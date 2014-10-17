@@ -72,7 +72,7 @@
 		?>
 	<input type="hidden" id="currntspan"/>
 	</table>
-	<input type="hidden" id="plugin_path" value="<?php echo plugins_url('OpenEducationalResource'); ?>"/>
+	<input type="hidden" id="plugin_path" value="<?php echo plugins_url('wp-oer'); ?>"/>
 
 <script type="text/javascript">
 jQuery(document).ready(function() {
