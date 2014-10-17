@@ -1,0 +1,161 @@
+.oer_rsfrmwpr
+{
+	width: 100%;
+	float: left;
+	margin: 0;
+	padding: 0;
+	font-size: 14px;
+}
+.oer_rsfrmwpr .oer_rsfrmhdng
+{
+    float: left;
+    font-size: 30px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    width: 100%;
+}
+.oer_rsfrmwpr .oer_rsfrminrwpr
+{
+	width: 100%;
+	float: left;
+	margin: 0;
+	padding: 0;
+}
+.oer_rsfrminrwpr .oer_snglfld
+{
+	width: 100%;
+	float: left;
+	margin: 0;
+	padding: 6px 0;
+	line-height: 25px;
+}
+.oer_snglfld.oer_hdngsngl
+{
+	font-weight: bold;
+	font-size: 22px;
+	width: 100%;
+	position: relative;
+}
+.oer_rsfrminrwpr .oer_authrcntr
+{
+	width: 100%;
+	float: left;
+	position: relative;
+}
+.oer_cls
+{
+	position: absolute;
+	right: 0px;
+	top: -30px;
+	cursor: pointer;
+	width: 32px;
+	height: 32px;
+}
+.oer_snglfld.oer_hdngsngl input[type="button"], .oer_snglfld input[type="submit"]
+{
+	border-radius: 5px 5px 5px 5px;
+	color: #ffffff;
+	border: medium none !important;
+	cursor: pointer;
+	float: left;
+	font-weight: bold;
+	height: auto;
+	margin: 0 0 0 0px;
+	padding: 10px 20px;
+	text-align: center;
+	width: auto;
+	background-image: linear-gradient(to bottom, #2A95C5, #21759B);
+	filter: progrid:DXImageTransform.Microsoft.gradient( startColorstr =#2A95C5, endColorstr = #21759B,GradientType=0);
+	font-size: 14px;
+}
+.oer_snglfld.oer_hdngsngl input[type="button"]:hover, .oer_snglfld input[type="submit"]:hover
+{
+	background-image: linear-gradient(to bottom, #2E9FD2, #21759B);
+	filter: progrid:DXImageTransform.Microsoft.gradient( startColorstr=#2E9FD2,endColorstr=#21759B,GradientType=0 );
+}
+.oer_snglfld .oer_txt
+{
+	width: 30%;
+	float: left;
+	margin: 0;
+	padding: 0;
+}
+.oer_snglfld .oer_fld
+{
+	width: 70%;
+	float: left;
+	margin: 0;
+	padding: 0;
+}
+.oer_snglfld .oer_fld input[type="text"]
+{
+    float: left;
+    margin: 0;
+    padding: 7px 0;
+    width: 100%;
+}
+.oer_snglfld .oer_fld label
+{
+    padding-left: 20px;
+    padding-right: 5px;
+	cursor: pointer;
+}
+.oer_snglfld .oer_fld select
+{
+    height: 30px;
+    width: 100%;
+}
+.oer_imprtrwpr
+{
+    float: left;
+    padding: 0px 20px 30px;
+    width: 1200px;
+}
+.oer_imprtrwpr .oer_hdng
+{
+    float: left;
+    font-size: 25px;
+    padding: 20px 0;
+    width: 100%;
+}
+.postform
+{
+    height: 100px !important;
+}
+.oer_fld ul
+{
+	list-style: none;
+}
+.oer_fld li
+{
+    float: left;
+    width: 50%;
+	display: block;
+}
+.level-0,.level-1,.level-2,.level-3,.level-4
+{
+	height: 20px;
+	padding: 2px 0;
+}
+.oer_lstofstandrd li{
+	display: none;
+}
+li.oer_sbstndard{
+	display: block;
+}
+.oer_fld .oer_lstofstandrd {
+    float: left;
+    width: 100%;
+}
+.oer_fld .oer_lstofstandrd ul{
+    float: left;
+    width: 100%;
+}
+.oer_fld .oer_lstofstandrd ul li{
+    float: left;
+    width: 100%;
+}
+.oer_fld .oer_lstofstandrd img{
+    margin-left:100px;
+}

@@ -1,0 +1,194 @@
+.oer_metawpr
+{
+	width: 100%;
+	float: left;
+	margin: 0;
+	padding: 0;
+	font-size: 14px;
+}
+.oer_metawpr .oer_metainrwpr
+{
+	width: 100%;
+	float: left;
+	margin: 0;
+	padding: 0;
+}
+.oer_metainrwpr .oer_snglfld
+{
+	width: 100%;
+	float: left;
+	margin: 0;
+	padding: 6px 0;
+	line-height: 25px;
+}
+.oer_snglfld.oer_hdngsngl
+{
+	font-weight: bold;
+	font-size: 22px;
+	width: 700px;
+	position: relative;
+}
+.oer_metainrwpr .oer_authrcntr
+{
+	width: 850px;
+	float: left;
+	position: relative;
+}
+.oer_cls
+{
+	position: absolute;
+	right: 300px;
+	top: -30px;
+	cursor: pointer;
+	width: 32px;
+	height: 32px;
+}
+.oer_snglfld.oer_hdngsngl input[type="button"]
+{
+	/*float: right;*/
+}
+.oer_snglfld .oer_txt
+{
+	width: 180px;
+	float: left;
+	margin: 0;
+	padding: 0;
+}
+.oer_snglfld .oer_fld
+{
+	width: 500px;
+	float: left;
+	margin: 0;
+	padding: 0;
+}
+.oer_snglfld .oer_fld input[type="text"]
+{
+    float: left;
+    margin: 0;
+    padding: 7px 0;
+    width: 320px;
+}
+.oer_snglfld .oer_fld label
+{
+	padding-right: 5px;
+}
+.oer_snglfld .oer_fld select
+{
+	width: 320px;
+}
+.oer_imprtrwpr
+{
+    float: left;
+    padding: 0px 20px 30px;
+    width: 90%;
+}
+.oer_imprtrwpr .oer_hdng
+{
+    float: left;
+    font-size: 25px;
+    padding: 20px 0;
+    width: 100%;
+}
+.oer_fld ul
+{
+	list-style: none;
+	margin-top: 5px;
+}
+.oer_fld .oer_grade li
+{
+    float: left;
+    width: 50%;
+}
+.main_lst {
+    float: left;
+    width: 100%;
+}
+.sub_lst {
+    float: left;
+    width: 100%;
+}
+.child {
+    margin-left: 25px;
+}
+.oer_fld  .radio_btn {
+    float: left;
+    width: 20%;
+}
+.testing
+{
+	font-weight: bold;
+	color: blue;
+}
+/*.oer_lstofstandrd li{
+	display: none;
+}*/
+/*li.oer_sbstndard
+{
+	display: block;
+}*/
+
+.oer_fld .oer_lstofstandrd {
+    float: left;
+	height: auto;
+    width: 100%;
+}
+.oer_fld .oer_lstofstandrd ul{
+    float: left;
+    width: 100%;
+}
+.oer_fld .oer_lstofstandrd li ul {
+    padding-left: 30px;
+}
+.oer_fld .oer_lstofstandrd ul li{
+    float: left;
+    width: 90%;
+	margin-top: 5px;
+}
+.oer_fld .oer_lstofstandrd img{
+    /*margin-left:100px;*/
+}
+.oer_fld .oer_lstofstandrd .oer_sbstndard .stndrd_ttl img
+{
+	margin-right: 10px;
+}
+.spn_category img
+{
+	width: 90px;
+	height: 90px;
+}
+.oer_pargrph
+{
+	width: 1000px;
+	float: left;
+	font-size: 14px;
+	margin-bottom: 15px;
+}
+.stndrd_desc {
+    margin-left: 25px;
+}
+.oer_cats {
+    float: left;
+    margin-left: 30px;
+    width: 97%;
+	margin-top: 10px;
+}
+.main li
+{
+	display: none;
+}
+li.main
+{
+	list-style: none;
+}
+ul.slctstandard > li
+{
+	display: list-item;
+}
+.oer_fld .active {
+    width: 94%!important;
+}
+.oer_lstofstandrd {
+    height: 600px !important;
+    overflow: scroll;
+    width: 600px !important;
+}
