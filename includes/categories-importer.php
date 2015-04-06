@@ -76,7 +76,7 @@ if(isset($_POST['bulk_imprt']))
 							$page_ids[$k] = $newvalue;
 							update_post_meta( $newvalue, '_wp_page_template', get_option("oer_category_template") );
 
-							$wpdb->get_results("insert into oer_category_page values('','$cat_parentid','$rsc_parentid','$newvalue','$title')");
+							$wpdb->get_results("insert into " . $wpdb->prefix. "category_page values('','$cat_parentid','$rsc_parentid','$newvalue','$title')");
 							break;
 						}
 						else
