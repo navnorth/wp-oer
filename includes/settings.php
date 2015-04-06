@@ -19,7 +19,8 @@
 	$oer_python_path 	= get_option("oer_python_path");
 	$oer_python_install = get_option("oer_python_install");
 
-	$options .= "<option value=''>--- Select Template ---</option>";
+	// Removed the concatenation shorthand as the variable didn't exist above this code yet
+	$options = "<option value=''>--- Select Template ---</option>";
 	foreach ( $templates as $template_name => $template_filename )
 	{
 		if($slct_template == $template_filename)

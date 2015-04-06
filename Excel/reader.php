@@ -258,7 +258,9 @@ class Spreadsheet_Excel_Reader
      */
     function Spreadsheet_Excel_Reader()
     {
-        $this->_ole =& new OLERead();
+        //$this->_ole =& new OLERead();
+        //Above code is deprecated for later version of PHP
+        $this->_ole = new OLERead();
         $this->setUTFEncoder('iconv');
     }
 
