@@ -82,10 +82,10 @@ if(isset($_POST['standards_import']))
 		{
 			$url = $cskey;
 			$title = $csdata['title'];
-			$results = $wpdb->get_results("SELECT id from oer_core_standards where standard_name = '$title'");
+			$results = $wpdb->get_results("SELECT id from " . $wpdb->prefix. "core_standards where standard_name = '$title'");
 			if(empty($results))
 			{
-				$wpdb->get_results('INSERT INTO oer_core_standards values("","'.$title.'", "'.$url.'")');
+				$wpdb->get_results('INSERT INTO " . $wpdb->prefix. "core_standards values("","'.$title.'", "'.$url.'")');
 			}
 		}
 		// Get Core Standard
@@ -98,24 +98,24 @@ if(isset($_POST['standards_import']))
 			$title = $data['title'];
 			$parent = '';
 
-			$rsltset = $wpdb->get_results("select id from oer_core_standards where standard_url='$ischild'");
+			$rsltset = $wpdb->get_results("select id from " . $wpdb->prefix. "core_standards where standard_url='$ischild'");
 			if(!empty($rsltset))
 			{
 				$parent = "core_standards-".$rsltset[0]->id;
 			}
 			else
 			{
-				$rsltset_sec = $wpdb->get_results("select id from oer_sub_standards where url='$ischild'");
+				$rsltset_sec = $wpdb->get_results("select id from " . $wpdb->prefix. "sub_standards where url='$ischild'");
 				if(!empty($rsltset_sec))
 				{
 					$parent = 'sub_standards-'.$rsltset_sec[0]->id;
 				}
 			}
 
-			$res = $wpdb->get_results("SELECT id from oer_sub_standards where parent_id = '$parent' && url = '$url'");
+			$res = $wpdb->get_results("SELECT id from " . $wpdb->prefix. "sub_standards where parent_id = '$parent' && url = '$url'");
 			if(empty($res))
 			{
-				$wpdb->get_results('INSERT INTO oer_sub_standards values("", "'.$parent.'", "'.$title.'", "'.$url.'")');
+				$wpdb->get_results('INSERT INTO ' . $wpdb->prefix. 'sub_standards values("", "'.$parent.'", "'.$title.'", "'.$url.'")');
 			}
 		}
 		// Get Sub Standard
@@ -129,26 +129,26 @@ if(isset($_POST['standards_import']))
 			$description = $st_data['description'];
 			$parent = '';
 
-			$rsltset = $wpdb->get_results("select id from oer_sub_standards where url='$ischild'");
+			$rsltset = $wpdb->get_results("select id from " . $wpdb->prefix. "sub_standards where url='$ischild'");
 			if(!empty($rsltset))
 			{
 				$parent = 'sub_standards-'.$rsltset[0]->id;
 			}
 			else
 			{
-				$rsltset_sec = $wpdb->get_results("select id from oer_standard_notation where url='$ischild'");
+				$rsltset_sec = $wpdb->get_results("select id from " . $wpdb->prefix. "standard_notation where url='$ischild'");
 				if(!empty($rsltset_sec))
 				{
 					$parent = 'standard_notation-'.$rsltset_sec[0]->id;
 				}
 			}
 
-			$res = $wpdb->get_results("SELECT id from oer_standard_notation where standard_notation = '$notation' && parent_id = '$parent' && url = '$url'");
+			$res = $wpdb->get_results("SELECT id from " . $wpdb->prefix. "standard_notation where standard_notation = '$notation' && parent_id = '$parent' && url = '$url'");
 			if(empty($res))
 			{
 				//$description = preg_replace("/[^a-zA-Z0-9]+/", " ", html_entity_decode($description))
 				$description = mysql_real_escape_string($description);
-				$wpdb->get_results('INSERT INTO oer_standard_notation values("", "'.$parent.'", "'.$notation.'", "'.$description.'", "", "'.$url.'")');
+				$wpdb->get_results('INSERT INTO " . $wpdb->prefix. "standard_notation values("", "'.$parent.'", "'.$notation.'", "'.$description.'", "", "'.$url.'")');
 			}
 		}
 		// Get Standard Notation

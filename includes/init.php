@@ -200,7 +200,9 @@ function create_resource_taxonomies() {
 add_action('save_post', 'oer_save_customfields');
 function oer_save_customfields()
 {
-	global $post;
+    global $post;
+    //Check first if $post is not empty
+    if ($post) {
 	if($post->post_type == 'resource')
 	{
 		if(isset($_POST['oer_resourceurl']))
@@ -442,7 +444,7 @@ function oer_save_customfields()
 		}//Create Screeenshot
 
 	}
-
+    }
 }
 
 function getScreenshotFile($url)

@@ -7,13 +7,13 @@ function user_pages($ids)
 	{
 		foreach($ids as $id)
 		{
-			$pages = $wpdb->get_results("select page_id from oer_category_page where resource_category_id = '$id'",ARRAY_A);
+			$pages = $wpdb->get_results("select page_id from " . $wpdb->prefix. "category_page where resource_category_id = '$id'",ARRAY_A);
 			$page_id[] = $pages[0]['page_id'];
 		}
 	}
 	else
 	{
-		$pages = $wpdb->get_results("select page_id from oer_category_page where resource_category_id = '$id'",ARRAY_A);
+		$pages = $wpdb->get_results("select page_id from " . $wpdb->prefix. "category_page where resource_category_id = '$id'",ARRAY_A);
 		$page_id = $pages[0]['page_id'];
 	}
 	return $page_id;
