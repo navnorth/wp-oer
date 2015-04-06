@@ -37,62 +37,66 @@ register_activation_hook(__FILE__, 'create_csv_import_table');
 function create_csv_import_table()
 {
 	global $wpdb;
-	$table_name = "oer_core_standards";
+	//Change hard-coded table prefix to $wpdb->prefix
+	$table_name = $wpdb->prefix . "core_standards";
 	if($wpdb->get_var("show tables like '$table_name'") != $table_name)
-    {
-      $sql = "CREATE TABLE IF NOT EXISTS $table_name (
- 			id int(20) NOT NULL AUTO_INCREMENT,
-  			standard_name varchar(255) NOT NULL,
-			standard_url varchar(255) NOT NULL,
-			PRIMARY KEY (id)
-			);";
-      require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-      dbDelta($sql);
-   }
+	{
+	  $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+			    id int(20) NOT NULL AUTO_INCREMENT,
+			    standard_name varchar(255) NOT NULL,
+			    standard_url varchar(255) NOT NULL,
+			    PRIMARY KEY (id)
+			    );";
+	  require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+	  dbDelta($sql);
+       }
 
-    $table_name = "oer_sub_standards";
+	//Change hard-coded table prefix to $wpdb->prefix
+	$table_name = $wpdb->prefix . "sub_standards";
 	if($wpdb->get_var("show tables like '$table_name'") != $table_name)
-    {
-      $sql = "CREATE TABLE IF NOT EXISTS $table_name (
- 			id int(20) NOT NULL AUTO_INCREMENT,
-  			parent_id varchar(255) NOT NULL,
-			standard_title varchar(255) NOT NULL,
-			url varchar(255) NOT NULL,
-			PRIMARY KEY (id)
-			);";
-      require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-      dbDelta($sql);
-   }
+	{
+	  $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+			    id int(20) NOT NULL AUTO_INCREMENT,
+			    parent_id varchar(255) NOT NULL,
+			    standard_title varchar(255) NOT NULL,
+			    url varchar(255) NOT NULL,
+			    PRIMARY KEY (id)
+			    );";
+	  require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+	  dbDelta($sql);
+	}
 
-   $table_name = "oer_standard_notation";
+	//Change hard-coded table prefix to $wpdb->prefix
+	$table_name = $wpdb->prefix . "standard_notation";
 	if($wpdb->get_var("show tables like '$table_name'") != $table_name)
-    {
-      $sql = "CREATE TABLE IF NOT EXISTS $table_name (
- 			id int(20) NOT NULL AUTO_INCREMENT,
-  			parent_id varchar(255) NOT NULL,
-			standard_notation varchar(255) NOT NULL,
-			description varchar(255) NOT NULL,
-			comment varchar(255) NOT NULL,
-			url varchar(255) NOT NULL,
-			PRIMARY KEY (id)
-			);";
-      require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-      dbDelta($sql);
-   }
+	 {
+	   $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+			     id int(20) NOT NULL AUTO_INCREMENT,
+			     parent_id varchar(255) NOT NULL,
+			     standard_notation varchar(255) NOT NULL,
+			     description varchar(255) NOT NULL,
+			     comment varchar(255) NOT NULL,
+			     url varchar(255) NOT NULL,
+			     PRIMARY KEY (id)
+			     );";
+	   require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+	   dbDelta($sql);
+	}
 
-   $table_name = "oer_category_page";
+	//Change hard-coded table prefix to $wpdb->prefix
+	$table_name = $wpdb->prefix . "category_page";
 	if($wpdb->get_var("show tables like '$table_name'") != $table_name)
-    {
-      $sql = "CREATE TABLE IF NOT EXISTS $table_name (
- 			id int(20) NOT NULL AUTO_INCREMENT,
-  			blog_category_id varchar(255) NOT NULL,
-			resource_category_id varchar(255) NOT NULL,
-			page_id varchar(255) NOT NULL,
-			page_name varchar(255) NOT NULL,
-			PRIMARY KEY (id));";
-      require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-      dbDelta($sql);
-   }
+	{
+	   $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+			     id int(20) NOT NULL AUTO_INCREMENT,
+			     blog_category_id varchar(255) NOT NULL,
+			     resource_category_id varchar(255) NOT NULL,
+			     page_id varchar(255) NOT NULL,
+			     page_name varchar(255) NOT NULL,
+			     PRIMARY KEY (id));";
+	   require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+	   dbDelta($sql);
+	}
 
    //CreatePage('Resource Form','[oer_resource_form]','resource_form'); // creating page
    //create_template();
@@ -141,6 +145,20 @@ function CreatePage($title,$content,$slug)
 	}
 ob_clean();
 }
+
+/** Add Settings Link on Plugins page **/
+add_filter( 'plugin_action_links' , 'add_oer_settings_link' , 10 , 2 );
+/** Add Settings Link function **/
+function add_oer_settings_link( $links, $file ){
+	if ( $file == plugin_basename(dirname(__FILE__).'/open-educational-resources.php') ) {
+		/** Insert settings link **/
+		$link = "<a href='edit.php?post_type=resource&page=oer_settings'>".__('Settings','oer')."</a>";
+		array_unshift($links, $link);
+		/** End of Insert settings link **/
+	}
+	return $links;
+}
+/** End of Add Settings Link on Plugins page **/
 
 /* Adding Auto Update Functionality*/
 
