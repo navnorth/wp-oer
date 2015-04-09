@@ -40,32 +40,59 @@ if(isset($_POST['resrc_imprt']))
 
 		for ($k =2; $k <= $fnldata['numRows']; $k++)
 		{
-			$oer_title          = $fnldata['cells'][$k][1];
-			$oer_resourceurl    = $fnldata['cells'][$k][2];
-			$oer_description    = $fnldata['cells'][$k][3];
-			$oer_highlight      = $fnldata['cells'][$k][4];
-			$oer_cetagories     = $fnldata['cells'][$k][5];
-			$oer_grade          = $fnldata['cells'][$k][6];
-			$oer_kywrd          = $fnldata['cells'][$k][7];
-			$oer_datecreated    = $fnldata['cells'][$k][8];
-			$oer_datemodified   = $fnldata['cells'][$k][9];
-			$oer_mediatype      = $fnldata['cells'][$k][10];
-			$oer_lrtype         = $fnldata['cells'][$k][11];
-			$oer_interactivity  = $fnldata['cells'][$k][12];
-			$oer_userightsurl   = $fnldata['cells'][$k][13];
-			$oer_isbasedonurl   = $fnldata['cells'][$k][14];
-			$oer_standard       = $fnldata['cells'][$k][15];
-			$oer_authortype     = $fnldata['cells'][$k][16];
-			$oer_authorname     = $fnldata['cells'][$k][17];
-			$oer_authorurl      = $fnldata['cells'][$k][18];
-			$oer_authoremail    = $fnldata['cells'][$k][19];
-			$oer_publishername  = $fnldata['cells'][$k][20];
-			$oer_publisherurl   = $fnldata['cells'][$k][21];
-			$oer_publisheremail = $fnldata['cells'][$k][22];
-			$oer_authortype2    = $fnldata['cells'][$k][23];
-			$oer_authorname2    = $fnldata['cells'][$k][24];
-			$oer_authorurl2     = $fnldata['cells'][$k][25];
-			$oer_authoremail2   = $fnldata['cells'][$k][26];
+			/** Check first if column is set **/
+			if (isset($fnldata['cells'][$k][1]))
+				$oer_title          = $fnldata['cells'][$k][1];
+			if (isset($fnldata['cells'][$k][2]))
+				$oer_resourceurl    = $fnldata['cells'][$k][2];
+			if (isset($fnldata['cells'][$k][3]))
+				$oer_description    = $fnldata['cells'][$k][3];
+			if (isset($fnldata['cells'][$k][4]))
+				$oer_highlight      = $fnldata['cells'][$k][4];
+			if (isset($fnldata['cells'][$k][5]))
+				$oer_cetagories     = $fnldata['cells'][$k][5];
+			if (isset($fnldata['cells'][$k][6]))
+				$oer_grade          = $fnldata['cells'][$k][6];
+			if (isset($fnldata['cells'][$k][7]))
+				$oer_kywrd          = $fnldata['cells'][$k][7];
+			if (isset($fnldata['cells'][$k][8]))
+				$oer_datecreated    = $fnldata['cells'][$k][8];
+			if (isset($fnldata['cells'][$k][9]))
+				$oer_datemodified   = $fnldata['cells'][$k][9];
+			if (isset($fnldata['cells'][$k][10]))
+				$oer_mediatype      = $fnldata['cells'][$k][10];
+			if (isset($fnldata['cells'][$k][11]))
+				$oer_lrtype         = $fnldata['cells'][$k][11];
+			if (isset($fnldata['cells'][$k][12]))
+				$oer_interactivity  = $fnldata['cells'][$k][12];
+			if (isset($fnldata['cells'][$k][13]))
+				$oer_userightsurl   = $fnldata['cells'][$k][13];
+			if (isset($fnldata['cells'][$k][14]))
+				$oer_isbasedonurl   = $fnldata['cells'][$k][14];
+			if (isset($fnldata['cells'][$k][15]))
+				$oer_standard       = $fnldata['cells'][$k][15];
+			if (isset($fnldata['cells'][$k][16]))
+				$oer_authortype     = $fnldata['cells'][$k][16];
+			if (isset($fnldata['cells'][$k][17]))
+				$oer_authorname     = $fnldata['cells'][$k][17];
+			if (isset($fnldata['cells'][$k][18]))
+				$oer_authorurl      = $fnldata['cells'][$k][18];
+			if (isset($fnldata['cells'][$k][19]))
+				$oer_authoremail    = $fnldata['cells'][$k][19];
+			if (isset($fnldata['cells'][$k][20]))
+				$oer_publishername  = $fnldata['cells'][$k][20];
+			if (isset($fnldata['cells'][$k][21]))
+				$oer_publisherurl   = $fnldata['cells'][$k][21];
+			if (isset($fnldata['cells'][$k][22]))
+				$oer_publisheremail = $fnldata['cells'][$k][22];
+			if (isset($fnldata['cells'][$k][23]))
+				$oer_authortype2    = $fnldata['cells'][$k][23];
+			if (isset($fnldata['cells'][$k][24]))
+				$oer_authorname2    = $fnldata['cells'][$k][24];
+			if (isset($fnldata['cells'][$k][25]))
+				$oer_authorurl2     = $fnldata['cells'][$k][25];
+			if (isset($fnldata['cells'][$k][26]))
+				$oer_authoremail2   = $fnldata['cells'][$k][26];
 
 			if(!empty($oer_standard))
 			{
@@ -103,7 +130,8 @@ if(isset($_POST['resrc_imprt']))
 			if(!empty($oer_title) && !empty($oer_resourceurl))
 			{
 				$post = array('post_content' => $oer_description, 'post_name' => $post_name, 'post_title' => $oer_title, 'post_status' => 'publish', 'post_type' => 'resource', 'post_author' => $user_id , 'post_date' => $cs_date, 'post_date_gmt'  => $cs_date, 'comment_status' => 'open');
-				$post_id = wp_insert_post( $post, $wp_error );
+				/** Set $wp_error to false to return 0 when error occurs **/
+				$post_id = wp_insert_post( $post, false );
 
 				//Set Category
 				wp_set_post_terms( $post_id, $category_id, 'resource-category', true );
