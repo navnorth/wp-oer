@@ -25,6 +25,10 @@ if(isset($_POST['resrc_imprt']))
 		}
 		else
 		{
+			/** Check if OER Plugin upload exists if not create to avoid error moving uploaded file **/
+			if (!(is_dir(OER_PATH."upload"))){
+				mkdir(OER_PATH."upload",0777);
+			}
 		 	"Upload: " . $_FILES["resource_import"]["name"] . "<br>";
 			"Type: " . $_FILES["resource_import"]["type"] . "<br>";
 		 	"Size: " . ($_FILES["resource_import"]["size"] / 1024) . " kB<br>";
@@ -202,6 +206,7 @@ if(isset($_POST['resrc_imprt']))
 				$gt_oer_standard = '';
 				for($l = 0; $l < count($oer_standard); $l++)
 				{
+					
 					$results = $wpdb->get_row("SELECT * from " . $wpdb->prefix. "standard_notation where standard_notation ='$oer_standard[$l]'",ARRAY_A);
 					if(!empty($results))
 					{
