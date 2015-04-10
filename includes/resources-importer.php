@@ -124,8 +124,11 @@ if(isset($_POST['resrc_imprt']))
 				$category_id = array();
 			}
 
-			$post_name = strtolower($oer_title);
-			$post_name = str_replace(' ','_', $post_name);
+			//Check if $oer_title is set
+			if ( isset( $oer_title ) ){
+				$post_name = strtolower($oer_title);
+				$post_name = str_replace(' ','_', $post_name);
+			}
 
 			if(!empty($oer_title) && !empty($oer_resourceurl))
 			{
