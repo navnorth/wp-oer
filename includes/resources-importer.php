@@ -94,7 +94,7 @@ if(isset($_POST['resrc_imprt']))
 			if (isset($fnldata['cells'][$k][26]))
 				$oer_authoremail2   = $fnldata['cells'][$k][26];
 
-			if(!empty($oer_standard))
+			if(!empty($oer_standard) && (!is_array($oer_standard)))
 			{
 				$oer_standard = explode(",", $oer_standard);
 			}
