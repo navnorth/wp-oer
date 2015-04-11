@@ -3,7 +3,7 @@
  Plugin Name: OER Management
  Plugin URI: http://www.navigationnorth.com/wordpress/oer-management
  Description: Open Educational Resource management and curation, metadata publishing, and alignment to Common Core State Standards. Developed in collaboration with Monad Infotech (http://monadinfotech.com)
- Version: 0.2
+ Version: 0.2.5
  Author: Navigation North
  Author URI: http://www.navigationnorth.com
 
