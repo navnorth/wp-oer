@@ -412,7 +412,8 @@ function oer_save_customfields()
 			$upload_dir = wp_upload_dir();
 			$file = '';
 
-			if(!has_post_thumbnail( $post_id ))
+			//Change $post_id as it is undefined to $post->ID
+			if(!has_post_thumbnail( $post->ID ))
 			{
 				$file = getScreenshotFile($url);
 			}
