@@ -35,12 +35,37 @@ class Page_Templater {
     private function __construct(){
         $this->_templates = array();
         
-        // Add a filter to the attributes metabox to inject template into the cache
-        add_filter( 'page_attributes_dropdown_pages_args' , array( $this , 'register_project_templates' ) );
+        // Add a filter to the template include to determine if the page hasbeen assigned
+        add_filter( 'template_include' , array( $this , 'view_project_template' ) );
         
-        // Add a filter to the save post to inject template into the page cache
-        add_filter( 'wp_insert_post_data' , array( $this , 'register_project_templates' ) );
+        // Add templates to array
+        $this->_templates = array( 'templates/single-resource.php' => 'Resource' );
+    }
+    
+    /**
+     * Check if the template is assigned to a page
+     **/
+    public function view_project_template( $template ){
+        global $post;
+        
+        // Checks page is assigned to this template
+        if ( !isset( $this->_templates[get_post_meta( $post->ID , '_wp_page_template' , true )] ) ){
+            return $template;
+        }
+        
+        // Get plugin template file
+        $file = plugin_dir_path(__FILE__) . get_post_meta( $post->ID , '_wp_page_template' , true );
+        
+        // Checks if the file exists
+        if ( file_exists( $file ) ){
+            return $file;
+        }
+        else {
+            echo $file;
+        }
+        
+        return $template;
     }
 }
-
+add_action( 'plugins_loaded' , array( 'Page_Templater' , 'get_instance' ) );
 ?>
