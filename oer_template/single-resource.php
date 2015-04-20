@@ -2,6 +2,10 @@
 /**
  * The Template for displaying all single resource
  */
+/** Add default stylesheet of Resource page **/
+wp_register_style( "resource-styles", OER_URL . "css/resource-style.css" );
+wp_enqueue_style( "resource-styles" );
+
 get_header(); ?>
 	<div class="cntnr">
         <div id="sngl-resource" class="sngl_resource_wrapper">
