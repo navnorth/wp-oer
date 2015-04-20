@@ -201,7 +201,30 @@ function oer_template_choser( $template ) {
 	}
 }
 
+/**
+ * Add filter to use plugin default category template
+ **/
+add_filter( 'template_include' , 'oer_category_template' );
 
+/**
+ * Function to choose template for the resource category
+ **/
+function oer_category_template( $template ) {
+	global $wp_query;
+	
+	//Post ID
+	$_id = $wp_query->get_queried_object_id();
+	
+	// Get Current Object if it belongs to Resource Category taxonomy
+	$resource_term = get_term_by( 'id' , $_id , 'resource-category' );
+	
+	//Check if the loaded resource is a category
+	if ($resource_term && !is_wp_error( $resource_term )) {
+		return oer_get_template_hierarchy('resource-category');
+	} else {
+		return $template;
+	}
+ }
 
 //front side shortcode
 //include_once(OER_PATH.'includes/resource_front.php');
