@@ -2,7 +2,7 @@
 /**
  * The Template for displaying all single resource
  */
-/** Add default stylesheet of Resource page **/
+/** Add default stylesheet for Resource page **/
 wp_register_style( "resource-styles", OER_URL . "css/resource-style.css" );
 wp_enqueue_style( "resource-styles" );
 

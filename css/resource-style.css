@@ -1,0 +1,25 @@
+/**
+ * WP-OER Plugin
+ * Resource Page Stylesheet
+ * Version : 0.1
+ **/
+.cntnr { width:100%; margin:0 auto; }
+.sngl_resource_wrapper { width: 100%; float: left; margin-bottom: 10px; }
+.rsrclftcntr-img { float: left; width: 42%; margin-right: 35px; }
+.rsrcrghtcntr { float: left; width: 54%; padding-top: 38px; }
+.sngl-rsrc-url { float: left; font-size: 26px; padding: 0 0 10px 0; line-height: 28px; text-align: left; width: 100%; }
+.sngl-rsrc-url a { text-decoration: none; color: #333; }
+.sngl-rsrc-img { position: relative; border: 2px solid #dddddd; float: left; width: 100%; }
+.sngl-rsrc-img .featureimg { width: auto; float: left; }
+.sngl-rsrc-img a { color: #444; text-decoration: none; }
+.sngl-rsrc-img .rsrcurl { background: none repeat scroll 0 0 #a8aaab; bottom: 0; left: 0; right: 0; padding: 10px; position: absolute; width: auto; color: #0c5598; font-style: italic; text-align: right; }
+.rsrcrghtcntr .rsrcctgries { float: left; margin: 0px; width: 100%; padding-bottom: 5px; }
+.sngl-rsrc-dscrptn { float: left; font-size: 15px; line-height: 20px; width: 100%; padding-bottom: 15px; }
+.sngl_resource_wrapper h1 { font-weight: bold; margin-bottom: 8px; font-size: 22px; color: #000; }
+
+/** For Mobile styles **/
+@media screen and (min-width: 960px) {
+    .sngl-rsrc-dscrptn {
+        width: 100%;
+    }
+}
