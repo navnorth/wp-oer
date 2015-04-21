@@ -2,15 +2,19 @@
 /*
  * Template Name: Category Template One
  */
+/** Add default stylesheet for Resource Category page **/
+wp_register_style( "resource-category-styles", OER_URL . "css/resource-category-style.css" );
+wp_enqueue_style( "resource-category-styles" );
+
 get_header();
 $term = get_the_title();
 $rsltdata = get_term_by( "name", $term, "resource-category", ARRAY_A );
 ?>
 <div class="cntnr">
 	<div class="subject-btn" onclick="tglcategories(this);"> Subjects List </div>
-    <div class="category_sidebar">
+    <div class="resource_category_sidebar">
 	<?php
-	echo '<ul class="category">';
+	echo '<ul class="resource_category">';
 			$args = array('hide_empty' => 0, 'taxonomy' => 'resource-category', 'parent' => 0);
 			$categories= get_categories($args);
 			foreach($categories as $category)
@@ -50,27 +54,30 @@ $rsltdata = get_term_by( "name", $term, "resource-category", ARRAY_A );
 		<div class="pgbrdcrums">
 			<ul>
 				<?php
-					$timthumb = get_template_directory_uri().'/lib/timthumb.php';
-					$term = get_the_title();
-					$termid = get_term_by('name', $term, "resource-category" );
-					$strcat = get_custom_category_parents($termid, "resource-category" , FALSE, ':', TRUE);
-					if(strpos($strcat,':'))
-					{
-						$top_cat = split(':',$strcat);
-					}
-					$parent = $top_cat[0];
-					
-					$catobj = get_category_by_slug($parent);
-					$getimage = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix.'postmeta'."  WHERE meta_key='category_image' AND meta_value='$catobj->term_id'");
-					if(!empty($getimage))
-					{
-						$attach_icn = get_post($getimage[0]->post_id);
-						echo '<li><img src="'. $timthumb.'?src='.$attach_icn->guid.'&amp;w=32&amp;h=32&amp;zc=0" alt="Breadcrumbs Icon" /></li>';
-					}
-					else
-					{
-						echo '<li></li>';
-					}
+					//$timthumb = get_template_directory_uri().'/lib/timthumb.php';
+					//$term = get_the_title();
+					//                                   
+					//$termid = get_term_by('name', $term, "resource-category" );
+					//                                   
+					//$strcat = get_custom_category_parents($termid, "resource-category" , FALSE, ':', TRUE);
+					//                                   
+					//if(strpos($strcat,':'))
+					//{
+					//	$top_cat = split(':',$strcat);
+					//}
+					//$parent = $top_cat[0];
+					//
+					//$catobj = get_category_by_slug($parent);
+					//$getimage = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix.'postmeta'."  WHERE meta_key='category_image' AND meta_value='$catobj->term_id'");
+					//if(!empty($getimage))
+					//{
+					//	$attach_icn = get_post($getimage[0]->post_id);
+					//	echo '<li><img src="'. $timthumb.'?src='.$attach_icn->guid.'&amp;w=32&amp;h=32&amp;zc=0" alt="Breadcrumbs Icon" /></li>';
+					//}
+					//else
+					//{
+					//	echo '<li></li>';
+					//}
 					
 				?>
 				<li>
