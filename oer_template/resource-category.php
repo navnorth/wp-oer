@@ -2,34 +2,53 @@
 /**
  * Default Category Template of Resource Post Type
  **/
+/** Add default stylesheet for Resource page **/
+wp_register_style( "resource-category-styles", OER_URL . "css/resource-category-style.css" );
+wp_enqueue_style( "resource-category-styles" );
+ 
 get_header();
 ?>
 <div class="cntnr">
-    <div class="category_sidebar">
+    <div class="resource_category_sidebar">
         <?php
             
            // Get Taxonomies of Resource Post Type
            $resource_taxonomies = get_object_taxonomies( 'resource' );
-           var_dump($resource_taxonomies);
            
            // Check if there are taxonomies returned
            if ( count( $resource_taxonomies ) > 0 ) {
             foreach($resource_taxonomies as $resource_taxonomy) {
                 //Only return all categories created under Resource Categories
                 if ( $resource_taxonomy == 'resource-category' ) {
-                     $args = array(
-                    'orderby' => 'name',
-                    'show_count' => 0,
-                    'pad_counts' => 0,
-                    'hierarchical' => 1,
-                    'taxonomy' => $resource_taxonomy,
-                    'title_li' => ''
-                  );
-                //
-                //wp_list_categories( $args );
-                    $resource_categories = get_categories( $args );
-                    var_dump($resource_categories);
-                    
+                    $args = array(
+                        'show_option_all'    => '',
+                        'orderby'            => 'name',
+                        'order'              => 'ASC',
+                        'style'              => 'list',
+                        'show_count'         => 0,
+                        'hide_empty'         => 0,
+                        'use_desc_for_title' => 1,
+                        'child_of'           => 0,
+                        'feed'               => '',
+                        'feed_type'          => '',
+                        'feed_image'         => '',
+                        'exclude'            => '',
+                        'exclude_tree'       => '',
+                        'include'            => '',
+                        'hierarchical'       => 1,
+                        'title_li'           => '',
+                        'show_option_none'   => '',
+                        'number'             => null,
+                        'echo'               => 1,
+                        'depth'              => 0,
+                        'current_category'   => 0,
+                        'pad_counts'         => 0,
+                        'taxonomy'           => $resource_taxonomy,
+                        'walker'             => null
+                    );
+                    echo "<ul class='resource-category'>";
+                    wp_list_categories($args);
+                    echo "</ul>";
                 }
             }
            }
