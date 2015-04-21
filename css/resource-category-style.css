@@ -21,3 +21,14 @@
 .allftrdrsrc .allftrdrsrccntr { float: left; margin: 0px; padding: 0 5px 0 0; overflow-y: scroll; height: 367px; border-top: 1px solid #c8c8c8; border-bottom: 1px solid #c8c8c8; }
 .allftrdrsrc .snglrsrc:first-child { border-top: none !important; margin: 8px 0 2px !important; }
 .allftrdrsrc .snglrsrc { float: left; padding: 5px 0; width: 100%; border-top: 1px solid #ddd !important; }
+.snglrsrc .snglimglft { width: 130px; height: 75px; overflow: hidden; float: left; margin: 0px; padding: 0px; border: 1px solid #c8c8c8; }
+.snglrsrc .snglimglft img { width: 100%; }
+.snglrsrc .snglttldscrght { width: 82%; float: right; margin: 0px; padding: 0px; }
+.snglttldscrght .ttl { width: 100%; float: left; margin: 0px; }
+.snglttldscrght .desc { width: 100%; float: left; margin: 10px 0; padding: 0px; line-height: 21px; font-size: 14px; color: #999; }
+.snglttldscrght .ttl a { font-size: 17px; color: #444; text-decoration: none; padding: 0 0 5px 0; }
+.allftrdpst .alltrdpsthdng { color: #444; float: left; font-size: 25px; line-height: 25px; margin: 0; padding: 5px 0 10px; width: 100%; }
+.allftrdpst .inrftrdpstwpr { width: 100%; float: left; margin: 0px; padding: 0px; }
+.inrftrdpstwpr .bx-wrapper .bx-controls-direction a { top: -16px; width: 24px; height: 24px; }
+.inrftrdpstwpr .bx-wrapper .bx-prev { background: #ccc url(../images/bxprev.png) no-repeat scroll 0 0; left: auto; right: 36px; }
+.inrftrdpstwpr .bx-wrapper .bx-next { background: #ccc url(../images/bxnext.png) no-repeat scroll 0 0; }
