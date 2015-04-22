@@ -197,4 +197,14 @@ function get_custom_category_parents( $id, $taxonomy = false, $link = false, $se
 	}
 	return $chain;
 }
+
+
+//Get Category Parent List
+function get_parent_term($id)
+{
+	$curr_cat = get_category_parents($id, false, '/' ,true);
+	$curr_cat = explode('/',$curr_cat);
+
+	return $curr_cat;
+}
 ?>

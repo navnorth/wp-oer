@@ -12,7 +12,14 @@ wp_enqueue_script( "resource-script" );
 
 /** Load WordPress Theme Header **/
 get_header();
-$term = get_the_title();
+//Get ID of Resource Category
+$term_id = get_queried_object_id();
+
+//Get Term based on Category ID
+//$term = get_the_title();
+$terms = get_term_by( "id" , $term_id , 'resource-category' , object );
+$term = $terms->name;
+
 $rsltdata = get_term_by( "name", $term, "resource-category", ARRAY_A );
 $timthumb = get_template_directory_uri().'/lib/timthumb.php';
 
@@ -25,21 +32,24 @@ if($rsltdata['parent'] != 0)
 		$idObj = get_category_by_slug($parent[$k]);
 		$parentid[] = $idObj->term_id;
 	}
-}	
+}
 ?>
-
 <div class="cntnr">
-	<div class="category_sidebar">
+	<div class="resource_category_sidebar">
 	<?php
-	echo '<ul class="category">';
+	echo '<ul class="resource_category">';
 			$args = array('hide_empty' => 0, 'taxonomy' => 'resource-category', 'parent' => 0);
 			$categories= get_categories($args);
+                        
 			foreach($categories as $category)
 			{
 				$children = get_term_children($category->term_id, 'resource-category');
 				$getimage = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix.'postmeta'." WHERE meta_key='category_image' AND meta_value='$category->term_id'");
-				if(!empty($getimage)){ $attach_icn = get_post($getimage[0]->post_id); }
-				else { $attach_icn = array(); }
+				if(!empty($getimage)){
+                                    $attach_icn = get_post($getimage[0]->post_id);
+                                } else {
+                                    $attach_icn = array();
+                                }
 				
 				if($rsltdata['term_id'] == $category->term_id)
 				{
@@ -74,10 +84,7 @@ if($rsltdata['parent'] != 0)
 		<div class="pgbrdcrums">
 			<ul>
 				<?php
-                                        //Get Current Object ID
-                                        $id = get_queried_object_id();
-					$termid = get_term_by('id', $id, "resource-category" );
-					$strcat = get_custom_category_parents($termid, "resource-category" , FALSE, ':', TRUE);
+					$strcat = get_custom_category_parents($term_id, "resource-category" , FALSE, ':', TRUE);
                                         
 					if(strpos($strcat,':'))
 					{
@@ -122,7 +129,7 @@ if($rsltdata['parent'] != 0)
 		?> <!--Text and HTML Widget-->
 		
 		<div class="allftrdrsrc">
-			<div class="snglrsrchdng">Browse <?php echo get_the_title();?> Resources</div>
+			<div class="snglrsrchdng">Browse <?php echo $term;?> Resources</div>
 			<div class="allftrdrsrccntr" onScroll="load_onScroll(this)" file-path="<?php echo get_template_directory_uri();?>/lib/ajax-scroll.php" data-id="<?php echo $rsltdata['term_id'];?>">
 				<?php
 				$args = array(
@@ -170,5 +177,6 @@ if($rsltdata['parent'] != 0)
 		</div> <!--Browse By Categories-->
     
 	</div>
+        <div class="clear"></div>
 </div>
 <?php get_footer(); ?><!-- Load WordPress Theme Footer -->
