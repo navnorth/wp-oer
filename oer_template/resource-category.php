@@ -44,7 +44,7 @@ if($rsltdata['parent'] != 0)
 			foreach($categories as $category)
 			{
 				$children = get_term_children($category->term_id, 'resource-category');
-				$getimage = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix.'postmeta'." WHERE meta_key='category_image' AND meta_value='$category->term_id'");
+				$getimage = $wpdb->get_results( $wpdb->prepare ( "SELECT * FROM ".$wpdb->prefix.'postmeta'." WHERE meta_key='category_image' AND meta_value=%d" , $category->term_id));
 				if(!empty($getimage)){
                                     $attach_icn = get_post($getimage[0]->post_id);
                                 } else {
@@ -94,7 +94,7 @@ if($rsltdata['parent'] != 0)
 					
 					$catobj = get_term_by( 'slug' , $parent , 'resource-category' );
                                         
-					$getimage = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix.'postmeta'."  WHERE meta_key='category_image' AND meta_value='$catobj->term_id'");
+					$getimage = $wpdb->get_results( $wpdb->prepare("SELECT * FROM ".$wpdb->prefix.'postmeta'."  WHERE meta_key='category_image' AND meta_value=%d" , $catobj->term_id ));
 					if(!empty($getimage))
 					{
 						$attach_icn = get_post($getimage[0]->post_id);
