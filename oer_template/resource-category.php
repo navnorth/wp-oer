@@ -26,7 +26,7 @@ $timthumb = get_template_directory_uri().'/lib/timthumb.php';
 $parentid = array();
 if($rsltdata['parent'] != 0)
 {
-	$parent = get_parent_term($rsltdata['parent']);
+	$parent = get_top_parents($rsltdata['parent']);
 	for($k=0; $k < count($parent); $k++)
 	{
 		$idObj = get_category_by_slug($parent[$k]);

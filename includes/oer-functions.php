@@ -207,4 +207,17 @@ function get_parent_term($id)
 
 	return $curr_cat;
 }
+
+
+function get_term_top_most_parent($term_id, $taxonomy="resource-category"){
+    // start from the current term
+    $parent  = get_term_by( 'id', $term_id, $taxonomy);
+    // climb up the hierarchy until we reach a term with parent = '0'
+    while ($parent->parent != '0'){
+        $term_id = $parent->parent;
+
+        $parent  = get_term_by( 'id', $term_id, $taxonomy);
+    }
+    return $parent;
+}
 ?>
