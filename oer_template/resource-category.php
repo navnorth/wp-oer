@@ -6,6 +6,10 @@
 wp_register_style( "resource-category-styles", OER_URL . "css/resource-category-style.css" );
 wp_enqueue_style( "resource-category-styles" );
 
+/** Add default javascript **/
+wp_register_script( "resource-script" , OER_URL ."js/resource-category.js" );
+wp_enqueue_script( "resource-script" );
+
 get_header();
 $term = get_the_title();
 $rsltdata = get_term_by( "name", $term, "resource-category", ARRAY_A );
