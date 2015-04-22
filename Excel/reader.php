@@ -1054,10 +1054,13 @@ class Spreadsheet_Excel_Reader
         $result = $string;
         if ($this->_defaultEncoding){
             switch ($this->_encoderFunction){
-                case 'iconv' :     $result = iconv('UTF-16LE', $this->_defaultEncoding, $string);
-                                break;
-                case 'mb_convert_encoding' :     $result = mb_convert_encoding($string, $this->_defaultEncoding, 'UTF-16LE' );
-                                break;
+                case 'iconv' :
+                    //Added IGNORE and TRANSLIT flag in iconv()
+                    $result = iconv('UTF-16LE', $this->_defaultEncoding.'//TRANSLIT//IGNORE', $string);
+                    break;
+                case 'mb_convert_encoding' :
+                    $result = mb_convert_encoding($string, $this->_defaultEncoding, 'UTF-16LE' );
+                    break;
             }
         }
         return $result;
