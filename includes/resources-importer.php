@@ -243,14 +243,14 @@ if(isset($_POST['resrc_imprt']))
 				for($l = 0; $l < count($oer_standard); $l++)
 				{
 					
-					$results = $wpdb->get_row("SELECT * from " . $wpdb->prefix. "standard_notation where standard_notation ='$oer_standard[$l]'",ARRAY_A);
+					$results = $wpdb->get_row( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "standard_notation where standard_notation =%s" , $oer_standard[$l] ),ARRAY_A);
 					if(!empty($results))
 					{
 						$gt_oer_standard .= "oer_standard_notation-".$results['id'].",";
 						$table = explode("-", $results['parent_id']);
 						if(!empty($table))
 						{
-							$stndrd_algn = $wpdb->get_row("SELECT * from  " . $wpdb->prefix. $table[0] . " where id ='$table[1]'",ARRAY_A);
+							$stndrd_algn = $wpdb->get_row( $wpdb->prepare( "SELECT * from  " . $wpdb->prefix. $table[0] . " where id =%s" , $table[1] ),ARRAY_A);
 							if($stndrd_algn['parent_id'])
 							{
 								fetch_stndrd($stndrd_algn['parent_id'], $post_id);
@@ -383,7 +383,7 @@ function fetch_stndrd($pId, $postid)
 {
 	global $wpdb;
 	$table = explode("-", $pId);
-	$stndrd_algn = $wpdb->get_row("SELECT * from  " . $wpdb->prefix. $table[0] . " where id ='$table[1]'",ARRAY_A);
+	$stndrd_algn = $wpdb->get_row( $wpdb->prepare( "SELECT * from  " . $wpdb->prefix. $table[0] . " where id =%s" , $table[1] ),ARRAY_A);
 
 	if(preg_match("/core_standards/", $table[0]))
 	{

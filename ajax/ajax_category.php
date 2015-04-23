@@ -37,12 +37,12 @@ if($action == "insert_image" || $action== "insert_hover_image")
 
 	$table =  $wpdb->prefix."postmeta";
 	//Checking this category already have an image
-	$get_post_meta = $wpdb->get_var("SELECT * FROM $table WHERE meta_key='$catergory_key' AND meta_value='$term_id'");
+	$get_post_meta = $wpdb->get_var( $wpdb->prepare( "SELECT * FROM $table WHERE meta_key=%s AND meta_value=%s" , $catergory_key , $term_id ));
 
 	if($get_post_meta > 0)
 	{
 		// if category alredy have an image
-		$wpdb->query("UPDATE $table SET post_id='$post_id',meta_value ='$term_id' WHERE  meta_key='$catergory_key' AND meta_value='$term_id'");
+		$wpdb->query( $wpdb->prepare( "UPDATE $table SET post_id=%d, meta_value =%s WHERE  meta_key=%s AND meta_value=%s" , $post_id , $term_id , $catergory_key , $term_id ));
 	}
 	else
 	{
@@ -65,6 +65,6 @@ if($action == "remove_image" || $action == "remove_image_hover")
 	{
 		$catergory_key ="category_image";
 	}
-	$wpdb->query("UPDATE $table SET meta_value ='' WHERE  meta_key='$catergory_key' AND meta_value='$term_id'");
+	$wpdb->query( $wpdb->prepare( "UPDATE $table SET meta_value ='' WHERE  meta_key=%s AND meta_value=%s" , $catergory_key , $term_id ));
 }
 ?>
