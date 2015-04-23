@@ -2,7 +2,7 @@
 function get_sub_standard($id, $oer_standard)
 {
 	global $wpdb;
-	$results = $wpdb->get_results("SELECT * from " . $wpdb->prefix. "sub_standards where parent_id ='$id'",ARRAY_A);
+	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "sub_standards where parent_id = %s" , $id ) ,ARRAY_A);
 	if(!empty($oer_standard))
 	{
 		$stndrd_arr = explode(",",$oer_standard);
@@ -49,7 +49,7 @@ function get_sub_standard($id, $oer_standard)
 function get_standard_notation($id, $oer_standard)
 {
 	global $wpdb;
-	$results = $wpdb->get_results("SELECT * from " . $wpdb->prefix. "standard_notation where parent_id ='$id'",ARRAY_A);
+	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "standard_notation where parent_id = %s" , $id ) , ARRAY_A);
 
 	if(!empty($oer_standard))
 	{
@@ -103,7 +103,7 @@ function get_standard_notation($id, $oer_standard)
 function check_child($id)
 {
 	global $wpdb;
-	$results = $wpdb->get_results("SELECT * from " . $wpdb->prefix. "standard_notation where parent_id ='$id'",ARRAY_A);
+	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "standard_notation where parent_id = %s" , $id ) , ARRAY_A);
 	return $results;
 }
 
