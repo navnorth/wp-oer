@@ -294,7 +294,7 @@ get_header(); ?>
                                     if(!empty($stdrd_id))
                                     {
 										echo "<h3>Standard Alignment</h3>";
-                                        $res = $wpdb->get_row("select standard_name from oer_core_standards where id='$stdrd_id'", ARRAY_A);
+                                        $res = $wpdb->get_row( $wpdb->prepare( "select standard_name from ".$wpdb->prefix."core_standards where id=%d" , $stdrd_id ), ARRAY_A);
                                         echo "<div class='stndrd_ttl'>".$res['standard_name']."</div>";
                                     }
                                     ?>
@@ -310,9 +310,9 @@ get_header(); ?>
                                                 $table = explode("-",$stnd_arr[$i]);
                                                 $table_name = $table[0];
                                                 $id = $table[1];
-                                                if(strcmp($table_name, 'oer_standard_notation') == 0)
+                                                if(strcmp($table_name, $wpdb->prefix.'standard_notation') == 0)
                                                 {
-                                                    $res = $wpdb->get_row("select * from $table_name where id='$id'", ARRAY_A);
+                                                    $res = $wpdb->get_row( $wpdb->prepare("select * from $table_name where id=%d" , $id ), ARRAY_A);
                                                     echo "<div class='sngl_stndrd'>";
                                                     echo "<div class='sngl_notation'>".$res['standard_notation']."</div>";
                                                     echo "<div class='sngl_description'>".$res['description']."</div>";

@@ -32,7 +32,7 @@
 				$image  ="";
 				$image_hover="";
 				$term_id= $category->term_id;
-				$sqlq = "SELECT * FROM $table_postmeta  WHERE  meta_value='$term_id' AND meta_key='category_image'";
+				$sqlq = $wpdb->prepare( "SELECT * FROM $table_postmeta  WHERE  meta_value=%s AND meta_key='category_image'" , $term_id );
 				$getimage = $wpdb->get_results($sqlq);
 
 				if(!empty($getimage))
@@ -52,7 +52,7 @@
 			</td>
 			<td>
 				<?php
-					$sqlq_hover = "SELECT * FROM $table_postmeta  WHERE  meta_value='$term_id' AND meta_key='category_image_hover'";
+					$sqlq_hover = $wpdb->prepare( "SELECT * FROM $table_postmeta  WHERE  meta_value=%s AND meta_key='category_image_hover'" , $term_id );
 					$getimage_hover = $wpdb->get_results($sqlq_hover);
 					if(!empty($getimage_hover))
 					{

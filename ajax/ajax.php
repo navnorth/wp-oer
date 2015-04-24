@@ -9,7 +9,7 @@ if($_REQUEST["task"] == 'get_standards')
 	extract($_POST);
 
 	$standard_id = 'core_standards-'.$standard_id;
-	$results = $wpdb->get_results("SELECT * from " . $wpdb->prefix. "sub_standards where parent_id ='$standard_id'",ARRAY_A);
+	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "sub_standards where parent_id = %s", $standard_id) ,ARRAY_A);
 	if(!empty($results))
 	{
 		get_child($standard_id);
@@ -43,7 +43,7 @@ if($_REQUEST["task"] == 'get_standards')
 function get_child($id)
 {
 	global $wpdb;
-	$results = $wpdb->get_results("SELECT * from " . $wpdb->prefix. "sub_standards where parent_id ='$id'",ARRAY_A);
+	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "sub_standards where parent_id = %s", $id ) ,ARRAY_A);
 	if(!empty($results))
 	{
 		echo "<ul>";
@@ -69,7 +69,7 @@ function get_child($id)
 function get_thrchild($id )
 {
 	global $wpdb;
-	$results = $wpdb->get_results("SELECT * from " . $wpdb->prefix. "standard_notation where parent_id ='$id'",ARRAY_A);
+	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "standard_notation where parent_id = %s" , $id  ) ,ARRAY_A);
 	if(!empty($results))
 	{
 		echo "<ul>";
@@ -102,7 +102,7 @@ function get_thrchild($id )
 function child_exist($id)
 {
 	global $wpdb;
-	$results = $wpdb->get_results("SELECT * from " . $wpdb->prefix. "standard_notation where parent_id ='$id'",ARRAY_A);
+	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "standard_notation where parent_id = %s" , $id ) ,ARRAY_A);
 	return $results;
 }
 ?>
