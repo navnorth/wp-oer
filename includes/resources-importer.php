@@ -40,6 +40,34 @@ if(isset($_POST['resrc_imprt']))
 
 		for ($k =2; $k <= $fnldata['numRows']; $k++)
 		{
+			/** Clear variable values after a loop **/
+			$oer_title 		= "";
+			$oer_resourceurl 	= "";
+			$oer_description 	= "";
+			$oer_highlight 		= "";
+			$oer_cetagories 	= "";
+			$oer_grade 		= "";
+			$oer_kywrd 		= "";
+			$oer_datecreated 	= "";
+			$oer_datemodified 	= "";
+			$oer_mediatype 		= "";
+			$oer_lrtype 		= "";
+			$oer_interactivity 	= "";
+			$oer_userightsurl 	= "";
+			$oer_isbasedonurl   	= "";
+			$oer_standard       	= "";
+			$oer_authortype     	= "";
+			$oer_authorname     	= "";
+			$oer_authorurl      	= "";
+			$oer_authoremail    	= "";
+			$oer_publishername  	= "";
+			$oer_publisherurl   	= "";
+			$oer_publisheremail 	= "";
+			$oer_authortype2    	= "";
+			$oer_authorname2    	= "";
+			$oer_authorurl2     	= "";
+			$oer_authoremail2   	= "";
+			
 			/** Check first if column is set **/
 			if (isset($fnldata['cells'][$k][1]))
 				$oer_title          = $fnldata['cells'][$k][1];
@@ -191,7 +219,7 @@ if(isset($_POST['resrc_imprt']))
 				update_post_meta( $post_id , 'oer_grade' , $oer_grades);
 			}
 
-			if(!empty($oer_datecreated))
+			if(!empty($oer_datecreated) && !($oer_datecreated==""))
 			{
 				update_post_meta( $post_id , 'oer_datecreated' , $oer_datecreated);
 			}
@@ -243,14 +271,14 @@ if(isset($_POST['resrc_imprt']))
 				for($l = 0; $l < count($oer_standard); $l++)
 				{
 					
-					$results = $wpdb->get_row("SELECT * from " . $wpdb->prefix. "standard_notation where standard_notation ='$oer_standard[$l]'",ARRAY_A);
+					$results = $wpdb->get_row( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "standard_notation where standard_notation =%s" , $oer_standard[$l] ),ARRAY_A);
 					if(!empty($results))
 					{
 						$gt_oer_standard .= "oer_standard_notation-".$results['id'].",";
 						$table = explode("-", $results['parent_id']);
 						if(!empty($table))
 						{
-							$stndrd_algn = $wpdb->get_row("SELECT * from  " . $wpdb->prefix. $table[0] . " where id ='$table[1]'",ARRAY_A);
+							$stndrd_algn = $wpdb->get_row( $wpdb->prepare( "SELECT * from  " . $wpdb->prefix. $table[0] . " where id =%s" , $table[1] ),ARRAY_A);
 							if($stndrd_algn['parent_id'])
 							{
 								fetch_stndrd($stndrd_algn['parent_id'], $post_id);
@@ -383,7 +411,7 @@ function fetch_stndrd($pId, $postid)
 {
 	global $wpdb;
 	$table = explode("-", $pId);
-	$stndrd_algn = $wpdb->get_row("SELECT * from  " . $wpdb->prefix. $table[0] . " where id ='$table[1]'",ARRAY_A);
+	$stndrd_algn = $wpdb->get_row( $wpdb->prepare( "SELECT * from  " . $wpdb->prefix. $table[0] . " where id =%s" , $table[1] ),ARRAY_A);
 
 	if(preg_match("/core_standards/", $table[0]))
 	{

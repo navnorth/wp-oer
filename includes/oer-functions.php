@@ -2,7 +2,7 @@
 function get_sub_standard($id, $oer_standard)
 {
 	global $wpdb;
-	$results = $wpdb->get_results("SELECT * from " . $wpdb->prefix. "sub_standards where parent_id ='$id'",ARRAY_A);
+	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "sub_standards where parent_id = %s" , $id ) ,ARRAY_A);
 	if(!empty($oer_standard))
 	{
 		$stndrd_arr = explode(",",$oer_standard);
@@ -49,7 +49,7 @@ function get_sub_standard($id, $oer_standard)
 function get_standard_notation($id, $oer_standard)
 {
 	global $wpdb;
-	$results = $wpdb->get_results("SELECT * from " . $wpdb->prefix. "standard_notation where parent_id ='$id'",ARRAY_A);
+	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "standard_notation where parent_id = %s" , $id ) , ARRAY_A);
 
 	if(!empty($oer_standard))
 	{
@@ -103,7 +103,7 @@ function get_standard_notation($id, $oer_standard)
 function check_child($id)
 {
 	global $wpdb;
-	$results = $wpdb->get_results("SELECT * from " . $wpdb->prefix. "standard_notation where parent_id ='$id'",ARRAY_A);
+	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "standard_notation where parent_id = %s" , $id ) , ARRAY_A);
 	return $results;
 }
 
@@ -196,5 +196,28 @@ function get_custom_category_parents( $id, $taxonomy = false, $link = false, $se
 		$chain .= $name.$separator;
 	}
 	return $chain;
+}
+
+
+//Get Category Parent List
+function get_parent_term($id)
+{
+	$curr_cat = get_category_parents($id, false, '/' ,true);
+	$curr_cat = explode('/',$curr_cat);
+
+	return $curr_cat;
+}
+
+
+function get_term_top_most_parent($term_id, $taxonomy="resource-category"){
+    // start from the current term
+    $parent  = get_term_by( 'id', $term_id, $taxonomy);
+    // climb up the hierarchy until we reach a term with parent = '0'
+    while ($parent->parent != '0'){
+        $term_id = $parent->parent;
+
+        $parent  = get_term_by( 'id', $term_id, $taxonomy);
+    }
+    return $parent;
 }
 ?>
