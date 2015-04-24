@@ -201,21 +201,21 @@ class Spreadsheet_Excel_Reader
     var $_coloffset = 1;
 
     /**
-     * List of default date formats used by Excel
+     * List of default date formats used by Excel (US Format)
      *
      * @var array
      * @access public
      */
-    var $dateFormats = array (
-        0xe => "d/m/Y",
-        0xf => "d-M-Y",
-        0x10 => "d-M",
+     var $dateFormats = array (
+        0xe => "m/d/Y",
+        0xf => "M-d-Y",
+        0x10 => "M-d",
         0x11 => "M-Y",
         0x12 => "h:i a",
         0x13 => "h:i:s a",
         0x14 => "H:i",
         0x15 => "H:i:s",
-        0x16 => "d/m/Y H:i",
+        0x16 => "m/d/Y H:i",
         0x2d => "i:s",
         0x2e => "H:i:s",
         0x2f => "i:s.S");
@@ -969,7 +969,8 @@ class Spreadsheet_Excel_Reader
     {
         if ($numValue > 1) {
             $utcDays = $numValue - ($this->nineteenFour ? SPREADSHEET_EXCEL_READER_UTCOFFSETDAYS1904 : SPREADSHEET_EXCEL_READER_UTCOFFSETDAYS);
-            $utcValue = round(($utcDays+1) * SPREADSHEET_EXCEL_READER_MSINADAY);
+            //$utcValue = round(($utcDays+1) * SPREADSHEET_EXCEL_READER_MSINADAY);
+            $utcValue = round(($utcDays) * SPREADSHEET_EXCEL_READER_MSINADAY);
             $string = date ($this->curformat, $utcValue);
             $raw = $utcValue;
         } else {
