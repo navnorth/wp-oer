@@ -21,7 +21,7 @@ $terms = get_term_by( "id" , $term_id , 'resource-category' , object );
 $term = $terms->name;
 
 $rsltdata = get_term_by( "name", $term, "resource-category", ARRAY_A );
-$timthumb = get_template_directory_uri().'/lib/timthumb.php';
+//$timthumb = get_template_directory_uri().'/lib/timthumb.php';
 
 $parentid = array();
 if($rsltdata['parent'] != 0)
@@ -35,7 +35,7 @@ if($rsltdata['parent'] != 0)
 }
 ?>
 <div class="cntnr">
-	<div class="resource_category_sidebar">
+	<div class="resource_category_sidebar template_resource_category_sidebar">
 	<?php
 	echo '<ul class="resource_category">';
 			$args = array('hide_empty' => 0, 'taxonomy' => 'resource-category', 'parent' => 0);
@@ -98,7 +98,8 @@ if($rsltdata['parent'] != 0)
 					if(!empty($getimage))
 					{
 						$attach_icn = get_post($getimage[0]->post_id);
-						echo '<li><img src="'. $timthumb.'?src='.$attach_icn->guid.'&w=32&h=32&zc=0" /></li>';
+						//echo '<li><img src="'. $timthumb.'?src='.$attach_icn->guid.'&w=32&h=32&zc=0" /></li>';
+						echo '<li><img src="'.$attach_icn->guid.'" /></li>';
 					}
 					else
 					{
