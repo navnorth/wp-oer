@@ -201,6 +201,9 @@ add_action('save_post', 'oer_save_customfields');
 function oer_save_customfields()
 {
     global $post;
+    //Check first if screenshot is enabled
+    $screenshot_enabled = get_option( 'oer_enable_screenshot' );
+    
     //Check first if $post is not empty
     if ($post) {
 	if($post->post_type == 'resource')
@@ -415,6 +418,7 @@ function oer_save_customfields()
 			//Change $post_id as it is undefined to $post->ID
 			if(!has_post_thumbnail( $post->ID ))
 			{
+			    if ( $screenshot_enabled )
 				$file = getScreenshotFile($url);
 			}
 
@@ -450,6 +454,7 @@ function oer_save_customfields()
 
 function getScreenshotFile($url)
 {
+	
 	$upload_dir = wp_upload_dir();
 	$path = $upload_dir['basedir'].'/resource-images/';
 

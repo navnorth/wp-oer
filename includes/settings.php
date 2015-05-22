@@ -85,7 +85,7 @@
     </div>
     <form method="post">
         <div class="fields">
-            <input type="checkbox" name="enable_screenshot" checked="<?php checked( $enable_screenshot, 'on') ?>" />
+            <input type="checkbox" name="enable_screenshot" id="enable_screenshot" <?php checked( $enable_screenshot, 'on') ?> />
             <input type="submit" name="enable_screenshot_save" value="Save" class="button button-primary"/>
         </div>
     </form>
