@@ -21,11 +21,11 @@ get_header(); ?>
                     <div class="sngl-rsrc-img">
                         <a class="featureimg" href="<?php echo get_post_meta($post->ID, "oer_resourceurl", true)?>" target="_blank" >
 					<?php
-                    	$img_url = wp_get_attachment_url(get_post_meta( $post->ID, "_thumbnail_id" , true));
+						$img_url = wp_get_attachment_url(get_post_meta( $post->ID, "_thumbnail_id" , true));
 						if(!empty($img_url))
 						{
-					      echo '<img src="'.$timthumb.'?src='.$img_url.'&w=528&h=455&zc=0" alt="'.get_the_title().'"/>';
-                        }
+						echo '<img src="'.$img_url.'" alt="'.get_the_title().'"/>';
+						}
 						else
 						{
 							echo '<img src="'.site_url().'/wp-content/plugins/wp-oer/images/default-icon-528x455.png" alt="'.get_the_title().'"/>';
