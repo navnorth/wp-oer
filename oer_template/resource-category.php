@@ -21,7 +21,6 @@ $terms = get_term_by( "id" , $term_id , 'resource-category' , object );
 $term = $terms->name;
 
 $rsltdata = get_term_by( "name", $term, "resource-category", ARRAY_A );
-//$timthumb = get_template_directory_uri().'/lib/timthumb.php';
 
 $parentid = array();
 if($rsltdata['parent'] != 0)
@@ -98,8 +97,28 @@ if($rsltdata['parent'] != 0)
 					if(!empty($getimage))
 					{
 						$attach_icn = get_post($getimage[0]->post_id);
-						//echo '<li><img src="'. $timthumb.'?src='.$attach_icn->guid.'&w=32&h=32&zc=0" /></li>';
-						echo '<li><img src="'.$attach_icn->guid.'" /></li>';
+						$img_path = $new_img_path = parse_url($attach_icn->guid);
+						$img_path = $_SERVER['DOCUMENT_ROOT'] . $img_path['path'];
+						//Resize Image using WP_Image_Editor
+						$image_editor = wp_get_image_editor($img_path);
+						if ( !is_wp_error($image_editor) ) {
+							$new_image = $image_editor->resize( 32, 32, true );
+							$suffix = "32x32";
+							
+							//Additional info of file
+							$info = pathinfo( $img_path );
+							$dir = $info['dirname'];
+							$ext = $info['extension'];
+							$name = wp_basename( $img_path, ".$ext" );
+							$dest_file_name = "{$dir}/{$name}-{$suffix}.{$ext}";
+							$new_port = ($new_img_path['port']==80)?'':':'.$new_img_path['port'];
+							$new_image_url = str_replace($_SERVER['DOCUMENT_ROOT'], "{$new_img_path['scheme']}://{$new_img_path['host']}{$new_port}", $dest_file_name);
+							
+							if ( !file_exists($dest_file_name) ){
+								$image_file = $image_editor->save($dest_file_name);
+							}
+						}
+						echo '<li><img src="'.$new_image_url.'" /></li>';
 					}
 					else
 					{
@@ -142,25 +161,45 @@ if($rsltdata['parent'] != 0)
 				
 				if(!empty($posts))
 				{
-					$timthumb = get_template_directory_uri().'/lib/timthumb.php';
 					foreach($posts as $post)
 					{
-						$image = wp_get_attachment_url( get_post_thumbnail_id($post->ID) );
+						$img_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ) , "full" );
+						if (empty($img_url))
+							$img_url = site_url().'/wp-content/plugins/wp-oer/images/default-icon.png';
 						$title =  $post->post_title;
 						$content =  $post->post_content;
 						$content = substr($content, 0, 180);
+						
+						$img_path = $new_img_path = parse_url($img_url[0]);
+						$img_path = $_SERVER['DOCUMENT_ROOT'] . $img_path['path'];
+						if(!empty($img_path))
+						{
+							//Resize Image using WP_Image_Editor
+							$image_editor = wp_get_image_editor($img_path);
+							if ( !is_wp_error($image_editor) ) {
+								$new_image = $image_editor->resize( 220, 180, true );
+								$suffix = "220x180";
+								
+								//Additional info of file
+								$info = pathinfo( $img_path );
+								$dir = $info['dirname'];
+								$ext = $info['extension'];
+								$name = wp_basename( $img_path, ".$ext" );
+								$dest_file_name = "{$dir}/{$name}-{$suffix}.{$ext}";
+								$new_port = ($new_img_path['port']==80)?'':':'.$new_img_path['port'];
+								$new_image_url = str_replace($_SERVER['DOCUMENT_ROOT'], "{$new_img_path['scheme']}://{$new_img_path['host']}{$new_port}", $dest_file_name);
+								
+								if ( !file_exists($dest_file_name) ){
+									$image_file = $image_editor->save($dest_file_name);
+								}
+							}
+						}
 					?>
 						<div class="snglrsrc">
-							 <?php if(!empty($image)){?>
-								<a href="<?php echo get_permalink($post->ID);?>"><div class="snglimglft"><img src="<?php echo $timthumb.'?src='.$image.'&w=80&h=60&zc=0';?>"></div></a>
-							<?php }
-							else
-							{
-								$dfltimg = site_url().'/wp-content/plugins/wp-oer/images/default-icon.png';
-								echo '<a href="'.get_permalink($post->ID).'"><div class="snglimglft"><img src="'.$timthumb.'?src='.$dfltimg.'&amp;w=80&amp;h=60&amp;zc=0" alt="'.$title.'"></div></a>';
-							}
+							<?php
+							echo '<a href="'.get_permalink($post->ID).'"><div class="snglimglft"><img src="'.$new_image_url.'"></div></a>';
 							?>
-							<div class="snglttldscrght <?php if(empty($image)){ echo 'snglttldscrghtfull';}?>">
+							<div class="snglttldscrght <?php if(empty($img_url)){ echo 'snglttldscrghtfull';}?>">
 								<div class="ttl"><a href="<?php echo get_permalink($post->ID);?>"><?php echo $title;?></a></div>
 								<div class="desc"><?php echo $content; ?></div>
 							</div>

@@ -21,10 +21,31 @@ get_header(); ?>
                     <div class="sngl-rsrc-img">
                         <a class="featureimg" href="<?php echo get_post_meta($post->ID, "oer_resourceurl", true)?>" target="_blank" >
 					<?php
-						$img_url = wp_get_attachment_url(get_post_meta( $post->ID, "_thumbnail_id" , true));
-						if(!empty($img_url))
+						$img_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ) , "full" );
+						$img_path = $new_img_path = parse_url($img_url[0]);
+						$img_path = $_SERVER['DOCUMENT_ROOT'] . $img_path['path'];
+						if(!empty($img_path))
 						{
-						echo '<img src="'.$img_url.'" alt="'.get_the_title().'"/>';
+							//Resize Image using WP_Image_Editor
+							$image_editor = wp_get_image_editor($img_path);
+							if ( !is_wp_error($image_editor) ) {
+								$new_image = $image_editor->resize( 528, 455, true );
+								$suffix = "528x455";
+								
+								//Additional info of file
+								$info = pathinfo( $img_path );
+								$dir = $info['dirname'];
+								$ext = $info['extension'];
+								$name = wp_basename( $img_path, ".$ext" );
+								$dest_file_name = "{$dir}/{$name}-{$suffix}.{$ext}";
+								$new_port = ($new_img_path['port']==80)?'':':'.$new_img_path['port'];
+								$new_image_url = str_replace($_SERVER['DOCUMENT_ROOT'], "{$new_img_path['scheme']}://{$new_img_path['host']}{$new_port}", $dest_file_name);
+								
+								if ( !file_exists($dest_file_name) ){
+									$image_file = $image_editor->save($dest_file_name);
+								}
+							}
+							echo '<img src="'.$new_image_url.'" alt="'.get_the_title().'"/>';
 						}
 						else
 						{
