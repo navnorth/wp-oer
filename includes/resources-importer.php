@@ -369,10 +369,13 @@ if(isset($_POST['resrc_imprt']))
 				$url = $oer_resourceurl;
 				$upload_dir = wp_upload_dir();
 				$file = '';
-
+				//Check first if screenshot is enabled
+				$screenshot_enabled = get_option( 'oer_enable_screenshot' );
+				
 				if(!has_post_thumbnail( $post_id ))
 				{
-					$file = getScreenshotFile_mlt($url);
+					if ($screenshot_enabled)
+						$file = getScreenshotFile_mlt($url);
 				}
 
 				if(file_exists($file))

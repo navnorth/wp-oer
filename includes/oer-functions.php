@@ -108,116 +108,123 @@ function check_child($id)
 }
 
 //Get Category Child for Sidebar
-function get_category_child($categoryid)
-{
- 	$args = array('hide_empty' => 0, 'taxonomy' => 'resource-category','parent' => $categoryid);
-	$catchilds = get_categories($args);
-	$term = get_the_title();
-	$rsltdata = get_term_by( "name", $term, "resource-category", ARRAY_A );
-	$parentid = array();
-	if($rsltdata['parent'] != 0)
+if (!function_exists('get_category_child')) {
+	function get_category_child($categoryid)
 	{
-		$parent = get_parent_term($rsltdata['parent']);
-		for($k=0; $k < count($parent); $k++)
+		$args = array('hide_empty' => 0, 'taxonomy' => 'resource-category','parent' => $categoryid);
+		$catchilds = get_categories($args);
+		$term = get_the_title();
+		$rsltdata = get_term_by( "name", $term, "resource-category", ARRAY_A );
+		$parentid = array();
+		if($rsltdata['parent'] != 0)
 		{
-			$idObj = get_category_by_slug($parent[$k]);
-			$parentid[] = $idObj->term_id;
+			$parent = get_parent_term($rsltdata['parent']);
+			for($k=0; $k < count($parent); $k++)
+			{
+				$idObj = get_category_by_slug($parent[$k]);
+				$parentid[] = $idObj->term_id;
+			}
 		}
-	}
-
-	if(!empty($catchilds))
-	{
-		echo '<ul class="category">';
-		foreach($catchilds as $catchild)
+	
+		if(!empty($catchilds))
 		{
-			$children = get_term_children($catchild->term_id, 'resource-category');
-			//current class
-			if($rsltdata['term_id'] == $catchild->term_id)
+			echo '<ul class="category">';
+			foreach($catchilds as $catchild)
 			{
-				$class = ' activelist current_class';
+				$children = get_term_children($catchild->term_id, 'resource-category');
+				//current class
+				if($rsltdata['term_id'] == $catchild->term_id)
+				{
+					$class = ' activelist current_class';
+				}
+				elseif(in_array($catchild->term_id, $parentid))
+				{
+					$class = ' activelist current_class';
+				}
+				else
+				{
+					$class = '';
+				}
+	
+				if( !empty( $children ) )
+				{
+					echo '<li class="sub-category has-child'.$class.'" title="'. $catchild->name .'" >
+							<span onclick="toggleparent(this);">
+								<a href="'. site_url() .'/'. $catchild->slug .'">' . $catchild->name .'</a>
+							</span>';
+				}
+				else
+				{
+					echo '<li class="sub-category'.$class.'" title="'. $catchild->name .'" >
+							<span onclick="toggleparent(this);">
+								<a href="'. site_url() .'/'. $catchild->slug .'">' . $catchild->name .'</a>
+							</span>';
+				}
+				get_category_child( $catchild->term_id);
+				echo '</li>';
 			}
-			elseif(in_array($catchild->term_id, $parentid))
-			{
-				$class = ' activelist current_class';
-			}
-			else
-			{
-				$class = '';
-			}
-
-			if( !empty( $children ) )
-			{
-				echo '<li class="sub-category has-child'.$class.'" title="'. $catchild->name .'" >
-						<span onclick="toggleparent(this);">
-							<a href="'. site_url() .'/'. $catchild->slug .'">' . $catchild->name .'</a>
-						</span>';
-			}
-			else
-			{
-				echo '<li class="sub-category'.$class.'" title="'. $catchild->name .'" >
-						<span onclick="toggleparent(this);">
-							<a href="'. site_url() .'/'. $catchild->slug .'">' . $catchild->name .'</a>
-						</span>';
-			}
-			get_category_child( $catchild->term_id);
-			echo '</li>';
+			echo '</ul>';
 		}
-		echo '</ul>';
 	}
 }
 
 //GET Custom Texonomy Parent
-function get_custom_category_parents( $id, $taxonomy = false, $link = false, $separator = '/', $nicename = false, $visited = array() ) {
-
-	if(!($taxonomy && is_taxonomy_hierarchical( $taxonomy )))
-		return '';
-
-	$chain = '';
-	// $parent = get_category( $id );
-	$parent = get_term( $id, $taxonomy);
-	if ( is_wp_error( $parent ) )
-		return $parent;
-
-	if ( $nicename )
-		$name = $parent->slug;
-	else
-		$name = $parent->name;
-
-	if ( $parent->parent && ( $parent->parent != $parent->term_id ) && !in_array( $parent->parent, $visited ) ) {
-		$visited[] = $parent->parent;
-		// $chain .= get_category_parents( $parent->parent, $link, $separator, $nicename, $visited );
-		$chain .= get_custom_category_parents( $parent->parent, $taxonomy, $link, $separator, $nicename, $visited );
+if (!function_exists('get_custom_category_parents')) {
+	function get_custom_category_parents( $id, $taxonomy = false, $link = false, $separator = '/', $nicename = false, $visited = array() ) {
+	
+		if(!($taxonomy && is_taxonomy_hierarchical( $taxonomy )))
+			return '';
+	
+		$chain = '';
+		// $parent = get_category( $id );
+		$parent = get_term( $id, $taxonomy);
+		if ( is_wp_error( $parent ) )
+			return $parent;
+	
+		if ( $nicename )
+			$name = $parent->slug;
+		else
+			$name = $parent->name;
+	
+		if ( $parent->parent && ( $parent->parent != $parent->term_id ) && !in_array( $parent->parent, $visited ) ) {
+			$visited[] = $parent->parent;
+			// $chain .= get_category_parents( $parent->parent, $link, $separator, $nicename, $visited );
+			$chain .= get_custom_category_parents( $parent->parent, $taxonomy, $link, $separator, $nicename, $visited );
+		}
+	
+		if ( $link ) {
+			// $chain .= '<a href="' . esc_url( get_category_link( $parent->term_id ) ) . '" title="' . esc_attr( sprintf( __( "View all posts in %s" ), $parent->name ) ) . '">'.$name.'</a>' . $separator;
+			$chain .= '<a href="' . esc_url( get_term_link( (int) $parent->term_id, $taxonomy ) ) . '" title="' . esc_attr( sprintf( __( "View all posts in %s" ), $parent->name ) ) . '">'.$name.'</a>' . $separator;
+		} else {
+			$chain .= $name.$separator;
+		}
+		return $chain;
 	}
-
-	if ( $link ) {
-		// $chain .= '<a href="' . esc_url( get_category_link( $parent->term_id ) ) . '" title="' . esc_attr( sprintf( __( "View all posts in %s" ), $parent->name ) ) . '">'.$name.'</a>' . $separator;
-		$chain .= '<a href="' . esc_url( get_term_link( (int) $parent->term_id, $taxonomy ) ) . '" title="' . esc_attr( sprintf( __( "View all posts in %s" ), $parent->name ) ) . '">'.$name.'</a>' . $separator;
-	} else {
-		$chain .= $name.$separator;
-	}
-	return $chain;
 }
-
 
 //Get Category Parent List
-function get_parent_term($id)
-{
-	$curr_cat = get_category_parents($id, false, '/' ,true);
-	$curr_cat = explode('/',$curr_cat);
-
-	return $curr_cat;
+if (!function_exists('get_parent_term')) {
+	function get_parent_term($id)
+	{
+		$curr_cat = get_category_parents($id, false, '/' ,true);
+		$curr_cat = explode('/',$curr_cat);
+	
+		return $curr_cat;
+	}
 }
 
-
-function get_term_top_most_parent($term_id, $taxonomy="resource-category"){
-    // start from the current term
-    $parent  = get_term_by( 'id', $term_id, $taxonomy);
-    // climb up the hierarchy until we reach a term with parent = '0'
-    while ($parent->parent != '0'){
-        $term_id = $parent->parent;
-
-        $parent  = get_term_by( 'id', $term_id, $taxonomy);
-    }
-    return $parent;
+if (!function_exists('get_term_top_most_parent')) {
+	function get_term_top_most_parent($term_id, $taxonomy="resource-category"){
+	    // start from the current term
+	    $parent  = get_term_by( 'id', $term_id, $taxonomy);
+	    // climb up the hierarchy until we reach a term with parent = '0'
+	    while ($parent->parent != '0'){
+		$term_id = $parent->parent;
+	
+		$parent  = get_term_by( 'id', $term_id, $taxonomy);
+	    }
+	    return $parent;
+	}
 }
+
 ?>

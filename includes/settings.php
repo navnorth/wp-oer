@@ -13,11 +13,18 @@
 	{
 		update_option("oer_python_install",$_POST['python_install']);
 	}
+	
+	if(isset($_POST['enable_screenshot']))
+	{
+		update_option("oer_enable_screenshot",isset($_POST['enable_screenshot'])?$_POST['enable_screenshot']:false);
+	}
 
 	$templates 			= get_page_templates();
 	$slct_template 		= get_option("oer_category_template");
 	$oer_python_path 	= get_option("oer_python_path");
 	$oer_python_install = get_option("oer_python_install");
+	//Enable Screenshot Option
+	$enable_screenshot 	= get_option("oer_enable_screenshot");
 
 	// Removed the concatenation shorthand as the variable didn't exist above this code yet
 	$options = "<option value=''>--- Select Template ---</option>";
@@ -68,6 +75,18 @@
         <div class="fields">
             <input type="text" name="python_install" value="<?php echo $oer_python_install;?>" />
             <input type="submit" name="python_install_save" value="Save" class="button button-primary"/>
+        </div>
+    </form>
+</div>
+
+<div class="oer_imprtrwpr">
+	<div class="oer_hdng">
+    	Enable Screenshots?
+    </div>
+    <form method="post">
+        <div class="fields">
+            <input type="checkbox" name="enable_screenshot" id="enable_screenshot" <?php checked( $enable_screenshot, 'on') ?> />
+            <input type="submit" name="enable_screenshot_save" value="Save" class="button button-primary"/>
         </div>
     </form>
 </div>
