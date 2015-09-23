@@ -108,7 +108,7 @@ function check_child($id)
 }
 
 //Get Category Child for Sidebar
-if (!function_exists('get_category_child')) {
+/*if (!function_exists('get_category_child')) {
 	function get_category_child($categoryid)
 	{
 		$args = array('hide_empty' => 0, 'taxonomy' => 'resource-category','parent' => $categoryid);
@@ -225,6 +225,6 @@ if (!function_exists('get_term_top_most_parent')) {
 	    }
 	    return $parent;
 	}
-}
+}*/
 
 ?>
