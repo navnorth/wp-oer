@@ -444,9 +444,9 @@ function getScreenshotFile_mlt($url)
 
 		// create screenshot
 		$params = array(
-			'xvfb-run',
+			/*'xvfb-run',
 			'--auto-servernum',
-			'--server-num=1',
+			'--server-num=1',*/
 			$oer_python_install,
 			$oer_python_script_path,
 			escapeshellarg($url),
