@@ -25,7 +25,7 @@ $rsltdata = get_term_by( "name", $term, "resource-category", ARRAY_A );
 $parentid = array();
 if($rsltdata['parent'] != 0)
 {
-	$parent = get_top_parents($rsltdata['parent']);
+	$parent = get_parent_term($rsltdata['parent']);
 	for($k=0; $k < count($parent); $k++)
 	{
 		$idObj = get_category_by_slug($parent[$k]);
