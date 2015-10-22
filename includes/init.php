@@ -452,6 +452,29 @@ function oer_save_customfields()
     }
 }
 
+//Update Split Shared Term
+function resource_split_shared_term( $term_id, $new_term_id, $term_taxonomy_id, $taxonomy ) {
+    // Checking if taxonomy is a resource category
+    if ( 'resource-category' == $taxonomy ) {
+	$resource_posts = get_posts(array(
+	    'posts_per_page' => -1,
+	    'post_type' => 'fabric_building',
+	    'tax_query' => array(
+		array(
+		    'taxonomy' => $taxonomy,
+		    'field' => 'term_id',
+		    'terms' => $term_id,
+		)
+	    )
+	));
+	var_dump($term_id);
+	var_dump($new_term_id);
+       var_dump($resource_posts);
+       exit();
+    }
+}
+add_action( 'split_shared_term', 'resource_split_shared_term', 10, 4 );
+
 function getScreenshotFile($url)
 {
 	
@@ -470,9 +493,9 @@ function getScreenshotFile($url)
 
 		// create screenshot
 		$params = array(
-			/*'xvfb-run',
+			'xvfb-run',
 			'--auto-servernum',
-			'--server-num=1',*/
+			'--server-num=1',
 			$oer_python_install,
 			$oer_python_script_path,
 			escapeshellarg($url),
