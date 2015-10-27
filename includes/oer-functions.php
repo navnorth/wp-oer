@@ -107,6 +107,42 @@ function check_child($id)
 	return $results;
 }
 
+// Get Screenshot File
+function getScreenshotFile($url)
+{
+	
+	$upload_dir = wp_upload_dir();
+	$path = $upload_dir['basedir'].'/resource-images/';
+
+	if(!file_exists($path))
+	{
+		mkdir($path, 0777, true);
+	}
+
+	if(!file_exists($file = $path.'Screenshot'.preg_replace('/https?|:|#|\//i', '-', $url).'.jpg'))
+	{
+		$oer_python_script_path 	= get_option("oer_python_path");
+		$oer_python_install = get_option("oer_python_install");
+
+		// create screenshot
+		$params = array(
+			'xvfb-run',
+			'--auto-servernum',
+			'--server-num=1',
+			$oer_python_install,
+			$oer_python_script_path,
+			escapeshellarg($url),
+			$file,
+		);
+
+		$lines = array();
+		$val = 0;
+
+		$output = exec(implode(' ', $params), $lines, $val);
+	}
+	return $file;
+}
+
 //Get Category Child for Sidebar
 if (!function_exists('get_category_child')) {
 	function get_category_child($categoryid)

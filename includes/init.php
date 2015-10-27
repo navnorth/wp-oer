@@ -1,4 +1,6 @@
 <?php
+require_once OER_PATH.'includes/oer-functions.php';
+
 //Filter Texonomy and Resource Texonomy According Categories Assignment
 function wpa_filter_term_args( $args, $taxonomies )
 {
@@ -452,41 +454,28 @@ function oer_save_customfields()
     }
 }
 
-function getScreenshotFile($url)
-{
-	
-	$upload_dir = wp_upload_dir();
-	$path = $upload_dir['basedir'].'/resource-images/';
-
-	if(!file_exists($path))
-	{
-		mkdir($path, 0777, true);
-	}
-
-	if(!file_exists($file = $path.'Screenshot'.preg_replace('/https?|:|#|\//i', '-', $url).'.jpg'))
-	{
-		$oer_python_script_path 	= get_option("oer_python_path");
-		$oer_python_install = get_option("oer_python_install");
-
-		// create screenshot
-		$params = array(
-			/*'xvfb-run',
-			'--auto-servernum',
-			'--server-num=1',*/
-			$oer_python_install,
-			$oer_python_script_path,
-			escapeshellarg($url),
-			$file,
-		);
-
-		$lines = array();
-		$val = 0;
-
-		$output = exec(implode(' ', $params), $lines, $val);
-	}
-	return $file;
+//Update Split Shared Term
+function resource_split_shared_term( $term_id, $new_term_id, $term_taxonomy_id, $taxonomy ) {
+    // Checking if taxonomy is a resource category
+    if ( 'resource-category' == $taxonomy ) {
+	$resource_posts = get_posts(array(
+	    'posts_per_page' => -1,
+	    'post_type' => 'fabric_building',
+	    'tax_query' => array(
+		array(
+		    'taxonomy' => $taxonomy,
+		    'field' => 'term_id',
+		    'terms' => $term_id,
+		)
+	    )
+	));
+	var_dump($term_id);
+	var_dump($new_term_id);
+       var_dump($resource_posts);
+       exit();
+    }
 }
-
+add_action( 'split_shared_term', 'resource_split_shared_term', 10, 4 );
 
 add_action('admin_menu','oer_rsrcimprtr');
 function oer_rsrcimprtr(){

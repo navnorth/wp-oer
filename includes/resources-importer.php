@@ -1,4 +1,5 @@
 <?php
+require_once OER_PATH.'includes/oer-functions.php';
 require OER_PATH.'Excel/reader.php';
 
 $excl_obj = new Spreadsheet_Excel_Reader();
@@ -375,7 +376,7 @@ if(isset($_POST['resrc_imprt']))
 				if(!has_post_thumbnail( $post_id ))
 				{
 					if ($screenshot_enabled)
-						$file = getScreenshotFile_mlt($url);
+						$file = getScreenshotFile($url);
 				}
 
 				if(file_exists($file))
@@ -427,7 +428,7 @@ function fetch_stndrd($pId, $postid)
 	}
 }
 
-function getScreenshotFile_mlt($url)
+/*function getScreenshotFile_mlt($url)
 {
 	$upload_dir = wp_upload_dir();
 	$path = $upload_dir['basedir'].'/resource-images/';
@@ -444,9 +445,9 @@ function getScreenshotFile_mlt($url)
 
 		// create screenshot
 		$params = array(
-			/*'xvfb-run',
+			'xvfb-run',
 			'--auto-servernum',
-			'--server-num=1',*/
+			'--server-num=1',
 			$oer_python_install,
 			$oer_python_script_path,
 			escapeshellarg($url),
@@ -459,7 +460,7 @@ function getScreenshotFile_mlt($url)
 		$output = exec(implode(' ', $params), $lines, $val);
 	}
 	return $file;
-}
+}*/
 
 ?>
 
