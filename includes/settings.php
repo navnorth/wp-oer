@@ -90,3 +90,15 @@
         </div>
     </form>
 </div>
+
+<div class="oer_imprtrwpr">
+	<div class="oer_hdng">
+    	Use xvfb?
+    </div>
+    <form method="post">
+        <div class="fields">
+            <input type="checkbox" name="use_xvfb" id="use_xvfb" <?php checked( $use_xvfb, 'on') ?> />
+            <input type="submit" name="use_xvfb_save" value="Save" class="button button-primary"/>
+        </div>
+    </form>
+</div>
