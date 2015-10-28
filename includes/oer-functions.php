@@ -124,16 +124,27 @@ function getScreenshotFile($url)
 		$oer_python_script_path 	= get_option("oer_python_path");
 		$oer_python_install = get_option("oer_python_install");
 
+		
+		$use_xvfb = get_option('oer_use_xvfb');
+		
+		$param_screenshots = array();
+		if($use_xvfb){
+			$param_screenshots = array(
+						'xvfb-run',
+						'--auto-servernum',
+						'--server-num=1'
+						);
+		}
+		
 		// create screenshot
 		$params = array(
-			'xvfb-run',
-			'--auto-servernum',
-			'--server-num=1',
 			$oer_python_install,
 			$oer_python_script_path,
 			escapeshellarg($url),
 			$file,
 		);
+		
+		$params = array_merge($param_screenshots, $params);
 
 		$lines = array();
 		$val = 0;
