@@ -14,9 +14,10 @@
 		update_option("oer_python_install",$_POST['python_install']);
 	}
 	
-	if(isset($_POST['enable_screenshot']))
+	if(isset($_POST['enable_screenshot_save']))
 	{
 		update_option("oer_enable_screenshot",isset($_POST['enable_screenshot'])?$_POST['enable_screenshot']:false);
+		update_option("oer_use_xvfb",isset($_POST['use_xvfb'])?$_POST['use_xvfb']:false);
 	}
 
 	$templates 			= get_page_templates();
@@ -25,6 +26,9 @@
 	$oer_python_install = get_option("oer_python_install");
 	//Enable Screenshot Option
 	$enable_screenshot 	= get_option("oer_enable_screenshot");
+	$use_xvfb 	= get_option("oer_use_xvfb");
+	
+	$use_xvfb = get_option('oer_use_xvfb');
 
 	// Removed the concatenation shorthand as the variable didn't exist above this code yet
 	$options = "<option value=''>--- Select Template ---</option>";
@@ -74,31 +78,27 @@
     <form method="post">
         <div class="fields">
             <input type="text" name="python_install" value="<?php echo $oer_python_install;?>" />
-            <input type="submit" name="python_install_save" value="Save" class="button button-primary"/>
+            <input type="submit" nam
+		   e="python_install_save" value="Save" class="button button-primary"/>
         </div>
     </form>
 </div>
 
-<div class="oer_imprtrwpr">
-	<div class="oer_hdng">
-    	Enable Screenshots?
-    </div>
-    <form method="post">
-        <div class="fields">
-            <input type="checkbox" name="enable_screenshot" id="enable_screenshot" <?php checked( $enable_screenshot, 'on') ?> />
-            <input type="submit" name="enable_screenshot_save" value="Save" class="button button-primary"/>
-        </div>
-    </form>
-</div>
-
-<div class="oer_imprtrwpr">
-	<div class="oer_hdng">
-    	Use xvfb?
-    </div>
-    <form method="post">
-        <div class="fields">
-            <input type="checkbox" name="use_xvfb" id="use_xvfb" <?php checked( $use_xvfb, 'on') ?> />
-            <input type="submit" name="use_xvfb_save" value="Save" class="button button-primary"/>
-        </div>
-    </form>
-</div>
+<form method="post" class="oer_settings_form">
+	<fieldset>
+		<legend><div class="oer_hdng">Screenshot Settings</div></legend>
+		<div class="oer_imprtrwpr">
+			<div class="fields">
+				<input type="checkbox" name="enable_screenshot" id="enable_screenshot" <?php checked( $enable_screenshot, 'on') ?> /> <span class="oer_chck_label">Enable Screenshots?</span>
+			</div>
+			<div>
+				<input type="checkbox" name="use_xvfb" id="use_xvfb" <?php checked( $use_xvfb, 'on') ?> /> <span class="oer_chck_label">Use xvfb?</span>
+			</div>
+		</div>
+		<div class="oer_imprtrwpr">
+			<div class="fields">
+				<input type="submit" name="enable_screenshot_save" value="Save" class="button button-primary"/>
+			</div>
+		</div>
+	</fieldset>
+</form>

@@ -192,3 +192,15 @@ ul.slctstandard > li
     overflow: scroll;
     width: 600px !important;
 }
+.oer_chck_label { font-size:1.5em; }
+.oer_settings_form legend {
+	font-size: 25px;
+	padding: 20px 0;
+}
+.oer_imprtrwpr .fields {
+	margin-bottom:10px;
+}
+fieldset {
+	border: 1px solid #cccccc;
+	padding-left: 10px;
+}
