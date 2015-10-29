@@ -1,13 +1,13 @@
 <?php
 /*
  Plugin Name: OER Management
- Plugin URI: http://navigationnorth.com/wordpress/oer-management
+ Plugin URI: http://www.navigationnorth.com/wordpress/oer-management
  Description: Open Educational Resource management and curation, metadata publishing, and alignment to Common Core State Standards. Developed in collaboration with Monad Infotech (http://monadinfotech.com)
  Version: 0.2.6
  Author: Navigation North
- Author URI: http://navigationnorth.com
+ Author URI: http://www.navigationnorth.com
 
- Copyright (C) 2015 Navigation North
+ Copyright (C) 2014 Navigation North
 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -29,6 +29,9 @@ define( 'OER_URL', plugin_dir_url(__FILE__) );
 define( 'OER_PATH', plugin_dir_path(__FILE__) );
 define( 'OER_SLUG','open-educational-resource' );
 define( 'OER_FILE',__FILE__);
+// Plugin Name and Version
+define( 'OER_PLUGIN_NAME', 'WordPress OER Management Plugin' );
+define( 'OER_VERSION', '0.2.7' );
 
 include_once(OER_PATH.'includes/oer-functions.php');
 include_once(OER_PATH.'includes/init.php');
@@ -169,14 +172,14 @@ function oer_get_template_hierarchy( $template ) {
 	//get template file
 	$template_slug = rtrim( $template , '.php' );
 	$template = $template_slug . '.php';
-
+	
 	//Check if custom template exists in theme folder
 	if ($theme_file = locate_template( array( 'oer_template/' . $template ) )) {
 		$file = $theme_file;
 	} else {
 		$file = OER_PATH . '/oer_template/' . $template;
 	}
-
+	
 	return apply_filters( 'oer_repl_template' . $template , $file  );
 }
 
@@ -191,11 +194,11 @@ add_filter( 'template_include' , 'oer_template_choser' );
 function oer_template_choser( $template ) {
 	//Post ID
 	$post_id = get_the_ID();
-
+	
 	if ( get_post_type($post_id) != 'resource' ) {
 		return $template;
 	}
-
+	
 	if ( is_single($post_id) ){
 		return oer_get_template_hierarchy('single-resource');
 	}
@@ -211,13 +214,13 @@ add_filter( 'template_include' , 'oer_category_template' );
  **/
 function oer_category_template( $template ) {
 	global $wp_query;
-
+	
 	//Post ID
 	$_id = $wp_query->get_queried_object_id();
-
+	
 	// Get Current Object if it belongs to Resource Category taxonomy
 	$resource_term = get_term_by( 'id' , $_id , 'resource-category' );
-
+	
 	//Check if the loaded resource is a category
 	if ($resource_term && !is_wp_error( $resource_term )) {
 		return oer_get_template_hierarchy('resource-category');
