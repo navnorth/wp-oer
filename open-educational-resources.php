@@ -29,6 +29,9 @@ define( 'OER_URL', plugin_dir_url(__FILE__) );
 define( 'OER_PATH', plugin_dir_path(__FILE__) );
 define( 'OER_SLUG','open-educational-resource' );
 define( 'OER_FILE',__FILE__);
+// Plugin Name and Version
+define( 'OER_PLUGIN_NAME', 'WordPress OER Management Plugin' );
+define( 'OER_VERSION', '0.2.7' );
 
 include_once(OER_PATH.'includes/oer-functions.php');
 include_once(OER_PATH.'includes/init.php');

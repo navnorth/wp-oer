@@ -204,3 +204,7 @@ fieldset {
 	border: 1px solid #cccccc;
 	padding-left: 10px;
 }
+.plugin-footer { margin:10px 0 0; }
+.plugin-info {  display:inline-block; }
+.plugin-link { display:inline-block; margin-left:10px; }
+.clear { clear:both; }

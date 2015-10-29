@@ -102,3 +102,9 @@
 		</div>
 	</fieldset>
 </form>
+
+<div class="plugin-footer">
+	<div class="plugin-info"><?php echo OER_PLUGIN_NAME . " " . OER_VERSION .""; ?></div>
+	<div class="plugin-link"><a href='http://www.navigationnorth.com/portfolio/oer-management/' target='_blank'>More info</a></div>
+	<div class="clear"></div>
+</div>
