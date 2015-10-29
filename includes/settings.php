@@ -18,6 +18,7 @@
 	{
 		update_option("oer_enable_screenshot",isset($_POST['enable_screenshot'])?$_POST['enable_screenshot']:false);
 		update_option("oer_use_xvfb",isset($_POST['use_xvfb'])?$_POST['use_xvfb']:false);
+		update_option("oer_debug_mode",isset($_POST['debug_mode'])?$_POST['debug_mode']:false);
 	}
 
 	$templates 			= get_page_templates();
@@ -26,9 +27,8 @@
 	$oer_python_install = get_option("oer_python_install");
 	//Enable Screenshot Option
 	$enable_screenshot 	= get_option("oer_enable_screenshot");
-	$use_xvfb 	= get_option("oer_use_xvfb");
-	
-	$use_xvfb = get_option('oer_use_xvfb');
+	$use_xvfb 		= get_option("oer_use_xvfb");
+	$debug_mode 		= get_option("oer_debug_mode");
 
 	// Removed the concatenation shorthand as the variable didn't exist above this code yet
 	$options = "<option value=''>--- Select Template ---</option>";
@@ -91,8 +91,11 @@
 			<div class="fields">
 				<input type="checkbox" name="enable_screenshot" id="enable_screenshot" <?php checked( $enable_screenshot, 'on') ?> /> <span class="oer_chck_label">Enable Screenshots?</span>
 			</div>
-			<div>
+			<div class="fields">
 				<input type="checkbox" name="use_xvfb" id="use_xvfb" <?php checked( $use_xvfb, 'on') ?> /> <span class="oer_chck_label">Use xvfb?</span>
+			</div>
+			<div class="fields">
+				<input type="checkbox" name="debug_mode" id="debug_mode" <?php checked( $debug_mode, 'on') ?> /> <span class="oer_chck_label">Enable Debug Mode?</span>
 			</div>
 		</div>
 		<div class="oer_imprtrwpr">
