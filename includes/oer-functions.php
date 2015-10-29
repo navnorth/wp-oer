@@ -110,19 +110,25 @@ function check_child($id)
 // Get Screenshot File
 function getScreenshotFile($url)
 {
+	global $_debug;
 	
 	$upload_dir = wp_upload_dir();
 	$path = $upload_dir['basedir'].'/resource-images/';
-
+	
 	if(!file_exists($path))
 	{
 		mkdir($path, 0777, true);
+		if ($_debug=="on")
+			error_log("OER : create upload directory");
 	}
 
 	if(!file_exists($file = $path.'Screenshot'.preg_replace('/https?|:|#|\//i', '-', $url).'.jpg'))
 	{
+		if ($_debug=="on")
+			error_log("OER : start screenshot function");
+			
 		$oer_python_script_path 	= get_option("oer_python_path");
-		$oer_python_install = get_option("oer_python_install");
+		$oer_python_install 		= get_option("oer_python_install");
 
 		
 		$use_xvfb = get_option('oer_use_xvfb');
@@ -149,7 +155,17 @@ function getScreenshotFile($url)
 		$lines = array();
 		$val = 0;
 
-		$output = exec(implode(' ', $params), $lines, $val);
+		try {
+			
+			$output = exec(implode(' ', $params), $lines, $val);
+			
+		} catch(Exception $e) {
+			if ($_debug=="on")
+				error_log($e->getMessage());
+			
+		}
+		if ($_debug=="on")
+			error_log("OER : end of screenshot function");
 	}
 	return $file;
 }
