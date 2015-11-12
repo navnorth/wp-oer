@@ -78,13 +78,13 @@ if(isset($_POST['bulk_imprt']))
 								$cat_ids[$k] = $cat_parentid;
 	
 								//Create Pages
-								$term = get_term( $rsc_parentid , "resource-category", ARRAY_A );
+								/*$term = get_term( $rsc_parentid , "resource-category", ARRAY_A );
 								$slug = $term['slug'];
 	
 								$post =array('comment_status' => 'closed', 'ping_status' =>  'closed', 'post_author' => 1, 'post_date' => date('Y-m-d H:i:s'), 	'post_name' => $slug, 'post_status'=> 'publish', 'post_title' => $title, 'post_type' => 'page', 'post_content' =>$content, 'post_parent' => $page_ids[$k-1]);
 								$newvalue = wp_insert_post( $post, false );
 								$page_ids[$k] = $newvalue;
-								update_post_meta( $newvalue, '_wp_page_template', get_option("oer_category_template") );
+								update_post_meta( $newvalue, '_wp_page_template', get_option("oer_category_template") );*/
 	
 								$wpdb->get_results( $wpdb->prepare( "insert into " . $wpdb->prefix. "category_page values('', %s, %s, %s, %s)" , $cat_parentid , $rsc_parentid , $newvalue, $title));
 								break;
