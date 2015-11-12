@@ -179,7 +179,7 @@ if(isset($_POST['resrc_imprt']))
 					$post = array('post_content' => $oer_description, 'post_name' => $post_name, 'post_title' => $oer_title, 'post_status' => 'publish', 'post_type' => 'resource', 'post_author' => $user_id , 'post_date' => $cs_date, 'post_date_gmt'  => $cs_date, 'comment_status' => 'open');
 					/** Set $wp_error to false to return 0 when error occurs **/
 					$post_id = wp_insert_post( $post, false );
-	
+					print_r($category_id);
 					//Set Category of Resources
 					wp_set_object_terms( $post_id, $category_id, 'resource-category', true );
 					
