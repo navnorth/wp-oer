@@ -176,12 +176,12 @@ if(isset($_POST['resrc_imprt']))
 					/** Get Current Timestamp for post_date **/
 					$cs_date = current_time('mysql');
 					
-					$post = array('post_content' => $oer_description, 'post_name' => $post_name, 'post_title' => $oer_title, 'post_status' => 'publish', 'post_type' => 'resource', 'post_author' => $user_id , 'post_date' => $cs_date, 'post_date_gmt'  => $cs_date, 'comment_status' => 'open');
+					$post = array('post_content' => $oer_description, 'post_name' => $post_name, 'post_title' => $oer_title, 'post_status' => 'publish', 'post_type' => 'resource', 'post_author' => $user_id , 'post_date' => $cs_date, 'post_date_gmt'  => $cs_date, 'comment_status' => 'open', 'tax_input' => $category_id);
 					/** Set $wp_error to false to return 0 when error occurs **/
 					$post_id = wp_insert_post( $post, false );
 					
 					//Set Category of Resources
-					var_dump(wp_set_object_terms( $post_id, $category_id, 'resource-category', true ));
+					//var_dump(wp_set_object_terms( $post_id, $category_id, 'resource-category', true ));
 					
 					// Set Tages
 					$oer_kywrd = strtolower(trim($oer_kywrd,","));
