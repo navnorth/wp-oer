@@ -74,7 +74,7 @@ get_header(); ?>
 								}
 								else
 								{
-									echo '<a href="'.site_url().'/'.$term->slug.'">'.ucwords ($term->name).'</a>';
+									echo '<a href="'.site_url().'/'.$term->taxonomy.'/'.$term->slug.'">'.ucwords ($term->name).'</a>';
 								}
 							}
 
