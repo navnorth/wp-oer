@@ -180,8 +180,9 @@ if(isset($_POST['resrc_imprt']))
 					/** Set $wp_error to false to return 0 when error occurs **/
 					$post_id = wp_insert_post( $post, false );
 	
-					//Set Category
-					wp_set_post_terms( $post_id, $category_id, 'resource-category', true );
+					//Set Category of Resources
+					wp_set_object_terms( $post_id, $category_id, 'resource-category', true );
+					
 					// Set Tages
 					$oer_kywrd = strtolower(trim($oer_kywrd,","));
 					wp_set_post_tags(  $post_id, $oer_kywrd , true );
