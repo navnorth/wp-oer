@@ -196,6 +196,7 @@ add_filter( 'template_include' , 'oer_template_choser' );
  * Function to choose template for the resource post type
  **/
 function oer_template_choser( $template ) {
+	
 	//Post ID
 	$post_id = get_the_ID();
 	
@@ -206,6 +207,7 @@ function oer_template_choser( $template ) {
 	if ( is_single($post_id) ){
 		return oer_get_template_hierarchy('single-resource');
 	}
+	
 }
 
 /**
@@ -228,6 +230,30 @@ function oer_category_template( $template ) {
 	//Check if the loaded resource is a category
 	if ($resource_term && !is_wp_error( $resource_term )) {
 		return oer_get_template_hierarchy('resource-category');
+	} else {
+		return $template;
+	}
+ }
+ 
+ /**
+ * Add filter to use plugin default category template
+ **/
+add_filter( 'template_include' , 'oer_tag_template' );
+
+/**
+ * Function to choose template for the resource category
+ **/
+function oer_tag_template( $template ) {
+	global $wp_query;
+	
+	//Post ID
+	$_id = $wp_query->get_queried_object_id();
+	
+	$resource_tag = is_tag($_id);
+	
+	//Check if the loaded resource is a category
+	if ($resource_tag && !is_wp_error( $resource_tag )) {
+		return oer_get_template_hierarchy('tag-resource');
 	} else {
 		return $template;
 	}
