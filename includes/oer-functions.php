@@ -118,14 +118,12 @@ function getScreenshotFile($url)
 	if(!file_exists($path))
 	{
 		mkdir($path, 0777, true);
-		if ($_debug=="on")
-			error_log("OER : create upload directory");
+		debug_log("OER : create upload directory");
 	}
 
 	if(!file_exists($file = $path.'Screenshot'.preg_replace('/https?|:|#|\//i', '-', $url).'.jpg'))
 	{
-		if ($_debug=="on")
-			error_log("OER : start screenshot function");
+		debug_log("OER : start screenshot function");
 			
 		$oer_python_script_path 	= get_option("oer_python_path");
 		$oer_python_install 		= get_option("oer_python_install");
@@ -164,10 +162,18 @@ function getScreenshotFile($url)
 				error_log($e->getMessage());
 			
 		}
-		if ($_debug=="on")
-			error_log("OER : end of screenshot function");
+		debug_log("OER : end of screenshot function");
 	}
 	return $file;
+}
+
+// Log Debugging
+function debug_log($message) {
+	global $_debug;
+	
+	// if debugging is on
+	if ($_debug=="on")
+		error_log($message);
 }
 
 //Get Category Child for Sidebar

@@ -1,9 +1,7 @@
 <?php
 require OER_PATH.'Excel/reader.php';
-global $_debug;
 
-if ($_debug=="on")
-	error_log("OER Categories Importer: Initializing Excel Reader");
+debug_log("OER Categories Importer: Initializing Excel Reader");
 	
 $excl_obj = new Spreadsheet_Excel_Reader();
 $excl_obj->setOutputEncoding('CP1251');
@@ -18,8 +16,7 @@ set_time_limit(0);
 if(isset($_POST['bulk_imprt']))
 {
 	// Log start of import process
-	if ($_debug=="on")
-		error_log("OER Categories Importer: Starting Bulk Import ");
+	debug_log("OER Categories Importer: Starting Bulk Import ");
 		
 	global $wpdb;
 	
@@ -112,12 +109,10 @@ if(isset($_POST['bulk_imprt']))
 		}
 	} catch (Exception $e) {
 		// Log any error encountered during the import process
-		if ($_debug=="on")
-			error_log($e->getMessage());
+		debug_log($e->getMessage());
 	}
 	// Log finish of import process
-	if ($_debug=="on")
-			error_log("OER Categories Importer: Finished Bulk Import ");
+	debug_log("OER Categories Importer: Finished Bulk Import ");
 	echo "Categories Import Successfully.";}
 
 function get_page_by_slug($page_slug, $output = OBJECT, $post_type = 'page', $parent = 0 )

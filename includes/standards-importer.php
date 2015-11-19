@@ -1,5 +1,4 @@
 <?php
-global $_debug;
 	
 $time = time();
 $date = date($time);
@@ -13,8 +12,7 @@ set_time_limit(0);
 if(isset($_POST['standards_import']))
 {
 	// Log start of import process
-	if ($_debug=="on")
-		error_log("OER Standards Importer: Start Bulk Import of Standards");
+	debug_log("OER Standards Importer: Start Bulk Import of Standards");
 		
 	global $wpdb;
 	if( isset($_FILES['standards_import']) && $_FILES['standards_import']['size'] != 0 )
@@ -163,12 +161,10 @@ if(isset($_POST['standards_import']))
 			
 		} catch(Exception $e) {
 			// Log any error during import process
-			if ($_debug=="on")
-				error_log($e->getMessage());
+			debug_log($e->getMessage());
 		}
 		// Log Finished Import
-		if ($_debug=="on")
-			error_log("OER Standards Importer: Finished Bulk Import of Standards");
+		debug_log("OER Standards Importer: Finished Bulk Import of Standards");
 		// Get Standard Notation
 		echo "<b>Standards Are Successfully Imported.</b>";
 	}

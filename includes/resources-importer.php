@@ -2,10 +2,7 @@
 require_once OER_PATH.'includes/oer-functions.php';
 require OER_PATH.'Excel/reader.php';
 
-global $_debug;
-
-if ($_debug=="on")
-	error_log("OER Resources Importer: Initializing Excel Reader");
+debug_log("OER Resources Importer: Initializing Excel Reader");
 
 $excl_obj = new Spreadsheet_Excel_Reader();
 $excl_obj->setOutputEncoding('CP1251');
@@ -22,8 +19,7 @@ set_time_limit(0);
 if(isset($_POST['resrc_imprt']))
 {
 	// Log start of import process
-	if ($_debug=="on")
-		error_log("OER Resources Importer: Starting Bulk Import of Resources");
+	debug_log("OER Resources Importer: Starting Bulk Import of Resources");
 		
 	if( isset($_FILES['resource_import']) && $_FILES['resource_import']['size'] != 0 )
 	{
@@ -425,8 +421,7 @@ if(isset($_POST['resrc_imprt']))
 			error_log($e->getMessage());
 	}
 	// Log finish of import process
-	if ($_debug=="on")
-			error_log("OER Resources Importer: Finished Bulk Import of Resources");
+	debug_log("OER Resources Importer: Finished Bulk Import of Resources");
 	echo "Resource Created successfully !";
 }}
 
