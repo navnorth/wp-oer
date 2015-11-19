@@ -24,14 +24,18 @@ get_header(); ?>
 						$img_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ) , "full" );
 						$img_path = $new_img_path = parse_url($img_url[0]);
 						$img_path = $_SERVER['DOCUMENT_ROOT'] . $img_path['path'];
-						if(!empty($img_path))
+						$new_image_url = OER_URL.'images/default-icon-528x455.png';
+
+                        if(!empty($img_path))
 						{
 							//Resize Image using WP_Image_Editor
 							$image_editor = wp_get_image_editor($img_path);
-							if ( !is_wp_error($image_editor) ) {
+							if ( is_wp_error($image_editor) ) {
+                                debug_log("Can't get Image editor to resize Resource screenshot.");
+                            } else {
 								$new_image = $image_editor->resize( 528, 455, true );
 								$suffix = "528x455";
-								
+
 								//Additional info of file
 								$info = pathinfo( $img_path );
 								$dir = $info['dirname'];
@@ -40,17 +44,15 @@ get_header(); ?>
 								$dest_file_name = "{$dir}/{$name}-{$suffix}.{$ext}";
 								$new_port = ($new_img_path['port']==80)?'':':'.$new_img_path['port'];
 								$new_image_url = str_replace($_SERVER['DOCUMENT_ROOT'], "{$new_img_path['scheme']}://{$new_img_path['host']}{$new_port}", $dest_file_name);
-								
+
 								if ( !file_exists($dest_file_name) ){
 									$image_file = $image_editor->save($dest_file_name);
 								}
 							}
-							echo '<img src="'.$new_image_url.'" alt="'.get_the_title().'"/>';
-						}
-						else
-						{
-							echo '<img src="'.site_url().'/wp-content/plugins/wp-oer/images/default-icon-528x455.png" alt="'.get_the_title().'"/>';
-						}
+                        }
+
+						echo '<img src="'.$new_image_url.'" alt="'.get_the_title().'"/>';
+
 						?>
                     	</a>
                         <a class="rsrcurl" href="<?php echo get_post_meta($post->ID, "oer_resourceurl", true); ?>" target="_blank" >
