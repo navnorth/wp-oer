@@ -121,7 +121,7 @@ function getScreenshotFile($url)
 		debug_log("OER : create upload directory");
 	}
 
-	if(!file_exists($file = $path.'Screenshot'.preg_replace('/https?|:|#|\//i', '-', $url).'.jpg'))
+	if(!file_exists($file = $path.'Screenshot'.preg_replace('/https?|:|#|\?|\//i', '-', $url).'.jpg'))
 	{
 		debug_log("OER : start screenshot function");
 			
