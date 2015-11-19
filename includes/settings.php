@@ -13,7 +13,7 @@
 	{
 		update_option("oer_python_install",$_POST['python_install']);
 	}
-	
+
 	if(isset($_POST['enable_screenshot_save']))
 	{
 		update_option("oer_enable_screenshot",isset($_POST['enable_screenshot'])?$_POST['enable_screenshot']:false);
@@ -78,8 +78,7 @@
     <form method="post">
         <div class="fields">
             <input type="text" name="python_install" value="<?php echo $oer_python_install;?>" />
-            <input type="submit" nam
-		   e="python_install_save" value="Save" class="button button-primary"/>
+            <input type="submit" name="python_install_save" value="Save" class="button button-primary"/>
         </div>
     </form>
 </div>
