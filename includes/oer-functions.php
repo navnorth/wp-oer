@@ -177,8 +177,8 @@ function debug_log($message) {
 }
 
 //Get Category Child for Sidebar
-if (!function_exists('get_category_child')) {
-	function get_category_child($categoryid)
+if (!function_exists('get_oer_category_child')) {
+	function get_oer_category_child($categoryid)
 	{
 		$args = array('hide_empty' => 0, 'taxonomy' => 'resource-category','parent' => $categoryid);
 		$catchilds = get_categories($args);
@@ -187,7 +187,7 @@ if (!function_exists('get_category_child')) {
 		$parentid = array();
 		if($rsltdata['parent'] != 0)
 		{
-			$parent = get_parent_term($rsltdata['parent']);
+			$parent = get_oer_parent_term($rsltdata['parent']);
 			for($k=0; $k < count($parent); $k++)
 			{
 				$idObj = get_category_by_slug($parent[$k]);
@@ -229,7 +229,7 @@ if (!function_exists('get_category_child')) {
 								<a href="'. site_url() .'/'. $catchild->slug .'">' . $catchild->name .'</a>
 							</span>';
 				}
-				get_category_child( $catchild->term_id);
+				get_oer_category_child( $catchild->term_id);
 				echo '</li>';
 			}
 			echo '</ul>';
@@ -238,8 +238,8 @@ if (!function_exists('get_category_child')) {
 }
 
 //GET Custom Texonomy Parent
-if (!function_exists('get_custom_category_parents')) {
-	function get_custom_category_parents( $id, $taxonomy = false, $link = false, $separator = '/', $nicename = false, $visited = array() ) {
+if (!function_exists('get_custom_oer_category_parents')) {
+	function get_custom_oer_category_parents( $id, $taxonomy = false, $link = false, $separator = '/', $nicename = false, $visited = array() ) {
 	
 		if(!($taxonomy && is_taxonomy_hierarchical( $taxonomy )))
 			return '';
@@ -258,7 +258,7 @@ if (!function_exists('get_custom_category_parents')) {
 		if ( $parent->parent && ( $parent->parent != $parent->term_id ) && !in_array( $parent->parent, $visited ) ) {
 			$visited[] = $parent->parent;
 			// $chain .= get_category_parents( $parent->parent, $link, $separator, $nicename, $visited );
-			$chain .= get_custom_category_parents( $parent->parent, $taxonomy, $link, $separator, $nicename, $visited );
+			$chain .= get_custom_oer_category_parents( $parent->parent, $taxonomy, $link, $separator, $nicename, $visited );
 		}
 	
 		if ( $link ) {
@@ -272,8 +272,8 @@ if (!function_exists('get_custom_category_parents')) {
 }
 
 //Get Category Parent List
-if (!function_exists('get_parent_term')) {
-	function get_parent_term($id)
+if (!function_exists('get_oer_parent_term')) {
+	function get_oer_parent_term($id)
 	{
 		$curr_cat = get_category_parents($id, false, '/' ,true);
 		$curr_cat = explode('/',$curr_cat);

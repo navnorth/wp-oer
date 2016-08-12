@@ -72,7 +72,7 @@ get_header(); ?>
 							{
 								if($term->parent != 0)
 								{
-									$parent[] = get_parent_term($term->term_id);
+									$parent[] = get_oer_parent_term($term->term_id);
 								}
 								else
 								{

@@ -25,7 +25,7 @@ $rsltdata = get_term_by( "name", $term, "resource-category", ARRAY_A );
 $parentid = array();
 if($rsltdata['parent'] != 0)
 {
-	$parent = get_parent_term($rsltdata['parent']);
+	$parent = get_oer_parent_term($rsltdata['parent']);
 	for($k=0; $k < count($parent); $k++)
 	{
 		$idObj = get_category_by_slug($parent[$k]);
@@ -71,7 +71,7 @@ if($rsltdata['parent'] != 0)
 				{
 					echo '<li class="sub-category'.$class.'"><span onclick="toggleparent(this);"><a href="'. site_url() .'/'.$category->taxonomy.'/'. $category->slug .'"  title="'. $category->name .'" >'. $category->name .'</a></span>';
 				}
-				echo get_category_child( $category->term_id);
+				echo get_oer_category_child( $category->term_id);
 				echo '</li>';
 			}
 	echo '</ul>';
@@ -83,7 +83,7 @@ if($rsltdata['parent'] != 0)
 		<div class="pgbrdcrums">
 			<ul>
 				<?php
-					$strcat = get_custom_category_parents($term_id, "resource-category" , FALSE, ':', TRUE);
+					$strcat = get_custom_oer_category_parents($term_id, "resource-category" , FALSE, ':', TRUE);
                                         
 					if(strpos($strcat,':'))
 					{
