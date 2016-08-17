@@ -263,6 +263,7 @@ function oer_tag_template( $template ) {
   * Load Resource Categories on home page
   **/
  function load_front_page_resources() {
+	global $wpdb;
 	$args = array(
 		'type'                     => 'post',
 		'parent'                   => 0,
