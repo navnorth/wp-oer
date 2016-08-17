@@ -289,23 +289,27 @@ function oer_tag_template( $template ) {
 				$icn_guid = "";
 				$icn_hover_guid = "";
 				
-				if(!empty($getimage) || !empty($getimage_hover))
-				{
-					$attach_icn = get_post($getimage[0]->post_id);
-					$attach_icn_hover = get_post($getimage_hover[0]->post_id);
-					$icn_guid = $attach_icn->guid;
-					$icn_hover_guid = $attach_icn_hover->guid;
-				}
-				else
-				{
+				if(empty($getimage) && empty($getimage_hover)){
+					
 					$attach_icn = array();
 					$attach_icn_hover = array();
-					switch($category->name){
-						case "Career and Technical Education":
-							
-							break;
-						default:
-							break;
+					$icn_guid = get_default_category_icon($category->name);
+					$icn_hover_guid = get_default_category_icon($category->name, true);
+					
+				} else {
+					//Checks if icon is empty
+					if (!empty($getimage)) {
+						$attach_icn = get_post($getimage[0]->post_id);
+						$icn_guid = $attach_icn->guid;
+					} else {
+						$icn_guid = get_default_category_icon($category->name);
+					}
+					
+					if (!empty($getimage_hover)) {
+						$attach_icn_hover = get_post($getimage_hover[0]->post_id);
+						$icn_hover_guid = $attach_icn_hover->guid;	
+					} else {
+						$icn_hover_guid = get_default_category_icon($category->name, true);
 					}
 				}
 				
@@ -335,6 +339,70 @@ function oer_tag_template( $template ) {
 			
 		}
 	echo '</div>';
+ }
+ 
+ /** get default category icon **/
+ function get_default_category_icon($category_name, $hover = false) {
+	
+	$default_icon_path = "";
+	$default_icon_dir = OER_URL . "images/category_icons/";
+	$default_icon_ext = ".png";
+	$default_icon_name = "";
+	
+	switch($category_name){
+		
+		case "Career and Technical Education":
+			$default_icon_name = "cte";
+			break;
+		
+		case "Educational Leadership":
+			$default_icon_name = "edu-leadership";
+			break;
+		
+		case "English Language Arts":
+			$default_icon_name = "language";
+			break;
+		
+		case "English Language Development":
+			$default_icon_name = "eng-lng-dev";
+			break;
+		
+		case "History/Social Studies":
+			$default_icon_name = "us-hstry";
+			break;
+		
+		case "Math":
+			$default_icon_name = "math";
+			break;
+		
+		case "Physical Education":
+			$default_icon_name = "phy-edu";
+			break;
+		
+		case "Science":
+			$default_icon_name = "science";
+			break;
+		
+		case "STEM":
+			$default_icon_name = "stem";
+			break;
+		
+		case "Visual and Performing Arts":
+			$default_icon_name = "arts1";
+			break;
+		
+		case "World Languages":
+			$default_icon_name = "world-lang";
+			break;
+		
+		default:
+			$default_icon_path = "";
+			break;
+	}
+	if ($default_icon_name!=""){
+		$default_icon_path = $default_icon_dir . $default_icon_name .(($hover==true)?"-hover":""). $default_icon_ext;
+	}
+	return $default_icon_path;
  }
 
 //front side shortcode
