@@ -170,19 +170,50 @@ if(isset($_POST['standards_import']))
 	}
 }
 ?>
-
-<div class="oer_imprtrwpr">
-	<div class="oer_hdng">
-    	Standards Import
-    </div>
-	<div class="oer_pargrph">
-		Import requires an XML file in the format used by ASN for Common Core State Standards. You can download the CCSS in XML format here: <a href="http://asn.jesandco.org/resources/ASNJurisdiction/CCSS" target="_blank" >http://asn.jesandco.org/resources/ASNJurisdiction/CCSS</a>
+<div id="col-container">
+	<div id="col-standards-left">
+		<div class="oer_imprtrwpr">
+			<div class="oer_hdng">
+			Standards Import
+		    </div>
+			<div class="oer_pargrph">
+				Import requires an XML file in the format used by ASN for Common Core State Standards. You can download the CCSS in XML format here: <a href="http://asn.jesandco.org/resources/ASNJurisdiction/CCSS" target="_blank" >http://asn.jesandco.org/resources/ASNJurisdiction/CCSS</a>
+			</div>
+		    <form method="post" enctype="multipart/form-data">
+			<div class="fields">
+			    <input type="file" name="standards_import"/>
+			    <input type="hidden" value="" name="standards_import" />
+			    <input type="submit" name="" value="Import" class="button button-primary"/>
+			</div>
+		    </form>
+		</div>
 	</div>
-    <form method="post" enctype="multipart/form-data">
-        <div class="fields">
-            <input type="file" name="standards_import"/>
-            <input type="hidden" value="" name="standards_import" />
-            <input type="submit" name="" value="Import" class="button button-primary"/>
-        </div>
-    </form>
+	<div id="col-standards-right">
+		<table class="wp-list-table wp-standards-list widefat fixed pages">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Standard Title</th>
+					<th>Url</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php
+				$standards_notation = $wpdb->get_results("select * from " . $wpdb->prefix. "sub_standards");
+				if (!empty($standards_notation)):
+				foreach($standards_notation as $notation){
+				?>
+				<tr>
+					<td><?php echo $notation->id; ?></td>
+					<td><?php echo $notation->standard_title; ?></td>
+					<td>
+						<?php echo "<a href='".$notation->url."' target='_blank'>".$notation->url."</a>"; ?>
+					</td>
+				</tr>
+				<?php } ?>
+				<?php endif; ?>
+				<input type="hidden" id="currntspan">
+			</tbody>
+		</table>
+	</div>
 </div>

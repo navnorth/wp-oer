@@ -208,3 +208,8 @@ fieldset {
 .plugin-info {  display:inline-block; }
 .plugin-link { display:inline-block; margin-left:10px; }
 .clear { clear:both; }
+#col-standards-left { width:40%; float:left; }
+#col-standards-left .oer_pargrph { width:auto; float:none; }
+#col-standards-right { width:60%; float:right; }
+.wp-standards-list td:first-child, .wp-standards-list th:first-child { width:10%; }
+.wp-standards-list td:not(:first-child), .wp-standards-list th:not(:first-child) { width:45%; }
