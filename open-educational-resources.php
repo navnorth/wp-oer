@@ -37,8 +37,9 @@ include_once(OER_PATH.'includes/oer-functions.php');
 include_once(OER_PATH.'includes/init.php');
 
 //define global variable $debug_mode and get value from settings
-global $_debug;
+global $_debug, $_bootstrap;
 $_debug = get_option('oer_debug_mode');
+$_bootstrap = get_option('oer_use_bootstrap');
 
 register_activation_hook(__FILE__, 'create_csv_import_table');
 function create_csv_import_table()
@@ -404,6 +405,18 @@ function oer_tag_template( $template ) {
 	}
 	return $default_icon_path;
  }
+
+// Add scripts and styles to frontend 
+add_action('wp_enqueue_scripts', 'oer_front_scripts');
+function oer_front_scripts()
+{
+	global $_bootstrap;
+
+	if ($_bootstrap) {
+		wp_enqueue_style('bootstrap-style', OER_URL.'css/bootstrap.min.css');
+		wp_enqueue_script('bootstrap-script', OER_URL.'js/bootstrap.min.js');
+	}
+}
 
 //front side shortcode
 //include_once(OER_PATH.'includes/resource_front.php');
