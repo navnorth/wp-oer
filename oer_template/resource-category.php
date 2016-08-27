@@ -33,8 +33,8 @@ if($rsltdata['parent'] != 0)
 	}
 }
 ?>
-<div class="cntnr">
-	<div class="resource_category_sidebar template_resource_category_sidebar">
+<div class="cntnr row">
+	<div class="resource_category_sidebar template_resource_category_sidebar col-md-3">
 	<?php
 	echo '<ul class="resource_category">';
 			$args = array('hide_empty' => 0, 'taxonomy' => 'resource-category', 'parent' => 0);
@@ -78,7 +78,7 @@ if($rsltdata['parent'] != 0)
 	?>
 </div> <!--Left Sidebar-->
 
-	<div class="rightcatcntr">
+	<div class="rightcatcntr col-md-9">
 	
 		<div class="pgbrdcrums">
 			<ul>

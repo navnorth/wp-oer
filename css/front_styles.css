@@ -159,3 +159,4 @@ li.oer_sbstndard{
 .oer_fld .oer_lstofstandrd img{
     margin-left:100px;
 }
+.snglctwpr { padding-left:0 !important;padding-right:0 !important;width:auto !important;float:none !important; position:initial !important; }

@@ -8,10 +8,10 @@ wp_enqueue_style( "resource-styles" );
 
 get_header(); ?>
 	<div class="cntnr">
-        <div id="sngl-resource" class="sngl_resource_wrapper">
+        <div id="sngl-resource" class="sngl_resource_wrapper row">
                 <?php global $post; global $wpdb; ?>
 
-				<div class="rsrclftcntr-img">
+		<div class="rsrclftcntr-img col-md-5">
                     <!--Resource URL-->
                     <div class="sngl-rsrc-url">
                         <a href="<?php echo get_permalink($post->ID);?>"><?php echo $post->post_title;?></a>
@@ -62,7 +62,7 @@ get_header(); ?>
 
               </div>
 
-				<div class="rsrcrghtcntr">
+		<div class="rsrcrghtcntr col-md-7">
                 	<div class="rsrcctgries">
                     	<?php
                         $post_terms = get_the_terms( $post->ID, 'resource-category' );

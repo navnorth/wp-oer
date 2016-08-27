@@ -279,7 +279,7 @@ function oer_tag_template( $template ) {
 		'pad_counts'               => false );
 			
 	$categories = get_categories( $args );
-	echo '<div class="ctgry-cntnr">';
+	echo '<div class="ctgry-cntnr row">';
 			$cnt = 1;
 			$lepcnt = 1;
 			
@@ -317,7 +317,7 @@ function oer_tag_template( $template ) {
 				$count = oer_post_count($category->term_id, "resource-category");
 				$count = $count + $category->count;
 					
-				echo '<div class="snglctwpr"><div class="cat-div" data-ownback="'.get_template_directory_uri().'/img/top-arrow.png" onMouseOver="changeonhover(this)" onMouseOut="changeonout(this);" onclick="togglenavigation(this);" data-id="'.$cnt.'" data-class="'.$lepcnt.'" data-normalimg="'.$icn_guid.'" data-hoverimg="'.$icn_hover_guid.'">
+				echo '<div class="snglctwpr col-md-3"><div class="cat-div" data-ownback="'.get_template_directory_uri().'/img/top-arrow.png" onMouseOver="changeonhover(this)" onMouseOut="changeonout(this);" onclick="togglenavigation(this);" data-id="'.$cnt.'" data-class="'.$lepcnt.'" data-normalimg="'.$icn_guid.'" data-hoverimg="'.$icn_hover_guid.'">
 					<div class="cat-icn" style="background: url('.$icn_guid.') no-repeat scroll center center; "></div>
 					<div class="cat-txt-btm-cntnr">
 						<ul>
