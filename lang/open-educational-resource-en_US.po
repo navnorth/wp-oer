@@ -1,0 +1,67 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Open Education Resource\n"
+"POT-Creation-Date: 2016-09-03 21:53+0800\n"
+"PO-Revision-Date: 2016-09-03 21:56+0800\n"
+"Last-Translator: \n"
+"Language-Team: Navigation North <joe@navigationnorth.com>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.9\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: oer_template/resource-category.php:152
+msgid "Browse %s Resources"
+msgstr ""
+
+#: oer_template/resource-category.php:215
+msgid "There are no resources available for %s"
+msgstr ""
+
+#: oer_template/single-resource.php:104
+msgid "Description"
+msgstr ""
+
+#: oer_template/single-resource.php:117
+msgid "Creator:"
+msgstr ""
+
+#: oer_template/single-resource.php:129
+msgid "Publisher:"
+msgstr ""
+
+#: oer_template/single-resource.php:138
+msgid "Type:"
+msgstr ""
+
+#: oer_template/single-resource.php:150
+msgid "Grades:"
+msgstr ""
+
+#: oer_template/single-resource.php:313
+msgid "Standards"
+msgstr ""
+
+#: oer_template/single-resource.php:320
+msgid "Standard Alignment"
+msgstr ""
+
+#: oer_template/single-resource.php:332
+msgid "Standard Notations"
+msgstr ""
+
+#: oer_template/tag-resource.php:13
+msgid "Tag Archives: %s"
+msgstr ""
+
+#: oer_template/tag-resource.php:48
+msgid "Nothing Found"
+msgstr ""
+
+#: oer_template/tag-resource.php:52
+msgid "Sorry, but nothing matched your search criteria. Please try again with some different keywords."
+msgstr ""

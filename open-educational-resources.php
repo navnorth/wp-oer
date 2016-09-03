@@ -110,6 +110,11 @@ function create_csv_import_table()
    //create_template();
 }
 
+//Load localization directory
+add_action('plugins_loaded', 'load_oer_textdomain');
+function load_oer_textdomain() {
+	load_plugin_textdomain( 'open-educational-resource', false, dirname( plugin_basename(__FILE__) ) . '/lang/' );
+}
 
 //Create Page Templates
 include_once(OER_PATH.'oer_template/oer_template.php');

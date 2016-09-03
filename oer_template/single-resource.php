@@ -101,7 +101,7 @@ get_header(); ?>
                     <!--Resource Description-->
 					<?php if(!empty($post->post_content)) {?>
 						<div class="sngl-rsrc-dscrptn">
-							<h1>Description</h1>
+							<h1><?php _e("Description", OER_SLUG) ?></h1>
 							<?php echo $content = apply_filters ("the_content", $post->post_content); ?>
 						</div>
 					<?php } ?>
@@ -114,7 +114,7 @@ get_header(); ?>
 							if(!empty($oer_authorname) && !empty($oer_authorurl))
 							{
 							?>
-								<h3>Creator:</h3>
+								<h3><?php _e("Creator:", OER_SLUG) ?></h3>
 								<div class="view"><a href="<?php echo $oer_authorurl; ?>" target="_blank"><?php echo $oer_authorname; ?></a></div>
 							<?php } ?>
                     </div>
@@ -126,7 +126,7 @@ get_header(); ?>
 							if(!empty($oer_publishername) && !empty($oer_publisherurl))
 							{
 							?>
-								<h3>Publisher:</h3>
+								<h3><?php _e("Publisher:", OER_SLUG) ?></h3>
 								<div class="view"><a href="<?php echo $oer_publisherurl; ?>" target="_blank"><?php echo $oer_publishername; ?></a></div>
 							<?php } ?>
 					</div>
@@ -135,7 +135,7 @@ get_header(); ?>
 							$oer_mediatype = get_post_meta($post->ID, "oer_mediatype", true);
 							if(!empty($oer_mediatype))
 							{ ?>
-								<h3>Type:</h3>
+								<h3><?php _e("Type:", OER_SLUG) ?></h3>
 								<div class="view"><?php echo ucwords($oer_mediatype); ?></div>
 						<?php } ?>
                     </div>
@@ -147,7 +147,7 @@ get_header(); ?>
 						{
 					?>
 						<div class="rsrcgrd cbxl">
-							<h3>Grades:</h3>
+							<h3><?php _e("Grades:", OER_SLUG) ?></h3>
 							<div class="view">
                         	<?php
 									sort($grades);
@@ -310,13 +310,15 @@ get_header(); ?>
 						{
 					?>
                     	<div class="alignedStandards">
-                            <h3>Standards</h3>
+                            <h3><?php _e("Standards", OER_SLUG) ?></h3>
                             <div class="meta_container">
                                 <div class="stndrd_align">
                                 <?php
                                     if(!empty($stdrd_id))
                                     {
-										echo "<h3>Standard Alignment</h3>";
+					?>
+					<h3><?php _e("Standard Alignment", OER_SLUG) ?></h3>
+					<?php
                                         $res = $wpdb->get_row( $wpdb->prepare( "select standard_name from ".$wpdb->prefix."core_standards where id=%d" , $stdrd_id ), ARRAY_A);
                                         echo "<div class='stndrd_ttl'>".$res['standard_name']."</div>";
                                     }
@@ -326,7 +328,10 @@ get_header(); ?>
                                     <?php
                                         if(!empty($oer_standard))
                                         {
-                                            echo "<h3>Standard Notations</h3>";
+						?>
+						<h3><?php _e("Standard Notations", OER_SLUG) ?></h3>
+						<?php
+                                           
 											$stnd_arr = explode(",", $oer_standard);
                                             for($i=0; $i< count($stnd_arr); $i++)
                                             {

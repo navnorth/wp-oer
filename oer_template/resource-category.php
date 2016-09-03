@@ -149,7 +149,7 @@ if($rsltdata['parent'] != 0)
 		?> <!--Text and HTML Widget-->
 		
 		<div class="allftrdrsrc">
-			<div class="snglrsrchdng">Browse <?php echo $term;?> Resources</div>
+			<div class="snglrsrchdng"><?php sprintf(__("Browse %s Resources", OER_SLUG), $term); ?></div>
 			<div class="allftrdrsrccntr" onScroll="load_onScroll(this)" file-path="<?php echo get_template_directory_uri();?>/lib/ajax-scroll.php" data-id="<?php echo $rsltdata['term_id'];?>">
 				<?php
 				$args = array(
@@ -210,7 +210,9 @@ if($rsltdata['parent'] != 0)
 				}
 				else
 				{
-					echo "<div class='snglrsrc'>There are no resources available for $term</div>";
+					?>
+					<div class='snglrsrc'><?php sprintf(__("There are no resources available for %s", OER_SLUG), $term); ?></div>
+					<?php
 				}	
 				?>
 		   </div>
