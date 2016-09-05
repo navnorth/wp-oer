@@ -65,3 +65,39 @@ msgstr ""
 #: oer_template/tag-resource.php:52
 msgid "Sorry, but nothing matched your search criteria. Please try again with some different keywords."
 msgstr ""
+
+#: includes/assign-categories.php:82
+msgid "Select All"
+msgstr ""
+
+#: includes/assign-categories.php:83
+msgid "UnSelect All"
+msgstr ""
+
+#: includes/assign-categories.php:88
+msgid "Assign Category"
+msgstr ""
+
+#: includes/assign-categories.php:143 includes/assign-categories.php:178
+msgid "Assign Categories"
+msgstr ""
+
+#: includes/assign-categories.php:143
+msgid "Select User"
+msgstr ""
+
+#: includes/assign-categories.php:182
+msgid "Select User Type"
+msgstr ""
+
+#: includes/assign-categories.php:185
+msgid "Editor"
+msgstr ""
+
+#: includes/assign-categories.php:186
+msgid "Author"
+msgstr ""
+
+#: includes/assign-categories.php:195
+msgid "Submit"
+msgstr ""

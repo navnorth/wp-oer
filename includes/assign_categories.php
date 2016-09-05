@@ -79,13 +79,13 @@ if(isset($_POST['oer_userasgnctgries']))
 				<input type="hidden" name="user_id" value="<?php echo $_POST['oer_user']; ?>" />
 				<div class="oer_snglfld">
 					<div class="oer_txt">
-						<button type="button" name="Select_All" id="oer_selectall" class="button button-primary" onclick="oer_select_all()">Select All</button>
-						<button type="button" name="UnSelect_All" id="oer_unselectall" class="button button-primary" onclick="oer_unselect_all()">UnSelect All</button>
+						<button type="button" name="Select_All" id="oer_selectall" class="button button-primary" onclick="oer_select_all()"><?php _e("Select All", OER_SLUG); ?></button>
+						<button type="button" name="UnSelect_All" id="oer_unselectall" class="button button-primary" onclick="oer_unselect_all()"><?php _e("UnSelect All", OER_SLUG); ?></button>
 					</div>
 				</div>
 				<div class="oer_snglfld">
 					<div class="oer_txt">
-						Assign Category
+						<?php _e("Assign Category", OER_SLUG); ?>
 					</div>
 					<?php
 						echo '<ul class="oer_cats">';
@@ -140,7 +140,7 @@ if(isset($_POST['oer_userasgnctgries']))
 			{?>
 
 				<div class="oer_snglfld oer_hdngsngl">
-					Assign Categories
+					<?php _e("Assign Categories", OER_SLUG); ?>
 				</div>
 				<?php
 					 if($_POST["oer_usrtyp"] == 'editor')
@@ -154,7 +154,7 @@ if(isset($_POST['oer_userasgnctgries']))
 				?>
 				<div class="oer_snglfld">
 					<div class="oer_txt">
-						Select User
+						<?php _e("Select User", OER_SLUG); ?>
 					</div>
 					<div class="oer_fld">
 						<select name="oer_user">
@@ -175,15 +175,15 @@ if(isset($_POST['oer_userasgnctgries']))
 			else
 			{?>
 				<div class="oer_snglfld oer_hdngsngl">
-					Assign Categories
+					<?php _e("Assign Categories", OER_SLUG); ?>
 				</div>
 				<div class="oer_snglfld">
 					<div class="oer_txt">
-						Select User Type
+						<?php _e("Select User Type", OER_SLUG); ?>
 					</div>
 					<div class="oer_fld">
-						<div class="radio_btn"><input type="radio" name="oer_usrtyp" value="editor" />Editor</div>
-						<div class="radio_btn"><input type="radio" name="oer_usrtyp" value="author" />Author</div>
+						<div class="radio_btn"><input type="radio" name="oer_usrtyp" value="editor" /><?php _e("Editor", OER_SLUG); ?></div>
+						<div class="radio_btn"><input type="radio" name="oer_usrtyp" value="author" /><?php _e("Author", OER_SLUG); ?></div>
 					</div>
 				</div>
 
@@ -192,7 +192,7 @@ if(isset($_POST['oer_userasgnctgries']))
 			?>
 			<div class="oer_snglfld">
 				<input type="hidden" value="" name="hdnuser" />
-            	<input type="submit" name="" value="Submit" class="button button-primary"/>
+            	<input type="submit" name="" value="<?php _e("Submit", OER_SLUG); ?>" class="button button-primary"/>
 			</div>
 		</form>
 
