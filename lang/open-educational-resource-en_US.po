@@ -385,3 +385,43 @@ msgstr ""
 #: includes/set-category-images.php:51 includes/set-category-images.php:66
 msgid "Remove"
 msgstr ""
+
+#: includes/settings.php:52
+msgid "Assign Page Template to Category Pages"
+msgstr ""
+
+#: includes/settings.php:59 includes/settings.php:71 includes/settings.php:83 includes/settings.php:107
+msgid "Save"
+msgstr ""
+
+#: includes/settings.php:66
+msgid "Set Path For Python Excutable Script"
+msgstr ""
+
+#: includes/settings.php:78
+msgid "Set Path For Python Installation"
+msgstr ""
+
+#: includes/settings.php:90
+msgid "Screenshot and Display Settings"
+msgstr ""
+
+#: includes/settings.php:93
+msgid "Enable Screenshots?"
+msgstr ""
+
+#: includes/settings.php:96
+msgid "Use xvfb?"
+msgstr ""
+
+#: includes/settings.php:99
+msgid "Enable Debug Mode?"
+msgstr ""
+
+#: includes/settings.php:102
+msgid "Use Bootstrap?"
+msgstr ""
+
+#: includes/settings.php:115
+msgid "More info"
+msgstr ""
