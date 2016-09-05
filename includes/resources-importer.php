@@ -422,7 +422,7 @@ if(isset($_POST['resrc_imprt']))
 	}
 	// Log finish of import process
 	debug_log("OER Resources Importer: Finished Bulk Import of Resources");
-	echo "Resource Created successfully !";
+	_e("Resource Created successfully!", OER_SLUG);
 }}
 
 function fetch_stndrd($pId, $postid)
@@ -480,13 +480,13 @@ function fetch_stndrd($pId, $postid)
 
 <div class="oer_imprtrwpr">
 	<div class="oer_hdng">
-    	Import Resources
+		<?php _e("Import Resources", OER_SLUG); ?>
     </div>
     <form method="post" enctype="multipart/form-data">
         <div class="fields">
             <input type="file" name="resource_import"/>
             <input type="hidden" value="" name="resrc_imprt" />
-            <input type="submit" name="" value="Import" class="button button-primary"/>
+            <input type="submit" name="" value="<?php _e("Import", OER_SLUG); ?>" class="button button-primary"/>
         </div>
     </form>
 </div>
