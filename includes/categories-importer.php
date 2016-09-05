@@ -113,7 +113,8 @@ if(isset($_POST['bulk_imprt']))
 	}
 	// Log finish of import process
 	debug_log("OER Categories Importer: Finished Bulk Import ");
-	echo "Categories Import Successfully.";}
+	_e("Categories Import Successfully.",OER_SLUG);
+}
 
 function get_page_by_slug($page_slug, $output = OBJECT, $post_type = 'page', $parent = 0 )
 {
@@ -128,13 +129,13 @@ function get_page_by_slug($page_slug, $output = OBJECT, $post_type = 'page', $pa
 
 <div class="oer_imprtrwpr">
 	<div class="oer_hdng">
-    	Categories Bulk Import
+		<?php _e("Categories Bulk Import", OER_SLUG); ?>
     </div>
     <form method="post" enctype="multipart/form-data">
         <div class="fields">
             <input type="file" name="bulk_import"/>
             <input type="hidden" value="" name="bulk_imprt" />
-            <input type="submit" name="" value="Import" class="button button-primary"/>
+            <input type="submit" name="" value="<?php _e("Import", OER_SLUG); ?>" class="button button-primary"/>
         </div>
     </form>
 </div>

@@ -101,3 +101,15 @@ msgstr ""
 #: includes/assign-categories.php:195
 msgid "Submit"
 msgstr ""
+
+#: includes/categories-importer.php:116
+msgid "Categories Import Successfully."
+msgstr ""
+
+#: includes/categories-importer.php:132
+msgid "Categories Bulk Import"
+msgstr ""
+
+#: includes/categories-importer.php:138
+msgid "Import"
+msgstr ""
