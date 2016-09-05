@@ -113,3 +113,11 @@ msgstr ""
 #: includes/categories-importer.php:138
 msgid "Import"
 msgstr ""
+
+#: includes/resource_front.php:25
+msgid "Resource Title and Resource URL is required"
+msgstr ""
+
+#: includes/resource_front.php:175
+msgid "Resource Created successfully!"
+msgstr ""

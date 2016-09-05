@@ -22,7 +22,7 @@ function resource_front_form()
 		}
 		else
 		{
-			echo "Resource Title and Resource URL is required";
+			_e("Resource Title and Resource URL is required", OER_SLUG);
 			exit;
 		}
 		//saving meta fields
@@ -171,8 +171,8 @@ function resource_front_form()
 			update_post_meta( $post_id , 'oer_publisheremail' , $_POST['oer_publisheremail']);
 		}
 		//saving meta fields
-
-		echo "Resource Created successfully !";
+		
+		_e("Resource Created successfully!", OER_SLUG);
 
 	}
 
