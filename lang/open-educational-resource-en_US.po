@@ -34,7 +34,7 @@ msgstr ""
 msgid "Publisher:"
 msgstr ""
 
-#: oer_template/single-resource.php:138
+#: oer_template/single-resource.php:138 includes/resource_metafields.php:206 includes/resource_metafields.php:266
 msgid "Type:"
 msgstr ""
 
@@ -120,4 +120,236 @@ msgstr ""
 
 #: includes/resource_front.php:175
 msgid "Resource Created successfully!"
+msgstr ""
+
+#: includes/resource_metafields.php:10
+msgid "Resource URL:"
+msgstr ""
+
+#: includes/resource_metafields.php:20
+msgid "Highlight:"
+msgstr ""
+
+#: includes/resource_metafields.php:24
+msgid "True"
+msgstr ""
+
+#: includes/resource_metafields.php:25
+msgid "False"
+msgstr ""
+
+#: includes/resource_metafields.php:31
+msgid "Grade:"
+msgstr ""
+
+#: includes/resource_metafields.php:51
+msgid "Pre-K"
+msgstr ""
+
+#: includes/resource_metafields.php:52
+msgid "K (Kindergarten)"
+msgstr ""
+
+#: includes/resource_metafields.php:53
+msgid "1"
+msgstr ""
+
+#: includes/resource_metafields.php:54
+msgid "2"
+msgstr ""
+
+#: includes/resource_metafields.php:55
+msgid "3"
+msgstr ""
+
+#: includes/resource_metafields.php:56
+msgid "4"
+msgstr ""
+
+#: includes/resource_metafields.php:57
+msgid "5"
+msgstr ""
+
+#: includes/resource_metafields.php:58
+msgid "6"
+msgstr ""
+
+#: includes/resource_metafields.php:59
+msgid "7"
+msgstr ""
+
+#: includes/resource_metafields.php:60
+msgid "8"
+msgstr ""
+
+#: includes/resource_metafields.php:61
+msgid "9"
+msgstr ""
+
+#: includes/resource_metafields.php:62
+msgid "10"
+msgstr ""
+
+#: includes/resource_metafields.php:63
+msgid "11"
+msgstr ""
+
+#: includes/resource_metafields.php:64
+msgid "12"
+msgstr ""
+
+#: includes/resource_metafields.php:72
+msgid "Date Created:"
+msgstr ""
+
+#: includes/resource_metafields.php:82
+msgid "Date Modified:"
+msgstr ""
+
+#: includes/resource_metafields.php:92
+msgid "Media Type:"
+msgstr ""
+
+#: includes/resource_metafields.php:97
+msgid "Website"
+msgstr ""
+
+#: includes/resource_metafields.php:98 includes/resource_metafields.php:115
+msgid "Audio"
+msgstr ""
+
+#: includes/resource_metafields.php:99
+msgid "Document"
+msgstr ""
+
+#: includes/resource_metafields.php:100
+msgid "Image"
+msgstr ""
+
+#: includes/resource_metafields.php:101
+msgid "Video"
+msgstr ""
+
+#: includes/resource_metafields.php:102 includes/resource_metafields.php:124
+msgid "Other"
+msgstr ""
+
+#: includes/resource_metafields.php:109
+msgid "Learning Resource Type:"
+msgstr ""
+
+#: includes/resource_metafields.php:114
+msgid "Assessment"
+msgstr ""
+
+#: includes/resource_metafields.php:116
+msgid "Calculator"
+msgstr ""
+
+#: includes/resource_metafields.php:117
+msgid "Demonstration"
+msgstr ""
+
+#: includes/resource_metafields.php:118
+msgid "Game"
+msgstr ""
+
+#: includes/resource_metafields.php:119
+msgid "Interview"
+msgstr ""
+
+#: includes/resource_metafields.php:120
+msgid "Lecture"
+msgstr ""
+
+#: includes/resource_metafields.php:121
+msgid "Lesson Plan"
+msgstr ""
+
+#: includes/resource_metafields.php:122
+msgid "Simulation"
+msgstr ""
+
+#: includes/resource_metafields.php:123
+msgid "Presentation"
+msgstr ""
+
+#: includes/resource_metafields.php:131
+msgid "Interactivity:"
+msgstr ""
+
+#: includes/resource_metafields.php:136
+msgid "Interactive"
+msgstr ""
+
+#: includes/resource_metafields.php:137
+msgid "Passive"
+msgstr ""
+
+#: includes/resource_metafields.php:138
+msgid "Social"
+msgstr ""
+
+#: includes/resource_metafields.php:139
+msgid "Programmatic"
+msgstr ""
+
+#: includes/resource_metafields.php:140
+msgid "One-on-One"
+msgstr ""
+
+#: includes/resource_metafields.php:141
+msgid "Async"
+msgstr ""
+
+#: includes/resource_metafields.php:142
+msgid "Sync"
+msgstr ""
+
+#: includes/resource_metafields.php:141
+msgid "Group"
+msgstr ""
+
+#: includes/resource_metafields.php:150
+msgid "Use Rights URL:"
+msgstr ""
+
+#: includes/resource_metafields.php:160
+msgid "Is based on URL:"
+msgstr ""
+
+#: includes/resource_metafields.php:170
+msgid "Standards Alignment:"
+msgstr ""
+
+#: includes/resource_metafields.php:201 includes/resource_metafields.php:261
+msgid "Author Information:"
+msgstr ""
+
+#: includes/resource_metafields.php:211 includes/resource_metafields.php:271
+msgid "Person"
+msgstr ""
+
+#: includes/resource_metafields.php:212 includes/resource_metafields.php:272
+msgid "Organization"
+msgstr ""
+
+#: includes/resource_metafields.php:219 includes/resource_metafields.php:279 includes/resource_metafields.php:325
+msgid "Name:"
+msgstr ""
+
+#: includes/resource_metafields.php:229 includes/resource_metafields.php:289 includes/resource_metafields.php:335
+msgid "URL:"
+msgstr ""
+
+#: includes/resource_metafields.php:239 includes/resource_metafields.php:299 includes/resource_metafields.php:345
+msgid "Email Address:"
+msgstr ""
+
+#: includes/resource_metafields.php:313
+msgid "Add Author"
+msgstr ""
+
+#: includes/resource_metafields.php:320
+msgid "Publisher Information:"
 msgstr ""
