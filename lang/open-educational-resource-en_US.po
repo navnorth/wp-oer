@@ -110,7 +110,7 @@ msgstr ""
 msgid "Categories Bulk Import"
 msgstr ""
 
-#: includes/categories-importer.php:138 includes/resources-importer.php:138
+#: includes/categories-importer.php:138 includes/resources-importer.php:138 includes/standards-importer.php:188
 msgid "Import"
 msgstr ""
 
@@ -424,4 +424,28 @@ msgstr ""
 
 #: includes/settings.php:115
 msgid "More info"
+msgstr ""
+
+#: includes/standards-importer.php:170
+msgid "Standards Are Successfully Imported."
+msgstr ""
+
+#: includes/standards-importer.php:179
+msgid "Standards Import"
+msgstr ""
+
+#: includes/standards-importer.php:182
+msgid "Import requires an XML file in the format used by ASN for Common Core State Standards. You can download the CCSS in XML format here:"
+msgstr ""
+
+#: includes/standards-importer.php:197
+msgid "Id"
+msgstr ""
+
+#: includes/standards-importer.php:198
+msgid "Standard Title"
+msgstr ""
+
+#: includes/standards-importer.php:199
+msgid "Url"
 msgstr ""

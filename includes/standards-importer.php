@@ -166,7 +166,9 @@ if(isset($_POST['standards_import']))
 		// Log Finished Import
 		debug_log("OER Standards Importer: Finished Bulk Import of Standards");
 		// Get Standard Notation
-		echo "<b>Standards Are Successfully Imported.</b>";
+		?>
+		<b><?php _e("Standards Are Successfully Imported.", OER_SLUG); ?></b>;
+		<?php
 	}
 }
 ?>
@@ -174,16 +176,16 @@ if(isset($_POST['standards_import']))
 	<div id="col-standards-left">
 		<div class="oer_imprtrwpr">
 			<div class="oer_hdng">
-			Standards Import
+				<?php _e("Standards Import", OER_SLUG); ?>
 		    </div>
 			<div class="oer_pargrph">
-				Import requires an XML file in the format used by ASN for Common Core State Standards. You can download the CCSS in XML format here: <a href="http://asn.jesandco.org/resources/ASNJurisdiction/CCSS" target="_blank" >http://asn.jesandco.org/resources/ASNJurisdiction/CCSS</a>
+				<?php _e("Import requires an XML file in the format used by ASN for Common Core State Standards. You can download the CCSS in XML format here:", OER_SLUG); ?> <a href="http://asn.jesandco.org/resources/ASNJurisdiction/CCSS" target="_blank" >http://asn.jesandco.org/resources/ASNJurisdiction/CCSS</a>
 			</div>
 		    <form method="post" enctype="multipart/form-data">
 			<div class="fields">
 			    <input type="file" name="standards_import"/>
 			    <input type="hidden" value="" name="standards_import" />
-			    <input type="submit" name="" value="Import" class="button button-primary"/>
+			    <input type="submit" name="" value="<?php _e("Import", OER_SLUG); ?>" class="button button-primary"/>
 			</div>
 		    </form>
 		</div>
@@ -192,9 +194,9 @@ if(isset($_POST['standards_import']))
 		<table class="wp-list-table wp-standards-list widefat fixed pages">
 			<thead>
 				<tr>
-					<th>Id</th>
-					<th>Standard Title</th>
-					<th>Url</th>
+					<th><?php _e("Id", OER_SLUG); ?></th>
+					<th><?php _e("Standard Title", OER_SLUG); ?></th>
+					<th><?php _e("Url", OER_SLUG); ?></th>
 				</tr>
 			</thead>
 			<tbody>
