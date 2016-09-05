@@ -357,3 +357,31 @@ msgstr ""
 #: includes/resources-importer.php:483
 msgid "Import Resources"
 msgstr ""
+
+#: includes/set-category-images.php:23
+msgid "S.No"
+msgstr ""
+
+#: includes/set-category-images.php:24
+msgid "Category Name"
+msgstr ""
+
+#: includes/set-category-images.php:25
+msgid "Upload/Remove"
+msgstr ""
+
+#: includes/set-category-images.php:26
+msgid "Upload/Remove on Hover"
+msgstr ""
+
+#: includes/set-category-images.php:49 includes/set-category-images.php:64
+msgid "Update"
+msgstr ""
+
+#: includes/set-category-images.php:49 includes/set-category-images.php:64
+msgid "Upload"
+msgstr ""
+
+#: includes/set-category-images.php:51 includes/set-category-images.php:66
+msgid "Remove"
+msgstr ""
