@@ -268,6 +268,7 @@ function oer_tag_template( $template ) {
  /**
   * Load Resource Categories on home page
   **/
+ add_action( 'get_footer', 'load_front_page_resources' );
  function load_front_page_resources() {
 	global $wpdb;
 	$args = array(
@@ -319,7 +320,7 @@ function oer_tag_template( $template ) {
 					}
 				}
 				
-				$count = oer_post_count($category->term_id, "resource-category");
+				$count = get_oer_post_count($category->term_id, "resource-category");
 				$count = $count + $category->count;
 					
 				echo '<div class="snglctwpr col-md-3"><div class="cat-div" data-ownback="'.get_template_directory_uri().'/img/top-arrow.png" onMouseOver="changeonhover(this)" onMouseOut="changeonout(this);" onclick="togglenavigation(this);" data-id="'.$cnt.'" data-class="'.$lepcnt.'" data-normalimg="'.$icn_guid.'" data-hoverimg="'.$icn_hover_guid.'">
@@ -333,7 +334,7 @@ function oer_tag_template( $template ) {
 					$children = get_term_children($category->term_id, 'resource-category');
 					if( !empty( $children ) )
 					{
-						echo '<div class="child-category">'. front_child_category($category->term_id) .'</div>';
+						echo '<div class="child-category">'. oer_front_child_category($category->term_id) .'</div>';
 					}
 				echo '</div>';
 				//if(($cnt % 4) == 0){

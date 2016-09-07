@@ -296,4 +296,56 @@ if (!function_exists('get_term_top_most_parent')) {
 	}
 }
 
+//Get Total Post Count
+if (!function_exists('get_oer_post_count')) {
+	function get_oer_post_count($category, $taxonomy)
+	{
+		$count = 0;
+		$args = array(
+		  'child_of' => $category,
+		);
+	
+		$tax_terms = get_terms($taxonomy,$args);
+		foreach ($tax_terms as $tax_term)
+		{
+			$count +=$tax_term->count;
+		}
+		return $count;
+	}
+}
+
+//Get Category Child for Homepage
+if (!function_exists('oer_front_child_category')) {
+	function oer_front_child_category($categoryid)
+	{
+		$args = array('hide_empty' => 0, 'taxonomy' => 'resource-category','parent' => $categoryid);
+		$catchilds = get_categories($args);
+		$rtrn = "";
+	
+		if(!empty($catchilds))
+		{
+			$rtrn .= '<ul class="category">';
+			foreach($catchilds as $catchild)
+			{
+				$children = get_term_children($catchild->term_id, 'resource-category');
+				$count = get_oer_post_count($catchild->term_id, "resource-category");
+				$count = $count + $catchild->count;
+				if( !empty( $children ) )
+				{
+					$rtrn .=  '<li class="sub-category has-child"><span onclick="toggleparent(this); gethght(this);"><a href="'. site_url() .'/'. $catchild->slug .'">' . $catchild->name .'</a><label>'. $count .'</label></span>';
+				}
+				else
+				{
+					$rtrn .=  '<li class="sub-category"><span onclick="toggleparent(this);"><a href="'. site_url() .'/'. $catchild->slug .'">' . $catchild->name .'</a><label>'. $count .'</label></span>';
+				}
+				$rtrn .=  oer_front_child_category( $catchild->term_id);
+				$rtrn .= '</li>';
+			}
+			$rtrn .=  '</ul>';
+		}
+	
+		return $rtrn;
+	}
+}
+
 ?>
