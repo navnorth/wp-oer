@@ -268,8 +268,8 @@ function oer_tag_template( $template ) {
  /**
   * Load Resource Categories on home page
   **/
- add_action( 'get_footer', 'load_front_page_resources' );
- function load_front_page_resources() {
+ add_filter( 'the_content', 'load_front_page_resources' );
+ function load_front_page_resources( $content ) {
 	global $wpdb;
 	$args = array(
 		'type'                     => 'post',
@@ -285,7 +285,7 @@ function oer_tag_template( $template ) {
 		'pad_counts'               => false );
 			
 	$categories = get_categories( $args );
-	echo '<div class="ctgry-cntnr row">';
+	$home_content =  '<div class="ctgry-cntnr row">';
 			$cnt = 1;
 			$lepcnt = 1;
 			
@@ -323,7 +323,7 @@ function oer_tag_template( $template ) {
 				$count = get_oer_post_count($category->term_id, "resource-category");
 				$count = $count + $category->count;
 					
-				echo '<div class="snglctwpr col-md-3"><div class="cat-div" data-ownback="'.get_template_directory_uri().'/img/top-arrow.png" onMouseOver="changeonhover(this)" onMouseOut="changeonout(this);" onclick="togglenavigation(this);" data-id="'.$cnt.'" data-class="'.$lepcnt.'" data-normalimg="'.$icn_guid.'" data-hoverimg="'.$icn_hover_guid.'">
+				$home_content .= '<div class="snglctwpr col-md-3"><div class="cat-div" data-ownback="'.get_template_directory_uri().'/img/top-arrow.png" onMouseOver="changeonhover(this)" onMouseOut="changeonout(this);" onclick="togglenavigation(this);" data-id="'.$cnt.'" data-class="'.$lepcnt.'" data-normalimg="'.$icn_guid.'" data-hoverimg="'.$icn_hover_guid.'">
 					<div class="cat-icn" style="background: url('.$icn_guid.') no-repeat scroll center center; "></div>
 					<div class="cat-txt-btm-cntnr">
 						<ul>
@@ -334,18 +334,21 @@ function oer_tag_template( $template ) {
 					$children = get_term_children($category->term_id, 'resource-category');
 					if( !empty( $children ) )
 					{
-						echo '<div class="child-category">'. oer_front_child_category($category->term_id) .'</div>';
+						$home_content .= '<div class="child-category">'. oer_front_child_category($category->term_id) .'</div>';
 					}
 				echo '</div>';
 				//if(($cnt % 4) == 0){
-					echo '<div class="child_content_wpr" data-id="'.$lepcnt.'"></div>';
+					$home_content .= '<div class="child_content_wpr" data-id="'.$lepcnt.'"></div>';
 					$lepcnt++;
 				//}
 			$cnt++;
-			echo '</div>';
+			$home_content .= '</div>';
 			
 		}
-	echo '</div>';
+	$home_content .= '</div>';
+	if (is_home() || is_front_page()) {
+		return $content . $home_content;
+	}
  }
  
  /** get default category icon **/
