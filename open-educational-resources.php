@@ -269,7 +269,7 @@ function oer_tag_template( $template ) {
   * Load Resource Categories on home page
   **/
  add_filter( 'the_content', 'load_front_page_resources' );
- function load_front_page_resources( $content ) {
+ function load_front_page_resources( $content = ""  ) {
 	global $wpdb;
 	$args = array(
 		'type'                     => 'post',
@@ -285,7 +285,7 @@ function oer_tag_template( $template ) {
 		'pad_counts'               => false );
 			
 	$categories = get_categories( $args );
-	$home_content =  '<div class="ctgry-cntnr row">';
+	$home_content =  '<div class="cntnr"><div class="ctgry-cntnr row">';
 			$cnt = 1;
 			$lepcnt = 1;
 			
@@ -336,7 +336,7 @@ function oer_tag_template( $template ) {
 					{
 						$home_content .= '<div class="child-category">'. oer_front_child_category($category->term_id) .'</div>';
 					}
-				echo '</div>';
+				$home_content .= '</div>';
 				//if(($cnt % 4) == 0){
 					$home_content .= '<div class="child_content_wpr" data-id="'.$lepcnt.'"></div>';
 					$lepcnt++;
@@ -345,9 +345,15 @@ function oer_tag_template( $template ) {
 			$home_content .= '</div>';
 			
 		}
-	$home_content .= '</div>';
+	$home_content .= '</div></div>';
+	
 	if (is_home() || is_front_page()) {
-		return $content . $home_content;
+		if ($content=="")
+			return $home_content;
+		else 
+			return $content . $home_content;
+	} else {
+		return $home_content;
 	}
  }
  
