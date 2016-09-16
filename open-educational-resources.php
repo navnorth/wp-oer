@@ -285,6 +285,7 @@ function oer_tag_template( $template ) {
 		'pad_counts'               => false );
 			
 	$categories = get_categories( $args );
+	
 	$home_content =  '<div class="cntnr"><div class="ctgry-cntnr row">';
 			$cnt = 1;
 			$lepcnt = 1;
@@ -348,13 +349,12 @@ function oer_tag_template( $template ) {
 	$home_content .= '</div></div>';
 	
 	if (is_home() || is_front_page()) {
-		if ($content=="")
-			return $home_content;
+		if (!$content)
+			$content = $home_content;
 		else 
-			return $content . $home_content;
-	} else {
-		return $home_content;
+			$content .= $home_content;
 	}
+	return $content;
  }
  
  /** get default category icon **/
