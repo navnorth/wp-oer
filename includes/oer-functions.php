@@ -219,14 +219,14 @@ if (!function_exists('get_oer_category_child')) {
 				{
 					echo '<li class="sub-category has-child'.$class.'" title="'. $catchild->name .'" >
 							<span onclick="toggleparent(this);">
-								<a href="'. site_url() .'/'. $catchild->slug .'">' . $catchild->name .'</a>
+								<a href="'. site_url() .'/resource-category/'. $catchild->slug .'">' . $catchild->name .'</a>
 							</span>';
 				}
 				else
 				{
 					echo '<li class="sub-category'.$class.'" title="'. $catchild->name .'" >
 							<span onclick="toggleparent(this);">
-								<a href="'. site_url() .'/'. $catchild->slug .'">' . $catchild->name .'</a>
+								<a href="'. site_url() .'/resource-category/'. $catchild->slug .'">' . $catchild->name .'</a>
 							</span>';
 				}
 				get_oer_category_child( $catchild->term_id);
