@@ -163,9 +163,13 @@ if($rsltdata['parent'] != 0)
 				{
 					foreach($posts as $post)
 					{
+						//set new_image_url to empty to reset on every loop
+						$new_image_url = "";
+						
 						$img_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ) , "full" );
 						if (empty($img_url))
 							$img_url = site_url().'/wp-content/plugins/wp-oer/images/default-icon.png';
+						
 						$title =  $post->post_title;
 						$content =  $post->post_content;
 						$content = substr($content, 0, 180);
