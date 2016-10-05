@@ -28,8 +28,11 @@ if($rsltdata['parent'] != 0)
 	$parent = get_oer_parent_term($rsltdata['parent']);
 	for($k=0; $k < count($parent); $k++)
 	{
-		$idObj = get_category_by_slug($parent[$k]);
-		$parentid[] = $idObj->term_id;
+		if ($parent[$k]) {
+			//$idObj = get_category_by_slug($parent[$k]);
+			$idObj = get_term_by('slug', $parent[$k], 'resource-category');
+			$parentid[] = $idObj->term_id;
+		}
 	}
 }
 ?>
@@ -71,7 +74,7 @@ if($rsltdata['parent'] != 0)
 				{
 					echo '<li class="sub-category'.$class.'"><span onclick="toggleparent(this);"><a href="'. site_url() .'/'.$category->taxonomy.'/'. $category->slug .'"  title="'. $category->name .'" >'. $category->name .'</a></span>';
 				}
-				echo get_oer_category_child( $category->term_id);
+				echo get_oer_category_child( $category->term_id, $rsltdata['term_id']);
 				echo '</li>';
 			}
 	echo '</ul>';

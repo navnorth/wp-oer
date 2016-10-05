@@ -6,8 +6,8 @@
 .resource_category_sidebar .resource_category .sub-category span,
 .resource_category_sidebar > .resource_category > .sub-category { display:block; position: relative; width: 100%; float: left; margin-bottom: 1px; }
 .resource_category_sidebar .resource_category .sub-category a, .child-category .category .sub-category a {float: left; text-decoration: none; color: #444; padding: 15px 0 15px 15px; width: 71%; margin-right: 20px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap}
-.resource_category_sidebar .resource_category .sub-category span, .child_content_wpr .category .sub-category span, .child-category .category .sub-category span{ width: 100%; float: left; background: none repeat scroll 0 0 #ffffff; margin-bottom: 1px }
-.resource_category_sidebar .resource_category .sub-category span:hover, .child_content_wpr .category .sub-category span:hover, .child-category .category .sub-category span:hover {background: #f2f2f2; cursor: pointer}
+.resource_category_sidebar .resource_category .sub-category span, .child_content_wpr .category .sub-category span, .child-category .category .sub-category span{ width: 100%; float: left; background: none repeat scroll 0 0 #ffffff; margin-bottom: 1px; border-left: 2px solid #024387; }
+.resource_category_sidebar .resource_category .sub-category span:hover, .child_content_wpr .category .sub-category span:hover, .child-category .category .sub-category span:hover { border-left: 2px solid #e57100; background: #f2f2f2; cursor: pointer}
 .resource_category_sidebar .resource_category .sub-category.has-child>span { background: url(img/plus.png) no-repeat scroll 265px center #ffffff; border-left: 2px solid #024387; }
 .child_content_wpr .category .sub-category.has-child>span { background: url(img/plus.png) no-repeat scroll 95% center #ffffff; border-left: 2px solid #024387; }
 .resource_category_sidebar .resource_category .sub-category.has-child>span:hover, .child_content_wpr .category .sub-category.has-child>span:hover { border-left: 2px solid #e57100; color: #444; cursor: pointer }
