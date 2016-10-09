@@ -74,6 +74,7 @@ if($rsltdata['parent'] != 0)
 				{
 					echo '<li class="sub-category'.$class.'"><span onclick="toggleparent(this);"><a href="'. site_url() .'/'.$category->taxonomy.'/'. $category->slug .'"  title="'. $category->name .'" >'. $category->name .'</a></span>';
 				}
+				
 				echo get_oer_category_child( $category->term_id, $rsltdata['term_id']);
 				echo '</li>';
 			}

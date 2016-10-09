@@ -182,20 +182,23 @@ if (!function_exists('get_oer_category_child')) {
 	{
 		$args = array('hide_empty' => 0, 'taxonomy' => 'resource-category','parent' => $categoryid);
 		$catchilds = get_categories($args);
-		$term = get_the_title($child_term_id);
+		$term = get_the_title();
 		
 		//$rsltdata = get_term_by( "name", $term, "resource-category", ARRAY_A );
-		$rsltdata = get_term_by( "name", $term, "resource-category", ARRAY_A );
-		//var_dump($rsltdata);
+		$rsltdata = get_term_by( "id", $child_term_id, "resource-category", ARRAY_A );
+		
 		$parentid = array();
 		if($rsltdata['parent'] != 0)
 		{
 			$parent = get_oer_parent_term($rsltdata['parent']);
+			
 			for($k=0; $k < count($parent); $k++)
 			{
 				//$idObj = get_category_by_slug($parent[$k]);
-				$idObj = get_term_by('slug', $parent[$k], 'resource-category');
-				$parentid[] = $idObj->term_id;
+				if ($parent[$k]) {
+					$idObj = get_term_by('slug', $parent[$k], 'resource-category');
+					$parentid[] = $idObj->term_id;
+				}
 			}
 		}
 	
@@ -204,7 +207,7 @@ if (!function_exists('get_oer_category_child')) {
 			echo '<ul class="category">';
 			foreach($catchilds as $catchild)
 			{
-				//var_dump($catchild);
+				//var_dump($catchild->term_id);
 				//var_dump($rsltdata['term_id']);
 				$children = get_term_children($catchild->term_id, 'resource-category');
 				//current class

@@ -15,6 +15,8 @@
 .resource_category_sidebar .resource_category .sub-category.has-child>span:hover a, .child_content_wpr .category .sub-category.has-child>span:hover a {color: #444; border: none}
 .resource_category_sidebar .resource_category .sub-category.has-child>span:hover .sub-category a, .child_content_wpr .category .sub-category.has-child>span:hover .sub-category a  {border: none}
 .resource_category_sidebar .resource_category .sub-category.activelist.has-child>span {background: url(../images/minus.png) no-repeat scroll 265px center #024387}
+.resource_category_sidebar .resource_category .sub-category.activelist>span { background-color:#024387; color:#fff; }
+.resource_category_sidebar .resource_category .sub-category.activelist>span a { color:#fff; }
 .child_content_wpr .category .sub-category.activelist.has-child>span {background: url(../images/minus.png) no-repeat scroll 95% center #024387}
 .child_content_wpr .category .sub-category.activelist.has-child>span label {border: 1px solid #fff; color: #fff}
 .resource_category_sidebar .resource_category .sub-category.activelist.has-child>span>a, .child_content_wpr .category .sub-category.activelist.has-child>span>a { color: #ffffff; }
