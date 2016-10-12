@@ -92,7 +92,7 @@ if(isset($_POST['standards_import']))
 				$results = $wpdb->get_results( $wpdb->prepare( "SELECT id from " . $wpdb->prefix. "core_standards where standard_name = %s" , $title ));
 				if(empty($results))
 				{
-					$wpdb->get_results( $wpdb->prepare( 'INSERT INTO " . $wpdb->prefix. "core_standards values("", %s , %s)' , $title , $url ));
+					$wpdb->get_results( $wpdb->prepare( 'INSERT INTO ' . $wpdb->prefix. 'core_standards values("", %s , %s)' , $title , $url ));
 				}
 			}
 			// Get Core Standard
@@ -155,7 +155,7 @@ if(isset($_POST['standards_import']))
 				{
 					//$description = preg_replace("/[^a-zA-Z0-9]+/", " ", html_entity_decode($description))
 					$description = mysql_real_escape_string($description);
-					$wpdb->get_results( $wpdb->prepare( 'INSERT INTO " . $wpdb->prefix. "standard_notation values("", %s, %s, %s, "", %s)' , $parent , $notation , $description , $url ));
+					$wpdb->get_results( $wpdb->prepare( 'INSERT INTO ' . $wpdb->prefix. 'standard_notation values("", %s, %s, %s, "", %s)' , $parent , $notation , $description , $url ));
 				}
 			}
 			
