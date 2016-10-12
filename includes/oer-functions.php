@@ -2,6 +2,7 @@
 function get_sub_standard($id, $oer_standard)
 {
 	global $wpdb;
+	global $chck, $class;
 	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "sub_standards where parent_id = %s" , $id ) ,ARRAY_A);
 	if(!empty($oer_standard))
 	{

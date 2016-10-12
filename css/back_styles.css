@@ -213,3 +213,4 @@ fieldset {
 #col-standards-right { width:60%; float:right; height:600px; overflow:scroll; }
 .wp-standards-list td:first-child, .wp-standards-list th:first-child { width:10%; }
 .wp-standards-list td:not(:first-child), .wp-standards-list th:not(:first-child) { width:45%; }
+#ui-datepicker-div { display:none; }

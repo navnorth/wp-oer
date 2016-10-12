@@ -1,6 +1,7 @@
 <?php
 global $post;
 global $wpdb;
+global $chck;
 ?>
 <div class="oer_metawpr">
 	<div class="oer_metainrwpr">
