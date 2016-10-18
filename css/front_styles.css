@@ -231,3 +231,21 @@ li.oer_sbstndard{
     overflow: hidden;
     white-space: nowrap;
 }
+.cat-txt-btm-cntnr ul { list-style:none; }
+.mne-sbjct-ttl {
+    float: left;
+    width: 70%;
+    padding: 5px 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.cat-txt-btm-cntnr li span {
+    background: #e57100;
+    border-radius: 5px;
+    padding: 5px 10px;
+    color: #fff;
+    float: right;
+    margin-right: 10px;
+    font-size: 12px;
+}
