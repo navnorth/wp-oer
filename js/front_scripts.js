@@ -1,4 +1,10 @@
 jQuery(document).ready(function(e) {
+	jQuery(".snglctwpr").each(function(index, element) {
+		var hght = jQuery(this).children(".cat-div").children(".child-category").height();
+			jQuery(this).children(".cat-div").children(".child-category").attr("data-height", hght);
+			jQuery(this).children(".cat-div").children(".child-category").hide();
+			//alert(hght);
+	    });
 	jQuery( ".oer_datepicker" ).datepicker();
 	jQuery( ".oer_datepicker" ).datepicker( "option", "showAnim", "slideDown" );
 });
