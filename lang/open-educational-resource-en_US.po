@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Open Education Resource\n"
 "POT-Creation-Date: 2016-09-03 21:53+0800\n"
-"PO-Revision-Date: 2016-09-03 21:56+0800\n"
+"PO-Revision-Date: 2016-10-18 15:47+0800\n"
 "Last-Translator: \n"
 "Language-Team: Navigation North <joe@navigationnorth.com>\n"
 "Language: en_US\n"
@@ -34,7 +34,8 @@ msgstr ""
 msgid "Publisher:"
 msgstr ""
 
-#: oer_template/single-resource.php:138 includes/resource_metafields.php:206 includes/resource_metafields.php:266
+#: oer_template/single-resource.php:138 includes/resource_metafields.php:206
+#: includes/resource_metafields.php:266
 msgid "Type:"
 msgstr ""
 
@@ -76,11 +77,11 @@ msgstr ""
 
 #: includes/assign-categories.php:88
 msgid "Assign Category"
-msgstr ""
+msgstr "Assign Subject Area"
 
 #: includes/assign-categories.php:143 includes/assign-categories.php:178
 msgid "Assign Categories"
-msgstr ""
+msgstr "Assign Subject Areas"
 
 #: includes/assign-categories.php:143
 msgid "Select User"
@@ -104,13 +105,14 @@ msgstr ""
 
 #: includes/categories-importer.php:116
 msgid "Categories Import Successfully."
-msgstr ""
+msgstr "Subject Areas Imported Successfully."
 
 #: includes/categories-importer.php:132
 msgid "Categories Bulk Import"
-msgstr ""
+msgstr "Subject Areas Bulk Import"
 
-#: includes/categories-importer.php:138 includes/resources-importer.php:138 includes/standards-importer.php:188
+#: includes/categories-importer.php:138 includes/resources-importer.php:138
+#: includes/standards-importer.php:188
 msgid "Import"
 msgstr ""
 
@@ -334,15 +336,18 @@ msgstr ""
 msgid "Organization"
 msgstr ""
 
-#: includes/resource_metafields.php:219 includes/resource_metafields.php:279 includes/resource_metafields.php:325
+#: includes/resource_metafields.php:219 includes/resource_metafields.php:279
+#: includes/resource_metafields.php:325
 msgid "Name:"
 msgstr ""
 
-#: includes/resource_metafields.php:229 includes/resource_metafields.php:289 includes/resource_metafields.php:335
+#: includes/resource_metafields.php:229 includes/resource_metafields.php:289
+#: includes/resource_metafields.php:335
 msgid "URL:"
 msgstr ""
 
-#: includes/resource_metafields.php:239 includes/resource_metafields.php:299 includes/resource_metafields.php:345
+#: includes/resource_metafields.php:239 includes/resource_metafields.php:299
+#: includes/resource_metafields.php:345
 msgid "Email Address:"
 msgstr ""
 
@@ -364,7 +369,7 @@ msgstr ""
 
 #: includes/set-category-images.php:24
 msgid "Category Name"
-msgstr ""
+msgstr "Subject Area Name"
 
 #: includes/set-category-images.php:25
 msgid "Upload/Remove"
@@ -388,9 +393,10 @@ msgstr ""
 
 #: includes/settings.php:52
 msgid "Assign Page Template to Category Pages"
-msgstr ""
+msgstr "Assign Page Template to Subject Area Pages"
 
-#: includes/settings.php:59 includes/settings.php:71 includes/settings.php:83 includes/settings.php:107
+#: includes/settings.php:59 includes/settings.php:71 includes/settings.php:83
+#: includes/settings.php:107
 msgid "Save"
 msgstr ""
 

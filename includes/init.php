@@ -173,17 +173,17 @@ function oermeta_callback()
 add_action( 'init', 'create_resource_taxonomies', 0 );
 function create_resource_taxonomies() {
 	$labels = array(
-		'name'              => _x( 'Category', 'taxonomy general name' ),
-		'singular_name'     => _x( 'Category', 'taxonomy singular name' ),
-		'search_items'      => __( 'Search Category' ),
-		'all_items'         => __( 'All Categorys' ),
-		'parent_item'       => __( 'Parent Category' ),
-		'parent_item_colon' => __( 'Parent Category:' ),
-		'edit_item'         => __( 'Edit Category' ),
-		'update_item'       => __( 'Update Category' ),
-		'add_new_item'      => __( 'Add New Category' ),
-		'new_item_name'     => __( 'New Genre Category' ),
-		'menu_name'         => __( 'Categories' ),
+		'name'              => _x( 'Subject Area', 'taxonomy general name' ),
+		'singular_name'     => _x( 'Subject Area', 'taxonomy singular name' ),
+		'search_items'      => __( 'Search Subject Areas' ),
+		'all_items'         => __( 'All Subject Areas' ),
+		'parent_item'       => __( 'Parent Subject Area' ),
+		'parent_item_colon' => __( 'Parent Subject Area:' ),
+		'edit_item'         => __( 'Edit Subject Area' ),
+		'update_item'       => __( 'Update Subject Area' ),
+		'add_new_item'      => __( 'Add New Subject Area' ),
+		'new_item_name'     => __( 'New Genre Subject Area' ),
+		'menu_name'         => __( 'Subject Areas' ),
 	);
 
 	$args = array(
@@ -479,11 +479,11 @@ add_action( 'split_shared_term', 'resource_split_shared_term', 10, 4 );
 
 add_action('admin_menu','oer_rsrcimprtr');
 function oer_rsrcimprtr(){
-	add_submenu_page('edit.php?post_type=resource','Set Category Images','Set Category Images','add_users','oer_setcatimage','oer_setcatimage');
+	add_submenu_page('edit.php?post_type=resource','Set Subject Area Images','Set Subject Area Images','add_users','oer_setcatimage','oer_setcatimage');
 	add_submenu_page('edit.php?post_type=resource','Resources Import','Import Resources','add_users','oer_rsrcimprt','oer_rsrcimprtrfn');
-	add_submenu_page('edit.php?post_type=resource','Categories Import','Import Categories','add_users','oer_catsimprt','oer_catsimprtrfn');
+	add_submenu_page('edit.php?post_type=resource','Subject Areas Import','Import Subject Areas','add_users','oer_catsimprt','oer_catsimprtrfn');
 	add_submenu_page('edit.php?post_type=resource','Standards Import','Import Standards','add_users','oer_stndrdsimprt','oer_stndrdsimprtfn');
-	add_submenu_page('edit.php?post_type=resource','Assign Categories','Assign Categories','add_users','oer_assign_categories','oer_assign_categories');
+	add_submenu_page('edit.php?post_type=resource','Assign Subject Areas','Assign Subject Areas','add_users','oer_assign_categories','oer_assign_categories');
 	add_submenu_page('edit.php?post_type=resource','Settings','Settings','add_users','oer_settings','oer_setngpgfn');
 }
 
