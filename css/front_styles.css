@@ -315,3 +315,7 @@ li.oer_sbstndard{
     color: #888;
     font-size: 13px;
 }
+
+.cat-div:hover .cat-txt-btm-cntnr .mne-sbjct-ttl a {
+    color: #fff;
+}

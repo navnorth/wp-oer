@@ -1,6 +1,6 @@
 /*.resource_category_sidebar { width: 25%; float: left; margin: 0; padding: 0; background: none repeat scroll 0 0 #ededed; }*/
 .resource_category_sidebar { width: 300px; float: left; margin: 0; padding: 0; background: none repeat scroll 0 0 #ededed; padding: 10px }
-.resource_category_sidebar > .resource_category { display:block; width: 100%; float: left; }
+.resource_category_sidebar > .resource_category { display:block; width: 100%; float: left; padding-left:0; }
 .rightcatcntr { width: 75%; float: right; margin: 0; padding: 0; }
 .subject-btn { width: 100%; padding: 15px 0; float: left; text-align: center; background: #024387; display: none; font-weight: bold; color: #fff; }
 .resource_category_sidebar .resource_category .sub-category span,
@@ -14,12 +14,14 @@
 .resource_category_sidebar .resource_category .sub-category>span a, .child_content_wpr .category .sub-category>span a { width: 71%; margin-right: 20px; float: left; padding: 15px 0 15px 15px; text-decoration: none; color: #444; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
 .resource_category_sidebar .resource_category .sub-category.has-child>span:hover a, .child_content_wpr .category .sub-category.has-child>span:hover a {color: #444; border: none}
 .resource_category_sidebar .resource_category .sub-category.has-child>span:hover .sub-category a, .child_content_wpr .category .sub-category.has-child>span:hover .sub-category a  {border: none}
-.resource_category_sidebar .resource_category .sub-category.activelist.has-child>span {background: url(../images/minus.png) no-repeat scroll 265px center #024387}
+.resource_category_sidebar .resource_category .sub-category.activelist.has-child>span,
+.resource_category_sidebar .resource_category .sub-category.current_class.has-child>span{background: url(../images/minus.png) no-repeat scroll 265px center #024387}
 .resource_category_sidebar .resource_category .sub-category.activelist>span { background-color:#024387; color:#fff; }
 .resource_category_sidebar .resource_category .sub-category.activelist>span a { color:#fff; }
 .child_content_wpr .category .sub-category.activelist.has-child>span {background: url(../images/minus.png) no-repeat scroll 95% center #024387}
 .child_content_wpr .category .sub-category.activelist.has-child>span label {border: 1px solid #fff; color: #fff}
-.resource_category_sidebar .resource_category .sub-category.activelist.has-child>span>a, .child_content_wpr .category .sub-category.activelist.has-child>span>a { color: #ffffff; }
+.resource_category_sidebar .resource_category .sub-category.activelist.has-child>span>a, .child_content_wpr .category .sub-category.activelist.has-child>span>a,
+.resource_category_sidebar .resource_category .sub-category.current_class.has-child>span>a, .child_content_wpr .category .sub-category.current_class.has-child>span>a{ color: #ffffff; }
 .resource_category_sidebar .resource_category .sub-category .sub-category, .child_content_wpr .category .sub-category .sub-category { margin-bottom: 0px; }
 .resource_category_sidebar .resource_category .sub-category .sub-category .current_class { background: #f2f2f2}
 .resource_category_sidebar .resource_category .sub-category .sub-category a, .child_content_wpr .category .sub-category .sub-category a { padding: 15px 0 15px 15px; color: #444; float: left; text-decoration: none; margin-bottom: 1px; width: 70%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
