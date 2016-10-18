@@ -41,7 +41,7 @@
 .resource_category_sidebar .resource_category .sub-category.has-child>span:hover a { color:#444444; }
 .has-child .category {display:none}
 .child-category { float: left; margin: 0; padding: 0; background: none repeat scroll 0 0 #ededed; padding: 10px; position: absolute;}
-.pgbrdcrums { float: left; width: 100%; background: #ededed; padding: 8px 0; height: 30px; }
+.pgbrdcrums { float: left; width: 100%; background: #ededed; padding: 8px 0; height: auto; }
 .pgbrdcrums ul { float: left; width: 98%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 0 0 10px 0; }
 .pgbrdcrums li { padding: 9px 0 0 15px; float: left; width: auto; }
 .pgbrdcrums ul li a { text-decoration: none !important; }
