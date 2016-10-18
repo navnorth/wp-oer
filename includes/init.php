@@ -138,7 +138,7 @@ function oer_postcreation(){
         'all_items'          => __( 'All Resources' ),
         'view_item'          => __( 'View Resource' ),
         'search_items'       => __( 'Search' ),
-        'menu_name'          => 'Resource'
+        'menu_name'          => 'OER'
     );
 
     $args = array(
