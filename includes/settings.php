@@ -22,7 +22,7 @@
 		update_option("oer_use_bootstrap",isset($_POST['use_bootstrap'])?$_POST['use_bootstrap']:false);
 	}
 
-	$templates 			= get_page_templates();
+	$templates 		= get_page_templates();
 	$slct_template 		= get_option("oer_category_template");
 	$oer_python_path 	= get_option("oer_python_path");
 	$oer_python_install = get_option("oer_python_install");
@@ -46,6 +46,47 @@
 		}
 		$options .= "<option $slct value='$template_filename'>$template_name</option>";
 	}
+?>
+<div class="wrap">
+    
+    <div id="icon-themes" class="icon32"></div>
+    <h2>Settings - OER Management</h2>
+    <?php settings_errors(); ?>
+     
+	<?php
+	$active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'general';
+	?>
+     
+    <h2 class="nav-tab-wrapper">
+        <a href="?post_type=resource&page=oer_settings&tab=general" class="nav-tab <?php echo $active_tab == 'general' ? 'nav-tab-active' : ''; ?>">General</a>
+        <a href="?post_type=resource&page=oer_settings&tab=styles" class="nav-tab <?php echo $active_tab == 'styles' ? 'nav-tab-active' : ''; ?>">Styles</a>
+        <a href="?post_type=resource&page=oer_settings&tab=setup" class="nav-tab <?php echo $active_tab == 'setup' ? 'nav-tab-active' : ''; ?>">Setup</a>
+    </h2>
+    
+    <?php
+	switch ($active_tab) {
+		case "general":
+			show_general_settings($options);
+			break;
+		case "styles":
+			show_styles_settings();
+			break;
+		case "setup":
+			show_setup_settings();
+			break;
+		default:
+			break;
+	}
+    ?>
+</div><!-- /.wrap -->
+<div class="plugin-footer">
+	<div class="plugin-info"><?php echo OER_PLUGIN_NAME . " " . OER_VERSION .""; ?></div>
+	<div class="plugin-link"><a href='http://www.navigationnorth.com/portfolio/oer-management/' target='_blank'><?php _e("More info", OER_SLUG); ?></a></div>
+	<div class="clear"></div>
+</div>
+
+<?php
+function show_general_settings($options) {
 ?>
 <div class="oer_imprtrwpr">
 	<div class="oer_hdng">
@@ -84,7 +125,11 @@
         </div>
     </form>
 </div>
+<?php
+}
 
+function show_styles_settings() {
+?>
 <form method="post" class="oer_settings_form">
 	<fieldset>
 		<legend><div class="oer_hdng"><?php _e("Screenshot and Display Settings", OER_SLUG); ?></div></legend>
@@ -109,9 +154,10 @@
 		</div>
 	</fieldset>
 </form>
+<?php
+}
 
-<div class="plugin-footer">
-	<div class="plugin-info"><?php echo OER_PLUGIN_NAME . " " . OER_VERSION .""; ?></div>
-	<div class="plugin-link"><a href='http://www.navigationnorth.com/portfolio/oer-management/' target='_blank'><?php _e("More info", OER_SLUG); ?></a></div>
-	<div class="clear"></div>
-</div>
+function show_setup_settings() {
+	echo "Upcoming Setup Settings!";
+}
+?>
