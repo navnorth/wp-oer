@@ -433,6 +433,93 @@ function oer_front_scripts()
 	}
 }
 
+//Initialize settings page
+add_action( 'admin_init' , 'oer_settings_page' );
+function oer_settings_page() {
+	//Create General Section
+	add_settings_section(
+		'oer_general_settings',
+		'General Settings',
+		'general_settings_callback',
+		'oer_settings'
+	);
+	
+	//Add Settings Fields - Assign Page Template
+	add_settings_field(
+		'category_template',
+		__("Assign Page Template to Category Pages", OER_SLUG),
+		'setup_settings_field',
+		'oer_settings',
+		'oer_general_settings',
+		array(
+			'uid' => 'category_template',
+			'type' => 'textbox',
+			'description' => __('Assign page template to subject area pages', OER_SLUG)
+		)
+	);
+	
+	//Set Path for Python Executable Script
+	add_settings_field(
+		'python_path',
+		__("Set Path For Python Excutable Script", OER_SLUG),
+		'setup_settings_field',
+		'oer_settings',
+		'oer_general_settings',
+		array(
+			'uid' => 'python_path',
+			'type' => 'textbox',
+			'description' => __('Set Path For Python Excutable Script', OER_SLUG)
+		)
+	);
+	
+	//Set Path for Python Installation
+	add_settings_field(
+		'python_install',
+		__("Set Path For Python Installation", OER_SLUG),
+		'setup_settings_field',
+		'oer_settings',
+		'oer_general_settings',
+		array(
+			'uid' => 'python_install',
+			'type' => 'textbox',
+			'description' => __('Set Path For Python Installation', OER_SLUG)
+		)
+	);
+	register_setting( 'oer_general_settings' , 'category_template' );
+	register_setting( 'oer_general_settings' , 'python_path' );
+	register_setting( 'oer_general_settings' , 'python_install' );
+}
+
+function setup_settings_field( $arguments ) {
+	$selected = "";
+	$size = "";
+
+	$value = get_option($arguments['uid']);
+
+	if ($arguments['type']=="textbox") {
+		$size = 'size="50"';
+	}
+
+	if ($arguments['type']=="checkbox"){
+		if ($value==1 || $value=="on")
+			$selected = "checked='checked'";
+		else{
+			$value = 1;
+		}
+	}
+
+	echo '<input name="'.$arguments['uid'].'" id="'.$arguments['uid'].'" type="'.$arguments['type'].'" value="' . $value . '" ' . $size . ' ' .  $selected . ' />';
+
+	//Show Helper Text if specified
+	if ($helper = $arguments['helper']) {
+		printf( '<span class="helper"> %s</span>' , $helper );
+	}
+
+	//Show Description if specified
+	if( $description = $arguments['description'] ){
+		printf( '<p class="description">%s</p>', $description );
+	}
+}
 //front side shortcode
 //include_once(OER_PATH.'includes/resource_front.php');
 ?>

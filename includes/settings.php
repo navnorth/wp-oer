@@ -88,7 +88,31 @@
 <?php
 function show_general_settings($options) {
 ?>
-<div class="oer_imprtrwpr">
+<div class="plugin-body">
+	<div class="row">
+		<div class="row-left">
+			<?php __("<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis tempus a metus eu vulputate. Integer imperdiet mattis pulvinar. Praesent finibus rutrum ipsum vel facilisis.</p>", OER_SLUG); ?>
+		</div>
+		<div class="row-right">
+			<strong><?php __("Support Options", OER_SLUG); ?></strong>
+			<ul>
+				<li><a href="#" target="_blank"><?php __("WordPress Plugin Support Forums", OER_SLUG); ?></a></li>
+				<li><?php __("Navigation North <a href='#' target='_blank'>direct supprt</a>", OER_SLUG); ?></li>
+			</ul>
+		</div>
+	</div>
+	<div class="row">
+		<form method="post" class="oer_settings_form">
+			<fieldset>
+				<legend><div class="oer_hdng"><?php _e("Screenshot Utility", OER_SLUG); ?></div></legend>
+			</fieldset>
+			<?php settings_fields("oer_general_settings"); ?>
+			<?php do_settings_sections("oer_general_settings"); ?>
+			<?php submit_button(); ?>
+		</form>
+	</div>
+</div>
+<!--<div class="oer_imprtrwpr">
 	<div class="oer_hdng">
 		<?php _e("Assign Page Template to Category Pages", OER_SLUG); ?>
     </div>
@@ -124,7 +148,7 @@ function show_general_settings($options) {
             <input type="submit" name="python_install_save" value="<?php _e("Save", OER_SLUG); ?>" class="button button-primary"/>
         </div>
     </form>
-</div>
+</div>-->
 <?php
 }
 
