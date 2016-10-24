@@ -439,34 +439,64 @@ function oer_settings_page() {
 	//Create General Section
 	add_settings_section(
 		'oer_general_settings',
-		'General Settings',
+		'',
 		'general_settings_callback',
 		'oer_settings'
 	);
 	
 	//Add Settings Fields - Assign Page Template
-	add_settings_field(
-		'category_template',
+	/*add_settings_field(
+		'oer_category_template',
 		__("Assign Page Template to Category Pages", OER_SLUG),
 		'setup_settings_field',
 		'oer_settings',
 		'oer_general_settings',
 		array(
-			'uid' => 'category_template',
-			'type' => 'textbox',
+			'uid' => 'oer_category_template',
+			'type' => 'selectbox',
 			'description' => __('Assign page template to subject area pages', OER_SLUG)
+		)
+	);*/
+	
+	//Add Settings field for Disable Screenshots
+	add_settings_field(
+		'oer_screenshots',
+		'',
+		'setup_settings_field',
+		'oer_settings',
+		'oer_general_settings',
+		array(
+			'uid' => 'oer_screenshots',
+			'type' => 'radio',
+			'name' =>  __('Disable Screenshots', OER_SLUG),
+			'value' => 'disabled'
+		)
+	);
+	
+	//Add Settings field for Disable Screenshots
+	add_settings_field(
+		'oer_screenshots',
+		'',
+		'setup_settings_field',
+		'oer_settings',
+		'oer_general_settings',
+		array(
+			'uid' => 'oer_screenshots',
+			'type' => 'radio',
+			'name' =>  __('Enable Server-side screenshots', OER_SLUG),
+			'value' => 'server-side enabled'
 		)
 	);
 	
 	//Set Path for Python Executable Script
 	add_settings_field(
-		'python_path',
+		'oer_python_path',
 		__("Set Path For Python Excutable Script", OER_SLUG),
 		'setup_settings_field',
 		'oer_settings',
 		'oer_general_settings',
 		array(
-			'uid' => 'python_path',
+			'uid' => 'oer_python_path',
 			'type' => 'textbox',
 			'description' => __('Set Path For Python Excutable Script', OER_SLUG)
 		)
@@ -474,21 +504,28 @@ function oer_settings_page() {
 	
 	//Set Path for Python Installation
 	add_settings_field(
-		'python_install',
+		'oer_python_install',
 		__("Set Path For Python Installation", OER_SLUG),
 		'setup_settings_field',
 		'oer_settings',
 		'oer_general_settings',
 		array(
-			'uid' => 'python_install',
+			'uid' => 'oer_python_install',
 			'type' => 'textbox',
 			'description' => __('Set Path For Python Installation', OER_SLUG)
 		)
 	);
-	register_setting( 'oer_general_settings' , 'category_template' );
-	register_setting( 'oer_general_settings' , 'python_path' );
-	register_setting( 'oer_general_settings' , 'python_install' );
+	register_setting( 'oer_settings' , 'oer_category_template' );
+	register_setting( 'oer_settings' , 'oer_enable_server_screenshots' );
+	register_setting( 'oer_settings' , 'oer_python_path' );
+	register_setting( 'oer_settings' , 'oer_python_install' );
 }
+
+//General settings callback
+function general_settings_callback() {
+	
+}
+
 
 function setup_settings_field( $arguments ) {
 	$selected = "";
@@ -498,6 +535,7 @@ function setup_settings_field( $arguments ) {
 
 	if ($arguments['type']=="textbox") {
 		$size = 'size="50"';
+		echo '<input name="'.$arguments['uid'].'" id="'.$arguments['uid'].'" type="'.$arguments['type'].'" value="' . $value . '" ' . $size . ' ' .  $selected . ' />';
 	}
 
 	if ($arguments['type']=="checkbox"){
@@ -506,18 +544,17 @@ function setup_settings_field( $arguments ) {
 		else{
 			$value = 1;
 		}
+		echo '<input name="'.$arguments['uid'].'" id="'.$arguments['uid'].'" type="'.$arguments['type'].'" value="' . $value . '" ' . $size . ' ' .  $selected . ' /><label for="'.$arguments['uid'].'"><strong>'.$arguments['name'].'</strong></label>';
 	}
 
-	echo '<input name="'.$arguments['uid'].'" id="'.$arguments['uid'].'" type="'.$arguments['type'].'" value="' . $value . '" ' . $size . ' ' .  $selected . ' />';
-
 	//Show Helper Text if specified
-	if ($helper = $arguments['helper']) {
-		printf( '<span class="helper"> %s</span>' , $helper );
+	if (isset($arguments['helper'])) {
+		printf( '<span class="helper"> %s</span>' , $arguments['helper'] );
 	}
 
 	//Show Description if specified
-	if( $description = $arguments['description'] ){
-		printf( '<p class="description">%s</p>', $description );
+	if( isset($arguments['description']) ){
+		printf( '<p class="description">%s</p>', $arguments['description'] );
 	}
 }
 //front side shortcode

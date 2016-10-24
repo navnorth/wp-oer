@@ -89,30 +89,30 @@
 function show_general_settings($options) {
 ?>
 <div class="plugin-body">
-	<div class="row">
+	<div class="plugin-row">
 		<div class="row-left">
-			<?php __("<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis tempus a metus eu vulputate. Integer imperdiet mattis pulvinar. Praesent finibus rutrum ipsum vel facilisis.</p>", OER_SLUG); ?>
+			<?php _e("Lorem ipsum dolor sit amet, consectetur adipiscing elit. In quis nunc tempor, maximus nulla nec, consectetur dolor. Cras tempor fermentum dolor ut maximus. Suspendisse pellentesque lacus semper justo blandit, non interdum velit tempor. Aenean euismod viverra erat eu pretium. Proin ut molestie velit, sit amet vehicula tellus. Praesent et pretium lectus.", OER_SLUG); ?>
 		</div>
 		<div class="row-right">
-			<strong><?php __("Support Options", OER_SLUG); ?></strong>
+			<strong><?php _e("Support Options", OER_SLUG); ?></strong>
 			<ul>
-				<li><a href="#" target="_blank"><?php __("WordPress Plugin Support Forums", OER_SLUG); ?></a></li>
-				<li><?php __("Navigation North <a href='#' target='_blank'>direct supprt</a>", OER_SLUG); ?></li>
+				<li><a href="#" target="_blank"><?php _e("WordPress Plugin Support Forums", OER_SLUG); ?></a></li>
+				<li><?php _e("Navigation North <a href='#' target='_blank'>direct supprt</a>", OER_SLUG); ?></li>
 			</ul>
 		</div>
 	</div>
-	<div class="row">
+	<div class="plugin-row">
 		<form method="post" class="oer_settings_form">
 			<fieldset>
 				<legend><div class="oer_hdng"><?php _e("Screenshot Utility", OER_SLUG); ?></div></legend>
+				<?php settings_fields("oer_settings"); ?>
+				<?php do_settings_sections("oer_settings"); ?>
+				<?php submit_button(); ?>
 			</fieldset>
-			<?php settings_fields("oer_general_settings"); ?>
-			<?php do_settings_sections("oer_general_settings"); ?>
-			<?php submit_button(); ?>
 		</form>
 	</div>
 </div>
-<!--<div class="oer_imprtrwpr">
+<div class="oer_imprtrwpr">
 	<div class="oer_hdng">
 		<?php _e("Assign Page Template to Category Pages", OER_SLUG); ?>
     </div>
@@ -148,12 +148,31 @@ function show_general_settings($options) {
             <input type="submit" name="python_install_save" value="<?php _e("Save", OER_SLUG); ?>" class="button button-primary"/>
         </div>
     </form>
-</div>-->
+</div>
 <?php
 }
 
 function show_styles_settings() {
 ?>
+<div class="plugin-body">
+	<div class="plugin-row">
+		<div class="row-left">
+			<?php _e("Lorem ipsum dolor sit amet, consectetur adipiscing elit. In quis nunc tempor, maximus nulla nec, consectetur dolor. Cras tempor fermentum dolor ut maximus. Suspendisse pellentesque lacus semper justo blandit, non interdum velit tempor. Aenean euismod viverra erat eu pretium. Proin ut molestie velit, sit amet vehicula tellus. Praesent et pretium lectus.", OER_SLUG); ?>
+		</div>
+		<div class="row-right">
+			<strong><?php _e("Support Options", OER_SLUG); ?></strong>
+			<ul>
+				<li><a href="#" target="_blank"><?php _e("WordPress Plugin Support Forums", OER_SLUG); ?></a></li>
+				<li><?php _e("Navigation North <a href='#' target='_blank'>direct supprt</a>", OER_SLUG); ?></li>
+			</ul>
+		</div>
+	</div>
+	<div class="plugin-row">
+		<form method="post" class="oer_settings_form">
+			
+		</form>
+	</div>
+</div>
 <form method="post" class="oer_settings_form">
 	<fieldset>
 		<legend><div class="oer_hdng"><?php _e("Screenshot and Display Settings", OER_SLUG); ?></div></legend>
