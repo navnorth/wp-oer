@@ -460,65 +460,120 @@ function oer_settings_page() {
 	
 	//Add Settings field for Disable Screenshots
 	add_settings_field(
-		'oer_screenshots',
+		'oer_disable_screenshots',
 		'',
 		'setup_settings_field',
 		'oer_settings',
 		'oer_general_settings',
 		array(
-			'uid' => 'oer_screenshots',
+			'uid' => 'oer_disable_screenshots',
 			'type' => 'radio',
+			'class' => 'screenshot_option',
 			'name' =>  __('Disable Screenshots', OER_SLUG),
-			'value' => 'disabled'
+			'value' => '1'
 		)
 	);
 	
-	//Add Settings field for Disable Screenshots
+	//Add Settings field for Server Side Screenshots
 	add_settings_field(
-		'oer_screenshots',
+		'oer_enable_screenshot',
 		'',
 		'setup_settings_field',
 		'oer_settings',
 		'oer_general_settings',
 		array(
-			'uid' => 'oer_screenshots',
+			'uid' => 'oer_enable_screenshot',
 			'type' => 'radio',
+			'class' => 'screenshot_option',
 			'name' =>  __('Enable Server-side screenshots', OER_SLUG),
-			'value' => 'server-side enabled'
+			'value' => '1'
 		)
 	);
 	
-	//Set Path for Python Executable Script
+	//Add Settings field for Using XvFB
 	add_settings_field(
-		'oer_python_path',
-		__("Set Path For Python Excutable Script", OER_SLUG),
+		'oer_use_xvfb',
+		'',
 		'setup_settings_field',
 		'oer_settings',
 		'oer_general_settings',
 		array(
-			'uid' => 'oer_python_path',
-			'type' => 'textbox',
-			'description' => __('Set Path For Python Excutable Script', OER_SLUG)
+			'uid' => 'oer_use_xvfb',
+			'type' => 'checkbox',
+			'indent' => true,
+			'name' =>  __('Use xvfb -- typically necessary on Linux installations', OER_SLUG)
 		)
 	);
 	
 	//Set Path for Python Installation
 	add_settings_field(
 		'oer_python_install',
-		__("Set Path For Python Installation", OER_SLUG),
+		__("Python executable", OER_SLUG),
 		'setup_settings_field',
 		'oer_settings',
 		'oer_general_settings',
 		array(
 			'uid' => 'oer_python_install',
 			'type' => 'textbox',
-			'description' => __('Set Path For Python Installation', OER_SLUG)
+			'indent' => true,
+			'title' => __('Python executable', OER_SLUG)
 		)
 	);
-	register_setting( 'oer_settings' , 'oer_category_template' );
-	register_setting( 'oer_settings' , 'oer_enable_server_screenshots' );
+	
+	//Set Path for Python Executable Script
+	add_settings_field(
+		'oer_python_path',
+		__("Python Screenshot script", OER_SLUG),
+		'setup_settings_field',
+		'oer_settings',
+		'oer_general_settings',
+		array(
+			'uid' => 'oer_python_path',
+			'type' => 'textbox',
+			'indent' => true,
+			'title' => __('Python Screenshot script', OER_SLUG)
+		)
+	);
+	
+	//Add Settings field for Disable Screenshots
+	add_settings_field(
+		'oer_external_screenshots',
+		'',
+		'setup_settings_field',
+		'oer_settings',
+		'oer_general_settings',
+		array(
+			'uid' => 'oer_external_screenshots',
+			'type' => 'radio',
+			'class' => 'screenshot_option',
+			'name' =>  __('Use external screenshot service', OER_SLUG),
+			'value' => '1'
+		)
+	);
+	
+	//Set Path for Python Executable Script
+	add_settings_field(
+		'oer_service_url',
+		__("Service URL", OER_SLUG),
+		'setup_settings_field',
+		'oer_settings',
+		'oer_general_settings',
+		array(
+			'uid' => 'oer_service_url',
+			'type' => 'textbox',
+			'indent' => true,
+			'title' => __("Service URL", OER_SLUG), 
+			'description' => __('use $url for where the Resource URL parameter should be placed', OER_SLUG)
+		)
+	);
+	
+	register_setting( 'oer_settings' , 'oer_disable_screenshots' );
+	register_setting( 'oer_settings' , 'oer_enable_screenshot' );
+	register_setting( 'oer_settings' , 'oer_use_xvfb' );
 	register_setting( 'oer_settings' , 'oer_python_path' );
 	register_setting( 'oer_settings' , 'oer_python_install' );
+	register_setting( 'oer_settings' , 'oer_external_screenshots' );
+	register_setting( 'oer_settings' , 'oer_service_url' );
 }
 
 //General settings callback
@@ -530,21 +585,34 @@ function general_settings_callback() {
 function setup_settings_field( $arguments ) {
 	$selected = "";
 	$size = "";
+	$class = "";
 
 	$value = get_option($arguments['uid']);
 
+	if (isset($arguments['indent'])){
+		echo '<div class="indent">';
+	}
+	
 	if ($arguments['type']=="textbox") {
 		$size = 'size="50"';
-		echo '<input name="'.$arguments['uid'].'" id="'.$arguments['uid'].'" type="'.$arguments['type'].'" value="' . $value . '" ' . $size . ' ' .  $selected . ' />';
+		if (isset($arguments['title']))
+			$title = $arguments['title'];
+		echo '<label for="'.$arguments['uid'].'"><strong>'.$title.'</strong></label><input name="'.$arguments['uid'].'" id="'.$arguments['uid'].'" type="'.$arguments['type'].'" value="' . $value . '" ' . $size . ' ' .  $selected . ' />';
+	}
+	
+	if (isset($arguments['class'])) {
+		$class = $arguments['class'];
+		$class = " class='".$class."' ";
 	}
 
-	if ($arguments['type']=="checkbox"){
+	if ($arguments['type']=="checkbox" || $arguments['type']=="radio"){
 		if ($value==1 || $value=="on")
 			$selected = "checked='checked'";
 		else{
 			$value = 1;
 		}
-		echo '<input name="'.$arguments['uid'].'" id="'.$arguments['uid'].'" type="'.$arguments['type'].'" value="' . $value . '" ' . $size . ' ' .  $selected . ' /><label for="'.$arguments['uid'].'"><strong>'.$arguments['name'].'</strong></label>';
+		
+		echo '<input name="'.$arguments['uid'].'" id="'.$arguments['uid'].'" '.$class.' type="'.$arguments['type'].'" value="' . $value . '" ' . $size . ' ' .  $selected . ' /><label for="'.$arguments['uid'].'"><strong>'.$arguments['name'].'</strong></label>';
 	}
 
 	//Show Helper Text if specified
@@ -555,6 +623,10 @@ function setup_settings_field( $arguments ) {
 	//Show Description if specified
 	if( isset($arguments['description']) ){
 		printf( '<p class="description">%s</p>', $arguments['description'] );
+	}
+	
+	if (isset($arguments['indent'])){
+		echo '</div>';
 	}
 }
 //front side shortcode

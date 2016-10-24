@@ -112,7 +112,7 @@ function show_general_settings($options) {
 		</form>
 	</div>
 </div>
-<div class="oer_imprtrwpr">
+<!--<div class="oer_imprtrwpr">
 	<div class="oer_hdng">
 		<?php _e("Assign Page Template to Category Pages", OER_SLUG); ?>
     </div>
@@ -148,7 +148,7 @@ function show_general_settings($options) {
             <input type="submit" name="python_install_save" value="<?php _e("Save", OER_SLUG); ?>" class="button button-primary"/>
         </div>
     </form>
-</div>
+</div>-->
 <?php
 }
 
