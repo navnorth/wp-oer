@@ -221,3 +221,11 @@ fieldset {
 .form-table th { width:0; display:none; }
 .form-table td label { margin-right:10px; }
 .form-table td .indent { margin-left:25px; }
+.form-table td textarea { width:100%; }
+.form-table td .inline-desc {
+	font-weight: normal;
+	font-size: 14px;
+	margin-left: 30px;
+}
+.form-table td h3 { margin:0; }
+.plugin-body { border-left:1px solid #cdcdcd; border-right:1px solid #cdcdcd; border-bottom:1px solid #cdcdcd; }

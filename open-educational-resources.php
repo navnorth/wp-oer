@@ -581,6 +581,56 @@ function general_settings_callback() {
 	
 }
 
+//Initialize Style Settings Tab
+add_action( 'admin_init' , 'oer_styles_settings' );
+function oer_styles_settings(){
+	//Create Styles Section
+	add_settings_section(
+		'oer_styles_settings',
+		'',
+		'styles_settings_callback',
+		'styles_settings_section'
+	);
+	
+	//Add Settings field for Importing Bootstrap CSS & JS Libraries
+	add_settings_field(
+		'oer_use_bootstrap',
+		'',
+		'setup_settings_field',
+		'styles_settings_section',
+		'oer_styles_settings',
+		array(
+			'uid' => 'oer_use_bootstrap',
+			'type' => 'checkbox',
+			'name' =>  __('Import Bootstrap CSS & JS libraries', OER_SLUG),
+			'description' => __('uncheck if your WP theme already included Bootstrap', OER_SLUG)
+		)
+	);
+	
+	//Add Settings field for Importing Bootstrap CSS & JS Libraries
+	add_settings_field(
+		'oer_additional_css',
+		'',
+		'setup_settings_field',
+		'styles_settings_section',
+		'oer_styles_settings',
+		array(
+			'uid' => 'oer_additional_css',
+			'type' => 'textarea',
+			'name' =>  __('Additional CSS', OER_SLUG),
+			'inline_description' => __('easily customize the look and feel with your own CSS', OER_SLUG)
+		)
+	);
+	
+	register_setting( 'styles_settings_section' , 'oer_use_bootstrap' );
+	register_setting( 'styles_settings_section' , 'oer_additional_css' );
+}
+
+//Styles Setting Callback
+function styles_settings_callback(){
+	
+}
+
 
 function setup_settings_field( $arguments ) {
 	$selected = "";
@@ -593,26 +643,37 @@ function setup_settings_field( $arguments ) {
 		echo '<div class="indent">';
 	}
 	
-	if ($arguments['type']=="textbox") {
-		$size = 'size="50"';
-		if (isset($arguments['title']))
-			$title = $arguments['title'];
-		echo '<label for="'.$arguments['uid'].'"><strong>'.$title.'</strong></label><input name="'.$arguments['uid'].'" id="'.$arguments['uid'].'" type="'.$arguments['type'].'" value="' . $value . '" ' . $size . ' ' .  $selected . ' />';
-	}
-	
 	if (isset($arguments['class'])) {
 		$class = $arguments['class'];
 		$class = " class='".$class."' ";
 	}
-
-	if ($arguments['type']=="checkbox" || $arguments['type']=="radio"){
-		if ($value==1 || $value=="on")
-			$selected = "checked='checked'";
-		else{
-			$value = 1;
-		}
+	
+	switch($arguments['type']){
+		case "textbox":
+			$size = 'size="50"';
+			if (isset($arguments['title']))
+				$title = $arguments['title'];
+			echo '<label for="'.$arguments['uid'].'"><strong>'.$title.'</strong></label><input name="'.$arguments['uid'].'" id="'.$arguments['uid'].'" type="'.$arguments['type'].'" value="' . $value . '" ' . $size . ' ' .  $selected . ' />';
+			break;
+		case "checkbox":
+		case "radio":
+			if ($value==1 || $value=="on")
+				$selected = "checked='checked'";
+			else{
+				$value = 1;
+			}
 		
-		echo '<input name="'.$arguments['uid'].'" id="'.$arguments['uid'].'" '.$class.' type="'.$arguments['type'].'" value="' . $value . '" ' . $size . ' ' .  $selected . ' /><label for="'.$arguments['uid'].'"><strong>'.$arguments['name'].'</strong></label>';
+			echo '<input name="'.$arguments['uid'].'" id="'.$arguments['uid'].'" '.$class.' type="'.$arguments['type'].'" value="' . $value . '" ' . $size . ' ' .  $selected . ' /><label for="'.$arguments['uid'].'"><strong>'.$arguments['name'].'</strong></label>';
+			break;
+		case "textarea":
+			echo '<label for="'.$arguments['uid'].'"><h3><strong>'.$arguments['name'];
+			if (isset($arguments['inline_description']))
+				echo '<span class="inline-desc">'.$arguments['inline_description'].'</span>';
+			echo '</strong></h3></label>';
+			echo '<textarea name="'.$arguments['uid'].'" id="'.$arguments['uid'].'" rows="10">' . $value . '</textarea>';
+			break;
+		default:
+			break;
 	}
 
 	//Show Helper Text if specified

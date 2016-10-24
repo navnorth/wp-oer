@@ -169,11 +169,13 @@ function show_styles_settings() {
 	</div>
 	<div class="plugin-row">
 		<form method="post" class="oer_settings_form">
-			
+			<?php settings_fields("styles_settings_section"); ?>
+			<?php do_settings_sections("styles_settings_section"); ?>
+			<?php submit_button(); ?>
 		</form>
 	</div>
 </div>
-<form method="post" class="oer_settings_form">
+<!--<form method="post" class="oer_settings_form">
 	<fieldset>
 		<legend><div class="oer_hdng"><?php _e("Screenshot and Display Settings", OER_SLUG); ?></div></legend>
 		<div class="oer_imprtrwpr">
@@ -196,7 +198,7 @@ function show_styles_settings() {
 			</div>
 		</div>
 	</fieldset>
-</form>
+</form>-->
 <?php
 }
 
