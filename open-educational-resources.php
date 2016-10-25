@@ -567,13 +567,13 @@ function oer_settings_page() {
 		)
 	);
 	
-	register_setting( 'oer_settings' , 'oer_disable_screenshots' );
-	register_setting( 'oer_settings' , 'oer_enable_screenshot' );
-	register_setting( 'oer_settings' , 'oer_use_xvfb' );
-	register_setting( 'oer_settings' , 'oer_python_path' );
-	register_setting( 'oer_settings' , 'oer_python_install' );
-	register_setting( 'oer_settings' , 'oer_external_screenshots' );
-	register_setting( 'oer_settings' , 'oer_service_url' );
+	register_setting( 'oer_general_settings' , 'oer_disable_screenshots' );
+	register_setting( 'oer_general_settings' , 'oer_enable_screenshot' );
+	register_setting( 'oer_general_settings' , 'oer_use_xvfb' );
+	register_setting( 'oer_general_settings' , 'oer_python_path' );
+	register_setting( 'oer_general_settings' , 'oer_python_install' );
+	register_setting( 'oer_general_settings' , 'oer_external_screenshots' );
+	register_setting( 'oer_general_settings' , 'oer_service_url' );
 }
 
 //General settings callback
@@ -622,8 +622,8 @@ function oer_styles_settings(){
 		)
 	);
 	
-	register_setting( 'styles_settings_section' , 'oer_use_bootstrap' );
-	register_setting( 'styles_settings_section' , 'oer_additional_css' );
+	register_setting( 'oer_styles_settings' , 'oer_use_bootstrap' );
+	register_setting( 'oer_styles_settings' , 'oer_additional_css' );
 }
 
 //Styles Setting Callback

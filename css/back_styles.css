@@ -218,6 +218,7 @@ fieldset {
 .plugin-row:first-child { padding:15px 15px 0; }
 .plugin-row .row-left { width:60%; float:left; }
 .plugin-row .row-right { width:35%; float:right; }
+.plugin-row fieldset { margin-bottom:15px; }
 .form-table th { width:0; display:none; }
 .form-table td label { margin-right:10px; }
 .form-table td .indent { margin-left:25px; }

@@ -1,25 +1,25 @@
 <?php
-	if(isset($_POST['cat_template']))
+	/*if(isset($_POST['oer_category_template']))
 	{
-		update_option("oer_category_template",$_POST['category_template']);
+		update_option("oer_category_template",$_POST['oer_category_template']);
 	}
 
-	if(isset($_POST['path_save']))
+	if(isset($_POST['oer_python_path']))
 	{
-		update_option("oer_python_path",$_POST['python_path']);
+		update_option("oer_python_path",$_POST['oer_python_path']);
 	}
 
-	if(isset($_POST['python_install_save']))
+	if(isset($_POST['oer_python_install']))
 	{
-		update_option("oer_python_install",$_POST['python_install']);
+		update_option("oer_python_install",$_POST['oer_python_install']);
 	}
 
-	if(isset($_POST['enable_screenshot_save']))
+	if(isset($_POST['oer_enable_screenshot']))
 	{
-		update_option("oer_enable_screenshot",isset($_POST['enable_screenshot'])?$_POST['enable_screenshot']:false);
-		update_option("oer_use_xvfb",isset($_POST['use_xvfb'])?$_POST['use_xvfb']:false);
+		update_option("oer_enable_screenshot",isset($_POST['oer_enable_screenshot'])?$_POST['enable_screenshot']:false);
+		update_option("oer_use_xvfb",isset($_POST['oer_use_xvfb'])?$_POST['oer_use_xvfb']:false);
 		update_option("oer_debug_mode",isset($_POST['debug_mode'])?$_POST['debug_mode']:false);
-		update_option("oer_use_bootstrap",isset($_POST['use_bootstrap'])?$_POST['use_bootstrap']:false);
+		update_option("oer_use_bootstrap",isset($_POST['oer_use_bootstrap'])?$_POST['oer_use_bootstrap']:false);
 	}
 
 	$templates 		= get_page_templates();
@@ -45,7 +45,7 @@
 			$slct = '';
 		}
 		$options .= "<option $slct value='$template_filename'>$template_name</option>";
-	}
+	}*/
 ?>
 <div class="wrap">
     
@@ -102,10 +102,10 @@ function show_general_settings($options) {
 		</div>
 	</div>
 	<div class="plugin-row">
-		<form method="post" class="oer_settings_form">
+		<form method="post" class="oer_settings_form" action="options.php">
 			<fieldset>
 				<legend><div class="oer_hdng"><?php _e("Screenshot Utility", OER_SLUG); ?></div></legend>
-				<?php settings_fields("oer_settings"); ?>
+				<?php settings_fields("oer_general_settings"); ?>
 				<?php do_settings_sections("oer_settings"); ?>
 				<?php submit_button(); ?>
 			</fieldset>
@@ -168,8 +168,8 @@ function show_styles_settings() {
 		</div>
 	</div>
 	<div class="plugin-row">
-		<form method="post" class="oer_settings_form">
-			<?php settings_fields("styles_settings_section"); ?>
+		<form method="post" class="oer_settings_form" action="options.php">
+			<?php settings_fields("oer_styles_settings"); ?>
 			<?php do_settings_sections("styles_settings_section"); ?>
 			<?php submit_button(); ?>
 		</form>
