@@ -200,7 +200,7 @@ ul.slctstandard > li
 .oer_imprtrwpr .fields {
 	margin-bottom:10px;
 }
-fieldset {
+.plugin-row fieldset {
 	border: 1px solid #cccccc;
 	padding-left: 10px;
 }
@@ -219,14 +219,14 @@ fieldset {
 .plugin-row .row-left { width:60%; float:left; }
 .plugin-row .row-right { width:35%; float:right; }
 .plugin-row fieldset { margin-bottom:15px; }
-.form-table th { width:0; display:none; }
-.form-table td label { margin-right:10px; }
-.form-table td .indent { margin-left:25px; }
-.form-table td textarea { width:100%; }
-.form-table td .inline-desc {
+.plugin-row .form-table th { width:0; display:none; }
+.plugin-row .form-table td label { margin-right:10px; }
+.plugin-row .form-table td .indent { margin-left:25px; }
+.plugin-row .form-table td textarea { width:100%; }
+.plugin-row .form-table td .inline-desc {
 	font-weight: normal;
 	font-size: 14px;
 	margin-left: 30px;
 }
-.form-table td h3 { margin:0; }
+.plugin-row .form-table td h3 { margin:0; }
 .plugin-body { border-left:1px solid #cdcdcd; border-right:1px solid #cdcdcd; border-bottom:1px solid #cdcdcd; }

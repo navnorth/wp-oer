@@ -35,6 +35,7 @@ define( 'OER_VERSION', '0.2.7' );
 
 include_once(OER_PATH.'includes/oer-functions.php');
 include_once(OER_PATH.'includes/init.php');
+include_once(OER_PATH.'includes/shortcode.php');
 
 //define global variable $debug_mode and get value from settings
 global $_debug, $_bootstrap;
@@ -268,7 +269,7 @@ function oer_tag_template( $template ) {
  /**
   * Load Resource Categories on home page
   **/
- add_filter( 'the_content', 'load_front_page_resources' );
+ /*add_filter( 'the_content', 'load_front_page_resources' );
  function load_front_page_resources( $content = ""  ) {
 	global $wpdb;
 	$args = array(
@@ -355,7 +356,7 @@ function oer_tag_template( $template ) {
 			$content .= $home_content;
 	}
 	return $content;
- }
+ }*/
  
  /** get default category icon **/
  function get_default_category_icon($category_name, $hover = false) {

@@ -66,7 +66,7 @@
     <?php
 	switch ($active_tab) {
 		case "general":
-			show_general_settings($options);
+			show_general_settings();
 			break;
 		case "styles":
 			show_styles_settings();
@@ -86,7 +86,7 @@
 </div>
 
 <?php
-function show_general_settings($options) {
+function show_general_settings() {
 ?>
 <div class="plugin-body">
 	<div class="plugin-row">

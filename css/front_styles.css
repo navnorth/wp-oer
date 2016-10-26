@@ -197,6 +197,7 @@ li.oer_sbstndard{
     margin-top: 35px;
     font-size: 15px;
     letter-spacing: .5px;
+    list-style:none;
 }
 .child-category {
     float: left;
