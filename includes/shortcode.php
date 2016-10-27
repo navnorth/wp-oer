@@ -83,11 +83,17 @@ function show_oer_subjects($atts) {
 				$column = " col-md-".$colnum;    
 			    }
 			    
+			    $count_span = '<span>'. $count .'</span>';
+			    if (isset($show_counts)){
+				if ($show_counts=="no" || $show_counts=="false")
+				    $count_span = "";
+			    }
+			    
 			    $content .= '<div class="snglctwpr'.$column.'"><div class="cat-div" data-ownback="'.get_template_directory_uri().'/img/top-arrow.png" onMouseOver="changeonhover(this)" onMouseOut="changeonout(this);" onclick="togglenavigation(this);" data-id="'.$cnt.'" data-class="'.$lepcnt.'" data-normalimg="'.$icn_guid.'" data-hoverimg="'.$icn_hover_guid.'">
 				    <div class="cat-icn" style="background: url('.$icn_guid.') no-repeat scroll center center; "></div>
 				    <div class="cat-txt-btm-cntnr">
 					    <ul>
-						    <li><label class="mne-sbjct-ttl" ><a href="'. site_url() .'/resource-category/'. $category->slug .'">'. $category->name .'</a></label><span>'. $count .'</span></li>
+						    <li><label class="mne-sbjct-ttl" ><a href="'. site_url() .'/resource-category/'. $category->slug .'">'. $category->name .'</a></label>'.$count_span.'</li>
 					    </ul>
 				    </div>';
 				    
