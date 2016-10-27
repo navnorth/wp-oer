@@ -258,7 +258,7 @@ li.oer_sbstndard{
 .child_content_wpr {
     float: left;
     margin: 0;
-    padding: 20px 20px 20px 20px;
+    padding: 20px 20px 0px 20px;
     display: none;
     background: #ededed;
     border-top: 1px solid #024387;
@@ -270,6 +270,7 @@ li.oer_sbstndard{
 .category_sidebar>.category, .child_content_wpr>.category, .category_sidebar>.category>.sub-category, .child_content_wpr>.category>.sub-category {
     display: block;
 }
+.child_content_wpr>.category>.sub-category { margin:0; }
 .category_sidebar .category, .child_content_wpr .category {
     display: none;
     width: 100%;

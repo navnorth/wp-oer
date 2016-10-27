@@ -7,6 +7,7 @@ function show_oer_subjects($atts) {
     global $wpdb;
     //Default
     $column = " col-md-3";
+    $show_children = false;
     
     if ($atts)
 	extract($atts);
@@ -64,6 +65,7 @@ function show_oer_subjects($atts) {
 			    $count = get_oer_post_count($category->term_id, "resource-category");
 			    $count = $count + $category->count;
 			    
+			    // Columns attribute
 			    if (isset($columns)) {
 				$colnum = 3;
 				switch ($columns){
@@ -84,24 +86,38 @@ function show_oer_subjects($atts) {
 			    }
 			    
 			    $count_span = '<span>'. $count .'</span>';
+			    
+			    // Show Counts Attribute
 			    if (isset($show_counts)){
 				if ($show_counts=="no" || $show_counts=="false")
 				    $count_span = "";
 			    }
 			    
-			    $content .= '<div class="snglctwpr'.$column.'"><div class="cat-div" data-ownback="'.get_template_directory_uri().'/img/top-arrow.png" onMouseOver="changeonhover(this)" onMouseOut="changeonout(this);" onclick="togglenavigation(this);" data-id="'.$cnt.'" data-class="'.$lepcnt.'" data-normalimg="'.$icn_guid.'" data-hoverimg="'.$icn_hover_guid.'">
+			    $toggle_navigation = "";
+			    //Sublevel attributes
+			    if (isset($sublevels)){
+				if ($sublevels=="yes" || $sublevels=="true"){
+				    $show_children=true;
+				    $toggle_navigation = ' onclick="togglenavigation(this);"';
+				}
+			    }
+			    
+			    $content .= '<div class="snglctwpr'.$column.'"><div class="cat-div" data-ownback="'.get_template_directory_uri().'/img/top-arrow.png" onMouseOver="changeonhover(this)" onMouseOut="changeonout(this);" '.$toggle_navigation.' data-id="'.$cnt.'" data-class="'.$lepcnt.'" data-normalimg="'.$icn_guid.'" data-hoverimg="'.$icn_hover_guid.'">
 				    <div class="cat-icn" style="background: url('.$icn_guid.') no-repeat scroll center center; "></div>
 				    <div class="cat-txt-btm-cntnr">
 					    <ul>
 						    <li><label class="mne-sbjct-ttl" ><a href="'. site_url() .'/resource-category/'. $category->slug .'">'. $category->name .'</a></label>'.$count_span.'</li>
 					    </ul>
 				    </div>';
-				    
+			    
+				if ($show_children) {
 				    $children = get_term_children($category->term_id, 'resource-category');
 				    if( !empty( $children ) )
 				    {
 					    $content .= '<div class="child-category">'. oer_front_child_category($category->term_id) .'</div>';
 				    }
+				}
+				
 			    $content .= '</div>';
 			    //if(($cnt % 4) == 0){
 				    $content .= '<div class="child_content_wpr" data-id="'.$lepcnt.'"></div>';
