@@ -159,7 +159,7 @@ li.oer_sbstndard{
 .oer_fld .oer_lstofstandrd img{
     margin-left:100px;
 }
-.snglctwpr { padding-left:0 !important;padding-right:0 !important;width:auto !important;float:none !important; position:initial !important; display:inline-block; }
+.snglctwpr { padding-left:0 !important;padding-right:0 !important;float:none !important; position:initial !important; display:inline-block; }
 .ctgry-cntnr {
     width: 100%;
     padding-bottom: 10px;
@@ -170,7 +170,7 @@ li.oer_sbstndard{
 }
 .cat-div {
     float: none;
-    width: 278px;
+    width: 93%;
     height: auto;
     border: 1px solid #afafaf;
     margin: 10px;
