@@ -1,8 +1,8 @@
 jQuery(document).ready(function(e) {
 	jQuery(".snglctwpr").each(function(index, element) {
-		var hght = jQuery(this).children(".cat-div").children(".child-category").height();
-			jQuery(this).children(".cat-div").children(".child-category").attr("data-height", hght);
-			jQuery(this).children(".cat-div").children(".child-category").hide();
+		var hght = jQuery(this).children(".cat-div,.cat-div-large,.cat-div-medium,.cat-div-small").children(".child-category").height();
+			jQuery(this).children(".cat-div,.cat-div-large,.cat-div-medium,.cat-div-small").children(".child-category").attr("data-height", hght);
+			jQuery(this).children(".cat-div,.cat-div-large,.cat-div-medium,.cat-div-small").children(".child-category").hide();
 			//alert(hght);
 	    });
 	jQuery( ".oer_datepicker" ).datepicker();
@@ -91,7 +91,7 @@ function toggleparent(ref)
 
 function togglenavigation(ref)
 {
-	jQuery(".cat-div").each(function(index, value)
+	jQuery(".cat-div,.cat-div-large,.cat-div-medium,.cat-div-small").each(function(index, value)
 	{
 		if(value == ref)
 		{

@@ -8,6 +8,7 @@ function show_oer_subjects($atts) {
     //Default
     $column = " col-md-3";
     $show_children = false;
+    $display_size = "cat-div";
     
     if ($atts)
 	extract($atts);
@@ -65,6 +66,11 @@ function show_oer_subjects($atts) {
 			    $count = get_oer_post_count($category->term_id, "resource-category");
 			    $count = $count + $category->count;
 			    
+			    // Size attribute
+			    if (isset($size)){
+				$display_size = "cat-div-".$size;
+			    }
+			    
 			    // Columns attribute
 			    if (isset($columns)) {
 				$colnum = 3;
@@ -102,7 +108,7 @@ function show_oer_subjects($atts) {
 				}
 			    }
 			    
-			    $content .= '<div class="snglctwpr'.$column.'"><div class="cat-div" data-ownback="'.get_template_directory_uri().'/img/top-arrow.png" onMouseOver="changeonhover(this)" onMouseOut="changeonout(this);" '.$toggle_navigation.' data-id="'.$cnt.'" data-class="'.$lepcnt.'" data-normalimg="'.$icn_guid.'" data-hoverimg="'.$icn_hover_guid.'">
+			    $content .= '<div class="snglctwpr'.$column.'"><div class="'.$display_size.'" data-ownback="'.get_template_directory_uri().'/img/top-arrow.png" onMouseOver="changeonhover(this)" onMouseOut="changeonout(this);" '.$toggle_navigation.' data-id="'.$cnt.'" data-class="'.$lepcnt.'" data-normalimg="'.$icn_guid.'" data-hoverimg="'.$icn_hover_guid.'">
 				    <div class="cat-icn" style="background: url('.$icn_guid.') no-repeat scroll center center; "></div>
 				    <div class="cat-txt-btm-cntnr">
 					    <ul>
