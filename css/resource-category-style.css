@@ -1,5 +1,5 @@
 /*.resource_category_sidebar { width: 25%; float: left; margin: 0; padding: 0; background: none repeat scroll 0 0 #ededed; }*/
-.resource_category_sidebar { width: 300px; float: left; margin: 0; padding: 0; background: none repeat scroll 0 0 #ededed; padding: 10px }
+.resource_category_sidebar { width: 300px; float: left; margin: 0; padding: 0; background: none repeat scroll 0 0 #ededed; padding: 10px; height:auto !important; }
 .resource_category_sidebar > .resource_category { display:block; width: 100%; float: left; padding-left:0; }
 .rightcatcntr { width: 75%; float: right; margin: 0; padding: 0; }
 .subject-btn { width: 100%; padding: 15px 0; float: left; text-align: center; background: #024387; display: none; font-weight: bold; color: #fff; }
