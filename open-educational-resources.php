@@ -38,9 +38,10 @@ include_once(OER_PATH.'includes/init.php');
 include_once(OER_PATH.'includes/shortcode.php');
 
 //define global variable $debug_mode and get value from settings
-global $_debug, $_bootstrap;
+global $_debug, $_bootstrap, $_css;
 $_debug = get_option('oer_debug_mode');
 $_bootstrap = get_option('oer_use_bootstrap');
+$_css = get_option('oer_additional_css');
 
 register_activation_hook(__FILE__, 'create_csv_import_table');
 function create_csv_import_table()

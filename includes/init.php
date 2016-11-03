@@ -127,6 +127,19 @@ function oer_frontside_scripts()
 	wp_enqueue_script('front-scripts', OER_URL.'js/front_scripts.js');
 }
 
+//Add style block
+add_action( 'wp_head' , 'add_style_block'  );
+function add_style_block(){
+    global $_css;
+    
+    if ($_css) {
+	$output = "<style>"."\n";
+	$output .= $_css."\n";
+	$output .="</style>"."\n";
+	echo $output;
+    }
+}
+
 //register custom post
 add_action( 'init' , 'oer_postcreation' );
 function oer_postcreation(){
