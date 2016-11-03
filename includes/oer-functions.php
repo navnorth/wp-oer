@@ -181,12 +181,12 @@ function debug_log($message) {
 if (!function_exists('get_oer_category_child')) {
 	function get_oer_category_child($categoryid, $child_term_id = 0)
 	{
-		$args = array('hide_empty' => 0, 'taxonomy' => 'resource-category','parent' => $categoryid);
+		$args = array('hide_empty' => 0, 'taxonomy' => 'resource-subject-area','parent' => $categoryid);
 		$catchilds = get_categories($args);
 		$term = get_the_title();
 		
 		//$rsltdata = get_term_by( "name", $term, "resource-category", ARRAY_A );
-		$rsltdata = get_term_by( "id", $child_term_id, "resource-category", ARRAY_A );
+		$rsltdata = get_term_by( "id", $child_term_id, "resource-subject-area", ARRAY_A );
 		
 		$parentid = array();
 		if($rsltdata['parent'] != 0)
@@ -197,7 +197,7 @@ if (!function_exists('get_oer_category_child')) {
 			{
 				//$idObj = get_category_by_slug($parent[$k]);
 				if ($parent[$k]) {
-					$idObj = get_term_by('slug', $parent[$k], 'resource-category');
+					$idObj = get_term_by('slug', $parent[$k], 'resource-subject-area');
 					$parentid[] = $idObj->term_id;
 				}
 			}
@@ -210,7 +210,7 @@ if (!function_exists('get_oer_category_child')) {
 			{
 				//var_dump($catchild->term_id);
 				//var_dump($rsltdata['term_id']);
-				$children = get_term_children($catchild->term_id, 'resource-category');
+				$children = get_term_children($catchild->term_id, 'resource-subject-area');
 				//current class
 				if($rsltdata['term_id'] == $catchild->term_id)
 				{
@@ -229,14 +229,14 @@ if (!function_exists('get_oer_category_child')) {
 				{
 					echo '<li class="sub-category has-child'.$class.'" title="'. $catchild->name .'" >
 							<span onclick="toggleparent(this);">
-								<a href="'. site_url() .'/resource-category/'. $catchild->slug .'">' . $catchild->name .'</a>
+								<a href="'. site_url() .'/resource-subject-area/'. $catchild->slug .'">' . $catchild->name .'</a>
 							</span>';
 				}
 				else
 				{
 					echo '<li class="sub-category'.$class.'" title="'. $catchild->name .'" >
 							<span onclick="toggleparent(this);">
-								<a href="'. site_url() .'/resource-category/'. $catchild->slug .'">' . $catchild->name .'</a>
+								<a href="'. site_url() .'/resource-subject-area/'. $catchild->slug .'">' . $catchild->name .'</a>
 							</span>';
 				}
 				get_oer_category_child( $catchild->term_id);
@@ -293,7 +293,7 @@ if (!function_exists('get_oer_parent_term')) {
 }
 
 if (!function_exists('get_term_top_most_parent')) {
-	function get_term_top_most_parent($term_id, $taxonomy="resource-category"){
+	function get_term_top_most_parent($term_id, $taxonomy="resource-subject-area"){
 	    // start from the current term
 	    $parent  = get_term_by( 'id', $term_id, $taxonomy);
 	    // climb up the hierarchy until we reach a term with parent = '0'
@@ -328,7 +328,7 @@ if (!function_exists('get_oer_post_count')) {
 if (!function_exists('oer_front_child_category')) {
 	function oer_front_child_category($categoryid)
 	{
-		$args = array('hide_empty' => 0, 'taxonomy' => 'resource-category','parent' => $categoryid);
+		$args = array('hide_empty' => 0, 'taxonomy' => 'resource-subject-area','parent' => $categoryid);
 		$catchilds = get_categories($args);
 		$rtrn = "";
 	
@@ -337,8 +337,8 @@ if (!function_exists('oer_front_child_category')) {
 			$rtrn .= '<ul class="category">';
 			foreach($catchilds as $catchild)
 			{
-				$children = get_term_children($catchild->term_id, 'resource-category');
-				$count = get_oer_post_count($catchild->term_id, "resource-category");
+				$children = get_term_children($catchild->term_id, 'resource-subject-area');
+				$count = get_oer_post_count($catchild->term_id, "resource-subject-area");
 				$count = $count + $catchild->count;
 				if( !empty( $children ) )
 				{

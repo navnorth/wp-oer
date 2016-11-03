@@ -65,7 +65,7 @@ get_header(); ?>
 		<div class="rsrcrghtcntr col-md-7">
                 	<div class="rsrcctgries">
                     	<?php
-                        $post_terms = get_the_terms( $post->ID, 'resource-category' );
+                        $post_terms = get_the_terms( $post->ID, 'resource-subject-area' );
 						if(!empty($post_terms))
 						{
 							foreach($post_terms as $term)

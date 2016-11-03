@@ -177,7 +177,7 @@ if(isset($_POST['resrc_imprt']))
 					$post_id = wp_insert_post( $post, false );
 					
 					//Set Category of Resources
-					wp_set_object_terms( $post_id, $category_id, 'resource-category', true );
+					wp_set_object_terms( $post_id, $category_id, 'resource-subject-area', true );
 					
 					// Set Tages
 					$oer_kywrd = strtolower(trim($oer_kywrd,","));

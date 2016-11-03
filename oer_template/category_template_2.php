@@ -4,7 +4,7 @@
  */
 get_header();
 $term = get_the_title();
-$rsltdata = get_term_by( "name", $term, "resource-category", ARRAY_A );
+$rsltdata = get_term_by( "name", $term, "resource-subject-area", ARRAY_A );
 
 $parentid = array();
 if($rsltdata['parent'] != 0)
@@ -22,11 +22,11 @@ if($rsltdata['parent'] != 0)
 	<div class="category_sidebar">
 	<?php
 	echo '<ul class="category">';
-			$args = array('hide_empty' => 0, 'taxonomy' => 'resource-category', 'parent' => 0);
+			$args = array('hide_empty' => 0, 'taxonomy' => 'resource-subject-area', 'parent' => 0);
 			$categories= get_categories($args);
 			foreach($categories as $category)
 			{
-				$children = get_term_children($category->term_id, 'resource-category');
+				$children = get_term_children($category->term_id, 'resource-subject-area');
 				$getimage = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix.'postmeta'." WHERE meta_key='category_image' AND meta_value='$category->term_id'");
 				if(!empty($getimage)){ $attach_icn = get_post($getimage[0]->post_id); }
 				else { $attach_icn = array(); }
@@ -64,8 +64,8 @@ if($rsltdata['parent'] != 0)
 		<div class="pgbrdcrums">
 			<ul>
 				<?php
-					$termid = get_term_by('name', $term, "resource-category" );
-					$strcat = get_custom_category_parents($termid, "resource-category" , FALSE, ':', TRUE);
+					$termid = get_term_by('name', $term, "resource-subject-area" );
+					$strcat = get_custom_category_parents($termid, "resource-subject-area" , FALSE, ':', TRUE);
 					if(strpos($strcat,':'))
 					{
 						$top_cat = split(':',$strcat);
@@ -115,7 +115,7 @@ if($rsltdata['parent'] != 0)
 				$args = array(
 					'post_type' => 'resource',
 					'posts_per_page' => 15,
-					'tax_query' => array(array('taxonomy' => 'resource-category','terms' => array($rsltdata['term_id'])))
+					'tax_query' => array(array('taxonomy' => 'resource-subject-area','terms' => array($rsltdata['term_id'])))
 				);
 				$posts = get_posts($args);
 				

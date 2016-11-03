@@ -17,10 +17,10 @@ $term_id = get_queried_object_id();
 
 //Get Term based on Category ID
 //$term = get_the_title();
-$terms = get_term_by( "id" , $term_id , 'resource-category' , object );
+$terms = get_term_by( "id" , $term_id , 'resource-subject-area' , object );
 $term = $terms->name;
 
-$rsltdata = get_term_by( "name", $term, "resource-category", ARRAY_A );
+$rsltdata = get_term_by( "name", $term, "resource-subject-area", ARRAY_A );
 
 $parentid = array();
 if($rsltdata['parent'] != 0)
@@ -30,7 +30,7 @@ if($rsltdata['parent'] != 0)
 	{
 		if ($parent[$k]) {
 			//$idObj = get_category_by_slug($parent[$k]);
-			$idObj = get_term_by('slug', $parent[$k], 'resource-category');
+			$idObj = get_term_by('slug', $parent[$k], 'resource-subject-area');
 			$parentid[] = $idObj->term_id;
 		}
 	}
@@ -40,12 +40,12 @@ if($rsltdata['parent'] != 0)
 	<div class="resource_category_sidebar template_resource_category_sidebar col-md-3">
 	<?php
 	echo '<ul class="resource_category">';
-			$args = array('hide_empty' => 0, 'taxonomy' => 'resource-category', 'parent' => 0);
+			$args = array('hide_empty' => 0, 'taxonomy' => 'resource-subject-area', 'parent' => 0);
 			$categories= get_categories($args);
                         
 			foreach($categories as $category)
 			{
-				$children = get_term_children($category->term_id, 'resource-category');
+				$children = get_term_children($category->term_id, 'resource-subject-area');
 				$getimage = $wpdb->get_results( $wpdb->prepare ( "SELECT * FROM ".$wpdb->prefix.'postmeta'." WHERE meta_key='category_image' AND meta_value=%s" , $category->term_id));
 				if(!empty($getimage)){
                                     $attach_icn = get_post($getimage[0]->post_id);
@@ -87,7 +87,7 @@ if($rsltdata['parent'] != 0)
 		<div class="pgbrdcrums">
 			<ul>
 				<?php
-					$strcat = get_custom_oer_category_parents($term_id, "resource-category" , FALSE, ':', TRUE);
+					$strcat = get_custom_oer_category_parents($term_id, "resource-subject-area" , FALSE, ':', TRUE);
                                         
 					if(strpos($strcat,':'))
 					{
@@ -95,7 +95,7 @@ if($rsltdata['parent'] != 0)
 					}
 					$parent = $top_cat[0];
 					
-					$catobj = get_term_by( 'slug' , $parent , 'resource-category' );
+					$catobj = get_term_by( 'slug' , $parent , 'resource-subject-area' );
                                         
 					$getimage = $wpdb->get_results( $wpdb->prepare("SELECT * FROM ".$wpdb->prefix.'postmeta'."  WHERE meta_key='category_image' AND meta_value=%s" , $catobj->term_id ));
 					if(!empty($getimage))
@@ -159,7 +159,7 @@ if($rsltdata['parent'] != 0)
 				$args = array(
 					'post_type' => 'resource',
 					'posts_per_page' => 15,
-					'tax_query' => array(array('taxonomy' => 'resource-category','terms' => array($rsltdata['term_id'])))
+					'tax_query' => array(array('taxonomy' => 'resource-subject-area','terms' => array($rsltdata['term_id'])))
 				);
 				$posts = get_posts($args);
 				

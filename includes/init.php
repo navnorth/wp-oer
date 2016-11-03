@@ -9,7 +9,7 @@ function wpa_filter_term_args( $args, $taxonomies )
     $client_terms = get_user_meta($user_id, 'oer_userasgnctgries', true);
   	$client_terms = unserialize($client_terms);
 
-	if( $pagenow == $pagenow && 'resource-category' == $taxonomies[0] )
+	if( $pagenow == $pagenow && 'resource-subject-area' == $taxonomies[0] )
 	{
          $args['include'] = $client_terms;
     }
@@ -192,9 +192,9 @@ function create_resource_taxonomies() {
 		'show_ui'           => true,
 		'show_admin_column' => true,
 		'query_var'         => true,
-		'rewrite'           => array( 'slug' => 'resource-category' ),
+		'rewrite'           => array( 'slug' => 'resource-subject-area' ),
 	);
-	register_taxonomy( 'resource-category', array( 'resource' ), $args );
+	register_taxonomy( 'resource-subject-area', array( 'resource' ), $args );
 }
 //register cutsom category
 
@@ -457,7 +457,7 @@ function oer_save_customfields()
 //Update Split Shared Term
 function resource_split_shared_term( $term_id, $new_term_id, $term_taxonomy_id, $taxonomy ) {
     // Checking if taxonomy is a resource category
-    if ( 'resource-category' == $taxonomy ) {
+    if ( 'resource-subject-area' == $taxonomy ) {
 	$resource_posts = get_posts(array(
 	    'posts_per_page' => -1,
 	    'post_type' => 'fabric_building',

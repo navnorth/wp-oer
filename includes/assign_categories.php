@@ -25,7 +25,7 @@ function get_post_ids($cats , $post_type)
 
 	if(!empty($post_type))
 	{
-		$args=array('post_type' => $post_type, 'tax_query' => array(	array('taxonomy' => 'resource-category','terms' => array($cat))), 'post_status' => 'publish', 'posts_per_page' => -1,'fields' => 'ids');
+		$args=array('post_type' => $post_type, 'tax_query' => array(	array('taxonomy' => 'resource-subject-area','terms' => array($cat))), 'post_status' => 'publish', 'posts_per_page' => -1,'fields' => 'ids');
 	}
 	else
 	{
@@ -89,11 +89,11 @@ if(isset($_POST['oer_userasgnctgries']))
 					</div>
 					<?php
 						echo '<ul class="oer_cats">';
-							$args = array('hide_empty' => 0, 'taxonomy' => 'resource-category', 'parent' => 0);
+							$args = array('hide_empty' => 0, 'taxonomy' => 'resource-subject-area', 'parent' => 0);
 							$categories= get_categories($args);
 							foreach($categories as $category)
 							{
-								$children = get_term_children($category->term_id, 'resource-category');
+								$children = get_term_children($category->term_id, 'resource-subject-area');
 								if( !empty( $children ) )
 								{
 									echo "<li class='oer_sbstndard has-child'>
@@ -217,7 +217,7 @@ if(isset($_POST['oer_userasgnctgries']))
 }*/
 function process_cat_tree($categoryid, $asgn_catgrs )
 {
- 	$args = array('hide_empty' => 0, 'taxonomy' => 'resource-category','parent' => $categoryid);
+ 	$args = array('hide_empty' => 0, 'taxonomy' => 'resource-subject-area','parent' => $categoryid);
 	$catchilds = get_categories($args);
 
 	if(!empty($catchilds))
@@ -225,7 +225,7 @@ function process_cat_tree($categoryid, $asgn_catgrs )
 		echo '<ul class="oer_cats">';
 		foreach($catchilds as $catchild)
 		{
-			$children = get_term_children($catchild->term_id, 'resource-category');
+			$children = get_term_children($catchild->term_id, 'resource-subject-area');
 			if( !empty( $children ) )
 			{
 				echo "<li class='oer_sbstndard has-child'>

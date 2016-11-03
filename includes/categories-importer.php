@@ -64,9 +64,9 @@ if(isset($_POST['bulk_imprt']))
 								$description = $cattl[1];
 							}
 	
-							if(!term_exists( $title, "resource-category", $ids_arr[$k-1] ))
+							if(!term_exists( $title, "resource-subject-area", $ids_arr[$k-1] ))
 							{
-								$catarr = array(  'cat_name' => $title, 'category_parent' => $ids_arr[$k-1],'taxonomy' => 'resource-category','category_description' => $description );
+								$catarr = array(  'cat_name' => $title, 'category_parent' => $ids_arr[$k-1],'taxonomy' => 'resource-subject-area','category_description' => $description );
 	
 								$rsc_parentid = wp_insert_category( $catarr ); //Insert Resource Category
 								$cat_parentid = wp_create_category( $title, $cat_ids[$k-1] ); //Insert Post Category
@@ -88,13 +88,13 @@ if(isset($_POST['bulk_imprt']))
 							}
 							else
 							{
-								$rsc_parentid = term_exists( $title, "resource-category", $ids_arr[$k-1]);
+								$rsc_parentid = term_exists( $title, "resource-subject-area", $ids_arr[$k-1]);
 								$ids_arr[$k] = $rsc_parentid['term_id'];
 	
 								$cat_parentid = term_exists( $title, "category", $cat_ids[$k-1]);
 								$cat_ids[$k] = $cat_parentid['term_id'];
 	
-								$term = get_term( $ids_arr[$k] , "resource-category" );
+								$term = get_term( $ids_arr[$k] , "resource-subject-area" );
 								$slug = $term->slug;
 	
 								$page = get_page_by_slug($slug, ARRAY_A, "page", $page_ids[$k-1] );

@@ -12,7 +12,7 @@
 		'hierarchical'       => 1,
 		'number'             => null,
 		'echo'               => 1,
-		'taxonomy'           => 'resource-category');
+		'taxonomy'           => 'resource-subject-area');
 
 	$all_category = get_categories( $args );
 	$i=1;

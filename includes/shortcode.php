@@ -23,7 +23,7 @@ function show_oer_subjects($atts) {
 	    'exclude'                  => '',
 	    'include'                  => '',
 	    'number'                   => '',
-	    'taxonomy'                 => 'resource-category',
+	    'taxonomy'                 => 'resource-subject-area',
 	    'pad_counts'               => false );
 		    
     $categories = get_categories( $args );
@@ -63,7 +63,7 @@ function show_oer_subjects($atts) {
 				    }
 			    }
 			    
-			    $count = get_oer_post_count($category->term_id, "resource-category");
+			    $count = get_oer_post_count($category->term_id, "resource-subject-area");
 			    $count = $count + $category->count;
 			    
 			    // Size attribute
@@ -112,12 +112,12 @@ function show_oer_subjects($atts) {
 				    <div class="cat-icn" style="background: url('.$icn_guid.') no-repeat scroll center center; "></div>
 				    <div class="cat-txt-btm-cntnr">
 					    <ul>
-						    <li><label class="mne-sbjct-ttl" ><a href="'. site_url() .'/resource-category/'. $category->slug .'">'. $category->name .'</a></label>'.$count_span.'</li>
+						    <li><label class="mne-sbjct-ttl" ><a href="'. site_url() .'/resource-subject-area/'. $category->slug .'">'. $category->name .'</a></label>'.$count_span.'</li>
 					    </ul>
 				    </div>';
 			    
 				if ($show_children) {
-				    $children = get_term_children($category->term_id, 'resource-category');
+				    $children = get_term_children($category->term_id, 'resource-subject-area');
 				    if( !empty( $children ) )
 				    {
 					    $content .= '<div class="child-category">'. oer_front_child_category($category->term_id) .'</div>';
