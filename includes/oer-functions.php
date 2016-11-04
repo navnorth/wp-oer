@@ -259,7 +259,7 @@ if (!function_exists('get_custom_oer_category_parents')) {
 		$parent = get_term( $id, $taxonomy);
 		if ( is_wp_error( $parent ) )
 			return $parent;
-	
+		
 		if ( $nicename )
 			$name = $parent->slug;
 		else

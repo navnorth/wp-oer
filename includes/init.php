@@ -129,7 +129,7 @@ function oer_frontside_scripts()
 }
 
 //Add style block
-add_action( 'wp_head' , 'add_style_block'  );
+add_action( 'wp_head' , 'add_style_block', 99  );
 function add_style_block(){
     global $_css;
     
