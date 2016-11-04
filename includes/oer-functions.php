@@ -342,11 +342,11 @@ if (!function_exists('oer_front_child_category')) {
 				$count = $count + $catchild->count;
 				if( !empty( $children ) )
 				{
-					$rtrn .=  '<li class="sub-category has-child"><span onclick="toggleparent(this); gethght(this);"><a href="'. site_url() .'/'. $catchild->slug .'">' . $catchild->name .'</a><label>'. $count .'</label></span>';
+					$rtrn .=  '<li class="sub-category has-child"><span onclick="toggleparent(this); gethght(this);"><a href="'. site_url() .'/resource-subject-area/'. $catchild->slug .'">' . $catchild->name .'</a><label>'. $count .'</label></span>';
 				}
 				else
 				{
-					$rtrn .=  '<li class="sub-category"><span onclick="toggleparent(this);"><a href="'. site_url() .'/'. $catchild->slug .'">' . $catchild->name .'</a><label>'. $count .'</label></span>';
+					$rtrn .=  '<li class="sub-category"><span onclick="toggleparent(this);"><a href="'. site_url() .'/resource-subject-area/'. $catchild->slug .'">' . $catchild->name .'</a><label>'. $count .'</label></span>';
 				}
 				$rtrn .=  oer_front_child_category( $catchild->term_id);
 				$rtrn .= '</li>';

@@ -14,7 +14,7 @@ get_header(); ?>
 		<div class="rsrclftcntr-img col-md-5">
                     <!--Resource URL-->
                     <div class="sngl-rsrc-url">
-                        <a href="<?php echo get_permalink($post->ID);?>"><?php echo $post->post_title;?></a>
+			<h1><?php echo $post->post_title;?></h1>
                     </div>
 
                     <!--Resource Image-->
