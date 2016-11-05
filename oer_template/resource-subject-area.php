@@ -12,6 +12,8 @@ wp_enqueue_script( "resource-script" );
 
 /** Load WordPress Theme Header **/
 get_header();
+global $_subjectarea;
+
 //Get ID of Resource Category
 $term_id = get_queried_object_id();
 
@@ -37,6 +39,7 @@ if($rsltdata['parent'] != 0)
 }
 ?>
 <div class="cntnr row">
+<?php if ($_subjectarea) { ?>
 	<div class="resource_category_sidebar template_resource_category_sidebar col-md-3">
 	<?php
 	echo '<ul class="resource_category">';
@@ -81,8 +84,8 @@ if($rsltdata['parent'] != 0)
 	echo '</ul>';
 	?>
 </div> <!--Left Sidebar-->
-
-	<div class="rightcatcntr col-md-9">
+<?php } ?>
+	<div class="rightcatcntr<?php if ($_subjectarea) { ?> col-md-9<?php } ?>">
 	
 		<div class="pgbrdcrums">
 			<ul>
@@ -152,9 +155,9 @@ if($rsltdata['parent'] != 0)
 						}
 						$taxonomy 	= get_taxonomy ( get_query_var('taxonomy') );
 						$term 		= get_query_var('term');
-						$cur_term = get_term_by( 'slug' , $term , 'resource-subject-area' );
-						$output .= ' '.$opt['sep'].' ';
-						$post = $wp_query->get_queried_object();
+						$cur_term 	= get_term_by( 'slug' , $term , 'resource-subject-area' );
+						$output 	.= ' '.$opt['sep'].' ';
+						$post 		= $wp_query->get_queried_object();
 						
 						// If this is a top level Page, it's simple to output the breadcrumb
 						if ( 0 == $post->parent ) {

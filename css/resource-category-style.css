@@ -1,7 +1,7 @@
 /*.resource_category_sidebar { width: 25%; float: left; margin: 0; padding: 0; background: none repeat scroll 0 0 #ededed; }*/
 .resource_category_sidebar { width: 300px; float: left; margin: 0; padding: 0; background: none repeat scroll 0 0 #ededed; padding: 10px; height:auto !important; }
 .resource_category_sidebar > .resource_category { display:block; width: 100%; float: left; padding-left:0; }
-.rightcatcntr { width: 75%; float: right; margin: 0; padding: 0; }
+.rightcatcntr { width: 100%; float: right; margin: 0; padding: 0; }
 .subject-btn { width: 100%; padding: 15px 0; float: left; text-align: center; background: #024387; display: none; font-weight: bold; color: #fff; }
 .resource_category_sidebar .resource_category .sub-category span,
 .resource_category_sidebar > .resource_category > .sub-category { display:block; position: relative; width: 100%; float: left; margin-bottom: 1px; }
@@ -54,7 +54,7 @@
 .allftrdrsrc { width: 100%; float: left; margin: 0px; padding: 0 0 25px 0; }
 .allftrdpst { float: left; margin: 0; padding: 10px 0; width: 100%; border-top: 1px dashed #ddd; }
 .allftrdrsrc .snglrsrchdng { width: 100%; float: left; margin: 0px; padding: 5px 0 10px; font-size: 25px; line-height: 25px; }
-.allftrdrsrc .allftrdrsrccntr { float: left; margin: 0px; padding: 0 5px 0 0; overflow-y: scroll; height: 367px; border-top: 1px solid #c8c8c8; border-bottom: 1px solid #c8c8c8; }
+.allftrdrsrc .allftrdrsrccntr { float: left; margin: 0px; padding: 0 5px 0 0; overflow-y: scroll; height: 367px; border-top: 1px solid #c8c8c8; border-bottom: 1px solid #c8c8c8; width:100%; }
 .allftrdrsrc .snglrsrc:first-child { border-top: none !important; margin: 8px 0 2px !important; }
 .allftrdrsrc .snglrsrc { float: left; padding: 5px 0; width: 100%; border-top: 1px solid #ddd !important; }
 .snglrsrc .snglimglft { width: 130px; height: 75px; overflow: hidden; float: left; margin: 0px; padding: 0px; border: 1px solid #c8c8c8; }

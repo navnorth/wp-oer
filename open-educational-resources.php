@@ -38,10 +38,11 @@ include_once(OER_PATH.'includes/init.php');
 include_once(OER_PATH.'includes/shortcode.php');
 
 //define global variable $debug_mode and get value from settings
-global $_debug, $_bootstrap, $_css;
+global $_debug, $_bootstrap, $_css, $_subjectarea;
 $_debug = get_option('oer_debug_mode');
 $_bootstrap = get_option('oer_use_bootstrap');
 $_css = get_option('oer_additional_css');
+$_subjectarea = get_option('oer_display_subject_area');
 
 register_activation_hook(__FILE__, 'create_csv_import_table');
 function create_csv_import_table()
@@ -609,6 +610,23 @@ function oer_styles_settings(){
 		)
 	);
 	
+	//Add Settings field for displaying Subject Area sidebar
+	add_settings_field(
+		'oer_display_subject_area',
+		'',
+		'setup_settings_field',
+		'styles_settings_section',
+		'oer_styles_settings',
+		array(
+			'uid' => 'oer_display_subject_area',
+			'type' => 'checkbox',
+			'value' => '1',
+			'default' => true,
+			'name' =>  __('Display Subjects menu on Subject Area pages', OER_SLUG),
+			'description' => __('Lists all subject areas in left column of Subject Area pages - may conflict with themes using left navigation.', OER_SLUG)
+		)
+	);
+	
 	//Add Settings field for Importing Bootstrap CSS & JS Libraries
 	add_settings_field(
 		'oer_additional_css',
@@ -625,6 +643,7 @@ function oer_styles_settings(){
 	);
 	
 	register_setting( 'oer_styles_settings' , 'oer_use_bootstrap' );
+	register_setting( 'oer_styles_settings' , 'oer_display_subject_area' );
 	register_setting( 'oer_styles_settings' , 'oer_additional_css' );
 }
 
@@ -659,12 +678,16 @@ function setup_settings_field( $arguments ) {
 			break;
 		case "checkbox":
 		case "radio":
+			if (isset($arguments['default'])) {
+				$selected = "checked='checked'";
+			}
 			if ($value==1 || $value=="on")
 				$selected = "checked='checked'";
 			else{
+				$selected = "";
 				$value = 1;
 			}
-		
+			
 			echo '<input name="'.$arguments['uid'].'" id="'.$arguments['uid'].'" '.$class.' type="'.$arguments['type'].'" value="' . $value . '" ' . $size . ' ' .  $selected . ' /><label for="'.$arguments['uid'].'"><strong>'.$arguments['name'].'</strong></label>';
 			break;
 		case "textarea":
