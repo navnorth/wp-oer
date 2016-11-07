@@ -66,7 +66,8 @@ if(isset($_POST['bulk_imprt']))
 	
 							if(!term_exists( $title, "resource-subject-area", $ids_arr[$k-1] ))
 							{
-								$catarr = array(  'cat_name' => $title, 'category_parent' => $ids_arr[$k-1],'taxonomy' => 'resource-subject-area','category_description' => $description );
+								$catslug = slugify($title);
+								$catarr = array(  'cat_name' => $title, 'category_parent' => $ids_arr[$k-1],'taxonomy' => 'resource-subject-area','category_description' => $description,'category_nicename'=>$catslug );
 	
 								$rsc_parentid = wp_insert_category( $catarr ); //Insert Resource Category
 								$cat_parentid = wp_create_category( $title, $cat_ids[$k-1] ); //Insert Post Category
