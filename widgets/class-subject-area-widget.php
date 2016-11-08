@@ -1,0 +1,132 @@
+<?php
+
+class Subject_Area_Widget extends WP_Widget{
+    
+    //Constructor
+    function Subject_Area_Widget(){
+        parent::WP_Widget(
+                          false,
+                          $name = __('Subject Area Widget', OER_SLUG),
+                          array('description'=>__('This is the Subject Area widget', OER_SLUG))
+                          );
+    }
+    
+    //Widget Form Creation
+    function form($instance) {
+        //Check widget values
+        if ($instance) {
+            $title = esc_attr($instance['title']);
+        } else {
+            $title = '';
+        }
+        ?>
+        <p>
+        <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Widget Title', 'wp_widget_plugin'); ?></label>
+        <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
+        </p>
+        <?php
+    }
+    
+    //Widget Update
+    function update($new_instance, $old_instance) {
+        
+        $instance = $old_instance;
+        
+        $instance['title'] = strip_tags($new_instance['title']);
+        
+        return $instance;
+    }
+    
+    //Widget Display
+    function widget($args, $instance) {
+        global $wpdb;
+        
+        extract($args);
+        
+        $title = apply_filters('widget_title', $instance['title']);
+        
+        echo $before_widget;
+        
+        //echo '<div class="wp_subject_area_widget">';
+        
+        //Get ID of Resource Category
+        $term_id = get_queried_object_id();
+        
+        //Get Term based on Category ID
+        //$term = get_the_title();
+        $terms = get_term_by( "id" , $term_id , 'resource-subject-area' , object );
+        $term = $terms->name;
+        
+        $rsltdata = get_term_by( "name", $term, "resource-subject-area", ARRAY_A );
+        
+        $parentid = array();
+        if($rsltdata['parent'] != 0)
+        {
+                $parent = get_oer_parent_term($rsltdata['parent']);
+                for($k=0; $k < count($parent); $k++)
+                {
+                        if ($parent[$k]) {
+                                //$idObj = get_category_by_slug($parent[$k]);
+                                $idObj = get_term_by('slug', $parent[$k], 'resource-subject-area');
+                                $parentid[] = $idObj->term_id;
+                        }
+                }
+        }
+        
+        ?>
+        <div class="resource_category_sidebar template_resource_category_sidebar col-md-3">
+	<?php
+        
+        if ($title){
+            echo $before_title . $title . $after_title;
+        }
+        
+	echo '<ul class="resource_category">';
+			$args = array('hide_empty' => 0, 'taxonomy' => 'resource-subject-area', 'parent' => 0);
+			$categories= get_categories($args);
+                        
+			foreach($categories as $category)
+			{
+				$children = get_term_children($category->term_id, 'resource-subject-area');
+				$getimage = $wpdb->get_results( $wpdb->prepare ( "SELECT * FROM ".$wpdb->prefix.'postmeta'." WHERE meta_key='category_image' AND meta_value=%s" , $category->term_id));
+				if(!empty($getimage)){
+                                    $attach_icn = get_post($getimage[0]->post_id);
+                                } else {
+                                    $attach_icn = array();
+                                }
+				
+				if($rsltdata['term_id'] == $category->term_id)
+				{
+					$class = ' activelist current_class';	
+				}
+				elseif(in_array($category->term_id, $parentid))
+				{
+					$class = ' activelist current_class';
+				}
+				else
+				{
+					$class = '';
+				}
+				
+				if( !empty( $children ) )
+				{
+					echo '<li class="sub-category has-child'.$class.'"><span onclick="toggleparent(this);"><a href="'. site_url() .'/'.$category->taxonomy.'/'. $category->slug .'" title="'. $category->name .'" >'. $category->name .'</a></span>';
+				}
+				else
+				{
+					echo '<li class="sub-category'.$class.'"><span onclick="toggleparent(this);"><a href="'. site_url() .'/'.$category->taxonomy.'/'. $category->slug .'"  title="'. $category->name .'" >'. $category->name .'</a></span>';
+				}
+				
+				echo get_oer_category_child( $category->term_id, $rsltdata['term_id']);
+				echo '</li>';
+			}
+	echo '</ul>';
+	?>
+        </div> <!--Left Sidebar-->
+        <?php
+        //echo '</div>';
+        
+        echo $after_widget;
+    }
+}
+add_action('widgets_init', create_function('', 'return register_widget("Subject_Area_Widget");'));

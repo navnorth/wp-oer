@@ -40,9 +40,13 @@ if($rsltdata['parent'] != 0)
 ?>
 <div class="cntnr row">
 <?php if ($_subjectarea) { ?>
-	<div class="resource_category_sidebar template_resource_category_sidebar col-md-3">
+	
+	<!--<div class="resource_category_sidebar template_resource_category_sidebar col-md-3">-->
 	<?php
-	echo '<ul class="resource_category">';
+	if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('subject_area_sidebar') ) : 
+
+	endif;
+	/*echo '<ul class="resource_category">';
 			$args = array('hide_empty' => 0, 'taxonomy' => 'resource-subject-area', 'parent' => 0);
 			$categories= get_categories($args);
                         
@@ -81,9 +85,9 @@ if($rsltdata['parent'] != 0)
 				echo get_oer_category_child( $category->term_id, $rsltdata['term_id']);
 				echo '</li>';
 			}
-	echo '</ul>';
+	echo '</ul>';*/
 	?>
-</div> <!--Left Sidebar-->
+<!--</div>--> <!--Left Sidebar-->
 <?php } ?>
 	<div class="rightcatcntr<?php if ($_subjectarea) { ?> col-md-9<?php } ?>">
 	

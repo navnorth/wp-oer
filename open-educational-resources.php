@@ -36,6 +36,7 @@ define( 'OER_VERSION', '0.2.7' );
 include_once(OER_PATH.'includes/oer-functions.php');
 include_once(OER_PATH.'includes/init.php');
 include_once(OER_PATH.'includes/shortcode.php');
+include_once(OER_PATH.'widgets/class-subject-area-widget.php');
 
 //define global variable $debug_mode and get value from settings
 global $_debug, $_bootstrap, $_css, $_subjectarea;
@@ -715,6 +716,19 @@ function setup_settings_field( $arguments ) {
 		echo '</div>';
 	}
 }
+
+function oer_widgets_init() {
+
+	register_sidebar( array(
+		'name' => 'Subject Area Sidebar',
+		'id' => 'subject_area_sidebar',
+		'before_widget' => '<div id="oer-subject-area-widget">',
+		'after_widget' => '</div>',
+		'before_title' => '<h2 class="rounded">',
+		'after_title' => '</h2>',
+	) );
+}
+add_action( 'widgets_init', 'oer_widgets_init' );
 //front side shortcode
 //include_once(OER_PATH.'includes/resource_front.php');
 ?>
