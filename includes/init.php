@@ -122,10 +122,12 @@ function oer_frontside_scripts()
 {
 	wp_enqueue_style('jqueryui-styles', OER_URL.'css/jquery-ui.css');
 	wp_enqueue_style('front-styles', OER_URL.'css/front_styles.css');
+	wp_enqueue_style( "resource-category-styles", OER_URL . "css/resource-category-style.css" );
 
 	wp_enqueue_script('jquery');
 	wp_enqueue_script('jqueryui-scripts', OER_URL.'js/jquery-ui.js');
 	wp_enqueue_script('front-scripts', OER_URL.'js/front_scripts.js');
+	wp_enqueue_style( "resource-category-styles", OER_URL . "css/resource-category-style.css" );
 }
 
 //Add style block

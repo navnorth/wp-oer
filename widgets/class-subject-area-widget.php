@@ -74,7 +74,7 @@ class Subject_Area_Widget extends WP_Widget{
         }
         
         ?>
-        <div class="oer_resource_category_sidebar template_resource_category_sidebar col-md-3">
+        <div class="oer_resource_category_sidebar template_resource_category_sidebar">
 	<?php
         
         if ($title){

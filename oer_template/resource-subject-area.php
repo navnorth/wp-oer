@@ -40,7 +40,7 @@ if($rsltdata['parent'] != 0)
 ?>
 <div class="cntnr row">
 <?php if ($_subjectarea) { ?>
-	
+	<div class="col-md-3">
 	<!--<div class="resource_category_sidebar template_resource_category_sidebar col-md-3">-->
 	<?php
 	if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('subject_area_sidebar') ) : 
@@ -87,6 +87,7 @@ if($rsltdata['parent'] != 0)
 			}
 	echo '</ul>';*/
 	?>
+	</div>
 <!--</div>--> <!--Left Sidebar-->
 <?php } ?>
 	<div class="rightcatcntr<?php if ($_subjectarea) { ?> col-md-9<?php } ?>">
