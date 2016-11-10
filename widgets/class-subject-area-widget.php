@@ -74,14 +74,14 @@ class Subject_Area_Widget extends WP_Widget{
         }
         
         ?>
-        <div class="resource_category_sidebar template_resource_category_sidebar col-md-3">
+        <div class="oer_resource_category_sidebar template_resource_category_sidebar col-md-3">
 	<?php
         
         if ($title){
             echo $before_title . $title . $after_title;
         }
         
-	echo '<ul class="resource_category">';
+	echo '<ul class="oer_resource_category">';
 			$args = array('hide_empty' => 0, 'taxonomy' => 'resource-subject-area', 'parent' => 0);
 			$categories= get_categories($args);
                         
