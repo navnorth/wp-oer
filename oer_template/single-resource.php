@@ -10,13 +10,12 @@ get_header(); ?>
 	<div class="cntnr">
         <div id="sngl-resource" class="sngl_resource_wrapper row">
                 <?php global $post; global $wpdb; ?>
-
+		
+		<!--Resource URL-->
+		<div class="sngl-rsrc-url col-md-12">
+		    <h1><?php echo $post->post_title;?></h1>
+		</div>
 		<div class="rsrclftcntr-img col-md-5">
-                    <!--Resource URL-->
-                    <div class="sngl-rsrc-url">
-			<h1><?php echo $post->post_title;?></h1>
-                    </div>
-
                     <!--Resource Image-->
                     <div class="sngl-rsrc-img">
                         <a class="featureimg" href="<?php echo get_post_meta($post->ID, "oer_resourceurl", true)?>" target="_blank" >
