@@ -89,9 +89,10 @@ get_header(); ?>
 								$flat_arr = array_values(array_unique($flat_arr));
 								for($k=0; $k < count($flat_arr); $k++)
 								{
-									$idObj = get_category_by_slug($flat_arr[$k]);
+									//$idObj = get_category_by_slug($flat_arr[$k]);
+									$idObj = get_term_by( 'slug' , $flat_arr[$k] , 'resource-subject-area' );
 									if(!empty($idObj->name))
-									echo '<a href="'.site_url().'/'.$idObj->slug.'">'.ucwords ($idObj->name).'</a>';
+									echo '<a href="'.site_url().'/'.$idObj->taxonomy.'/'.$idObj->slug.'">'.ucwords ($idObj->name).'</a>';
 								}
 							}
 						}
