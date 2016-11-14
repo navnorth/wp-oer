@@ -654,6 +654,53 @@ function styles_settings_callback(){
 }
 
 
+//Initialize Import Academic Standards
+add_action( 'admin_init' , 'oer_import_standards' );
+function oer_import_standards(){
+	//Create Standards Section
+	add_settings_section(
+		'oer_import_standards',
+		'',
+		'import_standards_callback',
+		'import_standards_section'
+	);
+	
+	//Add Common Core Mathematics field
+	add_settings_field(
+		'oer_common_core_mathematics',
+		'',
+		'setup_settings_field',
+		'import_standards_section',
+		'oer_import_standards',
+		array(
+			'uid' => 'oer_common_core_mathematics',
+			'type' => 'checkbox',
+			'name' =>  __('Common Core Mathematics', OER_SLUG)
+		)
+	);
+	
+	//Add Common Core English Language Arts
+	add_settings_field(
+		'oer_common_core_english',
+		'',
+		'setup_settings_field',
+		'import_standards_section',
+		'oer_import_standards',
+		array(
+			'uid' => 'oer_common_core_english',
+			'type' => 'checkbox',
+			'name' =>  __('Common Core English Language Arts', OER_SLUG)
+		)
+	);
+	
+	register_setting( 'oer_import_standards' , 'oer_common_core_mathematics' );
+	register_setting( 'oer_import_standards' , 'oer_common_core_english' );
+}
+
+function import_standards_callback() {
+	
+}
+
 function setup_settings_field( $arguments ) {
 	$selected = "";
 	$size = "";

@@ -2,22 +2,23 @@
 require_once OER_PATH.'includes/oer-functions.php';
 require OER_PATH.'Excel/reader.php';
 
-debug_log("OER Resources Importer: Initializing Excel Reader");
-
-$excl_obj = new Spreadsheet_Excel_Reader();
-$excl_obj->setOutputEncoding('CP1251');
-$time = time();
-$date = date($time);
-
-//Set Maximum Excution Time
-ini_set('max_execution_time', 0);
-ini_set('max_input_time ', -1);
-ini_set('memory_limit ', -1);
-set_time_limit(0);
-
 //Resource Import
 if(isset($_POST['resrc_imprt']))
 {
+	
+	debug_log("OER Resources Importer: Initializing Excel Reader");
+
+	$excl_obj = new Spreadsheet_Excel_Reader();
+	$excl_obj->setOutputEncoding('CP1251');
+	$time = time();
+	$date = date($time);
+	
+	//Set Maximum Excution Time
+	ini_set('max_execution_time', 0);
+	ini_set('max_input_time ', -1);
+	ini_set('memory_limit ', -1);
+	set_time_limit(0);
+
 	// Log start of import process
 	debug_log("OER Resources Importer: Starting Bulk Import of Resources");
 		
@@ -479,14 +480,30 @@ function fetch_stndrd($pId, $postid)
 ?>
 
 <div class="oer_imprtrwpr">
-	<div class="oer_hdng">
-		<?php _e("Import Resources", OER_SLUG); ?>
-    </div>
     <form method="post" enctype="multipart/form-data">
-        <div class="fields">
-            <input type="file" name="resource_import"/>
-            <input type="hidden" value="" name="resrc_imprt" />
-            <input type="submit" name="" value="<?php _e("Import", OER_SLUG); ?>" class="button button-primary"/>
-        </div>
+	<fieldset>
+		<legend><div class="oer_heading"><?php _e("Import Resources", OER_SLUG); ?></div></legend>
+		<div class="oer-import-row">
+			<div class="row-left">
+				<?php _e("Lorem ipsum dolor sit amet, consectetur adipiscing elit. In quis nunc tempor, maximus nulla nec, consectetur dolor.", OER_SLUG); ?>
+			</div>
+			<div class="row-right alignRight">
+				<a href="<?php echo OER_URL."samples/resource_import_sample_data.xls"; ?>" target="_blank"><?php _e("Download Spreadsheet Template", OER_SLUG); ?></a>
+			</div>
+		</div>
+		<div class="oer-import-row">
+			<div class="row-left">
+				<div class="fields">
+					<input type="file" name="resource_import"/>
+					<input type="hidden" value="" name="resrc_imprt" />
+				</div>
+			</div>
+			<div class="row-right">
+				<div class="fields alignRight">
+					<input type="submit" name="" value="<?php _e("Import", OER_SLUG); ?>" class="button button-primary"/>
+				</div>
+			</div>
+		</div>
+	</fieldset>
     </form>
 </div>

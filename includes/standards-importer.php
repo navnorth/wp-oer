@@ -172,50 +172,32 @@ if(isset($_POST['standards_import']))
 	}
 }
 ?>
-<div id="col-container">
-	<div id="col-standards-left">
-		<div class="oer_imprtrwpr">
-			<div class="oer_hdng">
-				<?php _e("Standards Import", OER_SLUG); ?>
-		    </div>
-			<div class="oer_pargrph">
-				<?php _e("Import requires an XML file in the format used by ASN for Common Core State Standards. You can download the CCSS in XML format here:", OER_SLUG); ?> <a href="http://asn.jesandco.org/resources/ASNJurisdiction/CCSS" target="_blank" >http://asn.jesandco.org/resources/ASNJurisdiction/CCSS</a>
+<div id="col-container" class="oer_imprtrwpr">
+	<form method="post" action="options.php">
+		<fieldset>
+			<legend><div class="oer_heading"><?php _e("Import Academic Standards", OER_SLUG); ?></div></legend>
+			<div class="oer-import-row">
+				<div class="row-left">
+					<?php _e("Lorem ipsum dolor sit amet, consectetur adipiscing elit. In quis nunc tempor, maximus nulla nec, consectetur dolor.", OER_SLUG); ?>
+				</div>
+				<div class="row-right alignRight">
+					<a href="http://asn.jesandco.org/resources/ASNJurisdiction/CCSS" target="_blank"><?php _e("ASN Standards Info", OER_SLUG); ?></a>
+				</div>
 			</div>
-		    <form method="post" enctype="multipart/form-data">
-			<div class="fields">
-			    <input type="file" name="standards_import"/>
-			    <input type="hidden" value="" name="standards_import" />
-			    <input type="submit" name="" value="<?php _e("Import", OER_SLUG); ?>" class="button button-primary"/>
+			<div class="oer-import-row">
+				<div class="row-left">
+					<div class="fields">
+						<?php settings_fields("oer_import_standards"); ?>
+						<?php do_settings_sections("import_standards_section"); ?>
+						<input type="hidden" value="" name="standards_import" />
+					</div>
+				</div>
+				<div class="row-right">
+					<div class="fields alignRight">
+						<input type="submit" name="" value="<?php _e("Import", OER_SLUG); ?>" class="button button-primary"/>
+					</div>
+				</div>
 			</div>
-		    </form>
-		</div>
-	</div>
-	<div id="col-standards-right">
-		<table class="wp-list-table wp-standards-list widefat fixed pages">
-			<thead>
-				<tr>
-					<th><?php _e("Id", OER_SLUG); ?></th>
-					<th><?php _e("Standard Title", OER_SLUG); ?></th>
-					<th><?php _e("Url", OER_SLUG); ?></th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php
-				$standards_notation = $wpdb->get_results("select * from " . $wpdb->prefix. "sub_standards");
-				if (!empty($standards_notation)):
-				foreach($standards_notation as $notation){
-				?>
-				<tr>
-					<td><?php echo $notation->id; ?></td>
-					<td><?php echo $notation->standard_title; ?></td>
-					<td>
-						<?php echo "<a href='".$notation->url."' target='_blank'>".$notation->url."</a>"; ?>
-					</td>
-				</tr>
-				<?php } ?>
-				<?php endif; ?>
-				<input type="hidden" id="currntspan">
-			</tbody>
-		</table>
-	</div>
+		</fieldset>
+	</form>
 </div>

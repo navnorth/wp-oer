@@ -200,7 +200,7 @@ ul.slctstandard > li
 .oer_imprtrwpr .fields {
 	margin-bottom:10px;
 }
-.plugin-row fieldset {
+.plugin-row fieldset, .oer-import-row fieldset {
 	border: 1px solid #cccccc;
 	padding-left: 10px;
 }
@@ -216,6 +216,8 @@ ul.slctstandard > li
 #ui-datepicker-div { display:none; }
 .plugin-row, .oer-import-row { padding:0 15px; overflow:hidden; }
 .plugin-row:first-child, .oer-import-row:first-child { padding:15px 15px 0; }
+.oer-import-row:first-child { padding:15px 0; }
+.oer-import-row { padding:0; }
 .plugin-row .row-left, .oer-import-row .row-left { width:60%; float:left; }
 .plugin-row .row-right, .oer-import-row .row-right { width:35%; float:right; }
 .plugin-row fieldset, .oer-import-row fieldset { margin-bottom:15px; }
@@ -230,3 +232,16 @@ ul.slctstandard > li
 }
 .plugin-row .form-table td h3 { margin:0; }
 .plugin-body { border-left:1px solid #cdcdcd; border-right:1px solid #cdcdcd; border-bottom:1px solid #cdcdcd; }
+.oer_imprtrwpr form legend {
+	font-size: 25px;
+	padding: 20px 0;
+}
+.oer-import-row .oer_imprtrwpr {
+    float: left;
+    padding: 0px 0px 0px;
+    width: 100%;
+}
+.alignRight { text-align:right; }
+.oer_imprtrwpr form .oer-import-row { padding:10px 15px 10px 5px; }
+.oer_imprtrwpr form .oer-import-row .row-left table.form-table th { display:none; }
+.oer_imprtrwpr form .oer-import-row .row-left table.form-table td { padding:5px 10px; }
