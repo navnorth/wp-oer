@@ -19,12 +19,32 @@
 							<tbody>
 								<tr>
 									<td>
-										<input name="oer_common_core_mathematics" id="oer_common_core_mathematics" type="checkbox" value="1" checked="checked"><label for="oer_common_core_mathematics"><strong>Common Core Mathematics</strong></label>
+										<?php
+											$math = isStandardExisting("Math");
+											$attr = "";
+											$class = "";
+											if ($math){
+												$attr = "disabled";
+												$class = "class='disabled'";
+											}
+											
+										?>
+										<input name="oer_common_core_mathematics" id="oer_common_core_mathematics" type="checkbox" value="1" <?php echo $attr; ?>><label for="oer_common_core_mathematics" <?php echo $class; ?>><strong>Common Core Mathematics</strong> <?php if ($math): ?><span class="prev-import">(previously imported)</span><?php endif; ?></label>
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<input name="oer_common_core_english" id="oer_common_core_english" type="checkbox" value="1"><label for="oer_common_core_english"><strong>Common Core English Language Arts</strong></label>
+										<?php
+											$english = isStandardExisting("English");
+											$attr = "";
+											$class = "";
+											if ($english){
+												$attr = "disabled";
+												$class = "class='disabled'";
+											}
+											
+										?>
+										<input name="oer_common_core_english" id="oer_common_core_english" type="checkbox" value="1" <?php echo $attr; ?>><label for="oer_common_core_english" <?php echo $class; ?>><strong>Common Core English Language Arts</strong> <?php if ($english): ?><span class="prev-import">(previously imported)</span><?php endif; ?></label>
 									</td>
 								</tr>
 							</tbody>

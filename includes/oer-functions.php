@@ -549,4 +549,16 @@ function importStandards($file){
 	}
 }
 
+//Check if Standard Exists
+function isStandardExisting($standard) {
+	global $wpdb;
+	
+	$response = false;
+	$results = $wpdb->get_results( $wpdb->prepare( "SELECT id from " . $wpdb->prefix. "core_standards where standard_name like %s" , '%'.$standard.'%'));
+	if(!empty($results))
+		$response = true;
+		
+	return $response;
+}
+
 ?>

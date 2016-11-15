@@ -218,7 +218,7 @@ ul.slctstandard > li
 .plugin-row:first-child, .oer-import-row:first-child { padding:15px 15px 0; }
 .oer-import-row:first-child { padding:10px 0 0; }
 .oer-import-row { padding:0; }
-.plugin-row .row-left, .oer-import-row .row-left { width:60%; float:left; }
+.plugin-row .row-left, .oer-import-row .row-left { width:65%; float:left; }
 .plugin-row .row-right, .oer-import-row .row-right { width:35%; float:right; }
 .plugin-row fieldset, .oer-import-row fieldset { margin-bottom:15px; }
 .plugin-row .form-table th { width:0; display:none; }
@@ -252,3 +252,6 @@ p.oer_heading {
 	padding: 9px 15px 4px 0;
 	line-height: 29px;
 }
+label.disabled { color:#ababab; }
+label.disabled strong { font-weight:normal; }
+span.prev-import { font-style:italic; font-weight:bold; color:#000000; }
