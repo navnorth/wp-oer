@@ -554,6 +554,33 @@ if(isset($_POST['bulk_imprt']))
 	//_e("Categories Import Successfully.",OER_SLUG);
 }
 
+//Categories Bulk Import
+//Standards Bulk Import
+if(isset($_POST['standards_import']))
+{   
+    $files = array();
+    
+    if (isset($_POST['oer_common_core_mathematics'])){
+	$files[] = OER_PATH."samples/CCSS_Math.xml";
+    }
+    
+    if (isset($_POST['oer_common_core_english'])){
+	$files[] = OER_PATH."samples/CCSS_ELA.xml";
+    }
+	
+    foreach ($files as $file) {
+	$import = importStandards($file);
+	if ($import['type']=="success") {
+	    if (strpos($file,'Math')) {
+		$message .= "Successfully imported Common Core Mathematics Standards. \n";
+	    } else {
+		$message .= "Successfully imported Common Core English Language Arts Standards. \n";
+	    }
+	}
+	$type = $import['type'];
+    }
+}
+
 function fetch_stndrd($pId, $postid)
 {
 	global $wpdb;

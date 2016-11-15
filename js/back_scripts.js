@@ -110,7 +110,7 @@ function get_standardlist(ref)
 	});
 }
 
-//Import
+//Import Resource/Subject Areas
 function processImport(btn, file) {
 	if ( document.getElementById(file).files.length == 0 ) {
 		return false;
@@ -118,6 +118,16 @@ function processImport(btn, file) {
 	jQuery(btn).prop('value','Processing...');
 	jQuery('.oer_imprtrwpr .oer-import-row input[type=submit]').prop('disabled',true);
 	return(true); 
+}
+
+//Import Standards
+function importStandards(frm,btn) {
+	if (jQuery(frm).find(':checkbox:checked').length==0){
+		return(false);
+	}
+	jQuery(btn).prop('value','Processing...');
+	jQuery('.oer_imprtrwpr .oer-import-row input[type=submit]').prop('disabled',true);
+	return(true);
 }
 
 //Set image in span
