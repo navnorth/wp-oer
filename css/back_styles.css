@@ -216,7 +216,7 @@ ul.slctstandard > li
 #ui-datepicker-div { display:none; }
 .plugin-row, .oer-import-row { padding:0 15px; overflow:hidden; }
 .plugin-row:first-child, .oer-import-row:first-child { padding:15px 15px 0; }
-.oer-import-row:first-child { padding:15px 0; }
+.oer-import-row:first-child { padding:10px 0 0; }
 .oer-import-row { padding:0; }
 .plugin-row .row-left, .oer-import-row .row-left { width:60%; float:left; }
 .plugin-row .row-right, .oer-import-row .row-right { width:35%; float:right; }
@@ -245,3 +245,10 @@ ul.slctstandard > li
 .oer_imprtrwpr form .oer-import-row { padding:10px 15px 10px 5px; }
 .oer_imprtrwpr form .oer-import-row .row-left table.form-table th { display:none; }
 .oer_imprtrwpr form .oer-import-row .row-left table.form-table td { padding:5px 10px; }
+p.oer_heading {
+	font-size: 23px;
+	font-weight: 400;
+	margin: 0;
+	padding: 9px 15px 4px 0;
+	line-height: 29px;
+}

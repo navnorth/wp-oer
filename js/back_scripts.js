@@ -110,6 +110,16 @@ function get_standardlist(ref)
 	});
 }
 
+//Import
+function processImport(btn, file) {
+	if ( document.getElementById(file).files.length == 0 ) {
+		return false;
+	}
+	jQuery(btn).prop('value','Processing...');
+	jQuery('.oer_imprtrwpr .oer-import-row input[type=submit]').prop('disabled',true);
+	return(true); 
+}
+
 //Set image in span
 function setimage(ref)
 {
