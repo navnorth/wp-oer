@@ -101,12 +101,12 @@ get_header(); ?>
                     <!--Resource Description-->
 					<?php if(!empty($post->post_content)) {?>
 						<div class="oer-sngl-rsrc-dscrptn">
-							<h1><?php _e("Description", OER_SLUG) ?></h1>
+							<h2><?php _e("Description", OER_SLUG) ?></h2>
 							<?php echo $content = apply_filters ("the_content", $post->post_content); ?>
 						</div>
 					<?php } ?>
 
-                    <div id="" class="authorName oer-cbxl">
+                    <div id="" class="oer-authorName oer-cbxl">
 						<?php
 							$oer_authorname = get_post_meta($post->ID, "oer_authorname", true);
 							$oer_authorurl = get_post_meta($post->ID, "oer_authorurl", true);
@@ -114,28 +114,28 @@ get_header(); ?>
 							if(!empty($oer_authorname) && !empty($oer_authorurl))
 							{
 							?>
-								<h3><?php _e("Creator:", OER_SLUG) ?></h3>
+								<h4><?php _e("Creator:", OER_SLUG) ?></h4>
 								<div class="oer-view"><a href="<?php echo $oer_authorurl; ?>" target="_blank"><?php echo $oer_authorname; ?></a></div>
 							<?php } ?>
                     </div>
-                    <div id="" class="publisherName oer-cbxl">
                         <?php
-							$oer_publishername = get_post_meta($post->ID, "oer_publishername", true);
-							$oer_publisherurl = get_post_meta($post->ID, "oer_publisherurl", true);
+			$oer_publishername = get_post_meta($post->ID, "oer_publishername", true);
+			$oer_publisherurl = get_post_meta($post->ID, "oer_publisherurl", true);
 
-							if(!empty($oer_publishername) && !empty($oer_publisherurl))
-							{
-							?>
-								<h3><?php _e("Publisher:", OER_SLUG) ?></h3>
-								<div class="oer-view"><a href="<?php echo $oer_publisherurl; ?>" target="_blank"><?php echo $oer_publishername; ?></a></div>
-							<?php } ?>
-					</div>
+			if(!empty($oer_publishername) && !empty($oer_publisherurl))
+			{
+			?>
+			<div id="" class="oer-publisherName oer-cbxl">
+				<h4><?php _e("Publisher:", OER_SLUG) ?></h4>
+				<div class="oer-view"><a href="<?php echo $oer_publisherurl; ?>" target="_blank"><?php echo $oer_publishername; ?></a></div>
+			</div>
+			<?php } ?>
                     <div id="" class="oer-mediaType oer-cbxl">
 						<?php
 							$oer_mediatype = get_post_meta($post->ID, "oer_mediatype", true);
 							if(!empty($oer_mediatype))
 							{ ?>
-								<h3><?php _e("Type:", OER_SLUG) ?></h3>
+								<h4><?php _e("Type:", OER_SLUG) ?></h4>
 								<div class="oer-view"><?php echo ucwords($oer_mediatype); ?></div>
 						<?php } ?>
                     </div>
@@ -146,8 +146,8 @@ get_header(); ?>
 						if(is_array($grades) && !empty($grades) && array_filter($grades))
 						{
 					?>
-						<div class="rsrcgrd oer-cbxl">
-							<h3><?php _e("Grades:", OER_SLUG) ?></h3>
+						<div class="oer-rsrcgrd oer-cbxl">
+							<h4><?php _e("Grades:", OER_SLUG) ?></h4>
 							<div class="oer-view">
                         	<?php
 									sort($grades);
@@ -193,8 +193,8 @@ get_header(); ?>
 						if(!empty($oer_datecreated))
 						{
 						?>
-                    <div class="created oer-cbxl">
-                        <h3>Created:</h3>
+                    <div class="oer-created oer-cbxl">
+                        <h4>Created:</h4>
                         <div class="oer-view"><?php echo $oer_datecreated; ?></div>
                     </div>
 					<?php } ?>
@@ -210,7 +210,7 @@ get_header(); ?>
 							   <?php
 									foreach($keywords as $keyword)
 									{
-										echo "<span><a href='".get_tag_link($keyword->term_id)."'>".ucwords($keyword->name)."</a></span>";
+										echo "<span><h3><a href='".get_tag_link($keyword->term_id)."'>".ucwords($keyword->name)."</a></h3></span>";
 									}
 								?>
 								</div>
@@ -312,7 +312,7 @@ get_header(); ?>
                     	<div class="alignedStandards">
                             <h3><?php _e("Standards", OER_SLUG) ?></h3>
                             <div class="oer_meta_container">
-                                <div class="stndrd_align">
+                                <div class="oer_stndrd_align">
                                 <?php
                                     if(!empty($stdrd_id))
                                     {
@@ -324,7 +324,7 @@ get_header(); ?>
                                     }
                                     ?>
                                 </div>
-                                <div class="stndrds_notn">
+                                <div class="oer_stndrds_notn">
                                     <?php
                                         if(!empty($oer_standard))
                                         {
@@ -341,9 +341,9 @@ get_header(); ?>
                                                 if(strcmp($table_name, $wpdb->prefix.'standard_notation') == 0)
                                                 {
                                                     $res = $wpdb->get_row( $wpdb->prepare("select * from $table_name where id=%d" , $id ), ARRAY_A);
-                                                    echo "<div class='sngl_stndrd'>";
-                                                    echo "<div class='sngl_notation'>".$res['standard_notation']."</div>";
-                                                    echo "<div class='sngl_description'>".$res['description']."</div>";
+                                                    echo "<div class='oer_sngl_stndrd'>";
+                                                    echo "<div class='oer_sngl_notation'>".$res['standard_notation']."</div>";
+                                                    echo "<div class='oer_sngl_description'>".$res['description']."</div>";
                                                     echo "</div>";
                                                 }
                                             }
