@@ -34,7 +34,7 @@
 .oer-rsrclftcntr { float: left; width: 50%; }
 .oer-sngl-rsrc-dscrptn h2 {
     font-size:22px;
-    font-weight:bold;
+    font-weight:bold !important;
     margin:10px 0;
     color:#000000;
 }
@@ -46,9 +46,9 @@
 .oer_sngl_resource_wrapper h4 {
     margin-top: 0;
     float: left;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: bold;
-    line-height: 22px;
+    line-height: 1.5em;
     margin-bottom: 10px;
     margin-right: 15px;
     width: auto;
