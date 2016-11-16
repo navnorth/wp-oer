@@ -561,4 +561,10 @@ function isStandardExisting($standard) {
 	return $response;
 }
 
+//Get Domain from Url
+function getDomainFromUrl($url) {
+	$url_details = parse_url($url);
+	return $url_details['host'];
+}
+
 ?>

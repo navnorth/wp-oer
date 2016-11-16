@@ -55,7 +55,11 @@ get_header(); ?>
 						?>
                     	</a>
                         <a class="oer-rsrcurl" href="<?php echo get_post_meta($post->ID, "oer_resourceurl", true); ?>" target="_blank" >
-                            <?php echo get_post_meta($post->ID, "oer_resourceurl", true); ?>
+                            <?php
+				$url = get_post_meta($post->ID, "oer_resourceurl", true);
+				$url_domain = getDomainFromUrl($url);
+				echo $url_domain;
+			    ?>
                         </a>
                     </div>
 
