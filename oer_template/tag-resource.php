@@ -4,7 +4,7 @@
  */
 
 get_header(); ?>
-<div class="cntnr">
+<div class="oer-cntnr">
 	<section id="primary" class="site-content">
 		<div id="content" role="main">
 

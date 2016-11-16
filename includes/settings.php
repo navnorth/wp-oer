@@ -79,21 +79,21 @@
 	}
     ?>
 </div><!-- /.wrap -->
-<div class="plugin-footer">
-	<div class="plugin-info"><?php echo OER_PLUGIN_NAME . " " . OER_VERSION .""; ?></div>
-	<div class="plugin-link"><a href='http://www.navigationnorth.com/portfolio/oer-management/' target='_blank'><?php _e("More info", OER_SLUG); ?></a></div>
+<div class="oer-plugin-footer">
+	<div class="oer-plugin-info"><?php echo OER_PLUGIN_NAME . " " . OER_VERSION .""; ?></div>
+	<div class="oer-plugin-link"><a href='http://www.navigationnorth.com/portfolio/oer-management/' target='_blank'><?php _e("More info", OER_SLUG); ?></a></div>
 	<div class="clear"></div>
 </div>
 
 <?php
 function show_general_settings() {
 ?>
-<div class="plugin-body">
-	<div class="plugin-row">
-		<div class="row-left">
+<div class="oer-plugin-body">
+	<div class="oer-plugin-row">
+		<div class="oer-row-left">
 			<?php _e("Lorem ipsum dolor sit amet, consectetur adipiscing elit. In quis nunc tempor, maximus nulla nec, consectetur dolor. Cras tempor fermentum dolor ut maximus. Suspendisse pellentesque lacus semper justo blandit, non interdum velit tempor. Aenean euismod viverra erat eu pretium. Proin ut molestie velit, sit amet vehicula tellus. Praesent et pretium lectus.", OER_SLUG); ?>
 		</div>
-		<div class="row-right">
+		<div class="oer-row-right">
 			<strong><?php _e("Support Options", OER_SLUG); ?></strong>
 			<ul>
 				<li><a href="#" target="_blank"><?php _e("WordPress Plugin Support Forums", OER_SLUG); ?></a></li>
@@ -101,7 +101,7 @@ function show_general_settings() {
 			</ul>
 		</div>
 	</div>
-	<div class="plugin-row">
+	<div class="oer-plugin-row">
 		<form method="post" class="oer_settings_form" action="options.php">
 			<fieldset>
 				<legend><div class="oer_hdng"><?php _e("Screenshot Utility", OER_SLUG); ?></div></legend>
@@ -154,12 +154,12 @@ function show_general_settings() {
 
 function show_styles_settings() {
 ?>
-<div class="plugin-body">
-	<div class="plugin-row">
-		<div class="row-left">
+<div class="oer-plugin-body">
+	<div class="oer-plugin-row">
+		<div class="oer-row-left">
 			<?php _e("Lorem ipsum dolor sit amet, consectetur adipiscing elit. In quis nunc tempor, maximus nulla nec, consectetur dolor. Cras tempor fermentum dolor ut maximus. Suspendisse pellentesque lacus semper justo blandit, non interdum velit tempor. Aenean euismod viverra erat eu pretium. Proin ut molestie velit, sit amet vehicula tellus. Praesent et pretium lectus.", OER_SLUG); ?>
 		</div>
-		<div class="row-right">
+		<div class="oer-row-right">
 			<strong><?php _e("Support Options", OER_SLUG); ?></strong>
 			<ul>
 				<li><a href="#" target="_blank"><?php _e("WordPress Plugin Support Forums", OER_SLUG); ?></a></li>
@@ -167,7 +167,7 @@ function show_styles_settings() {
 			</ul>
 		</div>
 	</div>
-	<div class="plugin-row">
+	<div class="oer-plugin-row">
 		<form method="post" class="oer_settings_form" action="options.php">
 			<?php settings_fields("oer_styles_settings"); ?>
 			<?php do_settings_sections("styles_settings_section"); ?>

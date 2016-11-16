@@ -18,10 +18,10 @@ if($rsltdata['parent'] != 0)
 }	
 ?>
 
-<div class="cntnr">
-	<div class="category_sidebar">
+<div class="oer-cntnr">
+	<div class="oer_category_sidebar">
 	<?php
-	echo '<ul class="category">';
+	echo '<ul class="oer-category">';
 			$args = array('hide_empty' => 0, 'taxonomy' => 'resource-subject-area', 'parent' => 0);
 			$categories= get_categories($args);
 			foreach($categories as $category)
@@ -46,11 +46,11 @@ if($rsltdata['parent'] != 0)
 				
 				if( !empty( $children ) )
 				{
-					echo '<li class="sub-category has-child'.$class.'"><span onclick="toggleparent(this);"><a href="'. site_url() .'/'. $category->slug .'" title="'. $category->name .'" >'. $category->name .'</a></span>';
+					echo '<li class="oer-sub-category has-child'.$class.'"><span onclick="toggleparent(this);"><a href="'. site_url() .'/'. $category->slug .'" title="'. $category->name .'" >'. $category->name .'</a></span>';
 				}
 				else
 				{
-					echo '<li class="sub-category'.$class.'"><span onclick="toggleparent(this);"><a href="'. site_url() .'/'. $category->slug .'"  title="'. $category->name .'" >'. $category->name .'</a></span>';
+					echo '<li class="oer-sub-category'.$class.'"><span onclick="toggleparent(this);"><a href="'. site_url() .'/'. $category->slug .'"  title="'. $category->name .'" >'. $category->name .'</a></span>';
 				}
 				echo get_category_child( $category->term_id);
 				echo '</li>';
@@ -59,9 +59,9 @@ if($rsltdata['parent'] != 0)
 	?>
 </div> <!--Left Sidebar-->
 
-	<div class="rightcatcntr">
+	<div class="oer-rightcatcntr">
 	
-		<div class="pgbrdcrums">
+		<div class="oer-pgbrdcrums">
 			<ul>
 				<?php
 					$termid = get_term_by('name', $term, "resource-subject-area" );
@@ -104,13 +104,13 @@ if($rsltdata['parent'] != 0)
 			
 			if(!empty($rslt))
 			{ 
-				echo '<div class="allftrdpst">'.$rslt .'</div> ';
+				echo '<div class="oer-allftrdpst">'.$rslt .'</div> ';
 			}
 		?> <!--Text and HTML Widget-->
 		
-		<div class="allftrdrsrc">
-			<div class="snglrsrchdng">Browse <?php echo get_the_title();?> Resources</div>
-			<div class="allftrdrsrccntr" onScroll="load_onScroll(this)" file-path="<?php echo get_template_directory_uri();?>/lib/ajax-scroll.php" data-id="<?php echo $rsltdata['term_id'];?>">
+		<div class="oer-allftrdrsrc">
+			<div class="oer-snglrsrchdng">Browse <?php echo get_the_title();?> Resources</div>
+			<div class="oer-allftrdrsrccntr" onScroll="load_onScroll(this)" file-path="<?php echo get_template_directory_uri();?>/lib/ajax-scroll.php" data-id="<?php echo $rsltdata['term_id'];?>">
 				<?php
 				$args = array(
 					'post_type' => 'resource',
@@ -128,14 +128,14 @@ if($rsltdata['parent'] != 0)
 						$content =  $post->post_content;
 						$content = substr($content, 0, 180);
 					?>
-						<div class="snglrsrc">
+						<div class="oer-snglrsrc">
 							<?php if(empty($image)){
 								$image = site_url().'/wp-content/plugins/wp-oer/images/default-icon.png';
 							}
 							$new_image_url = wft_resize_image( $image , 80 , 60 , true );
 							?>
-							<a href="<?php echo get_permalink($post->ID);?>"><div class="snglimglft"><img src="<?php echo $new_image_url;?>" alt="<?php echo $title; ?>"></div></a>
-							<div class="snglttldscrght <?php if(empty($image)){ echo 'snglttldscrghtfull';}?>">
+							<a href="<?php echo get_permalink($post->ID);?>"><div class="oer-snglimglft"><img src="<?php echo $new_image_url;?>" alt="<?php echo $title; ?>"></div></a>
+							<div class="oer-snglttldscrght <?php if(empty($image)){ echo 'snglttldscrghtfull';}?>">
 								<div class="ttl"><a href="<?php echo get_permalink($post->ID);?>"><?php echo $title;?></a></div>
 								<div class="desc"><?php echo $content; ?></div>
 							</div>
@@ -146,7 +146,7 @@ if($rsltdata['parent'] != 0)
 				}
 				else
 				{
-					echo "<div class='snglrsrc'>There are no resources available for $term</div>";
+					echo "<div class='oer-snglrsrc'>There are no resources available for $term</div>";
 				}	
 				?>
 		   </div>

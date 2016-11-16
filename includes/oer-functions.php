@@ -34,7 +34,7 @@ function get_sub_standard($id, $oer_standard)
 							<img src='".OER_URL."images/closed_arrow.png' data-pluginpath='".OER_URL."' />
 							<input type='checkbox' ".$chck." name='oer_standard[]' value='".$value."' onclick='oer_check_all(this)' >
 							".$result['standard_title']."
-						</div><div class='stndrd_desc'></div>";
+						</div><div class='oer_stndrd_desc'></div>";
 
 						$id = 'sub_standards-'.$result['id'];
 						get_sub_standard($id, $oer_standard);
@@ -91,7 +91,7 @@ function get_standard_notation($id, $oer_standard)
 			  echo "<input type='checkbox' ".$chck." name='oer_standard[]' value='".$value."' onclick='oer_check_myChild(this)'>
 			 	   ". $result['standard_notation']."
 				   </div>
-				   <div class='stndrd_desc'> ". $result['description']." </div>";
+				   <div class='oer_stndrd_desc'> ". $result['description']." </div>";
 
 				   get_standard_notation($id, $oer_standard);
 
@@ -205,7 +205,7 @@ if (!function_exists('get_oer_category_child')) {
 	
 		if(!empty($catchilds))
 		{
-			echo '<ul class="category">';
+			echo '<ul class="oer-category">';
 			foreach($catchilds as $catchild)
 			{
 				//var_dump($catchild->term_id);
@@ -227,14 +227,14 @@ if (!function_exists('get_oer_category_child')) {
 	
 				if( !empty( $children ) )
 				{
-					echo '<li class="sub-category has-child'.$class.'" title="'. $catchild->name .'" >
+					echo '<li class="oer-sub-category has-child'.$class.'" title="'. $catchild->name .'" >
 							<span onclick="toggleparent(this);">
 								<a href="'. site_url() .'/resource-subject-area/'. $catchild->slug .'">' . $catchild->name .'</a>
 							</span>';
 				}
 				else
 				{
-					echo '<li class="sub-category'.$class.'" title="'. $catchild->name .'" >
+					echo '<li class="oer-sub-category'.$class.'" title="'. $catchild->name .'" >
 							<span onclick="toggleparent(this);">
 								<a href="'. site_url() .'/resource-subject-area/'. $catchild->slug .'">' . $catchild->name .'</a>
 							</span>';
@@ -334,7 +334,7 @@ if (!function_exists('oer_front_child_category')) {
 	
 		if(!empty($catchilds))
 		{
-			$rtrn .= '<ul class="category">';
+			$rtrn .= '<ul class="oer-category">';
 			foreach($catchilds as $catchild)
 			{
 				$children = get_term_children($catchild->term_id, 'resource-subject-area');
@@ -342,11 +342,11 @@ if (!function_exists('oer_front_child_category')) {
 				$count = $count + $catchild->count;
 				if( !empty( $children ) )
 				{
-					$rtrn .=  '<li class="sub-category has-child"><span onclick="toggleparent(this); gethght(this);"><a href="'. site_url() .'/resource-subject-area/'. $catchild->slug .'">' . $catchild->name .'</a><label>'. $count .'</label></span>';
+					$rtrn .=  '<li class="oer-sub-category has-child"><span onclick="toggleparent(this); gethght(this);"><a href="'. site_url() .'/resource-subject-area/'. $catchild->slug .'">' . $catchild->name .'</a><label>'. $count .'</label></span>';
 				}
 				else
 				{
-					$rtrn .=  '<li class="sub-category"><span onclick="toggleparent(this);"><a href="'. site_url() .'/resource-subject-area/'. $catchild->slug .'">' . $catchild->name .'</a><label>'. $count .'</label></span>';
+					$rtrn .=  '<li class="oer-sub-category"><span onclick="toggleparent(this);"><a href="'. site_url() .'/resource-subject-area/'. $catchild->slug .'">' . $catchild->name .'</a><label>'. $count .'</label></span>';
 				}
 				$rtrn .=  oer_front_child_category( $catchild->term_id);
 				$rtrn .= '</li>';

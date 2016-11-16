@@ -7,18 +7,18 @@ wp_register_style( "resource-styles", OER_URL . "css/resource-style.css" );
 wp_enqueue_style( "resource-styles" );
 
 get_header(); ?>
-	<div class="cntnr">
-        <div id="sngl-resource" class="sngl_resource_wrapper row">
+	<div class="oer-cntnr">
+        <div id="sngl-resource" class="oer_sngl_resource_wrapper row">
                 <?php global $post; global $wpdb; ?>
 		
 		<!--Resource URL-->
-		<div class="sngl-rsrc-url col-md-12">
+		<div class="oer-sngl-rsrc-url col-md-12">
 		    <h1><?php echo $post->post_title;?></h1>
 		</div>
-		<div class="rsrclftcntr-img col-md-5">
+		<div class="oer-rsrclftcntr-img col-md-5">
                     <!--Resource Image-->
-                    <div class="sngl-rsrc-img">
-                        <a class="featureimg" href="<?php echo get_post_meta($post->ID, "oer_resourceurl", true)?>" target="_blank" >
+                    <div class="oer-sngl-rsrc-img">
+                        <a class="oer-featureimg" href="<?php echo get_post_meta($post->ID, "oer_resourceurl", true)?>" target="_blank" >
 					<?php
 						$img_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ) , "full" );
 						$img_path = $new_img_path = parse_url($img_url[0]);
@@ -54,15 +54,15 @@ get_header(); ?>
 
 						?>
                     	</a>
-                        <a class="rsrcurl" href="<?php echo get_post_meta($post->ID, "oer_resourceurl", true); ?>" target="_blank" >
+                        <a class="oer-rsrcurl" href="<?php echo get_post_meta($post->ID, "oer_resourceurl", true); ?>" target="_blank" >
                             <?php echo get_post_meta($post->ID, "oer_resourceurl", true); ?>
                         </a>
                     </div>
 
               </div>
 
-		<div class="rsrcrghtcntr col-md-7">
-                	<div class="rsrcctgries">
+		<div class="oer-rsrcrghtcntr col-md-7">
+                	<div class="oer-rsrcctgries">
                     	<?php
                         $post_terms = get_the_terms( $post->ID, 'resource-subject-area' );
 						if(!empty($post_terms))
@@ -100,13 +100,13 @@ get_header(); ?>
 
                     <!--Resource Description-->
 					<?php if(!empty($post->post_content)) {?>
-						<div class="sngl-rsrc-dscrptn">
+						<div class="oer-sngl-rsrc-dscrptn">
 							<h1><?php _e("Description", OER_SLUG) ?></h1>
 							<?php echo $content = apply_filters ("the_content", $post->post_content); ?>
 						</div>
 					<?php } ?>
 
-                    <div id="" class="authorName cbxl">
+                    <div id="" class="authorName oer-cbxl">
 						<?php
 							$oer_authorname = get_post_meta($post->ID, "oer_authorname", true);
 							$oer_authorurl = get_post_meta($post->ID, "oer_authorurl", true);
@@ -115,10 +115,10 @@ get_header(); ?>
 							{
 							?>
 								<h3><?php _e("Creator:", OER_SLUG) ?></h3>
-								<div class="view"><a href="<?php echo $oer_authorurl; ?>" target="_blank"><?php echo $oer_authorname; ?></a></div>
+								<div class="oer-view"><a href="<?php echo $oer_authorurl; ?>" target="_blank"><?php echo $oer_authorname; ?></a></div>
 							<?php } ?>
                     </div>
-                    <div id="" class="publisherName cbxl">
+                    <div id="" class="publisherName oer-cbxl">
                         <?php
 							$oer_publishername = get_post_meta($post->ID, "oer_publishername", true);
 							$oer_publisherurl = get_post_meta($post->ID, "oer_publisherurl", true);
@@ -127,16 +127,16 @@ get_header(); ?>
 							{
 							?>
 								<h3><?php _e("Publisher:", OER_SLUG) ?></h3>
-								<div class="view"><a href="<?php echo $oer_publisherurl; ?>" target="_blank"><?php echo $oer_publishername; ?></a></div>
+								<div class="oer-view"><a href="<?php echo $oer_publisherurl; ?>" target="_blank"><?php echo $oer_publishername; ?></a></div>
 							<?php } ?>
 					</div>
-                    <div id="" class="mediaType cbxl">
+                    <div id="" class="oer-mediaType oer-cbxl">
 						<?php
 							$oer_mediatype = get_post_meta($post->ID, "oer_mediatype", true);
 							if(!empty($oer_mediatype))
 							{ ?>
 								<h3><?php _e("Type:", OER_SLUG) ?></h3>
-								<div class="view"><?php echo ucwords($oer_mediatype); ?></div>
+								<div class="oer-view"><?php echo ucwords($oer_mediatype); ?></div>
 						<?php } ?>
                     </div>
 					<?php
@@ -146,9 +146,9 @@ get_header(); ?>
 						if(is_array($grades) && !empty($grades) && array_filter($grades))
 						{
 					?>
-						<div class="rsrcgrd cbxl">
+						<div class="rsrcgrd oer-cbxl">
 							<h3><?php _e("Grades:", OER_SLUG) ?></h3>
-							<div class="view">
+							<div class="oer-view">
                         	<?php
 									sort($grades);
 
@@ -193,9 +193,9 @@ get_header(); ?>
 						if(!empty($oer_datecreated))
 						{
 						?>
-                    <div class="created cbxl">
+                    <div class="created oer-cbxl">
                         <h3>Created:</h3>
-                        <div class="view"><?php echo $oer_datecreated; ?></div>
+                        <div class="oer-view"><?php echo $oer_datecreated; ?></div>
                     </div>
 					<?php } ?>
 
@@ -204,9 +204,9 @@ get_header(); ?>
 						if(!empty($keywords))
 						{
 					?>
-							<div class="rsrckeyword">
+							<div class="oer-rsrckeyword">
 								<h3>Keywords</h3>
-								<div class="meta_container">
+								<div class="oer_meta_container">
 							   <?php
 									foreach($keywords as $keyword)
 									{
@@ -219,7 +219,7 @@ get_header(); ?>
 
 
                     <!--Resource Meta Data-->
-                    <div class="sngl-rsrc-meta">
+                    <div class="oer-sngl-rsrc-meta">
                         <!-- Meta Data Navigation Tab-->
                         <!--<div class="tabNavigator">
                          <a href="javascript:" data-id="tags" title="Metadata Tags" onclick="rsrc_tabs(this);">1</a>
@@ -231,15 +231,15 @@ get_header(); ?>
                        <!-- Meta Data Navigation Tab Tags-->
                        <!--<div class="tags">
                             <h3>Tags</h3>
-                            <div class="meta_container">
-                                <div id="resourceType" class="cbxl">
+                            <div class="oer_meta_container">
+                                <div id="resourceType" class="oer-cbxl">
                                     <h3>Resource Type</h3>
-                                    <div class="view"><?php //echo get_post_meta($post->ID, "oer_lrtype", true); ?></div>
+                                    <div class="oer-view"><?php //echo get_post_meta($post->ID, "oer_lrtype", true); ?></div>
                                 </div>
 
-                                <div id="language" class="cbxl">
+                                <div id="language" class="oer-cbxl">
                                     <h3>Language</h3>
-                                    <div class="view">English</div>
+                                    <div class="oer-view">English</div>
                                 </div>
                             </div>
                        </div>-->
@@ -247,7 +247,7 @@ get_header(); ?>
                        <!-- Meta Data Navigation Tab Related Post-->
                        <!--<div class="moreLikeThis" style="display: none;" >
                             <h3>More Like This</h3>
-                            <div class="meta_container">
+                            <div class="oer_meta_container">
                             <?php
 
                                 /*$tags = wp_get_post_tags($post->ID);
@@ -299,7 +299,7 @@ get_header(); ?>
                     </div>
                 </div> <!--Description & Resource Info at Right-->
 
-                <div class="rsrclftcntr">
+                <div class="oer-rsrclftcntr">
 
 					<?php
 
@@ -311,7 +311,7 @@ get_header(); ?>
 					?>
                     	<div class="alignedStandards">
                             <h3><?php _e("Standards", OER_SLUG) ?></h3>
-                            <div class="meta_container">
+                            <div class="oer_meta_container">
                                 <div class="stndrd_align">
                                 <?php
                                     if(!empty($stdrd_id))

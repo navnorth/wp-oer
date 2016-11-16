@@ -8,7 +8,7 @@ function show_oer_subjects($atts) {
     //Default
     $column = " col-md-3";
     $show_children = false;
-    $display_size = "cat-div";
+    $display_size = "oer-cat-div";
     
     if ($atts)
 	extract($atts);
@@ -28,7 +28,7 @@ function show_oer_subjects($atts) {
 		    
     $categories = get_categories( $args );
     
-    $content =  '<div class="cntnr"><div class="ctgry-cntnr row">';
+    $content =  '<div class="oer-cntnr"><div class="oer-ctgry-cntnr row">';
 		    $cnt = 1;
 		    $lepcnt = 1;
 		    
@@ -68,7 +68,7 @@ function show_oer_subjects($atts) {
 			    
 			    // Size attribute
 			    if (isset($size)){
-				$display_size = "cat-div-".$size;
+				$display_size = "oer-cat-div-".$size;
 			    }
 			    
 			    // Columns attribute
@@ -108,11 +108,11 @@ function show_oer_subjects($atts) {
 				}
 			    }
 			    
-			    $content .= '<div class="snglctwpr'.$column.'"><div class="'.$display_size.'" data-ownback="'.get_template_directory_uri().'/img/top-arrow.png" onMouseOver="changeonhover(this)" onMouseOut="changeonout(this);" '.$toggle_navigation.' data-id="'.$cnt.'" data-class="'.$lepcnt.'" data-normalimg="'.$icn_guid.'" data-hoverimg="'.$icn_hover_guid.'">
-				    <div class="cat-icn" style="background: url('.$icn_guid.') no-repeat scroll center center; "></div>
-				    <div class="cat-txt-btm-cntnr">
+			    $content .= '<div class="oer_snglctwpr'.$column.'"><div class="'.$display_size.'" data-ownback="'.get_template_directory_uri().'/img/top-arrow.png" onMouseOver="changeonhover(this)" onMouseOut="changeonout(this);" '.$toggle_navigation.' data-id="'.$cnt.'" data-class="'.$lepcnt.'" data-normalimg="'.$icn_guid.'" data-hoverimg="'.$icn_hover_guid.'">
+				    <div class="oer-cat-icn" style="background: url('.$icn_guid.') no-repeat scroll center center; "></div>
+				    <div class="oer-cat-txt-btm-cntnr">
 					    <ul>
-						    <li><label class="mne-sbjct-ttl" ><a href="'. site_url() .'/resource-subject-area/'. $category->slug .'">'. $category->name .'</a></label>'.$count_span.'</li>
+						    <li><label class="oer-mne-sbjct-ttl" ><a href="'. site_url() .'/resource-subject-area/'. $category->slug .'">'. $category->name .'</a></label>'.$count_span.'</li>
 					    </ul>
 				    </div>';
 			    
@@ -120,13 +120,13 @@ function show_oer_subjects($atts) {
 				    $children = get_term_children($category->term_id, 'resource-subject-area');
 				    if( !empty( $children ) )
 				    {
-					    $content .= '<div class="child-category">'. oer_front_child_category($category->term_id) .'</div>';
+					    $content .= '<div class="oer-child-category">'. oer_front_child_category($category->term_id) .'</div>';
 				    }
 				}
 				
 			    $content .= '</div>';
 			    //if(($cnt % 4) == 0){
-				    $content .= '<div class="child_content_wpr" data-id="'.$lepcnt.'"></div>';
+				    $content .= '<div class="oer_child_content_wpr" data-id="'.$lepcnt.'"></div>';
 				    $lepcnt++;
 			    //}
 		    $cnt++;

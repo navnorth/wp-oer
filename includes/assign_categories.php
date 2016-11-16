@@ -99,13 +99,13 @@ if(isset($_POST['oer_userasgnctgries']))
 									echo "<li class='oer_sbstndard has-child'>
 										<div class='stndrd_ttl'>
 											<img src='".OER_URL."images/open_arrow.png' data-pluginpath='".OER_URL."' />
-											<input type='checkbox' ". ischck_cats($asgn_catgrs, $category->term_id) ." name='oer_userasgnctgries[]' value='".$category->term_id ."' onclick='oer_check_all(this)' >".$category->name."</div><div class='stndrd_desc'></div>";
+											<input type='checkbox' ". ischck_cats($asgn_catgrs, $category->term_id) ." name='oer_userasgnctgries[]' value='".$category->term_id ."' onclick='oer_check_all(this)' >".$category->name."</div><div class='oer_stndrd_desc'></div>";
 								}
 								else
 								{
 									echo "<li class='oer_sbstndard'>
 										<div class='stndrd_ttl'>
-											<input type='checkbox' ". ischck_cats($asgn_catgrs, $category->term_id) ." name='oer_userasgnctgries[]' value='".$category->term_id ."' onclick='oer_check_all(this)' >".$category->name."</div><div class='stndrd_desc'></div>";
+											<input type='checkbox' ". ischck_cats($asgn_catgrs, $category->term_id) ." name='oer_userasgnctgries[]' value='".$category->term_id ."' onclick='oer_check_all(this)' >".$category->name."</div><div class='oer_stndrd_desc'></div>";
 								}
 								echo process_cat_tree( $category->term_id, $asgn_catgrs );
 								echo '</li>';
@@ -116,16 +116,16 @@ if(isset($_POST['oer_userasgnctgries']))
 							jQuery('li').children('.stndrd_ttl').children('img').click(function(e)
 							{
 								var plgnpth = jQuery(this).attr('data-pluginpath');
-								if( jQuery(this).parent('.stndrd_ttl').next('.stndrd_desc').next('ul').hasClass('active') )
+								if( jQuery(this).parent('.stndrd_ttl').next('.oer_stndrd_desc').next('ul').hasClass('active') )
 							   {
 									jQuery(this).attr('src', plgnpth+'images/open_arrow.png');
-									jQuery(this).parent('.stndrd_ttl').next('.stndrd_desc').next('ul').removeClass('active').children('li').slideToggle();
+									jQuery(this).parent('.stndrd_ttl').next('.oer_stndrd_desc').next('ul').removeClass('active').children('li').slideToggle();
 									e.stopPropagation();
 							   }
 							   else
 								  {
 									jQuery(this).attr('src', plgnpth+'images/closed_arrow.png')
-									jQuery(this).parent('.stndrd_ttl').next('.stndrd_desc').next('ul').addClass('active').children('li').slideToggle();
+									jQuery(this).parent('.stndrd_ttl').next('.oer_stndrd_desc').next('ul').addClass('active').children('li').slideToggle();
 									e.stopPropagation();
 								  }
 							});
@@ -205,7 +205,7 @@ if(isset($_POST['oer_userasgnctgries']))
 	$next = get_categories($args);
 	if( $next )
 	{
-		echo '<ul class="child">';
+		echo '<ul class="oer_child">';
 		foreach( $next as $cat )
 		{
 			 echo '<li><input '. ischck_cats($asgn_catgrs, $cat->term_id) .' type="checkbox" onclick="oer_check_myChild(this)" name="oer_userasgnctgries[]" value="'.$cat->term_id .'"><span class="">' . $cat->name.'</span>';
@@ -231,13 +231,13 @@ function process_cat_tree($categoryid, $asgn_catgrs )
 				echo "<li class='oer_sbstndard has-child'>
 						<div class='stndrd_ttl'>
 							<img src='".OER_URL."images/open_arrow.png' data-pluginpath='".OER_URL."' />
-							<input type='checkbox' ". ischck_cats($asgn_catgrs, $catchild->term_id) ." name='oer_userasgnctgries[]' value='".$catchild->term_id ."' onclick='oer_check_all(this)' >".$catchild->name."</div><div class='stndrd_desc'></div>";
+							<input type='checkbox' ". ischck_cats($asgn_catgrs, $catchild->term_id) ." name='oer_userasgnctgries[]' value='".$catchild->term_id ."' onclick='oer_check_all(this)' >".$catchild->name."</div><div class='oer_stndrd_desc'></div>";
 			}
 			else
 			{
 				echo "<li class='oer_sbstndard'>
 						<div class='stndrd_ttl'>
-							<input type='checkbox' ". ischck_cats($asgn_catgrs, $catchild->term_id) ." name='oer_userasgnctgries[]' value='".$catchild->term_id ."' onclick='oer_check_all(this)' >".$catchild->name."</div><div class='stndrd_desc'></div>";
+							<input type='checkbox' ". ischck_cats($asgn_catgrs, $catchild->term_id) ." name='oer_userasgnctgries[]' value='".$catchild->term_id ."' onclick='oer_check_all(this)' >".$catchild->name."</div><div class='oer_stndrd_desc'></div>";
 			}
 
 			process_cat_tree( $catchild->term_id, $asgn_catgrs );

@@ -181,12 +181,12 @@ global $chck;
 							foreach($results as $result)
 							{
 								$value = 'core_standards-'.$result['id'];
-								echo "<li class='oer_sbstndard main'>
+								echo "<li class='oer_sbstndard oer_main'>
 										<div class='stndrd_ttl'>
 											<img src='".OER_URL."images/closed_arrow.png' data-pluginpath='".OER_URL."' class='tglimg' />
 											<input type='checkbox' ".$chck." name='oer_standard[]' value='".$value."' onclick='oer_check_all(this)' >
 											".$result['standard_name']."
-										</div><div class='stndrd_desc'></div>";
+										</div><div class='oer_stndrd_desc'></div>";
 
 										get_sub_standard($value, $oer_standard);
 								echo "</li>";

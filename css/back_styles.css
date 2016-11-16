@@ -99,15 +99,15 @@
     float: left;
     width: 50%;
 }
-.main_lst {
+.oer_main_lst {
     float: left;
     width: 100%;
 }
-.sub_lst {
+.oer_sub_lst {
     float: left;
     width: 100%;
 }
-.child {
+.oer_child {
     margin-left: 25px;
 }
 .oer_fld  .radio_btn {
@@ -151,7 +151,7 @@
 {
 	margin-right: 10px;
 }
-.spn_category img
+.oer_spn_category img
 {
 	width: 90px;
 	height: 90px;
@@ -163,7 +163,7 @@
 	font-size: 14px;
 	margin-bottom: 15px;
 }
-.stndrd_desc {
+.oer_stndrd_desc {
     margin-left: 25px;
 }
 .oer_cats {
@@ -172,15 +172,15 @@
     width: 97%;
 	margin-top: 10px;
 }
-.main li
+.oer_main li
 {
 	display: none;
 }
-li.main
+li.oer_main
 {
 	list-style: none;
 }
-ul.slctstandard > li
+ul.oer_slctstandard > li
 {
 	display: list-item;
 }
@@ -200,13 +200,13 @@ ul.slctstandard > li
 .oer_imprtrwpr .fields {
 	margin-bottom:10px;
 }
-.plugin-row fieldset, .oer-import-row fieldset {
+.oer-plugin-row fieldset, .oer-import-row fieldset {
 	border: 1px solid #cccccc;
 	padding-left: 10px;
 }
-.plugin-footer { margin:10px 0 0; }
-.plugin-info {  display:inline-block; }
-.plugin-link { display:inline-block; margin-left:10px; }
+.oer-plugin-footer { margin:10px 0 0; }
+.oer-plugin-info {  display:inline-block; }
+.oer-plugin-link { display:inline-block; margin-left:10px; }
 .clear { clear:both; }
 #col-standards-left { width:40%; float:left; }
 #col-standards-left .oer_pargrph { width:auto; float:none; }
@@ -214,24 +214,24 @@ ul.slctstandard > li
 .wp-standards-list td:first-child, .wp-standards-list th:first-child { width:10%; }
 .wp-standards-list td:not(:first-child), .wp-standards-list th:not(:first-child) { width:45%; }
 #ui-datepicker-div { display:none; }
-.plugin-row, .oer-import-row { padding:0 15px; overflow:hidden; }
-.plugin-row:first-child, .oer-import-row:first-child { padding:15px 15px 0; }
+.oer-plugin-row, .oer-import-row { padding:0 15px; overflow:hidden; }
+.oer-plugin-row:first-child, .oer-import-row:first-child { padding:15px 15px 0; }
 .oer-import-row:first-child { padding:10px 0 0; }
 .oer-import-row { padding:0; }
-.plugin-row .row-left, .oer-import-row .row-left { width:63%; float:left; }
-.plugin-row .row-right, .oer-import-row .row-right { width:35%; float:right; }
-.plugin-row fieldset, .oer-import-row fieldset { margin-bottom:15px; }
-.plugin-row .form-table th { width:0; display:none; }
-.plugin-row .form-table td label { margin-right:10px; }
-.plugin-row .form-table td .indent { margin-left:25px; }
-.plugin-row .form-table td textarea { width:100%; }
-.plugin-row .form-table td .inline-desc {
+.oer-plugin-row .oer-row-left, .oer-import-row .row-left { width:63%; float:left; }
+.oer-plugin-row .oer-row-right, .oer-import-row .row-right { width:35%; float:right; }
+.oer-plugin-row fieldset, .oer-import-row fieldset { margin-bottom:15px; }
+.oer-plugin-row .form-table th { width:0; display:none; }
+.oer-plugin-row .form-table td label { margin-right:10px; }
+.oer-plugin-row .form-table td .indent { margin-left:25px; }
+.oer-plugin-row .form-table td textarea { width:100%; }
+.oer-plugin-row .form-table td .inline-desc {
 	font-weight: normal;
 	font-size: 14px;
 	margin-left: 30px;
 }
-.plugin-row .form-table td h3 { margin:0; }
-.plugin-body { border-left:1px solid #cdcdcd; border-right:1px solid #cdcdcd; border-bottom:1px solid #cdcdcd; }
+.oer-plugin-row .form-table td h3 { margin:0; }
+.oer-plugin-body { border-left:1px solid #cdcdcd; border-right:1px solid #cdcdcd; border-bottom:1px solid #cdcdcd; }
 .oer_imprtrwpr form legend {
 	font-size: 25px;
 	padding: 20px 0;

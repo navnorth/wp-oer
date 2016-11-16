@@ -38,7 +38,7 @@ if($rsltdata['parent'] != 0)
 	}
 }
 ?>
-<div class="cntnr row">
+<div class="oer-cntnr row">
 <?php if ($_subjectarea) { ?>
 	<div class="col-md-3">
 	<!--<div class="resource_category_sidebar template_resource_category_sidebar col-md-3">-->
@@ -75,11 +75,11 @@ if($rsltdata['parent'] != 0)
 				
 				if( !empty( $children ) )
 				{
-					echo '<li class="sub-category has-child'.$class.'"><span onclick="toggleparent(this);"><a href="'. site_url() .'/'.$category->taxonomy.'/'. $category->slug .'" title="'. $category->name .'" >'. $category->name .'</a></span>';
+					echo '<li class="oer-sub-category has-child'.$class.'"><span onclick="toggleparent(this);"><a href="'. site_url() .'/'.$category->taxonomy.'/'. $category->slug .'" title="'. $category->name .'" >'. $category->name .'</a></span>';
 				}
 				else
 				{
-					echo '<li class="sub-category'.$class.'"><span onclick="toggleparent(this);"><a href="'. site_url() .'/'.$category->taxonomy.'/'. $category->slug .'"  title="'. $category->name .'" >'. $category->name .'</a></span>';
+					echo '<li class="oer-sub-category'.$class.'"><span onclick="toggleparent(this);"><a href="'. site_url() .'/'.$category->taxonomy.'/'. $category->slug .'"  title="'. $category->name .'" >'. $category->name .'</a></span>';
 				}
 				
 				echo get_oer_category_child( $category->term_id, $rsltdata['term_id']);
@@ -90,9 +90,9 @@ if($rsltdata['parent'] != 0)
 	</div>
 <!--</div>--> <!--Left Sidebar-->
 <?php } ?>
-	<div class="rightcatcntr<?php if ($_subjectarea) { ?> col-md-9<?php } ?>">
+	<div class="oer-rightcatcntr<?php if ($_subjectarea) { ?> col-md-9<?php } ?>">
 	
-		<div class="pgbrdcrums">
+		<div class="oer-pgbrdcrums">
 			<ul>
 				<?php
 					$strcat = get_custom_oer_category_parents($term_id, "resource-subject-area" , FALSE, ':', TRUE);
@@ -227,13 +227,13 @@ if($rsltdata['parent'] != 0)
 			
 			if(!empty($rslt))
 			{ 
-				echo '<div class="allftrdpst">'.$rslt .'</div> ';
+				echo '<div class="oer-allftrdpst">'.$rslt .'</div> ';
 			}
 		?> <!--Text and HTML Widget-->
 		
-		<div class="allftrdrsrc">
-			<div class="snglrsrchdng"><?php sprintf(__("Browse %s Resources", OER_SLUG), $term); ?></div>
-			<div class="allftrdrsrccntr" onScroll="load_onScroll(this)" file-path="<?php echo get_template_directory_uri();?>/lib/ajax-scroll.php" data-id="<?php echo $rsltdata['term_id'];?>">
+		<div class="oer-allftrdrsrc">
+			<div class="oer-snglrsrchdng"><?php sprintf(__("Browse %s Resources", OER_SLUG), $term); ?></div>
+			<div class="oer-allftrdrsrccntr" onScroll="load_onScroll(this)" file-path="<?php echo get_template_directory_uri();?>/lib/ajax-scroll.php" data-id="<?php echo $rsltdata['term_id'];?>">
 				<?php
 				$args = array(
 					'post_type' => 'resource',
@@ -282,11 +282,11 @@ if($rsltdata['parent'] != 0)
 							}
 						}
 					?>
-						<div class="snglrsrc">
+						<div class="oer-snglrsrc">
 							<?php
-							echo '<a href="'.get_permalink($post->ID).'"><div class="snglimglft"><img src="'.$new_image_url.'"></div></a>';
+							echo '<a href="'.get_permalink($post->ID).'"><div class="oer-snglimglft"><img src="'.$new_image_url.'"></div></a>';
 							?>
-							<div class="snglttldscrght <?php if(empty($img_url)){ echo 'snglttldscrghtfull';}?>">
+							<div class="oer-snglttldscrght <?php if(empty($img_url)){ echo 'snglttldscrghtfull';}?>">
 								<div class="ttl"><a href="<?php echo get_permalink($post->ID);?>"><?php echo $title;?></a></div>
 								<div class="desc"><?php echo $content; ?></div>
 							</div>
@@ -298,7 +298,7 @@ if($rsltdata['parent'] != 0)
 				else
 				{
 					?>
-					<div class='snglrsrc'><?php sprintf(__("There are no resources available for %s", OER_SLUG), $term); ?></div>
+					<div class='oer-snglrsrc'><?php sprintf(__("There are no resources available for %s", OER_SLUG), $term); ?></div>
 					<?php
 				}	
 				?>

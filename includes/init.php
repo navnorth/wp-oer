@@ -100,7 +100,9 @@ function oer_resource_where_filter($sql)
 add_action('admin_enqueue_scripts', 'oer_backside_scripts');
 function oer_backside_scripts($hook)
 {
-    if ($_GET['post_type']=='resource') {
+    global $post;
+    
+    if ($_GET['post_type']=='resource' || $post->post_type=='resource') {
 	wp_enqueue_style('jqueryui-styles', OER_URL.'css/jquery-ui.css');
 	wp_enqueue_style('back-styles', OER_URL.'css/back_styles.css');
 	wp_enqueue_style( 'thickbox' );

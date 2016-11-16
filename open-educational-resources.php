@@ -290,7 +290,7 @@ function oer_tag_template( $template ) {
 			
 	$categories = get_categories( $args );
 	
-	$home_content =  '<div class="cntnr"><div class="ctgry-cntnr row">';
+	$home_content =  '<div class="oer-cntnr"><div class="oer-ctgry-cntnr row">';
 			$cnt = 1;
 			$lepcnt = 1;
 			
@@ -328,22 +328,22 @@ function oer_tag_template( $template ) {
 				$count = get_oer_post_count($category->term_id, "resource-category");
 				$count = $count + $category->count;
 					
-				$home_content .= '<div class="snglctwpr col-md-3"><div class="cat-div" data-ownback="'.get_template_directory_uri().'/img/top-arrow.png" onMouseOver="changeonhover(this)" onMouseOut="changeonout(this);" onclick="togglenavigation(this);" data-id="'.$cnt.'" data-class="'.$lepcnt.'" data-normalimg="'.$icn_guid.'" data-hoverimg="'.$icn_hover_guid.'">
-					<div class="cat-icn" style="background: url('.$icn_guid.') no-repeat scroll center center; "></div>
-					<div class="cat-txt-btm-cntnr">
+				$home_content .= '<div class="oer_snglctwpr col-md-3"><div class="oer-cat-div" data-ownback="'.get_template_directory_uri().'/img/top-arrow.png" onMouseOver="changeonhover(this)" onMouseOut="changeonout(this);" onclick="togglenavigation(this);" data-id="'.$cnt.'" data-class="'.$lepcnt.'" data-normalimg="'.$icn_guid.'" data-hoverimg="'.$icn_hover_guid.'">
+					<div class="oer-cat-icn" style="background: url('.$icn_guid.') no-repeat scroll center center; "></div>
+					<div class="oer-cat-txt-btm-cntnr">
 						<ul>
-							<li><label class="mne-sbjct-ttl" ><a href="'. site_url() .'/resource-category/'. $category->slug .'">'. $category->name .'</a></label><span>'. $count .'</span></li>
+							<li><label class="oer-mne-sbjct-ttl" ><a href="'. site_url() .'/resource-category/'. $category->slug .'">'. $category->name .'</a></label><span>'. $count .'</span></li>
 						</ul>
 					</div>';
 					
 					$children = get_term_children($category->term_id, 'resource-category');
 					if( !empty( $children ) )
 					{
-						$home_content .= '<div class="child-category">'. oer_front_child_category($category->term_id) .'</div>';
+						$home_content .= '<div class="oer-child-category">'. oer_front_child_category($category->term_id) .'</div>';
 					}
 				$home_content .= '</div>';
 				//if(($cnt % 4) == 0){
-					$home_content .= '<div class="child_content_wpr" data-id="'.$lepcnt.'"></div>';
+					$home_content .= '<div class="oer_child_content_wpr" data-id="'.$lepcnt.'"></div>';
 					$lepcnt++;
 				//}
 			$cnt++;
