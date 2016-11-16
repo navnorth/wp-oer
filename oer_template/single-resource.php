@@ -205,7 +205,7 @@ get_header(); ?>
 						{
 					?>
 							<div class="oer-rsrckeyword">
-								<h3>Keywords</h3>
+								<h4>Keywords</h4>
 								<div class="oer_meta_container">
 							   <?php
 									foreach($keywords as $keyword)
