@@ -7,7 +7,7 @@ wp_register_style( "resource-styles", OER_URL . "css/resource-style.css" );
 wp_enqueue_style( "resource-styles" );
 
 get_header(); ?>
-	<div class="oer-cntnr">
+	<div class="oer-cntnr post-content">
         <div id="sngl-resource" class="oer_sngl_resource_wrapper row">
                 <?php global $post; global $wpdb; ?>
 		
