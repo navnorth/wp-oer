@@ -110,6 +110,7 @@ if($rsltdata['parent'] != 0)
 					if(!empty($getimage))
 					{
 						$attach_icn = get_post($getimage[0]->post_id);
+						
 						$img_path = $new_img_path = parse_url($attach_icn->guid);
 						$img_path = $_SERVER['DOCUMENT_ROOT'] . $img_path['path'];
 						//Resize Image using WP_Image_Editor
@@ -246,12 +247,16 @@ if($rsltdata['parent'] != 0)
 				{
 					foreach($posts as $post)
 					{
+						$w_image = true;
 						//set new_image_url to empty to reset on every loop
 						$new_image_url = "";
 						
 						$img_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ) , "full" );
-						if (empty($img_url))
-							$img_url = site_url().'/wp-content/plugins/wp-oer/images/default-icon.png';
+						
+						if (empty($img_url)) {
+							$w_image = false;
+							$new_image_url = OER_URL . 'images/default-icon-220x180.png';
+						}
 						
 						$title =  $post->post_title;
 						$content =  $post->post_content;
@@ -259,7 +264,7 @@ if($rsltdata['parent'] != 0)
 						
 						$img_path = $new_img_path = parse_url($img_url[0]);
 						$img_path = $_SERVER['DOCUMENT_ROOT'] . $img_path['path'];
-						if(!empty($img_path))
+						if(!empty($img_url))
 						{
 							//Resize Image using WP_Image_Editor
 							$image_editor = wp_get_image_editor($img_path);
