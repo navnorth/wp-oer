@@ -571,7 +571,10 @@ function getDomainFromUrl($url) {
 function getImageFromExternalURL($url) {
 	global $_debug;
 	
-	$ch = curl_init ($url);
+	$external_service_url = get_option('oer_service_url');
+	$img_url = str_replace('$url',$url,$external_service_url);
+	
+	$ch = curl_init ($img_url);
 	
 	curl_setopt($ch, CURLOPT_HEADER, 0);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
