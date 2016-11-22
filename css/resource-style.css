@@ -34,7 +34,7 @@
 .oer-rsrclftcntr { float: left; width: 50%; }
 .oer-sngl-rsrc-dscrptn h2 {
     font-size:22px;
-    font-weight:bold !important;
+    font-weight:bold;
     margin:10px 0;
     color:#000000;
 }
