@@ -223,8 +223,10 @@ add_action('save_post', 'oer_save_customfields');
 function oer_save_customfields()
 {
     global $post;
+    
     //Check first if screenshot is enabled
     $screenshot_enabled = get_option( 'oer_enable_screenshot' );
+    $external_screenshot = get_option('oer_external_screenshots');
     
     //Check first if $post is not empty
     if ($post) {
@@ -442,6 +444,10 @@ function oer_save_customfields()
 			{
 			    if ( $screenshot_enabled )
 				$file = getScreenshotFile($url);
+			    
+			    // if external screenshot utility enabled
+			    if ( $external_screenshot )
+				$file = getImageFromExternalURL($url);
 			}
 
 			if(file_exists($file))
