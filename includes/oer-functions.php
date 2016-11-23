@@ -524,7 +524,7 @@ function importStandards($file){
 				if(empty($res))
 				{
 					//$description = preg_replace("/[^a-zA-Z0-9]+/", " ", html_entity_decode($description))
-					$description = mysqli_real_escape_string($description);
+					$description = esc_sql($description);
 					$wpdb->get_results( $wpdb->prepare( 'INSERT INTO ' . $wpdb->prefix. 'standard_notation values("", %s, %s, %s, "", %s)' , $parent , $notation , $description , $url ));
 				}
 			}
