@@ -209,7 +209,7 @@ get_header(); ?>
 						{
 					?>
 							<div class="oer-rsrckeyword">
-								<h4>Keywords</h4>
+								<h4><?php _e("Keywords:", OER_SLUG) ?></h4>
 								<div class="oer_meta_container">
 							   <?php
 									foreach($keywords as $keyword)
