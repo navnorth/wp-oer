@@ -79,7 +79,7 @@ get_header(); ?>
 								}
 								else
 								{
-									echo '<a href="'.site_url().'/'.$term->taxonomy.'/'.$term->slug.'">'.ucwords ($term->name).'</a>';
+									echo '<a href="'.site_url().'/'.$term->taxonomy.'/'.$term->slug.'" class="button">'.ucwords ($term->name).'</a>';
 								}
 							}
 
@@ -95,7 +95,7 @@ get_header(); ?>
 									//$idObj = get_category_by_slug($flat_arr[$k]);
 									$idObj = get_term_by( 'slug' , $flat_arr[$k] , 'resource-subject-area' );
 									if(!empty($idObj->name))
-									echo '<a href="'.site_url().'/'.$idObj->taxonomy.'/'.$idObj->slug.'">'.ucwords ($idObj->name).'</a>';
+									echo '<a href="'.site_url().'/'.$idObj->taxonomy.'/'.$idObj->slug.'" class="button">'.ucwords ($idObj->name).'</a>';
 								}
 							}
 						}
@@ -214,7 +214,7 @@ get_header(); ?>
 							   <?php
 									foreach($keywords as $keyword)
 									{
-										echo "<span><h3><a href='".get_tag_link($keyword->term_id)."'>".ucwords($keyword->name)."</a></h3></span>";
+										echo "<span><h3><a href='".get_tag_link($keyword->term_id)."' class='button'>".ucwords($keyword->name)."</a></h3></span>";
 									}
 								?>
 								</div>
