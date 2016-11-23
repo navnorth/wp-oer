@@ -13,7 +13,7 @@
 .oer-sngl-rsrc-img:hover { border: 2px solid #444; }
 .oer-sngl-rsrc-img .oer-featureimg { width: auto; float: left; }
 .oer-sngl-rsrc-img a { color: #444; text-decoration: none; }
-.oer-sngl-rsrc-img .oer-rsrcurl { background: none repeat scroll 0 0 #a8aaab; bottom: 0; left: 0; right: 0; padding: 10px; position: absolute; width: auto; color: #0c5598; font-style: italic; text-align: right; font-size:1.15rem;white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.oer-sngl-rsrc-img .oer-rsrcurl { background: none repeat scroll 0 0 #a8aaab; bottom: 0; left: 0; right: 0; padding: 10px; position: absolute; width: auto; /*color: #0c5598; font-style: italic;*/ text-align: right; /*font-size:1.15rem;*/ white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .oer-rsrcrghtcntr .oer-rsrcctgries { float: left; margin: 0px; width: 100%; padding-bottom: 5px; }
 .oer-rsrcctgries a { background: none repeat scroll 0 0 #085394; border: 1px solid #000000; color: #ffffff;float: left; padding: 10px 10px; text-decoration: none; width: auto; margin: 0 10px 7px 0; font-weight: bold; }
 .oer-rsrcctgries a:hover { background: none repeat scroll 0 0 #06457C; }
@@ -21,7 +21,7 @@
 .oer_sngl_resource_wrapper h1 { font-weight: bold; margin-bottom: 8px; font-size: 22px; color: #000; }
 .oer-cbxl { float: left; margin-bottom: 5px; width: 100%; }
 .oer-cbxl > h3 { margin-top:3px; margin-bottom: 5px; font-weight: bold; font-size: 14px; width: auto; float: left; margin-right: 15px; }
-.oer-view { float: left; font-size: 15px; }
+.oer-view { float: left; /*font-size: 15px;*/ }
 .oer-cbxl .oer-view a { color: #1d57a8; text-decoration: underline; width: auto; font-size: 15px; vertical-align:top; }
 .oer-mediaType { margin-top: 0px; }
 .oer-rsrckeyword { width: 100%; float: left; margin-top: 25px; }
