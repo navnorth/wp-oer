@@ -434,10 +434,10 @@ if(isset($_POST['resrc_imprt']))
 	//_e("Resource Created successfully!", OER_SLUG);
 }}
 
-//Categories Bulk Import
+//Subject Areas Bulk Import
 if(isset($_POST['bulk_imprt']))
 {
-	debug_log("OER Categories Importer: Initializing Excel Reader");
+	debug_log("OER Subject Areas Importer: Initializing Excel Reader");
 	
 	$excl_obj = new Spreadsheet_Excel_Reader();
 	$excl_obj->setOutputEncoding('CP1251');
@@ -449,7 +449,7 @@ if(isset($_POST['bulk_imprt']))
 	set_time_limit(0);
 	
 	// Log start of import process
-	debug_log("OER Categories Importer: Starting Bulk Import ");
+	debug_log("OER Subject Areas Importer: Starting Bulk Import ");
 		
 	global $wpdb;
 	
@@ -547,7 +547,7 @@ if(isset($_POST['bulk_imprt']))
 		debug_log($e->getMessage());
 	}
 	// Log finish of import process
-	debug_log("OER Categories Importer: Finished Bulk Import ");
+	debug_log("OER Subject Areas Importer: Finished Bulk Import ");
 	
 	$message = sprintf(__("Successfully imported %s subject areas.", OER_SLUG), $length);
 	$type = "success";
