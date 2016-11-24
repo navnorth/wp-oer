@@ -59,7 +59,7 @@ if(isset($_POST['resrc_imprt']))
 				$oer_resourceurl 	= "";
 				$oer_description 	= "";
 				$oer_highlight 		= "";
-				$oer_cetagories 	= "";
+				$oer_categories 	= "";
 				$oer_grade 		= "";
 				$oer_kywrd 		= "";
 				$oer_datecreated 	= "";
@@ -92,7 +92,7 @@ if(isset($_POST['resrc_imprt']))
 				if (isset($fnldata['cells'][$k][4]))
 					$oer_highlight      = $fnldata['cells'][$k][4];
 				if (isset($fnldata['cells'][$k][5]))
-					$oer_cetagories     = $fnldata['cells'][$k][5];
+					$oer_categories     = $fnldata['cells'][$k][5];
 				if (isset($fnldata['cells'][$k][6]))
 					$oer_grade          = $fnldata['cells'][$k][6];
 				if (isset($fnldata['cells'][$k][7]))
@@ -140,24 +140,25 @@ if(isset($_POST['resrc_imprt']))
 				{
 					$oer_standard = explode(",", $oer_standard);
 				}
-	
-				if(!empty($oer_cetagories))
+				
+				if(!empty($oer_categories))
 				{
-					$oer_cetagories = explode(",",$oer_cetagories);
+					$oer_categories = explode(",",$oer_categories);
 					$category_id = array();
-					for($i = 0; $i <= sizeof($oer_cetagories); $i++)
+					for($i = 0; $i <= sizeof($oer_categories); $i++)
 					{
-						if(!empty($oer_cetagories [$i]))
+						if(!empty($oer_categories [$i]))
 						{
-							if(get_cat_ID( $oer_cetagories [$i]))
-							{
-								$category_id[$i] = get_cat_ID( $oer_cetagories [$i]);
-							}
-							else
-							{
-								// Categories are not found then assign as keyword
-								$oer_kywrd .= ",".$oer_cetagories [$i];
-							}
+						    $cat = get_term_by( 'name', $oer_categories [$i], 'resource-subject-area' );
+						    if($cat)
+						    {
+							    $category_id[$i] = $cat->term_id;
+						    }
+						    else
+						    {
+							    // Categories are not found then assign as keyword
+							    $oer_kywrd .= ",".$oer_categories [$i];
+						    }
 						}
 					}
 				}
@@ -184,7 +185,7 @@ if(isset($_POST['resrc_imprt']))
 					$post_id = wp_insert_post( $post, false );
 					
 					//Set Category of Resources
-					wp_set_object_terms( $post_id, $category_id, 'resource-subject-area', true );
+					$tax_ids = wp_set_object_terms( $post_id, $category_id, 'resource-subject-area', true );
 					
 					// Set Tages
 					$oer_kywrd = strtolower(trim($oer_kywrd,","));
