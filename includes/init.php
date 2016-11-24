@@ -509,7 +509,7 @@ function oer_rsrcimprtr(){
 	//add_submenu_page('edit.php?post_type=resource','Resources Import','Import Resources','add_users','oer_rsrcimprt','oer_rsrcimprtrfn');
 	//add_submenu_page('edit.php?post_type=resource','Subject Areas Import','Import Subject Areas','add_users','oer_catsimprt','oer_catsimprtrfn');
 	//add_submenu_page('edit.php?post_type=resource','Standards Import','Import Standards','add_users','oer_stndrdsimprt','oer_stndrdsimprtfn');
-	add_submenu_page('edit.php?post_type=resource','Assign Subject Areas','Assign Subject Areas','add_users','oer_assign_categories','oer_assign_categories');
+	//add_submenu_page('edit.php?post_type=resource','Assign Subject Areas','Assign Subject Areas','add_users','oer_assign_categories','oer_assign_categories');
 	add_submenu_page('edit.php?post_type=resource','Import','Import','add_users','oer_import','oer_import');
 	add_submenu_page('edit.php?post_type=resource','Settings','Settings','add_users','oer_settings','oer_setngpgfn');
 }
