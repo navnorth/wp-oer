@@ -481,6 +481,7 @@ if(isset($_POST['bulk_imprt']))
 			$ids_arr = array(0);
 			$cat_ids = array(0);
 			$page_ids = array(0);
+			$cnt = 0;
 			for($i = 0; $i < $length; $i++)
 			{
 				for($j = 1; $j <= $fnldata[$i]['numRows']; $j++)
@@ -518,7 +519,7 @@ if(isset($_POST['bulk_imprt']))
 								$newvalue = wp_insert_post( $post, false );
 								$page_ids[$k] = $newvalue;
 								update_post_meta( $newvalue, '_wp_page_template', get_option("oer_category_template") );*/
-	
+								$cnt++;
 								$wpdb->get_results( $wpdb->prepare( "insert into " . $wpdb->prefix. "category_page values('', %s, %s, %s, %s)" , $cat_parentid , $rsc_parentid , $newvalue, $title));
 								break;
 							}
@@ -536,7 +537,7 @@ if(isset($_POST['bulk_imprt']))
 								$page = get_page_by_slug($slug, ARRAY_A, "page", $page_ids[$k-1] );
 								$page_ids[$k] = $page['ID'];
 							}
-	
+						    
 						}
 					}//For All Data Columns
 				}//For All Data Rows
@@ -550,7 +551,7 @@ if(isset($_POST['bulk_imprt']))
 	// Log finish of import process
 	debug_log("OER Subject Areas Importer: Finished Bulk Import ");
 	
-	$message = sprintf(__("Successfully imported %s subject areas.", OER_SLUG), $length);
+	$message = sprintf(__("Successfully imported %s subject areas.", OER_SLUG), $cnt);
 	$type = "success";
 	//_e("Categories Import Successfully.",OER_SLUG);
 }
