@@ -142,81 +142,88 @@ if($rsltdata['parent'] != 0)
 				?>
 				<li>
 					<?php
-					if(function_exists('yoast_breadcrumb'))
+					$opt = array(
+						'nofollowhome' => true,
+						'home' => 'Home',
+						'blog' => 'Blog',
+						'sep' => '&raquo;',
+						'prefix' => ''
+					);
+					/*if(function_exists('yoast_breadcrumb'))
 					{
 						//Custom breadcrumbs using Yoast
-						$opt = get_option("yoast_breadcrumbs");
-						$nofollow = ' ';
-						if ($opt['nofollowhome']) {
-							$nofollow = ' rel="nofollow" ';
-						}
-						
-						$on_front = get_option('show_on_front');
-						if ($on_front == "page") {
-							$homelink = '<a'.$nofollow.'href="'.get_permalink(get_option('page_on_front')).'">'.$opt['home'].'</a>';
-							$bloglink = $homelink.' '.$opt['sep'].' <a href="'.get_permalink(get_option('page_for_posts')).'">'.$opt['blog'].'</a>';
+						$opt = get_option("yoast_breadcrumbs");*/
+					$nofollow = ' ';
+					if ($opt['nofollowhome']) {
+						$nofollow = ' rel="nofollow" ';
+					}
+					
+					$on_front = get_option('show_on_front');
+					if ($on_front == "page") {
+						$homelink = '<a'.$nofollow.'href="'.get_permalink(get_option('page_on_front')).'">'.$opt['home'].'</a>';
+						$bloglink = $homelink.' '.$opt['sep'].' <a href="'.get_permalink(get_option('page_for_posts')).'">'.$opt['blog'].'</a>';
+					} else {
+						$homelink = '<a'.$nofollow.'href="'.get_bloginfo('url').'">'.$opt['home'].'</a>';
+						$bloglink = $homelink;
+					}
+					$taxonomy 	= get_taxonomy ( get_query_var('taxonomy') );
+					$term 		= get_query_var('term');
+					$cur_term 	= get_term_by( 'slug' , $term , 'resource-subject-area' );
+					$output 	.= ' '.$opt['sep'].' ';
+					$post 		= $wp_query->get_queried_object();
+					
+					// If this is a top level Page, it's simple to output the breadcrumb
+					if ( 0 == $post->parent ) {
+						$output = $homelink." ".$opt['sep']." ".$taxonomy->label .': '.$cur_term->name;
+					} else {
+						if (isset($post->ancestors)) {
+							if (is_array($post->ancestors))
+								$ancestors = array_values($post->ancestors);
+							else 
+								$ancestors = array($post->ancestors);				
 						} else {
-							$homelink = '<a'.$nofollow.'href="'.get_bloginfo('url').'">'.$opt['home'].'</a>';
-							$bloglink = $homelink;
+							$ancestors = array($post->parent);
 						}
-						$taxonomy 	= get_taxonomy ( get_query_var('taxonomy') );
-						$term 		= get_query_var('term');
-						$cur_term 	= get_term_by( 'slug' , $term , 'resource-subject-area' );
-						$output 	.= ' '.$opt['sep'].' ';
-						$post 		= $wp_query->get_queried_object();
+			
+						// Reverse the order so it's oldest to newest
+						$ancestors = array_reverse($ancestors);
 						
-						// If this is a top level Page, it's simple to output the breadcrumb
-						if ( 0 == $post->parent ) {
-							$output = $homelink." ".$opt['sep']." ".$taxonomy->label .': '.$cur_term->name;
-						} else {
-							if (isset($post->ancestors)) {
-								if (is_array($post->ancestors))
-									$ancestors = array_values($post->ancestors);
-								else 
-									$ancestors = array($post->ancestors);				
+						// Add the current Page to the ancestors list (as we need it's title too)
+						$ancestors[] = $post->term_id;
+						
+						$links = array();			
+						foreach ( $ancestors as $ancestor ) {
+							$termObj = get_term_by( 'term' , $ancestor , 'resource-subject-area' );
+							//var_dump($termObj);
+							$tmp  = array();
+							$tmp['title'] 	= $termObj->name;
+							$tmp['url'] 	= site_url() .'/resource-subject-area/'. $termObj->slug;
+							$tmp['cur'] = false;
+							if ($ancestor == $post->term_id) {
+								$tmp['cur'] = true;
+							}
+							$links[] = $tmp;
+						}
+			
+						$output = $homelink;
+						
+						foreach ( $links as $link ) {
+							$output .= ' '.$opt['sep'].' ';
+							if (!$link['cur']) {
+								$output .= '<a href="'.$link['url'].'">'.$link['title'].'</a>';
 							} else {
-								$ancestors = array($post->parent);
-							}
-				
-							// Reverse the order so it's oldest to newest
-							$ancestors = array_reverse($ancestors);
-							
-							// Add the current Page to the ancestors list (as we need it's title too)
-							$ancestors[] = $post->term_id;
-							
-							$links = array();			
-							foreach ( $ancestors as $ancestor ) {
-								$termObj = get_term_by( 'term' , $ancestor , 'resource-subject-area' );
-								//var_dump($termObj);
-								$tmp  = array();
-								$tmp['title'] 	= $termObj->name;
-								$tmp['url'] 	= site_url() .'/resource-subject-area/'. $termObj->slug;
-								$tmp['cur'] = false;
-								if ($ancestor == $post->term_id) {
-									$tmp['cur'] = true;
-								}
-								$links[] = $tmp;
-							}
-				
-							$output = $homelink;
-							
-							foreach ( $links as $link ) {
-								$output .= ' '.$opt['sep'].' ';
-								if (!$link['cur']) {
-									$output .= '<a href="'.$link['url'].'">'.$link['title'].'</a>';
-								} else {
-									$output .= $taxonomy->label .': '. $link['title'];
-								}
+								$output .= $taxonomy->label .': '. $link['title'];
 							}
 						}
-						if ($opt['prefix'] != "") {
-							$output = $opt['prefix']." ".$output;
-						}
-						//$output .= $taxonomy->label .': '. $cur_term->name ;
-						echo ucwords($output);
-						//$breadcrumbs = yoast_breadcrumb("","",false);
-						//echo ucwords ($breadcrumbs);
-					} 
+					}
+					if ($opt['prefix'] != "") {
+						$output = $opt['prefix']." ".$output;
+					}
+					//$output .= $taxonomy->label .': '. $cur_term->name ;
+					echo ucwords($output);
+					//$breadcrumbs = yoast_breadcrumb("","",false);
+					//echo ucwords ($breadcrumbs);
+					/*} */
 					?>
 				</li>
 			</ul>	

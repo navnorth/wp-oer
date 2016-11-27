@@ -75,11 +75,11 @@ $rsltdata = get_term_by( "name", $term, "resource-subject-area", ARRAY_A );
 				?>
 				<li>
 					<?php
-					if(function_exists('yoast_breadcrumb'))
+					/*if(function_exists('yoast_breadcrumb'))
 					{
 						$breadcrumbs = yoast_breadcrumb("","",false);
 						echo ucwords ($breadcrumbs);
-					} 
+					}*/ 
 					?>
 				</li>
 			</ul>	

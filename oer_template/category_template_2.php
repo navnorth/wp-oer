@@ -88,11 +88,11 @@ if($rsltdata['parent'] != 0)
 				?>
 				<li>
 					<?php
-					if(function_exists('yoast_breadcrumb'))
+					/*if(function_exists('yoast_breadcrumb'))
 					{
 						$breadcrumbs = yoast_breadcrumb("","",false);
 						echo ucwords ($breadcrumbs);
-					} 
+					}*/ 
 					?>
 				</li>
 			</ul>	
