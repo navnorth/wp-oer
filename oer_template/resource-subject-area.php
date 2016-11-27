@@ -146,7 +146,7 @@ if($rsltdata['parent'] != 0)
 						'nofollowhome' => true,
 						'home' => 'Home',
 						'blog' => 'Blog',
-						'sep' => '&raquo;',
+						'sep' => '-',
 						'prefix' => ''
 					);
 					/*if(function_exists('yoast_breadcrumb'))
