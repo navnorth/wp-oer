@@ -107,10 +107,11 @@ function oer_backside_scripts($hook)
 	wp_enqueue_style('back-styles', OER_URL.'css/back_styles.css');
 	wp_enqueue_style( 'thickbox' );
 
+	if ($post->post_type!=='resource') {
+	    wp_enqueue_script('jquery');
+	    wp_enqueue_script('min_jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
+	}
 	
-	wp_enqueue_script('jquery');
-	wp_enqueue_script('min_jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
-
 	wp_enqueue_script('jqueryui-scripts', OER_URL.'js/jquery-ui.js');
 	wp_enqueue_script( 'media-upload' );
 	wp_enqueue_script( 'thickbox' );
