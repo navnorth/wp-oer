@@ -68,38 +68,42 @@ get_header(); ?>
 		<div class="oer-rsrcrghtcntr col-md-7">
                 	<div class="oer-rsrcctgries">
                     	<?php
+			
                         $post_terms = get_the_terms( $post->ID, 'resource-subject-area' );
-						if(!empty($post_terms))
-						{
-							foreach($post_terms as $term)
-							{
-								if($term->parent != 0)
-								{
-									$parent[] = get_oer_parent_term($term->term_id);
-								}
-								else
-								{
-									echo '<a href="'.site_url().'/'.$term->taxonomy.'/'.$term->slug.'" class="button">'.ucwords ($term->name).'</a>';
-								}
-							}
+			if(!empty($post_terms))
+			{
+				echo  "<ul>";
+				foreach($post_terms as $term)
+				{
+					if($term->parent != 0)
+					{
+						$parent[] = get_oer_parent_term($term->term_id);
+					}
+					else
+					{
+						echo '<li class="cat-item cat-item-'.$term->term_id.'"><a href="'.site_url().'/'.$term->taxonomy.'/'.$term->slug.'" class="button">'.ucwords ($term->name).'</a></li>';
+					}
+				}
 
-							if(!empty($parent) && array_filter($parent))
-							{
-								$recur_multi_dimen_arr_obj =  new RecursiveArrayIterator($parent);
-								$recur_flat_arr_obj =  new RecursiveIteratorIterator($recur_multi_dimen_arr_obj);
-								$flat_arr = iterator_to_array($recur_flat_arr_obj, false);
+				if(!empty($parent) && array_filter($parent))
+				{
+					$recur_multi_dimen_arr_obj =  new RecursiveArrayIterator($parent);
+					$recur_flat_arr_obj =  new RecursiveIteratorIterator($recur_multi_dimen_arr_obj);
+					$flat_arr = iterator_to_array($recur_flat_arr_obj, false);
 
-								$flat_arr = array_values(array_unique($flat_arr));
-								for($k=0; $k < count($flat_arr); $k++)
-								{
-									//$idObj = get_category_by_slug($flat_arr[$k]);
-									$idObj = get_term_by( 'slug' , $flat_arr[$k] , 'resource-subject-area' );
-									if(!empty($idObj->name))
-									echo '<a href="'.site_url().'/'.$idObj->taxonomy.'/'.$idObj->slug.'" class="button">'.ucwords ($idObj->name).'</a>';
-								}
-							}
-						}
-						?>
+					$flat_arr = array_values(array_unique($flat_arr));
+					for($k=0; $k < count($flat_arr); $k++)
+					{
+						//$idObj = get_category_by_slug($flat_arr[$k]);
+						$idObj = get_term_by( 'slug' , $flat_arr[$k] , 'resource-subject-area' );
+						
+						if(!empty($idObj->name))
+						echo '<li class="cat-item cat-item-'.$idObj->term_id.'"><a href="'.site_url().'/'.$idObj->taxonomy.'/'.$idObj->slug.'" class="button">'.ucwords ($idObj->name).'</a></li>';
+					}
+				}
+				echo "</ul>";
+			}
+			?>
                     </div>
 
                     <!--Resource Description-->
@@ -210,11 +214,11 @@ get_header(); ?>
 					?>
 							<div class="oer-rsrckeyword">
 								<h4><?php _e("Keywords:", OER_SLUG) ?></h4>
-								<div class="oer_meta_container">
+								<div class="oer_meta_container tagcloud">
 							   <?php
 									foreach($keywords as $keyword)
 									{
-										echo "<span><h3><a href='".get_tag_link($keyword->term_id)."' class='button'>".ucwords($keyword->name)."</a></h3></span>";
+										echo "<span><a href='".get_tag_link($keyword->term_id)."' class='button'>".ucwords($keyword->name)."</a></span>";
 									}
 								?>
 								</div>

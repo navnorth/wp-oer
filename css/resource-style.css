@@ -53,6 +53,10 @@
     margin-right: 15px;
     width: auto;
 }
+.oer-rsrcctgries ul li.cat-item {
+    list-style:none;
+    display:inline-block;
+}
 /** For Mobile styles **/
 @media screen and (min-width: 960px) {
     .oer-sngl-rsrc-dscrptn { width: 100%; }
