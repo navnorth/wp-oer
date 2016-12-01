@@ -66,13 +66,12 @@ get_header(); ?>
               </div>
 
 		<div class="oer-rsrcrghtcntr col-md-7">
-                	<div class="oer-rsrcctgries">
+                	<div class="oer-rsrcctgries tagcloud">
                     	<?php
 			
                         $post_terms = get_the_terms( $post->ID, 'resource-subject-area' );
 			if(!empty($post_terms))
 			{
-				echo  "<ul>";
 				foreach($post_terms as $term)
 				{
 					if($term->parent != 0)
@@ -81,7 +80,7 @@ get_header(); ?>
 					}
 					else
 					{
-						echo '<li class="cat-item cat-item-'.$term->term_id.'"><a href="'.site_url().'/'.$term->taxonomy.'/'.$term->slug.'" class="button">'.ucwords ($term->name).'</a></li>';
+						echo '<span><a href="'.site_url().'/'.$term->taxonomy.'/'.$term->slug.'" class="button">'.ucwords ($term->name).'</a></span>';
 					}
 				}
 
@@ -98,10 +97,9 @@ get_header(); ?>
 						$idObj = get_term_by( 'slug' , $flat_arr[$k] , 'resource-subject-area' );
 						
 						if(!empty($idObj->name))
-						echo '<li class="cat-item cat-item-'.$idObj->term_id.'"><a href="'.site_url().'/'.$idObj->taxonomy.'/'.$idObj->slug.'" class="button">'.ucwords ($idObj->name).'</a></li>';
+						echo '<span><a href="'.site_url().'/'.$idObj->taxonomy.'/'.$idObj->slug.'" class="button">'.ucwords ($idObj->name).'</a></span>';
 					}
 				}
-				echo "</ul>";
 			}
 			?>
                     </div>
