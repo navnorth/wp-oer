@@ -3,7 +3,8 @@
  * Template Name: Default Tag Page Template
  */
 
-get_header(); ?>
+get_header();
+?>
 <div class="oer-cntnr">
 	<section id="primary" class="site-content">
 		<div id="content" role="main">

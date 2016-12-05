@@ -269,6 +269,24 @@ function oer_tag_template( $template ) {
 	}
  }
  
+add_action( 'pre_get_posts', 'oer_cpt_tags' );
+function oer_cpt_tags( $query ) {
+	
+	if ( $query->is_tag() && $query->is_main_query() ) {
+	    $query->set( 'post_type', array( 'post', 'resource' ) );
+	}
+}
+ 
+function query_post_type($query) {
+   //Limit to main query, tag queries and frontend
+   if($query->is_main_query() && $query->is_tag() ) {
+
+        $query->set( 'post_type', 'resource' );
+
+   }
+
+}
+ 
  /**
   * Load Resource Categories on home page
   **/
