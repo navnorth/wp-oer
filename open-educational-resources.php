@@ -112,6 +112,29 @@ function create_csv_import_table()
 
    //CreatePage('Resource Form','[oer_resource_form]','resource_form'); // creating page
    //create_template();
+   update_option('setup_notify', true);
+}
+
+add_action( 'admin_notices', 'oer_plugin_activation_notice' );
+// Plugin activation notice
+function oer_plugin_activation_notice() {
+	if (isset($_GET['dismiss'])) {
+		update_option('setup_notify', false);
+	}
+	if (get_option('setup_notify') && (get_option('setup_notify')==true)) {
+		$dismiss_button = '<form class="inline-form" style="display:inline;"><input type="hidden" name="dismiss" value="1" /><input type="submit" value="Dismiss" /></form>';
+		$setup_button = '<form class="inline-form" style="display:inline;" method="post" action="'.admin_url( 'edit.php?post_type=resource&page=oer_settings&tab=setup').'"><input type="hidden" name="setup" value="1" /><input type="submit" value="Setup" /></form>'
+	?>
+		<div class="updated notice is-dismissible">
+			<p>Thank you for installing the WP-OER plugin. <?php echo $dismiss_button . $setup_button; ?></p>
+		</div>
+	<?php
+	}
+}
+
+register_deactivation_hook( __FILE__, "deactivate_oer_plugin" );
+function deactivate_oer_plugin() {
+	delete_option('setup_notify');
 }
 
 //Load localization directory
