@@ -646,6 +646,35 @@ function oer_styles_settings(){
 		)
 	);
 	
+	//Add Settings field for hiding Page title on Subject Area pages
+	add_settings_field(
+		'oer_hide_subject_area_title',
+		'',
+		'setup_settings_field',
+		'styles_settings_section',
+		'oer_styles_settings',
+		array(
+			'uid' => 'oer_hide_subject_area_title',
+			'type' => 'checkbox',
+			'name' =>  __('Subject Area pages', OER_SLUG),
+			'pre_html' => '<h3>Hide Page Titles</h3><p class="description hide-description">Some themes have built-in display of page titles.</p>'		)
+	);
+	
+	//Add Settings field for hiding Page title on Resource pages
+	add_settings_field(
+		'oer_hide_resource_title',
+		'',
+		'setup_settings_field',
+		'styles_settings_section',
+		'oer_styles_settings',
+		array(
+			'uid' => 'oer_hide_resource_title',
+			'type' => 'checkbox',
+			'name' =>  __('Resource pages', OER_SLUG),
+			'class' => 'hide-title-setting'
+		)
+	);
+	
 	//Add Settings field for Importing Bootstrap CSS & JS Libraries
 	add_settings_field(
 		'oer_additional_css',
@@ -663,6 +692,8 @@ function oer_styles_settings(){
 	
 	register_setting( 'oer_styles_settings' , 'oer_use_bootstrap' );
 	register_setting( 'oer_styles_settings' , 'oer_display_subject_area' );
+	register_setting( 'oer_styles_settings' , 'oer_hide_subject_area_title' );
+	register_setting( 'oer_styles_settings' , 'oer_hide_resource_title' );
 	register_setting( 'oer_styles_settings' , 'oer_additional_css' );
 }
 
@@ -733,6 +764,10 @@ function setup_settings_field( $arguments ) {
 	if (isset($arguments['class'])) {
 		$class = $arguments['class'];
 		$class = " class='".$class."' ";
+	}
+	
+	if (isset($arguments['pre_html'])) {
+		echo $arguments['pre_html'];
 	}
 	
 	switch($arguments['type']){

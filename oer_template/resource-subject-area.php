@@ -37,6 +37,9 @@ if($rsltdata['parent'] != 0)
 		}
 	}
 }
+
+// Checks if subject area title is set to hide 
+$hide_title = get_option('oer_hide_subject_area_title');
 ?>
 <div class="oer-cntnr row">
 <?php if ($_subjectarea) { ?>
@@ -91,7 +94,7 @@ if($rsltdata['parent'] != 0)
 <!--</div>--> <!--Left Sidebar-->
 <?php } ?>
 	<div class="oer-rightcatcntr<?php if ($_subjectarea) { ?> col-md-9<?php } ?>">
-	
+		<?php if (!$hide_title) { ?>
 		<div class="oer-pgbrdcrums">
 			<ul>
 				<?php
@@ -228,7 +231,7 @@ if($rsltdata['parent'] != 0)
 				</li>
 			</ul>	
 		</div> <!--Breadcrumbs-->
-	
+		<?php } ?>
 		<?php 
 			 $postid = get_the_ID();
 			 $rslt = get_post_meta($postid, "enhance_page_content", true);

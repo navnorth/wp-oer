@@ -6,14 +6,18 @@
 wp_register_style( "resource-styles", OER_URL . "css/resource-style.css" );
 wp_enqueue_style( "resource-styles" );
 
-get_header(); ?>
+get_header();
+$hide_title = get_option('oer_hide_resource_title');
+?>
 	<div class="oer-cntnr post-content">
         <div id="sngl-resource" class="oer_sngl_resource_wrapper row">
                 <?php global $post; global $wpdb; ?>
 		
 		<!--Resource URL-->
 		<div class="oer-sngl-rsrc-url col-md-12">
-		    <h1><?php echo $post->post_title;?></h1>
+			<?php if (!$hide_title){ ?>
+				<h1><?php echo $post->post_title;?></h1>
+			<?php } ?>
 		</div>
 		<div class="oer-rsrclftcntr-img col-md-5">
                     <!--Resource Image-->
