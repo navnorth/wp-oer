@@ -127,8 +127,8 @@ $hide_title = get_option('oer_hide_resource_title');
     							if(!empty($oer_authorname) && !empty($oer_authorurl))
     							{
     							?>
-    								<p><strong><?php _e("Creator:", OER_SLUG) ?></strong>
-    								<span><a href="<?php echo $oer_authorurl; ?>" target="_blank"><?php echo $oer_authorname; ?></a></span></p>
+    								<h4><strong><?php _e("Creator:", OER_SLUG) ?></strong>
+    								<span><a href="<?php echo $oer_authorurl; ?>" target="_blank"><?php echo $oer_authorname; ?></a></span></h4>
     							<?php } ?>
                         </div>
                             <?php
@@ -139,8 +139,8 @@ $hide_title = get_option('oer_hide_resource_title');
     			{
     			?>
     			<div id="" class="oer-publisherName oer-cbxl">
-    				<p><strong><?php _e("Publisher:", OER_SLUG) ?></strong>
-    				<span><a href="<?php echo $oer_publisherurl; ?>" target="_blank"><?php echo $oer_publishername; ?></a></span></p>
+    				<h4><strong><?php _e("Publisher:", OER_SLUG) ?></strong>
+    				<span><a href="<?php echo $oer_publisherurl; ?>" target="_blank"><?php echo $oer_publishername; ?></a></span></h4>
     			</div>
     			<?php } ?>
                         <div id="" class="oer-mediaType oer-cbxl">
@@ -148,8 +148,8 @@ $hide_title = get_option('oer_hide_resource_title');
     							$oer_mediatype = get_post_meta($post->ID, "oer_mediatype", true);
     							if(!empty($oer_mediatype))
     							{ ?>
-    								<p><strong><?php _e("Type:", OER_SLUG) ?></strong>
-    								<span><?php echo ucwords($oer_mediatype); ?></span></p>
+    								<h4><strong><?php _e("Type:", OER_SLUG) ?></strong>
+    								<span><?php echo ucwords($oer_mediatype); ?></span></h4>
     						<?php } ?>
                         </div>
     					<?php
@@ -160,7 +160,7 @@ $hide_title = get_option('oer_hide_resource_title');
     						{
     					?>
     						<div class="oer-rsrcgrd oer-cbxl">
-    							<p><strong><?php _e("Grades:", OER_SLUG) ?></strong>
+    							<h4><strong><?php _e("Grades:", OER_SLUG) ?></strong>
     							<span>
                             	<?php
     									sort($grades);
@@ -197,7 +197,7 @@ $hide_title = get_option('oer_hide_resource_title');
     										echo $fltrarr[0]."-".$fltrarr[$end_filter];
     									}
     							?>
-							</span></p>
+							</span></h4>
 						</div>
     					<?php }?>
 
@@ -207,8 +207,8 @@ $hide_title = get_option('oer_hide_resource_title');
     						{
     						?>
 					<div class="oer-created oer-cbxl">
-					    <p><strong>Created:</strong>
-					    <span><?php echo $oer_datecreated; ?></span></p>
+					    <h4><strong>Created:</strong>
+					    <span><?php echo $oer_datecreated; ?></span></h4>
 					</div>
     					<?php } ?>
 
