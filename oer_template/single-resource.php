@@ -218,7 +218,7 @@ $hide_title = get_option('oer_hide_resource_title');
     						{
     					?>
     							<div class="oer-rsrckeyword">
-    								<h4><?php _e("Keywords:", OER_SLUG) ?></h4>
+    								<h4><strong><?php _e("Keywords:", OER_SLUG) ?></strong></h4>
     								<div class="oer_meta_container tagcloud">
     							   <?php
     									foreach($keywords as $keyword)
