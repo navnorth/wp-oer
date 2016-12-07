@@ -113,20 +113,46 @@ function create_csv_import_table()
    //CreatePage('Resource Form','[oer_resource_form]','resource_form'); // creating page
    //create_template();
    update_option('setup_notify', true);
+   //enqueue_activation_script();
+}
+
+//Enqueue activation script
+function enqueue_activation_script() {
+	if ( is_admin()) {
+		
+		// Adds our JS file to the queue that WordPress will load
+		wp_enqueue_script( 'wp_ajax_oer_admin_script', OER_URL . 'js/oer-admin.js', array( 'jquery' ), null, true );
+
+		// Make some data available to our JS file
+		wp_localize_script( 'wp_ajax_oer_admin_script', 'wp_ajax_oer_admin', array(
+			'wp_ajax_oer_admin_nonce' => wp_create_nonce( 'wp_ajax_oer_admin_nonce' ),
+		));
+	}
+}
+
+add_action( 'wp_ajax_oer_activation_notice', 'dismiss_activation_notice' );
+function dismiss_activation_notice() {
+	
+	update_option('setup_notify', false);
+	
+	// Send success message
+	wp_send_json( array(
+		'status' => 'success',
+		'message' => __( 'Your request was successful.', OER_SLUG )
+	) );
 }
 
 add_action( 'admin_notices', 'oer_plugin_activation_notice' );
 // Plugin activation notice
 function oer_plugin_activation_notice() {
-	if (isset($_GET['dismiss'])) {
+	if (isset($_POST['oer_setup'])) {
 		update_option('setup_notify', false);
 	}
 	if (get_option('setup_notify') && (get_option('setup_notify')==true)) {
-		$dismiss_button = '<form class="inline-form" style="display:inline;"><input type="hidden" name="dismiss" value="1" /><input type="submit" value="Dismiss" /></form>';
-		$setup_button = '<form class="inline-form" style="display:inline;" method="post" action="'.admin_url( 'edit.php?post_type=resource&page=oer_settings&tab=setup').'"><input type="hidden" name="setup" value="1" /><input type="submit" value="Setup" /></form>'
+		$setup_button = '<form class="inline-form" style="display:inline;" method="post" action="'.admin_url( 'edit.php?post_type=resource&page=oer_settings&tab=setup').'"><input type="hidden" name="oer_setup" value="1" /><input type="submit" value="Setup" /></form>';
 	?>
-		<div class="updated notice is-dismissible">
-			<p>Thank you for installing the WP-OER plugin. <?php echo $dismiss_button . $setup_button; ?></p>
+		<div id="oer-dismissible-notice" class="updated notice is-dismissible" style="padding-top:5px;padding-bottom:5px;">
+			<span>Thank you for installing the WP-OER plugin.</span> <?php echo $setup_button; ?>
 		</div>
 	<?php
 	}

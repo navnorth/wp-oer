@@ -117,6 +117,14 @@ function oer_backside_scripts($hook)
 	wp_enqueue_script( 'thickbox' );
 	wp_enqueue_script('back-scripts', OER_URL.'js/back_scripts.js',array( 'jquery','media-upload','thickbox','set-post-thumbnail' ));
     }
+    
+    // Adds our JS file to the queue that WordPress will load
+    wp_enqueue_script( 'wp_ajax_oer_admin_script', OER_URL . 'js/oer_admin.js', array( 'jquery' ), null, true );
+
+    // Make some data available to our JS file
+    wp_localize_script( 'wp_ajax_oer_admin_script', 'wp_ajax_oer_admin', array(
+	    'wp_ajax_oer_admin_nonce' => wp_create_nonce( 'wp_ajax_oer_admin_nonce' ),
+    ));
 }
 
 //scripts and styles on front end
