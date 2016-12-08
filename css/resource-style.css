@@ -3,7 +3,7 @@
  * Resource Page Stylesheet
  * Version : 0.1
  **/
-.oer-cntnr { width:100%; margin:0 auto; }
+.oer-cntnr { width:100%; margin:0 auto; overflow:hidden; }
 .oer_sngl_resource_wrapper { width: 100%; margin-bottom: 10px; overflow:hidden; }
 .oer-rsrclftcntr-img { float: left; width: 42%; /*margin-right: 35px;*/ }
 .oer-rsrcrghtcntr { float: left; width: 54%; padding: 0 0 0 15px; box-sizing: border-box; }
