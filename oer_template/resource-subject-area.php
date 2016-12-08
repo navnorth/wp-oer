@@ -299,7 +299,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 					?>
 						<div class="oer-snglrsrc">
 							<?php
-							echo '<a href="'.get_permalink($post->ID).'"><div class="oer-snglimglft"><img src="'.$new_image_url.'"></div></a>';
+							echo '<a href="'.get_permalink($post->ID).'" class="oer-resource-link"><div class="oer-snglimglft"><img src="'.$new_image_url.'"></div></a>';
 							?>
 							<div class="oer-snglttldscrght <?php if(empty($img_url)){ echo 'snglttldscrghtfull';}?>">
 								<div class="ttl"><a href="<?php echo get_permalink($post->ID);?>"><?php echo $title;?></a></div>

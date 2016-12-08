@@ -57,9 +57,10 @@
 .oer-allftrdrsrc .oer-allftrdrsrccntr { float: left; margin: 0px; padding: 0 5px 0 0; overflow-y: scroll; height: 367px; border-top: 1px solid #c8c8c8; border-bottom: 1px solid #c8c8c8; width:100%; }
 .oer-allftrdrsrc .oer-snglrsrc:first-child { border-top: none !important; margin: 8px 0 2px !important; }
 .oer-allftrdrsrc .oer-snglrsrc { float: left; padding: 5px 0; width: 100%; border-top: 1px solid #ddd !important; }
-.oer-snglrsrc .oer-snglimglft { width: 130px; height: 75px; overflow: hidden; float: left; margin: 0px; padding: 0px; border: 1px solid #c8c8c8; }
+.oer-snglrsrc .oer-snglimglft { width: 100%; height: auto; overflow: hidden; float: left; margin: 0px; padding: 0px; border: 1px solid #c8c8c8; }
 .oer-snglrsrc .oer-snglimglft img { width: 100%; }
-.oer-snglrsrc .oer-snglttldscrght { width: 82%; float: right; margin: 0px; padding: 0px; }
+.oer-snglrsrc .oer-snglttldscrght { width: 82%; float: right; margin: 0px; padding: 0 0 0 10px; }
+.oer-snglrsrc .oer-resource-link { width:18%; float:left; }
 .oer-snglttldscrght .ttl { width: 100%; float: left; margin: 0px; }
 .oer-snglttldscrght .desc { width: 100%; float: left; margin: 10px 0; padding: 0px; line-height: 21px; font-size: 14px; color: #999; }
 .oer-snglttldscrght .ttl a { font-size: 17px; color: #444; text-decoration: none; padding: 0 0 5px 0; }
