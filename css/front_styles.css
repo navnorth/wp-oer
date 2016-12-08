@@ -165,7 +165,7 @@ li.oer_sbstndard{
     padding-bottom: 10px;
     border-bottom: 1px dashed #ccc;
     position: relative;
-    margin: 0 auto;
+    margin: 0 auto !important;
     float: left;
 }
 .oer-cat-div, .oer-cat-div-large {
