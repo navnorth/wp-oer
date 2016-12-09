@@ -878,6 +878,15 @@ function oer_widgets_init() {
 	) );
 }
 add_action( 'widgets_init', 'oer_widgets_init' );
+
+//Add body class on oer emplates for themes without default font color
+add_filter( 'body_class', 'add_body_class');
+function add_body_class($classes) {
+	$cur_theme = wp_get_theme();
+	$theme_class = $cur_theme->get('Name');
+	
+	return array_merge( $classes, array( str_replace( ' ', '-', strtolower($theme_class) ) ) );
+}
 //front side shortcode
 //include_once(OER_PATH.'includes/resource_front.php');
 ?>

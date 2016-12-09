@@ -388,3 +388,12 @@ li.oer_sbstndard{
 .oer-cat-div:hover .oer-cat-txt-btm-cntnr .oer-mne-sbjct-ttl a,
 .oer-cat-div-large:hover .oer-cat-txt-btm-cntnr .oer-mne-sbjct-ttl a{ color: #fff; }
 .oer-cntnr { overflow:hidden; width:100%; margin:0 auto !important; }
+
+/* Eleganto specific style due to lack of styling from theme */
+.eleganto .oer-allftrdrsrc,
+.eleganto .oer_sngl_resource_wrapper p,
+.eleganto .oer_sngl_resource_wrapper h1,
+.eleganto .oer_sngl_resource_wrapper h2,
+.eleganto .oer_sngl_resource_wrapper h3,
+.eleganto .oer_sngl_resource_wrapper h4,
+.eleganto .oer_sngl_resource_wrapper h5 { color:#ffffff; }
