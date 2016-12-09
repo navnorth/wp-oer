@@ -63,7 +63,7 @@
 .oer-snglrsrc .oer-resource-link { width:18%; float:left; }
 .oer-snglttldscrght .ttl { width: 100%; float: left; margin: 0px; }
 .oer-snglttldscrght .desc { width: 100%; float: left; margin: 10px 0; padding: 0px; line-height: 21px; font-size: 14px; color: #999; }
-.oer-snglttldscrght .ttl a { font-size: 17px; color: #444; text-decoration: none; padding: 0 0 5px 0; }
+.oer-snglttldscrght .ttl a { font-size: 17px; /*color: #444; */text-decoration: none; padding: 0 0 5px 0; }
 .oer-allftrdpst .oer-alltrdpsthdng { color: #444; float: left; font-size: 25px; line-height: 25px; margin: 0; padding: 5px 0 10px; width: 100%; }
 .oer-allftrdpst .oer-inrftrdpstwpr { width: 100%; float: left; margin: 0px; padding: 0px; }
 .oer-inrftrdpstwpr .bx-wrapper .bx-controls-direction a { top: -16px; width: 24px; height: 24px; }
