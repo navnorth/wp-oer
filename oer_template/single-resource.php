@@ -16,7 +16,7 @@ $url_domain = getDomainFromUrl($url);
 
 $hide_title = get_option('oer_hide_resource_title');
 ?>
-<div id="primary" class="content-area">
+<!--<div id="primary" class="content-area">-->
     <main id="main" class="site-main" role="main">
 
     <article id="oer-resource-<?php the_ID(); ?>" class="oer_sngl_resource_wrapper post-content">
@@ -361,6 +361,6 @@ $hide_title = get_option('oer_hide_resource_title');
 
     </article>
 </main>
-</div>
+<!--</div>-->
 
 <?php get_footer(); ?>

@@ -1,6 +1,6 @@
 /*.oer_resource_category_sidebar { width: 25%; float: left; margin: 0; padding: 0; background: none repeat scroll 0 0 #ededed; }*/
 .oer_resource_category_sidebar { max-width: 300px; float: left; margin: 0; padding: 0; background: none repeat scroll 0 0 #ededed; padding: 10px; height:auto !important; width:100%; }
-.oer_resource_category_sidebar > .oer_resource_category { display:block; width: 100%; float: left; padding-left:0; }
+.oer_resource_category_sidebar > .oer_resource_category { display:block; width: 100%; float: left; padding-left:0; margin-left:0; }
 .oer-rightcatcntr { width: 100%; float: right; margin: 0; padding: 0; }
 .oer-subject-btn { width: 100%; padding: 15px 0; float: left; text-align: center; background: #024387; display: none; font-weight: bold; color: #fff; }
 .oer_resource_category_sidebar .oer_resource_category .oer-sub-category span,

@@ -387,4 +387,4 @@ li.oer_sbstndard{
 
 .oer-cat-div:hover .oer-cat-txt-btm-cntnr .oer-mne-sbjct-ttl a,
 .oer-cat-div-large:hover .oer-cat-txt-btm-cntnr .oer-mne-sbjct-ttl a{ color: #fff; }
-.oer-cntnr { overflow:hidden; }
+.oer-cntnr { overflow:hidden; width:100%; margin:0 auto !important; }
