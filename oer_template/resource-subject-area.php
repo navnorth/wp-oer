@@ -3,10 +3,12 @@
  * Template Name: Default Category Page Template
  */
 /** Add default stylesheet for Resource Category page **/
+wp_enqueue_style('bxslider-style', OER_URL.'/css/jquery.bxslider.css');
 wp_register_style( "resource-category-styles", OER_URL . "css/resource-category-style.css" );
 wp_enqueue_style( "resource-category-styles" );
 
 /** Add default javascript **/
+wp_enqueue_script('bxslider-script', OER_URL.'/js/jquery.bxslider.js');
 wp_register_script( "resource-script" , OER_URL ."js/resource-category.js" );
 wp_enqueue_script( "resource-script" );
 
@@ -242,6 +244,59 @@ $hide_title = get_option('oer_hide_subject_area_title');
 			</ul>	
 		</div> <!--Breadcrumbs-->
 		<?php } ?>
+		
+		<div class="oer_right_featuredwpr">
+			<div class="oer-ftrdttl">Highlighted Resources</div>
+			<?php
+			$args = array(
+				'meta_key' => 'oer_highlight',
+				'meta_value' => 1,
+				'post_type'  => 'resource',
+				'orderby'	 => 'rand',
+				'posts_per_page' => 10,
+				'tax_query' => array(array('taxonomy' => 'resource-subject-area','terms' => array($rsltdata['term_id'])))
+			);
+			$posts = get_posts($args);
+			
+			if(!empty($posts))
+			{ ?>
+			<ul class="featuredwpr_bxslider">
+				<?php
+				foreach($posts as $post)
+				{
+					setup_postdata( $post );
+					$image = wp_get_attachment_url( get_post_thumbnail_id($post->ID) );
+					$title =  $post->post_title;
+					$content =  $post->post_content;
+				?>
+					<li>
+						<div class="frtdsnglwpr">
+							<?php
+							
+							if(empty($image)){
+								$image = site_url().'/wp-content/plugins/wp-oer/images/default-icon.png';
+							}
+							$new_image_url = wft_resize_image( $image, 220, 180, true );
+							?>
+							<a href="<?php echo get_permalink($post->ID);?>"><div class="img"><img src="<?php echo $new_image_url;?>" alt="<?php echo $title;?>"></div></a>
+							<div class="ttl"><a href="<?php echo get_permalink($post->ID);?>"><?php echo $title;?></a></div>
+							<div class="desc"><?php echo apply_filters('the_content',$content); ?></div>
+						</div>
+					</li>
+				<?php
+				}
+				wp_reset_postdata();
+				?>
+			</ul>
+			<?php 
+			}
+			else
+			{
+				echo "<ul class='featuredwpr_bxslider'>There are no resources available for $term</ul>";
+			}
+			?>	
+		</div> <!--Highlighted Resources-->
+		
 		<?php 
 			 $postid = get_the_ID();
 			 $rslt = get_post_meta($postid, "enhance_page_content", true);
@@ -250,11 +305,12 @@ $hide_title = get_option('oer_hide_subject_area_title');
 			{ 
 				echo '<div class="oer-allftrdpst">'.$rslt .'</div> ';
 			}
+			$termObj = get_term_by( 'slug' , $term , 'resource-subject-area' );
 		?> <!--Text and HTML Widget-->
 		
 		<div class="oer-allftrdrsrc">
-			<div class="oer-snglrsrchdng"><?php sprintf(__("Browse %s Resources", OER_SLUG), $term); ?></div>
-			<div class="oer-allftrdrsrccntr" onScroll="load_onScroll(this)" file-path="<?php echo get_template_directory_uri();?>/lib/ajax-scroll.php" data-id="<?php echo $rsltdata['term_id'];?>">
+			<div class="oer-snglrsrchdng"><?php printf(__("Browse %s Resources", OER_SLUG), $termObj->name); ?></div>
+			<div class="oer-allftrdrsrccntr" file-path="<?php echo get_template_directory_uri();?>/lib/ajax-scroll.php" data-id="<?php echo $rsltdata['term_id'];?>">
 				<?php
 				$args = array(
 					'post_type' => 'resource',
@@ -329,6 +385,63 @@ $hide_title = get_option('oer_hide_subject_area_title');
 				?>
 		   </div>
 		</div> <!--Browse By Categories-->
+		
+		<div class="oer-allftrdpst">
+			<div class="oer-alltrdpsthdng">Features</div>
+			<div class="oer-inrftrdpstwpr">
+				<?php
+				$args = array(
+					'post_type' => 'post',
+					'posts_per_page' => -1,
+					'category' => $rsltdata['term_id']
+				);
+				$posts = get_posts($args);
+				
+				if(!empty($posts))
+				{ ?>
+				
+				<ul class="allftrdpst_slider">
+				<?php
+				foreach($posts as $post)
+				{
+					$image = wp_get_attachment_url( get_post_thumbnail_id($post->ID) );
+					$title =  $post->post_title;
+					$content = strip_tags($post->post_content);
+					$content = substr($content, 0, 250);
+				?>
+					<li>
+						<div class="allftrdsngl">
+							<?php
+							if(!empty($image)){
+								$new_image = wft_resize_image( $image , 220 , 180 , true );
+								?>
+							<div class="pstimg"><img src="<?php echo $new_image;?>" alt="<?php echo $title;?>"></div>
+							<?php }?>
+							<div class="rght-sd-cntnr-cntnt">
+							<div class="psttl"><?php echo $title;?></div>
+							<div class="pstdesc"><?php echo $content; ?></div>
+							<div class="pstrdmr"><a href="<?php echo get_permalink($post->ID);?>">More</a></div>
+							<div class="pstmta">
+							    <span class="date-icn"><?php echo get_the_time( 'F j, Y', $post->ID );?></span>
+							    <span class="time-icn"><?php echo  date('H:i', get_post_time( 'U', true));?></span>
+							</div>
+							</div>
+                        </div>
+					</li>
+				<?php
+				}
+				wp_reset_postdata();
+				?>
+			</ul>
+			<?php 
+			}
+			else
+			{
+				echo "<ul class='allftrdpst_slider'>There are no resources available for $term</ul>";
+			}
+			?>
+			</div>
+		</div> <!--Feature Resource -->
     
 	</div>
         <div class="clear"></div>

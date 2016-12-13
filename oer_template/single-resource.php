@@ -28,13 +28,12 @@ $hide_title = get_option('oer_hide_resource_title');
     <main id="main" class="site-main" role="main">
 
     <article id="oer-resource-<?php the_ID(); ?>" class="oer_sngl_resource_wrapper post-content">
-	<?php if (!$hide_title): ?>
+        <div id="sngl-resource" class="entry-content oer-cntnr post-content oer_sngl_resource_wrapper row">
+		<?php if (!$hide_title): ?>
         <header class="entry-header">
             <h1 class="entry-title"><?php echo $post->post_title;?></h1>
         </header>
 	<?php endif; ?>
-        <div id="sngl-resource" class="entry-content oer-cntnr post-content oer_sngl_resource_wrapper row">
-
     	    <div class="oer-rsrclftcntr-img col-md-5">
                 <!--Resource Image-->
                 <div class="oer-sngl-rsrc-img">

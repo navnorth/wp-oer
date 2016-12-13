@@ -3,6 +3,18 @@ jQuery(document).ready(function(){
     if ( content_height > 0 ) {
         jQuery('.oer_resource_category_sidebar').height(content_height);
     }
+    jQuery('.featuredwpr_bxslider').bxSlider({
+		minSlides: 3,
+  		maxSlides: 3,
+		moveSlides: 1,
+  		slideWidth: 320,
+  		slideMargin: 10,
+		pager: false
+	});
+
+    jQuery('.allftrdpst_slider').bxSlider({
+	    pager: false
+    });
 });
 
 /** Toggle Sub Categories **/
