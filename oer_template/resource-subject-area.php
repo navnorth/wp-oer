@@ -393,9 +393,11 @@ $hide_title = get_option('oer_hide_subject_area_title');
 				$args = array(
 					'post_type' => 'post',
 					'posts_per_page' => -1,
-					'category' => $rsltdata['term_id']
+					'cat_name' => $termObj->name
 				);
+				
 				$posts = get_posts($args);
+				
 				
 				if(!empty($posts))
 				{ ?>
