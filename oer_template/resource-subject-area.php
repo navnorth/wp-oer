@@ -276,7 +276,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 							if(empty($image)){
 								$image = site_url().'/wp-content/plugins/wp-oer/images/default-icon.png';
 							}
-							$new_image_url = wft_resize_image( $image, 220, 180, true );
+							$new_image_url = oer_resize_image( $image, 220, 180, true );
 							?>
 							<a href="<?php echo get_permalink($post->ID);?>"><div class="img"><img src="<?php echo $new_image_url;?>" alt="<?php echo $title;?>"></div></a>
 							<div class="ttl"><a href="<?php echo get_permalink($post->ID);?>"><?php echo $title;?></a></div>
@@ -413,7 +413,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 						<div class="allftrdsngl">
 							<?php
 							if(!empty($image)){
-								$new_image = wft_resize_image( $image , 220 , 180 , true );
+								$new_image = oer_resize_image( $image , 220 , 180 , true );
 								?>
 							<div class="pstimg"><img src="<?php echo $new_image;?>" alt="<?php echo $title;?>"></div>
 							<?php }?>

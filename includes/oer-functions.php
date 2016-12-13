@@ -606,7 +606,8 @@ function getImageFromExternalURL($url) {
 	return $file;
 }
 
-function wft_resize_image($orig_img_url, $width, $height, $crop = false) {
+
+function oer_resize_image($orig_img_url, $width, $height, $crop = false) {
 	$new_image_url = "";
 	
 	$suffix = "{$width}x{$height}";

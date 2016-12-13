@@ -77,7 +77,7 @@ if($rsltdata['parent'] != 0)
 					if(!empty($getimage))
 					{
 						$attach_icn = get_post($getimage[0]->post_id);
-						$new_image_url = wft_resize_image( $attach_icn->guid , 32 , 32 , true );
+						$new_image_url = oer_resize_image( $attach_icn->guid , 32 , 32 , true );
 						echo '<li><img src="'. $new_image_url .'" /></li>';
 					}
 					else
@@ -132,7 +132,7 @@ if($rsltdata['parent'] != 0)
 							<?php if(empty($image)){
 								$image = site_url().'/wp-content/plugins/wp-oer/images/default-icon.png';
 							}
-							$new_image_url = wft_resize_image( $image , 80 , 60 , true );
+							$new_image_url = oer_resize_image( $image , 80 , 60 , true );
 							?>
 							<a href="<?php echo get_permalink($post->ID);?>"><div class="oer-snglimglft"><img src="<?php echo $new_image_url;?>" alt="<?php echo $title; ?>"></div></a>
 							<div class="oer-snglttldscrght <?php if(empty($image)){ echo 'snglttldscrghtfull';}?>">
