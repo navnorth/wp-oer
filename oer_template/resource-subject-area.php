@@ -12,6 +12,15 @@ wp_enqueue_script( "resource-script" );
 
 /** Load WordPress Theme Header **/
 get_header();
+
+//Add this hack to display top nav and head section on Eleganto theme
+$cur_theme = wp_get_theme();
+$theme = $cur_theme->get('Name');
+if ($theme == "Eleganto"){
+	get_template_part( 'template-part', 'topnav' );
+	get_template_part( 'template-part', 'head' );
+}
+
 global $_subjectarea;
 
 //Get ID of Resource Category
@@ -95,7 +104,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 <?php } ?>
 	<div class="oer-rightcatcntr<?php if ($_subjectarea) { ?> col-md-9<?php } ?>">
 		<?php if (!$hide_title) { ?>
-		<div class="oer-pgbrdcrums">
+		<div class="oer-pgbrdcrums" id="breadcrumbs">
 			<ul>
 				<?php
 					$strcat = get_custom_oer_category_parents($term_id, "resource-subject-area" , FALSE, ':', TRUE);
@@ -323,4 +332,10 @@ $hide_title = get_option('oer_hide_subject_area_title');
 	</div>
         <div class="clear"></div>
 </div>
-<?php get_footer(); ?><!-- Load WordPress Theme Footer -->
+<?php
+if ($theme == "Eleganto"){
+	get_template_part( 'template-part', 'footernav' );
+}
+
+get_footer();
+?><!-- Load WordPress Theme Footer -->

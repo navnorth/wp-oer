@@ -8,6 +8,14 @@ wp_enqueue_style( "resource-styles" );
 
 get_header();
 
+//Add this hack to display top nav and head section on Eleganto theme
+$cur_theme = wp_get_theme();
+$theme = $cur_theme->get('Name');
+if ($theme == "Eleganto"){
+	get_template_part( 'template-part', 'topnav' );
+	get_template_part( 'template-part', 'head' );
+}
+
 global $post;
 global $wpdb;
 
@@ -363,4 +371,10 @@ $hide_title = get_option('oer_hide_resource_title');
 </main>
 <!--</div>-->
 
-<?php get_footer(); ?>
+<?php
+if ($theme == "Eleganto"){
+	get_template_part( 'template-part', 'footernav' );
+}
+
+get_footer();
+?>
