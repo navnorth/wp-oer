@@ -50,6 +50,7 @@ if($rsltdata['parent'] != 0)
 // Checks if subject area title is set to hide 
 $hide_title = get_option('oer_hide_subject_area_title');
 ?>
+<div id="oer-content">
 <div class="oer-cntnr row">
 <?php if ($_subjectarea) { ?>
 	<div class="col-md-3">
@@ -331,6 +332,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
     
 	</div>
         <div class="clear"></div>
+</div>
 </div>
 <?php
 if ($theme == "Eleganto"){

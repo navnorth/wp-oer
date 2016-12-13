@@ -249,7 +249,7 @@ li.oer_sbstndard{
     vertical-align: middle;
 }
 .oer-cat-txt-btm-cntnr li {
-    margin-left: 10px;
+    margin-left: 0px;
     margin-top: 35px;
     font-size: 15px;
     letter-spacing: .5px;
@@ -397,3 +397,6 @@ li.oer_sbstndard{
 .eleganto .oer_sngl_resource_wrapper h3,
 .eleganto .oer_sngl_resource_wrapper h4,
 .eleganto .oer_sngl_resource_wrapper h5 { color:#ffffff; }
+/* Vertex specific style */
+.vertex #sngl-resource { width:75%; float:right; }
+.vertex #oer-content .oer-cntnr { width:75%; float:right; }
