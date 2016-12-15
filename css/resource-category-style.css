@@ -66,8 +66,10 @@
 .oer-snglttldscrght .ttl a { font-size: 17px; /*color: #444; */text-decoration: none; padding: 0 0 5px 0; }
 .oer-allftrdpst .oer-alltrdpsthdng { color: #444; float: left; font-size: 25px; line-height: 25px; margin: 0; padding: 5px 0 10px; width: 100%; }
 .oer-allftrdpst .oer-inrftrdpstwpr { width: 100%; float: left; margin: 0px; padding: 0px; }
+.oer_right_featuredwpr .bx-wrapper { background:#fff; }
 .oer_right_featuredwpr .bx-wrapper .bx-controls-direction a { top: -16px; width: 24px; height: 24px; z-index:2; }
 .oer_right_featuredwpr .bx-wrapper .bx-prev { background: #ccc url(../images/bxprev.png) no-repeat scroll 0 0; left: auto; right: 36px; }
 .oer_right_featuredwpr .bx-wrapper .bx-next { background: #ccc url(../images/bxnext.png) no-repeat scroll 0 0; }
+.oer_right_featuredwpr .bx-wrapper .featuredwpr_bxslider li p { color:#444; }
 .clear { clear:both; }
 #oer-content { overflow:hidden; width:100%; }

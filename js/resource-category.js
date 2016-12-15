@@ -15,6 +15,12 @@ jQuery(document).ready(function(){
     jQuery('.allftrdpst_slider').bxSlider({
 	    pager: false
     });
+    if (jQuery('.oer_right_featuredwpr .bx-wrapper').is(':visible')) {
+	var slider_width = jQuery('.oer_right_featuredwpr .bx-wrapper').css('max-width');
+	var swidth = parseInt(slider_width)-10;
+	jQuery('.oer_right_featuredwpr .bx-viewport').css('width',swidth+'px');
+	jQuery('.oer_right_featuredwpr .bx-wrapper').css( { 'max-width':'100%', 'width':'100%' } );
+    }
 });
 
 /** Toggle Sub Categories **/
