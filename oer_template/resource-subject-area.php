@@ -245,21 +245,21 @@ $hide_title = get_option('oer_hide_subject_area_title');
 		</div> <!--Breadcrumbs-->
 		<?php } ?>
 		
+		<?php
+		$args = array(
+			'meta_key' => 'oer_highlight',
+			'meta_value' => 1,
+			'post_type'  => 'resource',
+			'orderby'	 => 'rand',
+			'posts_per_page' => 10,
+			'tax_query' => array(array('taxonomy' => 'resource-subject-area','terms' => array($rsltdata['term_id'])))
+		);
+		$posts = get_posts($args);
+		
+		if(!empty($posts))
+		{ ?>
 		<div class="oer_right_featuredwpr">
 			<div class="oer-ftrdttl">Highlighted Resources</div>
-			<?php
-			$args = array(
-				'meta_key' => 'oer_highlight',
-				'meta_value' => 1,
-				'post_type'  => 'resource',
-				'orderby'	 => 'rand',
-				'posts_per_page' => 10,
-				'tax_query' => array(array('taxonomy' => 'resource-subject-area','terms' => array($rsltdata['term_id'])))
-			);
-			$posts = get_posts($args);
-			
-			if(!empty($posts))
-			{ ?>
 			<ul class="featuredwpr_bxslider">
 				<?php
 				foreach($posts as $post)
@@ -288,14 +288,10 @@ $hide_title = get_option('oer_hide_subject_area_title');
 				wp_reset_postdata();
 				?>
 			</ul>
-			<?php 
-			}
-			else
-			{
-				echo "<ul class='featuredwpr_bxslider'>There are no resources available for $term</ul>";
-			}
-			?>	
 		</div> <!--Highlighted Resources-->
+		<?php 
+			}
+		?>
 		
 		<?php 
 			 $postid = get_the_ID();
