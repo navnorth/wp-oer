@@ -382,22 +382,20 @@ $hide_title = get_option('oer_hide_subject_area_title');
 		   </div>
 		</div> <!--Browse By Categories-->
 		
+		<?php
+		$args = array(
+			'post_type' => 'post',
+			'posts_per_page' => -1,
+			'category_name' => $termObj->slug
+		);
+		
+		$posts = get_posts($args);
+		
+		if(!empty($posts))
+		{ ?>
 		<div class="oer-allftrdpst">
 			<div class="oer-alltrdpsthdng">Features</div>
 			<div class="oer-inrftrdpstwpr">
-				<?php
-				$args = array(
-					'post_type' => 'post',
-					'posts_per_page' => -1,
-					'cat_name' => $termObj->name
-				);
-				
-				$posts = get_posts($args);
-				
-				
-				if(!empty($posts))
-				{ ?>
-				
 				<ul class="allftrdpst_slider">
 				<?php
 				foreach($posts as $post)
@@ -431,15 +429,11 @@ $hide_title = get_option('oer_hide_subject_area_title');
 				wp_reset_postdata();
 				?>
 			</ul>
-			<?php 
-			}
-			else
-			{
-				echo "<ul class='allftrdpst_slider'>There are no resources available for $term</ul>";
-			}
-			?>
 			</div>
 		</div> <!--Feature Resource -->
+		<?php 
+			}
+		?>
     
 	</div>
         <div class="clear"></div>
