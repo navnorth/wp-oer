@@ -42,10 +42,11 @@
 .oer_resource_category_sidebar .oer_resource_category .oer-sub-category.has-child>span:hover a { color:#444444; }
 .has-child .oer-category {display:none}
 .oer-child-category { float: left; margin: 0; padding: 0; background: none repeat scroll 0 0 #ededed; padding: 10px; position: absolute;}
-.oer-pgbrdcrums { float: left; width: 100%; background: #ededed; padding: 8px 0; height: auto; }
-.oer-pgbrdcrums ul { float: left; width: 98%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; /*padding: 0 0 10px 0;*/ }
-.oer-pgbrdcrums li { padding: 9px 0 0 15px; float: left; width: auto; list-style-type: none; }
+.oer-pgbrdcrums { float: left; width: 100%; /* background: #ededed; */ padding: 8px 0; height: auto; }
+.oer-pgbrdcrums ul { float: left; width: 98%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding:0; }
+.oer-pgbrdcrums li { padding: 9px 0 0 0; float: left; width: auto; list-style-type: none; }
 .oer-pgbrdcrums ul li a { text-decoration: none !important; }
+.oer-pgbrdcrums h1 { white-space:normal; }
 .oer_right_featuredwpr { width: 100%; float: left; margin: 0px; padding: 10px 0 25px 0; border-bottom: 1px dashed #ddd; }
 .oer-ftrdttl { width: 100%; float: left; margin: 0; font-size: 25px; padding: 7px 0; line-height: 25px; }
 .oer_right_featuredwpr .bx-wrapper { float: left; margin: 0 auto; padding: 10px; /* border: 1px solid #ccc;*/ position:relative; max-width:100%; }
