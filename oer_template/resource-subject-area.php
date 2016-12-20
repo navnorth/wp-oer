@@ -107,7 +107,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 <?php } ?>
 	<div class="oer-rightcatcntr<?php if ($_subjectarea) { ?> col-md-9<?php } ?>">
 		<?php if (!$hide_title) { ?>
-		<div class="oer-pgbrdcrums" id="breadcrumbs">
+		<div class="oer-pgbrdcrums">
 			<ul>
 				<?php
 					$strcat = get_custom_oer_category_parents($term_id, "resource-subject-area" , FALSE, ':', TRUE);
@@ -168,6 +168,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 					{
 						//Custom breadcrumbs using Yoast
 						$opt = get_option("yoast_breadcrumbs");*/
+					
 					$nofollow = ' ';
 					if ($opt['nofollowhome']) {
 						$nofollow = ' rel="nofollow" ';
@@ -175,10 +176,10 @@ $hide_title = get_option('oer_hide_subject_area_title');
 					
 					$on_front = get_option('show_on_front');
 					if ($on_front == "page") {
-						$homelink = '<a'.$nofollow.'href="'.get_permalink(get_option('page_on_front')).'">'.$opt['home'].'</a>';
+						//$homelink = '<a'.$nofollow.'href="'.get_permalink(get_option('page_on_front')).'">'.$opt['home'].'</a>';
 						$bloglink = $homelink.' '.$opt['sep'].' <a href="'.get_permalink(get_option('page_for_posts')).'">'.$opt['blog'].'</a>';
 					} else {
-						$homelink = '<a'.$nofollow.'href="'.get_bloginfo('url').'">'.$opt['home'].'</a>';
+						//$homelink = '<a'.$nofollow.'href="'.get_bloginfo('url').'">'.$opt['home'].'</a>';
 						$bloglink = $homelink;
 					}
 					$taxonomy 	= get_taxonomy ( get_query_var('taxonomy') );
@@ -189,7 +190,8 @@ $hide_title = get_option('oer_hide_subject_area_title');
 					
 					// If this is a top level Page, it's simple to output the breadcrumb
 					if ( 0 == $post->parent ) {
-						$output = $homelink." ".$opt['sep']." ".$taxonomy->label .': '.$cur_term->name;
+						//$output = "<h1>".$homelink." ".$opt['sep']." ".$taxonomy->label .': '.$cur_term->name . "</h1>";
+						$output = "<h1>".$cur_term->name . "</h1>";
 					} else {
 						if (isset($post->ancestors)) {
 							if (is_array($post->ancestors))
@@ -219,21 +221,24 @@ $hide_title = get_option('oer_hide_subject_area_title');
 							}
 							$links[] = $tmp;
 						}
-			
-						$output = $homelink;
+						$output = "<h1>";
+						//$output .= $homelink;
 						
 						foreach ( $links as $link ) {
-							$output .= ' '.$opt['sep'].' ';
+							//$output .= ' '.$opt['sep'].' ';
 							if (!$link['cur']) {
 								$output .= '<a href="'.$link['url'].'">'.$link['title'].'</a>';
 							} else {
-								$output .= $taxonomy->label .': '. $link['title'];
+								//$output .= $taxonomy->label .': '. $link['title'];
+								$output .= ': '. $link['title'];
 							}
 						}
 					}
 					if ($opt['prefix'] != "") {
 						$output = $opt['prefix']." ".$output;
 					}
+					
+					$output .= "</h1>";
 					//$output .= $taxonomy->label .': '. $cur_term->name ;
 					echo ucwords($output);
 					//$breadcrumbs = yoast_breadcrumb("","",false);
