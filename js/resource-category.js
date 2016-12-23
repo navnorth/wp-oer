@@ -21,6 +21,10 @@ jQuery(document).ready(function(){
 	jQuery('.oer_right_featuredwpr .bx-viewport').css('width',swidth+'px');
 	jQuery('.oer_right_featuredwpr .bx-wrapper').css( { 'max-width':'100%', 'width':'100%' } );
     }
+    
+    //Sets height of browse section to 4 items by default
+    var bHeight = jQuery('.oer-snglrsrc').outerHeight();
+    jQuery('.oer-allftrdrsrccntr').css('height',bHeight*4+'px')
 });
 
 /** Toggle Sub Categories **/
