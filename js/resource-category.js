@@ -23,7 +23,7 @@ jQuery(document).ready(function(){
     }
     
     //Sets height of browse section to 4 items by default
-    var bHeight = jQuery('.oer-snglrsrc').outerHeight(true);
+    var bHeight = jQuery('.oer-snglrsrc:first-child').outerHeight();
     console.log(bHeight);
     jQuery('.oer-allftrdrsrccntr').css('height',bHeight*4+'px')
 });
