@@ -205,6 +205,28 @@ function show_styles_settings() {
 }
 
 function show_setup_settings() {
-	echo "Upcoming Setup Settings!";
+	?>
+<div class="oer-plugin-body">
+	<div class="oer-plugin-row">
+		<div class="oer-row-left">
+			<?php _e("When first setting up the plugin, the following options will give you the base set of data to see how everything works. All of these options will be available to you in other settings and features at a later time if you want to skip any or all of these options.", OER_SLUG); ?>
+		</div>
+		<div class="oer-row-right">
+			<strong><?php _e("Support Options", OER_SLUG); ?></strong>
+			<ul>
+				<li><a href="#" target="_blank"><?php _e("WordPress Plugin Support Forums", OER_SLUG); ?></a></li>
+				<li><?php _e("Navigation North <a href='#' target='_blank'>direct supprt</a>", OER_SLUG); ?></li>
+			</ul>
+		</div>
+	</div>
+	<div class="oer-plugin-row">
+		<form method="post" class="oer_settings_form" action="options.php">
+			<?php settings_fields("oer_setup_settings"); ?>
+			<?php do_settings_sections("setup_settings_section"); ?>
+			<?php submit_button('Continue'); ?>
+		</form>
+	</div>
+</div>
+<?php
 }
 ?>

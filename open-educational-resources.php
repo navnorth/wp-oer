@@ -751,6 +751,90 @@ function styles_settings_callback(){
 	
 }
 
+//Initialize Setup Settings Tab
+add_action( 'admin_init' , 'oer_setup_settings' );
+function oer_setup_settings(){
+	//Create Setup Section
+	add_settings_section(
+		'oer_setup_settings',
+		'',
+		'setup_settings_callback',
+		'setup_settings_section'
+	);
+	
+	//Add Settings field for Importing Example Set of Resources
+	add_settings_field(
+		'oer_import_sample_resources',
+		'',
+		'setup_settings_field',
+		'setup_settings_section',
+		'oer_setup_settings',
+		array(
+			'uid' => 'oer_import_sample_resources',
+			'type' => 'checkbox',
+			'name' =>  __('Import Example Set of Resources', OER_SLUG),
+			'description' => __('A collection of 40 Open Education Resources has been provided as a base - you can easily remove these later.', OER_SLUG)
+		)
+	);
+	
+	//Add Settings field for Import Default Subject Areas
+	add_settings_field(
+		'oer_import_default_subject_areas',
+		'',
+		'setup_settings_field',
+		'setup_settings_section',
+		'oer_setup_settings',
+		array(
+			'uid' => 'oer_import_default_subject_areas',
+			'type' => 'checkbox',
+			'value' => '1',
+			'default' => true,
+			'name' =>  __('Import Default Subject Areas', OER_SLUG),
+			'description' => __('A general listing of the most common subject areas.', OER_SLUG)
+		)
+	);
+	
+	//Add Settings field for Importing Common Core State Standards
+	add_settings_field(
+		'oer_import_ccss',
+		'',
+		'setup_settings_field',
+		'setup_settings_section',
+		'oer_setup_settings',
+		array(
+			'uid' => 'oer_import_ccss',
+			'type' => 'checkbox',
+			'name' =>  __('Import Common Core State Standards', OER_SLUG),
+			'description' => __('Enable use of CCSS as an optional alignment option for resources.', OER_SLUG)
+		)
+	);
+	
+	//Add Settings field for Importing Bootstrap CSS & JS Libraries
+	add_settings_field(
+		'oer_setup_bootstrap',
+		'',
+		'setup_settings_field',
+		'setup_settings_section',
+		'oer_setup_settings',
+		array(
+			'uid' => 'oer_setup_bootstrap',
+			'type' => 'checkbox',
+			'name' =>  __('Import Bootstrap CSS & JS libraries', OER_SLUG),
+			'description' => __('uncheck if your WP theme already included Bootstrap', OER_SLUG)
+		)
+	);
+	
+	register_setting( 'oer_setup_settings' , 'oer_import_sample_resources' );
+	register_setting( 'oer_setup_settings' , 'oer_import_default_subject_areas' );
+	register_setting( 'oer_setup_settings' , 'oer_import_ccss' );
+	register_setting( 'oer_setup_settings' , 'oer_setup_bootstrap' );
+}
+
+//Setup Setting Callback
+function setup_settings_callback(){
+	
+}
+
 
 //Initialize Import Academic Standards
 add_action( 'admin_init' , 'oer_import_standards' );
