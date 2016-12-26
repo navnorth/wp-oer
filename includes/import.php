@@ -385,15 +385,22 @@ if(isset($_POST['resrc_imprt']))
 					$url = $oer_resourceurl;
 					$upload_dir = wp_upload_dir();
 					$file = '';
+					
 					//Check first if screenshot is enabled
 					$screenshot_enabled = get_option( 'oer_enable_screenshot' );
+					//Check if external service screenshot is enabled
+					$external_screenshot = get_option( 'oer_external_screenshots' );
 					
 					if(!has_post_thumbnail( $post_id ))
 					{
 						if ($screenshot_enabled)
-							$file = getScreenshotFile($url);
+						    $file = getScreenshotFile($url);
+						    
+						// if external screenshot utility enabled
+						if ( $external_screenshot )
+						    $file = getImageFromExternalURL($url);
 					}
-	
+					
 					if(file_exists($file))
 					{
 						$filetype = wp_check_filetype( basename( $file ), null );
