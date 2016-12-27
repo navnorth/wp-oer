@@ -31,7 +31,13 @@
 					$type .= $response["type"];
 				}
 			}
+			//Redirect to main settings page
+			exit( wp_safe_redirect( admin_url( 'edit.php?post_type=resource&page=oer_settings&setup=true' ) ) );
 		}
+	}
+	if ($_REQUEST['setup']==true){
+		$message = "The plugin has successfully loaded the default data.";
+		$type = "success";
 	}
 ?>
 <div class="wrap">
@@ -81,6 +87,14 @@ function show_general_settings() {
 	<div class="oer-plugin-row">
 		<div class="oer-row-left">
 			<?php _e("Lorem ipsum dolor sit amet, consectetur adipiscing elit. In quis nunc tempor, maximus nulla nec, consectetur dolor. Cras tempor fermentum dolor ut maximus. Suspendisse pellentesque lacus semper justo blandit, non interdum velit tempor. Aenean euismod viverra erat eu pretium. Proin ut molestie velit, sit amet vehicula tellus. Praesent et pretium lectus.", OER_SLUG); ?>
+			<div class="oer-import-row">
+			<h2 class="hidden"></h2>
+			<?php if ($message) { ?>
+			<div class="notice notice-<?php echo $type; ?> is-dismissible">
+			    <p><?php echo $message; ?></p>
+			</div>
+			<?php } ?>
+			</div>
 		</div>
 		<div class="oer-row-right">
 			<strong><?php _e("Support Options", OER_SLUG); ?></strong>
