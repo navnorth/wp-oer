@@ -1,51 +1,17 @@
 <?php
-	/*if(isset($_POST['oer_category_template']))
-	{
-		update_option("oer_category_template",$_POST['oer_category_template']);
-	}
-
-	if(isset($_POST['oer_python_path']))
-	{
-		update_option("oer_python_path",$_POST['oer_python_path']);
-	}
-
-	if(isset($_POST['oer_python_install']))
-	{
-		update_option("oer_python_install",$_POST['oer_python_install']);
-	}
-
-	if(isset($_POST['oer_enable_screenshot']))
-	{
-		update_option("oer_enable_screenshot",isset($_POST['oer_enable_screenshot'])?$_POST['enable_screenshot']:false);
-		update_option("oer_use_xvfb",isset($_POST['oer_use_xvfb'])?$_POST['oer_use_xvfb']:false);
-		update_option("oer_debug_mode",isset($_POST['debug_mode'])?$_POST['debug_mode']:false);
-		update_option("oer_use_bootstrap",isset($_POST['oer_use_bootstrap'])?$_POST['oer_use_bootstrap']:false);
-	}
-
-	$templates 		= get_page_templates();
-	$slct_template 		= get_option("oer_category_template");
-	$oer_python_path 	= get_option("oer_python_path");
-	$oer_python_install = get_option("oer_python_install");
-	//Enable Screenshot Option
-	$enable_screenshot 	= get_option("oer_enable_screenshot");
-	$use_xvfb 		= get_option("oer_use_xvfb");
-	$debug_mode 		= get_option("oer_debug_mode");
-	$use_bootstrap 		= get_option("oer_use_bootstrap");
-
-	// Removed the concatenation shorthand as the variable didn't exist above this code yet
-	$options = "<option value=''>--- Select Template ---</option>";
-	foreach ( $templates as $template_name => $template_filename )
-	{
-		if($slct_template == $template_filename)
-		{
-			$slct = 'selected="selected"';
+	if (isset($_REQUEST['settings-updated'])) {
+		//When submitting settings tab
+		if ($_REQUEST['tab']=="setup") {
+			$import_resources = get_option('oer_import_sample_resources');
+			if ($import_resources) {
+				$response = importResources(true);
+				if ($response) {
+					$message = $response["message"];
+					$type = $response["type"];
+				}
+			}
 		}
-		else
-		{
-			$slct = '';
-		}
-		$options .= "<option $slct value='$template_filename'>$template_name</option>";
-	}*/
+	}
 ?>
 <div class="wrap">
     
@@ -210,6 +176,14 @@ function show_setup_settings() {
 	<div class="oer-plugin-row">
 		<div class="oer-row-left">
 			<?php _e("When first setting up the plugin, the following options will give you the base set of data to see how everything works. All of these options will be available to you in other settings and features at a later time if you want to skip any or all of these options.", OER_SLUG); ?>
+			<div class="oer-import-row">
+			<h2 class="hidden"></h2>
+			<?php if ($message) { ?>
+			<div class="notice notice-<?php echo $type; ?> is-dismissible">
+			    <p><?php echo $message; ?></p>
+			</div>
+			<?php } ?>
+			</div>
 		</div>
 		<div class="oer-row-right">
 			<strong><?php _e("Support Options", OER_SLUG); ?></strong>

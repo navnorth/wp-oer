@@ -811,13 +811,13 @@ function oer_setup_settings(){
 	
 	//Add Settings field for Importing Bootstrap CSS & JS Libraries
 	add_settings_field(
-		'oer_setup_bootstrap',
+		'oer_use_bootstrap',
 		'',
 		'setup_settings_field',
 		'setup_settings_section',
 		'oer_setup_settings',
 		array(
-			'uid' => 'oer_setup_bootstrap',
+			'uid' => 'oer_use_bootstrap',
 			'type' => 'checkbox',
 			'name' =>  __('Import Bootstrap CSS & JS libraries', OER_SLUG),
 			'description' => __('uncheck if your WP theme already included Bootstrap', OER_SLUG)
