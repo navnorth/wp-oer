@@ -656,7 +656,6 @@ function oer_resize_image($orig_img_url, $width, $height, $crop = false) {
 function importResources($default=false) {
 	global $wpdb;
 	require_once OER_PATH.'Excel/reader.php';
-	$response = array('message'=>null,'type'=>null);
 	
 	debug_log("OER Resources Importer: Initializing Excel Reader");
 
@@ -1224,7 +1223,29 @@ function importSubjectAreas($default=false) {
 	
 	$message = sprintf(__("Successfully imported %s subject areas.", OER_SLUG), $cnt);
 	$type = "success";
-	//_e("Categories Import Successfully.",OER_SLUG);
+	$response = array('message' => $message, 'type' => $type);
+	return $response;
+}
+
+//Import Default CCSS
+function importDefaultStandards() {
+	$files = array(
+		OER_PATH."samples/CCSS_Math.xml",
+		OER_PATH."samples/CCSS_ELA.xml"
+		);
+	foreach ($files as $file) {
+		$import = importStandards($file);
+		if ($import['type']=="success") {
+		    if (strpos($file,'Math')) {
+			$message .= "Successfully imported Common Core Mathematics Standards. \n";
+		    } else {
+			$message .= "Successfully imported Common Core English Language Arts Standards. \n";
+		    }
+		}
+		$type = $import['type'];
+	}
+	$response = array( 'message' => $message, 'type' => $type );
+	return $response;
 }
 
 function fetch_stndrd($pId, $postid)

@@ -1,13 +1,34 @@
 <?php
+	$message = "";
+	$type = "";
 	if (isset($_REQUEST['settings-updated'])) {
 		//When submitting settings tab
 		if ($_REQUEST['tab']=="setup") {
+			//Import Default Resources
 			$import_resources = get_option('oer_import_sample_resources');
 			if ($import_resources) {
 				$response = importResources(true);
 				if ($response) {
 					$message = $response["message"];
 					$type = $response["type"];
+				}
+			}
+			//Import Default Subject Areas
+			$import_subject_areas = get_option('oer_import_default_subject_areas');
+			if ($import_subject_areas){
+				$response = importSubjectAreas(true);
+				if ($response) {
+					$message .= $response["message"];
+					$type .= $response["type"];
+				}
+			}
+			//Import CCSS Standards
+			$import_ccss = get_option('oer_import_ccss');
+			if ($import_ccss) {
+				$response = importDefaultStandards();
+				if ($response) {
+					$message .= $response["message"];
+					$type .= $response["type"];
 				}
 			}
 		}
