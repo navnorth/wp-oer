@@ -1,6 +1,6 @@
 <?php
-	$message = "";
-	$type = "";
+global $message, $type;
+
 	if (isset($_REQUEST['settings-updated'])) {
 		//When submitting settings tab
 		if ($_REQUEST['tab']=="setup") {
@@ -35,7 +35,7 @@
 			exit( wp_safe_redirect( admin_url( 'edit.php?post_type=resource&page=oer_settings&setup=true' ) ) );
 		}
 	}
-	if ($_REQUEST['setup']==true){
+	if ($_REQUEST['setup']=='true'){
 		$message = "The plugin has successfully loaded the default data.";
 		$type = "success";
 	}
@@ -82,6 +82,7 @@
 
 <?php
 function show_general_settings() {
+	global $message, $type;
 ?>
 <div class="oer-plugin-body">
 	<div class="oer-plugin-row">
