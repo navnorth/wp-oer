@@ -310,15 +310,18 @@ $hide_title = get_option('oer_hide_subject_area_title');
 		?> <!--Text and HTML Widget-->
 		
 		<div class="oer-allftrdrsrc">
-			<!--<div class="oer-snglrsrchdng"><?php printf(__("Browse %s Resources", OER_SLUG), $termObj->name); ?></div>-->
-			<div class="oer-allftrdrsrccntr" file-path="<?php echo get_template_directory_uri();?>/lib/ajax-scroll.php" data-id="<?php echo $rsltdata['term_id'];?>">
-				<?php
+			<?php
 				$args = array(
 					'post_type' => 'resource',
 					'posts_per_page' => -1,
 					'tax_query' => array(array('taxonomy' => 'resource-subject-area','terms' => array($rsltdata['term_id'])))
 				);
 				$posts = get_posts($args);
+				$resource_count = count($posts);
+				?>
+			<div class="oer-snglrsrchdng"><?php printf(__("Browse All %d Resources", OER_SLUG), $resource_count); ?></div>
+			<div class="oer-allftrdrsrccntr" file-path="<?php echo get_template_directory_uri();?>/lib/ajax-scroll.php" data-id="<?php echo $rsltdata['term_id'];?>">
+				<?php
 				
 				if(!empty($posts))
 				{
