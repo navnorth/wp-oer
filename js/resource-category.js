@@ -28,7 +28,7 @@ jQuery(document).ready(function(){
 	bHeight = jQuery('.oer-snglrsrc:nth-child(2) img').outerHeight();
     }
     console.log(bHeight);
-    bHeight = Math.ceil(bHeight*3.5);
+    bHeight = Math.ceil((bHeight+10)*3.5);
     console.log(bHeight);
     jQuery('.oer-allftrdrsrccntr').css('height',bHeight+'px')
 });
