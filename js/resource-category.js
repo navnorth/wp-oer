@@ -27,6 +27,7 @@ jQuery(document).ready(function(){
     if (jQuery('.oer-snglrsrc:nth-child(2)').length) {
 	bHeight = jQuery('.oer-snglrsrc:nth-child(2)').outerHeight();
     }
+    console.log(bHeight);
     bHeight = Math.ceil(bHeight*3.5);
     jQuery('.oer-allftrdrsrccntr').css('height',bHeight+'px')
 });
