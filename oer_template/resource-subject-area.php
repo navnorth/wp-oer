@@ -256,7 +256,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 			'meta_value' => 1,
 			'post_type'  => 'resource',
 			'orderby'	 => 'rand',
-			'posts_per_page' => 10,
+			'posts_per_page' => -1,
 			'tax_query' => array(array('taxonomy' => 'resource-subject-area','terms' => array($rsltdata['term_id'])))
 		);
 		$posts = get_posts($args);
