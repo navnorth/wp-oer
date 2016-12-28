@@ -454,7 +454,9 @@ $hide_title = get_option('oer_hide_subject_area_title');
 		/*if (jQuery('.oer-snglrsrc:nth-child(2)').length) {
 		    bHeight = jQuery('.oer-snglrsrc:nth-child(2)').outerHeight();
 		}*/
+		console.log(bHeight);
 		bHeight = Math.ceil(bHeight*3.5);
+		console.log(bHeight);
 		jQuery('.oer-allftrdrsrccntr').css('height',bHeight+'px')
 	});
 </script>
