@@ -447,6 +447,19 @@ $hide_title = get_option('oer_hide_subject_area_title');
         <div class="clear"></div>
 </div>
 </div>
+<script type="text/javascript">
+	jQuery(document).ready(function(){
+		//Sets height of browse section to 4 items by default
+		var bHeight = jQuery('.oer-snglrsrc:first-child img').outerHeight();
+		if (jQuery('.oer-snglrsrc:nth-child(2)').length) {
+		    bHeight = jQuery('.oer-snglrsrc:nth-child(2) img').outerHeight();
+		}
+		console.log(bHeight);
+		bHeight = Math.ceil((bHeight+10)*3.5);
+		console.log(bHeight);
+		jQuery('.oer-allftrdrsrccntr').css('height',bHeight+'px')
+	});
+</script>
 <?php
 if ($theme == "Eleganto"){
 	get_template_part( 'template-part', 'footernav' );
