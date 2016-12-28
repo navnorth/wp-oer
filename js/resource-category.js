@@ -23,12 +23,13 @@ jQuery(document).ready(function(){
     }
     
     //Sets height of browse section to 4 items by default
-    var bHeight = jQuery('.oer-snglrsrc:first-child').outerHeight();
+    var bHeight = jQuery('.oer-snglrsrc:first-child img').outerHeight();
     if (jQuery('.oer-snglrsrc:nth-child(2)').length) {
-	bHeight = jQuery('.oer-snglrsrc:nth-child(2)').outerHeight();
+	bHeight = jQuery('.oer-snglrsrc:nth-child(2) img').outerHeight();
     }
     console.log(bHeight);
     bHeight = Math.ceil(bHeight*3.5);
+    console.log(bHeight);
     jQuery('.oer-allftrdrsrccntr').css('height',bHeight+'px')
 });
 
