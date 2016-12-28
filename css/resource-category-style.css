@@ -53,7 +53,7 @@
 .bx-wrapper .bx-viewport { -moz-box-shadow: 0 0 5px #ccc; -webkit-box-shadow: 0 0 5px #ccc; box-shadow: 0 0 5px #ccc; border: 5px solid #fff; left: -5px; background: #fff; -webkit-transform: translatez(0); -moz-transform: translatez(0); -ms-transform: translatez(0); -o-transform: translatez(0);transform: translatez(0);}
 .oer_right_featuredwpr .bx-wrapper .bx-viewport { border: medium none; box-shadow: none; left: 0px; width: 100%; overflow: hidden; position: relative; height: 277px; }
 .oer-allftrdrsrc { width: 100%; float: left; margin: 0px; padding: 0 0 25px 0; }
-.oer-allftrdpst { float: left; margin: 0; padding: 10px 0; width: 100%; border-top: 1px dashed #ddd; }
+.oer-allftrdpst { float: left; margin: 0; padding: 10px 0; width: 100%; /*border-top: 1px dashed #ddd;*/ }
 .oer-allftrdrsrc .oer-snglrsrchdng { width: 100%; float: left; margin: 0px; padding: 5px 0 10px; font-size: 25px; line-height: 25px; }
 .oer-allftrdrsrc .oer-allftrdrsrccntr { float: left; margin: 0px; padding: 0 5px 0 0; overflow: auto; height: 540px; border-top: 1px solid #c8c8c8; border-bottom: 1px solid #c8c8c8; width:100%; }
 .oer-allftrdrsrc .oer-snglrsrc:first-child { border-top: none !important; margin: 8px 0 2px !important; }
