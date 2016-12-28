@@ -448,7 +448,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 </div>
 </div>
 <script type="text/javascript">
-	jQuery(document).ready(function(){
+	jQuery(window).load(function(){
 		//Sets height of browse section to 4 items by default
 		var bHeight = jQuery('.oer-snglrsrc').outerHeight(true);
 		/*if (jQuery('.oer-snglrsrc:nth-child(2)').length) {
