@@ -1274,4 +1274,19 @@ function get_page_by_slug($page_slug, $output = OBJECT, $post_type = 'page', $pa
 		return get_post($page, $output);
 		return null;
 }
+
+//Limited Content
+function content($the_content, $limit) {
+  $content = explode(' ', $the_content, $limit);
+  if (count($content)>=$limit) {
+    array_pop($content);
+    $content = implode(" ",$content).'...';
+  } else {
+    $content = implode(" ",$content);
+  }	
+  $content = preg_replace('/\[.+\]/','', $content);
+  $content = apply_filters('the_content', $content); 
+  $content = str_replace(']]>', ']]&gt;', $content);
+  return $content;
+}
 ?>
