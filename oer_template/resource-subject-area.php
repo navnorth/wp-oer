@@ -275,12 +275,12 @@ $hide_title = get_option('oer_hide_subject_area_title');
 					//$content =  $post->post_content;
 					$offset = 0;
 					$ellipsis = "...";
-					if (strlen($post->post_content)>150)
-						$offset = strpos($post->post_content, " ", 150);
-					else
+					if (strlen($post->post_content)>150) {
+						$offset = strpos($post->post_content, ' ', 150);
+					} else
 						$ellipsis = "";
 					
-					$length = $offset + 150;
+					$length = 150;
 					
 					$content =  trim(substr($post->post_content,0,$length)).$ellipsis;
 				?>
