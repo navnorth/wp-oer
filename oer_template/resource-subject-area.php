@@ -273,7 +273,16 @@ $hide_title = get_option('oer_hide_subject_area_title');
 					$image = wp_get_attachment_url( get_post_thumbnail_id($post->ID) );
 					$title =  $post->post_title;
 					//$content =  $post->post_content;
-					$content =  substr($post->post_content,0,150)."...";
+					$offset = 0;
+					$ellipsis = "...";
+					if (strlen($post->post_content)>150)
+						$offset = strpos($post->post_content, " ", 150);
+					else
+						$ellipsis = "";
+					
+					$length = $offset + 150;
+					
+					$content =  trim(substr($post->post_content,0,$length)).$ellipsis;
 				?>
 					<li>
 						<div class="frtdsnglwpr">
