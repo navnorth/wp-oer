@@ -267,7 +267,6 @@ $hide_title = get_option('oer_hide_subject_area_title');
 			<div class="oer-ftrdttl">Highlighted Resources</div>
 			<ul class="featuredwpr_bxslider">
 				<?php
-				var_dump(count($posts));
 				foreach($posts as $post)
 				{
 					setup_postdata( $post );

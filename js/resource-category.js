@@ -16,6 +16,7 @@ jQuery(document).ready(function(){
 	    pager: false
     });
     if (jQuery('.oer_right_featuredwpr .bx-wrapper').is(':visible')) {
+	jQuery('.bx-loading').hide();
 	var slider_width = jQuery('.oer_right_featuredwpr .bx-wrapper').css('max-width');
 	var swidth = parseInt(slider_width)-10;
 	jQuery('.oer_right_featuredwpr .bx-viewport').css('width',swidth+'px');
