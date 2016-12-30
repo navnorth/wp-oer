@@ -350,7 +350,11 @@ $hide_title = get_option('oer_hide_subject_area_title');
 						
 						$title =  $post->post_title;
 						$content =  $post->post_content;
-						$content = substr($content, 0, 180);
+						$ellipsis = "...";
+						if (strlen($post->post_content)<180)
+							$ellipsis = "";
+							
+						$content = substr($content, 0, 180).$ellipsis;
 						
 						$img_path = $new_img_path = parse_url($img_url[0]);
 						$img_path = $_SERVER['DOCUMENT_ROOT'] . $img_path['path'];
