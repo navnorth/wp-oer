@@ -272,8 +272,8 @@ $hide_title = get_option('oer_hide_subject_area_title');
 					setup_postdata( $post );
 					$image = wp_get_attachment_url( get_post_thumbnail_id($post->ID) );
 					$title =  $post->post_title;
-					$content =  $post->post_content;
-					//$content =  substr($post->post_content,0,150)."...";
+					//$content =  $post->post_content;
+					$content =  substr($post->post_content,0,150)."...";
 				?>
 					<li>
 						<div class="frtdsnglwpr">
