@@ -267,12 +267,14 @@ $hide_title = get_option('oer_hide_subject_area_title');
 			<div class="oer-ftrdttl">Highlighted Resources</div>
 			<ul class="featuredwpr_bxslider">
 				<?php
+				var_dump(count($posts));
 				foreach($posts as $post)
 				{
 					setup_postdata( $post );
 					$image = wp_get_attachment_url( get_post_thumbnail_id($post->ID) );
 					$title =  $post->post_title;
-					$content =  substr($post->post_content,0,150)."...";
+					$content =  $post->post_content;
+					//$content =  substr($post->post_content,0,150)."...";
 				?>
 					<li>
 						<div class="frtdsnglwpr">
