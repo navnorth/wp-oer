@@ -115,6 +115,13 @@ function processImport(btn, file) {
 	if ( document.getElementById(file).files.length == 0 ) {
 		return false;
 	}
+	if (jQuery('.notice-red').length>0) {
+		jQuery('.notice-red').remove();
+	}
+	if (getFileExtension(document.getElementById(file).value)!=="xls") {
+		jQuery('#'+file).closest('div').find('.resource-upload-notice').html('<span class="notice-red">Import file must be in Excel format with .xls extension</span>');
+		return false;
+	}
 	jQuery(btn).prop('value','Processing...');
 	jQuery('.oer_imprtrwpr .oer-import-row input[type=submit]').prop('disabled',true);
 	return(true); 
@@ -215,4 +222,8 @@ function save_image(ref)  // save image as post
 		ref.attr("title","upload");
 		alert("Image Saved Successfully");
     });
+}
+
+function getFileExtension(filename) {
+	return filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
 }

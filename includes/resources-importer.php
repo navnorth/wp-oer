@@ -53,6 +53,7 @@
 				<div class="fields">
 					<input type="file" id="resource_import" name="resource_import"/>
 					<input type="hidden" value="" name="resrc_imprt" />
+					<div class="resource-upload-notice"></div>
 				</div>
 			</div>
 			<div class="row-right">

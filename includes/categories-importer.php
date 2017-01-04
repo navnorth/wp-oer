@@ -19,6 +19,7 @@
 				<div class="fields">
 					<input type="file" id="bulk_import" name="bulk_import"/>
 					<input type="hidden" value="" name="bulk_imprt" />
+					<div class="resource-upload-notice"></div>
 				</div>
 			</div>
 			<div class="row-right">
