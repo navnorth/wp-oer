@@ -39,6 +39,7 @@ $parentid = array();
 if($rsltdata['parent'] != 0)
 {
 	$parent = get_oer_parent_term($rsltdata['parent']);
+	
 	for($k=0; $k < count($parent); $k++)
 	{
 		if ($parent[$k]) {
@@ -250,7 +251,29 @@ $hide_title = get_option('oer_hide_subject_area_title');
 		</div> <!--Breadcrumbs-->
 		<?php } ?>
 		
+		
 		<?php
+		// Display Child Subject Areas
+		if (!$_subjectarea) {
+		?>
+		
+		<div class="oer-rsrcctgries tagcloud">
+		
+		<?php
+		$child_subjects = get_child_subjects($term_id);
+			
+		if ( ! is_wp_error( $child_subjects ) ) {
+			foreach ( $child_subjects as $subject ) {
+				echo '<span><a href="'.get_term_link($subject).'" class="button">'.ucwords ($subject->name).'</a></span>';
+			}
+		}
+		?>
+		
+		</div><!-- Child Subject Areas -->
+		
+		<?php
+		}
+		
 		$args = array(
 			'meta_key' => 'oer_highlight',
 			'meta_value' => 1,

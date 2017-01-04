@@ -92,4 +92,6 @@
 ::-webkit-scrollbar-track {
 	padding: 2px;
 	box-shadow: inset 2px 0 5px rgba(0, 0, 0, 0.3);
-} 
+}
+.oer-rsrcctgries span { width: auto; float: left; margin: 0 10px 7px 0; padding: 0px; border: medium none; border-radius: 0px; font-size:14px; }
+.oer-rsrcctgries span a{ float: left; padding: 6px 12px; }

@@ -1288,4 +1288,11 @@ function content($the_content, $limit) {
   $content = str_replace(']]>', ']]&gt;', $content);
   return $content;
 }
+
+//Get Child Subject Areas
+function get_child_subjects($subject_area_id) {
+	$args = array('hide_empty' => 0, 'taxonomy' => 'resource-subject-area','parent' => $subject_area_id);
+	$subchildren = get_categories($args);
+	return $subchildren;
+}
 ?>
