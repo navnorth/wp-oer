@@ -673,7 +673,7 @@ function importResources($default=false) {
 	// Log start of import process
 	debug_log("OER Resources Importer: Starting Bulk Import of Resources");
 		
-	
+	$cnt = 0;
 		try{
 			if ($default==true) {
 				//default resource filename
@@ -705,7 +705,6 @@ function importResources($default=false) {
 			}
 	
 			$fnldata = $excl_obj->sheets[0];
-	
 			for ($k =2; $k <= $fnldata['numRows']; $k++)
 			{
 				/** Clear variable values after a loop **/
@@ -1080,7 +1079,7 @@ function importResources($default=false) {
 					}
 	
 				}//Create Screeenshot
-	
+				$cnt++;
 			}
 		
 		}
@@ -1091,7 +1090,7 @@ function importResources($default=false) {
 	}		
 	// Log finish of import process
 	debug_log("OER Resources Importer: Finished Bulk Import of Resources");
-	$message = sprintf(__("Successfully imported %s resources.", OER_SLUG), $fnldata['numRows']);
+	$message = sprintf(__("Successfully imported %s resources.", OER_SLUG), $cnt);
 	$type = "success";
 	$response = array('message' => $message, 'type' => $type);
 	return $response;
