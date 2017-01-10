@@ -11,6 +11,7 @@ wp_enqueue_style( "resource-category-styles" );
 wp_enqueue_script('bxslider-script', OER_URL.'/js/jquery.bxslider.js');
 wp_register_script( "resource-script" , OER_URL ."js/resource-category.js" );
 wp_enqueue_script( "resource-script" );
+wp_enqueue_script( "ajax-script", OER_URL."js/front_ajax.js", array("jquery"));
 
 /** Load WordPress Theme Header **/
 get_header();
@@ -348,19 +349,21 @@ $hide_title = get_option('oer_hide_subject_area_title');
 				$args = array(
 					'post_type' => 'resource',
 					'posts_per_page' => -1,
+					'post_status' => 'publish',
 					'tax_query' => array(array('taxonomy' => 'resource-subject-area','terms' => array($rsltdata['term_id'])))
 				);
 				$resources = get_posts($args);
 				$resource_count = count($resources);
 				?>
 			<div class="oer-snglrsrchdng"><?php printf(__("Browse All %d Resources", OER_SLUG), $resource_count); ?></div>
-			<div class="oer-allftrdrsrccntr content-resources" file-path="<?php echo get_template_directory_uri();?>/lib/ajax-scroll.php" data-id="<?php echo $rsltdata['term_id'];?>">
+			<div class="oer-allftrdrsrccntr" id="content-resources" file-path="<?php echo get_template_directory_uri();?>/lib/ajax-scroll.php" data-id="<?php echo $rsltdata['term_id'];?>">
 				<?php
 				//Get number of pages
 				$items_per_page = 20;
 				$args = array(
 					'post_type' => 'resource',
 					'posts_per_page' => $items_per_page,
+					'post_status' => 'publish',
 					'tax_query' => array(array('taxonomy' => 'resource-subject-area','terms' => array($rsltdata['term_id'])))
 				);
 				$max = new WP_Query($args);
@@ -368,7 +371,12 @@ $hide_title = get_option('oer_hide_subject_area_title');
 				
 				$paged = 1;
 				
-				$args = array('post_type' => 'resource', 'posts_per_page' => 20 * $paged);
+				$args = array(
+					      'post_type' => 'resource',
+					      'posts_per_page' => 20 * $paged,
+					      'post_status' => 'publish',
+					      'tax_query' => array(array('taxonomy' => 'resource-subject-area','terms' => array($rsltdata['term_id'])))
+					      );
 				
 				$posts = get_posts($args);
 				
@@ -432,21 +440,20 @@ $hide_title = get_option('oer_hide_subject_area_title');
 					<?php
 					}
 					wp_reset_postdata();
-;
-					//Show load more button
-					if ($resource_count>$items_per_page & $paged<(int)$max_pages) {
-						$base_url = "http" . (($_SERVER['SERVER_PORT'] == 443) ? "s://" : "://") . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-						if (strpos($base_url,"page"))
-								$base_url = substr($base_url,0,strpos($base_url, "page")-1);
-						echo '<div class="col-md-12 pblctn_paramtr padding_left"><a href="&page='.($paged+1).'" data-page-number="'.($paged+1).'" data-page="show_all" data-base-url="'.$base_url.'" data-max-page="'.$max_pages.'" class="btn-load-more">Load More</a></div>';
-					}
 				}
 				else
 				{
 					?>
 					<div class='oer-snglrsrc'><?php sprintf(__("There are no resources available for %s", OER_SLUG), $term); ?></div>
 					<?php
-				}	
+				}
+				//Show load more button
+				if ($resource_count>$items_per_page & $paged<(int)$max_pages) {
+					$base_url = "http" . (($_SERVER['SERVER_PORT'] == 443) ? "s://" : "://") . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+					if (strpos($base_url,"page"))
+							$base_url = substr($base_url,0,strpos($base_url, "page")-1);
+					echo '<div class="col-md-12 tagcloud resourcecloud"><a href="&page='.($paged+1).'" data-subject-ids="'.json_encode(array($rsltdata['term_id'])).'" data-page-number="'.($paged+1).'" data-base-url="'.$base_url.'" class="button resource-load-more-button" data-max-page="'.$max_pages.'" class="btn-load-more">Load More</a></div>';
+				}
 				?>
 		   </div>
 		</div> <!--Browse By Categories-->

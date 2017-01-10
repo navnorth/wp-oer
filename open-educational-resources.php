@@ -971,6 +971,104 @@ function add_body_class($classes) {
 	
 	return array_merge( $classes, array( str_replace( ' ', '-', strtolower($theme_class) ) ) );
 }
+
+/* Ajax Callback */
+function load_more_resources() {
+	global $wpdb, $wp_query;
+
+	if (isset($_POST["post_var"])) {
+		$page_num = $_POST["post_var"];
+		$terms = json_decode($_POST["subjects"]);
+		$args = array(
+				'post_type' => 'resource',
+				'posts_per_page' => 20,
+				'post_status' => 'publish',
+				'paged' => $page_num,
+				'tax_query' => array(array('taxonomy' => 'resource-subject-area','terms' => $terms))
+				);
+
+		$postquery = get_posts($args);
+		
+		if(!empty($postquery)) {
+			foreach($postquery as $post) {
+
+				$w_image = true;
+				//set new_image_url to empty to reset on every loop
+				$new_image_url = "";
+				
+				$img_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ) , "full" );
+				
+				if (empty($img_url)) {
+					$w_image = false;
+					$new_image_url = OER_URL . 'images/default-icon-220x180.png';
+				}
+				
+				$title =  $post->post_title;
+				$content =  $post->post_content;
+				$ellipsis = "...";
+				if (strlen($post->post_content)<180)
+					$ellipsis = "";
+					
+				$content = substr($content, 0, 180).$ellipsis;
+				
+				$img_path = $new_img_path = parse_url($img_url[0]);
+				$img_path = $_SERVER['DOCUMENT_ROOT'] . $img_path['path'];
+				if(!empty($img_url))
+				{
+					//Resize Image using WP_Image_Editor
+					$image_editor = wp_get_image_editor($img_path);
+					if ( !is_wp_error($image_editor) ) {
+						$new_image = $image_editor->resize( 220, 180, true );
+						$suffix = "220x180";
+						
+						//Additional info of file
+						$info = pathinfo( $img_path );
+						$dir = $info['dirname'];
+						$ext = $info['extension'];
+						$name = wp_basename( $img_path, ".$ext" );
+						$dest_file_name = "{$dir}/{$name}-{$suffix}.{$ext}";
+						$new_port = ($new_img_path['port']==80)?'':':'.$new_img_path['port'];
+						$new_image_url = str_replace($_SERVER['DOCUMENT_ROOT'], "{$new_img_path['scheme']}://{$new_img_path['host']}{$new_port}", $dest_file_name);
+						
+						if ( !file_exists($dest_file_name) ){
+							$image_file = $image_editor->save($dest_file_name);
+						}
+					}
+				}
+			?>
+			<div class="oer-snglrsrc">
+				<?php
+				echo '<a href="'.get_permalink($post->ID).'" class="oer-resource-link"><div class="oer-snglimglft"><img src="'.$new_image_url.'"></div></a>';
+				?>
+				<div class="oer-snglttldscrght <?php if(empty($img_url)){ echo 'snglttldscrghtfull';}?>">
+					<div class="ttl"><a href="<?php echo get_permalink($post->ID);?>"><?php echo $title;?></a></div>
+					<div class="desc"><?php echo $content; ?></div>
+				</div>
+			</div>
+		<?php
+			}
+		}
+		die();
+	}
+}
+add_action('wp_ajax_load_more', 'load_more_resources');
+add_action('wp_ajax_nopriv_load_more', 'load_more_resources');
+
+/*Enqueue ajax url on frontend*/
+add_action('wp_head','resource_ajaxurl', 8);
+function resource_ajaxurl()
+{
+	?>
+    <script type="text/javascript">
+    /* workaround to only use SSL when on SSL (avoid self-signed cert issues) */
+    <?php if (!strpos($_SERVER['REQUEST_URI'],"wp-admin")): ?>
+	var sajaxurl = '<?php echo OER_URL ?>ajax.php';
+    <?php else: ?>
+	var sajaxurl = '<?php echo admin_url("admin-ajax.php", (is_ssl() ? "https": "http") ); ?>
+    <?php endif; ?>
+    </script>
+<?php
+}
 //front side shortcode
 //include_once(OER_PATH.'includes/resource_front.php');
 ?>

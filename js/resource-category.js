@@ -22,44 +22,6 @@ jQuery(document).ready(function(){
 	jQuery('.oer_right_featuredwpr .bx-viewport').css('width',swidth+'px');
 	jQuery('.oer_right_featuredwpr .bx-wrapper').css( { 'max-width':'100%', 'width':'100%' } );
     }
-    
-    jQuery('.btn-load-more').click(function(){
-        var page_num = parseInt(jQuery(this).attr('data-page-number'));
-        var post_ids = jQuery(this).attr('data-posts');
-        var page = jQuery(this).attr('data-page');
-        
-        var data = {
-            action: 'load_more',
-            post_var: page_num,
-            post_ids:  post_ids,
-            page: page
-        };
-        
-        /*$.post(the_ajax_script.ajaxurl, data).done(function(response) {*/
-        jQuery.post(sajaxurl, data).done(function(response) {
-            var btn_load = jQuery('.btn-load-more');
-            var next_page = page_num + 1;
-            var base_url = btn_load.attr('data-base-url');
-            var max_page = btn_load.attr('data-max-page');
-            
-            history.pushState({}, '', base_url + $('.btn-load-more').attr("href"));
-            $('#content-stories').append(response);
-            if (next_page<=max_page) {
-                if (post_ids) {
-                    btn_load
-                       .attr('data-page-number',next_page)
-                       .attr('href', '?page='  + next_page.toString());
-                } else {
-                    btn_load
-                       .attr('data-page-number',next_page)
-                       .attr('href', '&page='  + next_page.toString());
-                }
-            }else {
-                btn_load.addClass('btn-hidden');
-            }
-        });
-        return false;
-    });
 });
 
 /** Toggle Sub Categories **/

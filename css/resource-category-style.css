@@ -95,3 +95,10 @@
 }
 .oer-rsrcctgries span { width: auto; float: left; margin: 0 10px 7px 0; padding: 0px; border: medium none; border-radius: 0px; font-size:14px; }
 .oer-rsrcctgries span a{ float: left; padding: 6px 12px; }
+.resourcecloud { padding-left:0 !important; padding-right:0 !important; }
+.resource-load-more-button {
+    width: 100%;
+    text-align: center;
+    padding: 6px 12px !important;
+}
+.resource-load-more-button.btn-hidden { display:none; }
