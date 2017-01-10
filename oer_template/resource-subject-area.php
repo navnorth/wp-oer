@@ -344,17 +344,33 @@ $hide_title = get_option('oer_hide_subject_area_title');
 		
 		<div class="oer-allftrdrsrc">
 			<?php
+				//Get Resource count
 				$args = array(
 					'post_type' => 'resource',
 					'posts_per_page' => -1,
 					'tax_query' => array(array('taxonomy' => 'resource-subject-area','terms' => array($rsltdata['term_id'])))
 				);
-				$posts = get_posts($args);
-				$resource_count = count($posts);
+				$resources = get_posts($args);
+				$resource_count = count($resources);
 				?>
 			<div class="oer-snglrsrchdng"><?php printf(__("Browse All %d Resources", OER_SLUG), $resource_count); ?></div>
-			<div class="oer-allftrdrsrccntr" file-path="<?php echo get_template_directory_uri();?>/lib/ajax-scroll.php" data-id="<?php echo $rsltdata['term_id'];?>">
+			<div class="oer-allftrdrsrccntr content-resources" file-path="<?php echo get_template_directory_uri();?>/lib/ajax-scroll.php" data-id="<?php echo $rsltdata['term_id'];?>">
 				<?php
+				//Get number of pages
+				$items_per_page = 20;
+				$args = array(
+					'post_type' => 'resource',
+					'posts_per_page' => $items_per_page,
+					'tax_query' => array(array('taxonomy' => 'resource-subject-area','terms' => array($rsltdata['term_id'])))
+				);
+				$max = new WP_Query($args);
+				$max_pages = $max->max_num_pages;
+				
+				$paged = 1;
+				
+				$args = array('post_type' => 'resource', 'posts_per_page' => 20 * $paged);
+				
+				$posts = get_posts($args);
 				
 				if(!empty($posts))
 				{
@@ -416,6 +432,14 @@ $hide_title = get_option('oer_hide_subject_area_title');
 					<?php
 					}
 					wp_reset_postdata();
+;
+					//Show load more button
+					if ($resource_count>$items_per_page & $paged<(int)$max_pages) {
+						$base_url = "http" . (($_SERVER['SERVER_PORT'] == 443) ? "s://" : "://") . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+						if (strpos($base_url,"page"))
+								$base_url = substr($base_url,0,strpos($base_url, "page")-1);
+						echo '<div class="col-md-12 pblctn_paramtr padding_left"><a href="&page='.($paged+1).'" data-page-number="'.($paged+1).'" data-page="show_all" data-base-url="'.$base_url.'" data-max-page="'.$max_pages.'" class="btn-load-more">Load More</a></div>';
+					}
 				}
 				else
 				{
