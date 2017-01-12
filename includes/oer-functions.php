@@ -1295,4 +1295,56 @@ function get_child_subjects($subject_area_id) {
 	$subchildren = get_categories($args);
 	return $subchildren;
 }
+
+function get_sort_box(){
+	$sort = 0;
+	if (isset($_SESSION['resource_sort']))
+		$sort = (int)$_SESSION['resource_sort'];
+	?>
+	<div class="sort-box">
+		<span class="sortoption"></span>
+		<span class="sort-resources" title="Sort stories"><i class="fa fa-sort" aria-hidden="true"></i></span>
+		<div class="sort-options">
+			<ul>
+				<li data-value="0"<?php if ($sort==0): ?> class="cs-selected"<?php endif; ?>><a href="javascript:void(0);"><span>Newest</span></a></li>
+				<li data-value="1"<?php if ($sort==1): ?> class="cs-selected"<?php endif; ?>><a href="javascript:void(0);"><span>Oldest</span></a></li>
+				<li data-value="2"<?php if ($sort==2): ?> class="cs-selected"<?php endif; ?>><a href="javascript:void(0);"><span>A-Z</span></a></li>
+				<li data-value="3"<?php if ($sort==3): ?> class="cs-selected"<?php endif; ?>><a href="javascript:void(0);"><span>Z-A</span></a></li>
+			</ul>
+		</div>
+		<select class="sort-selectbox">
+			<option value="0"<?php if ($sort==0): ?>  disabled selected<?php endif; ?>>Newest</option>
+			<option value="1"<?php if ($sort==1): ?>  disabled selected<?php endif; ?>>Oldest</option>
+			<option value="2"<?php if ($sort==2): ?>  disabled selected<?php endif; ?>>A-Z</option>
+			<option value="3"<?php if ($sort==3): ?>  disabled selected<?php endif; ?>>Z-A</option>
+		</select>
+	</div>
+	 <?php
+}
+
+function apply_sort_args($args){
+	$sort = 0;
+	if (isset($_SESSION['story_sort']))
+		$sort = (int)$_SESSION['story_sort'];
+
+	switch($sort){
+		case 0:
+			$args['orderby'] = 'post_date';
+			$args['order'] = 'DESC';
+			break;
+		case 1:
+			$args['orderby'] = 'post_date';
+			$args['order'] = 'ASC';
+			break;
+		case 2:
+			$args['orderby'] = 'post_title';
+			$args['order'] = 'ASC';
+			break;
+		case 3:
+			$args['orderby'] = 'post_title';
+			$args['order'] = 'DESC';
+			break;
+	}
+	return $args;
+}
 ?>

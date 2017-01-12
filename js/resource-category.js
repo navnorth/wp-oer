@@ -24,6 +24,21 @@ jQuery(document).ready(function(){
 	jQuery('.oer_right_featuredwpr .bx-viewport').css('width',swidth+'px');
 	jQuery('.oer_right_featuredwpr .bx-wrapper').css( { 'max-width':'100%', 'width':'100%' } );
     }
+    /** Sort Script **/
+    jQuery('.sortoption').text(jQuery('.sort-options').find('li.cs-selected').text());
+    
+    jQuery('.sort-resources').click(function(){
+      jQuery('.sort-options').fadeToggle('fast');
+    });
+    
+    jQuery('.sort-options ul li a').click(function(){
+      jQuery('.sort-options ul li').removeClass('cs-selected');
+      jQuery(this).parent().addClass('cs-selected');
+      jQuery('.sortoption').text(jQuery(this).text());
+      jQuery('.sort-selectbox').val(jQuery(this).parent().attr('data-value'));
+      jQuery('.sort-options').fadeToggle('fast');
+      jQuery('.sort-selectbox').trigger("change");
+    });
 });
 
 /** Toggle Sub Categories **/

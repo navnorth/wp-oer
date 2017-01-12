@@ -102,3 +102,44 @@
     padding: 6px 12px !important;
 }
 .resource-load-more-button.btn-hidden { display:none; }
+.sort-box {
+    text-align: right;
+    float: right;
+    margin-top: 0;
+    position: relative;
+    width: 100px;
+    display: inline-block;
+    line-height: 1.5em;
+    z-index: 2;
+}
+.sortoption {
+    margin-right: 10px;
+    font-size: 0.75em;
+    color: #8d8d8d;
+}
+.sort-resources {
+    cursor: pointer;
+}
+.sort-box .sort-options {
+    color: #2980b9;
+    font-size: 0.75em;
+    -webkit-transition: opacity 0.2s, visibility 0s 0.2s;
+    transition: opacity 0.2s, visibility 0s 0.2s;
+    position: absolute;
+    right: 0;
+    overflow: hidden;
+    width: 100%;
+    background-color: #fff;
+    display: none;
+    border: 1px solid #cdcdcd;
+    padding: 0 10px;
+    outline:0;
+}
+.sort-box .sort-options ul { padding-left:0; }
+.sort-box .sort-options ul li {
+    cursor: pointer;
+    list-style-type:none;
+}
+.sort-box .sort-selectbox {
+    display: none;
+}

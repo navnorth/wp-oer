@@ -355,7 +355,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 				$resources = get_posts($args);
 				$resource_count = count($resources);
 				?>
-			<div class="oer-snglrsrchdng"><?php printf(__("Browse All %d Resources", OER_SLUG), $resource_count); ?></div>
+			<div class="oer-snglrsrchdng"><?php printf(__("Browse All %d Resources", OER_SLUG), $resource_count); ?><?php get_sort_box(); ?></div>
 			<div class="oer-allftrdrsrccntr" id="content-resources" file-path="<?php echo get_template_directory_uri();?>/lib/ajax-scroll.php" data-id="<?php echo $rsltdata['term_id'];?>">
 				<?php
 				//Get number of pages

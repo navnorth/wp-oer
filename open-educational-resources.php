@@ -1069,6 +1069,14 @@ function resource_ajaxurl()
     </script>
 <?php
 }
+
+/** Start session to store sort option **/
+add_action( 'init', 'initSession', 1 );
+function initSession(){
+	if(!session_id()) {
+		session_start();
+	}
+}
 //front side shortcode
 //include_once(OER_PATH.'includes/resource_front.php');
 ?>
