@@ -1296,7 +1296,7 @@ function get_child_subjects($subject_area_id) {
 	return $subchildren;
 }
 
-function get_sort_box(){
+function get_sort_box($subjects=array()){
 	$sort = 0;
 	if (isset($_SESSION['resource_sort']))
 		$sort = (int)$_SESSION['resource_sort'];
@@ -1312,7 +1312,7 @@ function get_sort_box(){
 				<li data-value="3"<?php if ($sort==3): ?> class="cs-selected"<?php endif; ?>><a href="javascript:void(0);"><span>Z-A</span></a></li>
 			</ul>
 		</div>
-		<select class="sort-selectbox">
+		<select class="sort-selectbox" data-subject-ids="<?php echo json_encode($subjects); ?>">
 			<option value="0"<?php if ($sort==0): ?>  disabled selected<?php endif; ?>>Newest</option>
 			<option value="1"<?php if ($sort==1): ?>  disabled selected<?php endif; ?>>Oldest</option>
 			<option value="2"<?php if ($sort==2): ?>  disabled selected<?php endif; ?>>A-Z</option>
@@ -1324,8 +1324,8 @@ function get_sort_box(){
 
 function apply_sort_args($args){
 	$sort = 0;
-	if (isset($_SESSION['story_sort']))
-		$sort = (int)$_SESSION['story_sort'];
+	if (isset($_SESSION['resource_sort']))
+		$sort = (int)$_SESSION['resource_sort'];
 
 	switch($sort){
 		case 0:

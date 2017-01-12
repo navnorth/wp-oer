@@ -21,6 +21,7 @@ jQuery(document).ready(function(){
         var base_url = btn_load.attr('data-base-url');
         var max_page = btn_load.attr('data-max-page');
         
+        history.pushState({}, '', base_url + jQuery('.resource-load-more-button').attr("href"));
         jQuery('#content-resources .resourcecloud').before(response);
         if (next_page<=max_page) {
             btn_load
@@ -36,17 +37,17 @@ jQuery(document).ready(function(){
     /** Sorting of List of Resources **/
     jQuery('.sort-selectbox').change(function(){
         var sort = jQuery(this).val();
+        var terms = jQuery(this).attr('data-subject-ids');
         var page_num = parseInt(jQuery('.resource-load-more-button').attr('data-page-number'));
-        var post_ids = jQuery('.resource-load-more-button').attr('data-posts');
         
         var data = {
             action: 'sort_resources',
             sort: sort,
             post_var: page_num-1,
-            post_ids: post_ids
+            subjects:terms
         };
         
-        jQuery.post(the_ajax_script.ajaxurl, data).done(function(response) {
+        jQuery.post(sajaxurl, data).done(function(response) {
             jQuery('#content-resources').html('');
             jQuery('#content-resources').html(response);
             
