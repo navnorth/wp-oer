@@ -1095,9 +1095,15 @@ function sort_resources(){
 		if ($_REQUEST['page'])
 			$paged = (int)$_REQUEST['page'];
 
-		$args['posts_per_page'] = 20 * $paged;
+		$args = array(
+				'post_type' => 'resource',
+				'post_status' => 'publish',
+				'tax_query' => array(array('taxonomy' => 'resource-subject-area','terms' => $terms))
+				);
 		
 		$args = apply_sort_args($args);
+		
+		$args['posts_per_page'] = 20 * $paged;
 		
 		$postquery = get_posts($args);
 

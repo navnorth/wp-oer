@@ -1,5 +1,5 @@
 jQuery(document).ready(function(){
-    jQuery('.resource-load-more-button').click(function(){
+    jQuery('#content-resources').on("click", ".resource-load-more-button", function(){
         var page_num = parseInt(jQuery(this).attr('data-page-number'));
         var terms = jQuery(this).attr('data-subject-ids');
         var sort = 0;
@@ -48,8 +48,10 @@ jQuery(document).ready(function(){
         };
         
         jQuery.post(sajaxurl, data).done(function(response) {
+            var button = jQuery('#content-resources .resourcecloud');
             jQuery('#content-resources').html('');
             jQuery('#content-resources').html(response);
+            jQuery('#content-resources').append(button);
             
             if (jQuery('.resource-load-more-button').is(':visible')) {
                 var btn_load = jQuery('.resource-load-more-button');

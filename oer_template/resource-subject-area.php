@@ -453,9 +453,13 @@ $hide_title = get_option('oer_hide_subject_area_title');
 				//Show load more button
 				if ($resource_count>$items_per_page & $paged<(int)$max_pages) {
 					$base_url = "http" . (($_SERVER['SERVER_PORT'] == 443) ? "s://" : "://") . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+					
+					if (isset($_SESSION['resource_sort']))
+						$_rsort = " data-sort='".(int)$_SESSION['resource_sort']."'";
+					
 					if (strpos($base_url,"page"))
 							$base_url = substr($base_url,0,strpos($base_url, "page")-1);
-					echo '<div class="col-md-12 tagcloud resourcecloud"><a href="&page='.($paged+1).'" data-subject-ids="'.json_encode(array($rsltdata['term_id'])).'" data-page-number="'.($paged+1).'" data-base-url="'.$base_url.'" class="button resource-load-more-button" data-max-page="'.$max_pages.'" class="btn-load-more">Load More</a></div>';
+					echo '<div class="col-md-12 tagcloud resourcecloud"><a href="?page='.($paged+1).'" '.$_rsort.' data-subject-ids="'.json_encode(array($rsltdata['term_id'])).'" data-page-number="'.($paged+1).'" data-base-url="'.$base_url.'" class="button resource-load-more-button" data-max-page="'.$max_pages.'" class="btn-load-more">Load More</a></div>';
 				}
 				?>
 		   </div>
