@@ -400,3 +400,9 @@ li.oer_sbstndard{
 /* Vertex specific style */
 .vertex #sngl-resource { width:75%; float:right; }
 .vertex #oer-content .oer-cntnr { width:75%; float:right; }
+/* Tag Resource Styles */
+.oer_blgpst { padding:10px 0; border-bottom:1px solid #cdcdcd; overflow:hidden; }
+.oer_blgpst .oer-feature-image { width:20%; float:left; }
+.oer_blgpst .rght-sd-cntnr-blg { width:80%; float:right; }
+.oer_blgpst .rght-sd-cntnr-blg h2 { margin-bottom:0; }
+.resource-tag #content { width:100%; }
