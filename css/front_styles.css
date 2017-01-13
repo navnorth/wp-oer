@@ -406,3 +406,8 @@ li.oer_sbstndard{
 .oer_blgpst .rght-sd-cntnr-blg { width:80%; float:right; }
 .oer_blgpst .rght-sd-cntnr-blg h2 { margin-bottom:0; }
 .resource-tag #content { width:100%; }
+
+@media screen and (max-width: 600px) {
+	.oer_blgpst .oer-feature-image { width:100%; float:none; margin-bottom:10px; }
+	.oer_blgpst .rght-sd-cntnr-blg { width:100%; float:none; }
+}
