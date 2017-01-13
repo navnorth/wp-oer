@@ -33,14 +33,14 @@ get_header();
 				<div class="oer_blgpst">
 					
                     <?php if ( has_post_thumbnail() ) {?>
-						<div class="oer-feature-image">
+						<div class="oer-feature-image col-md-3">
 						<?php if ( ! post_password_required() && ! is_attachment() ) :
 							the_post_thumbnail("thumbnail");
 						endif; ?>
 						</div>
 					<?php }?>
 					
-                    <div class="rght-sd-cntnr-blg">
+                    <div class="rght-sd-cntnr-blg col-md-9">
                         <h2><a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
             
                         <div class="small"><span><?php the_time('F jS, Y'); ?> </span></div>
