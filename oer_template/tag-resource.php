@@ -41,7 +41,7 @@ get_header();
 					<?php }?>
 					
                     <div class="rght-sd-cntnr-blg col-md-9">
-                        <h2><a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
+                        <h4><a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h4>
             
                         <div class="small"><span><?php the_time('F jS, Y'); ?> </span></div>
                                                 
