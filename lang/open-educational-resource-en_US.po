@@ -1,0 +1,457 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Open Education Resource\n"
+"POT-Creation-Date: 2016-09-03 21:53+0800\n"
+"PO-Revision-Date: 2016-10-18 15:47+0800\n"
+"Last-Translator: \n"
+"Language-Team: Navigation North <joe@navigationnorth.com>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.9\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: oer_template/resource-category.php:152
+msgid "Browse %s Resources"
+msgstr ""
+
+#: oer_template/resource-category.php:215
+msgid "There are no resources available for %s"
+msgstr ""
+
+#: oer_template/single-resource.php:104
+msgid "Description"
+msgstr ""
+
+#: oer_template/single-resource.php:117
+msgid "Creator:"
+msgstr ""
+
+#: oer_template/single-resource.php:129
+msgid "Publisher:"
+msgstr ""
+
+#: oer_template/single-resource.php:138 includes/resource_metafields.php:206
+#: includes/resource_metafields.php:266
+msgid "Type:"
+msgstr ""
+
+#: oer_template/single-resource.php:150
+msgid "Grades:"
+msgstr ""
+
+#: oer_template/single-resource.php:313
+msgid "Standards"
+msgstr ""
+
+#: oer_template/single-resource.php:320
+msgid "Standard Alignment"
+msgstr ""
+
+#: oer_template/single-resource.php:332
+msgid "Standard Notations"
+msgstr ""
+
+#: oer_template/tag-resource.php:13
+msgid "Tag Archives: %s"
+msgstr ""
+
+#: oer_template/tag-resource.php:48
+msgid "Nothing Found"
+msgstr ""
+
+#: oer_template/tag-resource.php:52
+msgid "Sorry, but nothing matched your search criteria. Please try again with some different keywords."
+msgstr ""
+
+#: includes/assign-categories.php:82
+msgid "Select All"
+msgstr ""
+
+#: includes/assign-categories.php:83
+msgid "UnSelect All"
+msgstr ""
+
+#: includes/assign-categories.php:88
+msgid "Assign Category"
+msgstr "Assign Subject Area"
+
+#: includes/assign-categories.php:143 includes/assign-categories.php:178
+msgid "Assign Categories"
+msgstr "Assign Subject Areas"
+
+#: includes/assign-categories.php:143
+msgid "Select User"
+msgstr ""
+
+#: includes/assign-categories.php:182
+msgid "Select User Type"
+msgstr ""
+
+#: includes/assign-categories.php:185
+msgid "Editor"
+msgstr ""
+
+#: includes/assign-categories.php:186
+msgid "Author"
+msgstr ""
+
+#: includes/assign-categories.php:195
+msgid "Submit"
+msgstr ""
+
+#: includes/categories-importer.php:116
+msgid "Categories Import Successfully."
+msgstr "Subject Areas Imported Successfully."
+
+#: includes/categories-importer.php:132
+msgid "Categories Bulk Import"
+msgstr "Subject Areas Bulk Import"
+
+#: includes/categories-importer.php:138 includes/resources-importer.php:138
+#: includes/standards-importer.php:188
+msgid "Import"
+msgstr ""
+
+#: includes/resource_front.php:25
+msgid "Resource Title and Resource URL is required"
+msgstr ""
+
+#: includes/resource_front.php:175 includes/resources-importer.php:425
+msgid "Resource Created successfully!"
+msgstr ""
+
+#: includes/resource_metafields.php:10
+msgid "Resource URL:"
+msgstr ""
+
+#: includes/resource_metafields.php:20
+msgid "Highlight:"
+msgstr ""
+
+#: includes/resource_metafields.php:24
+msgid "True"
+msgstr ""
+
+#: includes/resource_metafields.php:25
+msgid "False"
+msgstr ""
+
+#: includes/resource_metafields.php:31
+msgid "Grade:"
+msgstr ""
+
+#: includes/resource_metafields.php:51
+msgid "Pre-K"
+msgstr ""
+
+#: includes/resource_metafields.php:52
+msgid "K (Kindergarten)"
+msgstr ""
+
+#: includes/resource_metafields.php:53
+msgid "1"
+msgstr ""
+
+#: includes/resource_metafields.php:54
+msgid "2"
+msgstr ""
+
+#: includes/resource_metafields.php:55
+msgid "3"
+msgstr ""
+
+#: includes/resource_metafields.php:56
+msgid "4"
+msgstr ""
+
+#: includes/resource_metafields.php:57
+msgid "5"
+msgstr ""
+
+#: includes/resource_metafields.php:58
+msgid "6"
+msgstr ""
+
+#: includes/resource_metafields.php:59
+msgid "7"
+msgstr ""
+
+#: includes/resource_metafields.php:60
+msgid "8"
+msgstr ""
+
+#: includes/resource_metafields.php:61
+msgid "9"
+msgstr ""
+
+#: includes/resource_metafields.php:62
+msgid "10"
+msgstr ""
+
+#: includes/resource_metafields.php:63
+msgid "11"
+msgstr ""
+
+#: includes/resource_metafields.php:64
+msgid "12"
+msgstr ""
+
+#: includes/resource_metafields.php:72
+msgid "Date Created:"
+msgstr ""
+
+#: includes/resource_metafields.php:82
+msgid "Date Modified:"
+msgstr ""
+
+#: includes/resource_metafields.php:92
+msgid "Media Type:"
+msgstr ""
+
+#: includes/resource_metafields.php:97
+msgid "Website"
+msgstr ""
+
+#: includes/resource_metafields.php:98 includes/resource_metafields.php:115
+msgid "Audio"
+msgstr ""
+
+#: includes/resource_metafields.php:99
+msgid "Document"
+msgstr ""
+
+#: includes/resource_metafields.php:100
+msgid "Image"
+msgstr ""
+
+#: includes/resource_metafields.php:101
+msgid "Video"
+msgstr ""
+
+#: includes/resource_metafields.php:102 includes/resource_metafields.php:124
+msgid "Other"
+msgstr ""
+
+#: includes/resource_metafields.php:109
+msgid "Learning Resource Type:"
+msgstr ""
+
+#: includes/resource_metafields.php:114
+msgid "Assessment"
+msgstr ""
+
+#: includes/resource_metafields.php:116
+msgid "Calculator"
+msgstr ""
+
+#: includes/resource_metafields.php:117
+msgid "Demonstration"
+msgstr ""
+
+#: includes/resource_metafields.php:118
+msgid "Game"
+msgstr ""
+
+#: includes/resource_metafields.php:119
+msgid "Interview"
+msgstr ""
+
+#: includes/resource_metafields.php:120
+msgid "Lecture"
+msgstr ""
+
+#: includes/resource_metafields.php:121
+msgid "Lesson Plan"
+msgstr ""
+
+#: includes/resource_metafields.php:122
+msgid "Simulation"
+msgstr ""
+
+#: includes/resource_metafields.php:123
+msgid "Presentation"
+msgstr ""
+
+#: includes/resource_metafields.php:131
+msgid "Interactivity:"
+msgstr ""
+
+#: includes/resource_metafields.php:136
+msgid "Interactive"
+msgstr ""
+
+#: includes/resource_metafields.php:137
+msgid "Passive"
+msgstr ""
+
+#: includes/resource_metafields.php:138
+msgid "Social"
+msgstr ""
+
+#: includes/resource_metafields.php:139
+msgid "Programmatic"
+msgstr ""
+
+#: includes/resource_metafields.php:140
+msgid "One-on-One"
+msgstr ""
+
+#: includes/resource_metafields.php:141
+msgid "Async"
+msgstr ""
+
+#: includes/resource_metafields.php:142
+msgid "Sync"
+msgstr ""
+
+#: includes/resource_metafields.php:141
+msgid "Group"
+msgstr ""
+
+#: includes/resource_metafields.php:150
+msgid "Use Rights URL:"
+msgstr ""
+
+#: includes/resource_metafields.php:160
+msgid "Is based on URL:"
+msgstr ""
+
+#: includes/resource_metafields.php:170
+msgid "Standards Alignment:"
+msgstr ""
+
+#: includes/resource_metafields.php:201 includes/resource_metafields.php:261
+msgid "Author Information:"
+msgstr ""
+
+#: includes/resource_metafields.php:211 includes/resource_metafields.php:271
+msgid "Person"
+msgstr ""
+
+#: includes/resource_metafields.php:212 includes/resource_metafields.php:272
+msgid "Organization"
+msgstr ""
+
+#: includes/resource_metafields.php:219 includes/resource_metafields.php:279
+#: includes/resource_metafields.php:325
+msgid "Name:"
+msgstr ""
+
+#: includes/resource_metafields.php:229 includes/resource_metafields.php:289
+#: includes/resource_metafields.php:335
+msgid "URL:"
+msgstr ""
+
+#: includes/resource_metafields.php:239 includes/resource_metafields.php:299
+#: includes/resource_metafields.php:345
+msgid "Email Address:"
+msgstr ""
+
+#: includes/resource_metafields.php:313
+msgid "Add Author"
+msgstr ""
+
+#: includes/resource_metafields.php:320
+msgid "Publisher Information:"
+msgstr ""
+
+#: includes/resources-importer.php:483
+msgid "Import Resources"
+msgstr ""
+
+#: includes/set-category-images.php:23
+msgid "S.No"
+msgstr ""
+
+#: includes/set-category-images.php:24
+msgid "Category Name"
+msgstr "Subject Area Name"
+
+#: includes/set-category-images.php:25
+msgid "Upload/Remove"
+msgstr ""
+
+#: includes/set-category-images.php:26
+msgid "Upload/Remove on Hover"
+msgstr ""
+
+#: includes/set-category-images.php:49 includes/set-category-images.php:64
+msgid "Update"
+msgstr ""
+
+#: includes/set-category-images.php:49 includes/set-category-images.php:64
+msgid "Upload"
+msgstr ""
+
+#: includes/set-category-images.php:51 includes/set-category-images.php:66
+msgid "Remove"
+msgstr ""
+
+#: includes/settings.php:52
+msgid "Assign Page Template to Category Pages"
+msgstr "Assign Page Template to Subject Area Pages"
+
+#: includes/settings.php:59 includes/settings.php:71 includes/settings.php:83
+#: includes/settings.php:107
+msgid "Save"
+msgstr ""
+
+#: includes/settings.php:66
+msgid "Set Path For Python Excutable Script"
+msgstr ""
+
+#: includes/settings.php:78
+msgid "Set Path For Python Installation"
+msgstr ""
+
+#: includes/settings.php:90
+msgid "Screenshot and Display Settings"
+msgstr ""
+
+#: includes/settings.php:93
+msgid "Enable Screenshots?"
+msgstr ""
+
+#: includes/settings.php:96
+msgid "Use xvfb?"
+msgstr ""
+
+#: includes/settings.php:99
+msgid "Enable Debug Mode?"
+msgstr ""
+
+#: includes/settings.php:102
+msgid "Use Bootstrap?"
+msgstr ""
+
+#: includes/settings.php:115
+msgid "More info"
+msgstr ""
+
+#: includes/standards-importer.php:170
+msgid "Standards Are Successfully Imported."
+msgstr ""
+
+#: includes/standards-importer.php:179
+msgid "Standards Import"
+msgstr ""
+
+#: includes/standards-importer.php:182
+msgid "Import requires an XML file in the format used by ASN for Common Core State Standards. You can download the CCSS in XML format here:"
+msgstr ""
+
+#: includes/standards-importer.php:197
+msgid "Id"
+msgstr ""
+
+#: includes/standards-importer.php:198
+msgid "Standard Title"
+msgstr ""
+
+#: includes/standards-importer.php:199
+msgid "Url"
+msgstr ""

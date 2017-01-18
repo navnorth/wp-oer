@@ -1,4 +1,10 @@
 jQuery(document).ready(function(e) {
+	jQuery(".oer_snglctwpr").each(function(index, element) {
+		var hght = jQuery(this).children(".oer-cat-div,.oer-cat-div-large,.oer-cat-div-medium,.oer-cat-div-small").children(".oer-child-category").height();
+			jQuery(this).children(".oer-cat-div,.oer-cat-div-large,.oer-cat-div-medium,.oer-cat-div-small").children(".oer-child-category").attr("data-height", hght);
+			jQuery(this).children(".oer-cat-div,.oer-cat-div-large,.oer-cat-div-medium,.oer-cat-div-small").children(".oer-child-category").hide();
+			//alert(hght);
+	    });
 	jQuery( ".oer_datepicker" ).datepicker();
 	jQuery( ".oer_datepicker" ).datepicker( "option", "showAnim", "slideDown" );
 });
@@ -70,4 +76,190 @@ function oer_check_myChild(ref)
 			});
 		}
 	}
+}
+
+function set_new_source(source, sourceElement) {
+    new_src = source;
+    sourceElement.attr("src", new_src);
+}
+
+function toggleparent(ref)
+{
+	jQuery(ref).parent(".oer-sub-category").toggleClass("activelist");
+	jQuery(ref).next(".oer-category").slideToggle();
+}
+
+function togglenavigation(ref)
+{
+	jQuery(".oer-cat-div,.oer-cat-div-large,.oer-cat-div-medium,.oer-cat-div-small").each(function(index, value)
+	{
+		if(value == ref)
+		{
+			if(jQuery(value).hasClass("active-cat"))
+			{
+				jQuery(value).removeClass("active-cat");
+			}
+			else
+			{
+				jQuery(value).addClass("active-cat");
+			}
+
+
+			if ( jQuery(value).children(".active-arrow").length )
+			{
+				jQuery(value).children( ".active-arrow" ).remove();
+			}
+			else
+			{
+				jQuery(value).append( "<div class='active-arrow'></div>" );
+			}
+		}
+		else
+		{
+			jQuery(value).removeClass("active-cat");
+			jQuery(value).children( ".active-arrow" ).remove();
+		}
+	});
+	var htmldata = jQuery(ref).children(".oer-child-category").html();
+	var datcls = jQuery(ref).attr("data-class");
+	var datid = jQuery(ref).attr("data-id");
+	jQuery(".oer_child_content_wpr").each(function(index, element) {
+		if(jQuery(this).attr("data-id") == datcls)
+		{
+			var dspl = jQuery(this).css("display");
+			if(dspl == "block")
+			{
+				if(jQuery(this).attr("data-class") == datid)
+				{
+					jQuery(this).slideUp("slow");
+					jQuery(this).parent(".oer_snglctwpr").height("auto");
+				}
+				else
+				{
+					jQuery(this).html("");
+					jQuery(this).slideUp("slow");
+					jQuery(this).html(htmldata);
+					jQuery(this).attr("data-class", datid);
+					jQuery(this).slideDown("slow");
+
+					var hght_upr = jQuery(ref).height();
+					var hght_lwr = jQuery(ref).children(".oer-child-category").attr("data-height");
+					var ttl_hght = parseInt(hght_upr) + parseInt(hght_lwr) + parseInt(80);
+					jQuery(ref).parent(".oer_snglctwpr").height(ttl_hght);
+				}
+			}
+			else
+			{
+				jQuery(this).html(htmldata);
+				jQuery(this).attr("data-class", datid);
+				jQuery(this).slideDown("slow");
+
+				var hght_upr = jQuery(ref).height();
+				var hght_lwr = jQuery(ref).children(".oer-child-category").attr("data-height");
+				var ttl_hght = parseInt(hght_upr) + parseInt(hght_lwr) + parseInt(80);
+				jQuery(ref).parent(".oer_snglctwpr").height(ttl_hght);
+			}
+
+		}
+		else
+		{
+			jQuery(this).slideUp("slow");
+			jQuery(this).parent(".oer_snglctwpr").height("auto");
+		}
+	});
+
+}
+
+function togglenavigation_mobile(ref)
+{
+	var dspl = jQuery(ref).next(".oer-child-category-mobile").css("display");
+	jQuery(".oer-cat-div-mobile").each(function(){
+		jQuery(this).next(".oer-child-category-mobile").slideUp("slow");
+		jQuery(this).removeClass("child_mobileactive");
+	});
+	if(dspl == 'none')
+	{
+		jQuery(ref).next(".oer-child-category-mobile").slideDown("slow");
+		jQuery(ref).addClass("child_mobileactive");
+	}
+	else
+	{
+		jQuery(ref).next(".oer-child-category-mobile").slideUp("slow");
+		jQuery(ref).removeClass("child_mobileactive");
+	}
+}
+
+function changeonhover(ref)
+{
+	var img = jQuery(ref).attr("data-hoverimg")
+	jQuery(ref).addClass("change_mouseover");
+	jQuery(ref).children(".oer-cat-icn").css("background", "url("+img+") no-repeat scroll center center transparent");
+}
+
+function changeonout(ref)
+{
+	var img = jQuery(ref).attr("data-normalimg")
+	jQuery(ref).removeClass("change_mouseover");
+	/*jQuery(".oer-cat-div").each(function(){
+		jQuery(this).removeClass("change_mouseover");
+	});*/
+	jQuery(ref).children(".oer-cat-icn").css("background", "url("+img+") no-repeat scroll center center transparent");
+}
+
+//tab functionality at single resource page
+function rsrc_tabs(ref)
+{
+	var dataid = jQuery(ref).attr("data-id");
+	var arrClass = [ "tags", "alignedStandards", "keyword", "moreLikeThis" ];
+	jQuery.each( arrClass, function( index, value )
+	{
+	  if(value == dataid)
+	  {
+		jQuery( "." + value ).css("display", "block");
+	  }
+	  else
+	  {
+		jQuery( "." + value ).css("display", "none");
+	  }
+	});
+}
+
+function load_onScroll(ref)
+{
+	var path = jQuery(ref).attr("file-path");
+	var dataId = jQuery(ref).attr("data-id");
+
+	if(jQuery(ref).scrollTop() >= 15)
+	{
+		jQuery.ajax({
+			type: "POST",
+			url: path,
+			data: "termid="+dataId+"&task=dataScroll",
+			success: function (res)
+			{
+           		jQuery(ref).html(res);
+        	}
+        });
+	}
+}
+function collapse(ref)
+{
+	jQuery(".oer_category_sidebar").slideToggle(500, function () {
+        jQuery(ref).text(function () {
+            return jQuery(ref).is(":visible") ? "Collapse" : "Expand";
+        });
+    });
+}
+// Slide Toggole in Subject Button
+function tglcategories(ref)
+{
+	if(jQuery(ref).hasClass("open"))
+	{
+		jQuery(ref).removeClass("open")
+	}
+	else
+	{
+		jQuery(ref).addClass("open")
+	}
+    jQuery(".oer_category_sidebar").slideToggle("slow");
 }

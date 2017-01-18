@@ -9,7 +9,7 @@ function wpa_filter_term_args( $args, $taxonomies )
     $client_terms = get_user_meta($user_id, 'oer_userasgnctgries', true);
   	$client_terms = unserialize($client_terms);
 
-	if( $pagenow == $pagenow && 'resource-category' == $taxonomies[0] )
+	if( $pagenow == $pagenow && 'resource-subject-area' == $taxonomies[0] )
 	{
          $args['include'] = $client_terms;
     }
@@ -98,19 +98,33 @@ function oer_resource_where_filter($sql)
 
 //scripts and styles on backend
 add_action('admin_enqueue_scripts', 'oer_backside_scripts');
-function oer_backside_scripts()
+function oer_backside_scripts($hook)
 {
+    global $post;
+    
+    if ($_GET['post_type']=='resource' || $post->post_type=='resource') {
 	wp_enqueue_style('jqueryui-styles', OER_URL.'css/jquery-ui.css');
 	wp_enqueue_style('back-styles', OER_URL.'css/back_styles.css');
 	wp_enqueue_style( 'thickbox' );
 
-	wp_enqueue_script('jquery');
-	wp_enqueue_script('min_jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
-
+	if ($post->post_type!=='resource') {
+	    wp_enqueue_script('jquery');
+	    wp_enqueue_script('min_jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
+	}
+	
 	wp_enqueue_script('jqueryui-scripts', OER_URL.'js/jquery-ui.js');
 	wp_enqueue_script( 'media-upload' );
 	wp_enqueue_script( 'thickbox' );
 	wp_enqueue_script('back-scripts', OER_URL.'js/back_scripts.js',array( 'jquery','media-upload','thickbox','set-post-thumbnail' ));
+    }
+    
+    // Adds our JS file to the queue that WordPress will load
+    wp_enqueue_script( 'wp_ajax_oer_admin_script', OER_URL . 'js/oer_admin.js', array( 'jquery' ), null, true );
+
+    // Make some data available to our JS file
+    wp_localize_script( 'wp_ajax_oer_admin_script', 'wp_ajax_oer_admin', array(
+	    'wp_ajax_oer_admin_nonce' => wp_create_nonce( 'wp_ajax_oer_admin_nonce' ),
+    ));
 }
 
 //scripts and styles on front end
@@ -119,10 +133,25 @@ function oer_frontside_scripts()
 {
 	wp_enqueue_style('jqueryui-styles', OER_URL.'css/jquery-ui.css');
 	wp_enqueue_style('front-styles', OER_URL.'css/front_styles.css');
+	wp_enqueue_style( "resource-category-styles", OER_URL . "css/resource-category-style.css" );
 
 	wp_enqueue_script('jquery');
 	wp_enqueue_script('jqueryui-scripts', OER_URL.'js/jquery-ui.js');
 	wp_enqueue_script('front-scripts', OER_URL.'js/front_scripts.js');
+	wp_enqueue_style( "resource-category-styles", OER_URL . "css/resource-category-style.css" );
+}
+
+//Add style block
+add_action( 'wp_head' , 'add_style_block', 99  );
+function add_style_block(){
+    global $_css;
+    
+    if ($_css) {
+	$output = "<style>"."\n";
+	$output .= $_css."\n";
+	$output .="</style>"."\n";
+	echo $output;
+    }
 }
 
 //register custom post
@@ -138,7 +167,7 @@ function oer_postcreation(){
         'all_items'          => __( 'All Resources' ),
         'view_item'          => __( 'View Resource' ),
         'search_items'       => __( 'Search' ),
-        'menu_name'          => 'Resource'
+        'menu_name'          => 'OER'
     );
 
     $args = array(
@@ -173,17 +202,17 @@ function oermeta_callback()
 add_action( 'init', 'create_resource_taxonomies', 0 );
 function create_resource_taxonomies() {
 	$labels = array(
-		'name'              => _x( 'Category', 'taxonomy general name' ),
-		'singular_name'     => _x( 'Category', 'taxonomy singular name' ),
-		'search_items'      => __( 'Search Category' ),
-		'all_items'         => __( 'All Categorys' ),
-		'parent_item'       => __( 'Parent Category' ),
-		'parent_item_colon' => __( 'Parent Category:' ),
-		'edit_item'         => __( 'Edit Category' ),
-		'update_item'       => __( 'Update Category' ),
-		'add_new_item'      => __( 'Add New Category' ),
-		'new_item_name'     => __( 'New Genre Category' ),
-		'menu_name'         => __( 'Categories' ),
+		'name'              => _x( 'Subject Area', 'taxonomy general name' ),
+		'singular_name'     => _x( 'Subject Area', 'taxonomy singular name' ),
+		'search_items'      => __( 'Search Subject Areas' ),
+		'all_items'         => __( 'All Subject Areas' ),
+		'parent_item'       => __( 'Parent Subject Area' ),
+		'parent_item_colon' => __( 'Parent Subject Area:' ),
+		'edit_item'         => __( 'Edit Subject Area' ),
+		'update_item'       => __( 'Update Subject Area' ),
+		'add_new_item'      => __( 'Add New Subject Area' ),
+		'new_item_name'     => __( 'New Genre Subject Area' ),
+		'menu_name'         => __( 'Subject Areas' ),
 	);
 
 	$args = array(
@@ -192,9 +221,9 @@ function create_resource_taxonomies() {
 		'show_ui'           => true,
 		'show_admin_column' => true,
 		'query_var'         => true,
-		'rewrite'           => array( 'slug' => 'resource-category' ),
+		'rewrite'           => array( 'slug' => 'resource-subject-area' ),
 	);
-	register_taxonomy( 'resource-category', array( 'resource' ), $args );
+	register_taxonomy( 'resource-subject-area', array( 'resource' ), $args );
 }
 //register cutsom category
 
@@ -203,8 +232,10 @@ add_action('save_post', 'oer_save_customfields');
 function oer_save_customfields()
 {
     global $post;
+    
     //Check first if screenshot is enabled
     $screenshot_enabled = get_option( 'oer_enable_screenshot' );
+    $external_screenshot = get_option('oer_external_screenshots');
     
     //Check first if $post is not empty
     if ($post) {
@@ -422,6 +453,10 @@ function oer_save_customfields()
 			{
 			    if ( $screenshot_enabled )
 				$file = getScreenshotFile($url);
+			    
+			    // if external screenshot utility enabled
+			    if ( $external_screenshot )
+				$file = getImageFromExternalURL($url);
 			}
 
 			if(file_exists($file))
@@ -457,7 +492,7 @@ function oer_save_customfields()
 //Update Split Shared Term
 function resource_split_shared_term( $term_id, $new_term_id, $term_taxonomy_id, $taxonomy ) {
     // Checking if taxonomy is a resource category
-    if ( 'resource-category' == $taxonomy ) {
+    if ( 'resource-subject-area' == $taxonomy ) {
 	$resource_posts = get_posts(array(
 	    'posts_per_page' => -1,
 	    'post_type' => 'fabric_building',
@@ -479,11 +514,12 @@ add_action( 'split_shared_term', 'resource_split_shared_term', 10, 4 );
 
 add_action('admin_menu','oer_rsrcimprtr');
 function oer_rsrcimprtr(){
-	add_submenu_page('edit.php?post_type=resource','Set Category Images','Set Category Images','add_users','oer_setcatimage','oer_setcatimage');
-	add_submenu_page('edit.php?post_type=resource','Resources Import','Import Resources','add_users','oer_rsrcimprt','oer_rsrcimprtrfn');
-	add_submenu_page('edit.php?post_type=resource','Categories Import','Import Categories','add_users','oer_catsimprt','oer_catsimprtrfn');
-	add_submenu_page('edit.php?post_type=resource','Standards Import','Import Standards','add_users','oer_stndrdsimprt','oer_stndrdsimprtfn');
-	add_submenu_page('edit.php?post_type=resource','Assign Categories','Assign Categories','add_users','oer_assign_categories','oer_assign_categories');
+	add_submenu_page('edit.php?post_type=resource','Set Subject Area Images','Set Subject Area Images','add_users','oer_setcatimage','oer_setcatimage');
+	//add_submenu_page('edit.php?post_type=resource','Resources Import','Import Resources','add_users','oer_rsrcimprt','oer_rsrcimprtrfn');
+	//add_submenu_page('edit.php?post_type=resource','Subject Areas Import','Import Subject Areas','add_users','oer_catsimprt','oer_catsimprtrfn');
+	//add_submenu_page('edit.php?post_type=resource','Standards Import','Import Standards','add_users','oer_stndrdsimprt','oer_stndrdsimprtfn');
+	//add_submenu_page('edit.php?post_type=resource','Assign Subject Areas','Assign Subject Areas','add_users','oer_assign_categories','oer_assign_categories');
+	add_submenu_page('edit.php?post_type=resource','Import','Import','add_users','oer_import','oer_import');
 	add_submenu_page('edit.php?post_type=resource','Settings','Settings','add_users','oer_settings','oer_setngpgfn');
 }
 
@@ -507,6 +543,10 @@ function oer_stndrdsimprtfn()
 {
 	global $wpdb;
 	include_once(OER_PATH.'includes/standards-importer.php');
+}
+function oer_import() {
+	global $wpdb;
+	include_once(OER_PATH.'includes/import.php');
 }
 function oer_assign_categories()
 {

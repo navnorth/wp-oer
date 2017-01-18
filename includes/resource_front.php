@@ -18,11 +18,11 @@ function resource_front_form()
 			$oer_subject = $_POST["oer_subject"];
 			$post = array('post_content' => '', 'post_name' => $post_name, 'post_title' => $oer_resourcettl, 'post_status' => 'publish', 'post_type' => 'resource', 'post_author' => $user_id , 'post_date' => $cs_date, 'post_date_gmt'  => $cs_date, 'comment_status' => 'open');
 			$post_id = wp_insert_post( $post, $wp_error );
-			wp_set_post_terms( $post_id, $oer_subject, 'resource-category', true );
+			wp_set_post_terms( $post_id, $oer_subject, 'resource-subject-area', true );
 		}
 		else
 		{
-			echo "Resource Title and Resource URL is required";
+			_e("Resource Title and Resource URL is required", OER_SLUG);
 			exit;
 		}
 		//saving meta fields
@@ -171,8 +171,8 @@ function resource_front_form()
 			update_post_meta( $post_id , 'oer_publisheremail' , $_POST['oer_publisheremail']);
 		}
 		//saving meta fields
-
-		echo "Resource Created successfully !";
+		
+		_e("Resource Created successfully!", OER_SLUG);
 
 	}
 
@@ -219,7 +219,7 @@ function resource_front_form()
             		$return .='</div>';
             		$return .='<div class="oer_fld">';
 
-						 $select_cats = wp_dropdown_categories( array( 'echo' => 0,'show_count'=>0,'hierarchical'=>1, 'taxonomy' => 'resource-category', 'hide_empty' => 0 ) );
+						 $select_cats = wp_dropdown_categories( array( 'echo' => 0,'show_count'=>0,'hierarchical'=>1, 'taxonomy' => 'resource-subject-area', 'hide_empty' => 0 ) );
 						 $select_cats = str_replace( 'id=', 'multiple="multiple" id=', $select_cats );
 						 $select_cats = str_replace( "name='cat'", "name='oer_subject[]'", $select_cats );
 						 $return .= $select_cats;

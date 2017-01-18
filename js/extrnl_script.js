@@ -3,27 +3,27 @@ jQuery(document).ready(function(){
 	jQuery('li').children('.stndrd_ttl').children('img').click(function(e)
 	{
 		var plgnpth = jQuery(this).attr('data-pluginpath');
-		if( jQuery(this).parent('.stndrd_ttl').next('.stndrd_desc').next('ul').hasClass('active') )
+		if( jQuery(this).parent('.stndrd_ttl').next('.oer_stndrd_desc').next('ul').hasClass('active') )
 		{
 			jQuery(this).attr('src', plgnpth+'images/closed_arrow.png');
-			jQuery(this).parent('.stndrd_ttl').next('.stndrd_desc').next('ul').removeClass('active').children('li').slideToggle();
+			jQuery(this).parent('.stndrd_ttl').next('.oer_stndrd_desc').next('ul').removeClass('active').children('li').slideToggle();
 			e.stopPropagation();
 		}
 		else
 		{
 			jQuery(this).attr('src', plgnpth+'images/open_arrow.png')
-			jQuery(this).parent('.stndrd_ttl').next('.stndrd_desc').next('ul').addClass('active').children('li').slideToggle();
+			jQuery(this).parent('.stndrd_ttl').next('.oer_stndrd_desc').next('ul').addClass('active').children('li').slideToggle();
 			e.stopPropagation();
 		}
 
-		if( jQuery(this).parent('.stndrd_ttl').next('.stndrd_desc').next('ul').next('ul').hasClass('active') )
+		if( jQuery(this).parent('.stndrd_ttl').next('.oer_stndrd_desc').next('ul').next('ul').hasClass('active') )
 		{
-			jQuery(this).parent('.stndrd_ttl').next('.stndrd_desc').next('ul').next('ul').removeClass('active').children('li').slideToggle();
+			jQuery(this).parent('.stndrd_ttl').next('.oer_stndrd_desc').next('ul').next('ul').removeClass('active').children('li').slideToggle();
 			e.stopPropagation();
 		}
 		else
 		{
-			jQuery(this).parent('.stndrd_ttl').next('.stndrd_desc').next('ul').next('ul').addClass('active').children('li').slideToggle();
+			jQuery(this).parent('.stndrd_ttl').next('.oer_stndrd_desc').next('ul').next('ul').addClass('active').children('li').slideToggle();
 			e.stopPropagation();
 		}
 
@@ -47,9 +47,9 @@ jQuery(document).ready(function(){
 		var path = jQuery('.tglimg').attr('data-pluginpath');
 
 		jQuery(this).css('display', 'list-item');
-		jQuery(this).parents('li').last('.main').css('display', 'list-item');
-		jQuery(this).parents('li').last('.main').children('.stndrd_ttl').children('img').attr('src', path+'images/open_arrow.png')
-		jQuery(this).parents('li').last('.main').children('ul').addClass('active slctstandard');
+		jQuery(this).parents('li').last('.oer_main').css('display', 'list-item');
+		jQuery(this).parents('li').last('.oer_main').children('.stndrd_ttl').children('img').attr('src', path+'images/open_arrow.png')
+		jQuery(this).parents('li').last('.oer_main').children('ul').addClass('active oer_slctstandard');
 
 		if(jQuery(this).children('.stndrd_ttl').children('img').attr('src') != 'undefined')
 		{

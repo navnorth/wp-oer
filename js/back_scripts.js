@@ -1,6 +1,10 @@
 jQuery(document).ready(function(e) {
 	jQuery( ".oer_datepicker" ).datepicker();
 	jQuery( ".oer_datepicker" ).datepicker( "option", "showAnim", "slideDown" );
+	
+	jQuery( "input.screenshot_option").on("change",function(){
+		jQuery( "input.screenshot_option" ).not(this).attr("checked",false);
+	});
 
 });
 
@@ -106,6 +110,33 @@ function get_standardlist(ref)
 	});
 }
 
+//Import Resource/Subject Areas
+function processImport(btn, file) {
+	if ( document.getElementById(file).files.length == 0 ) {
+		return false;
+	}
+	if (jQuery('.notice-red').length>0) {
+		jQuery('.notice-red').remove();
+	}
+	if (getFileExtension(document.getElementById(file).value)!=="xls") {
+		jQuery('#'+file).closest('div').find('.resource-upload-notice').html('<span class="notice-red">Import file must be in Excel format with .xls extension</span>');
+		return false;
+	}
+	jQuery(btn).prop('value','Processing...');
+	jQuery('.oer_imprtrwpr .oer-import-row input[type=submit]').prop('disabled',true);
+	return(true); 
+}
+
+//Import Standards
+function importStandards(frm,btn) {
+	if (jQuery(frm).find(':checkbox:checked').length==0){
+		return(false);
+	}
+	jQuery(btn).prop('value','Processing...');
+	jQuery('.oer_imprtrwpr .oer-import-row input[type=submit]').prop('disabled',true);
+	return(true);
+}
+
 //Set image in span
 function setimage(ref)
 {
@@ -191,4 +222,8 @@ function save_image(ref)  // save image as post
 		ref.attr("title","upload");
 		alert("Image Saved Successfully");
     });
+}
+
+function getFileExtension(filename) {
+	return filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
 }

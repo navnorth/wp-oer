@@ -25,7 +25,7 @@ function get_post_ids($cats , $post_type)
 
 	if(!empty($post_type))
 	{
-		$args=array('post_type' => $post_type, 'tax_query' => array(	array('taxonomy' => 'resource-category','terms' => array($cat))), 'post_status' => 'publish', 'posts_per_page' => -1,'fields' => 'ids');
+		$args=array('post_type' => $post_type, 'tax_query' => array(	array('taxonomy' => 'resource-subject-area','terms' => array($cat))), 'post_status' => 'publish', 'posts_per_page' => -1,'fields' => 'ids');
 	}
 	else
 	{
@@ -79,33 +79,33 @@ if(isset($_POST['oer_userasgnctgries']))
 				<input type="hidden" name="user_id" value="<?php echo $_POST['oer_user']; ?>" />
 				<div class="oer_snglfld">
 					<div class="oer_txt">
-						<button type="button" name="Select_All" id="oer_selectall" class="button button-primary" onclick="oer_select_all()">Select All</button>
-						<button type="button" name="UnSelect_All" id="oer_unselectall" class="button button-primary" onclick="oer_unselect_all()">UnSelect All</button>
+						<button type="button" name="Select_All" id="oer_selectall" class="button button-primary" onclick="oer_select_all()"><?php _e("Select All", OER_SLUG); ?></button>
+						<button type="button" name="UnSelect_All" id="oer_unselectall" class="button button-primary" onclick="oer_unselect_all()"><?php _e("UnSelect All", OER_SLUG); ?></button>
 					</div>
 				</div>
 				<div class="oer_snglfld">
 					<div class="oer_txt">
-						Assign Category
+						<?php _e("Assign Category", OER_SLUG); ?>
 					</div>
 					<?php
 						echo '<ul class="oer_cats">';
-							$args = array('hide_empty' => 0, 'taxonomy' => 'resource-category', 'parent' => 0);
+							$args = array('hide_empty' => 0, 'taxonomy' => 'resource-subject-area', 'parent' => 0);
 							$categories= get_categories($args);
 							foreach($categories as $category)
 							{
-								$children = get_term_children($category->term_id, 'resource-category');
+								$children = get_term_children($category->term_id, 'resource-subject-area');
 								if( !empty( $children ) )
 								{
 									echo "<li class='oer_sbstndard has-child'>
 										<div class='stndrd_ttl'>
 											<img src='".OER_URL."images/open_arrow.png' data-pluginpath='".OER_URL."' />
-											<input type='checkbox' ". ischck_cats($asgn_catgrs, $category->term_id) ." name='oer_userasgnctgries[]' value='".$category->term_id ."' onclick='oer_check_all(this)' >".$category->name."</div><div class='stndrd_desc'></div>";
+											<input type='checkbox' ". ischck_cats($asgn_catgrs, $category->term_id) ." name='oer_userasgnctgries[]' value='".$category->term_id ."' onclick='oer_check_all(this)' >".$category->name."</div><div class='oer_stndrd_desc'></div>";
 								}
 								else
 								{
 									echo "<li class='oer_sbstndard'>
 										<div class='stndrd_ttl'>
-											<input type='checkbox' ". ischck_cats($asgn_catgrs, $category->term_id) ." name='oer_userasgnctgries[]' value='".$category->term_id ."' onclick='oer_check_all(this)' >".$category->name."</div><div class='stndrd_desc'></div>";
+											<input type='checkbox' ". ischck_cats($asgn_catgrs, $category->term_id) ." name='oer_userasgnctgries[]' value='".$category->term_id ."' onclick='oer_check_all(this)' >".$category->name."</div><div class='oer_stndrd_desc'></div>";
 								}
 								echo process_cat_tree( $category->term_id, $asgn_catgrs );
 								echo '</li>';
@@ -116,16 +116,16 @@ if(isset($_POST['oer_userasgnctgries']))
 							jQuery('li').children('.stndrd_ttl').children('img').click(function(e)
 							{
 								var plgnpth = jQuery(this).attr('data-pluginpath');
-								if( jQuery(this).parent('.stndrd_ttl').next('.stndrd_desc').next('ul').hasClass('active') )
+								if( jQuery(this).parent('.stndrd_ttl').next('.oer_stndrd_desc').next('ul').hasClass('active') )
 							   {
 									jQuery(this).attr('src', plgnpth+'images/open_arrow.png');
-									jQuery(this).parent('.stndrd_ttl').next('.stndrd_desc').next('ul').removeClass('active').children('li').slideToggle();
+									jQuery(this).parent('.stndrd_ttl').next('.oer_stndrd_desc').next('ul').removeClass('active').children('li').slideToggle();
 									e.stopPropagation();
 							   }
 							   else
 								  {
 									jQuery(this).attr('src', plgnpth+'images/closed_arrow.png')
-									jQuery(this).parent('.stndrd_ttl').next('.stndrd_desc').next('ul').addClass('active').children('li').slideToggle();
+									jQuery(this).parent('.stndrd_ttl').next('.oer_stndrd_desc').next('ul').addClass('active').children('li').slideToggle();
 									e.stopPropagation();
 								  }
 							});
@@ -140,7 +140,7 @@ if(isset($_POST['oer_userasgnctgries']))
 			{?>
 
 				<div class="oer_snglfld oer_hdngsngl">
-					Assign Categories
+					<?php _e("Assign Categories", OER_SLUG); ?>
 				</div>
 				<?php
 					 if($_POST["oer_usrtyp"] == 'editor')
@@ -154,7 +154,7 @@ if(isset($_POST['oer_userasgnctgries']))
 				?>
 				<div class="oer_snglfld">
 					<div class="oer_txt">
-						Select User
+						<?php _e("Select User", OER_SLUG); ?>
 					</div>
 					<div class="oer_fld">
 						<select name="oer_user">
@@ -175,15 +175,15 @@ if(isset($_POST['oer_userasgnctgries']))
 			else
 			{?>
 				<div class="oer_snglfld oer_hdngsngl">
-					Assign Categories
+					<?php _e("Assign Categories", OER_SLUG); ?>
 				</div>
 				<div class="oer_snglfld">
 					<div class="oer_txt">
-						Select User Type
+						<?php _e("Select User Type", OER_SLUG); ?>
 					</div>
 					<div class="oer_fld">
-						<div class="radio_btn"><input type="radio" name="oer_usrtyp" value="editor" />Editor</div>
-						<div class="radio_btn"><input type="radio" name="oer_usrtyp" value="author" />Author</div>
+						<div class="radio_btn"><input type="radio" name="oer_usrtyp" value="editor" /><?php _e("Editor", OER_SLUG); ?></div>
+						<div class="radio_btn"><input type="radio" name="oer_usrtyp" value="author" /><?php _e("Author", OER_SLUG); ?></div>
 					</div>
 				</div>
 
@@ -192,7 +192,7 @@ if(isset($_POST['oer_userasgnctgries']))
 			?>
 			<div class="oer_snglfld">
 				<input type="hidden" value="" name="hdnuser" />
-            	<input type="submit" name="" value="Submit" class="button button-primary"/>
+            	<input type="submit" name="" value="<?php _e("Submit", OER_SLUG); ?>" class="button button-primary"/>
 			</div>
 		</form>
 
@@ -205,7 +205,7 @@ if(isset($_POST['oer_userasgnctgries']))
 	$next = get_categories($args);
 	if( $next )
 	{
-		echo '<ul class="child">';
+		echo '<ul class="oer_child">';
 		foreach( $next as $cat )
 		{
 			 echo '<li><input '. ischck_cats($asgn_catgrs, $cat->term_id) .' type="checkbox" onclick="oer_check_myChild(this)" name="oer_userasgnctgries[]" value="'.$cat->term_id .'"><span class="">' . $cat->name.'</span>';
@@ -217,7 +217,7 @@ if(isset($_POST['oer_userasgnctgries']))
 }*/
 function process_cat_tree($categoryid, $asgn_catgrs )
 {
- 	$args = array('hide_empty' => 0, 'taxonomy' => 'resource-category','parent' => $categoryid);
+ 	$args = array('hide_empty' => 0, 'taxonomy' => 'resource-subject-area','parent' => $categoryid);
 	$catchilds = get_categories($args);
 
 	if(!empty($catchilds))
@@ -225,19 +225,19 @@ function process_cat_tree($categoryid, $asgn_catgrs )
 		echo '<ul class="oer_cats">';
 		foreach($catchilds as $catchild)
 		{
-			$children = get_term_children($catchild->term_id, 'resource-category');
+			$children = get_term_children($catchild->term_id, 'resource-subject-area');
 			if( !empty( $children ) )
 			{
 				echo "<li class='oer_sbstndard has-child'>
 						<div class='stndrd_ttl'>
 							<img src='".OER_URL."images/open_arrow.png' data-pluginpath='".OER_URL."' />
-							<input type='checkbox' ". ischck_cats($asgn_catgrs, $catchild->term_id) ." name='oer_userasgnctgries[]' value='".$catchild->term_id ."' onclick='oer_check_all(this)' >".$catchild->name."</div><div class='stndrd_desc'></div>";
+							<input type='checkbox' ". ischck_cats($asgn_catgrs, $catchild->term_id) ." name='oer_userasgnctgries[]' value='".$catchild->term_id ."' onclick='oer_check_all(this)' >".$catchild->name."</div><div class='oer_stndrd_desc'></div>";
 			}
 			else
 			{
 				echo "<li class='oer_sbstndard'>
 						<div class='stndrd_ttl'>
-							<input type='checkbox' ". ischck_cats($asgn_catgrs, $catchild->term_id) ." name='oer_userasgnctgries[]' value='".$catchild->term_id ."' onclick='oer_check_all(this)' >".$catchild->name."</div><div class='stndrd_desc'></div>";
+							<input type='checkbox' ". ischck_cats($asgn_catgrs, $catchild->term_id) ." name='oer_userasgnctgries[]' value='".$catchild->term_id ."' onclick='oer_check_all(this)' >".$catchild->name."</div><div class='oer_stndrd_desc'></div>";
 			}
 
 			process_cat_tree( $catchild->term_id, $asgn_catgrs );

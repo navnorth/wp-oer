@@ -18,16 +18,16 @@ if($_REQUEST["task"] == 'get_standards')
 					jQuery('li').children('.stndrd_ttl').children('img').click(function(e)
 					{
 						var plgnpth = jQuery(this).attr('data-pluginpath');
-						if( jQuery(this).parent('.stndrd_ttl').next('.stndrd_desc').next('ul').hasClass('active') )
+						if( jQuery(this).parent('.stndrd_ttl').next('.oer_stndrd_desc').next('ul').hasClass('active') )
 					   {
 							jQuery(this).attr('src', plgnpth+'images/closed_arrow.png');
-							jQuery(this).parent('.stndrd_ttl').next('.stndrd_desc').next('ul').removeClass('active').children('li').slideToggle();
+							jQuery(this).parent('.stndrd_ttl').next('.oer_stndrd_desc').next('ul').removeClass('active').children('li').slideToggle();
 							e.stopPropagation();
 					   }
 					   else
 						  {
 							jQuery(this).attr('src', plgnpth+'images/open_arrow.png')
-							jQuery(this).parent('.stndrd_ttl').next('.stndrd_desc').next('ul').addClass('active').children('li').slideToggle();
+							jQuery(this).parent('.stndrd_ttl').next('.oer_stndrd_desc').next('ul').addClass('active').children('li').slideToggle();
 							e.stopPropagation();
 						  }
 					});
@@ -54,7 +54,7 @@ function get_child($id)
 							<img src='".OER_URL."images/closed_arrow.png' data-pluginpath='".OER_URL."' />
 							<input type='checkbox' name='oer_standard[]' value='oer_sub_standards-".$result['id']."' onclick='oer_check_all(this)' >
 							".$result['standard_title']."
-						</div><div class='stndrd_desc'></div>";
+						</div><div class='oer_stndrd_desc'></div>";
 
 						$id = 'sub_standards-'.$result['id'];
 						get_child($id);
@@ -89,7 +89,7 @@ function get_thrchild($id )
 			  echo "<input type='checkbox' name='oer_standard[]' value='oer_standard_notation-".$result['id'] ."' onclick='oer_check_myChild(this)'>
 			 	   ". $result['standard_notation']."
 				   </div>
-				   <div class='stndrd_desc'> ". $result['description']." </div>";
+				   <div class='oer_stndrd_desc'> ". $result['description']." </div>";
 
 				   get_thrchild($id);
 

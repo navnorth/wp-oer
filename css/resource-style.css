@@ -3,37 +3,44 @@
  * Resource Page Stylesheet
  * Version : 0.1
  **/
-.cntnr { width:100%; margin:0 auto; }
-.sngl_resource_wrapper { width: 100%; float: left; margin-bottom: 10px; }
-.rsrclftcntr-img { float: left; width: 42%; margin-right: 35px; }
-.rsrcrghtcntr { float: left; width: 54%; padding-top: 38px; }
-.sngl-rsrc-url { float: left; font-size: 26px; padding: 0 0 10px 0; line-height: 28px; text-align: left; width: 100%; }
-.sngl-rsrc-url a { text-decoration: none; color: #333; }
-.sngl-rsrc-img { position: relative; border: 2px solid #dddddd; float: left; width: 100%; }
-.sngl-rsrc-img:hover { border: 2px solid #444; }
-.sngl-rsrc-img .featureimg { width: auto; float: left; }
-.sngl-rsrc-img a { color: #444; text-decoration: none; }
-.sngl-rsrc-img .rsrcurl { background: none repeat scroll 0 0 #a8aaab; bottom: 0; left: 0; right: 0; padding: 10px; position: absolute; width: auto; color: #0c5598; font-style: italic; text-align: right; font-size:1.15rem; }
-.rsrcrghtcntr .rsrcctgries { float: left; margin: 0px; width: 100%; padding-bottom: 5px; }
-.rsrcctgries a { background: none repeat scroll 0 0 #085394; border: 1px solid #000000; color: #ffffff;float: left; padding: 10px 10px; text-decoration: none; width: auto; margin: 0 10px 7px 0; font-weight: bold; }
-.rsrcctgries a:hover { background: none repeat scroll 0 0 #06457C; }
-.sngl-rsrc-dscrptn { float: left; font-size: 15px; line-height: 20px; width: 100%; padding-bottom: 15px; }
-.sngl_resource_wrapper h1 { font-weight: bold; margin-bottom: 8px; font-size: 22px; color: #000; }
-.cbxl { float: left; margin-bottom: 5px; width: 100%; }
-.cbxl > h3 { margin-bottom: 5px; font-weight: bold; font-size: 14px; width: auto; float: left; margin-right: 15px; }
-.view { float: left; font-size: 15px; }
-.cbxl .view a { color: #1d57a8; text-decoration: underline; width: auto; font-size: 15px; vertical-align:top; }
-.mediaType { margin-top: 10px; }
-.rsrckeyword { width: 100%; float: left; margin-top: 25px; }
-.rsrckeyword .meta_container span a:hover {  background: none repeat scroll 0 0 #777; }
-.rsrckeyword h3 { float: left; font-size: 20px; font-weight: bold; line-height: 22px; margin-bottom: 10px;margin-right: 15px; width: 100%; }
-.rsrckeyword .meta_container { float: left; font-size: 15px; margin: 0; padding-left: 0; width: 100%; }
-.rsrckeyword .meta_container span { width: auto; float: left; margin: 0 10px 7px 0; padding: 0px; border: medium none; border-radius: 0px; font-size:14px; }
-.rsrckeyword .meta_container span a { background: none repeat scroll 0 0 #999999; border: 2px solid #085394; color: #ffffff; float: left; font-weight: bold; padding: 6px 12px; text-decoration: none; width: auto; }
-.sngl-rsrc-meta { width: 100%; float: left; margin-top: 30px; }
-.rsrclftcntr { float: left; width: 50%; }
-
+.oer-cntnr { width:100%; margin:0 auto; overflow:hidden; }
+.oer_sngl_resource_wrapper { width: 100%; margin-bottom: 10px; overflow:hidden; }
+.oer-rsrclftcntr-img { float: left; width: 42%; /*margin-right: 35px;*/ }
+.oer-rsrcrghtcntr { float: left; width: 54%; padding: 0 0 0 15px; box-sizing: border-box; }
+.oer-sngl-rsrc-url { float: left; font-size: 26px; padding: 0 0 10px 0; line-height: 28px; text-align: left; width: 100%; }
+.oer-sngl-rsrc-url a { text-decoration: none; color: #333; }
+.oer-sngl-rsrc-img { position: relative; border: 2px solid #dddddd; float: left; width: 100%; }
+.oer-sngl-rsrc-img:hover { border: 2px solid #444; }
+.oer-sngl-rsrc-img .oer-featureimg { width: auto; float: left; }
+.oer-sngl-rsrc-img a { color: #444; text-decoration: none; }
+.oer-sngl-rsrc-img .oer-rsrcurl { background: none repeat scroll 0 0 #a8aaab; bottom: 0; left: 0; right: 0; padding: 10px; position: absolute; width: auto; /*color: #0c5598; font-style: italic;*/ text-align: right; /*font-size:1.15rem;*/ white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.oer-rsrcrghtcntr .oer-rsrcctgries { float: left; margin: 0px; width: 100%; padding-bottom: 5px; }
+.oer-rsrcctgries a { /* background: none repeat scroll 0 0 #085394; border: 1px solid #000000; color: #ffffff;float: left;*/ padding: 10px 10px; /*text-decoration: none;*/ width: auto; margin: 0 10px 7px 0; /*font-weight: bold;*/ }
+.oer-rsrcctgries a:hover { /*background: none repeat scroll 0 0 #06457C;*/ }
+.oer-sngl-rsrc-dscrptn { float: left; font-size: 15px; line-height: 20px; width: 100%; padding-bottom: 15px; }
+.oer_sngl_resource_wrapper h1 { font-weight: bold; margin-bottom: 8px; font-size: 22px; color: #000; }
+.oer-cbxl { float: left; margin-bottom: 5px; width: 100%; }
+.oer-cbxl > h3 { margin-top:3px; margin-bottom: 5px; font-weight: bold; font-size: 14px; width: auto; float: left; margin-right: 15px; }
+.oer-view { float: left; /*font-size: 15px;*/ }
+.oer-cbxl .oer-view a { color: #1d57a8; text-decoration: underline; width: auto; font-size: 15px; vertical-align:top; }
+.oer-mediaType { margin-top: 0px; }
+.oer-rsrckeyword { width: 100%; float: left; margin-top: 25px; }
+.oer-rsrckeyword .oer_meta_container span a:hover {  /*background: none repeat scroll 0 0 #777;*/ }
+.oer-rsrckeyword h3 { margin-top:0; float: left; font-size: 20px; font-weight: bold; line-height: 22px; margin-bottom: 10px;margin-right: 15px; width: 100%; }
+.oer-rsrckeyword .oer_meta_container { float: left; font-size: 15px; margin: 0; padding-left: 0; width: 100%; }
+.oer-rsrckeyword .oer_meta_container span,
+.oer-rsrcrghtcntr .oer-rsrcctgries span { width: auto; float: left; margin: 0 10px 7px 0; padding: 0px; border: medium none; border-radius: 0px; font-size:14px; }
+.oer-rsrckeyword .oer_meta_container span a,
+.oer-rsrcrghtcntr .oer-rsrcctgries span a{ /*background: none repeat scroll 0 0 #999999; border: 2px solid #085394; color: #ffffff; font-weight: bold;*/ float: left; padding: 6px 12px; /*text-decoration: none; width: auto;*/ }
+.oer-sngl-rsrc-meta { width: 100%; float: left; margin-top: 30px; }
+.oer-rsrclftcntr { float: left; width: 50%; }
+.oer-sngl-rsrc-dscrptn h2 { font-size:22px; font-weight:bold; margin:10px 0; color:#000000; }
+.oer_sngl_resource_wrapper h1 { font-size:24px; font-weight:bold; }
+.oer_sngl_resource_wrapper h3 { font-size:20px; }
+.oer_sngl_resource_wrapper h4 { margin-top: 0; float: left; font-size: 15px; font-weight: bold; line-height: 2em; margin-bottom: 10px; margin-right: 15px; width: auto; }
+.oer-rsrcctgries ul li.cat-item { list-style:none; display:inline-block; }
+.oer-featureimg img { width:100%; }
 /** For Mobile styles **/
 @media screen and (min-width: 960px) {
-    .sngl-rsrc-dscrptn { width: 100%; }
+    .oer-sngl-rsrc-dscrptn { width: 100%; }
 }
