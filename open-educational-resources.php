@@ -1,13 +1,13 @@
 <?php
 /*
  Plugin Name: OER Management
- Plugin URI: http://www.navigationnorth.com/wordpress/oer-management
- Description: Open Educational Resource management and curation, metadata publishing, and alignment to Common Core State Standards. Developed in collaboration with Monad Infotech (http://monadinfotech.com)
- Version: 0.2.7
+ Plugin URI: https://www.wp-oer.com
+ Description: Open Educational Resource management and curation, metadata publishing, and alignment to Common Core State Standards.
+ Version: 0.3.0
  Author: Navigation North
- Author URI: http://www.navigationnorth.com
+ Author URI: https://www.navigationnorth.com
 
- Copyright (C) 2014 Navigation North
+ Copyright (C) 2017 Navigation North
 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ define( 'OER_SLUG','open-educational-resource' );
 define( 'OER_FILE',__FILE__);
 // Plugin Name and Version
 define( 'OER_PLUGIN_NAME', 'WordPress OER Management Plugin' );
-define( 'OER_VERSION', '0.2.7' );
+define( 'OER_VERSION', '0.3.0' );
 
 include_once(OER_PATH.'includes/oer-functions.php');
 include_once(OER_PATH.'includes/init.php');
@@ -119,7 +119,7 @@ function create_csv_import_table()
 //Enqueue activation script
 function enqueue_activation_script() {
 	if ( is_admin()) {
-		
+
 		// Adds our JS file to the queue that WordPress will load
 		wp_enqueue_script( 'wp_ajax_oer_admin_script', OER_URL . 'js/oer-admin.js', array( 'jquery' ), null, true );
 
@@ -132,9 +132,9 @@ function enqueue_activation_script() {
 
 add_action( 'wp_ajax_oer_activation_notice', 'dismiss_activation_notice' );
 function dismiss_activation_notice() {
-	
+
 	update_option('setup_notify', false);
-	
+
 	// Send success message
 	wp_send_json( array(
 		'status' => 'success',
@@ -235,14 +235,14 @@ function oer_get_template_hierarchy( $template ) {
 	//get template file
 	$template_slug = rtrim( $template , '.php' );
 	$template = $template_slug . '.php';
-	
+
 	//Check if custom template exists in theme folder
 	if ($theme_file = locate_template( array( 'oer_template/' . $template ) )) {
 		$file = $theme_file;
 	} else {
 		$file = OER_PATH . '/oer_template/' . $template;
 	}
-	
+
 	return apply_filters( 'oer_repl_template' . $template , $file  );
 }
 
@@ -255,18 +255,18 @@ add_filter( 'template_include' , 'oer_template_choser' );
  * Function to choose template for the resource post type
  **/
 function oer_template_choser( $template ) {
-	
+
 	//Post ID
 	$post_id = get_the_ID();
-	
+
 	if ( get_post_type($post_id) != 'resource' ) {
 		return $template;
 	}
-	
+
 	if ( is_single($post_id) ){
 		return oer_get_template_hierarchy('single-resource');
 	}
-	
+
 }
 
 /**
@@ -279,13 +279,13 @@ add_filter( 'template_include' , 'oer_category_template' );
  **/
 function oer_category_template( $template ) {
 	global $wp_query;
-	
+
 	//Post ID
 	$_id = $wp_query->get_queried_object_id();
-	
+
 	// Get Current Object if it belongs to Resource Category taxonomy
 	$resource_term = get_term_by( 'id' , $_id , 'resource-subject-area' );
-	
+
 	//Check if the loaded resource is a category
 	if ($resource_term && !is_wp_error( $resource_term )) {
 		return oer_get_template_hierarchy('resource-subject-area');
@@ -293,7 +293,7 @@ function oer_category_template( $template ) {
 		return $template;
 	}
  }
- 
+
  /**
  * Add filter to use plugin default category template
  **/
@@ -304,12 +304,12 @@ add_filter( 'template_include' , 'oer_tag_template' );
  **/
 function oer_tag_template( $template ) {
 	global $wp_query;
-	
+
 	//Post ID
 	$_id = $wp_query->get_queried_object_id();
-	
+
 	$resource_tag = is_tag($_id);
-	
+
 	//Check if the loaded resource is a category
 	if ($resource_tag && !is_wp_error( $resource_tag )) {
 		return oer_get_template_hierarchy('tag-resource');
@@ -317,15 +317,15 @@ function oer_tag_template( $template ) {
 		return $template;
 	}
  }
- 
+
 add_action( 'pre_get_posts', 'oer_cpt_tags' );
 function oer_cpt_tags( $query ) {
-	
+
 	if ( $query->is_tag() && $query->is_main_query() ) {
 	    $query->set( 'post_type', array( 'post', 'resource' ) );
 	}
 }
- 
+
 function query_post_type($query) {
    //Limit to main query, tag queries and frontend
    if($query->is_main_query() && $query->is_tag() ) {
@@ -335,7 +335,7 @@ function query_post_type($query) {
    }
 
 }
- 
+
  /**
   * Load Resource Categories on home page
   **/
@@ -354,27 +354,27 @@ function query_post_type($query) {
 		'number'                   => '',
 		'taxonomy'                 => 'resource-category',
 		'pad_counts'               => false );
-			
+
 	$categories = get_categories( $args );
-	
+
 	$home_content =  '<div class="oer-cntnr"><div class="oer-ctgry-cntnr row">';
 			$cnt = 1;
 			$lepcnt = 1;
-			
-			foreach($categories as $category)	
+
+			foreach($categories as $category)
 			{
 				$getimage = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix.'postmeta'." WHERE meta_key='category_image' AND meta_value='$category->term_id'");
 				$getimage_hover = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix.'postmeta'." WHERE meta_key='category_image_hover' AND meta_value='$category->term_id'");
 				$icn_guid = "";
 				$icn_hover_guid = "";
-				
+
 				if(empty($getimage) && empty($getimage_hover)){
-					
+
 					$attach_icn = array();
 					$attach_icn_hover = array();
 					$icn_guid = get_default_category_icon($category->name);
 					$icn_hover_guid = get_default_category_icon($category->name, true);
-					
+
 				} else {
 					//Checks if icon is empty
 					if (!empty($getimage)) {
@@ -383,18 +383,18 @@ function query_post_type($query) {
 					} else {
 						$icn_guid = get_default_category_icon($category->name);
 					}
-					
+
 					if (!empty($getimage_hover)) {
 						$attach_icn_hover = get_post($getimage_hover[0]->post_id);
-						$icn_hover_guid = $attach_icn_hover->guid;	
+						$icn_hover_guid = $attach_icn_hover->guid;
 					} else {
 						$icn_hover_guid = get_default_category_icon($category->name, true);
 					}
 				}
-				
+
 				$count = get_oer_post_count($category->term_id, "resource-category");
 				$count = $count + $category->count;
-					
+
 				$home_content .= '<div class="oer_snglctwpr col-md-3"><div class="oer-cat-div" data-ownback="'.get_template_directory_uri().'/img/top-arrow.png" onMouseOver="changeonhover(this)" onMouseOut="changeonout(this);" onclick="togglenavigation(this);" data-id="'.$cnt.'" data-class="'.$lepcnt.'" data-normalimg="'.$icn_guid.'" data-hoverimg="'.$icn_hover_guid.'">
 					<div class="oer-cat-icn" style="background: url('.$icn_guid.') no-repeat scroll center center; "></div>
 					<div class="oer-cat-txt-btm-cntnr">
@@ -402,7 +402,7 @@ function query_post_type($query) {
 							<li><label class="oer-mne-sbjct-ttl" ><a href="'. site_url() .'/resource-category/'. $category->slug .'">'. $category->name .'</a></label><span>'. $count .'</span></li>
 						</ul>
 					</div>';
-					
+
 					$children = get_term_children($category->term_id, 'resource-category');
 					if( !empty( $children ) )
 					{
@@ -415,73 +415,73 @@ function query_post_type($query) {
 				//}
 			$cnt++;
 			$home_content .= '</div>';
-			
+
 		}
 	$home_content .= '</div></div>';
-	
+
 	if (is_home() || is_front_page()) {
 		if (!$content)
 			$content = $home_content;
-		else 
+		else
 			$content .= $home_content;
 	}
 	return $content;
  }*/
- 
+
  /** get default category icon **/
  function get_default_category_icon($category_name, $hover = false) {
-	
+
 	$default_icon_path = "";
 	$default_icon_dir = OER_URL . "images/category_icons/";
 	$default_icon_ext = ".png";
 	$default_icon_name = "";
-	
+
 	switch($category_name){
-		
+
 		case "Career and Technical Education":
 			$default_icon_name = "cte";
 			break;
-		
+
 		case "Educational Leadership":
 			$default_icon_name = "edu-leadership";
 			break;
-		
+
 		case "English Language Arts":
 			$default_icon_name = "language";
 			break;
-		
+
 		case "English Language Development":
 			$default_icon_name = "eng-lng-dev";
 			break;
-		
+
 		case "History/Social Studies":
 			$default_icon_name = "us-hstry";
 			break;
-		
+
 		case "Math":
 			$default_icon_name = "math";
 			break;
-		
+
 		case "Physical Education":
 			$default_icon_name = "phy-edu";
 			break;
-		
+
 		case "Science":
 			$default_icon_name = "science";
 			break;
-		
+
 		case "STEM":
 			$default_icon_name = "stem";
 			break;
-		
+
 		case "Visual and Performing Arts":
 			$default_icon_name = "arts1";
 			break;
-		
+
 		case "World Languages":
 			$default_icon_name = "world-lang";
 			break;
-		
+
 		default:
 			$default_icon_path = "";
 			break;
@@ -492,7 +492,7 @@ function query_post_type($query) {
 	return $default_icon_path;
  }
 
-// Add scripts and styles to frontend 
+// Add scripts and styles to frontend
 add_action('wp_enqueue_scripts', 'oer_front_scripts');
 function oer_front_scripts()
 {
@@ -514,7 +514,7 @@ function oer_settings_page() {
 		'general_settings_callback',
 		'oer_settings'
 	);
-	
+
 	//Add Settings Fields - Assign Page Template
 	/*add_settings_field(
 		'oer_category_template',
@@ -528,7 +528,7 @@ function oer_settings_page() {
 			'description' => __('Assign page template to subject area pages', OER_SLUG)
 		)
 	);*/
-	
+
 	//Add Settings field for Disable Screenshots
 	add_settings_field(
 		'oer_disable_screenshots',
@@ -544,7 +544,7 @@ function oer_settings_page() {
 			'value' => '1'
 		)
 	);
-	
+
 	//Add Settings field for Server Side Screenshots
 	add_settings_field(
 		'oer_enable_screenshot',
@@ -560,7 +560,7 @@ function oer_settings_page() {
 			'value' => '1'
 		)
 	);
-	
+
 	//Add Settings field for Using XvFB
 	add_settings_field(
 		'oer_use_xvfb',
@@ -575,7 +575,7 @@ function oer_settings_page() {
 			'name' =>  __('Use xvfb -- typically necessary on Linux installations', OER_SLUG)
 		)
 	);
-	
+
 	//Set Path for Python Installation
 	add_settings_field(
 		'oer_python_install',
@@ -590,7 +590,7 @@ function oer_settings_page() {
 			'title' => __('Python executable', OER_SLUG)
 		)
 	);
-	
+
 	//Set Path for Python Executable Script
 	add_settings_field(
 		'oer_python_path',
@@ -605,7 +605,7 @@ function oer_settings_page() {
 			'title' => __('Python Screenshot script', OER_SLUG)
 		)
 	);
-	
+
 	//Add Settings field for Disable Screenshots
 	add_settings_field(
 		'oer_external_screenshots',
@@ -621,7 +621,7 @@ function oer_settings_page() {
 			'value' => '1'
 		)
 	);
-	
+
 	//Set Path for Python Executable Script
 	add_settings_field(
 		'oer_service_url',
@@ -633,11 +633,11 @@ function oer_settings_page() {
 			'uid' => 'oer_service_url',
 			'type' => 'textbox',
 			'indent' => true,
-			'title' => __("Service URL", OER_SLUG), 
+			'title' => __("Service URL", OER_SLUG),
 			'description' => __('use $url for where the Resource URL parameter should be placed', OER_SLUG)
 		)
 	);
-	
+
 	register_setting( 'oer_general_settings' , 'oer_disable_screenshots' );
 	register_setting( 'oer_general_settings' , 'oer_enable_screenshot' );
 	register_setting( 'oer_general_settings' , 'oer_use_xvfb' );
@@ -649,7 +649,7 @@ function oer_settings_page() {
 
 //General settings callback
 function general_settings_callback() {
-	
+
 }
 
 //Initialize Style Settings Tab
@@ -662,7 +662,7 @@ function oer_styles_settings(){
 		'styles_settings_callback',
 		'styles_settings_section'
 	);
-	
+
 	//Add Settings field for Importing Bootstrap CSS & JS Libraries
 	add_settings_field(
 		'oer_use_bootstrap',
@@ -677,7 +677,7 @@ function oer_styles_settings(){
 			'description' => __('uncheck if your WP theme already included Bootstrap', OER_SLUG)
 		)
 	);
-	
+
 	//Add Settings field for displaying Subject Area sidebar
 	add_settings_field(
 		'oer_display_subject_area',
@@ -694,7 +694,7 @@ function oer_styles_settings(){
 			'description' => __('Lists all subject areas in left column of Subject Area pages - may conflict with themes using left navigation.', OER_SLUG)
 		)
 	);
-	
+
 	//Add Settings field for hiding Page title on Subject Area pages
 	add_settings_field(
 		'oer_hide_subject_area_title',
@@ -708,7 +708,7 @@ function oer_styles_settings(){
 			'name' =>  __('Subject Area pages', OER_SLUG),
 			'pre_html' => '<h3>Hide Page Titles</h3><p class="description hide-description">Some themes have built-in display of page titles.</p>'		)
 	);
-	
+
 	//Add Settings field for hiding Page title on Resource pages
 	add_settings_field(
 		'oer_hide_resource_title',
@@ -723,7 +723,7 @@ function oer_styles_settings(){
 			'class' => 'hide-title-setting'
 		)
 	);
-	
+
 	//Add Settings field for Importing Bootstrap CSS & JS Libraries
 	add_settings_field(
 		'oer_additional_css',
@@ -738,7 +738,7 @@ function oer_styles_settings(){
 			'inline_description' => __('easily customize the look and feel with your own CSS', OER_SLUG)
 		)
 	);
-	
+
 	register_setting( 'oer_styles_settings' , 'oer_use_bootstrap' );
 	register_setting( 'oer_styles_settings' , 'oer_display_subject_area' );
 	register_setting( 'oer_styles_settings' , 'oer_hide_subject_area_title' );
@@ -748,7 +748,7 @@ function oer_styles_settings(){
 
 //Styles Setting Callback
 function styles_settings_callback(){
-	
+
 }
 
 //Initialize Setup Settings Tab
@@ -761,7 +761,7 @@ function oer_setup_settings(){
 		'setup_settings_callback',
 		'setup_settings_section'
 	);
-	
+
 	//Add Settings field for Importing Example Set of Resources
 	add_settings_field(
 		'oer_import_sample_resources',
@@ -776,7 +776,7 @@ function oer_setup_settings(){
 			'description' => __('A collection of 40 Open Education Resources has been provided as a base - you can easily remove these later.', OER_SLUG)
 		)
 	);
-	
+
 	//Add Settings field for Import Default Subject Areas
 	add_settings_field(
 		'oer_import_default_subject_areas',
@@ -793,7 +793,7 @@ function oer_setup_settings(){
 			'description' => __('A general listing of the most common subject areas.', OER_SLUG)
 		)
 	);
-	
+
 	//Add Settings field for Importing Common Core State Standards
 	add_settings_field(
 		'oer_import_ccss',
@@ -808,7 +808,7 @@ function oer_setup_settings(){
 			'description' => __('Enable use of CCSS as an optional alignment option for resources.', OER_SLUG)
 		)
 	);
-	
+
 	//Add Settings field for Importing Bootstrap CSS & JS Libraries
 	add_settings_field(
 		'oer_use_bootstrap',
@@ -823,7 +823,7 @@ function oer_setup_settings(){
 			'description' => __('uncheck if your WP theme already included Bootstrap', OER_SLUG)
 		)
 	);
-	
+
 	register_setting( 'oer_setup_settings' , 'oer_import_sample_resources' );
 	register_setting( 'oer_setup_settings' , 'oer_import_default_subject_areas' );
 	register_setting( 'oer_setup_settings' , 'oer_import_ccss' );
@@ -832,7 +832,7 @@ function oer_setup_settings(){
 
 //Setup Setting Callback
 function setup_settings_callback(){
-	
+
 }
 
 
@@ -846,7 +846,7 @@ function oer_import_standards(){
 		'import_standards_callback',
 		'import_standards_section'
 	);
-	
+
 	//Add Common Core Mathematics field
 	add_settings_field(
 		'oer_common_core_mathematics',
@@ -860,7 +860,7 @@ function oer_import_standards(){
 			'name' =>  __('Common Core Mathematics', OER_SLUG)
 		)
 	);
-	
+
 	//Add Common Core English Language Arts
 	add_settings_field(
 		'oer_common_core_english',
@@ -874,13 +874,13 @@ function oer_import_standards(){
 			'name' =>  __('Common Core English Language Arts', OER_SLUG)
 		)
 	);
-	
+
 	register_setting( 'oer_import_standards' , 'oer_common_core_mathematics' );
 	register_setting( 'oer_import_standards' , 'oer_common_core_english' );
 }
 
 function import_standards_callback() {
-	
+
 }
 
 function setup_settings_field( $arguments ) {
@@ -893,16 +893,16 @@ function setup_settings_field( $arguments ) {
 	if (isset($arguments['indent'])){
 		echo '<div class="indent">';
 	}
-	
+
 	if (isset($arguments['class'])) {
 		$class = $arguments['class'];
 		$class = " class='".$class."' ";
 	}
-	
+
 	if (isset($arguments['pre_html'])) {
 		echo $arguments['pre_html'];
 	}
-	
+
 	switch($arguments['type']){
 		case "textbox":
 			$size = 'size="50"';
@@ -921,7 +921,7 @@ function setup_settings_field( $arguments ) {
 				$selected = "";
 				$value = 1;
 			}
-			
+
 			echo '<input name="'.$arguments['uid'].'" id="'.$arguments['uid'].'" '.$class.' type="'.$arguments['type'].'" value="' . $value . '" ' . $size . ' ' .  $selected . ' /><label for="'.$arguments['uid'].'"><strong>'.$arguments['name'].'</strong></label>';
 			break;
 		case "textarea":
@@ -944,7 +944,7 @@ function setup_settings_field( $arguments ) {
 	if( isset($arguments['description']) ){
 		printf( '<p class="description">%s</p>', $arguments['description'] );
 	}
-	
+
 	if (isset($arguments['indent'])){
 		echo '</div>';
 	}
@@ -968,7 +968,7 @@ add_filter( 'body_class', 'add_body_class');
 function add_body_class($classes) {
 	$cur_theme = wp_get_theme();
 	$theme_class = $cur_theme->get('Name');
-	
+
 	return array_merge( $classes, array( str_replace( ' ', '-', strtolower($theme_class) ) ) );
 }
 
@@ -986,33 +986,33 @@ function load_more_resources() {
 				'paged' => $page_num,
 				'tax_query' => array(array('taxonomy' => 'resource-subject-area','terms' => $terms))
 				);
-	
+
 		$args = apply_sort_args($args);
-		
+
 		$postquery = get_posts($args);
-		
+
 		if(!empty($postquery)) {
 			foreach($postquery as $post) {
 
 				$w_image = true;
 				//set new_image_url to empty to reset on every loop
 				$new_image_url = "";
-				
+
 				$img_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ) , "full" );
-				
+
 				if (empty($img_url)) {
 					$w_image = false;
 					$new_image_url = OER_URL . 'images/default-icon-220x180.png';
 				}
-				
+
 				$title =  $post->post_title;
 				$content =  $post->post_content;
 				$ellipsis = "...";
 				if (strlen($post->post_content)<180)
 					$ellipsis = "";
-					
+
 				$content = substr($content, 0, 180).$ellipsis;
-				
+
 				$img_path = $new_img_path = parse_url($img_url[0]);
 				$img_path = $_SERVER['DOCUMENT_ROOT'] . $img_path['path'];
 				if(!empty($img_url))
@@ -1022,7 +1022,7 @@ function load_more_resources() {
 					if ( !is_wp_error($image_editor) ) {
 						$new_image = $image_editor->resize( 220, 180, true );
 						$suffix = "220x180";
-						
+
 						//Additional info of file
 						$info = pathinfo( $img_path );
 						$dir = $info['dirname'];
@@ -1031,7 +1031,7 @@ function load_more_resources() {
 						$dest_file_name = "{$dir}/{$name}-{$suffix}.{$ext}";
 						$new_port = ($new_img_path['port']==80)?'':':'.$new_img_path['port'];
 						$new_image_url = str_replace($_SERVER['DOCUMENT_ROOT'], "{$new_img_path['scheme']}://{$new_img_path['host']}{$new_port}", $dest_file_name);
-						
+
 						if ( !file_exists($dest_file_name) ){
 							$image_file = $image_editor->save($dest_file_name);
 						}
@@ -1063,9 +1063,9 @@ function sort_resources(){
 	if (isset($_POST["sort"])) {
 
 		$_SESSION['resource_sort'] = $_POST['sort'];
-		
+
 		$terms = json_decode($_POST["subjects"]);
-		
+
 		$args = array(
 				'post_type' => 'resource',
 				'posts_per_page' => -1,
@@ -1074,9 +1074,9 @@ function sort_resources(){
 				);
 
 		$resources = get_posts($args);
-		
+
 		$post_count = count($resources);
-		
+
 		$args = array(
 				'post_type' => 'resource',
 				'posts_per_page' => 20,
@@ -1100,11 +1100,11 @@ function sort_resources(){
 				'post_status' => 'publish',
 				'tax_query' => array(array('taxonomy' => 'resource-subject-area','terms' => $terms))
 				);
-		
+
 		$args = apply_sort_args($args);
-		
+
 		$args['posts_per_page'] = 20 * $paged;
-		
+
 		$postquery = get_posts($args);
 
 		if(!empty($postquery)) {
@@ -1113,22 +1113,22 @@ function sort_resources(){
 				$w_image = true;
 				//set new_image_url to empty to reset on every loop
 				$new_image_url = "";
-				
+
 				$img_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ) , "full" );
-				
+
 				if (empty($img_url)) {
 					$w_image = false;
 					$new_image_url = OER_URL . 'images/default-icon-220x180.png';
 				}
-				
+
 				$title =  $post->post_title;
 				$content =  $post->post_content;
 				$ellipsis = "...";
 				if (strlen($post->post_content)<180)
 					$ellipsis = "";
-					
+
 				$content = substr($content, 0, 180).$ellipsis;
-				
+
 				$img_path = $new_img_path = parse_url($img_url[0]);
 				$img_path = $_SERVER['DOCUMENT_ROOT'] . $img_path['path'];
 				if(!empty($img_url))
@@ -1138,7 +1138,7 @@ function sort_resources(){
 					if ( !is_wp_error($image_editor) ) {
 						$new_image = $image_editor->resize( 220, 180, true );
 						$suffix = "220x180";
-						
+
 						//Additional info of file
 						$info = pathinfo( $img_path );
 						$dir = $info['dirname'];
@@ -1147,7 +1147,7 @@ function sort_resources(){
 						$dest_file_name = "{$dir}/{$name}-{$suffix}.{$ext}";
 						$new_port = ($new_img_path['port']==80)?'':':'.$new_img_path['port'];
 						$new_image_url = str_replace($_SERVER['DOCUMENT_ROOT'], "{$new_img_path['scheme']}://{$new_img_path['host']}{$new_port}", $dest_file_name);
-						
+
 						if ( !file_exists($dest_file_name) ){
 							$image_file = $image_editor->save($dest_file_name);
 						}
