@@ -5,6 +5,24 @@ jQuery(document).ready(function(e) {
 	jQuery( "input.screenshot_option").on("change",function(){
 		jQuery( "input.screenshot_option" ).not(this).attr("checked",false);
 	});
+	
+	jQuery('#main_icon_button').click(function() {
+		formfield = jQuery('#mainIcon').attr('name');
+		tb_show( '', 'media-upload.php?type=image&amp;TB_iframe=true' );
+		return false;
+	});
+	
+	jQuery('#hover_icon_button').click(function() {
+		formfield = jQuery('#hoverIcon').attr('name');
+		tb_show( '', 'media-upload.php?type=image&amp;TB_iframe=true' );
+		return false;
+	});
+
+	window.send_to_editor = function(html) {
+		imgurl = jQuery('img',html).attr('src');
+		jQuery("#"+formfield).val(imgurl);
+		tb_remove();
+	}
 
 });
 
