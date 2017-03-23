@@ -227,6 +227,34 @@ function create_resource_taxonomies() {
 }
 //register cutsom category
 
+/**
+ * Add Image meta data
+ **/
+add_action( 'resource-subject-area_add_form_fields', 'add_upload_image_fields', 10 );
+function add_upload_image_fields($taxonomy) {
+    global $feature_groups;
+    ?><div class="form-field term-group">
+        <label for="main-icon-group"><?php _e('Subject Area Main Icon', OER_SLUG); ?></label>
+        <input type="file" name="mainIcon" id="mainIcon">
+    </div>
+    <div class="form-field term-group">
+        <label for="hover-icon-group"><?php _e('Subject Area Hover Icon', OER_SLUG); ?></label>
+        <input type="file" name="hoverIcon" id="hoverIcon">
+    </div>
+    <?php
+}
+
+/**
+ * Save Image meta data
+ **/
+add_action( 'created_resource-subject-area', 'save_subject_area_meta', 10, 2 );
+function save_subject_area_meta( $term_id, $tt_id ){
+    if( isset( $_POST['mainIcon'] ) && '' !== $_POST['mainIcon'] ){
+        $group = sanitize_title( $_POST['mainIcon'] );
+        add_term_meta( $term_id, 'mainIcon', $group, true );
+    }
+}
+
 //saving meta fields
 add_action('save_post', 'oer_save_customfields');
 function oer_save_customfields()
