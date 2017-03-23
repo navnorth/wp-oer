@@ -247,17 +247,42 @@ function add_upload_image_fields($taxonomy) {
 }
 
 /**
+ * Edit Image meta data
+ **/
+add_action( 'resource-subject-area_edit_form_fields', 'edit_upload_image_fields', 10, 2 );
+function edit_upload_image_fields( $term, $taxonomy ) {
+    
+    $mainIcon = get_term_meta( $term->term_id, 'mainIcon', true );
+     ?><tr class="form-field term-group-wrap">
+        <th scope="row"><label for="feature-group"><?php _e('Subject Area Main Icon', OER_SLUG); ?></label></th>
+        <td>
+	    <div><img src="<?php echo $mainIcon; ?>" /></div>
+	    <a id="main_icon_button" href="javascript:void(0);" class="button">Set Main Icon</a>
+	    <input id="mainIcon" type="hidden" size="36" name="mainIcon" value="" />
+	</td>
+    </tr><?php
+    
+    $hoverIcon = get_term_meta( $term->term_id, 'hoverIcon', true );
+    ?><tr class="form-field term-group-wrap">
+        <th scope="row"><label for="feature-group"><?php _e('Subject Area Hover Icon', OER_SLUG); ?></label></th>
+        <td>
+	    <div><img src="<?php echo $hoverIcon; ?>" /></div>
+	    <a id="hover_icon_button" href="javascript:void(0);" class="button">Set Hover Icon</a>
+	    <input id="hoverIcon" type="hidden" size="36" name="hoverIcon" value="" />
+	</td>
+    </tr><?php
+}
+
+/**
  * Save Image meta data
  **/
 add_action( 'created_resource-subject-area', 'save_subject_area_meta', 10, 2 );
 function save_subject_area_meta( $term_id, $tt_id ){
     if( isset( $_POST['mainIcon'] ) && '' !== $_POST['mainIcon'] ){
-        $group = sanitize_title( $_POST['mainIcon'] );
-        add_term_meta( $term_id, 'mainIcon', $group, true );
+        add_term_meta( $term_id, 'mainIcon', $_POST['mainIcon'], true );
     }
      if( isset( $_POST['hoverIcon'] ) && '' !== $_POST['hoverIcon'] ){
-        $group = sanitize_title( $_POST['hoverIcon'] );
-        add_term_meta( $term_id, 'hoverIcon', $group, true );
+        add_term_meta( $term_id, 'hoverIcon', $_POST['hoverIcon'], true );
     }
 }
 
