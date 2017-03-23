@@ -235,11 +235,13 @@ function add_upload_image_fields($taxonomy) {
     global $feature_groups;
     ?><div class="form-field term-group">
         <label for="main-icon-group"><?php _e('Subject Area Main Icon', OER_SLUG); ?></label>
-        <input type="file" name="mainIcon" id="mainIcon">
+	<a id="main_icon_button" href="javascript:void(0);" class="button">Set Main Icon</a>
+	<input id="mainIcon" type="hidden" size="36" name="mainIcon" value="" />
     </div>
     <div class="form-field term-group">
         <label for="hover-icon-group"><?php _e('Subject Area Hover Icon', OER_SLUG); ?></label>
-        <input type="file" name="hoverIcon" id="hoverIcon">
+	<a id="hover_icon_button" href="javascript:void(0);" class="button">Set Hover Icon</a>
+	<input id="hoverIcon" type="hidden" size="36" name="hoverIcon" value="" />
     </div>
     <?php
 }
@@ -532,9 +534,6 @@ function resource_split_shared_term( $term_id, $new_term_id, $term_taxonomy_id, 
 		)
 	    )
 	));
-	var_dump($term_id);
-	var_dump($new_term_id);
-       var_dump($resource_posts);
        exit();
     }
 }

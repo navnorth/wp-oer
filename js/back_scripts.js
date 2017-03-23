@@ -7,12 +7,14 @@ jQuery(document).ready(function(e) {
 	});
 	
 	jQuery('#main_icon_button').click(function() {
+		invoker = jQuery(this).attr('id');
 		formfield = jQuery('#mainIcon').attr('name');
 		tb_show( '', 'media-upload.php?type=image&amp;TB_iframe=true' );
 		return false;
 	});
 	
 	jQuery('#hover_icon_button').click(function() {
+		invoker = jQuery(this).attr('id');
 		formfield = jQuery('#hoverIcon').attr('name');
 		tb_show( '', 'media-upload.php?type=image&amp;TB_iframe=true' );
 		return false;
@@ -21,6 +23,7 @@ jQuery(document).ready(function(e) {
 	window.send_to_editor = function(html) {
 		imgurl = jQuery('img',html).attr('src');
 		jQuery("#"+formfield).val(imgurl);
+		jQuery("#"+invoker).before('<div>'+html+'</div>');
 		tb_remove();
 	}
 
