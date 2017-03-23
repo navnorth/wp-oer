@@ -256,7 +256,7 @@ function edit_upload_image_fields( $term, $taxonomy ) {
      ?><tr class="form-field term-group-wrap">
         <th scope="row"><label for="feature-group"><?php _e('Subject Area Main Icon', OER_SLUG); ?></label></th>
         <td>
-	    <div><img src="<?php echo $mainIcon; ?>" /></div>
+	    <div class="main_icon_button_img"><img src="<?php echo $mainIcon; ?>" /></div>
 	    <a id="main_icon_button" href="javascript:void(0);" class="button">Set Main Icon</a>
 	    <input id="mainIcon" type="hidden" size="36" name="mainIcon" value="" />
 	</td>
@@ -266,7 +266,7 @@ function edit_upload_image_fields( $term, $taxonomy ) {
     ?><tr class="form-field term-group-wrap">
         <th scope="row"><label for="feature-group"><?php _e('Subject Area Hover Icon', OER_SLUG); ?></label></th>
         <td>
-	    <div><img src="<?php echo $hoverIcon; ?>" /></div>
+	    <div class="hover_icon_button_img"><img src="<?php echo $hoverIcon; ?>" /></div>
 	    <a id="hover_icon_button" href="javascript:void(0);" class="button">Set Hover Icon</a>
 	    <input id="hoverIcon" type="hidden" size="36" name="hoverIcon" value="" />
 	</td>
@@ -283,6 +283,17 @@ function save_subject_area_meta( $term_id, $tt_id ){
     }
      if( isset( $_POST['hoverIcon'] ) && '' !== $_POST['hoverIcon'] ){
         add_term_meta( $term_id, 'hoverIcon', $_POST['hoverIcon'], true );
+    }
+}
+
+add_action( 'edited_resource-subject-area', 'update_subject_area_meta', 10, 2 );
+function update_subject_area_meta( $term_id, $tt_id ){
+
+   if( isset( $_POST['mainIcon'] ) && '' !== $_POST['mainIcon'] ){
+        update_term_meta( $term_id, 'mainIcon', $_POST['mainIcon'] );
+    }
+     if( isset( $_POST['hoverIcon'] ) && '' !== $_POST['hoverIcon'] ){
+        update_term_meta( $term_id, 'hoverIcon', $_POST['hoverIcon'] );
     }
 }
 

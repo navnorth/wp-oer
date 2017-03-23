@@ -6,6 +6,7 @@ jQuery(document).ready(function(e) {
 		jQuery( "input.screenshot_option" ).not(this).attr("checked",false);
 	});
 	
+	/* Set Subject Area Main Icon */
 	jQuery('#main_icon_button').click(function() {
 		invoker = jQuery(this).attr('id');
 		formfield = jQuery('#mainIcon').attr('name');
@@ -13,6 +14,7 @@ jQuery(document).ready(function(e) {
 		return false;
 	});
 	
+	/* Set Subject Area Hover Icon */
 	jQuery('#hover_icon_button').click(function() {
 		invoker = jQuery(this).attr('id');
 		formfield = jQuery('#hoverIcon').attr('name');
@@ -20,10 +22,14 @@ jQuery(document).ready(function(e) {
 		return false;
 	});
 
+	/* Callback after calling media upload */
 	window.send_to_editor = function(html) {
 		imgurl = jQuery('img',html).attr('src');
 		jQuery("#"+formfield).val(imgurl);
-		jQuery("#"+invoker).before('<div>'+html+'</div>');
+		if (jQuery("."+invoker+"_img").length>0) {
+			jQuery("."+invoker+"_img").remove();
+		}
+		jQuery("#"+invoker).before('<div class="' + invoker + '_img">'+html+'</div>');
 		tb_remove();
 	}
 
