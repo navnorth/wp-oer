@@ -255,6 +255,10 @@ function save_subject_area_meta( $term_id, $tt_id ){
         $group = sanitize_title( $_POST['mainIcon'] );
         add_term_meta( $term_id, 'mainIcon', $group, true );
     }
+     if( isset( $_POST['hoverIcon'] ) && '' !== $_POST['hoverIcon'] ){
+        $group = sanitize_title( $_POST['hoverIcon'] );
+        add_term_meta( $term_id, 'hoverIcon', $group, true );
+    }
 }
 
 //saving meta fields
