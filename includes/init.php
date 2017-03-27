@@ -260,7 +260,7 @@ function edit_upload_image_fields( $term, $taxonomy ) {
         <td>
 	    <div class="main_icon_button_img"><img src="<?php echo $mainIcon; ?>" /></div>
 	    <a id="main_icon_button" href="javascript:void(0);" class="button">Set Main Icon</a>
-	    <a id="remove_main_icon_button" href="javascript:void(0);" class="button hidden">Remove Main Icon</a>
+	    <a id="remove_main_icon_button" href="javascript:void(0);" class="button<?php if (!$mainIcon):?> hidden<?php endif; ?>">Remove Main Icon</a>
 	    <input id="mainIcon" type="hidden" size="36" name="mainIcon" value="" />
 	</td>
     </tr><?php
@@ -271,7 +271,7 @@ function edit_upload_image_fields( $term, $taxonomy ) {
         <td>
 	    <div class="hover_icon_button_img"><img src="<?php echo $hoverIcon; ?>" /></div>
 	    <a id="hover_icon_button" href="javascript:void(0);" class="button">Set Hover Icon</a>
-	    <a id="remove_hover_icon_button" href="javascript:void(0);" class="button hidden">Remove Hover Icon</a>
+	    <a id="remove_hover_icon_button" href="javascript:void(0);" class="button<?php if (!$hoverIcon):?> hidden<?php endif; ?>">Remove Hover Icon</a>
 	    <input id="hoverIcon" type="hidden" size="36" name="hoverIcon" value="" />
 	</td>
     </tr><?php
@@ -295,9 +295,19 @@ function update_subject_area_meta( $term_id, $tt_id ){
 
    if( isset( $_POST['mainIcon'] ) && '' !== $_POST['mainIcon'] ){
         update_term_meta( $term_id, 'mainIcon', $_POST['mainIcon'] );
+    } else {
+	//If Main Icon is existing, remove it
+	$mainIcon = get_term_meta( $term_id, 'mainIcon', true );
+	if ($mainIcon)
+	    delete_term_meta( $term_id, 'mainIcon' );
     }
-     if( isset( $_POST['hoverIcon'] ) && '' !== $_POST['hoverIcon'] ){
+    if( isset( $_POST['hoverIcon'] ) && '' !== $_POST['hoverIcon'] ){
         update_term_meta( $term_id, 'hoverIcon', $_POST['hoverIcon'] );
+    } else {
+	// If Icon is existing, remove it
+	$hoverIcon = get_term_meta( $term_id, 'hoverIcon', true );
+	if ($hoverIcon)
+	    delete_term_meta( $term_id, 'hoverIcon' );
     }
 }
 
