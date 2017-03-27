@@ -34,8 +34,12 @@ function show_oer_subjects($atts) {
 		    
 		    foreach($categories as $category)	
 		    {
-			    $getimage = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix.'postmeta'." WHERE meta_key='category_image' AND meta_value='$category->term_id'");
-			    $getimage_hover = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix.'postmeta'." WHERE meta_key='category_image_hover' AND meta_value='$category->term_id'");
+			    //$getimage = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix.'postmeta'." WHERE meta_key='category_image' AND meta_value='$category->term_id'");
+			    //$getimage_hover = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix.'postmeta'." WHERE meta_key='category_image_hover' AND meta_value='$category->term_id'");
+			    
+			    // Updated code to get term meta
+			    $getimage = get_term_meta($category->term_id,'mainIcon');
+			    $getimage_hover = get_term_meta($category->term_id,'hoverIcon');
 			    $icn_guid = "";
 			    $icn_hover_guid = "";
 			    
@@ -49,15 +53,17 @@ function show_oer_subjects($atts) {
 			    } else {
 				    //Checks if icon is empty
 				    if (!empty($getimage)) {
-					    $attach_icn = get_post($getimage[0]->post_id);
-					    $icn_guid = $attach_icn->guid;
+					    //$attach_icn = get_post($getimage[0]->post_id);
+					    //$icn_guid = $attach_icn->guid;
+					    $icn_guid = $getimage[0];
 				    } else {
 					    $icn_guid = get_default_category_icon($category->name);
 				    }
 				    
 				    if (!empty($getimage_hover)) {
-					    $attach_icn_hover = get_post($getimage_hover[0]->post_id);
-					    $icn_hover_guid = $attach_icn_hover->guid;	
+					    //$attach_icn_hover = get_post($getimage_hover[0]->post_id);
+					    //$icn_hover_guid = $attach_icn_hover->guid;
+					    $icn_hover_guid = $getimage_hover[0];
 				    } else {
 					    $icn_hover_guid = get_default_category_icon($category->name, true);
 				    }
