@@ -236,11 +236,13 @@ function add_upload_image_fields($taxonomy) {
     ?><div class="form-field term-group">
         <label for="main-icon-group"><?php _e('Subject Area Main Icon', OER_SLUG); ?></label>
 	<a id="main_icon_button" href="javascript:void(0);" class="button">Set Main Icon</a>
+	<a id="remove_main_icon_button" href="javascript:void(0);" class="button hidden">Remove Main Icon</a>
 	<input id="mainIcon" type="hidden" size="36" name="mainIcon" value="" />
     </div>
     <div class="form-field term-group">
         <label for="hover-icon-group"><?php _e('Subject Area Hover Icon', OER_SLUG); ?></label>
 	<a id="hover_icon_button" href="javascript:void(0);" class="button">Set Hover Icon</a>
+	<a id="remove_hover_icon_button" href="javascript:void(0);" class="button hidden">Remove Hover Icon</a>
 	<input id="hoverIcon" type="hidden" size="36" name="hoverIcon" value="" />
     </div>
     <?php
@@ -258,6 +260,7 @@ function edit_upload_image_fields( $term, $taxonomy ) {
         <td>
 	    <div class="main_icon_button_img"><img src="<?php echo $mainIcon; ?>" /></div>
 	    <a id="main_icon_button" href="javascript:void(0);" class="button">Set Main Icon</a>
+	    <a id="remove_main_icon_button" href="javascript:void(0);" class="button hidden">Remove Main Icon</a>
 	    <input id="mainIcon" type="hidden" size="36" name="mainIcon" value="" />
 	</td>
     </tr><?php
@@ -268,6 +271,7 @@ function edit_upload_image_fields( $term, $taxonomy ) {
         <td>
 	    <div class="hover_icon_button_img"><img src="<?php echo $hoverIcon; ?>" /></div>
 	    <a id="hover_icon_button" href="javascript:void(0);" class="button">Set Hover Icon</a>
+	    <a id="remove_hover_icon_button" href="javascript:void(0);" class="button hidden">Remove Hover Icon</a>
 	    <input id="hoverIcon" type="hidden" size="36" name="hoverIcon" value="" />
 	</td>
     </tr><?php

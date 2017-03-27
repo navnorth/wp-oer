@@ -30,9 +30,23 @@ jQuery(document).ready(function(e) {
 			jQuery("."+invoker+"_img").remove();
 		}
 		jQuery("#"+invoker).before('<div class="' + invoker + '_img">'+html+'</div>');
+		jQuery("#remove_"+invoker).removeClass("hidden");
 		tb_remove();
 	}
-
+	
+	/** Remove Main Icon **/
+	jQuery('#remove_main_icon_button').click(function() {
+		jQuery('#mainIcon').val('');
+		jQuery('.main_icon_button_img').remove();
+		jQuery(this).addClass('hidden');
+	});
+	
+	/** Remove Hover Icon **/
+	jQuery('#remove_hover_icon_button').click(function() {
+		jQuery('#hoverIcon').val('');
+		jQuery('.hover_icon_button_img').remove();
+		jQuery(this).addClass('hidden');
+	});
 });
 
 
