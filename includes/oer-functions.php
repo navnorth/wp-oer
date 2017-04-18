@@ -606,6 +606,42 @@ function getImageFromExternalURL($url) {
 	return $file;
 }
 
+//Get External Thumbnail Image
+function getExternalThumbnailImage($url) {
+	global $_debug;
+	
+	$ch = curl_init ($url);
+	
+	curl_setopt($ch, CURLOPT_HEADER, 0);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
+	curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+	
+	$raw=curl_exec($ch);
+	curl_close ($ch);
+	
+	$upload_dir = wp_upload_dir();
+	$path = $upload_dir['basedir'].'/resource-images/';
+	
+	if(!file_exists($path))
+	{
+		mkdir($path, 0777, true);
+		debug_log("OER : create upload directory");
+	}
+
+	if(!file_exists($file = $path.'Screenshot'.preg_replace('/https?|:|#|\?|\&|\//i', '-', $url).'.jpg'))
+	{	
+		debug_log("OER : start download image function");
+			
+		$fp = fopen($file,'wb');
+		fwrite($fp, $raw);
+		fclose($fp);
+		
+		debug_log("OER : end of download image function");
+	}
+	return $file;
+}
+
 
 function oer_resize_image($orig_img_url, $width, $height, $crop = false) {
 	$new_image_url = "";
@@ -734,6 +770,7 @@ function importResources($default=false) {
 				$oer_authorname2    	= "";
 				$oer_authorurl2     	= "";
 				$oer_authoremail2   	= "";
+				$oer_thumbnailurl	= "";
 				
 				/** Check first if column is set **/
 				if (isset($fnldata['cells'][$k][1]))
@@ -788,6 +825,8 @@ function importResources($default=false) {
 					$oer_authorurl2     = $fnldata['cells'][$k][25];
 				if (isset($fnldata['cells'][$k][26]))
 					$oer_authoremail2   = $fnldata['cells'][$k][26];
+				if (isset($fnldata['cells'][$k][27]))
+					$oer_thumbnailurl   = $fnldata['cells'][$k][27];
 	
 				if(!empty($oer_standard) && (!is_array($oer_standard)))
 				{
@@ -1046,12 +1085,14 @@ function importResources($default=false) {
 					
 					if(!has_post_thumbnail( $post_id ))
 					{
-						if ($screenshot_enabled)
-						    $file = getScreenshotFile($url);
-						    
-						// if external screenshot utility enabled
-						if ( $external_screenshot )
-						    $file = getImageFromExternalURL($url);
+						if (!empty($oer_thumbnailurl)) {
+							$file = getExternalThumbnailImage($oer_thumbnailurl);
+						} elseif ($screenshot_enabled) {
+							$file = getScreenshotFile($url);
+						} elseif ( $external_screenshot ) {
+							// if external screenshot utility enabled
+							$file = getImageFromExternalURL($url);
+						}
 					}
 					
 					if(file_exists($file))
