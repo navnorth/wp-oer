@@ -412,6 +412,7 @@ function importStandards($file){
 			$doc->load( $file );
 	
 			$StandardDocuments = $doc->getElementsByTagName('StandardDocument');
+			
 			$xml_arr = array();
 			$m = 0;
 			foreach( $StandardDocuments as $StandardDocument)
@@ -453,7 +454,7 @@ function importStandards($file){
 				}
 				$i++;
 			}
-	
+			
 			// Get Core Standard
 			foreach($core_standard as $cskey => $csdata)
 			{
@@ -1271,7 +1272,8 @@ function importSubjectAreas($default=false) {
 function importDefaultStandards() {
 	$files = array(
 		OER_PATH."samples/CCSS_Math.xml",
-		OER_PATH."samples/CCSS_ELA.xml"
+		OER_PATH."samples/CCSS_ELA.xml",
+		OER_PATH."samples/D2454348.xml"
 		);
 	foreach ($files as $file) {
 		$import = importStandards($file);

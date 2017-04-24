@@ -47,6 +47,21 @@
 										<input name="oer_common_core_english" id="oer_common_core_english" type="checkbox" value="1" <?php echo $attr; ?>><label for="oer_common_core_english" <?php echo $class; ?>><strong>Common Core English Language Arts</strong> <?php if ($english): ?><span class="prev-import">(previously imported)</span><?php endif; ?></label>
 									</td>
 								</tr>
+								<tr>
+									<td>
+										<?php
+											$science = isStandardExisting("Next Generation Science");
+											$attr = "";
+											$class = "";
+											if ($science){
+												$attr = "disabled";
+												$class = "class='disabled'";
+											}
+											
+										?>
+										<input name="oer_next_generation_science" id="oer_next_generation_science" type="checkbox" value="1" <?php echo $attr; ?>><label for="oer_next_generation_science" <?php echo $class; ?>><strong>Next Generation Science Standards</strong> <?php if ($science): ?><span class="prev-import">(previously imported)</span><?php endif; ?></label>
+									</td>
+								</tr>
 							</tbody>
 						</table>
 						<input type="hidden" value="" name="standards_import" />
