@@ -177,9 +177,9 @@ $hide_title = get_option('oer_hide_resource_title');
     									  $grades[$x];
     									}
     									$fltrarr = array_filter($grades, 'strlen');
-
     									$flag = array();
     									$elmnt = $fltrarr[min(array_keys($fltrarr))];
+									
     									for($i =0; $i < count($fltrarr); $i++)
     									{
     										if($elmnt == $fltrarr[$i])
@@ -201,7 +201,10 @@ $hide_title = get_option('oer_hide_resource_title');
     									{
     										$arr_flt = array_keys($fltrarr);
     										$end_filter = end($arr_flt);
-    										echo $fltrarr[0]."-".$fltrarr[$end_filter];
+										if (count($fltrarr)>1)
+											echo $fltrarr[0]."-".$fltrarr[$end_filter];
+										else
+											echo $fltrarr[0];
     									}
     							?>
 							</span></h4>
