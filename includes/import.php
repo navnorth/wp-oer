@@ -61,7 +61,7 @@ if(isset($_POST['standards_import']))
 }
 ?>
 <div class="wrap">
-    <div id="icon-themes" class="icon32"></div>
+    <div id="icon-themes" class="oer-logo"><img src="<?php echo OER_URL ?>images/wp-oer-admin-logo.png" /></div>
     <p class="oer_heading">Import - OER</p>
     <?php settings_errors(); ?>
     <div class="oer-import-body">
@@ -108,3 +108,4 @@ if(isset($_POST['standards_import']))
 	<div class="plugin-link"><a href='http://www.navigationnorth.com/portfolio/oer-management/' target='_blank'><?php _e("More info", OER_SLUG); ?></a></div>
 	<div class="clear"></div>
 </div>
+<div class="loader"><div class="loader-img"><div><img src="<?php echo OER_URL; ?>images/loading.gif" align="center" valign="middle" /></div></div></div>

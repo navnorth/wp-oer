@@ -42,7 +42,7 @@ global $message, $type;
 ?>
 <div class="wrap">
     
-    <div id="icon-themes" class="icon32"></div>
+    <div id="icon-themes" class="oer-logo"><img src="<?php echo OER_URL ?>images/wp-oer-admin-logo.png" /></div>
     <h2>Settings - OER Management</h2>
     <?php settings_errors(); ?>
      
