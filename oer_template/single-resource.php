@@ -167,9 +167,14 @@ $hide_title = get_option('oer_hide_resource_title');
     						{
     					?>
     						<div class="oer-rsrcgrd oer-cbxl">
-    							<h4><strong><?php _e("Grades:", OER_SLUG) ?></strong>
+    							<h4><strong><?php
+							if (count($grades)>1)
+								_e("Grades:", OER_SLUG);
+							else
+								_e("Grade:", OER_SLUG)
+							?></strong>
     							<span>
-                            	<?php
+						<?php
     									sort($grades);
 
     									for($x=0; $x < count($grades); $x++)
