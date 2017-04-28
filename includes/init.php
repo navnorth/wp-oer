@@ -178,7 +178,7 @@ function oer_postcreation(){
         'description'   => 'Create Resources',
         'public'        => true,
         'menu_position' => '',
-		'menu_icon' => OER_URL.'images/plugicon.png',
+		'menu_icon' => 'dashicons-welcome-learn-more',
         'supports'      => array(  'title', 'editor', 'thumbnail', 'revisions',  ),
 		'taxonomies' => array('post_tag'),
         'has_archive'   => true,
