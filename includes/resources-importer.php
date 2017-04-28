@@ -42,7 +42,7 @@
 		<legend><div class="oer_heading"><?php _e("Import Resources", OER_SLUG); ?></div></legend>
 		<div class="oer-import-row">
 			<div class="row-left">
-				<?php _e("Lorem ipsum dolor sit amet, consectetur adipiscing elit. In quis nunc tempor, maximus nulla nec, consectetur dolor.", OER_SLUG); ?>
+				<?php _e("For bulk upload of resources. Import file must match the spreadsheet template. If screenshot processing is enabled, a maximum of 50 records per transaction is suggested.", OER_SLUG); ?>
 			</div>
 			<div class="row-right alignRight">
 				<a href="<?php echo OER_URL."samples/resource_import_sample_data.xls"; ?>" target="_blank"><?php _e("Download Spreadsheet Template", OER_SLUG); ?></a>

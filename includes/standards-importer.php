@@ -6,7 +6,7 @@
 			<legend><div class="oer_heading"><?php _e("Import Academic Standards", OER_SLUG); ?></div></legend>
 			<div class="oer-import-row">
 				<div class="row-left">
-					<?php _e("Lorem ipsum dolor sit amet, consectetur adipiscing elit. In quis nunc tempor, maximus nulla nec, consectetur dolor.", OER_SLUG); ?>
+					<?php _e("Resources can be easily tagged to standards to provide additional alignment information to viewers. Datasets for the standards listed below are included with the plugin.", OER_SLUG); ?>
 				</div>
 				<div class="row-right alignRight">
 					<a href="http://asn.jesandco.org/resources/ASNJurisdiction/CCSS" target="_blank"><?php _e("ASN Standards Info", OER_SLUG); ?></a>
