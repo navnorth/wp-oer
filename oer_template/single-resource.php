@@ -43,29 +43,15 @@ $hide_title = get_option('oer_hide_resource_title');
     				$img_path = $new_img_path = parse_url($img_url[0]);
     				$img_path = $_SERVER['DOCUMENT_ROOT'] . $img_path['path'];
     				$new_image_url = OER_URL.'images/default-icon-528x455.png';
-
-                    if(!empty($img_path))
+				$img_width = get_image_width('large');
+				$img_height = get_image_height('large');
+				
+			if(!empty($img_path))
     				{
-    					//Resize Image using WP_Image_Editor
-    					$image_editor = wp_get_image_editor($img_path);
     					if ( is_wp_error($image_editor) ) {
-                            debug_log("Can't get Image editor to resize Resource screenshot.");
-                        } else {
-    						$new_image = $image_editor->resize( 528, 455, true );
-    						$suffix = "528x455";
-
-    						//Additional info of file
-    						$info = pathinfo( $img_path );
-    						$dir = $info['dirname'];
-    						$ext = $info['extension'];
-    						$name = wp_basename( $img_path, ".$ext" );
-    						$dest_file_name = "{$dir}/{$name}-{$suffix}.{$ext}";
-    						$new_port = ($new_img_path['port']==80)?'':':'.$new_img_path['port'];
-    						$new_image_url = str_replace($_SERVER['DOCUMENT_ROOT'], "{$new_img_path['scheme']}://{$new_img_path['host']}{$new_port}", $dest_file_name);
-
-    						if ( !file_exists($dest_file_name) ){
-    							$image_file = $image_editor->save($dest_file_name);
-    						}
+						debug_log("Can't get Image editor to resize Resource screenshot.");
+					} else {
+						$new_image_url = oer_resize_image($img_url[0], $img_width, $img_height, true);
     					}
                     }
 

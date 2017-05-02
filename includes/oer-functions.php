@@ -660,6 +660,7 @@ function oer_resize_image($orig_img_url, $width, $height, $crop = false) {
 	if (!empty($img_path)) {
 		//Resize Image using WP_Image_Editor class
 		$image_editor = wp_get_image_editor($img_path);
+		
 		if ( !is_wp_error($image_editor) ) {
 			$new_image = $image_editor->resize( $width, $height, $crop );
 			
@@ -1389,5 +1390,65 @@ function apply_sort_args($args){
 			break;
 	}
 	return $args;
+}
+
+/** Get Image Sizes for all registered image sizes **/
+function get_image_sizes() {
+	global $_wp_additional_image_sizes;
+
+	$sizes = array();
+
+	foreach ( get_intermediate_image_sizes() as $_size ) {
+		if ( in_array( $_size, array('thumbnail', 'medium', 'medium_large', 'large') ) ) {
+			$sizes[ $_size ]['width']  = get_option( "{$_size}_size_w" );
+			$sizes[ $_size ]['height'] = get_option( "{$_size}_size_h" );
+			$sizes[ $_size ]['crop']   = (bool) get_option( "{$_size}_crop" );
+		} elseif ( isset( $_wp_additional_image_sizes[ $_size ] ) ) {
+			$sizes[ $_size ] = array(
+				'width'  => $_wp_additional_image_sizes[ $_size ]['width'],
+				'height' => $_wp_additional_image_sizes[ $_size ]['height'],
+				'crop'   => $_wp_additional_image_sizes[ $_size ]['crop'],
+			);
+		}
+	}
+
+	return $sizes;
+}
+
+/** Get Image size for specific size **/
+function get_image_size( $size ) {
+	$sizes = get_image_sizes();
+
+	if ( isset( $sizes[ $size ] ) ) {
+		return $sizes[ $size ];
+	}
+
+	return false;
+}
+
+/** Get Image Width based on size **/
+function get_image_width( $size ) {
+	if ( ! $size = get_image_size( $size ) ) {
+		return false;
+	}
+
+	if ( isset( $size['width'] ) ) {
+		return $size['width'];
+	}
+
+	return false;
+}
+
+/** Get Image Height based on size **/
+function get_image_height( $size ) {
+	if ( ! $size = get_image_size( $size ) ) {
+		return false;
+	}
+
+	if ( isset( $size['height'] ) ) {
+		return $size['height'];
+	}
+
+	return false;
 }
 ?>
