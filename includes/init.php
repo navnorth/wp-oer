@@ -315,7 +315,7 @@ function update_subject_area_meta( $term_id, $tt_id ){
 add_action('save_post', 'oer_save_customfields');
 function oer_save_customfields()
 {
-    global $post;
+    global $post, $wpdb;
     
     //Check first if screenshot is enabled
     $screenshot_enabled = get_option( 'oer_enable_screenshot' );
@@ -415,7 +415,7 @@ function oer_save_customfields()
 			}
 			update_post_meta( $post->ID , 'oer_isbasedonurl' , $oer_isbasedonurl);
 		}
-
+		
 		if(isset($_POST['oer_standard_alignment']))
 		{
 			update_post_meta( $post->ID , 'oer_standard_alignment' , $_POST['oer_standard_alignment']);
@@ -427,6 +427,27 @@ function oer_save_customfields()
 
 		if(isset($_POST['oer_standard']))
 		{
+			$gt_oer_standard = $_POST['oer_standard'];
+			
+			if(!empty($gt_oer_standard)) {
+			    for($l = 0; $l < count($gt_oer_standard); $l++)
+			    {
+				$results = $wpdb->get_row( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "standard_notation where standard_notation =%s" , $gt_oer_standard[$l] ),ARRAY_A);
+				if(!empty($results))
+				{
+				    $gt_oer_standard_notation .= "oer_standard_notation-".$results['id'].",";
+				    $table = explode("-", $results['parent_id']);
+				    if(!empty($table))
+				    {
+					$stndrd_algn = $wpdb->get_row( $wpdb->prepare( "SELECT * from  " . $wpdb->prefix. $table[0] . " where id =%s" , $table[1] ),ARRAY_A);
+					if($stndrd_algn['parent_id'])
+					{
+						fetch_stndrd($stndrd_algn['parent_id'], $post_id);
+					}
+				    }
+				}
+			    }
+			}
 			$oer_standard = implode(",", $_POST['oer_standard']);
 			update_post_meta( $post->ID , 'oer_standard' , $oer_standard);
 		}

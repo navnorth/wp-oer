@@ -304,12 +304,11 @@ $hide_title = get_option('oer_hide_resource_title');
 
     						$stdrd_id = get_post_meta($post->ID, 'oer_standard_alignment', true);
     						$oer_standard = get_post_meta($post->ID, 'oer_standard', true);
-
     						if(!empty($stdrd_id) || !empty($oer_standard))
     						{
     					?>
                         	<div class="alignedStandards">
-                                <h3><?php _e("Standards", OER_SLUG) ?></h3>
+                                <h2><?php _e("Standards", OER_SLUG) ?></h2>
                                 <div class="oer_meta_container">
                                     <div class="oer_stndrd_align">
                                     <?php
@@ -329,24 +328,27 @@ $hide_title = get_option('oer_hide_resource_title');
                                     <?php
                                         if(!empty($oer_standard))
                                         {
-    						        ?>
-    						                <h3><?php _e("Standard Notations", OER_SLUG) ?></h3>
-    						                <?php
+    					?>
+						<h3><?php _e("Standard Notations", OER_SLUG) ?></h3>
+						<?php
 
-    											$stnd_arr = explode(",", $oer_standard);
+    						$stnd_arr = explode(",", $oer_standard);
+						
                                                 for($i=0; $i< count($stnd_arr); $i++)
                                                 {
                                                     $table = explode("-",$stnd_arr[$i]);
+						    $prefix = substr($stnd_arr[$i],0,strpos($stnd_arr[$i],"_"));
                                                     $table_name = $table[0];
                                                     $id = $table[1];
-                                                    if(strcmp($table_name, $wpdb->prefix.'standard_notation') == 0)
+                                                    if(strcmp($prefix, $wpdb->prefix) !== 0)
                                                     {
-                                                        $res = $wpdb->get_row( $wpdb->prepare("select * from $table_name where id=%d" , $id ), ARRAY_A);
-                                                        echo "<div class='oer_sngl_stndrd'>";
-                                                        echo "<div class='oer_sngl_notation'>".$res['standard_notation']."</div>";
-                                                        echo "<div class='oer_sngl_description'>".$res['description']."</div>";
-                                                        echo "</div>";
+                                                        $table_name = $wpdb->prefix."standard_notation";
                                                     }
+						    $res = $wpdb->get_row( $wpdb->prepare("select * from $table_name where id=%d" , $id ), ARRAY_A);
+						    echo "<div class='oer_sngl_stndrd'>";
+							echo "<div class='oer_sngl_notation'>".$res['standard_notation']."</div>";
+							echo "<div class='oer_sngl_description'>".$res['description']."</div>";
+						    echo "</div>";
                                                 }
                                         }
                                     ?>
