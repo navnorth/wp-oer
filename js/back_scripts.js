@@ -164,6 +164,9 @@ function processImport(btn, file) {
 		return false;
 	}
 	jQuery(btn).prop('value','Processing...');
+	setTimeout(function() {
+		jQuery('.loader').show();
+		} ,1000);
 	jQuery('.oer_imprtrwpr .oer-import-row input[type=submit]').prop('disabled',true);
 	return(true); 
 }
