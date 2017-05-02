@@ -152,10 +152,10 @@ function oer_plugin_activation_notice() {
 		update_option('setup_notify', false);
 	}
 	if (get_option('setup_notify') && (get_option('setup_notify')==true)) {
-		$setup_button = '<form class="inline-form" style="display:inline;" method="post" action="'.admin_url( 'edit.php?post_type=resource&page=oer_settings&tab=setup').'"><input type="hidden" name="oer_setup" value="1" /><input type="submit" value="Setup" /></form>';
+		$setup_button = '<form class="inline-form" style="display:inline;text-align: right; float: right; width: 20%; margin-top: 3px;" method="post" action="'.admin_url( 'edit.php?post_type=resource&page=oer_settings&tab=setup').'"><input type="hidden" name="oer_setup" value="1" /><input type="submit" class="button-primary" value="Setup" /></form>';
 	?>
-		<div id="oer-dismissible-notice" class="updated notice is-dismissible" style="padding-top:5px;padding-bottom:5px;">
-			<span>Thank you for installing the WP-OER plugin.</span> <?php echo $setup_button; ?>
+		<div id="oer-dismissible-notice" class="updated notice is-dismissible" style="padding-top:5px;padding-bottom:5px;overflow:hidden;">
+			<p style="width:75%;float:left;">Thank you for installing the <a href="https://www.wp-oer.com/" target="_blank">WP-OER</a> plugin. If you need support, please visit our site or the forums. <?php echo $setup_button; ?></p>
 		</div>
 	<?php
 	}
