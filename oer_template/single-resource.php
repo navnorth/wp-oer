@@ -339,13 +339,16 @@ $hide_title = get_option('oer_hide_resource_title');
                                                     $table = explode("-",$stnd_arr[$i]);
 						    $prefix = substr($stnd_arr[$i],0,strpos($stnd_arr[$i],"_"));
                                                     $table_name = $table[0];
+						    var_dump($table_name);
                                                     $id = $table[1];
                                                     if(strcmp($prefix, $wpdb->prefix) !== 0)
                                                     {
-                                                        //$table_name = str_replace($prefix,$wpdb->prefix,$table[0]);
+                                                        $table_name = str_replace($prefix,$wpdb->prefix,$table[0]);
                                                     }
+						    var_dump($table_name);
+						    $table_name = $wpdb->prefix.$table_name;
+						    var_dump($id);
 						    $res = $wpdb->get_row( $wpdb->prepare("select * from $table_name where id=%d" , $id ), ARRAY_A);
-						    var_dump($res);
 						    echo "<div class='oer_sngl_stndrd'>";
 							echo "<div class='oer_sngl_notation'>".$res['standard_notation']."</div>";
 							echo "<div class='oer_sngl_description'>".$res['description']."</div>";
