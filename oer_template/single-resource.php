@@ -344,8 +344,8 @@ $hide_title = get_option('oer_hide_resource_title');
                                                     {
                                                         $table_name = str_replace($prefix,$wpdb->prefix,$table[0]);
                                                     }
-						    var_dump($table_name);
 						    $res = $wpdb->get_row( $wpdb->prepare("select * from $table_name where id=%d" , $id ), ARRAY_A);
+						    var_dump($res);
 						    echo "<div class='oer_sngl_stndrd'>";
 							echo "<div class='oer_sngl_notation'>".$res['standard_notation']."</div>";
 							echo "<div class='oer_sngl_description'>".$res['description']."</div>";
