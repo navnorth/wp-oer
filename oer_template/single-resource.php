@@ -342,7 +342,7 @@ $hide_title = get_option('oer_hide_resource_title');
                                                     $id = $table[1];
                                                     if(strcmp($prefix, $wpdb->prefix) !== 0)
                                                     {
-                                                        $table_name = str_replace($prefix,$wpdb->prefix,$table[0]);
+                                                        //$table_name = str_replace($prefix,$wpdb->prefix,$table[0]);
                                                     }
 						    $res = $wpdb->get_row( $wpdb->prepare("select * from $table_name where id=%d" , $id ), ARRAY_A);
 						    var_dump($res);
