@@ -117,6 +117,13 @@ function create_csv_import_table()
    //create_template();
    update_option('setup_notify', true);
    //enqueue_activation_script();
+   
+   //Trigger CPT and Taxonomy creation
+   oer_postcreation();
+   create_resource_taxonomies();
+   
+   //Trigger permalink reset
+   flush_rewrite_rules();
 }
 
 //Enqueue activation script

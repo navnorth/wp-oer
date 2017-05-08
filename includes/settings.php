@@ -4,6 +4,7 @@ global $message, $type;
 	if (isset($_REQUEST['settings-updated'])) {
 		//When submitting settings tab
 		if ($_REQUEST['tab']=="setup") {
+			
 			//Import Default Resources
 			$import_resources = get_option('oer_import_sample_resources');
 			if ($import_resources) {
@@ -31,8 +32,10 @@ global $message, $type;
 					$type .= $response["type"];
 				}
 			}
+			
 			//Redirect to main settings page
-			exit( wp_safe_redirect( admin_url( 'edit.php?post_type=resource&page=oer_settings&setup=true' ) ) );
+			wp_safe_redirect( admin_url( 'edit.php?post_type=resource&page=oer_settings&setup=true' ) );
+			exit();
 		}
 	}
 	if ($_REQUEST['setup']=='true'){
