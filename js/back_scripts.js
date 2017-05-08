@@ -151,6 +151,14 @@ function get_standardlist(ref)
 	});
 }
 
+//Process Initial Setup
+function processInitialSettings(form) {
+	setTimeout(function() {
+		jQuery('.loader').show();
+	} ,1000);
+	return true;
+}
+
 //Import Resource/Subject Areas
 function processImport(btn, file) {
 	if ( document.getElementById(file).files.length == 0 ) {

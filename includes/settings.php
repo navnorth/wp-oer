@@ -236,13 +236,14 @@ function show_setup_settings() {
 		</div>
 	</div>
 	<div class="oer-plugin-row">
-		<form method="post" class="oer_settings_form" action="options.php">
+		<form method="post" class="oer_settings_form" action="options.php"  onsubmit="return processInitialSettings(this)">
 			<?php settings_fields("oer_setup_settings"); ?>
 			<?php do_settings_sections("setup_settings_section"); ?>
-			<?php submit_button('Continue'); ?>
+			<?php submit_button('Continue', 'primary setup-continue'); ?>
 		</form>
 	</div>
 </div>
 <?php
 }
 ?>
+<div class="loader"><div class="loader-img"><div><img src="<?php echo OER_URL; ?>images/loading.gif" align="center" valign="middle" /></div></div></div>
