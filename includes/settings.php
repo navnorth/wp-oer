@@ -33,6 +33,9 @@ global $message, $type;
 				}
 			}
 			
+			//Set Default screenshots to disabled
+			update_option('oer_disable_screenshots', 1);
+			
 			//Redirect to main settings page
 			wp_safe_redirect( admin_url( 'edit.php?post_type=resource&page=oer_settings&setup=true' ) );
 			exit();
