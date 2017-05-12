@@ -304,6 +304,7 @@ $hide_title = get_option('oer_hide_resource_title');
 
     						$stdrd_id = get_post_meta($post->ID, 'oer_standard_alignment', true);
     						$oer_standard = get_post_meta($post->ID, 'oer_standard', true);
+						
     						if(!empty($stdrd_id) || !empty($oer_standard))
     						{
     					?>
@@ -333,7 +334,7 @@ $hide_title = get_option('oer_hide_resource_title');
 						<?php
 
     						$stnd_arr = explode(",", $oer_standard);
-						
+
                                                 for($i=0; $i< count($stnd_arr); $i++)
                                                 {
                                                     $table = explode("-",$stnd_arr[$i]);
@@ -341,15 +342,21 @@ $hide_title = get_option('oer_hide_resource_title');
                                                     $table_name = $table[0];
 						    
                                                     $id = $table[1];
+						    
                                                     if(strcmp($prefix, $wpdb->prefix) !== 0)
                                                     {
                                                         $table_name = str_replace($prefix,$wpdb->prefix,$table[0]);
                                                     }
 						    
 						    $res = $wpdb->get_row( $wpdb->prepare("select * from $table_name where id=%d" , $id ), ARRAY_A);
+						    
 						    echo "<div class='oer_sngl_stndrd'>";
-							echo "<div class='oer_sngl_notation'>".$res['standard_notation']."</div>";
-							echo "<div class='oer_sngl_description'>".$res['description']."</div>";
+							if (strpos($table_name,"sub_standards")>0) {
+								echo "<div class='oer_sngl_notation'>".$res['standard_title']."</div>";
+							} else {
+								echo "<div class='oer_sngl_notation'>".$res['standard_notation']."</div>";
+								echo "<div class='oer_sngl_description'>".$res['description']."</div>";
+							}
 						    echo "</div>";
                                                 }
                                         }
