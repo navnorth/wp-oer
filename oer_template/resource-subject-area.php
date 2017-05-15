@@ -477,7 +477,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 		if(!empty($posts))
 		{ ?>
 		<div class="oer-allftrdpst">
-			<div class="oer-alltrdpsthdng"><?php _e( 'Featured Resources', OER_SLUG ); ?></div>
+			<div class="oer-alltrdpsthdng"><?php printf( __( 'Recommended %s Content', OER_SLUG ) , $termObj->name ); ?></div>
 			<div class="oer-inrftrdpstwpr">
 				<ul class="allftrdpst_slider">
 				<?php
