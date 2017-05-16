@@ -23,6 +23,44 @@ $url = get_post_meta($post->ID, "oer_resourceurl", true);
 $url_domain = getDomainFromUrl($url);
 
 $hide_title = get_option('oer_hide_resource_title');
+
+// Resource Subject Areas
+$subject_areas = array();
+$post_terms = get_the_terms( $post->ID, 'resource-subject-area' );
+
+if(!empty($post_terms))
+{
+	foreach($post_terms as $term)
+	{
+		if($term->parent != 0)
+		{
+			$parent[] = get_oer_parent_term($term->term_id);
+		}
+		else
+		{
+			$subject_areas[] = $term;
+		}
+	}
+
+	if(!empty($parent) && array_filter($parent))
+	{
+		$recur_multi_dimen_arr_obj =  new RecursiveArrayIterator($parent);
+		$recur_flat_arr_obj =  new RecursiveIteratorIterator($recur_multi_dimen_arr_obj);
+		$flat_arr = iterator_to_array($recur_flat_arr_obj, false);
+
+		$flat_arr = array_values(array_unique($flat_arr));
+		
+		for($k=0; $k < count($flat_arr); $k++)
+		{
+			//$idObj = get_category_by_slug($flat_arr[$k]);
+			$idObj = get_term_by( 'slug' , $flat_arr[$k] , 'resource-subject-area' );
+			
+			if(!empty($idObj->name))
+				$subject_areas[] = $idObj;
+		}
+	}
+}
+
 ?>
 <!--<div id="primary" class="content-area">-->
     <main id="main" class="site-main" role="main">
@@ -66,51 +104,28 @@ $hide_title = get_option('oer_hide_resource_title');
             </div>
 
     		<div class="oer-rsrcrghtcntr col-md-7">
-            	<div class="oer-rsrcctgries tagcloud">
+			<div class="oer-rsrcctgries tagcloud">
                 	<?php
-
-                            $post_terms = get_the_terms( $post->ID, 'resource-subject-area' );
-    			if(!empty($post_terms))
+			/** Resource Subject Areas **/
+			$subjects = array_unique($subject_areas, SORT_REGULAR);
+			
+    			if(!empty($subjects))
     			{
-    				foreach($post_terms as $term)
+    				foreach($subjects as $subject)
     				{
-    					if($term->parent != 0)
-    					{
-    						$parent[] = get_oer_parent_term($term->term_id);
-    					}
-    					else
-    					{
-    						echo '<span><a href="'.site_url().'/'.$term->taxonomy.'/'.$term->slug.'" class="button">'.ucwords ($term->name).'</a></span>';
-    					}
-    				}
-
-    				if(!empty($parent) && array_filter($parent))
-    				{
-    					$recur_multi_dimen_arr_obj =  new RecursiveArrayIterator($parent);
-    					$recur_flat_arr_obj =  new RecursiveIteratorIterator($recur_multi_dimen_arr_obj);
-    					$flat_arr = iterator_to_array($recur_flat_arr_obj, false);
-
-    					$flat_arr = array_values(array_unique($flat_arr));
-    					for($k=0; $k < count($flat_arr); $k++)
-    					{
-    						//$idObj = get_category_by_slug($flat_arr[$k]);
-    						$idObj = get_term_by( 'slug' , $flat_arr[$k] , 'resource-subject-area' );
-
-    						if(!empty($idObj->name))
-    						echo '<span><a href="'.site_url().'/'.$idObj->taxonomy.'/'.$idObj->slug.'" class="button">'.ucwords ($idObj->name).'</a></span>';
-    					}
+    					echo '<span><a href="'.site_url().'/'.$subject->taxonomy.'/'.$subject->slug.'" class="button">'.ucwords ($subject->name).'</a></span>';
     				}
     			}
     			?>
                         </div>
 
                         <!--Resource Description-->
-    					<?php if(!empty($post->post_content)) {?>
-    						<div class="oer-sngl-rsrc-dscrptn">
-    							<h2><?php _e("Description", OER_SLUG) ?></h2>
-    							<?php echo $content = apply_filters ("the_content", $post->post_content); ?>
-    						</div>
-    					<?php } ?>
+			<?php if(!empty($post->post_content)) {?>
+				<div class="oer-sngl-rsrc-dscrptn">
+					<h2><?php _e("Description", OER_SLUG) ?></h2>
+					<?php echo $content = apply_filters ("the_content", $post->post_content); ?>
+				</div>
+			<?php } ?>
 
                         <div id="" class="oer-authorName oer-cbxl">
     						<?php
