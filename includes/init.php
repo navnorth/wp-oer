@@ -261,7 +261,7 @@ function edit_upload_image_fields( $term, $taxonomy ) {
 	    <div class="main_icon_button_img"><img src="<?php echo $mainIcon; ?>" /></div>
 	    <a id="main_icon_button" href="javascript:void(0);" class="button">Set Main Icon</a>
 	    <a id="remove_main_icon_button" href="javascript:void(0);" class="button<?php if (!$mainIcon):?> hidden<?php endif; ?>">Remove Main Icon</a>
-	    <input id="mainIcon" type="hidden" size="36" name="mainIcon" value="" />
+	    <input id="mainIcon" type="hidden" size="36" name="mainIcon" value="<?php echo $mainIcon; ?>" />
 	</td>
     </tr><?php
     
@@ -272,7 +272,7 @@ function edit_upload_image_fields( $term, $taxonomy ) {
 	    <div class="hover_icon_button_img"><img src="<?php echo $hoverIcon; ?>" /></div>
 	    <a id="hover_icon_button" href="javascript:void(0);" class="button">Set Hover Icon</a>
 	    <a id="remove_hover_icon_button" href="javascript:void(0);" class="button<?php if (!$hoverIcon):?> hidden<?php endif; ?>">Remove Hover Icon</a>
-	    <input id="hoverIcon" type="hidden" size="36" name="hoverIcon" value="" />
+	    <input id="hoverIcon" type="hidden" size="36" name="hoverIcon" value="<?php echo $hoverIcon; ?>" />
 	</td>
     </tr><?php
 }
