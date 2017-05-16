@@ -486,7 +486,12 @@ $hide_title = get_option('oer_hide_subject_area_title');
 					$image = wp_get_attachment_url( get_post_thumbnail_id($post->ID) );
 					$title =  $post->post_title;
 					$content = strip_tags($post->post_content);
-					$content = substr($content, 0, 250);
+					$ellipsis = "...";
+					
+					if (strlen($post->post_content)<180)
+						$ellipsis = "";
+							
+					$content = substr($content, 0, 250).$ellipsis;
 				?>
 					<li>
 						<div class="allftrdsngl">
