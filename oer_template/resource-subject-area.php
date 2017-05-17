@@ -275,12 +275,24 @@ $hide_title = get_option('oer_hide_subject_area_title');
 		<?php
 		}
 		
+		//Get Highlighted Resource count
 		$args = array(
 			'meta_key' => 'oer_highlight',
 			'meta_value' => 1,
 			'post_type'  => 'resource',
 			'orderby'	 => 'rand',
 			'posts_per_page' => -1,
+			'tax_query' => array(array('taxonomy' => 'resource-subject-area','terms' => array($rsltdata['term_id'])))
+		);
+		$highlighted_resources = get_posts($args);
+		$highlighted_resources_count = count($highlighted_resources);
+		
+		$args = array(
+			'meta_key' => 'oer_highlight',
+			'meta_value' => 1,
+			'post_type'  => 'resource',
+			'orderby'	 => 'rand',
+			'posts_per_page' => 12,
 			'tax_query' => array(array('taxonomy' => 'resource-subject-area','terms' => array($rsltdata['term_id'])))
 		);
 		$posts = get_posts($args);
