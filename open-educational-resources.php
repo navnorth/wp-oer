@@ -1205,7 +1205,6 @@ function load_more_highlights() {
 		$style="";
 		
 		if(!empty($postquery)) {
-			$i = 12*$page_num+1;
 			foreach($postquery as $post) {
 				setup_postdata( $post );
 				$image = wp_get_attachment_url( get_post_thumbnail_id($post->ID) );
@@ -1228,7 +1227,6 @@ function load_more_highlights() {
 				<li<?php echo $style; ?>>
 					<div class="frtdsnglwpr">
 						<?php
-						echo $i;
 						if(empty($image)){
 							$image = site_url().'/wp-content/plugins/wp-oer/images/default-icon.png';
 						}
@@ -1240,7 +1238,6 @@ function load_more_highlights() {
 					</div>
 				</li>
 			<?php
-			$i++;
 			}
 		}
 		die();
