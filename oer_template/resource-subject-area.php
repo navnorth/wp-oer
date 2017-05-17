@@ -317,8 +317,9 @@ $hide_title = get_option('oer_hide_subject_area_title');
 		{ ?>
 		<div class="oer_right_featuredwpr">
 			<div class="oer-ftrdttl">Highlighted Resources</div>
-			<ul class="featuredwpr_bxslider">
+			<ul class="featuredwpr_bxslider" data-term-id="<?php echo $rsltdata['term_id']; ?>" data-max-page="<?php echo $max_limit; ?>">
 				<?php
+				$i=1;
 				foreach($posts as $post)
 				{
 					setup_postdata( $post );
@@ -339,7 +340,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 					<li>
 						<div class="frtdsnglwpr">
 							<?php
-							
+							echo $i;
 							if(empty($image)){
 								$image = site_url().'/wp-content/plugins/wp-oer/images/default-icon.png';
 							}
@@ -351,6 +352,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 						</div>
 					</li>
 				<?php
+				$i++;
 				}
 				wp_reset_postdata();
 				?>

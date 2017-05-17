@@ -4,9 +4,8 @@ jQuery(document).ready(function(){
         jQuery('.oer_resource_category_sidebar').height(content_height);
     }
     
-    //Responsive BX SLider
-    jQuery('.featuredwpr_bxslider').bxSlider({
-		minSlides: 1,
+    var highlights_slider_config = {
+	minSlides: 1,
   		maxSlides: 3,
 		moveSlides: 1,
   		slideWidth: 320,
@@ -27,11 +26,28 @@ jQuery(document).ready(function(){
 			jQuery('.featuredwpr_bxslider').attr('data-page-number',1);
 		    }
 		    
-		    if (newIndex>=numItems-1) {
-			jQuery('.featuredwpr_bxslider').attr('data-page-number',parseInt(curPage)+1);
+		    var style = jQuery($slideElement).attr('style');
+		    
+		    if (oldIndex>=(parseInt(numItems)*parseInt(curPage))-3) {
+			
+			var term_id = jQuery('.featuredwpr_bxslider').attr('data-term-id');
+			
+			var data = {
+			    action: 'load_highlights',
+			    post_var: curPage,
+			    term_id: term_id,
+			    style: style
+			};
+			
+			jQuery.post(sajaxurl, data).done(function(response) {
+			    jQuery('.featuredwpr_bxslider').append(response);
+			    jQuery('.featuredwpr_bxslider').attr('data-page-number',parseInt(curPage)+1); 
+			});
 		    }
 		}
-	});
+    };
+    //Responsive BX SLider
+    jQuery('.featuredwpr_bxslider').bxSlider(highlights_slider_config);
 
     jQuery('.allftrdpst_slider').bxSlider({
 	    pager: false
