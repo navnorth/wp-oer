@@ -11,7 +11,26 @@ jQuery(document).ready(function(){
 		moveSlides: 1,
   		slideWidth: 320,
   		slideMargin: 10,
-		pager: false
+		pager: false,
+		onSliderLoad: function(currentIndex) {
+		    jQuery('.featuredwpr_bxslider').attr('data-page-number',1);
+		    jQuery('.featuredwpr_bxslider').attr('data-items',12);
+		},
+		onSlideNext: function($slideElement, oldIndex, newIndex) {
+		    var numItems = jQuery('.featuredwpr_bxslider').attr('data-items');
+		    if (typeof numItems === typeof undefined || numItems === false) {
+			jQuery('.featuredwpr_bxslider').attr('data-items',12)
+		    }
+		    
+		    var curPage = jQuery('.featuredwpr_bxslider').attr('data-page-number');
+		    if (typeof curPage === typeof undefined || curPage === false) {
+			jQuery('.featuredwpr_bxslider').attr('data-page-number',1);
+		    }
+		    
+		    if (newIndex>=numItems-1) {
+			jQuery('.featuredwpr_bxslider').attr('data-page-number',parseInt(curPage)+1);
+		    }
+		}
 	});
 
     jQuery('.allftrdpst_slider').bxSlider({

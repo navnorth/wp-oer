@@ -275,7 +275,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 		<?php
 		}
 		
-		//Get Highlighted Resource count
+		//Get Highlighted Resources count
 		$args = array(
 			'meta_key' => 'oer_highlight',
 			'meta_value' => 1,
@@ -287,14 +287,30 @@ $hide_title = get_option('oer_hide_subject_area_title');
 		$highlighted_resources = get_posts($args);
 		$highlighted_resources_count = count($highlighted_resources);
 		
+		$items_per_load = 12;
+		
 		$args = array(
 			'meta_key' => 'oer_highlight',
 			'meta_value' => 1,
 			'post_type'  => 'resource',
 			'orderby'	 => 'rand',
-			'posts_per_page' => 12,
+			'posts_per_page' => $items_per_load,
 			'tax_query' => array(array('taxonomy' => 'resource-subject-area','terms' => array($rsltdata['term_id'])))
 		);
+		$max_resources = new WP_Query($args);
+		$max_limit = $max_resources->max_num_pages;
+		
+		$paged = 1;
+		
+		$args = array(
+			'meta_key' => 'oer_highlight',
+			'meta_value' => 1,
+			'post_type'  => 'resource',
+			'orderby'	 => 'rand',
+			'posts_per_page' => $items_per_load*$paged,
+			'tax_query' => array(array('taxonomy' => 'resource-subject-area','terms' => array($rsltdata['term_id'])))
+		);
+		
 		$posts = get_posts($args);
 		
 		if(!empty($posts))
