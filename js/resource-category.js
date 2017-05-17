@@ -15,6 +15,7 @@ jQuery(document).ready(function(){
   		slideWidth: 320,
   		slideMargin: 10,
 		pager: false,
+		infiniteLoop: false,
 		onSliderLoad: function(currentIndex) {
 		    jQuery('.featuredwpr_bxslider').attr('data-page-number',1);
 		    jQuery('.featuredwpr_bxslider').attr('data-items',12);
