@@ -46,7 +46,7 @@ jQuery(document).ready(function(){
 			};
 			
 			jQuery.post(sajaxurl, data).done(function(response) {
-			    jQuery('.featuredwpr_bxslider').last().append(response);
+			    jQuery('.featuredwpr_bxslider:not(.bx-clone)').last().append(response);
 			    jQuery('.featuredwpr_bxslider').attr('data-page-number',parseInt(curPage)+1); 
 			});
 		    }
