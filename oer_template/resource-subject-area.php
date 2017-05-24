@@ -300,17 +300,6 @@ $hide_title = get_option('oer_hide_subject_area_title');
 		$max_resources = new WP_Query($args);
 		$max_limit = $max_resources->max_num_pages;
 		
-		$paged = 1;
-		
-		$args = array(
-			'meta_key' => 'oer_highlight',
-			'meta_value' => 1,
-			'post_type'  => 'resource',
-			'orderby'	 => 'rand',
-			'posts_per_page' => $items_per_load*$paged,
-			'tax_query' => array(array('taxonomy' => 'resource-subject-area','terms' => array($rsltdata['term_id'])))
-		);
-		
 		$args = array(
 			'meta_key' => 'oer_highlight',
 			'meta_value' => 1,
@@ -355,7 +344,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 							}
 							$new_image_url = oer_resize_image( $image, 220, 180, true );
 							?>
-							<a href="<?php echo get_permalink($post->ID);?>"><div class="img"><img class="lazy" data-original="<?php echo $new_image_url;?>" alt="<?php echo $title;?>"></div></a>
+							<a href="<?php echo get_permalink($post->ID);?>"><div class="img"><img src="<?php echo $new_image_url;?>" alt="<?php echo $title;?>"></div></a>
 							<div class="ttl"><a href="<?php echo get_permalink($post->ID);?>"><?php echo $title;?></a></div>
 							<div class="desc"><?php echo apply_filters('the_content',$content); ?></div>
 						</div>
