@@ -287,7 +287,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 		$highlighted_resources = get_posts($args);
 		$highlighted_resources_count = count($highlighted_resources);
 		
-		$items_per_load = 12;
+		$items_per_load = 4;
 		
 		$args = array(
 			'meta_key' => 'oer_highlight',
@@ -311,14 +311,24 @@ $hide_title = get_option('oer_hide_subject_area_title');
 			'tax_query' => array(array('taxonomy' => 'resource-subject-area','terms' => array($rsltdata['term_id'])))
 		);
 		
+		$args = array(
+			'meta_key' => 'oer_highlight',
+			'meta_value' => 1,
+			'post_type'  => 'resource',
+			'orderby'	 => 'rand',
+			'posts_per_page' => -1,
+			'tax_query' => array(array('taxonomy' => 'resource-subject-area','terms' => array($rsltdata['term_id'])))
+		);
+		
 		$posts = get_posts($args);
 		
 		if(!empty($posts))
 		{ ?>
 		<div class="oer_right_featuredwpr">
 			<div class="oer-ftrdttl">Highlighted Resources</div>
-			<ul class="featuredwpr_bxslider" data-term-id="<?php echo $rsltdata['term_id']; ?>" data-max-page="<?php echo $max_limit; ?>">
+			<ul class="featuredwpr_bxslider" data-term-id="<?php echo $rsltdata['term_id']; ?>" data-max-page="<?php echo $max_limit; ?>" data-count="<?php echo $highlighted_resources_count; ?>">
 				<?php
+				$i=1;
 				foreach($posts as $post)
 				{
 					setup_postdata( $post );
@@ -336,7 +346,8 @@ $hide_title = get_option('oer_hide_subject_area_title');
 					
 					$content =  trim(substr($post->post_content,0,$length)).$ellipsis;
 				?>
-					<li>
+					<li data-id="<?php echo $post->ID; ?>">
+					<?php if ($i<=$items_per_load) { ?>
 						<div class="frtdsnglwpr">
 							<?php
 							if(empty($image)){
@@ -344,12 +355,14 @@ $hide_title = get_option('oer_hide_subject_area_title');
 							}
 							$new_image_url = oer_resize_image( $image, 220, 180, true );
 							?>
-							<a href="<?php echo get_permalink($post->ID);?>"><div class="img"><img src="<?php echo $new_image_url;?>" alt="<?php echo $title;?>"></div></a>
+							<a href="<?php echo get_permalink($post->ID);?>"><div class="img"><img class="lazy" data-original="<?php echo $new_image_url;?>" alt="<?php echo $title;?>"></div></a>
 							<div class="ttl"><a href="<?php echo get_permalink($post->ID);?>"><?php echo $title;?></a></div>
 							<div class="desc"><?php echo apply_filters('the_content',$content); ?></div>
 						</div>
+					<?php } ?>
 					</li>
 				<?php
+				$i++;
 				}
 				wp_reset_postdata();
 				?>

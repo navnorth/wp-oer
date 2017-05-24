@@ -4,55 +4,37 @@ jQuery(document).ready(function(){
         jQuery('.oer_resource_category_sidebar').height(content_height);
     }
     
+    jQuery("img.lazy").lazyload({effect:"show"});
     var highlights_slider_config = {
-	
-    };
-    //Responsive BX SLider
-    jQuery('.featuredwpr_bxslider').bxSlider({
 		minSlides: 1,
   		maxSlides: 3,
 		moveSlides: 1,
   		slideWidth: 320,
   		slideMargin: 10,
 		pager: false,
-		infiniteLoop: false,
-		onSliderLoad: function(currentIndex) {
-		    jQuery('.featuredwpr_bxslider').attr('data-page-number',1);
-		    jQuery('.featuredwpr_bxslider').attr('data-items',12);
-		},
-		onSlideNext: function($slideElement, oldIndex, newIndex) {
-		    var numItems = jQuery('.featuredwpr_bxslider').attr('data-items');
-		    if (typeof numItems === typeof undefined || numItems === false) {
-			jQuery('.featuredwpr_bxslider').attr('data-items',12)
-		    }
-		    
-		    var curPage = jQuery('.featuredwpr_bxslider').attr('data-page-number');
-		    if (typeof curPage === typeof undefined || curPage === false) {
-			jQuery('.featuredwpr_bxslider').attr('data-page-number',1);
-		    }
-		    
-		    var maxPage = jQuery('.featuredwpr_bxslider').attr('data-max-page');
-		    
-		    var style = jQuery($slideElement).attr('style');
-		    
-		    if (oldIndex>=(parseInt(numItems)*parseInt(curPage))-4 && parseInt(curPage)<parseInt(maxPage)) {
-			
-			var term_id = jQuery('.featuredwpr_bxslider').attr('data-term-id');
-			
+		onSlideBefore: function($slideElement, oldIndex, newIndex){
+		    var next_resource = $slideElement.next().next().next();
+		    var resource_id = next_resource.attr('data-id');
+		    if (next_resource.find('.frtdsnglwpr').length==0) {
 			var data = {
-			    action: 'load_highlights',
-			    post_var: curPage,
-			    term_id: term_id,
-			    style: style
+			    action: 'load_highlight',
+			    post_var: resource_id
 			};
 			
 			jQuery.post(sajaxurl, data).done(function(response) {
-			    jQuery('.featuredwpr_bxslider:not(.bx-clone)').last().append(response);
-			    jQuery('.featuredwpr_bxslider').attr('data-page-number',parseInt(curPage)+1); 
+			    next_resource.append(jQuery.trim(response));
 			});
 		    }
 		}
-	});
+	};
+    
+    //Responsive BX SLider
+    var highlight_slider = jQuery('.featuredwpr_bxslider').bxSlider(highlights_slider_config);
+    
+    jQuery(".featuredwpr_bxslider a.bx-prev, .featuredwpr_bxslider a.bx-next").bind("click", function() {
+	setTimeout(function(e) { jQuery(window).trigger("scroll"); }, 10); //handle the lazy load
+	e.preventDefault();
+    });
 
     jQuery('.allftrdpst_slider').bxSlider({
 	    pager: false

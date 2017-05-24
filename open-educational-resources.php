@@ -1189,7 +1189,7 @@ function load_more_highlights() {
 
 	if (isset($_POST["post_var"])) {
 		$page_num = $_POST["post_var"];
-		
+		$items_per_load = 4;
 		$term_id = $_POST['term_id'];
 		
 		$args = array(
@@ -1197,7 +1197,7 @@ function load_more_highlights() {
 			'meta_value' => 1,
 			'post_type'  => 'resource',
 			'orderby'	 => 'rand',
-			'posts_per_page' => 12*$page_num,
+			'posts_per_page' => $items_per_load*$page_num,
 			'tax_query' => array(array('taxonomy' => 'resource-subject-area','terms' => array($term_id)))
 		);
 
@@ -1245,6 +1245,65 @@ function load_more_highlights() {
 }
 add_action('wp_ajax_load_highlights', 'load_more_highlights');
 add_action('wp_ajax_nopriv_load_highlights', 'load_more_highlights');
+
+/* Load Highlighted Resource based on ID Ajax Callback */
+function load_highlight() {
+	global $wpdb, $wp_query;
+
+	if (isset($_POST["post_var"])) {
+		$resource_id = $_POST["post_var"];
+		
+		$args = array(
+			'p' => $resource_id,
+			'meta_key' => 'oer_highlight',
+			'meta_value' => 1,
+			'post_type'  => 'resource',
+			'orderby'	 => 'rand',
+			'posts_per_page' => -1,
+			'tax_query' => array(array('taxonomy' => 'resource-subject-area','terms' => array($term_id)))
+		);
+
+		$postquery = get_posts($args);
+		$style="";
+		
+		if(!empty($postquery)) {
+			foreach($postquery as $post) {
+				setup_postdata( $post );
+				$image = wp_get_attachment_url( get_post_thumbnail_id($post->ID) );
+				$title =  $post->post_title;
+				
+				$offset = 0;
+				$ellipsis = "...";
+				if (strlen($post->post_content)>150) {
+					$offset = strpos($post->post_content, ' ', 150);
+				} else
+					$ellipsis = "";
+				
+				$length = 150;
+				
+				$content =  trim(substr($post->post_content,0,$length)).$ellipsis;
+				
+				if (isset($_POST['style']))
+					$style = ' style="'.$_POST['style'].'"';
+				?>
+				<div class="frtdsnglwpr">
+					<?php
+					if(empty($image)){
+						$image = site_url().'/wp-content/plugins/wp-oer/images/default-icon.png';
+					}
+					$new_image_url = oer_resize_image( $image, 220, 180, true );
+					?>
+					<a href="<?php echo get_permalink($post->ID);?>"><div class="img"><img src="<?php echo $new_image_url;?>" alt="<?php echo $title;?>"></div></a>
+					<div class="ttl"><a href="<?php echo get_permalink($post->ID);?>"><?php echo $title;?></a></div>
+					<div class="desc"><?php echo apply_filters('the_content',$content); ?></div>
+				</div><?php
+			}
+		}
+		die();
+	}
+}
+add_action('wp_ajax_load_highlight', 'load_highlight');
+add_action('wp_ajax_nopriv_load_highlight', 'load_highlight');
 
 /*Enqueue ajax url on frontend*/
 add_action('wp_head','resource_ajaxurl', 8);
