@@ -4,7 +4,6 @@ jQuery(document).ready(function(){
         jQuery('.oer_resource_category_sidebar').height(content_height);
     }
     
-    jQuery("img.lazy").lazyload({effect:"show"});
     var highlights_slider_config = {
 		minSlides: 1,
   		maxSlides: 3,
