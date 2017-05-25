@@ -192,6 +192,167 @@ function debug_log($message) {
 		error_log($message);
 }
 
+// Taxonomy rewrite
+function taxonomy_slug_rewrite($wp_rewrite) {
+    $rules = array();
+    
+    // get all custom taxonomies
+    $taxonomies = get_taxonomies(array('_builtin' => false), 'objects');
+    
+    // get all custom post types
+    $post_types = get_post_types(array('public' => true, '_builtin' => false), 'objects');
+
+    foreach ($post_types as $post_type) {
+        foreach ($taxonomies as $taxonomy) {
+
+            // go through all post types which this taxonomy is assigned to
+            foreach ($taxonomy->object_type as $object_type) {
+
+                // check if taxonomy is registered for this custom type
+                if ($object_type == $post_type->rewrite['slug']) {
+
+                    // get category objects
+                    $terms = get_categories(array('type' => $object_type, 'taxonomy' => $taxonomy->name, 'hide_empty' => 0));
+
+                    // make rules
+                    foreach ($terms as $term) {
+                        $rules[$object_type . '/' . $term->slug . '/([^/]*)/?'] = 'index.php?pagename=$matches[1]&' . $term->taxonomy . '=' . $term->slug;
+                    }
+                }
+            }
+        }
+    }
+    
+    // merge with global rules
+    $wp_rewrite->rules = $rules + $wp_rewrite->rules;
+}
+add_filter('generate_rewrite_rules', 'taxonomy_slug_rewrite');
+
+// Get Permalink Structure
+function get_permalink_structure( $post_type ) {
+	if ( is_string( $post_type ) ) {
+		$pt_object = get_post_type_object( $post_type );
+	} else {
+		$pt_object = $post_type;
+	}
+
+	if ( ! empty( $pt_object->cptp_permalink_structure ) ) {
+		$structure = $pt_object->cptp_permalink_structure;
+	} else {
+
+		$structure = get_option( $pt_object->name . '_structure' );
+	}
+
+	return apply_filters( 'OER_' . $pt_object->name . '_structure', $structure );
+}
+
+//Get Date Front
+function get_date_front( $post_type ) {
+	$structure = get_permalink_structure( $post_type );
+
+	$front = '';
+
+	preg_match_all( '/%.+?%/', $structure, $tokens );
+	$tok_index = 1;
+	foreach ( (array) $tokens[0] as $token ) {
+		if ( '%post_id%' == $token && ( $tok_index <= 3 ) ) {
+			$front = '/date';
+			break;
+		}
+		$tok_index ++;
+	}
+
+	return apply_filters( 'OER_date_front', $front, $post_type, $structure );
+}
+
+// Taxonomy Replace Tag
+function create_taxonomy_replace_tag( $post_id, $permalink ) {
+	$search  = array();
+	$replace = array();
+
+	$taxonomies = get_taxonomies();
+
+	foreach ( $taxonomies as $taxonomy => $objects ) {
+
+		if ( false !== strpos( $permalink, '%' . $taxonomy . '%' ) ) {
+			$terms = get_the_terms( $post_id, $taxonomy );
+
+			if ( $terms and ! is_wp_error( $terms ) ) {
+				$parents  = array_map( "get_term_parent", $terms );
+				
+				$newTerms = array();
+				foreach ( $terms as $key => $term ) {
+					if ( ! in_array( $term->term_id, $parents ) ) {
+						$newTerms[] = $term;
+					}
+				}
+
+				$term_obj  = reset( $newTerms ); 
+				$term_slug = $term_obj->slug;
+
+				if ( isset( $term_obj->parent ) and 0 != $term_obj->parent ) {
+					$term_slug = get_taxonomy_parents_slug( $term_obj->parent, $taxonomy, '/', true ) . $term_slug;
+				}
+			}
+
+			if ( isset( $term_slug ) ) {
+				$search[]  = '%' . $taxonomy . '%';
+				$replace[] = $term_slug;
+			}
+		}
+	}
+
+	return array( 'search' => $search, 'replace' => $replace );
+}
+
+function get_taxonomy_parents_slug( $term, $taxonomy = 'category', $separator = '/', $nicename = false, $visited = array() ) {
+	$chain  = '';
+	$parent = get_term( $term, $taxonomy );
+	if ( is_wp_error( $parent ) ) {
+		return $parent;
+	}
+
+	if ( $nicename ) {
+		$name = $parent->slug;
+	} else {
+		$name = $parent->name;
+	}
+
+	if ( $parent->parent && ( $parent->parent != $parent->term_id ) && ! in_array( $parent->parent, $visited ) ) {
+		$visited[] = $parent->parent;
+		$chain .= get_taxonomy_parents_slug( $parent->parent, $taxonomy, $separator, $nicename, $visited );
+	}
+	$chain .= $name . $separator;
+
+	return $chain;
+}
+
+function get_term_parent( $term ) {
+	if ( isset( $term->parent ) and $term->parent > 0 ) {
+		return $term->parent;
+	}
+}
+
+function sort_terms( $terms, $orderby = 'term_id', $order = 'ASC' ) {
+
+	if ( function_exists( 'wp_list_sort' ) ) {
+		$terms = wp_list_sort( $terms, 'term_id', 'ASC' );
+	} else {
+
+		if ( 'name' == $orderby ) {
+			usort( $terms, '_usort_terms_by_name' );
+		} else {
+			usort( $terms, '_usort_terms_by_ID' );
+		}
+
+		if ( 'DESC' == $order ) {
+			$terms = array_reverse( $terms );
+		}
+	}
+
+	return $terms;
+}
+
 //Get Category Child for Sidebar
 if (!function_exists('get_oer_category_child')) {
 	function get_oer_category_child($categoryid, $child_term_id = 0)
@@ -223,8 +384,6 @@ if (!function_exists('get_oer_category_child')) {
 			echo '<ul class="oer-category">';
 			foreach($catchilds as $catchild)
 			{
-				//var_dump($catchild->term_id);
-				//var_dump($rsltdata['term_id']);
 				$children = get_term_children($catchild->term_id, 'resource-subject-area');
 				//current class
 				if($rsltdata['term_id'] == $catchild->term_id)

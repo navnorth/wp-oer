@@ -213,7 +213,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 						$links = array();			
 						foreach ( $ancestors as $ancestor ) {
 							$termObj = get_term_by( 'term' , $ancestor , 'resource-subject-area' );
-							//var_dump($termObj);
+							
 							$tmp  = array();
 							$tmp['title'] 	= $termObj->name;
 							$tmp['url'] 	= site_url() .'/resource-subject-area/'. $termObj->slug;

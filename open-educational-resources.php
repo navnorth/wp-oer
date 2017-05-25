@@ -1328,6 +1328,357 @@ function initSession(){
 		session_start();
 	}
 }
+
+/** Parse Request **/
+function oer_parse_request( $obj ) {
+	$taxes = get_taxonomies( array( 'show_ui' => true, '_builtin' => false ), 'objects' );
+	foreach ( $taxes as $key => $tax ) {
+		if ( isset( $obj->query_vars[ $tax->name ] ) and is_string( $obj->query_vars[ $tax->name ] ) ) {
+			if ( false !== strpos( $obj->query_vars[ $tax->name ], '/' ) ) {
+				$query_vars = explode( '/', $obj->query_vars[ $tax->name ] );
+				if ( is_array( $query_vars ) ) {
+					$obj->query_vars[ $tax->name ] = array_pop( $query_vars );
+				}
+			}
+		}
+	}
+}
+add_action( 'parse_request', 'oer_parse_request' );
+
+/** Register Post Type Rewrite Rules **/
+function register_post_type_rules( $post_type, $args ) {
+
+	if ($post_type=="resource") {
+		/** @var WP_Rewrite $wp_rewrite */
+		global $wp_rewrite;
+	
+		if ( $args->_builtin or ! $args->publicly_queryable ) {
+			return;
+		}
+	
+		if ( false === $args->rewrite ) {
+			return;
+		}
+	
+		$permalink = get_permalink_structure( $post_type );
+		
+		if ( ! $permalink ) {
+			$permalink = '/%postname%/';
+		}
+		
+		$permalink = '%' . $post_type . '_slug%' . $permalink;
+		$permalink = str_replace( '%postname%', '%' . $post_type . '%', $permalink );
+		
+		add_rewrite_tag( '%' . $post_type . '_slug%', '(' . $args->rewrite['slug'] . ')', 'post_type=' . $post_type . '&slug=' );
+	
+		$taxonomies = get_taxonomies( array( 'show_ui' => true, '_builtin' => false ), 'objects' );
+		foreach ( $taxonomies as $taxonomy => $objects ) :
+			$wp_rewrite->add_rewrite_tag( "%$taxonomy%", '(.+?)', "$taxonomy=" );
+		endforeach;
+	
+		$rewrite_args = $args->rewrite;
+		if ( ! is_array( $rewrite_args ) ) {
+			$rewrite_args = array( 'with_front' => $args->rewrite );
+		}
+	
+		$slug = $args->rewrite['slug'];
+		
+		if ( $args->has_archive ) {
+			if ( is_string( $args->has_archive ) ) {
+				$slug = $args->has_archive;
+			};
+	
+			if ( $args->rewrite['with_front'] ) {
+				$slug = substr( $wp_rewrite->front, 1 ) . $slug;
+			}
+	
+			$date_front = get_date_front( $post_type );
+	
+			add_rewrite_rule( $slug . $date_front . '/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/feed/(feed|rdf|rss|rss2|atom)/?$', 'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&feed=$matches[4]&post_type=' . $post_type, 'top' );
+			add_rewrite_rule( $slug . $date_front . '/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/(feed|rdf|rss|rss2|atom)/?$', 'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&feed=$matches[4]&post_type=' . $post_type, 'top' );
+			add_rewrite_rule( $slug . $date_front . '/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/page/?([0-9]{1,})/?$', 'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&paged=$matches[4]&post_type=' . $post_type, 'top' );
+			add_rewrite_rule( $slug . $date_front . '/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/?$', 'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&post_type=' . $post_type, 'top' );
+			add_rewrite_rule( $slug . $date_front . '/([0-9]{4})/([0-9]{1,2})/feed/(feed|rdf|rss|rss2|atom)/?$', 'index.php?year=$matches[1]&monthnum=$matches[2]&feed=$matches[3]&post_type=' . $post_type, 'top' );
+			add_rewrite_rule( $slug . $date_front . '/([0-9]{4})/([0-9]{1,2})/(feed|rdf|rss|rss2|atom)/?$', 'index.php?year=$matches[1]&monthnum=$matches[2]&feed=$matches[3]&post_type=' . $post_type, 'top' );
+			add_rewrite_rule( $slug . $date_front . '/([0-9]{4})/([0-9]{1,2})/page/?([0-9]{1,})/?$', 'index.php?year=$matches[1]&monthnum=$matches[2]&paged=$matches[3]&post_type=' . $post_type, 'top' );
+			add_rewrite_rule( $slug . $date_front . '/([0-9]{4})/([0-9]{1,2})/?$', 'index.php?year=$matches[1]&monthnum=$matches[2]&post_type=' . $post_type, 'top' );
+			add_rewrite_rule( $slug . $date_front . '/([0-9]{4})/feed/(feed|rdf|rss|rss2|atom)/?$', 'index.php?year=$matches[1]&feed=$matches[2]&post_type=' . $post_type, 'top' );
+			add_rewrite_rule( $slug . $date_front . '/([0-9]{4})/(feed|rdf|rss|rss2|atom)/?$', 'index.php?year=$matches[1]&feed=$matches[2]&post_type=' . $post_type, 'top' );
+			add_rewrite_rule( $slug . $date_front . '/([0-9]{4})/page/?([0-9]{1,})/?$', 'index.php?year=$matches[1]&paged=$matches[2]&post_type=' . $post_type, 'top' );
+			add_rewrite_rule( $slug . $date_front . '/([0-9]{4})/?$', 'index.php?year=$matches[1]&post_type=' . $post_type, 'top' );
+			add_rewrite_rule( $slug . '/author/([^/]+)/page/?([0-9]{1,})/?$', 'index.php?author_name=$matches[1]&paged=$matches[2]&post_type=' . $post_type, 'top' );
+			add_rewrite_rule( $slug . '/author/([^/]+)/?$', 'index.php?author_name=$matches[1]&post_type=' . $post_type, 'top' );
+	
+			if ( in_array( 'category', $args->taxonomies ) ) {
+	
+				$category_base = get_option( 'category_base' );
+				if ( ! $category_base ) {
+					$category_base = 'category';
+				}
+	
+				add_rewrite_rule( $slug . '/' . $category_base . '/([^/]+)/page/?([0-9]{1,})/?$', 'index.php?category_name=$matches[1]&paged=$matches[2]&post_type=' . $post_type, 'top' );
+				add_rewrite_rule( $slug . '/' . $category_base . '/([^/]+)/?$', 'index.php?category_name=$matches[1]&post_type=' . $post_type, 'top' );
+	
+			}
+	
+			do_action( 'OER_registered_' . $post_type . '_rules', $args, $slug );
+		}
+	
+		$rewrite_args['walk_dirs'] = false;
+		add_permastruct( $post_type, $permalink, $rewrite_args );
+	}
+
+}
+add_action( 'registered_post_type', 'register_post_type_rules', 10, 2 );
+
+function oer_post_type_link( $post_link, $post, $leavename ) {
+	global $wp_rewrite;
+
+	if ( ! $wp_rewrite->permalink_structure ) {
+		return $post_link;
+	}
+
+	$draft_or_pending = isset( $post->post_status ) && in_array( $post->post_status, array(
+			'draft',
+			'pending',
+			'auto-draft',
+	) );
+	if ( $draft_or_pending and ! $leavename ) {
+		return $post_link;
+	}
+
+	$post_type = $post->post_type;
+	$pt_object = get_post_type_object( $post_type );
+
+	if ( false === $pt_object->rewrite ) {
+		return $post_link;
+	}
+
+	$permalink = $wp_rewrite->get_extra_permastruct( $post_type );
+
+	$permalink = str_replace( '%post_id%', $post->ID, $permalink );
+	$permalink = str_replace( '%' . $post_type . '_slug%', $pt_object->rewrite['slug'], $permalink );
+
+	// has parent.
+	$parentsDirs = '';
+	if ( $pt_object->hierarchical ) {
+		if ( ! $leavename ) {
+			$postId = $post->ID;
+			while ( $parent = get_post( $postId )->post_parent ) {
+				$parentsDirs = get_post( $parent )->post_name . '/' . $parentsDirs;
+				$postId      = $parent;
+			}
+		}
+	}
+
+	$permalink = str_replace( '%' . $post_type . '%', $parentsDirs . '%' . $post_type . '%', $permalink );
+
+	if ( ! $leavename ) {
+		$permalink = str_replace( '%' . $post_type . '%', $post->post_name, $permalink );
+	}
+
+	// %post_id%/attachment/%attachement_name%;
+	if ( isset( $_GET['post'] ) && $_GET['post'] != $post->ID ) {
+		$parent_structure = trim( get_permalink_structure( $post->post_type ), '/' );
+		$parent_dirs      = explode( '/', $parent_structure );
+		if ( is_array( $parent_dirs ) ) {
+			$last_dir = array_pop( $parent_dirs );
+		} else {
+			$last_dir = $parent_dirs;
+		}
+
+		if ( '%post_id%' == $parent_structure or '%post_id%' == $last_dir ) {
+			$permalink = $permalink . '/attachment/';
+		}
+	}
+
+	$search  = array();
+	$replace = array();
+
+	$replace_tag = create_taxonomy_replace_tag( $post->ID, $permalink );
+	$search      = $search + $replace_tag['search'];
+	$replace     = $replace + $replace_tag['replace'];
+
+	// from get_permalink.
+	$category = '';
+	if ( false !== strpos( $permalink, '%category%' ) ) {
+		$categories = get_the_category( $post->ID );
+		if ( $categories ) {
+			$categories = sort_terms( $categories );
+
+			$category_object = apply_filters( 'post_link_category', $categories[0], $categories, $post );
+			$category_object = get_term( $category_object, 'category' );
+			$category        = $category_object->slug;
+			if ( $parent = $category_object->parent ) {
+				$category = get_category_parents( $parent, false, '/', true ) . $category;
+			}
+		}
+		// show default category in permalinks, without
+		// having to assign it explicitly
+		if ( empty( $category ) ) {
+			$default_category = get_term( get_option( 'default_category' ), 'category' );
+			$category         = is_wp_error( $default_category ) ? '' : $default_category->slug;
+		}
+	}
+
+	$author = '';
+	if ( false !== strpos( $permalink, '%author%' ) ) {
+		$authordata = get_userdata( $post->post_author );
+		$author     = $authordata->user_nicename;
+	}
+
+	$post_date = strtotime( $post->post_date );
+	$permalink = str_replace(
+		array(
+			'%year%',
+			'%monthnum%',
+			'%day%',
+			'%hour%',
+			'%minute%',
+			'%second%',
+			'%category%',
+			'%author%',
+		),
+		array(
+			date( 'Y', $post_date ),
+			date( 'm', $post_date ),
+			date( 'd', $post_date ),
+			date( 'H', $post_date ),
+			date( 'i', $post_date ),
+			date( 's', $post_date ),
+			$category,
+			$author,
+		),
+		$permalink
+	);
+	$permalink = str_replace( $search, $replace, $permalink );
+	$permalink = home_url( $permalink );
+	return $permalink;
+}
+add_filter( 'post_type_link', 'oer_post_type_link', 10, 3 );
+
+/** Register Taxonomy Rules **/
+function register_taxonomy_rules( $taxonomy, $object_type, $args ) {
+	global $wp_rewrite;
+
+	/* for 4.7 */
+	$args = (array) $args;
+
+	if ( ! empty( $args['_builtin'] ) ) {
+		return;
+	}
+
+	if ( false === $args['rewrite'] ) {
+		return;
+	}
+
+	$post_types = $args['object_type'];
+	foreach ( $post_types as $post_type ) :
+		$post_type_obj = get_post_type_object( $post_type );
+		if ( ! empty( $post_type_obj->rewrite['slug'] ) ) {
+			$slug = $post_type_obj->rewrite['slug'];
+		} else {
+			$slug = $post_type;
+		}
+
+		if ( ! empty( $post_type_obj->has_archive ) && is_string( $post_type_obj->has_archive ) ) {
+			$slug = $post_type_obj->has_archive;
+		};
+
+		if ( ! empty( $post_type_obj->rewrite['with_front'] ) ) {
+			$slug = substr( $wp_rewrite->front, 1 ) . $slug;
+		}
+
+		if ( 'category' == $taxonomy ) {
+			$taxonomy_slug = ( $cb = get_option( 'category_base' ) ) ? $cb : $taxonomy;
+			$taxonomy_key  = 'category_name';
+		} else {
+			// Edit by [Xiphe]
+			if ( isset( $args['rewrite']['slug'] ) ) {
+				$taxonomy_slug = $args['rewrite']['slug'];
+			} else {
+				$taxonomy_slug = $taxonomy;
+			}
+			// [Xiphe] stop
+			$taxonomy_key = $taxonomy;
+		}
+
+		$rules = array(
+			// feed.
+			array(
+				'regex'    => '%s/(.+?)/feed/(feed|rdf|rss|rss2|atom)/?$',
+				'redirect' => "index.php?{$taxonomy_key}=\$matches[1]&feed=\$matches[2]",
+			),
+			array(
+				'regex'    => '%s/(.+?)/(feed|rdf|rss|rss2|atom)/?$',
+				'redirect' => "index.php?{$taxonomy_key}=\$matches[1]&feed=\$matches[2]",
+			),
+			// year
+			array(
+				'regex'    => '%s/(.+?)/date/([0-9]{4})/?$',
+				'redirect' => "index.php?{$taxonomy_key}=\$matches[1]&year=\$matches[2]",
+			),
+			array(
+				'regex'    => '%s/(.+?)/date/([0-9]{4})/page/?([0-9]{1,})/?$',
+				'redirect' => "index.php?{$taxonomy_key}=\$matches[1]&year=\$matches[2]&paged=\$matches[3]",
+			),
+			// monthnum
+			array(
+				'regex'    => '%s/(.+?)/date/([0-9]{4})/([0-9]{1,2})/?$',
+				'redirect' => "index.php?{$taxonomy_key}=\$matches[1]&year=\$matches[2]&monthnum=\$matches[3]",
+			),
+			array(
+				'regex'    => '%s/(.+?)/date/([0-9]{4})/([0-9]{1,2})/page/?([0-9]{1,})/?$',
+				'redirect' => "index.php?{$taxonomy_key}=\$matches[1]&year=\$matches[2]&monthnum=\$matches[3]&paged=\$matches[4]",
+			),
+			// day
+			array(
+				'regex'    => '%s/(.+?)/date/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/?$',
+				'redirect' => "index.php?{$taxonomy_key}=\$matches[1]&year=\$matches[2]&monthnum=\$matches[3]&day=\$matches[4]",
+			),
+			array(
+				'regex'    => '%s/(.+?)/date/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/page/?([0-9]{1,})/?$',
+				'redirect' => "index.php?{$taxonomy_key}=\$matches[1]&year=\$matches[2]&monthnum=\$matches[3]&day=\$matches[4]&paged=\$matches[5]",
+			),
+			// paging
+			array(
+				'regex'    => '%s/(.+?)/page/?([0-9]{1,})/?$',
+				'redirect' => "index.php?{$taxonomy_key}=\$matches[1]&paged=\$matches[2]",
+			),
+			// tax archive.
+			array(
+				'regex'    => '%s/(.+?)/?$',
+				'redirect' => "index.php?{$taxonomy_key}=\$matches[1]",
+			),
+		);
+
+		// no post_type slug.
+		foreach ( $rules as $rule ) {
+			$regex    = sprintf( $rule['regex'], "{$taxonomy_slug}" );
+			$redirect = $rule['redirect'];
+			add_rewrite_rule( $regex, $redirect, 'top' );
+		}
+
+		if ( get_option( 'add_post_type_for_tax' ) ) {
+			foreach ( $rules as $rule ) {
+				$regex    = sprintf( $rule['regex'], "{$slug}/{$taxonomy_slug}" );
+				$redirect = $rule['redirect'] . "&post_type={$post_type}";
+				add_rewrite_rule( $regex, $redirect, 'top' );
+			}
+		} else {
+			foreach ( $rules as $rule ) {
+				$regex    = sprintf( $rule['regex'], "{$slug}/{$taxonomy_slug}" );
+				$redirect = $rule['redirect'];
+				add_rewrite_rule( $regex, $redirect, 'top' );
+			}
+		}
+
+		do_action( 'OER_registered_' . $taxonomy . '_rules', $object_type, $args, $taxonomy_slug );
+
+	endforeach;
+}
+add_action( 'registered_taxonomy', 'register_taxonomy_rules' , 10, 3 );
+
 //front side shortcode
 //include_once(OER_PATH.'includes/resource_front.php');
 ?>
