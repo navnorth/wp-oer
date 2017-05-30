@@ -1247,7 +1247,7 @@ function oer_importResources($default=false) {
 					update_post_meta( $post_id , 'oer_publisheremail' , $oer_publisheremail);
 				}
 				//saving meta fields
-	
+				
 				if(!empty($oer_resourceurl))
 				{
 					$url = $oer_resourceurl;

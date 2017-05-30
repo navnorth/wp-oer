@@ -84,7 +84,7 @@ if(!empty($post_terms))
 				$img_width = oer_get_image_width('large');
 				$img_height = oer_get_image_height('large');
 				
-			if(!empty($img_path))
+			if(!empty($img_url))
     				{
     					if ( is_wp_error($image_editor) ) {
 						debug_log("Can't get Image editor to resize Resource screenshot.");

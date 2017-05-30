@@ -546,8 +546,8 @@ function oer_save_customfields()
 		{
 			update_post_meta( $post->ID , 'oer_publisheremail' , $_POST['oer_publisheremail']);
 		}
-
-		if(isset($_POST['oer_resourceurl']))
+		
+		if(!empty($_POST['oer_resourceurl']))
 		{
 			$url = $_POST['oer_resourceurl'];
 			$upload_dir = wp_upload_dir();
