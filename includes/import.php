@@ -10,7 +10,7 @@ $type = null;
 //Resource Import
 if(isset($_POST['resrc_imprt']))
 {
-	$import_response = importResources();
+	$import_response = oer_importResources();
 	if ($import_response){
 	    $message = $import_response["message"];
 	    $type = $import_response["type"];
@@ -20,7 +20,7 @@ if(isset($_POST['resrc_imprt']))
 //Subject Areas Bulk Import
 if(isset($_POST['bulk_imprt']))
 {
-    $import_response = importSubjectAreas();
+    $import_response = oer_importSubjectAreas();
     if ($import_response){
 	$message = $import_response["message"];
 	$type = $import_response["type"];
@@ -46,7 +46,7 @@ if(isset($_POST['standards_import']))
     }
 	
     foreach ($files as $file) {
-	$import = importStandards($file);
+	$import = oer_importStandards($file);
 	if ($import['type']=="success") {
 	    if (strpos($file,'Math')) {
 		$message .= "Successfully imported Common Core Mathematics Standards. \n";

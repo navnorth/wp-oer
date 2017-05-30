@@ -20,7 +20,7 @@
 								<tr>
 									<td>
 										<?php
-											$math = isStandardExisting("Math");
+											$math = oer_isStandardExisting("Math");
 											$attr = "";
 											$class = "";
 											if ($math){
@@ -35,7 +35,7 @@
 								<tr>
 									<td>
 										<?php
-											$english = isStandardExisting("English");
+											$english = oer_isStandardExisting("English");
 											$attr = "";
 											$class = "";
 											if ($english){
@@ -50,7 +50,7 @@
 								<tr>
 									<td>
 										<?php
-											$science = isStandardExisting("Next Generation Science");
+											$science = oer_isStandardExisting("Next Generation Science");
 											$attr = "";
 											$class = "";
 											if ($science){

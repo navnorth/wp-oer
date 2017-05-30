@@ -20,7 +20,7 @@ global $post;
 global $wpdb;
 
 $url = get_post_meta($post->ID, "oer_resourceurl", true);
-$url_domain = getDomainFromUrl($url);
+$url_domain = oer_getDomainFromUrl($url);
 
 $hide_title = get_option('oer_hide_resource_title');
 
@@ -81,8 +81,8 @@ if(!empty($post_terms))
     				$img_path = $new_img_path = parse_url($img_url[0]);
     				$img_path = $_SERVER['DOCUMENT_ROOT'] . $img_path['path'];
     				$new_image_url = OER_URL.'images/default-icon-528x455.png';
-				$img_width = get_image_width('large');
-				$img_height = get_image_height('large');
+				$img_width = oer_get_image_width('large');
+				$img_height = oer_get_image_height('large');
 				
 			if(!empty($img_path))
     				{

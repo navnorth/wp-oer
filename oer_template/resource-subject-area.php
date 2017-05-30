@@ -261,7 +261,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 		<div class="oer-rsrcctgries tagcloud">
 		
 		<?php
-		$child_subjects = get_child_subjects($term_id);
+		$child_subjects = oer_get_child_subjects($term_id);
 			
 		if ( ! is_wp_error( $child_subjects ) ) {
 			foreach ( $child_subjects as $subject ) {
@@ -384,7 +384,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 				$resources = get_posts($args);
 				$resource_count = count($resources);
 				?>
-			<div class="oer-snglrsrchdng"><?php printf(__("Browse All %d Resources", OER_SLUG), $resource_count); ?><?php get_sort_box(array($rsltdata['term_id'])); ?></div>
+			<div class="oer-snglrsrchdng"><?php printf(__("Browse All %d Resources", OER_SLUG), $resource_count); ?><?php oer_get_sort_box(array($rsltdata['term_id'])); ?></div>
 			<div class="oer-allftrdrsrccntr" id="content-resources" file-path="<?php echo get_template_directory_uri();?>/lib/ajax-scroll.php" data-id="<?php echo $rsltdata['term_id'];?>">
 				<?php
 				//Get number of pages
@@ -408,7 +408,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 					      );
 				
 				//Apply sort args
-				$args = apply_sort_args($args);
+				$args = oer_apply_sort_args($args);
 				
 				$posts = get_posts($args);
 				

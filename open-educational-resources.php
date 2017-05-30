@@ -48,8 +48,8 @@ $_bootstrap = get_option('oer_use_bootstrap');
 $_css = get_option('oer_additional_css');
 $_subjectarea = get_option('oer_display_subject_area');
 
-register_activation_hook(__FILE__, 'create_csv_import_table');
-function create_csv_import_table()
+register_activation_hook(__FILE__, 'oer_create_csv_import_table');
+function oer_create_csv_import_table()
 {
 	global $wpdb;
 	//Change hard-coded table prefix to $wpdb->prefix
@@ -120,14 +120,14 @@ function create_csv_import_table()
    
    //Trigger CPT and Taxonomy creation
    oer_postcreation();
-   create_resource_taxonomies();
+   oer_create_resource_taxonomies();
    
    //Trigger permalink reset
    flush_rewrite_rules();
 }
 
 //Enqueue activation script
-function enqueue_activation_script() {
+function oer_enqueue_activation_script() {
 	if ( is_admin()) {
 
 		// Adds our JS file to the queue that WordPress will load
@@ -140,8 +140,8 @@ function enqueue_activation_script() {
 	}
 }
 
-add_action( 'wp_ajax_oer_activation_notice', 'dismiss_activation_notice' );
-function dismiss_activation_notice() {
+add_action( 'wp_ajax_oer_activation_notice', 'oer_dismiss_activation_notice' );
+function oer_dismiss_activation_notice() {
 
 	update_option('setup_notify', false);
 
@@ -182,7 +182,7 @@ function load_oer_textdomain() {
 //Create Page Templates
 include_once(OER_PATH.'oer_template/oer_template.php');
 
-function CreatePage($title,$content,$slug)
+function oer_CreatePage($title,$content,$slug)
 {
 	$resultFlag = false;
 	$args = array(
@@ -336,7 +336,7 @@ function oer_cpt_tags( $query ) {
 	}
 }
 
-function query_post_type($query) {
+function oer_query_post_type($query) {
    //Limit to main query, tag queries and frontend
    if($query->is_main_query() && $query->is_tag() ) {
 
@@ -382,8 +382,8 @@ function query_post_type($query) {
 
 					$attach_icn = array();
 					$attach_icn_hover = array();
-					$icn_guid = get_default_category_icon($category->name);
-					$icn_hover_guid = get_default_category_icon($category->name, true);
+					$icn_guid = oer_get_default_category_icon($category->name);
+					$icn_hover_guid = oer_get_default_category_icon($category->name, true);
 
 				} else {
 					//Checks if icon is empty
@@ -391,14 +391,14 @@ function query_post_type($query) {
 						$attach_icn = get_post($getimage[0]->post_id);
 						$icn_guid = $attach_icn->guid;
 					} else {
-						$icn_guid = get_default_category_icon($category->name);
+						$icn_guid = oer_get_default_category_icon($category->name);
 					}
 
 					if (!empty($getimage_hover)) {
 						$attach_icn_hover = get_post($getimage_hover[0]->post_id);
 						$icn_hover_guid = $attach_icn_hover->guid;
 					} else {
-						$icn_hover_guid = get_default_category_icon($category->name, true);
+						$icn_hover_guid = oer_get_default_category_icon($category->name, true);
 					}
 				}
 
@@ -439,7 +439,7 @@ function query_post_type($query) {
  }*/
 
  /** get default category icon **/
- function get_default_category_icon($category_name, $hover = false) {
+ function oer_oer_get_default_category_icon($category_name, $hover = false) {
 
 	$default_icon_path = "";
 	$default_icon_dir = OER_URL . "images/category_icons/";
@@ -521,7 +521,7 @@ function oer_settings_page() {
 	add_settings_section(
 		'oer_general_settings',
 		'',
-		'general_settings_callback',
+		'oer_general_settings_callback',
 		'oer_settings'
 	);
 
@@ -529,7 +529,7 @@ function oer_settings_page() {
 	/*add_settings_field(
 		'oer_category_template',
 		__("Assign Page Template to Category Pages", OER_SLUG),
-		'setup_settings_field',
+		'oer_setup_settings_field',
 		'oer_settings',
 		'oer_general_settings',
 		array(
@@ -543,7 +543,7 @@ function oer_settings_page() {
 	add_settings_field(
 		'oer_disable_screenshots',
 		'',
-		'setup_settings_field',
+		'oer_setup_settings_field',
 		'oer_settings',
 		'oer_general_settings',
 		array(
@@ -559,7 +559,7 @@ function oer_settings_page() {
 	add_settings_field(
 		'oer_enable_screenshot',
 		'',
-		'setup_settings_field',
+		'oer_setup_settings_field',
 		'oer_settings',
 		'oer_general_settings',
 		array(
@@ -575,7 +575,7 @@ function oer_settings_page() {
 	add_settings_field(
 		'oer_use_xvfb',
 		'',
-		'setup_settings_field',
+		'oer_setup_settings_field',
 		'oer_settings',
 		'oer_general_settings',
 		array(
@@ -590,7 +590,7 @@ function oer_settings_page() {
 	add_settings_field(
 		'oer_python_install',
 		__("Python executable", OER_SLUG),
-		'setup_settings_field',
+		'oer_setup_settings_field',
 		'oer_settings',
 		'oer_general_settings',
 		array(
@@ -605,7 +605,7 @@ function oer_settings_page() {
 	add_settings_field(
 		'oer_python_path',
 		__("Python Screenshot script", OER_SLUG),
-		'setup_settings_field',
+		'oer_setup_settings_field',
 		'oer_settings',
 		'oer_general_settings',
 		array(
@@ -620,7 +620,7 @@ function oer_settings_page() {
 	add_settings_field(
 		'oer_external_screenshots',
 		'',
-		'setup_settings_field',
+		'oer_setup_settings_field',
 		'oer_settings',
 		'oer_general_settings',
 		array(
@@ -636,7 +636,7 @@ function oer_settings_page() {
 	add_settings_field(
 		'oer_service_url',
 		__("Service URL", OER_SLUG),
-		'setup_settings_field',
+		'oer_setup_settings_field',
 		'oer_settings',
 		'oer_general_settings',
 		array(
@@ -658,7 +658,7 @@ function oer_settings_page() {
 }
 
 //General settings callback
-function general_settings_callback() {
+function oer_general_settings_callback() {
 
 }
 
@@ -669,7 +669,7 @@ function oer_styles_settings(){
 	add_settings_section(
 		'oer_styles_settings',
 		'',
-		'styles_settings_callback',
+		'oer_styles_settings_callback',
 		'styles_settings_section'
 	);
 
@@ -677,7 +677,7 @@ function oer_styles_settings(){
 	add_settings_field(
 		'oer_use_bootstrap',
 		'',
-		'setup_settings_field',
+		'oer_setup_settings_field',
 		'styles_settings_section',
 		'oer_styles_settings',
 		array(
@@ -692,7 +692,7 @@ function oer_styles_settings(){
 	add_settings_field(
 		'oer_display_subject_area',
 		'',
-		'setup_settings_field',
+		'oer_setup_settings_field',
 		'styles_settings_section',
 		'oer_styles_settings',
 		array(
@@ -709,7 +709,7 @@ function oer_styles_settings(){
 	add_settings_field(
 		'oer_hide_subject_area_title',
 		'',
-		'setup_settings_field',
+		'oer_setup_settings_field',
 		'styles_settings_section',
 		'oer_styles_settings',
 		array(
@@ -723,7 +723,7 @@ function oer_styles_settings(){
 	add_settings_field(
 		'oer_hide_resource_title',
 		'',
-		'setup_settings_field',
+		'oer_setup_settings_field',
 		'styles_settings_section',
 		'oer_styles_settings',
 		array(
@@ -738,7 +738,7 @@ function oer_styles_settings(){
 	add_settings_field(
 		'oer_additional_css',
 		'',
-		'setup_settings_field',
+		'oer_setup_settings_field',
 		'styles_settings_section',
 		'oer_styles_settings',
 		array(
@@ -757,7 +757,7 @@ function oer_styles_settings(){
 }
 
 //Styles Setting Callback
-function styles_settings_callback(){
+function oer_styles_settings_callback(){
 
 }
 
@@ -768,7 +768,7 @@ function oer_setup_settings(){
 	add_settings_section(
 		'oer_setup_settings',
 		'',
-		'setup_settings_callback',
+		'oer_setup_settings_callback',
 		'setup_settings_section'
 	);
 
@@ -776,7 +776,7 @@ function oer_setup_settings(){
 	add_settings_field(
 		'oer_import_sample_resources',
 		'',
-		'setup_settings_field',
+		'oer_setup_settings_field',
 		'setup_settings_section',
 		'oer_setup_settings',
 		array(
@@ -791,7 +791,7 @@ function oer_setup_settings(){
 	add_settings_field(
 		'oer_import_default_subject_areas',
 		'',
-		'setup_settings_field',
+		'oer_setup_settings_field',
 		'setup_settings_section',
 		'oer_setup_settings',
 		array(
@@ -808,7 +808,7 @@ function oer_setup_settings(){
 	add_settings_field(
 		'oer_import_ccss',
 		'',
-		'setup_settings_field',
+		'oer_setup_settings_field',
 		'setup_settings_section',
 		'oer_setup_settings',
 		array(
@@ -823,7 +823,7 @@ function oer_setup_settings(){
 	add_settings_field(
 		'oer_use_bootstrap',
 		'',
-		'setup_settings_field',
+		'oer_setup_settings_field',
 		'setup_settings_section',
 		'oer_setup_settings',
 		array(
@@ -841,7 +841,7 @@ function oer_setup_settings(){
 }
 
 //Setup Setting Callback
-function setup_settings_callback(){
+function oer_setup_settings_callback(){
 
 }
 
@@ -853,7 +853,7 @@ function oer_import_standards(){
 	add_settings_section(
 		'oer_import_standards',
 		'',
-		'import_standards_callback',
+		'oer_import_standards_callback',
 		'import_standards_section'
 	);
 
@@ -861,7 +861,7 @@ function oer_import_standards(){
 	add_settings_field(
 		'oer_common_core_mathematics',
 		'',
-		'setup_settings_field',
+		'oer_setup_settings_field',
 		'import_standards_section',
 		'oer_import_standards',
 		array(
@@ -875,7 +875,7 @@ function oer_import_standards(){
 	add_settings_field(
 		'oer_common_core_english',
 		'',
-		'setup_settings_field',
+		'oer_setup_settings_field',
 		'import_standards_section',
 		'oer_import_standards',
 		array(
@@ -889,11 +889,11 @@ function oer_import_standards(){
 	register_setting( 'oer_import_standards' , 'oer_common_core_english' );
 }
 
-function import_standards_callback() {
+function oer_import_standards_callback() {
 
 }
 
-function setup_settings_field( $arguments ) {
+function oer_setup_settings_field( $arguments ) {
 	$selected = "";
 	$size = "";
 	$class = "";
@@ -974,8 +974,8 @@ function oer_widgets_init() {
 add_action( 'widgets_init', 'oer_widgets_init' );
 
 //Add body class on oer emplates for themes without default font color
-add_filter( 'body_class', 'add_body_class');
-function add_body_class($classes) {
+add_filter( 'body_class', 'oer_add_body_class');
+function oer_add_body_class($classes) {
 	$cur_theme = wp_get_theme();
 	$theme_class = $cur_theme->get('Name');
 
@@ -983,7 +983,7 @@ function add_body_class($classes) {
 }
 
 /* Ajax Callback */
-function load_more_resources() {
+function oer_load_more_resources() {
 	global $wpdb, $wp_query;
 
 	if (isset($_POST["post_var"])) {
@@ -997,7 +997,7 @@ function load_more_resources() {
 				'tax_query' => array(array('taxonomy' => 'resource-subject-area','terms' => $terms))
 				);
 
-		$args = apply_sort_args($args);
+		$args = oer_apply_sort_args($args);
 
 		$postquery = get_posts($args);
 
@@ -1063,11 +1063,11 @@ function load_more_resources() {
 		die();
 	}
 }
-add_action('wp_ajax_load_more', 'load_more_resources');
-add_action('wp_ajax_nopriv_load_more', 'load_more_resources');
+add_action('wp_ajax_load_more', 'oer_load_more_resources');
+add_action('wp_ajax_nopriv_load_more', 'oer_load_more_resources');
 
 /** Sort Resources **/
-function sort_resources(){
+function oer_sort_resources(){
 	global $wpdb;
 
 	if (isset($_POST["sort"])) {
@@ -1111,7 +1111,7 @@ function sort_resources(){
 				'tax_query' => array(array('taxonomy' => 'resource-subject-area','terms' => $terms))
 				);
 
-		$args = apply_sort_args($args);
+		$args = oer_apply_sort_args($args);
 
 		$args['posts_per_page'] = 20 * $paged;
 
@@ -1180,11 +1180,11 @@ function sort_resources(){
 		die();
 	}
 }
-add_action('wp_ajax_sort_resources', 'sort_resources');
-add_action('wp_ajax_nopriv_sort_resources', 'sort_resources');
+add_action('wp_ajax_sort_resources', 'oer_sort_resources');
+add_action('wp_ajax_nopriv_sort_resources', 'oer_sort_resources');
 
 /* Load More Highlights Ajax Callback */
-function load_more_highlights() {
+function oer_load_more_highlights() {
 	global $wpdb, $wp_query;
 
 	if (isset($_POST["post_var"])) {
@@ -1243,11 +1243,11 @@ function load_more_highlights() {
 		die();
 	}
 }
-add_action('wp_ajax_load_highlights', 'load_more_highlights');
-add_action('wp_ajax_nopriv_load_highlights', 'load_more_highlights');
+add_action('wp_ajax_load_highlights', 'oer_load_more_highlights');
+add_action('wp_ajax_nopriv_load_highlights', 'oer_load_more_highlights');
 
 /* Load Highlighted Resource based on ID Ajax Callback */
-function load_highlight() {
+function oer_load_highlight() {
 	global $wpdb, $wp_query;
 
 	if (isset($_POST["post_var"])) {
@@ -1302,12 +1302,12 @@ function load_highlight() {
 		die();
 	}
 }
-add_action('wp_ajax_load_highlight', 'load_highlight');
-add_action('wp_ajax_nopriv_load_highlight', 'load_highlight');
+add_action('wp_ajax_load_highlight', 'oer_load_highlight');
+add_action('wp_ajax_nopriv_load_highlight', 'oer_load_highlight');
 
 /*Enqueue ajax url on frontend*/
-add_action('wp_head','resource_ajaxurl', 8);
-function resource_ajaxurl()
+add_action('wp_head','oer_resource_ajaxurl', 8);
+function oer_resource_ajaxurl()
 {
 	?>
     <script type="text/javascript">
@@ -1322,8 +1322,8 @@ function resource_ajaxurl()
 }
 
 /** Start session to store sort option **/
-add_action( 'init', 'initSession', 1 );
-function initSession(){
+add_action( 'init', 'oer_initSession', 1 );
+function oer_initSession(){
 	if(!session_id()) {
 		session_start();
 	}
@@ -1346,7 +1346,7 @@ function oer_parse_request( $obj ) {
 add_action( 'parse_request', 'oer_parse_request' );
 
 /** Register Post Type Rewrite Rules **/
-function register_post_type_rules( $post_type, $args ) {
+function oer_register_post_type_rules( $post_type, $args ) {
 
 	if ($post_type=="resource") {
 		/** @var WP_Rewrite $wp_rewrite */
@@ -1360,7 +1360,7 @@ function register_post_type_rules( $post_type, $args ) {
 			return;
 		}
 	
-		$permalink = get_permalink_structure( $post_type );
+		$permalink = oer_get_permalink_structure( $post_type );
 		
 		if ( ! $permalink ) {
 			$permalink = '/%postname%/';
@@ -1392,7 +1392,7 @@ function register_post_type_rules( $post_type, $args ) {
 				$slug = substr( $wp_rewrite->front, 1 ) . $slug;
 			}
 	
-			$date_front = get_date_front( $post_type );
+			$date_front = oer_get_date_front( $post_type );
 	
 			add_rewrite_rule( $slug . $date_front . '/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/feed/(feed|rdf|rss|rss2|atom)/?$', 'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&feed=$matches[4]&post_type=' . $post_type, 'top' );
 			add_rewrite_rule( $slug . $date_front . '/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/(feed|rdf|rss|rss2|atom)/?$', 'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&feed=$matches[4]&post_type=' . $post_type, 'top' );
@@ -1429,7 +1429,7 @@ function register_post_type_rules( $post_type, $args ) {
 	}
 
 }
-add_action( 'registered_post_type', 'register_post_type_rules', 10, 2 );
+add_action( 'registered_post_type', 'oer_register_post_type_rules', 10, 2 );
 
 function oer_post_type_link( $post_link, $post, $leavename ) {
 	global $wp_rewrite;
@@ -1479,7 +1479,7 @@ function oer_post_type_link( $post_link, $post, $leavename ) {
 
 	// %post_id%/attachment/%attachement_name%;
 	if ( isset( $_GET['post'] ) && $_GET['post'] != $post->ID ) {
-		$parent_structure = trim( get_permalink_structure( $post->post_type ), '/' );
+		$parent_structure = trim( oer_get_permalink_structure( $post->post_type ), '/' );
 		$parent_dirs      = explode( '/', $parent_structure );
 		if ( is_array( $parent_dirs ) ) {
 			$last_dir = array_pop( $parent_dirs );
@@ -1495,7 +1495,7 @@ function oer_post_type_link( $post_link, $post, $leavename ) {
 	$search  = array();
 	$replace = array();
 
-	$replace_tag = create_taxonomy_replace_tag( $post->ID, $permalink );
+	$replace_tag = oer_create_taxonomy_replace_tag( $post->ID, $permalink );
 	$search      = $search + $replace_tag['search'];
 	$replace     = $replace + $replace_tag['replace'];
 
@@ -1504,7 +1504,7 @@ function oer_post_type_link( $post_link, $post, $leavename ) {
 	if ( false !== strpos( $permalink, '%category%' ) ) {
 		$categories = get_the_category( $post->ID );
 		if ( $categories ) {
-			$categories = sort_terms( $categories );
+			$categories = oer_sort_terms( $categories );
 
 			$category_object = apply_filters( 'post_link_category', $categories[0], $categories, $post );
 			$category_object = get_term( $category_object, 'category' );
@@ -1558,7 +1558,7 @@ function oer_post_type_link( $post_link, $post, $leavename ) {
 add_filter( 'post_type_link', 'oer_post_type_link', 10, 3 );
 
 /** Register Taxonomy Rules **/
-function register_taxonomy_rules( $taxonomy, $object_type, $args ) {
+function oer_register_taxonomy_rules( $taxonomy, $object_type, $args ) {
 	global $wp_rewrite;
 
 	/* for 4.7 */
@@ -1677,7 +1677,7 @@ function register_taxonomy_rules( $taxonomy, $object_type, $args ) {
 
 	endforeach;
 }
-add_action( 'registered_taxonomy', 'register_taxonomy_rules' , 10, 3 );
+add_action( 'registered_taxonomy', 'oer_register_taxonomy_rules' , 10, 3 );
 
 //front side shortcode
 //include_once(OER_PATH.'includes/resource_front.php');

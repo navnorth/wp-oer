@@ -188,7 +188,7 @@ global $chck;
 											".$result['standard_name']."
 										</div><div class='oer_stndrd_desc'></div>";
 
-										get_sub_standard($value, $oer_standard);
+										oer_get_sub_standard($value, $oer_standard);
 								echo "</li>";
 							}
 						?>

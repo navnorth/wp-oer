@@ -8,7 +8,7 @@ global $message, $type;
 			//Import Default Resources
 			$import_resources = get_option('oer_import_sample_resources');
 			if ($import_resources) {
-				$response = importResources(true);
+				$response = oer_importResources(true);
 				if ($response) {
 					$message = $response["message"];
 					$type = $response["type"];
@@ -17,7 +17,7 @@ global $message, $type;
 			//Import Default Subject Areas
 			$import_subject_areas = get_option('oer_import_default_subject_areas');
 			if ($import_subject_areas){
-				$response = importSubjectAreas(true);
+				$response = oer_importSubjectAreas(true);
 				if ($response) {
 					$message .= $response["message"];
 					$type .= $response["type"];
@@ -26,7 +26,7 @@ global $message, $type;
 			//Import CCSS Standards
 			$import_ccss = get_option('oer_import_ccss');
 			if ($import_ccss) {
-				$response = importDefaultStandards();
+				$response = oer_importDefaultStandards();
 				if ($response) {
 					$message .= $response["message"];
 					$type .= $response["type"];

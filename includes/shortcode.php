@@ -47,8 +47,8 @@ function show_oer_subjects($atts) {
 				    
 				    $attach_icn = array();
 				    $attach_icn_hover = array();
-				    $icn_guid = get_default_category_icon($category->name);
-				    $icn_hover_guid = get_default_category_icon($category->name, true);
+				    $icn_guid = oer_get_default_category_icon($category->name);
+				    $icn_hover_guid = oer_get_default_category_icon($category->name, true);
 				    
 			    } else {
 				    //Checks if icon is empty
@@ -57,7 +57,7 @@ function show_oer_subjects($atts) {
 					    //$icn_guid = $attach_icn->guid;
 					    $icn_guid = $getimage[0];
 				    } else {
-					    $icn_guid = get_default_category_icon($category->name);
+					    $icn_guid = oer_get_default_category_icon($category->name);
 				    }
 				    
 				    if (!empty($getimage_hover)) {
@@ -65,7 +65,7 @@ function show_oer_subjects($atts) {
 					    //$icn_hover_guid = $attach_icn_hover->guid;
 					    $icn_hover_guid = $getimage_hover[0];
 				    } else {
-					    $icn_hover_guid = get_default_category_icon($category->name, true);
+					    $icn_hover_guid = oer_get_default_category_icon($category->name, true);
 				    }
 			    }
 			    

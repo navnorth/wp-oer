@@ -2,7 +2,7 @@
 require_once OER_PATH.'includes/oer-functions.php';
 
 //Filter Texonomy and Resource Texonomy According Categories Assignment
-function wpa_filter_term_args( $args, $taxonomies )
+function oer_filter_term_args( $args, $taxonomies )
 {
     global $pagenow;
 	$user_id = get_current_user_id();
@@ -19,11 +19,11 @@ function wpa_filter_term_args( $args, $taxonomies )
     }
 	return $args;
 }
-add_filter( 'get_terms_args', 'wpa_filter_term_args', 10, 2 );
+add_filter( 'get_terms_args', 'oer_filter_term_args', 10, 2 );
 
 //Filter Posts , Pages and Resources According Categories Assignment
-add_action('load-edit.php', 'my_load_edit_php_action');
-function my_load_edit_php_action()
+add_action('load-edit.php', 'oer_load_edit_php_action');
+function oer_load_edit_php_action()
 {
   if(isset($_GET['post_type']))
   {
@@ -142,8 +142,8 @@ function oer_frontside_scripts()
 }
 
 //Add style block
-add_action( 'wp_head' , 'add_style_block', 99  );
-function add_style_block(){
+add_action( 'wp_head' , 'oer_add_style_block', 99  );
+function oer_add_style_block(){
     global $_css;
     
     if ($_css) {
@@ -182,12 +182,12 @@ function oer_postcreation(){
         'supports'      => array(  'title', 'editor', 'thumbnail', 'revisions',  ),
 		'taxonomies' => array('post_tag'),
         'has_archive'   => true,
-		'register_meta_box_cb' => 'resources_custom_metaboxes'
+		'register_meta_box_cb' => 'oer_resources_custom_metaboxes'
     );
 	register_post_type( 'resource', $args);
 }
 
-function resources_custom_metaboxes(){
+function oer_resources_custom_metaboxes(){
 	add_meta_box('oer_metaboxid','Open Resource Meta Fields','oermeta_callback','resource','advanced');
 }
 
@@ -199,8 +199,8 @@ function oermeta_callback()
 //register custom post
 
 //register custom category
-add_action( 'init', 'create_resource_taxonomies', 0 );
-function create_resource_taxonomies() {
+add_action( 'init', 'oer_create_resource_taxonomies', 0 );
+function oer_create_resource_taxonomies() {
 	$labels = array(
 		'name'              => _x( 'Subject Area', 'taxonomy general name' ),
 		'singular_name'     => _x( 'Subject Area', 'taxonomy singular name' ),
@@ -230,8 +230,8 @@ function create_resource_taxonomies() {
 /**
  * Add Image meta data
  **/
-add_action( 'resource-subject-area_add_form_fields', 'add_upload_image_fields', 10 );
-function add_upload_image_fields($taxonomy) {
+add_action( 'resource-subject-area_add_form_fields', 'oer_add_upload_image_fields', 10 );
+function oer_add_upload_image_fields($taxonomy) {
     global $feature_groups;
     ?><div class="form-field term-group">
         <label for="main-icon-group"><?php _e('Subject Area Main Icon', OER_SLUG); ?></label>
@@ -251,8 +251,8 @@ function add_upload_image_fields($taxonomy) {
 /**
  * Edit Image meta data
  **/
-add_action( 'resource-subject-area_edit_form_fields', 'edit_upload_image_fields', 10, 2 );
-function edit_upload_image_fields( $term, $taxonomy ) {
+add_action( 'resource-subject-area_edit_form_fields', 'oer_edit_upload_image_fields', 10, 2 );
+function oer_edit_upload_image_fields( $term, $taxonomy ) {
     
     $mainIcon = get_term_meta( $term->term_id, 'mainIcon', true );
      ?><tr class="form-field term-group-wrap">
@@ -280,8 +280,8 @@ function edit_upload_image_fields( $term, $taxonomy ) {
 /**
  * Save Image meta data
  **/
-add_action( 'created_resource-subject-area', 'save_subject_area_meta', 10, 2 );
-function save_subject_area_meta( $term_id, $tt_id ){
+add_action( 'created_resource-subject-area', 'oer_save_subject_area_meta', 10, 2 );
+function oer_save_subject_area_meta( $term_id, $tt_id ){
     if( isset( $_POST['mainIcon'] ) && '' !== $_POST['mainIcon'] ){
         add_term_meta( $term_id, 'mainIcon', $_POST['mainIcon'], true );
     }
@@ -290,8 +290,8 @@ function save_subject_area_meta( $term_id, $tt_id ){
     }
 }
 
-add_action( 'edited_resource-subject-area', 'update_subject_area_meta', 10, 2 );
-function update_subject_area_meta( $term_id, $tt_id ){
+add_action( 'edited_resource-subject-area', 'oer_update_subject_area_meta', 10, 2 );
+function oer_update_subject_area_meta( $term_id, $tt_id ){
 
    if( isset( $_POST['mainIcon'] ) && '' !== $_POST['mainIcon'] ){
         update_term_meta( $term_id, 'mainIcon', $_POST['mainIcon'] );
@@ -442,7 +442,7 @@ function oer_save_customfields()
 					$stndrd_algn = $wpdb->get_row( $wpdb->prepare( "SELECT * from  " . $wpdb->prefix. $table[0] . " where id =%s" , $table[1] ),ARRAY_A);
 					if($stndrd_algn['parent_id'])
 					{
-						fetch_stndrd($stndrd_algn['parent_id'], $post_id);
+						oer_fetch_stndrd($stndrd_algn['parent_id'], $post_id);
 					}
 				    }
 				}
@@ -557,11 +557,11 @@ function oer_save_customfields()
 			if(!has_post_thumbnail( $post->ID ))
 			{
 			    if ( $screenshot_enabled )
-				$file = getScreenshotFile($url);
+				$file = oer_getScreenshotFile($url);
 			    
 			    // if external screenshot utility enabled
 			    if ( $external_screenshot )
-				$file = getImageFromExternalURL($url);
+				$file = oer_getImageFromExternalURL($url);
 			}
 
 			if(file_exists($file))
@@ -595,7 +595,7 @@ function oer_save_customfields()
 }
 
 //Update Split Shared Term
-function resource_split_shared_term( $term_id, $new_term_id, $term_taxonomy_id, $taxonomy ) {
+function oer_resource_split_shared_term( $term_id, $new_term_id, $term_taxonomy_id, $taxonomy ) {
     // Checking if taxonomy is a resource category
     if ( 'resource-subject-area' == $taxonomy ) {
 	$resource_posts = get_posts(array(
@@ -612,7 +612,7 @@ function resource_split_shared_term( $term_id, $new_term_id, $term_taxonomy_id, 
        exit();
     }
 }
-add_action( 'split_shared_term', 'resource_split_shared_term', 10, 4 );
+add_action( 'split_shared_term', 'oer_resource_split_shared_term', 10, 4 );
 
 add_action('admin_menu','oer_rsrcimprtr');
 function oer_rsrcimprtr(){
