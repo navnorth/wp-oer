@@ -154,6 +154,8 @@ function get_standardlist(ref)
 //Process Initial Setup
 function processInitialSettings(form) {
 	setTimeout(function() {
+		var Top = document.documentElement.scrollTop || document.body.scrollTop;
+		jQuery('.loader .loader-img').css({'padding-top':Top + 'px'});
 		jQuery('.loader').show();
 	} ,1000);
 	return true;
@@ -173,6 +175,8 @@ function processImport(btn, file) {
 	}
 	jQuery(btn).prop('value','Processing...');
 	setTimeout(function() {
+		var Top = document.documentElement.scrollTop || document.body.scrollTop;
+		jQuery('.loader .loader-img').css({'padding-top':Top + 'px'});
 		jQuery('.loader').show();
 		} ,1000);
 	jQuery('.oer_imprtrwpr .oer-import-row input[type=submit]').prop('disabled',true);

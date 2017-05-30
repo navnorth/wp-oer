@@ -1625,4 +1625,11 @@ function oer_get_image_height( $size ) {
 
 	return false;
 }
+
+/** Display loader image **/
+function oer_display_loader(){
+?>
+<div class="loader"><div class="loader-img"><div><img src="<?php echo OER_URL; ?>images/loading.gif" align="center" valign="middle" /></div></div></div>
+<?php
+}
 ?>

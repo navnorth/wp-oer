@@ -112,7 +112,7 @@ function show_general_settings() {
 		</div>
 	</div>
 	<div class="oer-plugin-row">
-		<form method="post" class="oer_settings_form" action="options.php">
+		<form method="post" class="oer_settings_form" action="options.php"  onsubmit="return processInitialSettings(this)">
 			<fieldset>
 				<legend><div class="oer_hdng"><?php _e("Screenshot Utility", OER_SLUG); ?></div></legend>
 				<?php settings_fields("oer_general_settings"); ?>
@@ -178,7 +178,7 @@ function show_styles_settings() {
 		</div>
 	</div>
 	<div class="oer-plugin-row">
-		<form method="post" class="oer_settings_form" action="options.php">
+		<form method="post" class="oer_settings_form" action="options.php"  onsubmit="return processInitialSettings(this)">
 			<?php settings_fields("oer_styles_settings"); ?>
 			<?php do_settings_sections("styles_settings_section"); ?>
 			<?php submit_button(); ?>
@@ -245,5 +245,5 @@ function show_setup_settings() {
 </div>
 <?php
 }
+oer_display_loader();
 ?>
-<div class="loader"><div class="loader-img"><div><img src="<?php echo OER_URL; ?>images/loading.gif" align="center" valign="middle" /></div></div></div>
