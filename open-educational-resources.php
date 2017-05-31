@@ -439,7 +439,7 @@ function oer_query_post_type($query) {
  }*/
 
  /** get default category icon **/
- function oer_oer_get_default_category_icon($category_name, $hover = false) {
+ function oer_get_default_category_icon($category_name, $hover = false) {
 
 	$default_icon_path = "";
 	$default_icon_dir = OER_URL . "images/category_icons/";
