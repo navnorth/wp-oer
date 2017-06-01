@@ -265,7 +265,8 @@ $hide_title = get_option('oer_hide_subject_area_title');
 			
 		if ( ! is_wp_error( $child_subjects ) ) {
 			foreach ( $child_subjects as $subject ) {
-				echo '<span><a href="'.get_term_link($subject).'" class="button">'.ucwords ($subject->name).'</a></span>';
+				if ($subject->category_count>0)
+					echo '<span><a href="'.get_term_link($subject).'" class="button">'.ucwords ($subject->name).'</a></span>';
 			}
 		}
 		?>
