@@ -243,16 +243,22 @@ function add_oer_settings_link( $links, $file ){
  **/
 function oer_get_template_hierarchy( $template ) {
 	//get template file
-	$template_slug = rtrim( $template , '.php' );
-	$template = $template_slug . '.php';
-
+	if ($template=="search"){
+		$template = $template . '.php';
+	} else {
+		$template_slug = rtrim( $template , '.php' );
+		$template = $template_slug . '.php';
+	}
+	
 	//Check if custom template exists in theme folder
 	if ($theme_file = locate_template( array( 'oer_template/' . $template ) )) {
+		$file = $theme_file;
+	} elseif ($theme_file = locate_template( array( $template ) )) {
 		$file = $theme_file;
 	} else {
 		$file = OER_PATH . '/oer_template/' . $template;
 	}
-
+	
 	return apply_filters( 'oer_repl_template' . $template , $file  );
 }
 
@@ -265,7 +271,7 @@ add_filter( 'template_include' , 'oer_template_choser' );
  * Function to choose template for the resource post type
  **/
 function oer_template_choser( $template ) {
-
+	
 	//Post ID
 	$post_id = get_the_ID();
 
@@ -300,6 +306,8 @@ function oer_category_template( $template ) {
 	if ($resource_term && !is_wp_error( $resource_term )) {
 		return oer_get_template_hierarchy('resource-subject-area');
 	} else {
+		if ($wp_query->is_search)
+			return oer_get_template_hierarchy("search");
 		return $template;
 	}
  }
@@ -314,7 +322,7 @@ add_filter( 'template_include' , 'oer_tag_template' );
  **/
 function oer_tag_template( $template ) {
 	global $wp_query;
-
+	
 	//Post ID
 	$_id = $wp_query->get_queried_object_id();
 
@@ -330,7 +338,6 @@ function oer_tag_template( $template ) {
 
 add_action( 'pre_get_posts', 'oer_cpt_tags' );
 function oer_cpt_tags( $query ) {
-
 	if ( $query->is_tag() && $query->is_main_query() ) {
 	    $query->set( 'post_type', array( 'post', 'resource' ) );
 	}
@@ -961,7 +968,7 @@ function oer_setup_settings_field( $arguments ) {
 }
 
 function oer_widgets_init() {
-
+	
 	register_sidebar( array(
 		'name' => 'Subject Area Sidebar',
 		'id' => 'subject_area_sidebar',
@@ -976,6 +983,7 @@ add_action( 'widgets_init', 'oer_widgets_init' );
 //Add body class on oer emplates for themes without default font color
 add_filter( 'body_class', 'oer_add_body_class');
 function oer_add_body_class($classes) {
+	
 	$cur_theme = wp_get_theme();
 	$theme_class = $cur_theme->get('Name');
 
@@ -1347,7 +1355,7 @@ add_action( 'parse_request', 'oer_parse_request' );
 
 /** Register Post Type Rewrite Rules **/
 function oer_register_post_type_rules( $post_type, $args ) {
-
+	
 	if ($post_type=="resource") {
 		/** @var WP_Rewrite $wp_rewrite */
 		global $wp_rewrite;
@@ -1427,13 +1435,13 @@ function oer_register_post_type_rules( $post_type, $args ) {
 		$rewrite_args['walk_dirs'] = false;
 		add_permastruct( $post_type, $permalink, $rewrite_args );
 	}
-
+	
 }
 add_action( 'registered_post_type', 'oer_register_post_type_rules', 10, 2 );
 
 function oer_post_type_link( $post_link, $post, $leavename ) {
 	global $wp_rewrite;
-
+	
 	if ( ! $wp_rewrite->permalink_structure ) {
 		return $post_link;
 	}
@@ -1678,6 +1686,16 @@ function oer_register_taxonomy_rules( $taxonomy, $object_type, $args ) {
 	endforeach;
 }
 add_action( 'registered_taxonomy', 'oer_register_taxonomy_rules' , 10, 3 );
+
+/** Add OER resources to search results **/
+//function oer_add_search_resources($query) {
+//	if ( !is_admin() && $query->is_main_query() ) {
+//		if ($query->is_search) {
+//			$query->set( 'post_type', array( 'resource' ) );
+//		}
+//	}
+//}
+//add_filter('pre_get_posts','oer_add_search_resources', 1);
 
 //front side shortcode
 //include_once(OER_PATH.'includes/resource_front.php');
