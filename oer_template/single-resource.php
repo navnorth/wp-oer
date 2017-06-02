@@ -320,7 +320,28 @@ if(!empty($post_terms))
     						$stdrd_id = get_post_meta($post->ID, 'oer_standard_alignment', true);
     						$oer_standard = get_post_meta($post->ID, 'oer_standard', true);
 						
-    						if(!empty($stdrd_id) || !empty($oer_standard))
+						$standards = explode(",", $oer_standard);
+						$oer_standards = array();
+						
+						foreach ($standards as $standard) {
+							$stds = oer_get_parent_standard($standard);
+							foreach($stds as $std){
+								$core_std = oer_get_core_standard($std['parent_id']);
+								$oer_standards[] = array(
+											'id' => $standard,
+											'core_id' => $core_std[0]['id'],
+											'core_title' => $core_std[0]['standard_name']
+											 );
+							}
+						}
+						
+						foreach ($oer_standards as $key => $row) {
+							$core[$key]  = $row['core_id'];
+						}
+						
+						array_multisort($core, SORT_ASC, $oer_standards);
+						
+    						if(!empty($stdrd_id) || !empty($oer_standards))
     						{
     					?>
                         	<div class="alignedStandards">
@@ -342,38 +363,46 @@ if(!empty($post_terms))
 
                                     <div class="oer_stndrds_notn">
                                     <?php
-                                        if(!empty($oer_standard))
+                                        if(!empty($oer_standards))
                                         {
     					?>
-						<h3><?php _e("Standard Notations", OER_SLUG) ?></h3>
 						<?php
-
-    						$stnd_arr = explode(",", $oer_standard);
-
-                                                for($i=0; $i< count($stnd_arr); $i++)
-                                                {
-                                                    $table = explode("-",$stnd_arr[$i]);
-						    $prefix = substr($stnd_arr[$i],0,strpos($stnd_arr[$i],"_")+1);
-                                                    $table_name = $table[0];
-						    
-                                                    $id = $table[1];
-						    
-                                                    if(strcmp($prefix, $wpdb->prefix) !== 0)
-                                                    {
-                                                        $table_name = str_replace($prefix,$wpdb->prefix,$table[0]);
-                                                    }
-						    
-						    $res = $wpdb->get_row( $wpdb->prepare("select * from $table_name where id=%d" , $id ), ARRAY_A);
-						    
-						    echo "<div class='oer_sngl_stndrd'>";
-							if (strpos($table_name,"sub_standards")>0) {
-								echo "<div class='oer_sngl_notation'>".$res['standard_title']."</div>";
-							} else {
-								echo "<div class='oer_sngl_notation'>".$res['standard_notation']."</div>";
-								echo "<div class='oer_sngl_description'>".$res['description']."</div>";
+						$displayed_core_standards = array();
+						foreach($oer_standards as $o_standard) {
+							
+							if (!in_array($o_standard['core_id'],$displayed_core_standards)){
+								echo "<div class='oer-core-title'><h4><strong>".$o_standard['core_title']."</strong></h4></div>";
+								$displayed_core_standards[] = $o_standard['core_id'];
 							}
-						    echo "</div>";
-                                                }
+							
+							$oer_standard =$o_standard['id'];
+							$stnd_arr = explode(",", $oer_standard);
+							
+							for($i=0; $i< count($stnd_arr); $i++)
+							{
+							    $table = explode("-",$stnd_arr[$i]);
+							    $prefix = substr($stnd_arr[$i],0,strpos($stnd_arr[$i],"_")+1);
+							    $table_name = $table[0];
+							    
+							    $id = $table[1];
+							    
+							    if(strcmp($prefix, $wpdb->prefix) !== 0)
+							    {
+								$table_name = str_replace($prefix,$wpdb->prefix,$table[0]);
+							    }
+							    
+							    $res = $wpdb->get_row( $wpdb->prepare("select * from $table_name where id=%d" , $id ), ARRAY_A);
+							    
+							    echo "<div class='oer_sngl_stndrd'>";
+								if (strpos($table_name,"sub_standards")>0) {
+									echo "<span class='oer_sngl_notation'>".$res['standard_title']."</span>";
+								} else {
+									echo "<span class='oer_sngl_notation'>".$res['standard_notation']."</span>";
+									echo "<span class='oer_sngl_description'>".$res['description']."</span>";
+								}
+							    echo "</div>";
+							}
+						}
                                         }
                                     ?>
                                     </div>

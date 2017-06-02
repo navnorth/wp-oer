@@ -123,6 +123,43 @@ function oer_get_substandard_children($id)
 	return $results;
 }
 
+function oer_get_core_standard($id) {
+	global $wpdb;
+	$stds = explode("-",$id);
+	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "core_standards where id = %s" , $stds[1] ) , ARRAY_A);
+	return $results;
+}
+
+function oer_get_parent_standard($standard_id) {
+	global $wpdb;
+	
+	$stds = explode("-",$standard_id);
+	$table = $stds[0];
+	$prefix = substr($standard_id,0,strpos($standard_id,"_")+1);
+	$table_name = $table;
+	
+	if(strcmp($prefix, $wpdb->prefix) !== 0)
+	{
+	    $table_name = str_replace($prefix,$wpdb->prefix,$table);
+	}
+	
+	$id = $stds[1];
+	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $table_name. " where id = %s" , $id ) , ARRAY_A);
+	
+	foreach($results as $result) {
+		
+		$stdrds = explode("-",$result['parent_id']);
+		$tbl = $stdrds[0];
+		$tbls = array('sub_standards','standard_notation');
+		
+		if (in_array($tbl,$tbls)){
+			$results = oer_get_parent_standard("oer_".$result['parent_id']);
+		}
+		
+	}
+	return $results;
+}
+
 // Get Screenshot File
 function oer_getScreenshotFile($url)
 {
@@ -242,12 +279,13 @@ function oer_get_permalink_structure( $post_type ) {
 
 		$structure = get_option( $pt_object->name . '_structure' );
 	}
-
+	
 	return apply_filters( 'OER_' . $pt_object->name . '_structure', $structure );
 }
 
 //Get Date Front
 function oer_get_date_front( $post_type ) {
+	
 	$structure = oer_get_permalink_structure( $post_type );
 
 	$front = '';
@@ -261,12 +299,13 @@ function oer_get_date_front( $post_type ) {
 		}
 		$tok_index ++;
 	}
-
+	
 	return apply_filters( 'OER_date_front', $front, $post_type, $structure );
 }
 
 // Taxonomy Replace Tag
 function oer_create_taxonomy_replace_tag( $post_id, $permalink ) {
+
 	$search  = array();
 	$replace = array();
 
@@ -306,6 +345,7 @@ function oer_create_taxonomy_replace_tag( $post_id, $permalink ) {
 }
 
 function oer_get_taxonomy_parents_slug( $term, $taxonomy = 'category', $separator = '/', $nicename = false, $visited = array() ) {
+	
 	$chain  = '';
 	$parent = get_term( $term, $taxonomy );
 	if ( is_wp_error( $parent ) ) {
@@ -1512,6 +1552,18 @@ function oer_get_child_subjects($subject_area_id) {
 	$args = array('hide_empty' => 0, 'taxonomy' => 'resource-subject-area','parent' => $subject_area_id);
 	$subchildren = get_categories($args);
 	return $subchildren;
+}
+
+//Get Resource Count from Subject Area
+function oer_get_subject_resource_count($subject_id) {
+	$args = array(
+		'post_type' => 'resource',
+		'posts_per_page' => -1,
+		'post_status' => 'publish',
+		'tax_query' => array(array('taxonomy' => 'resource-subject-area','terms' => array($subject_id)))
+	);
+	$resources = get_posts($args);
+	return count($resources);
 }
 
 function oer_get_sort_box($subjects=array()){
