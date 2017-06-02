@@ -313,7 +313,7 @@ if(!empty($post_terms))
                     </div> <!--Description & Resource Info at Right-->
 
                     <!-- Standards Alignment -->
-                    <div class="oer-rsrclftcntr col-md-12">
+                    <div class="oer-rsrclftcntr col-md-7">
 
     					<?php
 
