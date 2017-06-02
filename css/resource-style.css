@@ -43,7 +43,7 @@
 .oer-core-title { margin-top:15px; }
 .oer-core-title:first-child { margin-top:0; }
 .oer-core-title h4 { float:none; }
-.oer_sngl_notation { margin-right:10px; }
+.oer_sngl_notation { margin-right:5px; }
 .oer_sngl_stndrd { clear:both; }
 /** For Mobile styles **/
 @media screen and (min-width: 960px) {

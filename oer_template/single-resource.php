@@ -313,7 +313,7 @@ if(!empty($post_terms))
                     </div> <!--Description & Resource Info at Right-->
 
                     <!-- Standards Alignment -->
-                    <div class="oer-rsrclftcntr">
+                    <div class="oer-rsrclftcntr col-md-12">
 
     					<?php
 
@@ -395,7 +395,7 @@ if(!empty($post_terms))
 							    
 							    echo "<div class='oer_sngl_stndrd'>";
 								if (strpos($table_name,"sub_standards")>0) {
-									echo "<span class='oer_sngl_notation'>".$res['standard_title']."</span>";
+									echo "<span class='oer_sngl_description'>".$res['standard_title']."</span>";
 								} else {
 									echo "<span class='oer_sngl_notation'>".$res['standard_notation']."</span>";
 									echo "<span class='oer_sngl_description'>".$res['description']."</span>";
