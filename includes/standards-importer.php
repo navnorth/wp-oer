@@ -1,5 +1,3 @@
-<?php
-?>
 <div id="col-container" class="oer_imprtrwpr">
 	<form method="post" id="standards_form" onsubmit="return importStandards('#standards_form','#standards_submit')">
 		<fieldset>

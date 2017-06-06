@@ -1,4 +1,5 @@
 <?php
+/** Get Sub Standard **/
 function oer_get_sub_standard($id, $oer_standard)
 {
 	global $wpdb;
@@ -56,6 +57,7 @@ function oer_get_sub_standard($id, $oer_standard)
 	}
 }
 
+/** Get Standard Notation **/
 function oer_get_standard_notation($id, $oer_standard)
 {
 	global $wpdb;
@@ -109,6 +111,7 @@ function oer_get_standard_notation($id, $oer_standard)
 	}
 }
 
+/** Check Child Standard Notation **/
 function oer_check_child($id)
 {
 	global $wpdb;
@@ -116,6 +119,7 @@ function oer_check_child($id)
 	return $results;
 }
 
+/** Get Substandard Children **/
 function oer_get_substandard_children($id)
 {
 	global $wpdb;
@@ -123,6 +127,7 @@ function oer_get_substandard_children($id)
 	return $results;
 }
 
+/** Get Core Standard **/
 function oer_get_core_standard($id) {
 	global $wpdb;
 	$stds = explode("-",$id);
@@ -130,6 +135,7 @@ function oer_get_core_standard($id) {
 	return $results;
 }
 
+/** Get Parent Standard **/
 function oer_get_parent_standard($standard_id) {
 	global $wpdb;
 	
@@ -344,6 +350,7 @@ function oer_create_taxonomy_replace_tag( $post_id, $permalink ) {
 	return array( 'search' => $search, 'replace' => $replace );
 }
 
+/** Get Taxonomy Parents Slug **/
 function oer_get_taxonomy_parents_slug( $term, $taxonomy = 'category', $separator = '/', $nicename = false, $visited = array() ) {
 	
 	$chain  = '';
@@ -367,12 +374,14 @@ function oer_get_taxonomy_parents_slug( $term, $taxonomy = 'category', $separato
 	return $chain;
 }
 
+/** Get Term Parent **/
 function oer_get_term_parent( $term ) {
 	if ( isset( $term->parent ) and $term->parent > 0 ) {
 		return $term->parent;
 	}
 }
 
+/** Sort Terms **/
 function oer_sort_terms( $terms, $orderby = 'term_id', $order = 'ASC' ) {
 
 	if ( function_exists( 'wp_list_sort' ) ) {
@@ -600,6 +609,7 @@ function oer_slugify($text)
 	return $text;
 }
 
+/** Import Standards **/
 function oer_importStandards($file){
 	global $wpdb;
 	
@@ -857,7 +867,7 @@ function oer_getExternalThumbnailImage($url) {
 	return $file;
 }
 
-
+/** Resize Image **/
 function oer_resize_image($orig_img_url, $width, $height, $crop = false) {
 	$new_image_url = "";
 	
@@ -1505,6 +1515,7 @@ function oer_importDefaultStandards() {
 	return $response;
 }
 
+/** Fetch Standard **/
 function oer_fetch_stndrd($pId, $postid)
 {
 	global $wpdb;
@@ -1522,6 +1533,7 @@ function oer_fetch_stndrd($pId, $postid)
 	}
 }
 
+/** Get Page By Slug **/
 function oer_get_page_by_slug($page_slug, $output = OBJECT, $post_type = 'page', $parent = 0 )
 {
 	global $wpdb;
@@ -1566,6 +1578,7 @@ function oer_get_subject_resource_count($subject_id) {
 	return count($resources);
 }
 
+/** Display Sort Box **/
 function oer_get_sort_box($subjects=array()){
 	$sort = 0;
 	if (isset($_SESSION['resource_sort']))
@@ -1592,6 +1605,7 @@ function oer_get_sort_box($subjects=array()){
 	 <?php
 }
 
+/** Apply Sort Arguments **/
 function oer_apply_sort_args($args){
 	$sort = 0;
 	if (isset($_SESSION['resource_sort']))

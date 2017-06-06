@@ -122,43 +122,7 @@ function show_general_settings() {
 		</form>
 	</div>
 </div>
-<!--<div class="oer_imprtrwpr">
-	<div class="oer_hdng">
-		<?php _e("Assign Page Template to Category Pages", OER_SLUG); ?>
-    </div>
-    <form method="post">
-        <div class="fields">
-            <select name="category_template">
-				<?php echo $options; ?>
-			</select>
-            <input type="submit" name="cat_template" value="<?php _e("Save", OER_SLUG); ?>" class="button button-primary"/>
-        </div>
-    </form>
-</div>
 
-<div class="oer_imprtrwpr">
-	<div class="oer_hdng">
-		<?php _e("Set Path For Python Excutable Script", OER_SLUG); ?>
-    </div>
-    <form method="post">
-        <div class="fields">
-            <input type="text" name="python_path" value="<?php echo $oer_python_path;?>" />
-            <input type="submit" name="path_save" value="<?php _e("Save", OER_SLUG); ?>" class="button button-primary"/>
-        </div>
-    </form>
-</div>
-
-<div class="oer_imprtrwpr">
-	<div class="oer_hdng">
-		<?php _e("Set Path For Python Installation", OER_SLUG); ?>
-    </div>
-    <form method="post">
-        <div class="fields">
-            <input type="text" name="python_install" value="<?php echo $oer_python_install;?>" />
-            <input type="submit" name="python_install_save" value="<?php _e("Save", OER_SLUG); ?>" class="button button-primary"/>
-        </div>
-    </form>
-</div>-->
 <?php
 }
 
@@ -185,30 +149,6 @@ function show_styles_settings() {
 		</form>
 	</div>
 </div>
-<!--<form method="post" class="oer_settings_form">
-	<fieldset>
-		<legend><div class="oer_hdng"><?php _e("Screenshot and Display Settings", OER_SLUG); ?></div></legend>
-		<div class="oer_imprtrwpr">
-			<div class="fields">
-				<input type="checkbox" name="enable_screenshot" id="enable_screenshot" <?php checked( $enable_screenshot, 'on') ?> /> <span class="oer_chck_label"><?php _e("Enable Screenshots?", OER_SLUG); ?></span>
-			</div>
-			<div class="fields">
-				<input type="checkbox" name="use_xvfb" id="use_xvfb" <?php checked( $use_xvfb, 'on') ?> /> <span class="oer_chck_label"><?php _e("Use xvfb?", OER_SLUG); ?></span>
-			</div>
-			<div class="fields">
-				<input type="checkbox" name="debug_mode" id="debug_mode" <?php checked( $debug_mode, 'on') ?> /> <span class="oer_chck_label"><?php _e("Enable Debug Mode?", OER_SLUG); ?></span>
-			</div>
-			<div class="fields">
-				<input type="checkbox" name="use_bootstrap" id="use_bootstrap" <?php checked( $use_bootstrap, 'on') ?> /> <span class="oer_chck_label"><?php _e("Use Bootstrap?", OER_SLUG); ?></span>
-			</div>
-		</div>
-		<div class="oer_imprtrwpr">
-			<div class="fields">
-				<input type="submit" name="enable_screenshot_save" value="<?php _e("Save", OER_SLUG); ?>" class="button button-primary"/>
-			</div>
-		</div>
-	</fieldset>
-</form>-->
 <?php
 }
 

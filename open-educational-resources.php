@@ -113,10 +113,7 @@ function oer_create_csv_import_table()
 	   dbDelta($sql);
 	}
 
-   //CreatePage('Resource Form','[oer_resource_form]','resource_form'); // creating page
-   //create_template();
    update_option('setup_notify', true);
-   //enqueue_activation_script();
    
    //Trigger CPT and Taxonomy creation
    oer_postcreation();
@@ -140,6 +137,7 @@ function oer_enqueue_activation_script() {
 	}
 }
 
+//Dismiss Activation Notice
 add_action( 'wp_ajax_oer_activation_notice', 'oer_dismiss_activation_notice' );
 function oer_dismiss_activation_notice() {
 
@@ -353,98 +351,6 @@ function oer_query_post_type($query) {
 
 }
 
- /**
-  * Load Resource Categories on home page
-  **/
- /*add_filter( 'the_content', 'load_front_page_resources' );
- function load_front_page_resources( $content = ""  ) {
-	global $wpdb;
-	$args = array(
-		'type'                     => 'post',
-		'parent'                   => 0,
-		'orderby'                  => 'name',
-		'order'                    => 'ASC',
-		'hide_empty'               => 0,
-		'hierarchical'             => 0,
-		'exclude'                  => '',
-		'include'                  => '',
-		'number'                   => '',
-		'taxonomy'                 => 'resource-category',
-		'pad_counts'               => false );
-
-	$categories = get_categories( $args );
-
-	$home_content =  '<div class="oer-cntnr"><div class="oer-ctgry-cntnr row">';
-			$cnt = 1;
-			$lepcnt = 1;
-
-			foreach($categories as $category)
-			{
-				$getimage = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix.'postmeta'." WHERE meta_key='category_image' AND meta_value='$category->term_id'");
-				$getimage_hover = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix.'postmeta'." WHERE meta_key='category_image_hover' AND meta_value='$category->term_id'");
-				$icn_guid = "";
-				$icn_hover_guid = "";
-
-				if(empty($getimage) && empty($getimage_hover)){
-
-					$attach_icn = array();
-					$attach_icn_hover = array();
-					$icn_guid = oer_get_default_category_icon($category->name);
-					$icn_hover_guid = oer_get_default_category_icon($category->name, true);
-
-				} else {
-					//Checks if icon is empty
-					if (!empty($getimage)) {
-						$attach_icn = get_post($getimage[0]->post_id);
-						$icn_guid = $attach_icn->guid;
-					} else {
-						$icn_guid = oer_get_default_category_icon($category->name);
-					}
-
-					if (!empty($getimage_hover)) {
-						$attach_icn_hover = get_post($getimage_hover[0]->post_id);
-						$icn_hover_guid = $attach_icn_hover->guid;
-					} else {
-						$icn_hover_guid = oer_get_default_category_icon($category->name, true);
-					}
-				}
-
-				$count = get_oer_post_count($category->term_id, "resource-category");
-				$count = $count + $category->count;
-
-				$home_content .= '<div class="oer_snglctwpr col-md-3"><div class="oer-cat-div" data-ownback="'.get_template_directory_uri().'/img/top-arrow.png" onMouseOver="changeonhover(this)" onMouseOut="changeonout(this);" onclick="togglenavigation(this);" data-id="'.$cnt.'" data-class="'.$lepcnt.'" data-normalimg="'.$icn_guid.'" data-hoverimg="'.$icn_hover_guid.'">
-					<div class="oer-cat-icn" style="background: url('.$icn_guid.') no-repeat scroll center center; "></div>
-					<div class="oer-cat-txt-btm-cntnr">
-						<ul>
-							<li><label class="oer-mne-sbjct-ttl" ><a href="'. site_url() .'/resource-category/'. $category->slug .'">'. $category->name .'</a></label><span>'. $count .'</span></li>
-						</ul>
-					</div>';
-
-					$children = get_term_children($category->term_id, 'resource-category');
-					if( !empty( $children ) )
-					{
-						$home_content .= '<div class="oer-child-category">'. oer_front_child_category($category->term_id) .'</div>';
-					}
-				$home_content .= '</div>';
-				//if(($cnt % 4) == 0){
-					$home_content .= '<div class="oer_child_content_wpr" data-id="'.$lepcnt.'"></div>';
-					$lepcnt++;
-				//}
-			$cnt++;
-			$home_content .= '</div>';
-
-		}
-	$home_content .= '</div></div>';
-
-	if (is_home() || is_front_page()) {
-		if (!$content)
-			$content = $home_content;
-		else
-			$content .= $home_content;
-	}
-	return $content;
- }*/
-
  /** get default category icon **/
  function oer_get_default_category_icon($category_name, $hover = false) {
 
@@ -531,20 +437,6 @@ function oer_settings_page() {
 		'oer_general_settings_callback',
 		'oer_settings'
 	);
-
-	//Add Settings Fields - Assign Page Template
-	/*add_settings_field(
-		'oer_category_template',
-		__("Assign Page Template to Category Pages", OER_SLUG),
-		'oer_setup_settings_field',
-		'oer_settings',
-		'oer_general_settings',
-		array(
-			'uid' => 'oer_category_template',
-			'type' => 'selectbox',
-			'description' => __('Assign page template to subject area pages', OER_SLUG)
-		)
-	);*/
 
 	//Add Settings field for Disable Screenshots
 	add_settings_field(
@@ -967,6 +859,7 @@ function oer_setup_settings_field( $arguments ) {
 	}
 }
 
+/** Initialize Subject Area Sidebar widget **/
 function oer_widgets_init() {
 	
 	register_sidebar( array(
@@ -1439,6 +1332,7 @@ function oer_register_post_type_rules( $post_type, $args ) {
 }
 add_action( 'registered_post_type', 'oer_register_post_type_rules', 10, 2 );
 
+/** Post Type Permalink **/
 function oer_post_type_link( $post_link, $post, $leavename ) {
 	global $wp_rewrite;
 	
@@ -1687,16 +1581,4 @@ function oer_register_taxonomy_rules( $taxonomy, $object_type, $args ) {
 }
 add_action( 'registered_taxonomy', 'oer_register_taxonomy_rules' , 10, 3 );
 
-/** Add OER resources to search results **/
-//function oer_add_search_resources($query) {
-//	if ( !is_admin() && $query->is_main_query() ) {
-//		if ($query->is_search) {
-//			$query->set( 'post_type', array( 'resource' ) );
-//		}
-//	}
-//}
-//add_filter('pre_get_posts','oer_add_search_resources', 1);
-
-//front side shortcode
-//include_once(OER_PATH.'includes/resource_front.php');
 ?>

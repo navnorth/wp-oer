@@ -2,7 +2,6 @@
 /** Import Page **/
 global $wpdb;
 require_once OER_PATH.'includes/oer-functions.php';
-//require OER_PATH.'Excel/reader.php';
 
 $message = null;
 $type = null;

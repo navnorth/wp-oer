@@ -1,7 +1,3 @@
-<?php
-//require OER_PATH.'Excel/reader.php';
-?>
-
 <div class="oer_imprtrwpr">
     <form method="post" enctype="multipart/form-data" onsubmit="return processImport('#subject_submit','bulk_import')">
 	<fieldset>

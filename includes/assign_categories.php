@@ -199,22 +199,6 @@ if(isset($_POST['oer_userasgnctgries']))
 	</div>
 </div>
 <?php
-/*function process_cat_tree( $cat, $asgn_catgrs )
-{
- 	$args = array('hide_empty' => 0, 'taxonomy' => 'resource-category','parent' => $cat);
-	$next = get_categories($args);
-	if( $next )
-	{
-		echo '<ul class="oer_child">';
-		foreach( $next as $cat )
-		{
-			 echo '<li><input '. ischck_cats($asgn_catgrs, $cat->term_id) .' type="checkbox" onclick="oer_check_myChild(this)" name="oer_userasgnctgries[]" value="'.$cat->term_id .'"><span class="">' . $cat->name.'</span>';
-			 	process_cat_tree( $cat->term_id, $asgn_catgrs);
-			 echo '</li>';
-		}
-		echo '</ul>';
-	}
-}*/
 function process_cat_tree($categoryid, $asgn_catgrs )
 {
  	$args = array('hide_empty' => 0, 'taxonomy' => 'resource-subject-area','parent' => $categoryid);

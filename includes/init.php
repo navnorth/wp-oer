@@ -5,18 +5,20 @@ require_once OER_PATH.'includes/oer-functions.php';
 function oer_filter_term_args( $args, $taxonomies )
 {
     global $pagenow;
+    
 	$user_id = get_current_user_id();
-    $client_terms = get_user_meta($user_id, 'oer_userasgnctgries', true);
+	
+	$client_terms = get_user_meta($user_id, 'oer_userasgnctgries', true);
   	$client_terms = unserialize($client_terms);
 
 	if( $pagenow == $pagenow && 'resource-subject-area' == $taxonomies[0] )
 	{
-         $args['include'] = $client_terms;
-    }
+	    $args['include'] = $client_terms;
+	}
 	elseif( $pagenow == $pagenow && 'category' == $taxonomies[0] )
 	{
-         $args['include'] = $client_terms;
-    }
+	    $args['include'] = $client_terms;
+	}
 	return $args;
 }
 add_filter( 'get_terms_args', 'oer_filter_term_args', 10, 2 );
@@ -169,20 +171,23 @@ function oer_postcreation(){
         'search_items'       => __( 'Search' ),
         'menu_name'          => 'OER'
     );
-
+    
     $args = array(
         'labels'        => $labels,
-		'show_ui' => true,
-		'show_in_menu' => true,
-		'menu_position' => 5,
+	'show_ui' => true,
+	'show_in_menu' => true,
+	'menu_position' => 5,
         'description'   => 'Create Resources',
         'public'        => true,
+	'publicly_queryable'        => true,
+	'exclude_from_search' => false,
+	'query_var' => true,
         'menu_position' => '',
-		'menu_icon' => 'dashicons-welcome-learn-more',
+	'menu_icon' => 'dashicons-welcome-learn-more',
         'supports'      => array(  'title', 'editor', 'thumbnail', 'revisions',  ),
-		'taxonomies' => array('post_tag'),
+	'taxonomies' => array('post_tag'),
         'has_archive'   => true,
-		'register_meta_box_cb' => 'oer_resources_custom_metaboxes'
+	'register_meta_box_cb' => 'oer_resources_custom_metaboxes'
     );
 	register_post_type( 'resource', $args);
 }
@@ -214,7 +219,7 @@ function oer_create_resource_taxonomies() {
 		'new_item_name'     => __( 'New Genre Subject Area' ),
 		'menu_name'         => __( 'Subject Areas' ),
 	);
-
+	
 	$args = array(
 		'hierarchical'      => true,
 		'labels'            => $labels,
@@ -290,6 +295,7 @@ function oer_save_subject_area_meta( $term_id, $tt_id ){
     }
 }
 
+/** Update Subject Area Meta **/
 add_action( 'edited_resource-subject-area', 'oer_update_subject_area_meta', 10, 2 );
 function oer_update_subject_area_meta( $term_id, $tt_id ){
 
@@ -594,33 +600,8 @@ function oer_save_customfields()
     }
 }
 
-//Update Split Shared Term
-function oer_resource_split_shared_term( $term_id, $new_term_id, $term_taxonomy_id, $taxonomy ) {
-    // Checking if taxonomy is a resource category
-    if ( 'resource-subject-area' == $taxonomy ) {
-	$resource_posts = get_posts(array(
-	    'posts_per_page' => -1,
-	    'post_type' => 'fabric_building',
-	    'tax_query' => array(
-		array(
-		    'taxonomy' => $taxonomy,
-		    'field' => 'term_id',
-		    'terms' => $term_id,
-		)
-	    )
-	));
-       exit();
-    }
-}
-add_action( 'split_shared_term', 'oer_resource_split_shared_term', 10, 4 );
-
 add_action('admin_menu','oer_rsrcimprtr');
 function oer_rsrcimprtr(){
-	//add_submenu_page('edit.php?post_type=resource','Set Subject Area Images','Set Subject Area Images','add_users','oer_setcatimage','oer_setcatimage');
-	//add_submenu_page('edit.php?post_type=resource','Resources Import','Import Resources','add_users','oer_rsrcimprt','oer_rsrcimprtrfn');
-	//add_submenu_page('edit.php?post_type=resource','Subject Areas Import','Import Subject Areas','add_users','oer_catsimprt','oer_catsimprtrfn');
-	//add_submenu_page('edit.php?post_type=resource','Standards Import','Import Standards','add_users','oer_stndrdsimprt','oer_stndrdsimprtfn');
-	//add_submenu_page('edit.php?post_type=resource','Assign Subject Areas','Assign Subject Areas','add_users','oer_assign_categories','oer_assign_categories');
 	add_submenu_page('edit.php?post_type=resource','Import','Import','add_users','oer_import','oer_import');
 	add_submenu_page('edit.php?post_type=resource','Settings','Settings','add_users','oer_settings','oer_setngpgfn');
 }
