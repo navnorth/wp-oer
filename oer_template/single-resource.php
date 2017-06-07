@@ -345,7 +345,7 @@ if(!empty($post_terms))
     						{
     					?>
                         	<div class="alignedStandards">
-                                <h2><?php _e("Standards", OER_SLUG) ?></h2>
+                                <h2><?php _e("Standards Alignment", OER_SLUG) ?></h2>
                                 <div class="oer_meta_container">
                                     <div class="oer_stndrd_align">
                                     <?php
