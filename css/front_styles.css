@@ -406,11 +406,11 @@ li.oer_sbstndard{
 .oer_blgpst .rght-sd-cntnr-blg { width:80%; float:right; }
 .oer_blgpst .rght-sd-cntnr-blg h2 { margin-bottom:0; }
 .resource-tag #content { width:100%; }
-.oer_sngl_stndrd { margin-bottom:5px; }
+.oer_sngl_stndrd { margin-bottom:5px; margin-left:25px; }
 .oer_sngl_notation { font-size:1.1em; font-weight:bold; }
-.oer-rsrcrghtcntr p { text-indent:25px; }
 
 @media screen and (max-width: 600px) {
 	.oer_blgpst .oer-feature-image { width:100%; float:none; margin-bottom:10px; }
 	.oer_blgpst .rght-sd-cntnr-blg { width:100%; float:none; }
+	.oer_sngl_stndrd { margin-left:5px; }
 }
