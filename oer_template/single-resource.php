@@ -63,7 +63,7 @@ if(!empty($post_terms))
 
 ?>
 <!--<div id="primary" class="content-area">-->
-    <main id="main" class="site-main" role="main">
+    <main id="oer_main" class="site-main" role="main">
 
     <article id="oer-resource-<?php the_ID(); ?>" class="oer_sngl_resource_wrapper post-content">
         <div id="sngl-resource" class="entry-content oer-cntnr post-content oer_sngl_resource_wrapper row">
