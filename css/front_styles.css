@@ -408,6 +408,8 @@ li.oer_sbstndard{
 .resource-tag #content { width:100%; }
 .oer_sngl_stndrd { margin-bottom:5px; margin-left:25px; }
 .oer_sngl_notation { font-size:1.1em; font-weight:bold; }
+.oer-rsrclftcntr-img { padding-left:0 !important; }
+.oer-rsrclftcntr { padding-left:0 !important; }
 
 @media screen and (max-width: 600px) {
 	.oer_blgpst .oer-feature-image { width:100%; float:none; margin-bottom:10px; }
