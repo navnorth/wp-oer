@@ -62,6 +62,9 @@ global $message, $type;
 	<?php if ($active_tab=="setup") { ?>
         <a href="?post_type=resource&page=oer_settings&tab=setup" class="nav-tab <?php echo $active_tab == 'setup' ? 'nav-tab-active' : ''; ?>">Setup</a>
 	<?php } ?>
+	<?php if ($active_tab=="reset") { ?>
+        <a href="?post_type=resource&page=oer_settings&tab=reset" class="nav-tab <?php echo $active_tab == 'setup' ? 'nav-tab-active' : ''; ?>">Reset</a>
+	<?php } ?>
     </h2>
     
     <?php
@@ -74,6 +77,9 @@ global $message, $type;
 			break;
 		case "setup":
 			show_setup_settings();
+			break;
+		case "reset":
+			show_reset_settings();
 			break;
 		default:
 			break;
@@ -153,6 +159,40 @@ function show_styles_settings() {
 }
 
 function show_setup_settings() {
+	?>
+<div class="oer-plugin-body">
+	<div class="oer-plugin-row">
+		<div class="oer-row-left">
+			<?php _e("When first setting up the plugin, the following options will give you the base set of data to see how everything works. All of these options will be available to you in other settings and features at a later time if you want to skip any or all of these options.", OER_SLUG); ?>
+			<div class="oer-import-row">
+			<h2 class="hidden"></h2>
+			<?php if ($message) { ?>
+			<div class="notice notice-<?php echo $type; ?> is-dismissible">
+			    <p><?php echo $message; ?></p>
+			</div>
+			<?php } ?>
+			</div>
+		</div>
+		<div class="oer-row-right">
+			<strong><?php _e("Support Options", OER_SLUG); ?></strong>
+			<ul>
+				<li><a href="#" target="_blank"><?php _e("WordPress Plugin Support Forums", OER_SLUG); ?></a></li>
+				<li><?php _e("Navigation North <a href='#' target='_blank'>direct supprt</a>", OER_SLUG); ?></li>
+			</ul>
+		</div>
+	</div>
+	<div class="oer-plugin-row">
+		<form method="post" class="oer_settings_form" action="options.php"  onsubmit="return processInitialSettings(this)">
+			<?php settings_fields("oer_setup_settings"); ?>
+			<?php do_settings_sections("setup_settings_section"); ?>
+			<?php submit_button('Continue', 'primary setup-continue'); ?>
+		</form>
+	</div>
+</div>
+<?php
+}
+
+function show_reset_settings() {
 	?>
 <div class="oer-plugin-body">
 	<div class="oer-plugin-row">
