@@ -63,7 +63,7 @@ global $message, $type;
         <a href="?post_type=resource&page=oer_settings&tab=setup" class="nav-tab <?php echo $active_tab == 'setup' ? 'nav-tab-active' : ''; ?>">Setup</a>
 	<?php } ?>
 	<?php if ($active_tab=="reset") { ?>
-        <a href="?post_type=resource&page=oer_settings&tab=reset" class="nav-tab <?php echo $active_tab == 'setup' ? 'nav-tab-active' : ''; ?>">Reset</a>
+        <a href="?post_type=resource&page=oer_settings&tab=reset" class="nav-tab <?php echo $active_tab == 'reset' ? 'nav-tab-active' : ''; ?>">Reset</a>
 	<?php } ?>
     </h2>
     
@@ -197,7 +197,8 @@ function show_reset_settings() {
 <div class="oer-plugin-body">
 	<div class="oer-plugin-row">
 		<div class="oer-row-left">
-			<?php _e("When first setting up the plugin, the following options will give you the base set of data to see how everything works. All of these options will be available to you in other settings and features at a later time if you want to skip any or all of these options.", OER_SLUG); ?>
+			<h3><?php _e("Reset OER Plugin Setup", OER_SLUG); ?></h3>
+			<?php _e("This function is provided just to assist with testing. Be careful with the options below as each of them will remove data from your Wordpress site.", OER_SLUG); ?>
 			<div class="oer-import-row">
 			<h2 class="hidden"></h2>
 			<?php if ($message) { ?>
@@ -217,9 +218,9 @@ function show_reset_settings() {
 	</div>
 	<div class="oer-plugin-row">
 		<form method="post" class="oer_settings_form" action="options.php"  onsubmit="return processInitialSettings(this)">
-			<?php settings_fields("oer_setup_settings"); ?>
-			<?php do_settings_sections("setup_settings_section"); ?>
-			<?php submit_button('Continue', 'primary setup-continue'); ?>
+			<?php settings_fields("oer_reset_settings"); ?>
+			<?php do_settings_sections("reset_settings_section"); ?>
+			<?php submit_button('Submit', 'primary setup-continue'); ?>
 		</form>
 	</div>
 </div>

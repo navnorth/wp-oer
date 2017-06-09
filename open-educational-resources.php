@@ -792,6 +792,129 @@ function oer_import_standards_callback() {
 
 }
 
+//Initialize Reset Settings Tab
+add_action( 'admin_init' , 'oer_reset_settings' );
+function oer_reset_settings(){
+	//Create Reset Section
+	add_settings_section(
+		'oer_reset_settings',
+		'',
+		'oer_reset_settings_callback',
+		'reset_settings_section'
+	);
+
+	//Add Settings field for Deleting Standards data
+	add_settings_field(
+		'oer_delete_standards_data',
+		'',
+		'oer_setup_settings_field',
+		'reset_settings_section',
+		'oer_reset_settings',
+		array(
+			'uid' => 'oer_delete_standards_data',
+			'type' => 'checkbox',
+			'name' =>  __('Delete standards data', OER_SLUG)
+		)
+	);
+
+	//Add Settings field for Deleting resource subject area taxonomies
+	add_settings_field(
+		'oer_delete_subject_areas_taxonomies',
+		'',
+		'oer_setup_settings_field',
+		'reset_settings_section',
+		'oer_reset_settings',
+		array(
+			'uid' => 'oer_delete_subject_areas_taxonomies',
+			'type' => 'checkbox',
+			'name' =>  __('Delete all resource subject area taxonomies', OER_SLUG)
+		)
+	);
+
+	//Add Settings field for deleting resources
+	add_settings_field(
+		'oer_delete_resources',
+		'',
+		'oer_setup_settings_field',
+		'reset_settings_section',
+		'oer_reset_settings',
+		array(
+			'uid' => 'oer_delete_resources',
+			'type' => 'checkbox',
+			'name' =>  __('Delete all resources', OER_SLUG)
+		)
+	);
+
+	//Add Settings field for deleting media associated with resources
+	add_settings_field(
+		'oer_delete_resource_media',
+		'',
+		'oer_setup_settings_field',
+		'reset_settings_section',
+		'oer_reset_settings',
+		array(
+			'uid' => 'oer_delete_resource_media',
+			'type' => 'checkbox',
+			'name' =>  __('Delete media associated with resources(screenshots)', OER_SLUG)
+		)
+	);
+	
+	//Add Settings field for removing all OER plugin settings
+	add_settings_field(
+		'oer_remove_all_settings',
+		'',
+		'oer_setup_settings_field',
+		'reset_settings_section',
+		'oer_reset_settings',
+		array(
+			'uid' => 'oer_remove_all_settings',
+			'type' => 'checkbox',
+			'name' =>  __('Remove all OER plugin settings', OER_SLUG)
+		)
+	);
+	
+	//Add Settings field for deactivating plugin
+	add_settings_field(
+		'oer_deactivate_plugin',
+		'',
+		'oer_setup_settings_field',
+		'reset_settings_section',
+		'oer_reset_settings',
+		array(
+			'uid' => 'oer_deactivate_plugin',
+			'type' => 'checkbox',
+			'name' =>  __('Deactivate OER plugin', OER_SLUG)
+		)
+	);
+	
+	//Add Settings field for deleting plugin files
+	add_settings_field(
+		'oer_delete_plugin_files',
+		'',
+		'oer_setup_settings_field',
+		'reset_settings_section',
+		'oer_reset_settings',
+		array(
+			'uid' => 'oer_delete_plugin_files',
+			'type' => 'checkbox',
+			'name' =>  __('Delete the OER plugin files', OER_SLUG)
+		)
+	);
+
+	register_setting( 'oer_reset_settings' , 'oer_delete_standards_data' );
+	register_setting( 'oer_reset_settings' , 'oer_delete_subject_areas_taxonomies' );
+	register_setting( 'oer_reset_settings' , 'oer_delete_resources' );
+	register_setting( 'oer_reset_settings' , 'oer_delete_resource_media' );
+	register_setting( 'oer_reset_settings' , 'oer_remove_all_settings' );
+	register_setting( 'oer_reset_settings' , 'oer_deactivate_plugin' );
+	register_setting( 'oer_reset_settings' , 'oer_delete_plugin_files' );
+}
+
+
+function oer_reset_settings_callback() {
+
+}
+
 function oer_setup_settings_field( $arguments ) {
 	$selected = "";
 	$size = "";
