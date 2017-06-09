@@ -161,6 +161,22 @@ function processInitialSettings(form) {
 	return true;
 }
 
+//Confirm Deletion
+function confirm_deletion(form) {
+	var validate = false;
+	jQuery('.reset-form input[type=checkbox]').each(function(){
+		if(jQuery(this).is(':checked'))
+			validate = true;
+	});
+	if(validate){
+		if (confirm('Are you sure you want to continue? You will delete data from your system!')==true) {
+			return true;
+		} else {
+			return false;
+		}
+	} else { return false; }
+}
+
 //Import Resource/Subject Areas
 function processImport(btn, file) {
 	if ( document.getElementById(file).files.length == 0 ) {

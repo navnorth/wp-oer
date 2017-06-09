@@ -40,7 +40,11 @@ global $message, $type;
 			wp_safe_redirect( admin_url( 'edit.php?post_type=resource&page=oer_settings&setup=true' ) );
 			exit();
 		}
+		if ($_REQUEST['tab']=="reset") {
+			var_dump($_REQUEST);
+		}
 	}
+	
 	if ($_REQUEST['setup']=='true'){
 		$message = "The plugin has successfully loaded the default data.";
 		$type = "success";
@@ -217,7 +221,7 @@ function show_reset_settings() {
 		</div>
 	</div>
 	<div class="oer-plugin-row">
-		<form method="post" class="oer_settings_form" action="options.php"  onsubmit="return processInitialSettings(this)">
+		<form method="post" class="oer_settings_form reset-form" action="options.php"  onsubmit="return confirm_deletion(this)">
 			<?php settings_fields("oer_reset_settings"); ?>
 			<?php do_settings_sections("reset_settings_section"); ?>
 			<?php submit_button('Submit', 'primary setup-continue'); ?>
