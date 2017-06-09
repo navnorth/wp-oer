@@ -1698,4 +1698,18 @@ function oer_display_loader(){
 <div class="loader"><div class="loader-img"><div><img src="<?php echo OER_URL; ?>images/loading.gif" align="center" valign="middle" /></div></div></div>
 <?php
 }
+
+/** Delete Standards Data **/
+function oer_delete_standards() {
+	global $wpdb;
+	
+	//Delete Standard Notation
+	$wpdb->query("TRUNCATE TABLE ".$wpdb->prefix."standard_notation");
+	
+	//Delete Substandards
+	$wpdb->query("TRUNCATE TABLE ".$wpdb->prefix."sub_standards");
+	
+	//Delete Core Standards
+	$wpdb->query("TRUNCATE TABLE ".$wpdb->prefix."core_standards");
+}
 ?>

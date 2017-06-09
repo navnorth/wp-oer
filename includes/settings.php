@@ -41,7 +41,10 @@ global $message, $type;
 			exit();
 		}
 		if ($_REQUEST['tab']=="reset") {
-			var_dump($_REQUEST);
+			$delete_standards_data = get_option('oer_delete_standards_data');
+			if($delete_standards_data){
+				oer_delete_standards();
+			}
 		}
 	}
 	
