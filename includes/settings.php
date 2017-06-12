@@ -41,25 +41,37 @@ global $message, $type;
 			exit();
 		}
 		if ($_REQUEST['tab']=="reset") {
+			
 			$delete_standards_data = get_option('oer_delete_standards_data');
 			if($delete_standards_data){
-				oer_delete_standards();
+				$response = oer_delete_standards();
 				if ($response) {
 					$message .= $response["message"];
 					$type .= $response["type"];
 				}
 			}
+			
 			$delete_subject_area_taxomonies = get_option('oer_delete_subject_areas_taxonomies');
 			if ($delete_subject_area_taxomonies){
-				oer_delete_subject_areas();
+				$response = oer_delete_subject_areas();
 				if ($response) {
 					$message .= $response["message"];
 					$type .= $response["type"];
 				}
 			}
+			
 			$delete_resources = get_option('oer_delete_resources');
 			if ($delete_resources){
-				oer_delete_resources();
+				$response = oer_delete_resources();
+				if ($response) {
+					$message .= $response["message"];
+					$type .= $response["type"];
+				}
+			}
+			
+			$delete_resource_media = get_option('oer_delete_resource_media');
+			if ($delete_resource_media) {
+				$response = oer_delete_resource_media();
 				if ($response) {
 					$message .= $response["message"];
 					$type .= $response["type"];

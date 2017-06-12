@@ -1755,4 +1755,26 @@ function oer_delete_resources(){
 	$response = array( 'message' => $message, 'type' => $type );
 	return $response;
 }
+
+/** Delete Resource Media **/
+function oer_delete_resource_media() {
+	
+	$args = array(
+		'post_type' => 'resource',
+		'posts_per_page' => -1
+		      );
+	
+	$posts = get_posts($args);
+	foreach($posts as $post) {
+		if (has_post_thumbnail($post->ID)){
+			delete_post_thumbnail($post->ID);
+			$post_thumbnail_id = get_post_thumbnail_id( $post->ID );
+			wp_delete_attachment($post->ID);
+		}
+	}
+	$message = __("Successfully deleted resource media", OER_SLUG);
+	$type = "success";
+	$response = array( 'message' => $message, 'type' => $type );
+	return $response;
+}
 ?>
