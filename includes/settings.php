@@ -57,6 +57,14 @@ global $message, $type;
 					$type .= $response["type"];
 				}
 			}
+			$delete_resources = get_option('oer_delete_resources');
+			if ($delete_resources){
+				oer_delete_resources();
+				if ($response) {
+					$message .= $response["message"];
+					$type .= $response["type"];
+				}
+			}
 		}
 	}
 	

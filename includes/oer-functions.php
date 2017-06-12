@@ -1729,4 +1729,30 @@ function oer_delete_subject_areas(){
 	$response = array( 'message' => $message, 'type' => $type );
 	return $response;
 }
+
+/** Delete All Resources **/
+function oer_delete_resources(){
+	global $wpdb;
+	
+	/** Delete Term related to resources **/
+	$wpdb->query("DELETE FROM  ". $wpdb->prefix ."term_relationships WHERE object_id IN (
+						SELECT ID
+						FROM  ".$wpdb->prefix."posts 
+						WHERE post_type =  'resource'
+						)");
+	
+	/** Delete Post meta related to resources **/
+	$wpdb->query("DELETE FROM ".$wpdb->prefix."postmeta WHERE post_id IN (
+						SELECT ID
+						FROM  ".$wpdb->prefix."posts 
+						WHERE post_type =  'resource'
+						)");
+	
+	/** Delete all resources **/
+	$wpdb->query("DELETE FROM ".$wpdb->prefix."posts WHERE post_type =  'resource'");
+	$message = __("Successfully deleted all resources", OER_SLUG);
+	$type = "success";
+	$response = array( 'message' => $message, 'type' => $type );
+	return $response;
+}
 ?>
