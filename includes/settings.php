@@ -44,6 +44,18 @@ global $message, $type;
 			$delete_standards_data = get_option('oer_delete_standards_data');
 			if($delete_standards_data){
 				oer_delete_standards();
+				if ($response) {
+					$message .= $response["message"];
+					$type .= $response["type"];
+				}
+			}
+			$delete_subject_area_taxomonies = get_option('oer_delete_subject_areas_taxonomies');
+			if ($delete_subject_area_taxomonies){
+				oer_delete_subject_areas();
+				if ($response) {
+					$message .= $response["message"];
+					$type .= $response["type"];
+				}
 			}
 		}
 	}
@@ -200,6 +212,7 @@ function show_setup_settings() {
 }
 
 function show_reset_settings() {
+	global $message, $type;
 	?>
 <div class="oer-plugin-body">
 	<div class="oer-plugin-row">

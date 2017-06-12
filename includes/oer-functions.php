@@ -1711,5 +1711,22 @@ function oer_delete_standards() {
 	
 	//Delete Core Standards
 	$wpdb->query("TRUNCATE TABLE ".$wpdb->prefix."core_standards");
+	
+	$message = __("Successfully deleted standards", OER_SLUG);
+	$type = "success";
+	$response = array( 'message' => $message, 'type' => $type );
+	return $response;
+}
+
+/* Delete Resource Subject Area Taxonomies */
+function oer_delete_subject_areas(){
+	$terms = get_terms(array('taxonomy' => 'resource-subject-area', 'hide_empty' => false));
+	foreach($terms as $term) {
+		wp_delete_term( $term->term_id, 'resource-subject-area' );
+	}
+	$message = __("Successfully deleted all subject areas", OER_SLUG);
+	$type = "success";
+	$response = array( 'message' => $message, 'type' => $type );
+	return $response;
 }
 ?>
