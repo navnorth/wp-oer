@@ -77,6 +77,15 @@ global $message, $type;
 					$type .= $response["type"];
 				}
 			}
+			
+			$remove_all_settings = get_option('oer_remove_all_settings');
+			if ($remove_all_settings){
+				$response = oer_remove_plugin_settings();
+				if ($response) {
+					$message .= $response["message"];
+					$type .= $response["type"];
+				}
+			}
 		}
 	}
 	
