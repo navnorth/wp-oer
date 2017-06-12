@@ -1704,4 +1704,14 @@ function oer_register_taxonomy_rules( $taxonomy, $object_type, $args ) {
 }
 add_action( 'registered_taxonomy', 'oer_register_taxonomy_rules' , 10, 3 );
 
+/** Deactivate plugin **/
+function oer_deactivate_plugin(){
+	deactivate_plugins( plugin_basename( __FILE__ ) );
+}
+
+/** Delete plugin **/
+function oer_delete_plugin_files(){
+	if (!is_plugin_active(plugin_basename( __FILE__ )))
+		delete_plugins( array( plugin_basename( __FILE__ ) ) );
+}
 ?>

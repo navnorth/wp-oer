@@ -1831,5 +1831,10 @@ function oer_remove_plugin_settings(){
 	
 	if (get_option('oer_use_bootstrap'))
 		delete_option('oer_use_bootstrap');
+		
+	$message = __("Successfully removed all plugin settings", OER_SLUG);
+	$type = "success";
+	$response = array( 'message' => $message, 'type' => $type );
+	return $response;
 }
 ?>

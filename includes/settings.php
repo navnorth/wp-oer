@@ -86,6 +86,25 @@ global $message, $type;
 					$type .= $response["type"];
 				}
 			}
+			
+			$deactivate_plugin = get_option('oer_deactivate_plugin');
+			if ($deactivate_plugin){
+				oer_deactivate_plugin();
+				
+				//Redirect to plugins page
+				wp_safe_redirect( admin_url( 'plugins.php' ) );
+				exit();
+			}
+			
+			$delete_plugin_files = get_option('oer_delete_plugin_files');
+			if ($delete_plugin_files){
+				oer_deactivate_plugin();
+				oer_delete_plugin_files();
+				
+				//Redirect to plugins page
+				wp_safe_redirect( admin_url( 'plugins.php' ) );
+				exit();
+			}
 		}
 	}
 	
