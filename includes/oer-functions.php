@@ -1703,14 +1703,29 @@ function oer_display_loader(){
 function oer_delete_standards() {
 	global $wpdb;
 	
+	//Check if standard notations exist
+	$standard_notations = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."standard_notation", ARRAY_A);
+	
 	//Delete Standard Notation
-	$wpdb->query("TRUNCATE TABLE ".$wpdb->prefix."standard_notation");
+	if (count($standard_notations)>0){
+		$wpdb->query("TRUNCATE TABLE ".$wpdb->prefix."standard_notation");
+	}
+	
+	//Check if substandards exist
+	$substandards = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."sub_standards");
 	
 	//Delete Substandards
-	$wpdb->query("TRUNCATE TABLE ".$wpdb->prefix."sub_standards");
+	if (count($substandards)>0){
+		$wpdb->query("TRUNCATE TABLE ".$wpdb->prefix."sub_standards");
+	}
+	
+	//Check if core standards exist
+	$core_standards = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."core_standards");
 	
 	//Delete Core Standards
-	$wpdb->query("TRUNCATE TABLE ".$wpdb->prefix."core_standards");
+	if (count($core_standards)>0){
+		$wpdb->query("TRUNCATE TABLE ".$wpdb->prefix."core_standards");
+	}
 	
 	$message = __("Successfully deleted standards", OER_SLUG);
 	$type = "success";
@@ -1734,22 +1749,46 @@ function oer_delete_subject_areas(){
 function oer_delete_resources(){
 	global $wpdb;
 	
+	//Check if term relationships data exist
+	$term_relationships = $wpdb->get_results("SELECT * FROM ". $wpdb->prefix."term_relationships WHERE object_id IN (
+						SELECT ID
+						FROM  ".$wpdb->prefix."posts 
+						WHERE post_type =  'resource'
+						)", ARRAY_A);
+	
 	/** Delete Term related to resources **/
-	$wpdb->query("DELETE FROM  ". $wpdb->prefix ."term_relationships WHERE object_id IN (
+	if (count($term_relationships)>0) {
+		$wpdb->query("DELETE FROM  ". $wpdb->prefix ."term_relationships WHERE object_id IN (
 						SELECT ID
 						FROM  ".$wpdb->prefix."posts 
 						WHERE post_type =  'resource'
 						)");
+	}
+	
+	//Check if postmeta data exist
+	$post_meta = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."postmeta WHERE post_id IN (
+						SELECT ID
+						FROM  ".$wpdb->prefix."posts 
+						WHERE post_type =  'resource'
+						)", ARRAY_A);
 	
 	/** Delete Post meta related to resources **/
-	$wpdb->query("DELETE FROM ".$wpdb->prefix."postmeta WHERE post_id IN (
+	if (count($post_meta)>0) {
+		$wpdb->query("DELETE FROM ".$wpdb->prefix."postmeta WHERE post_id IN (
 						SELECT ID
 						FROM  ".$wpdb->prefix."posts 
 						WHERE post_type =  'resource'
 						)");
+	}
+	
+	//Check if resources exist
+	$resources = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."posts WHERE post_type =  'resource'", ARRAY_A);
 	
 	/** Delete all resources **/
-	$wpdb->query("DELETE FROM ".$wpdb->prefix."posts WHERE post_type =  'resource'");
+	if (count($resources)>0) {
+		$wpdb->query("DELETE FROM ".$wpdb->prefix."posts WHERE post_type =  'resource'");
+	}
+	
 	$message = __("Successfully deleted all resources", OER_SLUG);
 	$type = "success";
 	$response = array( 'message' => $message, 'type' => $type );
