@@ -1,2 +1,3 @@
 upload/*
 *.komodoproject
+.DS_Store
