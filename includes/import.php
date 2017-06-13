@@ -29,33 +29,33 @@ if(isset($_POST['bulk_imprt']))
 //Categories Bulk Import
 //Standards Bulk Import
 if(isset($_POST['standards_import']))
-{   
+{
     $files = array();
-    
+
     if (isset($_POST['oer_common_core_mathematics'])){
-	$files[] = OER_PATH."samples/CCSS_Math.xml";
+	   $files[] = OER_PATH."samples/CCSS_Math.xml";
     }
-    
+
     if (isset($_POST['oer_common_core_english'])){
-	$files[] = OER_PATH."samples/CCSS_ELA.xml";
+	   $files[] = OER_PATH."samples/CCSS_ELA.xml";
     }
-    
+
     if (isset($_POST['oer_next_generation_science'])){
-	$files[] = OER_PATH."samples/D2454348.xml";
+	   $files[] = OER_PATH."samples/NGSS.xml";
     }
-	
+
     foreach ($files as $file) {
-	$import = oer_importStandards($file);
-	if ($import['type']=="success") {
-	    if (strpos($file,'Math')) {
-		$message .= "Successfully imported Common Core Mathematics Standards. \n";
-	    } elseif (strpos($file,'ELA')) {
-		$message .= "Successfully imported Common Core English Language Arts Standards. \n";
-	    } else {
-		$message .= "Successfully imported Next Generation Science Standards. \n";
-	    }
-	}
-	$type = $import['type'];
+    	$import = oer_importStandards($file);
+    	if ($import['type']=="success") {
+    	    if (strpos($file,'Math')) {
+    		$message .= "Successfully imported Common Core Mathematics Standards. \n";
+    	    } elseif (strpos($file,'ELA')) {
+    		$message .= "Successfully imported Common Core English Language Arts Standards. \n";
+    	    } else {
+    		$message .= "Successfully imported Next Generation Science Standards. \n";
+    	    }
+    	}
+    	$type = $import['type'];
     }
 }
 ?>
@@ -70,9 +70,9 @@ if(isset($_POST['standards_import']))
 			<div class="oer-import-row">
 			<h2 class="hidden"></h2>
 			<?php if ($message) { ?>
-			<div class="notice notice-<?php echo $type; ?> is-dismissible">
-			    <p><?php echo $message; ?></p>
-			</div>
+    			<div class="notice notice-<?php echo $type; ?> is-dismissible">
+    			    <p><?php echo $message; ?></p>
+    			</div>
 			<?php } ?>
 			</div>
 			<div class="oer-import-row">

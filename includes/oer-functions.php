@@ -9,7 +9,7 @@ function oer_get_sub_standard($id, $oer_standard)
 	{
 		$stndrd_arr = explode(",",$oer_standard);
 	}
-	
+
 	if(!empty($results))
 	{
 		echo "<ul>";
@@ -33,15 +33,15 @@ function oer_get_sub_standard($id, $oer_standard)
 				$id = 'sub_standards-'.$result['id'];
 				$subchildren = oer_get_substandard_children($id);
 				$child = oer_check_child($id);
-				
+
 				echo "<li class='oer_sbstndard ". $class ."'>
 						<div class='stndrd_ttl'>";
-						
+
 				if(!empty($subchildren) || !empty($child))
 					{
 						echo "<img src='".OER_URL."images/closed_arrow.png' data-pluginpath='".OER_URL."' />";
-					}		
-				
+					}
+
 				echo			"<input type='checkbox' ".$chck." name='oer_standard[]' value='".$value."' onclick='oer_check_all(this)' >
 							".$result['standard_title']."
 						</div><div class='oer_stndrd_desc'></div>";
@@ -138,30 +138,30 @@ function oer_get_core_standard($id) {
 /** Get Parent Standard **/
 function oer_get_parent_standard($standard_id) {
 	global $wpdb;
-	
+
 	$stds = explode("-",$standard_id);
 	$table = $stds[0];
 	$prefix = substr($standard_id,0,strpos($standard_id,"_")+1);
 	$table_name = $table;
-	
+
 	if(strcmp($prefix, $wpdb->prefix) !== 0)
 	{
 	    $table_name = str_replace($prefix,$wpdb->prefix,$table);
 	}
-	
+
 	$id = $stds[1];
 	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $table_name. " where id = %s" , $id ) , ARRAY_A);
-	
+
 	foreach($results as $result) {
-		
+
 		$stdrds = explode("-",$result['parent_id']);
 		$tbl = $stdrds[0];
 		$tbls = array('sub_standards','standard_notation');
-		
+
 		if (in_array($tbl,$tbls)){
 			$results = oer_get_parent_standard("oer_".$result['parent_id']);
 		}
-		
+
 	}
 	return $results;
 }
@@ -170,10 +170,10 @@ function oer_get_parent_standard($standard_id) {
 function oer_getScreenshotFile($url)
 {
 	global $_debug;
-	
+
 	$upload_dir = wp_upload_dir();
 	$path = $upload_dir['basedir'].'/resource-images/';
-	
+
 	if(!file_exists($path))
 	{
 		mkdir($path, 0777, true);
@@ -181,15 +181,15 @@ function oer_getScreenshotFile($url)
 	}
 
 	if(!file_exists($file = $path.'Screenshot'.preg_replace('/https?|:|#|\?|\&|\//i', '-', $url).'.jpg'))
-	{	
+	{
 		debug_log("OER : start screenshot function");
-			
+
 		$oer_python_script_path 	= get_option("oer_python_path");
 		$oer_python_install 		= get_option("oer_python_install");
 
-		
+
 		$use_xvfb = get_option('oer_use_xvfb');
-		
+
 		$param_screenshots = array();
 		if($use_xvfb){
 			$param_screenshots = array(
@@ -198,7 +198,7 @@ function oer_getScreenshotFile($url)
 						'--server-num=1'
 						);
 		}
-		
+
 		// create screenshot
 		$params = array(
 			$oer_python_install,
@@ -206,20 +206,20 @@ function oer_getScreenshotFile($url)
 			escapeshellarg($url),
 			$file,
 		);
-		
+
 		$params = array_merge($param_screenshots, $params);
 
 		$lines = array();
 		$val = 0;
 
 		try {
-			
+
 			$output = exec(implode(' ', $params), $lines, $val);
-			
+
 		} catch(Exception $e) {
 			if ($_debug=="on")
 				error_log($e->getMessage());
-			
+
 		}
 		debug_log("OER : end of screenshot function");
 	}
@@ -229,7 +229,7 @@ function oer_getScreenshotFile($url)
 // Log Debugging
 function debug_log($message) {
 	global $_debug;
-	
+
 	// if debugging is on
 	if ($_debug=="on")
 		error_log($message);
@@ -238,10 +238,10 @@ function debug_log($message) {
 // Taxonomy rewrite
 function oer_taxonomy_slug_rewrite($wp_rewrite) {
     $rules = array();
-    
+
     // get all custom taxonomies
     $taxonomies = get_taxonomies(array('_builtin' => false), 'objects');
-    
+
     // get all custom post types
     $post_types = get_post_types(array('public' => true, '_builtin' => false), 'objects');
 
@@ -265,7 +265,7 @@ function oer_taxonomy_slug_rewrite($wp_rewrite) {
             }
         }
     }
-    
+
     // merge with global rules
     $wp_rewrite->rules = $rules + $wp_rewrite->rules;
 }
@@ -285,13 +285,13 @@ function oer_get_permalink_structure( $post_type ) {
 
 		$structure = get_option( $pt_object->name . '_structure' );
 	}
-	
+
 	return apply_filters( 'OER_' . $pt_object->name . '_structure', $structure );
 }
 
 //Get Date Front
 function oer_get_date_front( $post_type ) {
-	
+
 	$structure = oer_get_permalink_structure( $post_type );
 
 	$front = '';
@@ -305,7 +305,7 @@ function oer_get_date_front( $post_type ) {
 		}
 		$tok_index ++;
 	}
-	
+
 	return apply_filters( 'OER_date_front', $front, $post_type, $structure );
 }
 
@@ -324,7 +324,7 @@ function oer_create_taxonomy_replace_tag( $post_id, $permalink ) {
 
 			if ( $terms and ! is_wp_error( $terms ) ) {
 				$parents  = array_map( "oer_get_term_parent", $terms );
-				
+
 				$newTerms = array();
 				foreach ( $terms as $key => $term ) {
 					if ( ! in_array( $term->term_id, $parents ) ) {
@@ -332,7 +332,7 @@ function oer_create_taxonomy_replace_tag( $post_id, $permalink ) {
 					}
 				}
 
-				$term_obj  = reset( $newTerms ); 
+				$term_obj  = reset( $newTerms );
 				$term_slug = $term_obj->slug;
 
 				if ( isset( $term_obj->parent ) and 0 != $term_obj->parent ) {
@@ -352,7 +352,7 @@ function oer_create_taxonomy_replace_tag( $post_id, $permalink ) {
 
 /** Get Taxonomy Parents Slug **/
 function oer_get_taxonomy_parents_slug( $term, $taxonomy = 'category', $separator = '/', $nicename = false, $visited = array() ) {
-	
+
 	$chain  = '';
 	$parent = get_term( $term, $taxonomy );
 	if ( is_wp_error( $parent ) ) {
@@ -409,15 +409,15 @@ if (!function_exists('get_oer_category_child')) {
 		$args = array('hide_empty' => 0, 'taxonomy' => 'resource-subject-area','parent' => $categoryid);
 		$catchilds = get_categories($args);
 		$term = get_the_title();
-		
+
 		//$rsltdata = get_term_by( "name", $term, "resource-category", ARRAY_A );
 		$rsltdata = get_term_by( "id", $child_term_id, "resource-subject-area", ARRAY_A );
-		
+
 		$parentid = array();
 		if($rsltdata['parent'] != 0)
 		{
 			$parent = get_oer_parent_term($rsltdata['parent']);
-			
+
 			for($k=0; $k < count($parent); $k++)
 			{
 				//$idObj = get_category_by_slug($parent[$k]);
@@ -427,7 +427,7 @@ if (!function_exists('get_oer_category_child')) {
 				}
 			}
 		}
-	
+
 		if(!empty($catchilds))
 		{
 			echo '<ul class="oer-category">';
@@ -447,7 +447,7 @@ if (!function_exists('get_oer_category_child')) {
 				{
 					$class = '';
 				}
-	
+
 				if( !empty( $children ) )
 				{
 					echo '<li class="oer-sub-category has-child'.$class.'" title="'. $catchild->name .'" >
@@ -473,27 +473,27 @@ if (!function_exists('get_oer_category_child')) {
 //GET Custom Texonomy Parent
 if (!function_exists('get_custom_oer_category_parents')) {
 	function get_custom_oer_category_parents( $id, $taxonomy = false, $link = false, $separator = '/', $nicename = false, $visited = array() ) {
-	
+
 		if(!($taxonomy && is_taxonomy_hierarchical( $taxonomy )))
 			return '';
-	
+
 		$chain = '';
 		// $parent = get_category( $id );
 		$parent = get_term( $id, $taxonomy);
 		if ( is_wp_error( $parent ) )
 			return $parent;
-		
+
 		if ( $nicename )
 			$name = $parent->slug;
 		else
 			$name = $parent->name;
-	
+
 		if ( $parent->parent && ( $parent->parent != $parent->term_id ) && !in_array( $parent->parent, $visited ) ) {
 			$visited[] = $parent->parent;
 			// $chain .= get_category_parents( $parent->parent, $link, $separator, $nicename, $visited );
 			$chain .= get_custom_oer_category_parents( $parent->parent, $taxonomy, $link, $separator, $nicename, $visited );
 		}
-	
+
 		if ( $link ) {
 			// $chain .= '<a href="' . esc_url( get_category_link( $parent->term_id ) ) . '" title="' . esc_attr( sprintf( __( "View all posts in %s" ), $parent->name ) ) . '">'.$name.'</a>' . $separator;
 			$chain .= '<a href="' . esc_url( get_term_link( (int) $parent->term_id, $taxonomy ) ) . '" title="' . esc_attr( sprintf( __( "View all posts in %s" ), $parent->name ) ) . '">'.$name.'</a>' . $separator;
@@ -510,7 +510,7 @@ if (!function_exists('get_oer_parent_term')) {
 	{
 		$curr_cat = get_category_parents($id, false, '/' ,true);
 		$curr_cat = explode('/',$curr_cat);
-	
+
 		return $curr_cat;
 	}
 }
@@ -522,7 +522,7 @@ if (!function_exists('get_term_top_most_parent')) {
 	    // climb up the hierarchy until we reach a term with parent = '0'
 	    while ($parent->parent != '0'){
 		$term_id = $parent->parent;
-	
+
 		$parent  = get_term_by( 'id', $term_id, $taxonomy);
 	    }
 	    return $parent;
@@ -537,7 +537,7 @@ if (!function_exists('get_oer_post_count')) {
 		$args = array(
 		  'child_of' => $category,
 		);
-	
+
 		$tax_terms = get_terms($taxonomy,$args);
 		foreach ($tax_terms as $tax_term)
 		{
@@ -554,7 +554,7 @@ if (!function_exists('oer_front_child_category')) {
 		$args = array('hide_empty' => 0, 'taxonomy' => 'resource-subject-area','parent' => $categoryid);
 		$catchilds = get_categories($args);
 		$rtrn = "";
-	
+
 		if(!empty($catchilds))
 		{
 			$rtrn .= '<ul class="oer-category">';
@@ -576,7 +576,7 @@ if (!function_exists('oer_front_child_category')) {
 			}
 			$rtrn .=  '</ul>';
 		}
-	
+
 		return $rtrn;
 	}
 }
@@ -586,57 +586,57 @@ function oer_slugify($text)
 {
 	// replace non letter or digits by -
 	$text = preg_replace('~[^\pL\d]+~u', '-', $text);
-      
+
 	// transliterate
 	$text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
-      
+
 	// remove unwanted characters
 	$text = preg_replace('~[^-\w]+~', '', $text);
-      
+
 	// trim
 	$text = trim($text, '-');
-      
+
 	// remove duplicate -
 	$text = preg_replace('~-+~', '-', $text);
-      
+
 	// lowercase
 	$text = strtolower($text);
-      
+
 	if (empty($text)) {
 	  return 'n-a';
 	}
-      
+
 	return $text;
 }
 
 /** Import Standards **/
 function oer_importStandards($file){
 	global $wpdb;
-	
+
 	$time = time();
 	$date = date($time);
 
 	//Set Maximum Excution Time
 	ini_set('max_execution_time', 0);
 	set_time_limit(0);
-    
+
 	// Log start of import process
 	debug_log("OER Standards Importer: Start Bulk Import of Standards");
-		
+
 	if( isset($file) )
 	{
 		try {
 
 			$filedetails = pathinfo($file);
-			
+
 			$filename = $filedetails['filename']."-".$date;
-			
+
 			$doc = new DOMDocument();
 			$doc->preserveWhiteSpace = FALSE;
 			$doc->load( $file );
-	
+
 			$StandardDocuments = $doc->getElementsByTagName('StandardDocument');
-			
+
 			$xml_arr = array();
 			$m = 0;
 			foreach( $StandardDocuments as $StandardDocument)
@@ -645,7 +645,7 @@ function oer_importStandards($file){
 				$titles = $StandardDocuments->item($m)->getElementsByTagName('title');
 				$core_standard[$url]['title'] = $titles->item($m)->nodeValue;
 			}
-	
+
 			$Statements = $doc->getElementsByTagName('Statement');
 			$i = 0;
 			foreach( $Statements as $Statement)
@@ -678,7 +678,7 @@ function oer_importStandards($file){
 				}
 				$i++;
 			}
-			
+
 			// Get Core Standard
 			foreach($core_standard as $cskey => $csdata)
 			{
@@ -691,7 +691,7 @@ function oer_importStandards($file){
 				}
 			}
 			// Get Core Standard
-	
+
 			// Get Sub Standard
 			foreach($xml_arr as $key => $data)
 			{
@@ -699,7 +699,7 @@ function oer_importStandards($file){
 				$ischild = $data['ischild'];
 				$title = $data['title'];
 				$parent = '';
-	
+
 				$rsltset = $wpdb->get_results( $wpdb->prepare( "select id from " . $wpdb->prefix. "core_standards where standard_url=%s" , $ischild ));
 				if(!empty($rsltset))
 				{
@@ -713,7 +713,7 @@ function oer_importStandards($file){
 						$parent = 'sub_standards-'.$rsltset_sec[0]->id;
 					}
 				}
-	
+
 				$res = $wpdb->get_results( $wpdb->prepare( "SELECT id from " . $wpdb->prefix. "sub_standards where parent_id = %s && url = %s" , $parent , $url ));
 				if(empty($res))
 				{
@@ -721,7 +721,7 @@ function oer_importStandards($file){
 				}
 			}
 			// Get Sub Standard
-	
+
 			// Get Standard Notation
 			foreach($standard_notation as $st_key => $st_data)
 			{
@@ -730,7 +730,7 @@ function oer_importStandards($file){
 				$notation = $st_data['title'];
 				$description = $st_data['description'];
 				$parent = '';
-	
+
 				$rsltset = $wpdb->get_results( $wpdb->prepare( "select id from " . $wpdb->prefix. "sub_standards where url=%s" , $ischild ));
 				if(!empty($rsltset))
 				{
@@ -744,7 +744,7 @@ function oer_importStandards($file){
 						$parent = 'standard_notation-'.$rsltset_sec[0]->id;
 					}
 				}
-	
+
 				$res = $wpdb->get_results( $wpdb->prepare( "SELECT id from " . $wpdb->prefix. "standard_notation where standard_notation = %s && parent_id = %s && url = %s" , $notation , $parent , $url ));
 				if(empty($res))
 				{
@@ -753,7 +753,7 @@ function oer_importStandards($file){
 					$wpdb->get_results( $wpdb->prepare( 'INSERT INTO ' . $wpdb->prefix. 'standard_notation values("", %s, %s, %s, "", %s)' , $parent , $notation , $description , $url ));
 				}
 			}
-			
+
 		} catch(Exception $e) {
 			$response = array(
 					  'message' => $e->getMessage(),
@@ -777,12 +777,12 @@ function oer_importStandards($file){
 //Check if Standard Exists
 function oer_isStandardExisting($standard) {
 	global $wpdb;
-	
+
 	$response = false;
 	$results = $wpdb->get_results( $wpdb->prepare( "SELECT id from " . $wpdb->prefix. "core_standards where standard_name like %s" , '%'.$standard.'%'));
 	if(!empty($results))
 		$response = true;
-		
+
 	return $response;
 }
 
@@ -795,23 +795,23 @@ function oer_getDomainFromUrl($url) {
 //Get Image from External URL
 function oer_getImageFromExternalURL($url) {
 	global $_debug;
-	
+
 	$external_service_url = get_option('oer_service_url');
 	$img_url = str_replace('$url',$url,$external_service_url);
-	
+
 	$ch = curl_init ($img_url);
-	
+
 	curl_setopt($ch, CURLOPT_HEADER, 0);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 	curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
 	curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-	
+
 	$raw=curl_exec($ch);
 	curl_close ($ch);
-	
+
 	$upload_dir = wp_upload_dir();
 	$path = $upload_dir['basedir'].'/resource-images/';
-	
+
 	if(!file_exists($path))
 	{
 		mkdir($path, 0777, true);
@@ -819,13 +819,13 @@ function oer_getImageFromExternalURL($url) {
 	}
 
 	if(!file_exists($file = $path.'Screenshot'.preg_replace('/https?|:|#|\?|\&|\//i', '-', $url).'.jpg'))
-	{	
+	{
 		debug_log("OER : start screenshot function");
-			
+
 		$fp = fopen($file,'wb');
 		fwrite($fp, $raw);
 		fclose($fp);
-		
+
 		debug_log("OER : end of screenshot function");
 	}
 	return $file;
@@ -834,20 +834,20 @@ function oer_getImageFromExternalURL($url) {
 //Get External Thumbnail Image
 function oer_getExternalThumbnailImage($url) {
 	global $_debug;
-	
+
 	$ch = curl_init ($url);
-	
+
 	curl_setopt($ch, CURLOPT_HEADER, 0);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 	curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
 	curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-	
+
 	$raw=curl_exec($ch);
 	curl_close ($ch);
-	
+
 	$upload_dir = wp_upload_dir();
 	$path = $upload_dir['basedir'].'/resource-images/';
-	
+
 	if(!file_exists($path))
 	{
 		mkdir($path, 0777, true);
@@ -855,13 +855,13 @@ function oer_getExternalThumbnailImage($url) {
 	}
 
 	if(!file_exists($file = $path.'Screenshot'.preg_replace('/https?|:|#|\?|\&|\//i', '-', $url).'.jpg'))
-	{	
+	{
 		debug_log("OER : start download image function");
-			
+
 		$fp = fopen($file,'wb');
 		fwrite($fp, $raw);
 		fclose($fp);
-		
+
 		debug_log("OER : end of download image function");
 	}
 	return $file;
@@ -870,42 +870,42 @@ function oer_getExternalThumbnailImage($url) {
 /** Resize Image **/
 function oer_resize_image($orig_img_url, $width, $height, $crop = false) {
 	$new_image_url = "";
-	
+
 	$suffix = "{$width}x{$height}";
-	
+
 	if ( !function_exists( 'get_home_path' ) )
 		require_once( ABSPATH . 'wp-admin/includes/file.php' );
-	
+
 	$home_path = get_home_path();
-	
+
 	$img_path = $new_img_path = parse_url($orig_img_url);
 	$img_path = $_SERVER['DOCUMENT_ROOT'] . $img_path['path'];
-	
+
 	if (!empty($img_path)) {
 		//Resize Image using WP_Image_Editor class
 		$image_editor = wp_get_image_editor($img_path);
-		
+
 		if ( !is_wp_error($image_editor) ) {
 			$new_image = $image_editor->resize( $width, $height, $crop );
-			
+
 			//Get Additional information of file
 			$info = pathinfo( $img_path );
 			$dir = $info['dirname'];
 			$ext = $info['extension'];
 			$name = wp_basename( $img_path , ".{$ext}" );
-			
+
 			$dest_filename = "{$dir}/{$name}-{$suffix}.{$ext}";
-			
+
 			//Set port if port is not 80
 			$new_port = ($new_img_path['port'])?':'.$new_img_path['port']:'';
-				
+
 			//new image url
 			$new_image_url = str_replace($_SERVER['DOCUMENT_ROOT'], "{$new_img_path['scheme']}://{$new_img_path['host']}{$new_port}", $dest_filename);
-			
+
 			if (!file_exists($dest_filename)) {
 				//save new resize image to file
 				$image_file = $image_editor->save($dest_filename);
-				
+
 				if ($image_file)
 					return $new_image_url;
 			}
@@ -918,14 +918,14 @@ function oer_resize_image($orig_img_url, $width, $height, $crop = false) {
 function oer_importResources($default=false) {
 	global $wpdb;
 	require_once OER_PATH.'Excel/reader.php';
-	
+
 	debug_log("OER Resources Importer: Initializing Excel Reader");
 
 	$excl_obj = new Spreadsheet_Excel_Reader();
 	$excl_obj->setOutputEncoding('CP1251');
 	$time = time();
 	$date = date($time);
-	
+
 	//Set Maximum Excution Time
 	ini_set('max_execution_time', 0);
 	ini_set('max_input_time ', -1);
@@ -934,7 +934,7 @@ function oer_importResources($default=false) {
 
 	// Log start of import process
 	debug_log("OER Resources Importer: Starting Bulk Import of Resources");
-		
+
 	$cnt = 0;
 		try{
 			if ($default==true) {
@@ -945,7 +945,7 @@ function oer_importResources($default=false) {
 				if( isset($_FILES['resource_import']) && $_FILES['resource_import']['size'] != 0 )
 				{
 					$filename = $_FILES['resource_import']['name']."-".$date;
-		
+
 					if ($_FILES["resource_import"]["error"] > 0)
 					{
 						$message = "Error: " . $_FILES["resource_import"]["error"] . "<br>";
@@ -965,7 +965,7 @@ function oer_importResources($default=false) {
 					$excl_obj->read(OER_PATH."upload/".$filename);
 				}
 			}
-	
+
 			$fnldata = $excl_obj->sheets[0];
 			for ($k =2; $k <= $fnldata['numRows']; $k++)
 			{
@@ -997,7 +997,7 @@ function oer_importResources($default=false) {
 				$oer_authorurl2     	= "";
 				$oer_authoremail2   	= "";
 				$oer_thumbnailurl	= "";
-				
+
 				/** Check first if column is set **/
 				if (isset($fnldata['cells'][$k][1]))
 					$oer_title          = $fnldata['cells'][$k][1];
@@ -1053,12 +1053,12 @@ function oer_importResources($default=false) {
 					$oer_authoremail2   = $fnldata['cells'][$k][26];
 				if (isset($fnldata['cells'][$k][27]))
 					$oer_thumbnailurl   = $fnldata['cells'][$k][27];
-	
+
 				if(!empty($oer_standard) && (!is_array($oer_standard)))
 				{
 					$oer_standard = explode(",", $oer_standard);
 				}
-				
+
 				if(!empty($oer_categories))
 				{
 					$oer_categories = explode(",",$oer_categories);
@@ -1084,33 +1084,33 @@ function oer_importResources($default=false) {
 				{
 					$category_id = array();
 				}
-	
+
 				//Check if $oer_title is set
 				if ( isset( $oer_title ) ){
 					$post_name = strtolower($oer_title);
 					$post_name = str_replace(' ','_', $post_name);
 				}
-	
+
 				if(!empty($oer_title) && !empty($oer_resourceurl))
 				{
 					/** Get Current WP User **/
 					$user_id = get_current_user_id();
 					/** Get Current Timestamp for post_date **/
 					$cs_date = current_time('mysql');
-					
+
 					$post = array('post_content' => $oer_description, 'post_name' => $post_name, 'post_title' => $oer_title, 'post_status' => 'publish', 'post_type' => 'resource', 'post_author' => $user_id , 'post_date' => $cs_date, 'post_date_gmt'  => $cs_date, 'comment_status' => 'open');
 					/** Set $wp_error to false to return 0 when error occurs **/
 					$post_id = wp_insert_post( $post, false );
-					
+
 					//Set Category of Resources
 					$tax_ids = wp_set_object_terms( $post_id, $category_id, 'resource-subject-area', true );
-					
+
 					// Set Tages
 					$oer_kywrd = strtolower(trim($oer_kywrd,","));
 					wp_set_post_tags(  $post_id, $oer_kywrd , true );
-	
-	
-	
+
+
+
 				if($oer_resourceurl)
 				{
 					if( !empty($oer_resourceurl) )
@@ -1126,12 +1126,12 @@ function oer_importResources($default=false) {
 					}
 					update_post_meta( $post_id , 'oer_resourceurl' , $oer_resourceurl);
 				}
-	
+
 				if(!empty($oer_highlight))
 				{
 					update_post_meta( $post_id , 'oer_highlight' , $oer_highlight);
 				}
-	
+
 				if(!empty($oer_grade))
 				{
 					$oer_grade = trim($oer_grade, '"');
@@ -1152,17 +1152,17 @@ function oer_importResources($default=false) {
 					}
 					update_post_meta( $post_id , 'oer_grade' , $oer_grades);
 				}
-	
+
 				if(!empty($oer_datecreated) && !($oer_datecreated==""))
 				{
 					update_post_meta( $post_id , 'oer_datecreated' , $oer_datecreated);
 				}
-	
+
 				if(!empty($oer_datemodified))
 				{
 					update_post_meta( $post_id , 'oer_datemodified' , $oer_datemodified);
 				}
-	
+
 				if(!empty($oer_mediatype))
 				{
 					update_post_meta( $post_id , 'oer_mediatype' , $oer_mediatype);
@@ -1204,7 +1204,7 @@ function oer_importResources($default=false) {
 					$gt_oer_standard = '';
 					for($l = 0; $l < count($oer_standard); $l++)
 					{
-						
+
 						$results = $wpdb->get_row( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "standard_notation where standard_notation =%s" , $oer_standard[$l] ),ARRAY_A);
 						if(!empty($results))
 						{
@@ -1275,7 +1275,7 @@ function oer_importResources($default=false) {
 				{
 					update_post_meta( $post_id , 'oer_authoremail2' , $oer_authoremail2);
 				}
-	
+
 				if(!empty($oer_publishername))
 				{
 					update_post_meta( $post_id , 'oer_publishername' , $oer_publishername);
@@ -1297,18 +1297,18 @@ function oer_importResources($default=false) {
 					update_post_meta( $post_id , 'oer_publisheremail' , $oer_publisheremail);
 				}
 				//saving meta fields
-				
+
 				if(!empty($oer_resourceurl))
 				{
 					$url = $oer_resourceurl;
 					$upload_dir = wp_upload_dir();
 					$file = '';
-					
+
 					//Check first if screenshot is enabled
 					$screenshot_enabled = get_option( 'oer_enable_screenshot' );
 					//Check if external service screenshot is enabled
 					$external_screenshot = get_option( 'oer_external_screenshots' );
-					
+
 					if(!has_post_thumbnail( $post_id ))
 					{
 						if (!empty($oer_thumbnailurl)) {
@@ -1320,12 +1320,12 @@ function oer_importResources($default=false) {
 							$file = oer_getImageFromExternalURL($url);
 						}
 					}
-					
+
 					if(file_exists($file))
 					{
 						$filetype = wp_check_filetype( basename( $file ), null );
 						$wp_upload_dir = wp_upload_dir();
-	
+
 						$attachment = array(
 							'guid'           => $wp_upload_dir['url'] . '/' . basename( $file ),
 							'post_mime_type' => $filetype['type'],
@@ -1333,28 +1333,28 @@ function oer_importResources($default=false) {
 							'post_content'   => '',
 							'post_status'    => 'inherit'
 						);
-	
+
 						$attach_id = wp_insert_attachment( $attachment, $file, $post_id );
 						update_post_meta($post_id, "_thumbnail_id", $attach_id);
-	
+
 						// Make sure that this file is included, as wp_generate_attachment_metadata() depends on it.
 						require_once( ABSPATH . 'wp-admin/includes/image.php' );
-	
+
 						// Generate the metadata for the attachment, and update the database record.
 						$attach_data = wp_generate_attachment_metadata( $attach_id, $file );
 						wp_update_attachment_metadata( $attach_id, $attach_data );
 					}
-	
+
 				}//Create Screeenshot
 				$cnt++;
 			}
-		
+
 		}
 	  } catch(Exception $e) {
 		// Log any error encountered during the import process
 		if ($_debug=="on")
 			error_log($e->getMessage());
-	}		
+	}
 	// Log finish of import process
 	debug_log("OER Resources Importer: Finished Bulk Import of Resources");
 	$message = sprintf(__("Successfully imported %s resources.", OER_SLUG), $cnt);
@@ -1367,23 +1367,23 @@ function oer_importResources($default=false) {
 function oer_importSubjectAreas($default=false) {
 	global $wpdb;
 	require_once OER_PATH.'Excel/reader.php';
-	
+
 	debug_log("OER Subject Areas Importer: Initializing Excel Reader");
-	
+
 	$excl_obj = new Spreadsheet_Excel_Reader();
 	$excl_obj->setOutputEncoding('CP1251');
 	$time = time();
 	$date = date($time);
-	
+
 	//Set Maximum Excution Time
 	ini_set('max_execution_time', 0);
 	set_time_limit(0);
-	
+
 	// Log start of import process
 	debug_log("OER Subject Areas Importer: Starting Bulk Import ");
-		
+
 	global $wpdb;
-	
+
 	try {
 		if ($default==true) {
 			//default subject area filename
@@ -1393,7 +1393,7 @@ function oer_importSubjectAreas($default=false) {
 			if( isset($_FILES['bulk_import']) && $_FILES['bulk_import']['size'] != 0 )
 			{
 				$filename = $_FILES['bulk_import']['name']."-".$date;
-		
+
 				if ($_FILES["bulk_import"]["error"] > 0)
 				{
 					$message = "Error: " . $_FILES["bulk_import"]["error"] . "<br>";
@@ -1407,15 +1407,15 @@ function oer_importSubjectAreas($default=false) {
 					"Size: " . ($_FILES["bulk_import"]["size"] / 1024) . " kB<br>";
 					"stored in:" .move_uploaded_file($_FILES["bulk_import"]["tmp_name"],OER_PATH."upload/".$filename) ;
 				}
-		
+
 				//Read Excel Data
 				$excl_obj->read(OER_PATH."upload/".$filename);
 			}
 		}
-		
+
 			$fnldata = $excl_obj->sheets;
 			$length = count($fnldata);
-	
+
 			$ids_arr = array(0);
 			$cat_ids = array(0);
 			$page_ids = array(0);
@@ -1437,22 +1437,22 @@ function oer_importSubjectAreas($default=false) {
 								$title = $cattl[0];
 								$description = $cattl[1];
 							}
-	
+
 							if(!term_exists( $title, "resource-subject-area", $ids_arr[$k-1] ))
 							{
 								$catslug = oer_slugify($title);
 								$catarr = array(  'cat_name' => $title, 'category_parent' => $ids_arr[$k-1],'taxonomy' => 'resource-subject-area','category_description' => $description,'category_nicename'=>$catslug );
-	
+
 								$rsc_parentid = wp_insert_category( $catarr ); //Insert Resource Category
 								$cat_parentid = wp_create_category( $title, $cat_ids[$k-1] ); //Insert Post Category
-	
+
 								$ids_arr[$k] = $rsc_parentid;
 								$cat_ids[$k] = $cat_parentid;
-	
+
 								//Create Pages
 								/*$term = get_term( $rsc_parentid , "resource-category", ARRAY_A );
 								$slug = $term['slug'];
-	
+
 								$post =array('comment_status' => 'closed', 'ping_status' =>  'closed', 'post_author' => 1, 'post_date' => date('Y-m-d H:i:s'), 	'post_name' => $slug, 'post_status'=> 'publish', 'post_title' => $title, 'post_type' => 'page', 'post_content' =>$content, 'post_parent' => $page_ids[$k-1]);
 								$newvalue = wp_insert_post( $post, false );
 								$page_ids[$k] = $newvalue;
@@ -1465,17 +1465,17 @@ function oer_importSubjectAreas($default=false) {
 							{
 								$rsc_parentid = term_exists( $title, "resource-subject-area", $ids_arr[$k-1]);
 								$ids_arr[$k] = $rsc_parentid['term_id'];
-	
+
 								$cat_parentid = term_exists( $title, "category", $cat_ids[$k-1]);
 								$cat_ids[$k] = $cat_parentid['term_id'];
-	
+
 								$term = get_term( $ids_arr[$k] , "resource-subject-area" );
 								$slug = $term->slug;
-	
+
 								$page = oer_get_page_by_slug($slug, ARRAY_A, "page", $page_ids[$k-1] );
 								$page_ids[$k] = $page['ID'];
 							}
-						    
+
 						}
 					}//For All Data Columns
 				}//For All Data Rows
@@ -1486,7 +1486,7 @@ function oer_importSubjectAreas($default=false) {
 	}
 	// Log finish of import process
 	debug_log("OER Subject Areas Importer: Finished Bulk Import ");
-	
+
 	$message = sprintf(__("Successfully imported %s subject areas.", OER_SLUG), $cnt);
 	$type = "success";
 	$response = array('message' => $message, 'type' => $type);
@@ -1498,15 +1498,15 @@ function oer_importDefaultStandards() {
 	$files = array(
 		OER_PATH."samples/CCSS_Math.xml",
 		OER_PATH."samples/CCSS_ELA.xml",
-		OER_PATH."samples/D2454348.xml"
+		OER_PATH."samples/NGSS.xml"
 		);
 	foreach ($files as $file) {
 		$import = oer_importStandards($file);
 		if ($import['type']=="success") {
 		    if (strpos($file,'Math')) {
-			$message .= "Successfully imported Common Core Mathematics Standards. \n";
+				$message .= "Successfully imported Common Core Mathematics Standards. \n";
 		    } else {
-			$message .= "Successfully imported Common Core English Language Arts Standards. \n";
+				$message .= "Successfully imported Common Core English Language Arts Standards. \n";
 		    }
 		}
 		$type = $import['type'];
@@ -1552,9 +1552,9 @@ function oer_content($the_content, $limit) {
     $content = implode(" ",$content).'...';
   } else {
     $content = implode(" ",$content);
-  }	
+  }
   $content = preg_replace('/\[.+\]/','', $content);
-  $content = apply_filters('the_content', $content); 
+  $content = apply_filters('the_content', $content);
   $content = str_replace(']]>', ']]&gt;', $content);
   return $content;
 }
@@ -1702,31 +1702,31 @@ function oer_display_loader(){
 /** Delete Standards Data **/
 function oer_delete_standards() {
 	global $wpdb;
-	
+
 	//Check if standard notations exist
 	$standard_notations = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."standard_notation", ARRAY_A);
-	
+
 	//Delete Standard Notation
 	if (count($standard_notations)>0){
 		$wpdb->query("TRUNCATE TABLE ".$wpdb->prefix."standard_notation");
 	}
-	
+
 	//Check if substandards exist
 	$substandards = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."sub_standards");
-	
+
 	//Delete Substandards
 	if (count($substandards)>0){
 		$wpdb->query("TRUNCATE TABLE ".$wpdb->prefix."sub_standards");
 	}
-	
+
 	//Check if core standards exist
 	$core_standards = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."core_standards");
-	
+
 	//Delete Core Standards
 	if (count($core_standards)>0){
 		$wpdb->query("TRUNCATE TABLE ".$wpdb->prefix."core_standards");
 	}
-	
+
 	$message = __("Successfully deleted standards", OER_SLUG);
 	$type = "success";
 	$response = array( 'message' => $message, 'type' => $type );
@@ -1748,47 +1748,47 @@ function oer_delete_subject_areas(){
 /** Delete All Resources **/
 function oer_delete_resources(){
 	global $wpdb;
-	
+
 	//Check if term relationships data exist
 	$term_relationships = $wpdb->get_results("SELECT * FROM ". $wpdb->prefix."term_relationships WHERE object_id IN (
 						SELECT ID
-						FROM  ".$wpdb->prefix."posts 
+						FROM  ".$wpdb->prefix."posts
 						WHERE post_type =  'resource'
 						)", ARRAY_A);
-	
+
 	/** Delete Term related to resources **/
 	if (count($term_relationships)>0) {
 		$wpdb->query("DELETE FROM  ". $wpdb->prefix ."term_relationships WHERE object_id IN (
 						SELECT ID
-						FROM  ".$wpdb->prefix."posts 
+						FROM  ".$wpdb->prefix."posts
 						WHERE post_type =  'resource'
 						)");
 	}
-	
+
 	//Check if postmeta data exist
 	$post_meta = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."postmeta WHERE post_id IN (
 						SELECT ID
-						FROM  ".$wpdb->prefix."posts 
+						FROM  ".$wpdb->prefix."posts
 						WHERE post_type =  'resource'
 						)", ARRAY_A);
-	
+
 	/** Delete Post meta related to resources **/
 	if (count($post_meta)>0) {
 		$wpdb->query("DELETE FROM ".$wpdb->prefix."postmeta WHERE post_id IN (
 						SELECT ID
-						FROM  ".$wpdb->prefix."posts 
+						FROM  ".$wpdb->prefix."posts
 						WHERE post_type =  'resource'
 						)");
 	}
-	
+
 	//Check if resources exist
 	$resources = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."posts WHERE post_type =  'resource'", ARRAY_A);
-	
+
 	/** Delete all resources **/
 	if (count($resources)>0) {
 		$wpdb->query("DELETE FROM ".$wpdb->prefix."posts WHERE post_type =  'resource'");
 	}
-	
+
 	$message = __("Successfully deleted all resources", OER_SLUG);
 	$type = "success";
 	$response = array( 'message' => $message, 'type' => $type );
@@ -1797,12 +1797,12 @@ function oer_delete_resources(){
 
 /** Delete Resource Media **/
 function oer_delete_resource_media() {
-	
+
 	$args = array(
 		'post_type' => 'resource',
 		'posts_per_page' => -1
 		      );
-	
+
 	$posts = get_posts($args);
 	foreach($posts as $post) {
 		if (has_post_thumbnail($post->ID)){
@@ -1822,55 +1822,55 @@ function oer_remove_plugin_settings(){
 	//General Settings
 	if (get_option('oer_disable_screenshots'))
 		delete_option('oer_disable_screenshots');
-	
+
 	if (get_option('oer_enable_screenshot'))
 		delete_option('oer_enable_screenshot');
-		
+
 	if (get_option('oer_use_xvfb'))
 		delete_option('oer_use_xvfb');
-	
+
 	if (get_option('oer_python_install'))
 		delete_option('oer_python_install');
-	
+
 	if (get_option('oer_python_path'))
 		delete_option('oer_python_path');
-	
+
 	if (get_option('oer_external_screenshots'))
 		delete_option('oer_external_screenshots');
-	
+
 	if (get_option('oer_service_url'))
 		delete_option('oer_service_url');
-		
+
 	//Styles Settings
 	if (get_option('oer_use_bootstrap'))
 		delete_option('oer_use_bootstrap');
-	
+
 	if (get_option('oer_display_subject_area'))
 		delete_option('oer_display_subject_area');
-		
+
 	if (get_option('oer_hide_subject_area_title'))
 		delete_option('oer_hide_subject_area_title');
-	
+
 	if (get_option('oer_hide_resource_title'))
 		delete_option('oer_hide_resource_title');
-	
+
 	if (get_option('oer_additional_css'))
 		delete_option('oer_additional_css');
-	
-	
+
+
 	//Setup Settings
 	if (get_option('oer_import_sample_resources'))
 		delete_option('oer_import_sample_resources');
-	
+
 	if (get_option('oer_import_default_subject_areas'))
 		delete_option('oer_import_default_subject_areas');
-	
+
 	if (get_option('oer_import_ccss'))
 		delete_option('oer_import_ccss');
-	
+
 	if (get_option('oer_use_bootstrap'))
 		delete_option('oer_use_bootstrap');
-		
+
 	$message = __("Successfully removed all plugin settings", OER_SLUG);
 	$type = "success";
 	$response = array( 'message' => $message, 'type' => $type );
