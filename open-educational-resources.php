@@ -3,9 +3,9 @@
  Plugin Name:  OER Management
  Plugin URI:   https://www.wp-oer.com
  Description:  Open Educational Resource management and curation, metadata publishing, and alignment to Common Core State Standards.
- Version:      0.3.0
+ Version:      0.5.0
  Author:       Navigation North
- Author URI:   http://www.navigationnorth.com
+ Author URI:   https://www.navigationnorth.com
  Text Domain:  wp-oer
  License:      GPL3
  License URI:  https://www.gnu.org/licenses/gpl-3.0.html
@@ -34,7 +34,7 @@ define( 'OER_SLUG','open-educational-resource' );
 define( 'OER_FILE',__FILE__);
 // Plugin Name and Version
 define( 'OER_PLUGIN_NAME', 'WordPress OER Management Plugin' );
-define( 'OER_VERSION', '0.3.0' );
+define( 'OER_VERSION', '0.5.0' );
 
 include_once(OER_PATH.'includes/oer-functions.php');
 include_once(OER_PATH.'includes/init.php');
@@ -114,11 +114,11 @@ function oer_create_csv_import_table()
 	}
 
    update_option('setup_notify', true);
-   
+
    //Trigger CPT and Taxonomy creation
    oer_postcreation();
    oer_create_resource_taxonomies();
-   
+
    //Trigger permalink reset
    flush_rewrite_rules();
 }
@@ -247,7 +247,7 @@ function oer_get_template_hierarchy( $template ) {
 		$template_slug = rtrim( $template , '.php' );
 		$template = $template_slug . '.php';
 	}
-	
+
 	//Check if custom template exists in theme folder
 	if ($theme_file = locate_template( array( 'oer_template/' . $template ) )) {
 		$file = $theme_file;
@@ -256,7 +256,7 @@ function oer_get_template_hierarchy( $template ) {
 	} else {
 		$file = OER_PATH . '/oer_template/' . $template;
 	}
-	
+
 	return apply_filters( 'oer_repl_template' . $template , $file  );
 }
 
@@ -269,7 +269,7 @@ add_filter( 'template_include' , 'oer_template_choser' );
  * Function to choose template for the resource post type
  **/
 function oer_template_choser( $template ) {
-	
+
 	//Post ID
 	$post_id = get_the_ID();
 
@@ -320,7 +320,7 @@ add_filter( 'template_include' , 'oer_tag_template' );
  **/
 function oer_tag_template( $template ) {
 	global $wp_query;
-	
+
 	//Post ID
 	$_id = $wp_query->get_queried_object_id();
 
@@ -858,7 +858,7 @@ function oer_reset_settings(){
 			'name' =>  __('Delete media associated with resources(screenshots)', OER_SLUG)
 		)
 	);
-	
+
 	//Add Settings field for removing all OER plugin settings
 	add_settings_field(
 		'oer_remove_all_settings',
@@ -872,7 +872,7 @@ function oer_reset_settings(){
 			'name' =>  __('Remove all OER plugin settings', OER_SLUG)
 		)
 	);
-	
+
 	//Add Settings field for deactivating plugin
 	add_settings_field(
 		'oer_deactivate_plugin',
@@ -886,7 +886,7 @@ function oer_reset_settings(){
 			'name' =>  __('Deactivate OER plugin', OER_SLUG)
 		)
 	);
-	
+
 	//Add Settings field for deleting plugin files
 	add_settings_field(
 		'oer_delete_plugin_files',
@@ -984,7 +984,7 @@ function oer_setup_settings_field( $arguments ) {
 
 /** Initialize Subject Area Sidebar widget **/
 function oer_widgets_init() {
-	
+
 	register_sidebar( array(
 		'name' => 'Subject Area Sidebar',
 		'id' => 'subject_area_sidebar',
@@ -999,7 +999,7 @@ add_action( 'widgets_init', 'oer_widgets_init' );
 //Add body class on oer emplates for themes without default font color
 add_filter( 'body_class', 'oer_add_body_class');
 function oer_add_body_class($classes) {
-	
+
 	$cur_theme = wp_get_theme();
 	$theme_class = $cur_theme->get('Name');
 
@@ -1215,7 +1215,7 @@ function oer_load_more_highlights() {
 		$page_num = $_POST["post_var"];
 		$items_per_load = 4;
 		$term_id = $_POST['term_id'];
-		
+
 		$args = array(
 			'meta_key' => 'oer_highlight',
 			'meta_value' => 1,
@@ -1227,24 +1227,24 @@ function oer_load_more_highlights() {
 
 		$postquery = get_posts($args);
 		$style="";
-		
+
 		if(!empty($postquery)) {
 			foreach($postquery as $post) {
 				setup_postdata( $post );
 				$image = wp_get_attachment_url( get_post_thumbnail_id($post->ID) );
 				$title =  $post->post_title;
-				
+
 				$offset = 0;
 				$ellipsis = "...";
 				if (strlen($post->post_content)>150) {
 					$offset = strpos($post->post_content, ' ', 150);
 				} else
 					$ellipsis = "";
-				
+
 				$length = 150;
-				
+
 				$content =  trim(substr($post->post_content,0,$length)).$ellipsis;
-				
+
 				if (isset($_POST['style']))
 					$style = ' style="'.$_POST['style'].'"';
 				?>
@@ -1276,7 +1276,7 @@ function oer_load_highlight() {
 
 	if (isset($_POST["post_var"])) {
 		$resource_id = $_POST["post_var"];
-		
+
 		$args = array(
 			'p' => $resource_id,
 			'meta_key' => 'oer_highlight',
@@ -1289,24 +1289,24 @@ function oer_load_highlight() {
 
 		$postquery = get_posts($args);
 		$style="";
-		
+
 		if(!empty($postquery)) {
 			foreach($postquery as $post) {
 				setup_postdata( $post );
 				$image = wp_get_attachment_url( get_post_thumbnail_id($post->ID) );
 				$title =  $post->post_title;
-				
+
 				$offset = 0;
 				$ellipsis = "...";
 				if (strlen($post->post_content)>150) {
 					$offset = strpos($post->post_content, ' ', 150);
 				} else
 					$ellipsis = "";
-				
+
 				$length = 150;
-				
+
 				$content =  trim(substr($post->post_content,0,$length)).$ellipsis;
-				
+
 				if (isset($_POST['style']))
 					$style = ' style="'.$_POST['style'].'"';
 				?>
@@ -1371,53 +1371,53 @@ add_action( 'parse_request', 'oer_parse_request' );
 
 /** Register Post Type Rewrite Rules **/
 function oer_register_post_type_rules( $post_type, $args ) {
-	
+
 	if ($post_type=="resource") {
 		/** @var WP_Rewrite $wp_rewrite */
 		global $wp_rewrite;
-	
+
 		if ( $args->_builtin or ! $args->publicly_queryable ) {
 			return;
 		}
-	
+
 		if ( false === $args->rewrite ) {
 			return;
 		}
-	
+
 		$permalink = oer_get_permalink_structure( $post_type );
-		
+
 		if ( ! $permalink ) {
 			$permalink = '/%postname%/';
 		}
-		
+
 		$permalink = '%' . $post_type . '_slug%' . $permalink;
 		$permalink = str_replace( '%postname%', '%' . $post_type . '%', $permalink );
-		
+
 		add_rewrite_tag( '%' . $post_type . '_slug%', '(' . $args->rewrite['slug'] . ')', 'post_type=' . $post_type . '&slug=' );
-	
+
 		$taxonomies = get_taxonomies( array( 'show_ui' => true, '_builtin' => false ), 'objects' );
 		foreach ( $taxonomies as $taxonomy => $objects ) :
 			$wp_rewrite->add_rewrite_tag( "%$taxonomy%", '(.+?)', "$taxonomy=" );
 		endforeach;
-	
+
 		$rewrite_args = $args->rewrite;
 		if ( ! is_array( $rewrite_args ) ) {
 			$rewrite_args = array( 'with_front' => $args->rewrite );
 		}
-	
+
 		$slug = $args->rewrite['slug'];
-		
+
 		if ( $args->has_archive ) {
 			if ( is_string( $args->has_archive ) ) {
 				$slug = $args->has_archive;
 			};
-	
+
 			if ( $args->rewrite['with_front'] ) {
 				$slug = substr( $wp_rewrite->front, 1 ) . $slug;
 			}
-	
+
 			$date_front = oer_get_date_front( $post_type );
-	
+
 			add_rewrite_rule( $slug . $date_front . '/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/feed/(feed|rdf|rss|rss2|atom)/?$', 'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&feed=$matches[4]&post_type=' . $post_type, 'top' );
 			add_rewrite_rule( $slug . $date_front . '/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/(feed|rdf|rss|rss2|atom)/?$', 'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&feed=$matches[4]&post_type=' . $post_type, 'top' );
 			add_rewrite_rule( $slug . $date_front . '/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/page/?([0-9]{1,})/?$', 'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&paged=$matches[4]&post_type=' . $post_type, 'top' );
@@ -1432,33 +1432,33 @@ function oer_register_post_type_rules( $post_type, $args ) {
 			add_rewrite_rule( $slug . $date_front . '/([0-9]{4})/?$', 'index.php?year=$matches[1]&post_type=' . $post_type, 'top' );
 			add_rewrite_rule( $slug . '/author/([^/]+)/page/?([0-9]{1,})/?$', 'index.php?author_name=$matches[1]&paged=$matches[2]&post_type=' . $post_type, 'top' );
 			add_rewrite_rule( $slug . '/author/([^/]+)/?$', 'index.php?author_name=$matches[1]&post_type=' . $post_type, 'top' );
-	
+
 			if ( in_array( 'category', $args->taxonomies ) ) {
-	
+
 				$category_base = get_option( 'category_base' );
 				if ( ! $category_base ) {
 					$category_base = 'category';
 				}
-	
+
 				add_rewrite_rule( $slug . '/' . $category_base . '/([^/]+)/page/?([0-9]{1,})/?$', 'index.php?category_name=$matches[1]&paged=$matches[2]&post_type=' . $post_type, 'top' );
 				add_rewrite_rule( $slug . '/' . $category_base . '/([^/]+)/?$', 'index.php?category_name=$matches[1]&post_type=' . $post_type, 'top' );
-	
+
 			}
-	
+
 			do_action( 'OER_registered_' . $post_type . '_rules', $args, $slug );
 		}
-	
+
 		$rewrite_args['walk_dirs'] = false;
 		add_permastruct( $post_type, $permalink, $rewrite_args );
 	}
-	
+
 }
 add_action( 'registered_post_type', 'oer_register_post_type_rules', 10, 2 );
 
 /** Post Type Permalink **/
 function oer_post_type_link( $post_link, $post, $leavename ) {
 	global $wp_rewrite;
-	
+
 	if ( ! $wp_rewrite->permalink_structure ) {
 		return $post_link;
 	}
