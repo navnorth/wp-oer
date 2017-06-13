@@ -1067,7 +1067,7 @@ function oer_importResources($default=false) {
 					{
 						if(!empty($oer_categories [$i]))
 						{
-						    $cat = get_term_by( 'name', $oer_categories [$i], 'resource-subject-area' );
+						    $cat = get_term_by( 'name', trim($oer_categories[$i]), 'resource-subject-area' );
 						    if($cat)
 						    {
 							    $category_id[$i] = $cat->term_id;
