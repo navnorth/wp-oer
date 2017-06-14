@@ -683,7 +683,7 @@ function oer_setup_settings(){
 			'uid' => 'oer_import_sample_resources',
 			'type' => 'checkbox',
 			'name' =>  __('Import Example Set of Resources', OER_SLUG),
-			'description' => __('A collection of 40 Open Education Resources has been provided as a base - you can easily remove these later.', OER_SLUG)
+			'description' => __('A collection of over 50 Open Educational Resources has been provided as a base - you can easily remove these later.', OER_SLUG)
 		)
 	);
 
@@ -730,7 +730,7 @@ function oer_setup_settings(){
 			'uid' => 'oer_use_bootstrap',
 			'type' => 'checkbox',
 			'name' =>  __('Import Bootstrap CSS & JS libraries', OER_SLUG),
-			'description' => __('uncheck if your WP theme already included Bootstrap', OER_SLUG)
+			'description' => __('Uncheck if your WP theme already included Bootstrap', OER_SLUG)
 		)
 	);
 
