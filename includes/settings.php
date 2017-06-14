@@ -181,8 +181,7 @@ function show_general_settings() {
 		<div class="oer-row-right">
 			<strong><?php _e("Support Options", OER_SLUG); ?></strong>
 			<ul>
-				<li><a href="#" target="_blank"><?php _e("WordPress Plugin Support Forums", OER_SLUG); ?></a></li>
-				<li><?php _e("Navigation North <a href='#' target='_blank'>direct supprt</a>", OER_SLUG); ?></li>
+				<li><a href="https://www.wp-oer.com/get-help/" target="_blank"><?php _e("WP OER Plugin Support", OER_SLUG); ?></a></li>
 			</ul>
 		</div>
 	</div>
@@ -211,8 +210,7 @@ function show_styles_settings() {
 		<div class="oer-row-right">
 			<strong><?php _e("Support Options", OER_SLUG); ?></strong>
 			<ul>
-				<li><a href="#" target="_blank"><?php _e("WordPress Plugin Support Forums", OER_SLUG); ?></a></li>
-				<li><?php _e("Navigation North <a href='#' target='_blank'>direct supprt</a>", OER_SLUG); ?></li>
+				<li><a href="https://www.wp-oer.com/get-help/" target="_blank"><?php _e("WP OER Plugin Support", OER_SLUG); ?></a></li>
 			</ul>
 		</div>
 	</div>
@@ -245,8 +243,7 @@ function show_setup_settings() {
 		<div class="oer-row-right">
 			<strong><?php _e("Support Options", OER_SLUG); ?></strong>
 			<ul>
-				<li><a href="#" target="_blank"><?php _e("WordPress Plugin Support Forums", OER_SLUG); ?></a></li>
-				<li><?php _e("Navigation North <a href='#' target='_blank'>direct supprt</a>", OER_SLUG); ?></li>
+				<li><a href="https://www.wp-oer.com/get-help/" target="_blank"><?php _e("WP OER Plugin Support", OER_SLUG); ?></a></li>
 			</ul>
 		</div>
 	</div>
@@ -281,8 +278,7 @@ function show_reset_settings() {
 		<div class="oer-row-right">
 			<strong><?php _e("Support Options", OER_SLUG); ?></strong>
 			<ul>
-				<li><a href="#" target="_blank"><?php _e("WordPress Plugin Support Forums", OER_SLUG); ?></a></li>
-				<li><?php _e("Navigation North <a href='#' target='_blank'>direct supprt</a>", OER_SLUG); ?></li>
+				<li><a href="https://www.wp-oer.com/get-help/" target="_blank"><?php _e("WP OER Plugin Support", OER_SLUG); ?></a></li>
 			</ul>
 		</div>
 	</div>
