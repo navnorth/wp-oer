@@ -1,6 +1,6 @@
 <?php
 /*
- Plugin Name:  OER Management
+ Plugin Name:  WP OER
  Plugin URI:   https://www.wp-oer.com
  Description:  Open Educational Resource management and curation, metadata publishing, and alignment to Common Core State Standards.
  Version:      0.5.0
@@ -33,7 +33,8 @@ define( 'OER_PATH', plugin_dir_path(__FILE__) );
 define( 'OER_SLUG','open-educational-resource' );
 define( 'OER_FILE',__FILE__);
 // Plugin Name and Version
-define( 'OER_PLUGIN_NAME', 'WordPress OER Management Plugin' );
+define( 'OER_PLUGIN_NAME', 'WP OER Plugin' );
+define( 'OER_ADMIN_PLUGIN_NAME', 'WP OER Plugin');
 define( 'OER_VERSION', '0.5.0' );
 
 include_once(OER_PATH.'includes/oer-functions.php');

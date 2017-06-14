@@ -1,4 +1,4 @@
-=== Wordpress OER Management ===
+=== WP OER ===
 Contributors: Navigation North
 Tags: OER, spam
 Requires at least: 3.0.1

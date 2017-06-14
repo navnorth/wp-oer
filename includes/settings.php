@@ -118,7 +118,7 @@ global $message, $type;
 <div class="wrap">
     
     <div id="icon-themes" class="oer-logo"><img src="<?php echo OER_URL ?>images/wp-oer-admin-logo.png" /></div>
-    <h2>Settings - OER Management</h2>
+    <h2>Settings - WP OER</h2>
     <?php settings_errors(); ?>
      
 	<?php
@@ -156,8 +156,8 @@ global $message, $type;
     ?>
 </div><!-- /.wrap -->
 <div class="oer-plugin-footer">
-	<div class="oer-plugin-info"><?php echo OER_PLUGIN_NAME . " " . OER_VERSION .""; ?></div>
-	<div class="oer-plugin-link"><a href='http://www.navigationnorth.com/portfolio/oer-management/' target='_blank'><?php _e("More info", OER_SLUG); ?></a></div>
+	<div class="oer-plugin-info"><?php echo OER_ADMIN_PLUGIN_NAME . " " . OER_VERSION .""; ?></div>
+	<div class="oer-plugin-link"><a href='https://www.wp-oer.com/' target='_blank'><?php _e("More Information", OER_SLUG); ?></a></div>
 	<div class="clear"></div>
 </div>
 

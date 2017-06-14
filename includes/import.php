@@ -102,8 +102,8 @@ if(isset($_POST['standards_import']))
     </div>
 </div><!-- /.wrap -->
 <div class="plugin-footer">
-	<div class="plugin-info"><?php echo OER_PLUGIN_NAME . " " . OER_VERSION .""; ?></div>
-	<div class="plugin-link"><a href='http://www.navigationnorth.com/portfolio/oer-management/' target='_blank'><?php _e("More info", OER_SLUG); ?></a></div>
+	<div class="plugin-info"><?php echo OER_ADMIN_PLUGIN_NAME . " " . OER_VERSION .""; ?></div>
+	<div class="plugin-link"><a href='https://www.wp-oer.com/' target='_blank'><?php _e("More Information", OER_SLUG); ?></a></div>
 	<div class="clear"></div>
 </div>
 <?php oer_display_loader(); ?>
