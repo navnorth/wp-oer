@@ -45,8 +45,7 @@ No frequently asked questions.
 * Added image upload when adding/editing subject areas
 * Removed old "Subject Images" from admin interface
 * Added Next Generation Science Standards to the set of default standards
-* Added Helper Text on General and Style Tab of Settings
-* Added OER logo on admin pages
+* Added helper text on General and Style Tab of Settings
 * Applied lazy loading on highlighted resources
 * Auto reset permalink on plugin activation
 * Added initial setup process
@@ -58,8 +57,8 @@ No frequently asked questions.
 * Made highlighted resources responsive
 
 = 0.2.5 =
-* Cleaned up Errors when using the plugin
-* Added Readme Instructions file
+* Cleaned up errors when using the plugin
+* Added Readme.txt file
 
 == Upgrade Notice ==
 No upgrades at this time.
