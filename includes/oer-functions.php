@@ -867,6 +867,20 @@ function oer_getExternalThumbnailImage($url) {
 	return $file;
 }
 
+function oer_getInternalThumbnailImage($url) {
+	if(!file_exists($file = $path.'Screenshot'.preg_replace('/https?|:|#|\?|\&|\//i', '-', $url).'.jpg'))
+	{
+		debug_log("OER : start download image function");
+
+		$fp = fopen($file,'wb');
+		fwrite($fp, $raw);
+		fclose($fp);
+
+		debug_log("OER : end of download image function");
+	}
+	return $file;
+}
+
 /** Resize Image **/
 function oer_resize_image($orig_img_url, $width, $height, $crop = false) {
 	$new_image_url = "";
@@ -1053,7 +1067,7 @@ function oer_importResources($default=false) {
 					$oer_authoremail2   = $fnldata['cells'][$k][26];
 				if (isset($fnldata['cells'][$k][27]))
 					$oer_thumbnailurl   = $fnldata['cells'][$k][27];
-
+					
 				if(!empty($oer_standard) && (!is_array($oer_standard)))
 				{
 					$oer_standard = explode(",", $oer_standard);
@@ -1312,6 +1326,9 @@ function oer_importResources($default=false) {
 					if(!has_post_thumbnail( $post_id ))
 					{
 						if (!empty($oer_thumbnailurl)) {
+							if (substr(trim($oer_thumbnailurl),0,2)=="./") {
+								$oer_thumbnailurl = OER_URL.substr(trim($oer_thumbnailurl),2);
+							} 
 							$file = oer_getExternalThumbnailImage($oer_thumbnailurl);
 						} elseif ($screenshot_enabled) {
 							$file = oer_getScreenshotFile($url);
@@ -1320,20 +1337,22 @@ function oer_importResources($default=false) {
 							$file = oer_getImageFromExternalURL($url);
 						}
 					}
-
+					
 					if(file_exists($file))
 					{
 						$filetype = wp_check_filetype( basename( $file ), null );
 						$wp_upload_dir = wp_upload_dir();
+						
+						$guid = $wp_upload_dir['url'] . '/' . basename( $file );
 
 						$attachment = array(
-							'guid'           => $wp_upload_dir['url'] . '/' . basename( $file ),
+							'guid'           => $guid,
 							'post_mime_type' => $filetype['type'],
 							'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $file ) ),
 							'post_content'   => '',
 							'post_status'    => 'inherit'
 						);
-
+						
 						$attach_id = wp_insert_attachment( $attachment, $file, $post_id );
 						update_post_meta($post_id, "_thumbnail_id", $attach_id);
 
