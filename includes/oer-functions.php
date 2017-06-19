@@ -867,20 +867,6 @@ function oer_getExternalThumbnailImage($url) {
 	return $file;
 }
 
-function oer_getInternalThumbnailImage($url) {
-	if(!file_exists($file = $path.'Screenshot'.preg_replace('/https?|:|#|\?|\&|\//i', '-', $url).'.jpg'))
-	{
-		debug_log("OER : start download image function");
-
-		$fp = fopen($file,'wb');
-		fwrite($fp, $raw);
-		fclose($fp);
-
-		debug_log("OER : end of download image function");
-	}
-	return $file;
-}
-
 /** Resize Image **/
 function oer_resize_image($orig_img_url, $width, $height, $crop = false) {
 	$new_image_url = "";
