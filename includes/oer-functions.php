@@ -832,9 +832,15 @@ function oer_getImageFromExternalURL($url) {
 }
 
 //Get External Thumbnail Image
-function oer_getExternalThumbnailImage($url) {
+function oer_getExternalThumbnailImage($url, $local=false) {
 	global $_debug;
-
+	
+	$local_filename = $url;
+	
+	if ($local) {
+		$url = OER_URL.$url;
+	}
+	
 	$ch = curl_init ($url);
 
 	curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -847,6 +853,12 @@ function oer_getExternalThumbnailImage($url) {
 
 	$upload_dir = wp_upload_dir();
 	$path = $upload_dir['basedir'].'/resource-images/';
+	
+	if ($local){
+		$ext = ".".pathinfo($local_filename, PATHINFO_EXTENSION);
+		$local_filename = str_replace($ext,"",$local_filename);
+		$url = "-".$local_filename;
+	}
 
 	if(!file_exists($path))
 	{
@@ -1313,9 +1325,11 @@ function oer_importResources($default=false) {
 					{
 						if (!empty($oer_thumbnailurl)) {
 							if (substr(trim($oer_thumbnailurl),0,2)=="./") {
-								$oer_thumbnailurl = OER_URL.substr(trim($oer_thumbnailurl),2);
-							} 
-							$file = oer_getExternalThumbnailImage($oer_thumbnailurl);
+								$oer_thumbnailurl = substr(trim($oer_thumbnailurl),2);
+								$file = oer_getExternalThumbnailImage($oer_thumbnailurl, true);	
+							} else {
+								$file = oer_getExternalThumbnailImage($oer_thumbnailurl);	
+							}
 						} elseif ($screenshot_enabled) {
 							$file = oer_getScreenshotFile($url);
 						} elseif ( $external_screenshot ) {
