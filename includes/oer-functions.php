@@ -839,22 +839,24 @@ function oer_getExternalThumbnailImage($url, $local=false) {
 	
 	if ($local) {
 		$url = OER_URL.$url;
+	} else {
+		// Curl to download image
+		$ch = curl_init ($url);
+
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+	
+		$raw=curl_exec($ch);
+		curl_close ($ch);
 	}
 	
-	$ch = curl_init ($url);
-
-	curl_setopt($ch, CURLOPT_HEADER, 0);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
-	curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-
-	$raw=curl_exec($ch);
-	curl_close ($ch);
-
 	$upload_dir = wp_upload_dir();
 	$path = $upload_dir['basedir'].'/resource-images/';
 	
 	if ($local){
+		$source_thumbnail_url = OER_PATH.$local_filename;
 		$ext = ".".pathinfo($local_filename, PATHINFO_EXTENSION);
 		$local_filename = str_replace($ext,"",$local_filename);
 		$url = "-".$local_filename;
@@ -870,9 +872,14 @@ function oer_getExternalThumbnailImage($url, $local=false) {
 	{
 		debug_log("OER : start download image function");
 
-		$fp = fopen($file,'wb');
-		fwrite($fp, $raw);
-		fclose($fp);
+		if ($local){
+			$file = $path.'Screenshot'.preg_replace('/https?|:|#|\?|\&|\//i', '-', $url).'.jpg';
+			copy($source_thumbnail_url,$file);
+		} else {
+			$fp = fopen($file,'wb');
+			fwrite($fp, $raw);
+			fclose($fp);
+		}
 
 		debug_log("OER : end of download image function");
 	}
