@@ -886,6 +886,21 @@ function oer_getExternalThumbnailImage($url, $local=false) {
 	return $file;
 }
 
+//Checks if bootstrap is loaded
+function is_bootstrap_loaded(){
+	$bootstrap = false;
+	$url = get_site_url();
+	
+	$content = file_get_contents($url);
+	
+	$locate_bootstrap = strpos($content,"bootstrap.");
+	
+	if ($locate_bootstrap>0)
+		$bootstrap = true;
+	
+	return $bootstrap;
+}
+
 /** Resize Image **/
 function oer_resize_image($orig_img_url, $width, $height, $crop = false) {
 	$new_image_url = "";

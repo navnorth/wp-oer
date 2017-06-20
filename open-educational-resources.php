@@ -43,7 +43,7 @@ include_once(OER_PATH.'includes/shortcode.php');
 include_once(OER_PATH.'widgets/class-subject-area-widget.php');
 
 //define global variable $debug_mode and get value from settings
-global $_debug, $_bootstrap, $_css, $_subjectarea;
+global $_debug, $_bootstrap, $_css, $_subjectarea, $_search_post_ids, $_w_bootstrap;
 $_debug = get_option('oer_debug_mode');
 $_bootstrap = get_option('oer_use_bootstrap');
 $_css = get_option('oer_additional_css');
@@ -241,6 +241,7 @@ function add_oer_settings_link( $links, $file ){
  * Get the Custom Template if set
  **/
 function oer_get_template_hierarchy( $template ) {
+	
 	//get template file
 	if ($template=="search"){
 		$template = $template . '.php';
@@ -248,7 +249,7 @@ function oer_get_template_hierarchy( $template ) {
 		$template_slug = rtrim( $template , '.php' );
 		$template = $template_slug . '.php';
 	}
-
+	
 	//Check if custom template exists in theme folder
 	if ($theme_file = locate_template( array( 'oer_template/' . $template ) )) {
 		$file = $theme_file;
@@ -257,7 +258,7 @@ function oer_get_template_hierarchy( $template ) {
 	} else {
 		$file = OER_PATH . '/oer_template/' . $template;
 	}
-
+	
 	return apply_filters( 'oer_repl_template' . $template , $file  );
 }
 
@@ -337,9 +338,122 @@ function oer_tag_template( $template ) {
 
 add_action( 'pre_get_posts', 'oer_cpt_tags' );
 function oer_cpt_tags( $query ) {
+	global $_search_post_ids;
+	
 	if ( $query->is_tag() && $query->is_main_query() ) {
-	    $query->set( 'post_type', array( 'post', 'resource' ) );
+		$query->set( 'post_type', array( 'post', 'resource' ) );
 	}
+}
+
+function oer_get_search_posts($search_text) {
+	// Search Query
+	$args = array(
+			'post_type' => array( 'post', 'resource' ),
+			'post_status' => 'publish',
+			'posts_per_page' => -1,
+			's' => $search_text
+	);
+	$search_query = new WP_Query($args);
+	
+	return $search_query->posts;
+}
+
+function oer_get_search_meta($search_text) {
+	// Meta Query
+	$args = array(
+		'post_type' => 'resource',
+		'post_status' => 'publish',
+		'posts_per_page' => -1,
+		'meta_query' => array(
+			'relation' => 'OR',
+			array(
+				'key'     => 'oer_authorname',
+				'value'   => $search_text,
+				'compare' => 'LIKE'
+			),
+			array(
+				'key'     => 'oer_publishername',
+				'value'   => $search_text,
+				'compare' => 'LIKE'
+			)
+		),
+	);
+	$meta_query = new WP_Query($args);
+	
+	return $meta_query->posts;
+}
+
+function oer_get_search_taxonomies($search_text) {
+	//Tax Query
+	$args = array(
+		'post_type' => 'resource',
+		'post_status' => 'publish',
+		'posts_per_page' => -1,
+		'tax_query' => array(
+			array(
+				'taxonomy' => 'resource-subject-area',
+				'field'   => 'slug',
+				'terms' => $search_text
+			)
+		)
+	);
+	$tax_query = new WP_Query($args);
+	
+	return $tax_query->posts;
+}
+
+function oer_get_search_tags($search_text){
+	//Tag Query
+	$args = array(
+		'post_type' => 'resource',
+		'post_status' => 'publish',
+		'posts_per_page' => -1,
+		'tag' => $search_text
+	);
+	
+	$tag_query = new WP_Query($args);
+	
+	return $tag_query->posts;
+}
+
+add_action( 'template_redirect' , 'oer_update_search_query' );
+function oer_update_search_query(){
+	global $_search_post_ids;
+	if ( !is_admin() && is_search() ) {
+		global $wp_query;
+		
+		$query_posts = array();
+		
+		$search_posts = oer_get_search_posts($_REQUEST['s']);
+		if (is_array($search_posts))
+			$query_posts = array_merge($query_posts, $search_posts);
+			
+		$meta_posts = oer_get_search_meta($_REQUEST['s']);
+		if (is_array($meta_posts))
+			$query_posts = array_merge($query_posts, $meta_posts);
+			
+		$tag_posts = oer_get_search_tags($_REQUEST['s']);
+		if (is_array($tag_posts))
+			$query_posts = array_merge($query_posts, $tag_posts);
+		
+		$wpquery = new WP_Query();
+		$wpquery->posts = $query_posts;
+		
+		$post_ids = array();
+		foreach( $wpquery->posts as $item ) {
+		    $post_ids[] = $item->ID;
+		}
+		
+		$unique = array_unique($post_ids);
+		$_search_post_ids = $unique;
+		$args = array(
+			'post_status' => 'publish',
+			'posts_per_page' => -1,
+			'post__in' => $unique
+			);
+		
+		$wp_query = new WP_Query($args);
+	} 
 }
 
 function oer_query_post_type($query) {
@@ -421,7 +535,7 @@ add_action('wp_enqueue_scripts', 'oer_front_scripts');
 function oer_front_scripts()
 {
 	global $_bootstrap;
-
+	
 	if ($_bootstrap) {
 		wp_enqueue_style('bootstrap-style', OER_URL.'css/bootstrap.min.css');
 		wp_enqueue_script('bootstrap-script', OER_URL.'js/bootstrap.min.js');
@@ -562,9 +676,12 @@ function oer_general_settings_callback() {
 
 }
 
+
+
 //Initialize Style Settings Tab
 add_action( 'admin_init' , 'oer_styles_settings' );
 function oer_styles_settings(){
+	
 	//Create Styles Section
 	add_settings_section(
 		'oer_styles_settings',
@@ -572,7 +689,7 @@ function oer_styles_settings(){
 		'oer_styles_settings_callback',
 		'styles_settings_section'
 	);
-
+	
 	//Add Settings field for Importing Bootstrap CSS & JS Libraries
 	add_settings_field(
 		'oer_use_bootstrap',
@@ -664,6 +781,14 @@ function oer_styles_settings_callback(){
 //Initialize Setup Settings Tab
 add_action( 'admin_init' , 'oer_setup_settings' );
 function oer_setup_settings(){
+	global $_w_bootstrap;
+	
+	if (is_bootstrap_loaded())
+		$_w_bootstrap = true;
+	
+	$bootstrap_disabled = false;
+	$load_bootstrap = true;
+	
 	//Create Setup Section
 	add_settings_section(
 		'oer_setup_settings',
@@ -718,7 +843,12 @@ function oer_setup_settings(){
 			'description' => __('Enable use of CCSS as an optional alignment option for resources.', OER_SLUG)
 		)
 	);
-
+	
+	if ($_w_bootstrap) {
+		$bootstrap_disabled = true;
+		$load_bootstrap = false;
+	}
+	
 	//Add Settings field for Importing Bootstrap CSS & JS Libraries
 	add_settings_field(
 		'oer_use_bootstrap',
@@ -729,8 +859,11 @@ function oer_setup_settings(){
 		array(
 			'uid' => 'oer_use_bootstrap',
 			'type' => 'checkbox',
+			'value' => 1,
+			'default' => $load_bootstrap,
+			'disabled' => $bootstrap_disabled,
 			'name' =>  __('Import Bootstrap CSS & JS libraries', OER_SLUG),
-			'description' => __('Uncheck if your WP theme already included Bootstrap', OER_SLUG)
+			'description' => __('Your theme does not appear to have bootstrap. Uncheck if your WP theme already included Bootstrap', OER_SLUG)
 		)
 	);
 
@@ -920,6 +1053,7 @@ function oer_setup_settings_field( $arguments ) {
 	$selected = "";
 	$size = "";
 	$class = "";
+	$disabled = "";
 
 	$value = get_option($arguments['uid']);
 
@@ -946,16 +1080,27 @@ function oer_setup_settings_field( $arguments ) {
 		case "checkbox":
 		case "radio":
 			if (isset($arguments['default'])) {
-				$selected = "checked='checked'";
+				if ($arguments['default']==true){
+					$selected = "checked='checked'";
+				}
 			}
+			
+			if (isset($arguments['value']))
+				$value = $arguments['value'];
+				
 			if ($value==1 || $value=="on")
 				$selected = "checked='checked'";
 			else{
 				$selected = "";
 				$value = 1;
 			}
-
-			echo '<input name="'.$arguments['uid'].'" id="'.$arguments['uid'].'" '.$class.' type="'.$arguments['type'].'" value="' . $value . '" ' . $size . ' ' .  $selected . ' /><label for="'.$arguments['uid'].'"><strong>'.$arguments['name'].'</strong></label>';
+			
+			if (isset($arguments['disabled'])){
+				if ($arguments['disabled']==true)
+					$disabled = " disabled";
+			}
+			
+			echo '<input name="'.$arguments['uid'].'" id="'.$arguments['uid'].'" '.$class.' type="'.$arguments['type'].'" value="' . $value . '" ' . $size . ' ' .  $selected . ' ' . $disabled . '  /><label for="'.$arguments['uid'].'"><strong>'.$arguments['name'].'</strong></label>';
 			break;
 		case "textarea":
 			echo '<label for="'.$arguments['uid'].'"><h3><strong>'.$arguments['name'];
