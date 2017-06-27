@@ -887,13 +887,22 @@ function oer_getExternalThumbnailImage($url, $local=false) {
 }
 
 //Checks if bootstrap is loaded
-function is_bootstrap_loaded(){
+function oer_is_bootstrap_loaded(){
 	$bootstrap = false;
+	$js = "";
 	$url = get_site_url();
 	
 	$content = file_get_contents($url);
 	
-	$locate_bootstrap = strpos($content,"bootstrap.");
+	preg_match_all('#(<head[^>]*>.*?<\/head>)#ims', $content, $head);
+	$content = implode('',$head[0]);
+	
+	preg_match_all('#<script(.*?)<\/script>#is', $content, $matches);
+	foreach ($matches[0] as $value) {
+		$js .= $value;
+	}
+	
+	$locate_bootstrap = strpos($js,"bootstrap.");
 	
 	if ($locate_bootstrap>0)
 		$bootstrap = true;
