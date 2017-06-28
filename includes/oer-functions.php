@@ -893,11 +893,12 @@ function oer_is_bootstrap_loaded(){
 	$url = get_site_url();
 	
 	$content = file_get_contents($url);
+	$content = htmlentities($content);
 	
-	preg_match_all('#(<head[^>]*>.*?<\/head>)#ims', $content, $head);
+	preg_match_all("#(<head[^>]*>.*?<\/head>)#ims", $content, $head);
 	$content = implode('',$head[0]);
 	
-	preg_match_all('#<script(.*?)<\/script>#is', $content, $matches);
+	preg_match_all("#<script(.*?)<\/script>#is", $content, $matches);
 	foreach ($matches[0] as $value) {
 		$js .= $value;
 	}

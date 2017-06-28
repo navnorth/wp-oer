@@ -783,8 +783,10 @@ add_action( 'admin_init' , 'oer_setup_settings' );
 function oer_setup_settings(){
 	global $_w_bootstrap;
 	
-	if (is_bootstrap_loaded())
-		$_w_bootstrap = true;
+	if ($_REQUEST['post_type']=="resource"){
+		if (oer_is_bootstrap_loaded())
+			$_w_bootstrap = true;
+	}
 	
 	$bootstrap_disabled = false;
 	$load_bootstrap = true;
@@ -1852,6 +1854,7 @@ add_action( 'registered_taxonomy', 'oer_register_taxonomy_rules' , 10, 3 );
 
 /** Deactivate plugin **/
 function oer_deactivate_plugin(){
+	delete_option('setup_notify');
 	deactivate_plugins( plugin_basename( __FILE__ ) );
 }
 
