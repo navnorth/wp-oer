@@ -25,7 +25,7 @@
 * @link       http://pear.php.net/package/Spreadsheet_Excel_Reader
 * @see        OLE, Spreadsheet_Excel_Writer
 */
-
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 //require_once 'PEAR.php';
 require_once OER_PATH.'Excel/oleread.inc';

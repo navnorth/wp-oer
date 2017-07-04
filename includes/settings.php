@@ -1,4 +1,6 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 global $message, $type;
 
 	if (isset($_REQUEST['settings-updated'])) {
@@ -110,7 +112,7 @@ global $message, $type;
 		}
 	}
 	
-	if ($_REQUEST['setup']=='true'){
+	if (isset($_REQUEST['setup']) && $_REQUEST['setup']=='true'){
 		$message = "The plugin has successfully loaded the default data.";
 		$type = "success";
 	}
@@ -226,6 +228,7 @@ function show_styles_settings() {
 }
 
 function show_setup_settings() {
+	global $message, $type;
 	?>
 <div class="oer-plugin-body">
 	<div class="oer-plugin-row">

@@ -26,6 +26,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
  */
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 //defining the url,path and slug for the plugin
 define( 'OER_URL', plugin_dir_url(__FILE__) );
@@ -783,7 +784,7 @@ add_action( 'admin_init' , 'oer_setup_settings' );
 function oer_setup_settings(){
 	global $_w_bootstrap;
 	
-	if ($_REQUEST['post_type']=="resource"){
+	if (isset($_REQUEST['post_type']) && $_REQUEST['post_type']=="resource"){
 		if (oer_is_bootstrap_loaded())
 			$_w_bootstrap = true;
 	}

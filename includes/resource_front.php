@@ -1,4 +1,6 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 add_shortcode('oer_resource_form', 'resource_front_form');
 function resource_front_form()
 {

@@ -1,4 +1,6 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 require_once OER_PATH.'includes/oer-functions.php';
 
 //Filter Texonomy and Resource Texonomy According Categories Assignment
@@ -104,7 +106,7 @@ function oer_backside_scripts($hook)
 {
     global $post;
     
-    if ($_GET['post_type']=='resource' || $post->post_type=='resource') {
+    if ((isset($_GET['post_type']) && $_GET['post_type']=='resource') || $post->post_type=='resource') {
 	wp_enqueue_style('jqueryui-styles', OER_URL.'css/jquery-ui.css');
 	wp_enqueue_style('back-styles', OER_URL.'css/back_styles.css');
 	wp_enqueue_style( 'thickbox' );

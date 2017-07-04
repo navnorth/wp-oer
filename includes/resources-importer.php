@@ -1,3 +1,4 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <div class="oer_imprtrwpr">
     <form method="post" enctype="multipart/form-data" onsubmit="return processImport('#resource_submit','resource_import')">
 	<fieldset>

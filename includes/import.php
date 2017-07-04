@@ -1,4 +1,6 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 /** Import Page **/
 global $wpdb;
 require_once OER_PATH.'includes/oer-functions.php';

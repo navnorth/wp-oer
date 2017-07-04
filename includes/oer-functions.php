@@ -1,4 +1,6 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 /** Get Sub Standard **/
 function oer_get_sub_standard($id, $oer_standard)
 {
