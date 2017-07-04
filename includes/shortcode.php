@@ -4,8 +4,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 /**
  * Contains all shortcodes used by OER Plugin
  **/
-add_shortcode( 'oer_subjects_index', 'show_oer_subjects' );
-function show_oer_subjects($atts) {
+add_shortcode( 'oer_subjects_index', 'oer_show_subjects' );
+function oer_show_subjects($atts) {
     global $wpdb;
     //Default
     $column = " col-md-3";
@@ -71,7 +71,7 @@ function show_oer_subjects($atts) {
 				    }
 			    }
 			    
-			    $count = get_oer_post_count($category->term_id, "resource-subject-area");
+			    $count = oer_get_post_count($category->term_id, "resource-subject-area");
 			    $count = $count + $category->count;
 			    
 			    // Size attribute

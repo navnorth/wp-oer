@@ -1,7 +1,7 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-function user_pages($ids)
+function oer_user_pages($ids)
 {
 	global $wpdb;
 	if(is_array($ids))
@@ -20,7 +20,7 @@ function user_pages($ids)
 	return $page_id;
 	exit;
 }
-function get_post_ids($cats , $post_type)
+function oer_get_post_ids($cats , $post_type)
 {
 	$cat = implode(",",$cats);
 
@@ -41,15 +41,15 @@ function get_post_ids($cats , $post_type)
 if(isset($_POST['oer_userasgnctgries']))
 {
 	extract($_POST);
-	$posts_array = get_post_ids($oer_userasgnctgries, 'resource');
+	$posts_array = oer_get_post_ids($oer_userasgnctgries, 'resource');
 	$oer_userasgnrsrc_post = serialize($posts_array);
 	update_user_meta($user_id, 'oer_userasgnrsrc_post', $oer_userasgnrsrc_post);
 
-	$posts_array = get_post_ids($oer_userasgnctgries, '');
+	$posts_array = oer_get_post_ids($oer_userasgnctgries, '');
 	$oer_userasgnblog_post = serialize($posts_array);
 	update_user_meta($user_id, 'oer_userasgnblog_post', $oer_userasgnblog_post);
 
-	$page_id = user_pages($oer_userasgnctgries);
+	$page_id = oer_user_pages($oer_userasgnctgries);
 	$oer_userasgnpages = serialize($page_id);
 	update_user_meta($user_id, 'oer_userasgnpages', $oer_userasgnpages);
 
@@ -100,15 +100,15 @@ if(isset($_POST['oer_userasgnctgries']))
 									echo "<li class='oer_sbstndard has-child'>
 										<div class='stndrd_ttl'>
 											<img src='".OER_URL."images/open_arrow.png' data-pluginpath='".OER_URL."' />
-											<input type='checkbox' ". ischck_cats($asgn_catgrs, $category->term_id) ." name='oer_userasgnctgries[]' value='".$category->term_id ."' onclick='oer_check_all(this)' >".$category->name."</div><div class='oer_stndrd_desc'></div>";
+											<input type='checkbox' ". oer_ischck_cats($asgn_catgrs, $category->term_id) ." name='oer_userasgnctgries[]' value='".$category->term_id ."' onclick='oer_check_all(this)' >".$category->name."</div><div class='oer_stndrd_desc'></div>";
 								}
 								else
 								{
 									echo "<li class='oer_sbstndard'>
 										<div class='stndrd_ttl'>
-											<input type='checkbox' ". ischck_cats($asgn_catgrs, $category->term_id) ." name='oer_userasgnctgries[]' value='".$category->term_id ."' onclick='oer_check_all(this)' >".$category->name."</div><div class='oer_stndrd_desc'></div>";
+											<input type='checkbox' ". oer_ischck_cats($asgn_catgrs, $category->term_id) ." name='oer_userasgnctgries[]' value='".$category->term_id ."' onclick='oer_check_all(this)' >".$category->name."</div><div class='oer_stndrd_desc'></div>";
 								}
-								echo process_cat_tree( $category->term_id, $asgn_catgrs );
+								echo oer_process_cat_tree( $category->term_id, $asgn_catgrs );
 								echo '</li>';
 							}
 						echo '</ul>';
@@ -200,7 +200,7 @@ if(isset($_POST['oer_userasgnctgries']))
 	</div>
 </div>
 <?php
-function process_cat_tree($categoryid, $asgn_catgrs )
+function oer_process_cat_tree($categoryid, $asgn_catgrs )
 {
  	$args = array('hide_empty' => 0, 'taxonomy' => 'resource-subject-area','parent' => $categoryid);
 	$catchilds = get_categories($args);
@@ -216,22 +216,22 @@ function process_cat_tree($categoryid, $asgn_catgrs )
 				echo "<li class='oer_sbstndard has-child'>
 						<div class='stndrd_ttl'>
 							<img src='".OER_URL."images/open_arrow.png' data-pluginpath='".OER_URL."' />
-							<input type='checkbox' ". ischck_cats($asgn_catgrs, $catchild->term_id) ." name='oer_userasgnctgries[]' value='".$catchild->term_id ."' onclick='oer_check_all(this)' >".$catchild->name."</div><div class='oer_stndrd_desc'></div>";
+							<input type='checkbox' ". oer_ischck_cats($asgn_catgrs, $catchild->term_id) ." name='oer_userasgnctgries[]' value='".$catchild->term_id ."' onclick='oer_check_all(this)' >".$catchild->name."</div><div class='oer_stndrd_desc'></div>";
 			}
 			else
 			{
 				echo "<li class='oer_sbstndard'>
 						<div class='stndrd_ttl'>
-							<input type='checkbox' ". ischck_cats($asgn_catgrs, $catchild->term_id) ." name='oer_userasgnctgries[]' value='".$catchild->term_id ."' onclick='oer_check_all(this)' >".$catchild->name."</div><div class='oer_stndrd_desc'></div>";
+							<input type='checkbox' ". oer_ischck_cats($asgn_catgrs, $catchild->term_id) ." name='oer_userasgnctgries[]' value='".$catchild->term_id ."' onclick='oer_check_all(this)' >".$catchild->name."</div><div class='oer_stndrd_desc'></div>";
 			}
 
-			process_cat_tree( $catchild->term_id, $asgn_catgrs );
+			oer_process_cat_tree( $catchild->term_id, $asgn_catgrs );
 			echo '</li>';
 		}
 		echo '</ul>';
 	}
 }
-function ischck_cats($data, $ctagrs_id)
+function oer_ischck_cats($data, $ctagrs_id)
 {
 	$rtn = '';
 	if(in_array ( $ctagrs_id , $data , true ))

@@ -405,8 +405,8 @@ function oer_sort_terms( $terms, $orderby = 'term_id', $order = 'ASC' ) {
 }
 
 //Get Category Child for Sidebar
-if (!function_exists('get_oer_category_child')) {
-	function get_oer_category_child($categoryid, $child_term_id = 0)
+if (!function_exists('oer_get_category_child')) {
+	function oer_get_category_child($categoryid, $child_term_id = 0)
 	{
 		$args = array('hide_empty' => 0, 'taxonomy' => 'resource-subject-area','parent' => $categoryid);
 		$catchilds = get_categories($args);
@@ -418,7 +418,7 @@ if (!function_exists('get_oer_category_child')) {
 		$parentid = array();
 		if($rsltdata['parent'] != 0)
 		{
-			$parent = get_oer_parent_term($rsltdata['parent']);
+			$parent = oer_get_parent_term($rsltdata['parent']);
 
 			for($k=0; $k < count($parent); $k++)
 			{
@@ -464,7 +464,7 @@ if (!function_exists('get_oer_category_child')) {
 								<a href="'. site_url() .'/resource-subject-area/'. $catchild->slug .'">' . $catchild->name .'</a>
 							</span>';
 				}
-				get_oer_category_child( $catchild->term_id);
+				oer_get_category_child( $catchild->term_id);
 				echo '</li>';
 			}
 			echo '</ul>';
@@ -473,8 +473,8 @@ if (!function_exists('get_oer_category_child')) {
 }
 
 //GET Custom Texonomy Parent
-if (!function_exists('get_custom_oer_category_parents')) {
-	function get_custom_oer_category_parents( $id, $taxonomy = false, $link = false, $separator = '/', $nicename = false, $visited = array() ) {
+if (!function_exists('oer_get_custom_category_parents')) {
+	function oer_get_custom_category_parents( $id, $taxonomy = false, $link = false, $separator = '/', $nicename = false, $visited = array() ) {
 
 		if(!($taxonomy && is_taxonomy_hierarchical( $taxonomy )))
 			return '';
@@ -493,7 +493,7 @@ if (!function_exists('get_custom_oer_category_parents')) {
 		if ( $parent->parent && ( $parent->parent != $parent->term_id ) && !in_array( $parent->parent, $visited ) ) {
 			$visited[] = $parent->parent;
 			// $chain .= get_category_parents( $parent->parent, $link, $separator, $nicename, $visited );
-			$chain .= get_custom_oer_category_parents( $parent->parent, $taxonomy, $link, $separator, $nicename, $visited );
+			$chain .= oer_get_custom_category_parents( $parent->parent, $taxonomy, $link, $separator, $nicename, $visited );
 		}
 
 		if ( $link ) {
@@ -507,8 +507,8 @@ if (!function_exists('get_custom_oer_category_parents')) {
 }
 
 //Get Category Parent List
-if (!function_exists('get_oer_parent_term')) {
-	function get_oer_parent_term($id)
+if (!function_exists('oer_get_parent_term')) {
+	function oer_get_parent_term($id)
 	{
 		$curr_cat = get_category_parents($id, false, '/' ,true);
 		$curr_cat = explode('/',$curr_cat);
@@ -517,8 +517,8 @@ if (!function_exists('get_oer_parent_term')) {
 	}
 }
 
-if (!function_exists('get_term_top_most_parent')) {
-	function get_term_top_most_parent($term_id, $taxonomy="resource-subject-area"){
+if (!function_exists('oer_get_term_top_most_parent')) {
+	function oer_get_term_top_most_parent($term_id, $taxonomy="resource-subject-area"){
 	    // start from the current term
 	    $parent  = get_term_by( 'id', $term_id, $taxonomy);
 	    // climb up the hierarchy until we reach a term with parent = '0'
@@ -532,8 +532,8 @@ if (!function_exists('get_term_top_most_parent')) {
 }
 
 //Get Total Post Count
-if (!function_exists('get_oer_post_count')) {
-	function get_oer_post_count($category, $taxonomy)
+if (!function_exists('oer_get_post_count')) {
+	function oer_get_post_count($category, $taxonomy)
 	{
 		$count = 0;
 		$args = array(
@@ -563,7 +563,7 @@ if (!function_exists('oer_front_child_category')) {
 			foreach($catchilds as $catchild)
 			{
 				$children = get_term_children($catchild->term_id, 'resource-subject-area');
-				$count = get_oer_post_count($catchild->term_id, "resource-subject-area");
+				$count = oer_get_post_count($catchild->term_id, "resource-subject-area");
 				$count = $count + $catchild->count;
 				if( !empty( $children ) )
 				{

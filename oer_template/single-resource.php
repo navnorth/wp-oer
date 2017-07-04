@@ -2,6 +2,7 @@
 /**
  * The Template for displaying all single resource
  */
+
 /** Add default stylesheet for Resource page **/
 wp_register_style( "resource-styles", OER_URL . "css/resource-style.css" );
 wp_enqueue_style( "resource-styles" );
@@ -34,7 +35,7 @@ if(!empty($post_terms))
 	{
 		if($term->parent != 0)
 		{
-			$parent[] = get_oer_parent_term($term->term_id);
+			$parent[] = oer_get_parent_term($term->term_id);
 		}
 		else
 		{

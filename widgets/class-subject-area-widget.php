@@ -1,6 +1,6 @@
 <?php
 
-class Subject_Area_Widget extends WP_Widget{
+class OER_Subject_Area_Widget extends WP_Widget{
     
     //Constructor
     function __construct(){
@@ -62,7 +62,7 @@ class Subject_Area_Widget extends WP_Widget{
         $parentid = array();
         if($rsltdata['parent'] != 0)
         {
-                $parent = get_oer_parent_term($rsltdata['parent']);
+                $parent = oer_get_parent_term($rsltdata['parent']);
                 for($k=0; $k < count($parent); $k++)
                 {
                         if ($parent[$k]) {
@@ -117,7 +117,7 @@ class Subject_Area_Widget extends WP_Widget{
 					echo '<li class="oer-sub-category'.$class.'"><span onclick="toggleparent(this);"><a href="'. site_url() .'/'.$category->taxonomy.'/'. $category->slug .'"  title="'. $category->name .'" >'. $category->name .'</a></span>';
 				}
 				
-				echo get_oer_category_child( $category->term_id, $rsltdata['term_id']);
+				echo oer_get_category_child( $category->term_id, $rsltdata['term_id']);
 				echo '</li>';
 			}
 	echo '</ul>';
@@ -129,4 +129,4 @@ class Subject_Area_Widget extends WP_Widget{
         echo $after_widget;
     }
 }
-add_action('widgets_init', create_function('', 'return register_widget("Subject_Area_Widget");'));
+add_action('widgets_init', create_function('', 'return register_widget("OER_Subject_Area_Widget");'));

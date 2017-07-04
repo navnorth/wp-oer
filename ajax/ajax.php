@@ -14,7 +14,7 @@ if($_REQUEST["task"] == 'get_standards')
 	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "sub_standards where parent_id = %s", $standard_id) ,ARRAY_A);
 	if(!empty($results))
 	{
-		get_child($standard_id);
+		oer_get_child($standard_id);
 		echo "<script type='text/javascript'>
 				jQuery(document).ready(function(){
 					jQuery('li').children('.stndrd_ttl').children('img').click(function(e)
@@ -42,7 +42,7 @@ if($_REQUEST["task"] == 'get_standards')
 	}
 }
 
-function get_child($id)
+function oer_get_child($id)
 {
 	global $wpdb;
 	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "sub_standards where parent_id = %s", $id ) ,ARRAY_A);
@@ -59,16 +59,16 @@ function get_child($id)
 						</div><div class='oer_stndrd_desc'></div>";
 
 						$id = 'sub_standards-'.$result['id'];
-						get_child($id);
+						oer_get_child($id);
 						$sid = 'sub_standards-'.$result['id'];
-						get_thrchild($sid);
+						oer_get_thrchild($sid);
 				echo "</li>";
 			}
 		echo "</ul>";
 	}
 }
 
-function get_thrchild($id )
+function oer_get_thrchild($id )
 {
 	global $wpdb;
 	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "standard_notation where parent_id = %s" , $id  ) ,ARRAY_A);
@@ -78,7 +78,7 @@ function get_thrchild($id )
 			foreach($results as $result)
 			{
 			  $id = 'standard_notation-'.$result['id'];
-			  $child = child_exist($id);
+			  $child = oer_child_exist($id);
 
 			  echo "<li>
 				   <div class='stndrd_ttl'>";
@@ -93,7 +93,7 @@ function get_thrchild($id )
 				   </div>
 				   <div class='oer_stndrd_desc'> ". $result['description']." </div>";
 
-				   get_thrchild($id);
+				   oer_get_thrchild($id);
 
 				   echo "</li>";
 			}
@@ -101,7 +101,7 @@ function get_thrchild($id )
 	}
 }
 
-function child_exist($id)
+function oer_child_exist($id)
 {
 	global $wpdb;
 	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "standard_notation where parent_id = %s" , $id ) ,ARRAY_A);

@@ -2,6 +2,7 @@
 /*
  * Template Name: Default Category Page Template
  */
+
 /** Add default stylesheet for Resource Category page **/
 wp_enqueue_style('bxslider-style', OER_URL.'/css/jquery.bxslider.css');
 wp_register_style( "resource-category-styles", OER_URL . "css/resource-category-style.css" );
@@ -39,7 +40,7 @@ $rsltdata = get_term_by( "name", $term, "resource-subject-area", ARRAY_A );
 $parentid = array();
 if($rsltdata['parent'] != 0)
 {
-	$parent = get_oer_parent_term($rsltdata['parent']);
+	$parent = oer_get_parent_term($rsltdata['parent']);
 	
 	for($k=0; $k < count($parent); $k++)
 	{
@@ -63,46 +64,6 @@ $hide_title = get_option('oer_hide_subject_area_title');
 	if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('subject_area_sidebar') ) : 
 
 	endif;
-	/*echo '<ul class="resource_category">';
-			$args = array('hide_empty' => 0, 'taxonomy' => 'resource-subject-area', 'parent' => 0);
-			$categories= get_categories($args);
-                        
-			foreach($categories as $category)
-			{
-				$children = get_term_children($category->term_id, 'resource-subject-area');
-				$getimage = $wpdb->get_results( $wpdb->prepare ( "SELECT * FROM ".$wpdb->prefix.'postmeta'." WHERE meta_key='category_image' AND meta_value=%s" , $category->term_id));
-				if(!empty($getimage)){
-                                    $attach_icn = get_post($getimage[0]->post_id);
-                                } else {
-                                    $attach_icn = array();
-                                }
-				
-				if($rsltdata['term_id'] == $category->term_id)
-				{
-					$class = ' activelist current_class';	
-				}
-				elseif(in_array($category->term_id, $parentid))
-				{
-					$class = ' activelist current_class';
-				}
-				else
-				{
-					$class = '';
-				}
-				
-				if( !empty( $children ) )
-				{
-					echo '<li class="oer-sub-category has-child'.$class.'"><span onclick="toggleparent(this);"><a href="'. site_url() .'/'.$category->taxonomy.'/'. $category->slug .'" title="'. $category->name .'" >'. $category->name .'</a></span>';
-				}
-				else
-				{
-					echo '<li class="oer-sub-category'.$class.'"><span onclick="toggleparent(this);"><a href="'. site_url() .'/'.$category->taxonomy.'/'. $category->slug .'"  title="'. $category->name .'" >'. $category->name .'</a></span>';
-				}
-				
-				echo get_oer_category_child( $category->term_id, $rsltdata['term_id']);
-				echo '</li>';
-			}
-	echo '</ul>';*/
 	?>
 	</div>
 <!--</div>--> <!--Left Sidebar-->
@@ -112,7 +73,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 		<div class="oer-pgbrdcrums">
 			<ul>
 				<?php
-					$strcat = get_custom_oer_category_parents($term_id, "resource-subject-area" , FALSE, ':', TRUE);
+					$strcat = oer_get_custom_category_parents($term_id, "resource-subject-area" , FALSE, ':', TRUE);
                                         
 					if(strpos($strcat,':'))
 					{
@@ -159,6 +120,9 @@ $hide_title = get_option('oer_hide_subject_area_title');
 				?>
 				<li>
 					<?php
+					$homelink="";
+					$output = "";
+					
 					$opt = array(
 						'nofollowhome' => true,
 						'home' => 'Home',
@@ -166,10 +130,6 @@ $hide_title = get_option('oer_hide_subject_area_title');
 						'sep' => '-',
 						'prefix' => ''
 					);
-					/*if(function_exists('yoast_breadcrumb'))
-					{
-						//Custom breadcrumbs using Yoast
-						$opt = get_option("yoast_breadcrumbs");*/
 					
 					$nofollow = ' ';
 					if ($opt['nofollowhome']) {

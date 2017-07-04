@@ -141,16 +141,16 @@ global $message, $type;
     <?php
 	switch ($active_tab) {
 		case "general":
-			show_general_settings();
+			oer_show_general_settings();
 			break;
 		case "styles":
-			show_styles_settings();
+			oer_show_styles_settings();
 			break;
 		case "setup":
-			show_setup_settings();
+			oer_show_setup_settings();
 			break;
 		case "reset":
-			show_reset_settings();
+			oer_show_reset_settings();
 			break;
 		default:
 			break;
@@ -164,7 +164,7 @@ global $message, $type;
 </div>
 
 <?php
-function show_general_settings() {
+function oer_show_general_settings() {
 	global $message, $type;
 ?>
 <div class="oer-plugin-body">
@@ -202,7 +202,7 @@ function show_general_settings() {
 <?php
 }
 
-function show_styles_settings() {
+function oer_show_styles_settings() {
 ?>
 <div class="oer-plugin-body">
 	<div class="oer-plugin-row">
@@ -227,7 +227,7 @@ function show_styles_settings() {
 <?php
 }
 
-function show_setup_settings() {
+function oer_show_setup_settings() {
 	global $message, $type;
 	?>
 <div class="oer-plugin-body">
@@ -261,7 +261,7 @@ function show_setup_settings() {
 <?php
 }
 
-function show_reset_settings() {
+function oer_show_reset_settings() {
 	global $message, $type;
 	?>
 <div class="oer-plugin-body">

@@ -168,14 +168,14 @@ function oer_plugin_activation_notice() {
 	}
 }
 
-register_deactivation_hook( __FILE__, "deactivate_oer_plugin" );
-function deactivate_oer_plugin() {
+register_deactivation_hook( __FILE__, "oer_deactivate_oer_plugin" );
+function oer_deactivate_oer_plugin() {
 	delete_option('setup_notify');
 }
 
 //Load localization directory
-add_action('plugins_loaded', 'load_oer_textdomain');
-function load_oer_textdomain() {
+add_action('plugins_loaded', 'oer_load_textdomain');
+function oer_load_textdomain() {
 	load_plugin_textdomain( 'open-educational-resource', false, dirname( plugin_basename(__FILE__) ) . '/lang/' );
 }
 
@@ -223,9 +223,9 @@ ob_clean();
 }
 
 /** Add Settings Link on Plugins page **/
-add_filter( 'plugin_action_links' , 'add_oer_settings_link' , 10 , 2 );
+add_filter( 'plugin_action_links' , 'oer_add_settings_link' , 10 , 2 );
 /** Add Settings Link function **/
-function add_oer_settings_link( $links, $file ){
+function oer_add_settings_link( $links, $file ){
 	if ( $file == plugin_basename(dirname(__FILE__).'/open-educational-resources.php') ) {
 		/** Insert settings link **/
 		$link = "<a href='edit.php?post_type=resource&page=oer_settings'>".__('Settings','oer')."</a>";

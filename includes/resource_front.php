@@ -1,8 +1,8 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-add_shortcode('oer_resource_form', 'resource_front_form');
-function resource_front_form()
+add_shortcode('oer_resource_form', 'oer_resource_front_form');
+function oer_resource_front_form()
 {
 	global $wpdb;
 	if(isset($_POST['oer_resource_submit']))
