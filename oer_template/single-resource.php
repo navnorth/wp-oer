@@ -87,7 +87,7 @@ if(!empty($post_terms))
 				
 			if(!empty($img_url))
     				{
-    					if ( is_wp_error($image_editor) ) {
+    					if ( is_wp_error($img_url) ) {
 						debug_log("Can't get Image editor to resize Resource screenshot.");
 					} else {
 						$new_image_url = oer_resize_image($img_url[0], $img_width, $img_height, true);
