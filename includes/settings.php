@@ -5,7 +5,7 @@ global $message, $type;
 
 	if (isset($_REQUEST['settings-updated'])) {
 		//When submitting settings tab
-		if ($_REQUEST['tab']=="setup") {
+		if (isset($_REQUEST['tab']) && $_REQUEST['tab']=="setup") {
 			
 			//Import Default Subject Areas
 			$import_subject_areas = get_option('oer_import_default_subject_areas');
@@ -44,7 +44,7 @@ global $message, $type;
 			wp_safe_redirect( admin_url( 'edit.php?post_type=resource&page=oer_settings&setup=true' ) );
 			exit();
 		}
-		if ($_REQUEST['tab']=="reset") {
+		if (isset($_REQUEST['tab']) && $_REQUEST['tab']=="reset") {
 			
 			$delete_standards_data = get_option('oer_delete_standards_data');
 			if($delete_standards_data){
