@@ -54,8 +54,10 @@ register_activation_hook(__FILE__, 'oer_create_csv_import_table');
 function oer_create_csv_import_table()
 {
 	global $wpdb;
+	$subprefix = "oer_";
+	
 	//Change hard-coded table prefix to $wpdb->prefix
-	$table_name = $wpdb->prefix . "core_standards";
+	$table_name = $wpdb->prefix . $subprefix . "core_standards";
 	if($wpdb->get_var("show tables like '$table_name'") != $table_name)
 	{
 	  $sql = "CREATE TABLE IF NOT EXISTS $table_name (
@@ -69,7 +71,7 @@ function oer_create_csv_import_table()
        }
 
 	//Change hard-coded table prefix to $wpdb->prefix
-	$table_name = $wpdb->prefix . "sub_standards";
+	$table_name = $wpdb->prefix . $subprefix . "sub_standards";
 	if($wpdb->get_var("show tables like '$table_name'") != $table_name)
 	{
 	  $sql = "CREATE TABLE IF NOT EXISTS $table_name (
@@ -84,7 +86,7 @@ function oer_create_csv_import_table()
 	}
 
 	//Change hard-coded table prefix to $wpdb->prefix
-	$table_name = $wpdb->prefix . "standard_notation";
+	$table_name = $wpdb->prefix . $subprefix . "standard_notation";
 	if($wpdb->get_var("show tables like '$table_name'") != $table_name)
 	 {
 	   $sql = "CREATE TABLE IF NOT EXISTS $table_name (

@@ -133,7 +133,7 @@ function oer_get_substandard_children($id)
 function oer_get_core_standard($id) {
 	global $wpdb;
 	$stds = explode("-",$id);
-	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "core_standards where id = %s" , $stds[1] ) , ARRAY_A);
+	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "oer_core_standards where id = %s" , $stds[1] ) , ARRAY_A);
 	return $results;
 }
 
@@ -919,11 +919,6 @@ function oer_resize_image($orig_img_url, $width, $height, $crop = false) {
 
 	$suffix = "{$width}x{$height}";
 
-	if ( !function_exists( 'get_home_path' ) )
-		require_once( ABSPATH . 'wp-admin/includes/file.php' );
-
-	$home_path = get_home_path();
-
 	$img_path = $new_img_path = parse_url($orig_img_url);
 	$img_path = $_SERVER['DOCUMENT_ROOT'] . $img_path['path'];
 
@@ -1389,9 +1384,6 @@ function oer_importResources($default=false) {
 						
 						$attach_id = wp_insert_attachment( $attachment, $file, $post_id );
 						update_post_meta($post_id, "_thumbnail_id", $attach_id);
-
-						// Make sure that this file is included, as wp_generate_attachment_metadata() depends on it.
-						require_once( ABSPATH . 'wp-admin/includes/image.php' );
 
 						// Generate the metadata for the attachment, and update the database record.
 						$attach_data = wp_generate_attachment_metadata( $attach_id, $file );
