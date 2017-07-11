@@ -6,7 +6,7 @@ function oer_get_sub_standard($id, $oer_standard)
 {
 	global $wpdb;
 	global $chck, $class;
-	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "sub_standards where parent_id = %s" , $id ) ,ARRAY_A);
+	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "oer_sub_standards where parent_id = %s" , $id ) ,ARRAY_A);
 	if(!empty($oer_standard))
 	{
 		$stndrd_arr = explode(",",$oer_standard);
@@ -63,7 +63,8 @@ function oer_get_sub_standard($id, $oer_standard)
 function oer_get_standard_notation($id, $oer_standard)
 {
 	global $wpdb;
-	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "standard_notation where parent_id = %s" , $id ) , ARRAY_A);
+	
+	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "oer_standard_notation where parent_id = %s" , $id ) , ARRAY_A);
 
 	if(!empty($oer_standard))
 	{
@@ -75,6 +76,8 @@ function oer_get_standard_notation($id, $oer_standard)
 		echo "<ul>";
 			foreach($results as $result)
 			{
+				$chck = '';
+				$class = '';
 			  $id = 'standard_notation-'.$result['id'];
 			  $child = oer_check_child($id);
 			  $value = 'oer_standard_notation-'.$result['id'];
@@ -85,11 +88,6 @@ function oer_get_standard_notation($id, $oer_standard)
 					{
 						$chck = 'checked="checked"';
 						$class = 'selected';
-					}
-					else
-					{
-						$chck = '';
-						$class = '';
 					}
 				}
 
@@ -117,7 +115,7 @@ function oer_get_standard_notation($id, $oer_standard)
 function oer_check_child($id)
 {
 	global $wpdb;
-	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "standard_notation where parent_id = %s" , $id ) , ARRAY_A);
+	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "oer_standard_notation where parent_id = %s" , $id ) , ARRAY_A);
 	return $results;
 }
 
@@ -125,41 +123,41 @@ function oer_check_child($id)
 function oer_get_substandard_children($id)
 {
 	global $wpdb;
-	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "sub_standards where parent_id = %s" , $id ) , ARRAY_A);
+	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "oer_sub_standards where parent_id = %s" , $id ) , ARRAY_A);
 	return $results;
 }
 
 /** Get Core Standard **/
 function oer_get_core_standard($id) {
 	global $wpdb;
-	$stds = explode("-",$id);
-	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "oer_core_standards where id = %s" , $stds[1] ) , ARRAY_A);
+	$results = null;
+	
+	if ($id!=="") {
+		$stds = explode("-",$id);
+		$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "oer_core_standards where id = %s" , $stds[1] ) , ARRAY_A);
+	}
 	return $results;
 }
 
 /** Get Parent Standard **/
 function oer_get_parent_standard($standard_id) {
 	global $wpdb;
-
+	
 	$stds = explode("-",$standard_id);
 	$table = $stds[0];
 	$prefix = substr($standard_id,0,strpos($standard_id,"_")+1);
-	$table_name = $table;
-
-	if(strcmp($prefix, $wpdb->prefix) !== 0)
-	{
-	    $table_name = str_replace($prefix,$wpdb->prefix,$table);
-	}
-
+	
+	$table_name = $wpdb->prefix.$table;
+	
 	$id = $stds[1];
 	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $table_name. " where id = %s" , $id ) , ARRAY_A);
-
+	
 	foreach($results as $result) {
 
 		$stdrds = explode("-",$result['parent_id']);
 		$tbl = $stdrds[0];
 		$tbls = array('sub_standards','standard_notation');
-
+		
 		if (in_array($tbl,$tbls)){
 			$results = oer_get_parent_standard("oer_".$result['parent_id']);
 		}
@@ -512,7 +510,7 @@ if (!function_exists('oer_get_parent_term')) {
 	{
 		$curr_cat = get_category_parents($id, false, '/' ,true);
 		$curr_cat = explode('/',$curr_cat);
-
+		
 		return $curr_cat;
 	}
 }
@@ -686,10 +684,10 @@ function oer_importStandards($file){
 			{
 				$url = $cskey;
 				$title = $csdata['title'];
-				$results = $wpdb->get_results( $wpdb->prepare( "SELECT id from " . $wpdb->prefix. "core_standards where standard_name = %s" , $title ));
+				$results = $wpdb->get_results( $wpdb->prepare( "SELECT id from " . $wpdb->prefix. "oer_core_standards where standard_name = %s" , $title ));
 				if(empty($results))
 				{
-					$wpdb->get_results( $wpdb->prepare( 'INSERT INTO ' . $wpdb->prefix. 'core_standards values("", %s , %s)' , $title , $url ));
+					$wpdb->get_results( $wpdb->prepare( 'INSERT INTO ' . $wpdb->prefix. 'oer_core_standards values("", %s , %s)' , $title , $url ));
 				}
 			}
 			// Get Core Standard
@@ -702,24 +700,24 @@ function oer_importStandards($file){
 				$title = $data['title'];
 				$parent = '';
 
-				$rsltset = $wpdb->get_results( $wpdb->prepare( "select id from " . $wpdb->prefix. "core_standards where standard_url=%s" , $ischild ));
+				$rsltset = $wpdb->get_results( $wpdb->prepare( "select id from " . $wpdb->prefix. "oer_core_standards where standard_url=%s" , $ischild ));
 				if(!empty($rsltset))
 				{
 					$parent = "core_standards-".$rsltset[0]->id;
 				}
 				else
 				{
-					$rsltset_sec = $wpdb->get_results( $wpdb->prepare( "select id from " . $wpdb->prefix. "sub_standards where url=%s" , $ischild ));
+					$rsltset_sec = $wpdb->get_results( $wpdb->prepare( "select id from " . $wpdb->prefix. "oer_sub_standards where url=%s" , $ischild ));
 					if(!empty($rsltset_sec))
 					{
 						$parent = 'sub_standards-'.$rsltset_sec[0]->id;
 					}
 				}
 
-				$res = $wpdb->get_results( $wpdb->prepare( "SELECT id from " . $wpdb->prefix. "sub_standards where parent_id = %s && url = %s" , $parent , $url ));
+				$res = $wpdb->get_results( $wpdb->prepare( "SELECT id from " . $wpdb->prefix. "oer_sub_standards where parent_id = %s && url = %s" , $parent , $url ));
 				if(empty($res))
 				{
-					$wpdb->get_results( $wpdb->prepare( 'INSERT INTO ' . $wpdb->prefix. 'sub_standards values("", %s, %s, %s)' , $parent , $title , $url ));
+					$wpdb->get_results( $wpdb->prepare( 'INSERT INTO ' . $wpdb->prefix. 'oer_sub_standards values("", %s, %s, %s)' , $parent , $title , $url ));
 				}
 			}
 			// Get Sub Standard
@@ -733,26 +731,26 @@ function oer_importStandards($file){
 				$description = $st_data['description'];
 				$parent = '';
 
-				$rsltset = $wpdb->get_results( $wpdb->prepare( "select id from " . $wpdb->prefix. "sub_standards where url=%s" , $ischild ));
+				$rsltset = $wpdb->get_results( $wpdb->prepare( "select id from " . $wpdb->prefix. "oer_sub_standards where url=%s" , $ischild ));
 				if(!empty($rsltset))
 				{
 					$parent = 'sub_standards-'.$rsltset[0]->id;
 				}
 				else
 				{
-					$rsltset_sec = $wpdb->get_results( $wpdb->prepare( "select id from " . $wpdb->prefix. "standard_notation where url=%s" , $ischild ));
+					$rsltset_sec = $wpdb->get_results( $wpdb->prepare( "select id from " . $wpdb->prefix. "oer_standard_notation where url=%s" , $ischild ));
 					if(!empty($rsltset_sec))
 					{
 						$parent = 'standard_notation-'.$rsltset_sec[0]->id;
 					}
 				}
 
-				$res = $wpdb->get_results( $wpdb->prepare( "SELECT id from " . $wpdb->prefix. "standard_notation where standard_notation = %s && parent_id = %s && url = %s" , $notation , $parent , $url ));
+				$res = $wpdb->get_results( $wpdb->prepare( "SELECT id from " . $wpdb->prefix. "oer_standard_notation where standard_notation = %s && parent_id = %s && url = %s" , $notation , $parent , $url ));
 				if(empty($res))
 				{
 					//$description = preg_replace("/[^a-zA-Z0-9]+/", " ", html_entity_decode($description))
 					$description = esc_sql($description);
-					$wpdb->get_results( $wpdb->prepare( 'INSERT INTO ' . $wpdb->prefix. 'standard_notation values("", %s, %s, %s, "", %s)' , $parent , $notation , $description , $url ));
+					$wpdb->get_results( $wpdb->prepare( 'INSERT INTO ' . $wpdb->prefix. 'oer_standard_notation values("", %s, %s, %s, "", %s)' , $parent , $notation , $description , $url ));
 				}
 			}
 
@@ -781,7 +779,7 @@ function oer_isStandardExisting($standard) {
 	global $wpdb;
 
 	$response = false;
-	$results = $wpdb->get_results( $wpdb->prepare( "SELECT id from " . $wpdb->prefix. "core_standards where standard_name like %s" , '%'.$standard.'%'));
+	$results = $wpdb->get_results( $wpdb->prepare( "SELECT id from " . $wpdb->prefix. "oer_core_standards where standard_name like %s" , '%'.$standard.'%'));
 	if(!empty($results))
 		$response = true;
 
@@ -1246,7 +1244,7 @@ function oer_importResources($default=false) {
 					for($l = 0; $l < count($oer_standard); $l++)
 					{
 
-						$results = $wpdb->get_row( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "standard_notation where standard_notation =%s" , $oer_standard[$l] ),ARRAY_A);
+						$results = $wpdb->get_row( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "oer_standard_notation where standard_notation =%s" , $oer_standard[$l] ),ARRAY_A);
 						if(!empty($results))
 						{
 							$gt_oer_standard .= "oer_standard_notation-".$results['id'].",";
@@ -1749,27 +1747,27 @@ function oer_delete_standards() {
 	global $wpdb;
 
 	//Check if standard notations exist
-	$standard_notations = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."standard_notation", ARRAY_A);
+	$standard_notations = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."oer_standard_notation", ARRAY_A);
 
 	//Delete Standard Notation
 	if (count($standard_notations)>0){
-		$wpdb->query("TRUNCATE TABLE ".$wpdb->prefix."standard_notation");
+		$wpdb->query("TRUNCATE TABLE ".$wpdb->prefix."oer_standard_notation");
 	}
 
 	//Check if substandards exist
-	$substandards = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."sub_standards");
+	$substandards = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."oer_sub_standards");
 
 	//Delete Substandards
 	if (count($substandards)>0){
-		$wpdb->query("TRUNCATE TABLE ".$wpdb->prefix."sub_standards");
+		$wpdb->query("TRUNCATE TABLE ".$wpdb->prefix."oer_sub_standards");
 	}
 
 	//Check if core standards exist
-	$core_standards = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."core_standards");
+	$core_standards = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."oer_core_standards");
 
 	//Delete Core Standards
 	if (count($core_standards)>0){
-		$wpdb->query("TRUNCATE TABLE ".$wpdb->prefix."core_standards");
+		$wpdb->query("TRUNCATE TABLE ".$wpdb->prefix."oer_core_standards");
 	}
 
 	$message = __("Successfully deleted standards", OER_SLUG);

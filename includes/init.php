@@ -446,7 +446,7 @@ function oer_save_customfields()
 			if(!empty($gt_oer_standard)) {
 			    for($l = 0; $l < count($gt_oer_standard); $l++)
 			    {
-				$results = $wpdb->get_row( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "standard_notation where standard_notation =%s" , $gt_oer_standard[$l] ),ARRAY_A);
+				$results = $wpdb->get_row( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "oer_standard_notation where standard_notation =%s" , $gt_oer_standard[$l] ),ARRAY_A);
 				if(!empty($results))
 				{
 				    $gt_oer_standard_notation .= "oer_standard_notation-".$results['id'].",";

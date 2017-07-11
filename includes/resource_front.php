@@ -355,7 +355,7 @@ function oer_resource_front_form()
             			$return .= '<select name="oer_standard_alignment" onchange="get_standardlist(this);" data-path="'.OER_URL.'ajax/ajax.php" img-path="'.OER_URL.'images/load.gif">';
 
 								$return .= '<option value=""> --  Select Standards  -- </option>';
-								$results = $wpdb->get_results("SELECT * from core_standards",ARRAY_A);
+								$results = $wpdb->get_results("SELECT * from ".$wpdb->prefix."oer_core_standards",ARRAY_A);
 								foreach($results as $result)
 								{
 									$return .= '<option value="'.$result['id'].'">'. $result['standard_name'] .'</option>';

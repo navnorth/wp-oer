@@ -179,7 +179,7 @@ global $chck;
 			 <div class="oer_fld">
 				<div class="oer_lstofstandrd ">
 				 	  <?php
-							$results = $wpdb->get_results("SELECT * from " . $wpdb->prefix. "core_standards",ARRAY_A);
+							$results = $wpdb->get_results("SELECT * from " . $wpdb->prefix. "oer_core_standards",ARRAY_A);
 							foreach($results as $result)
 							{
 								$value = 'core_standards-'.$result['id'];

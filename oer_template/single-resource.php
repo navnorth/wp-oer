@@ -355,7 +355,7 @@ if(!empty($post_terms))
     					            ?>
     					                   <h3><?php _e("Standard Alignment", OER_SLUG) ?></h3>
     					                   <?php
-                                             $res = $wpdb->get_row( $wpdb->prepare( "select standard_name from ".$wpdb->prefix."core_standards where id=%d" , $stdrd_id ), ARRAY_A);
+                                             $res = $wpdb->get_row( $wpdb->prepare( "select standard_name from ".$wpdb->prefix."oer_core_standards where id=%d" , $stdrd_id ), ARRAY_A);
                                              echo "<div class='stndrd_ttl'>".$res['standard_name']."</div>";
                                         }
                                     ?>
@@ -383,14 +383,9 @@ if(!empty($post_terms))
 							{
 							    $table = explode("-",$stnd_arr[$i]);
 							    $prefix = substr($stnd_arr[$i],0,strpos($stnd_arr[$i],"_")+1);
-							    $table_name = $table[0];
+							    $table_name = $wpdb->prefix.$table[0];
 							    
 							    $id = $table[1];
-							    
-							    if(strcmp($prefix, $wpdb->prefix) !== 0)
-							    {
-								$table_name = str_replace($prefix,$wpdb->prefix,$table[0]);
-							    }
 							    
 							    $res = $wpdb->get_row( $wpdb->prepare("select * from $table_name where id=%d" , $id ), ARRAY_A);
 							    
