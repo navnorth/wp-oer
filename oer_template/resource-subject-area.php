@@ -13,6 +13,7 @@ wp_enqueue_script('bxslider-script', OER_URL.'/js/jquery.bxslider.js');
 wp_register_script( "resource-script" , OER_URL ."js/resource-category.js" );
 wp_enqueue_script( "resource-script" );
 wp_enqueue_script( "ajax-script", OER_URL."js/front_ajax.js", array("jquery"));
+wp_localize_script( "ajax-script", "oer_ajax_object", array("ajaxurl" => admin_url( 'admin-ajax.php' )));
 
 /** Load WordPress Theme Header **/
 get_header();
@@ -172,7 +173,8 @@ $hide_title = get_option('oer_hide_subject_area_title');
 						
 						$links = array();			
 						foreach ( $ancestors as $ancestor ) {
-							$termObj = get_term_by( 'term' , $ancestor , 'resource-subject-area' );
+							
+							$termObj = get_term_by( 'term_id' , $ancestor , 'resource-subject-area' );
 							
 							$tmp  = array();
 							$tmp['title'] 	= $termObj->name;

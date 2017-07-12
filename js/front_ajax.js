@@ -15,7 +15,7 @@ jQuery(document).ready(function(){
             sort: sort
         };
         
-    jQuery.post(sajaxurl, data).done(function(response) {
+    jQuery.post(oer_ajax_object.ajaxurl, data).done(function(response) {
         var btn_load = jQuery('.resource-load-more-button');
         var next_page = page_num + 1;
         var base_url = btn_load.attr('data-base-url');
@@ -39,7 +39,7 @@ jQuery(document).ready(function(){
         var sort = jQuery(this).val();
         var terms = jQuery(this).attr('data-subject-ids');
         var page_num = parseInt(jQuery('.resource-load-more-button').attr('data-page-number'));
-        
+
         var data = {
             action: 'sort_resources',
             sort: sort,
@@ -47,7 +47,7 @@ jQuery(document).ready(function(){
             subjects:terms
         };
         
-        jQuery.post(sajaxurl, data).done(function(response) {
+        jQuery.post(oer_ajax_object.ajaxurl, data).done(function(response) {
             var button = jQuery('#content-resources .resourcecloud');
             jQuery('#content-resources').html('');
             jQuery('#content-resources').html(response);

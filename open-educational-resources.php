@@ -1259,7 +1259,6 @@ function oer_sort_resources(){
 				);
 
 		$resources = get_posts($args);
-
 		$post_count = count($resources);
 
 		$args = array(
@@ -1288,10 +1287,13 @@ function oer_sort_resources(){
 
 		$args = oer_apply_sort_args($args);
 
-		$args['posts_per_page'] = 20 * $paged;
-
+		if ($paged>0)
+			$args['posts_per_page'] = 20 * $paged;
+		else
+			$args['posts_per_page'] = -1;
+		
 		$postquery = get_posts($args);
-
+		
 		if(!empty($postquery)) {
 			foreach($postquery as $post) {
 
@@ -1479,22 +1481,6 @@ function oer_load_highlight() {
 }
 add_action('wp_ajax_load_highlight', 'oer_load_highlight');
 add_action('wp_ajax_nopriv_load_highlight', 'oer_load_highlight');
-
-/*Enqueue ajax url on frontend*/
-add_action('wp_head','oer_resource_ajaxurl', 8);
-function oer_resource_ajaxurl()
-{
-	?>
-    <script type="text/javascript">
-    /* workaround to only use SSL when on SSL (avoid self-signed cert issues) */
-    <?php if (!strpos($_SERVER['REQUEST_URI'],"wp-admin")): ?>
-	var sajaxurl = '<?php echo OER_URL ?>ajax.php';
-    <?php else: ?>
-	var sajaxurl = '<?php echo admin_url("admin-ajax.php", (is_ssl() ? "https": "http") ); ?>
-    <?php endif; ?>
-    </script>
-<?php
-}
 
 /** Start session to store sort option **/
 add_action( 'init', 'oer_initSession', 1 );

@@ -1639,10 +1639,10 @@ function oer_get_sort_box($subjects=array()){
 			</ul>
 		</div>
 		<select class="sort-selectbox" data-subject-ids="<?php echo json_encode($subjects); ?>">
-			<option value="0"<?php if ($sort==0): ?>  disabled selected<?php endif; ?>>Newest</option>
-			<option value="1"<?php if ($sort==1): ?>  disabled selected<?php endif; ?>>Oldest</option>
-			<option value="2"<?php if ($sort==2): ?>  disabled selected<?php endif; ?>>A-Z</option>
-			<option value="3"<?php if ($sort==3): ?>  disabled selected<?php endif; ?>>Z-A</option>
+			<option value="0"<?php if ($sort==0): ?>  selected<?php endif; ?>>Newest</option>
+			<option value="1"<?php if ($sort==1): ?>  selected<?php endif; ?>>Oldest</option>
+			<option value="2"<?php if ($sort==2): ?>  selected<?php endif; ?>>A-Z</option>
+			<option value="3"<?php if ($sort==3): ?>  selected<?php endif; ?>>Z-A</option>
 		</select>
 	</div>
 	 <?php
