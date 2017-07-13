@@ -66,7 +66,7 @@ if(isset($_POST['oer_userasgnctgries']))
 		<form method="post" action="">
 			<?php if(isset($_POST['oer_user']))
 			{
-				$oer_user = $_POST['oer_user'];
+				$oer_user = sanitize_text_field($_POST['oer_user']);
 				$asgn_catgrs = get_user_meta($oer_user, 'oer_userasgnctgries',true);
 				if(empty($asgn_catgrs))
 				{
@@ -77,7 +77,7 @@ if(isset($_POST['oer_userasgnctgries']))
 					$asgn_catgrs = unserialize($asgn_catgrs);
 				}
 			?>
-				<input type="hidden" name="user_id" value="<?php echo $_POST['oer_user']; ?>" />
+				<input type="hidden" name="user_id" value="<?php echo esc_attr($_POST['oer_user']); ?>" />
 				<div class="oer_snglfld">
 					<div class="oer_txt">
 						<button type="button" name="Select_All" id="oer_selectall" class="button button-primary" onclick="oer_select_all()"><?php _e("Select All", OER_SLUG); ?></button>

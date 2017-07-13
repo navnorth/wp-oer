@@ -1162,7 +1162,7 @@ function oer_load_more_resources() {
 	global $wpdb, $wp_query;
 
 	if (isset($_POST["post_var"])) {
-		$page_num = $_POST["post_var"];
+		$page_num = intval($_POST["post_var"]);
 		$terms = json_decode($_POST["subjects"]);
 		$args = array(
 				'post_type' => 'resource',
@@ -1247,7 +1247,7 @@ function oer_sort_resources(){
 
 	if (isset($_POST["sort"])) {
 
-		$_SESSION['resource_sort'] = $_POST['sort'];
+		$_SESSION['resource_sort'] = intval($_POST['sort']);
 
 		$terms = json_decode($_POST["subjects"]);
 
@@ -1273,11 +1273,11 @@ function oer_sort_resources(){
 
 		$paged = 1;
 		if ($_POST['post_var']){
-			$paged = (int)$_POST['post_var'];
+			$paged = intval($_POST['post_var']);
 		}
 
 		if ($_REQUEST['page'])
-			$paged = (int)$_REQUEST['page'];
+			$paged = intval($_REQUEST['page']);
 
 		$args = array(
 				'post_type' => 'resource',
@@ -1365,7 +1365,7 @@ function oer_load_more_highlights() {
 	global $wpdb, $wp_query;
 
 	if (isset($_POST["post_var"])) {
-		$page_num = $_POST["post_var"];
+		$page_num = intval(["post_var"]);
 		$items_per_load = 4;
 		$term_id = $_POST['term_id'];
 
@@ -1399,7 +1399,7 @@ function oer_load_more_highlights() {
 				$content =  trim(substr($post->post_content,0,$length)).$ellipsis;
 
 				if (isset($_POST['style']))
-					$style = ' style="'.$_POST['style'].'"';
+					$style = ' style="'.esc_attr($_POST['style']).'"';
 				?>
 				<li<?php echo $style; ?>>
 					<div class="frtdsnglwpr">
@@ -1428,7 +1428,7 @@ function oer_load_highlight() {
 	global $wpdb, $wp_query;
 
 	if (isset($_POST["post_var"])) {
-		$resource_id = $_POST["post_var"];
+		$resource_id = intval(["post_var"]);
 
 		$args = array(
 			'p' => $resource_id,
