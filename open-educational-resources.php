@@ -427,15 +427,15 @@ function oer_update_search_query(){
 		
 		$query_posts = array();
 		
-		$search_posts = oer_get_search_posts($_REQUEST['s']);
+		$search_posts = oer_get_search_posts(sanitize_text_field($_REQUEST['s']));
 		if (is_array($search_posts))
 			$query_posts = array_merge($query_posts, $search_posts);
 			
-		$meta_posts = oer_get_search_meta($_REQUEST['s']);
+		$meta_posts = oer_get_search_meta(sanitize_text_field($_REQUEST['s']));
 		if (is_array($meta_posts))
 			$query_posts = array_merge($query_posts, $meta_posts);
 			
-		$tag_posts = oer_get_search_tags($_REQUEST['s']);
+		$tag_posts = oer_get_search_tags(sanitize_text_field($_REQUEST['s']));
 		if (is_array($tag_posts))
 			$query_posts = array_merge($query_posts, $tag_posts);
 		
@@ -1164,6 +1164,13 @@ function oer_load_more_resources() {
 	if (isset($_POST["post_var"])) {
 		$page_num = intval($_POST["post_var"]);
 		$terms = json_decode($_POST["subjects"]);
+		
+		if (is_array($terms)){
+			$terms = array_map("sanitize_subject", $terms);
+		} else {
+			$terms = intval($terms);
+		}
+		
 		$args = array(
 				'post_type' => 'resource',
 				'posts_per_page' => 20,
@@ -1250,6 +1257,12 @@ function oer_sort_resources(){
 		$_SESSION['resource_sort'] = intval($_POST['sort']);
 
 		$terms = json_decode($_POST["subjects"]);
+		
+		if (is_array($terms)){
+			$terms = array_map("sanitize_subject",$terms);
+		} else {
+			$terms = intval($terms);
+		}
 
 		$args = array(
 				'post_type' => 'resource',
@@ -1367,7 +1380,7 @@ function oer_load_more_highlights() {
 	if (isset($_POST["post_var"])) {
 		$page_num = intval(["post_var"]);
 		$items_per_load = 4;
-		$term_id = $_POST['term_id'];
+		$term_id = intval($_POST['term_id']);
 
 		$args = array(
 			'meta_key' => 'oer_highlight',
@@ -1461,7 +1474,7 @@ function oer_load_highlight() {
 				$content =  trim(substr($post->post_content,0,$length)).$ellipsis;
 
 				if (isset($_POST['style']))
-					$style = ' style="'.$_POST['style'].'"';
+					$style = ' style="'.esc_attr($_POST['style']).'"';
 				?>
 				<div class="frtdsnglwpr">
 					<?php

@@ -1919,4 +1919,8 @@ function oer_remove_plugin_settings(){
 	$response = array( 'message' => $message, 'type' => $type );
 	return $response;
 }
+
+function sanitize_subject($subject) {
+	return intval($subject);
+}
 ?>
