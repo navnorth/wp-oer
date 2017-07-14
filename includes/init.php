@@ -120,6 +120,7 @@ function oer_backside_scripts($hook)
 	wp_enqueue_script( 'jquery-ui-core' );
 	wp_enqueue_script( 'jquery-ui-widgets' );
 	wp_enqueue_script( 'jquery-ui-tabs' );
+	wp_enqueue_script( 'jquery-ui-datepicker' );
 	wp_enqueue_script( 'media-upload' );
 	wp_enqueue_script( 'thickbox' );
 	wp_enqueue_script('back-scripts', OER_URL.'js/back_scripts.js',array( 'jquery','media-upload','thickbox','set-post-thumbnail' ));
@@ -297,10 +298,10 @@ function oer_edit_upload_image_fields( $term, $taxonomy ) {
 add_action( 'created_resource-subject-area', 'oer_save_subject_area_meta', 10, 2 );
 function oer_save_subject_area_meta( $term_id, $tt_id ){
     if( isset( $_POST['mainIcon'] ) && '' !== $_POST['mainIcon'] ){
-        add_term_meta( $term_id, 'mainIcon', $_POST['mainIcon'], true );
+        add_term_meta( $term_id, 'mainIcon', esc_url_raw($_POST['mainIcon']), true );
     }
      if( isset( $_POST['hoverIcon'] ) && '' !== $_POST['hoverIcon'] ){
-        add_term_meta( $term_id, 'hoverIcon', $_POST['hoverIcon'], true );
+        add_term_meta( $term_id, 'hoverIcon', esc_url_raw($_POST['hoverIcon']), true );
     }
 }
 
@@ -309,7 +310,7 @@ add_action( 'edited_resource-subject-area', 'oer_update_subject_area_meta', 10, 
 function oer_update_subject_area_meta( $term_id, $tt_id ){
 
    if( isset( $_POST['mainIcon'] ) && '' !== $_POST['mainIcon'] ){
-        update_term_meta( $term_id, 'mainIcon', $_POST['mainIcon'] );
+        update_term_meta( $term_id, 'mainIcon', esc_url_raw($_POST['mainIcon']) );
     } else {
 	//If Main Icon is existing, remove it
 	$mainIcon = get_term_meta( $term_id, 'mainIcon', true );
@@ -317,7 +318,7 @@ function oer_update_subject_area_meta( $term_id, $tt_id ){
 	    delete_term_meta( $term_id, 'mainIcon' );
     }
     if( isset( $_POST['hoverIcon'] ) && '' !== $_POST['hoverIcon'] ){
-        update_term_meta( $term_id, 'hoverIcon', $_POST['hoverIcon'] );
+        update_term_meta( $term_id, 'hoverIcon', esc_url_raw($_POST['hoverIcon']) );
     } else {
 	// If Icon is existing, remove it
 	$hoverIcon = get_term_meta( $term_id, 'hoverIcon', true );
@@ -354,18 +355,18 @@ function oer_save_customfields()
 					$oer_resourceurl = 'http://'.$_POST['oer_resourceurl'];
 				}
 			}
-			update_post_meta( $post->ID , 'oer_resourceurl' , $oer_resourceurl);
+			update_post_meta( $post->ID , 'oer_resourceurl' , esc_url_raw($oer_resourceurl));
 		}
 
 		if(isset($_POST['oer_highlight']))
 		{
-			update_post_meta( $post->ID , 'oer_highlight' , $_POST['oer_highlight']);
+			update_post_meta( $post->ID , 'oer_highlight' , sanitize_text_field($_POST['oer_highlight']));
 		}
 
 		if(isset($_POST['oer_grade']))
 		{
 			$oer_grade = implode(",",$_POST['oer_grade']);
-			update_post_meta( $post->ID , 'oer_grade' , $oer_grade);
+			update_post_meta( $post->ID , 'oer_grade' , sanitize_text_field($oer_grade));
 		}
 		else
 		{
@@ -384,17 +385,17 @@ function oer_save_customfields()
 
 		if(isset($_POST['oer_mediatype']))
 		{
-			update_post_meta( $post->ID , 'oer_mediatype' , $_POST['oer_mediatype']);
+			update_post_meta( $post->ID , 'oer_mediatype' , sanitize_text_field($_POST['oer_mediatype']));
 		}
 
 		if(isset($_POST['oer_lrtype']))
 		{
-			update_post_meta( $post->ID , 'oer_lrtype' , $_POST['oer_lrtype']);
+			update_post_meta( $post->ID , 'oer_lrtype' , sanitize_text_field($_POST['oer_lrtype']));
 		}
 
 		if(isset($_POST['oer_interactivity']))
 		{
-			update_post_meta( $post->ID , 'oer_interactivity' , $_POST['oer_interactivity']);
+			update_post_meta( $post->ID , 'oer_interactivity' , sanitize_text_field($_POST['oer_interactivity']));
 		}
 
 		if(isset($_POST['oer_userightsurl']))
@@ -411,7 +412,7 @@ function oer_save_customfields()
 					$oer_userightsurl = 'http://'.$_POST['oer_userightsurl'];
 				}
 			}
-			update_post_meta( $post->ID , 'oer_userightsurl' , $oer_userightsurl);
+			update_post_meta( $post->ID , 'oer_userightsurl' , esc_url_raw($oer_userightsurl));
 		}
 
 		if(isset($_POST['oer_isbasedonurl']))
@@ -428,12 +429,12 @@ function oer_save_customfields()
 					$oer_isbasedonurl = 'http://'.$_POST['oer_isbasedonurl'];
 				}
 			}
-			update_post_meta( $post->ID , 'oer_isbasedonurl' , $oer_isbasedonurl);
+			update_post_meta( $post->ID , 'oer_isbasedonurl' , esc_url_raw($oer_isbasedonurl));
 		}
 		
 		if(isset($_POST['oer_standard_alignment']))
 		{
-			update_post_meta( $post->ID , 'oer_standard_alignment' , $_POST['oer_standard_alignment']);
+			update_post_meta( $post->ID , 'oer_standard_alignment' , sanitize_text_field($_POST['oer_standard_alignment']));
 		}
 		else
 		{
@@ -464,7 +465,7 @@ function oer_save_customfields()
 			    }
 			}
 			$oer_standard = implode(",", $_POST['oer_standard']);
-			update_post_meta( $post->ID , 'oer_standard' , $oer_standard);
+			update_post_meta( $post->ID , 'oer_standard' , sanitize_text_field($oer_standard));
 		}
 		else
 		{
@@ -473,12 +474,12 @@ function oer_save_customfields()
 
 		if(isset($_POST['oer_authortype']))
 		{
-			update_post_meta( $post->ID , 'oer_authortype' , $_POST['oer_authortype']);
+			update_post_meta( $post->ID , 'oer_authortype' , sanitize_text_field($_POST['oer_authortype']));
 		}
 
 		if(isset($_POST['oer_authorname']))
 		{
-			update_post_meta( $post->ID , 'oer_authorname' , $_POST['oer_authorname']);
+			update_post_meta( $post->ID , 'oer_authorname' , sanitize_text_field($_POST['oer_authorname']));
 		}
 
 		if(isset($_POST['oer_authorurl']))
@@ -495,22 +496,22 @@ function oer_save_customfields()
 					$oer_authorurl = 'http://'.$_POST['oer_authorurl'];
 				}
 			}
-			update_post_meta( $post->ID , 'oer_authorurl' , $oer_authorurl);
+			update_post_meta( $post->ID , 'oer_authorurl' , esc_url_raw($oer_authorurl));
 		}
 
 		if(isset($_POST['oer_authoremail']))
 		{
-			update_post_meta( $post->ID , 'oer_authoremail' , $_POST['oer_authoremail']);
+			update_post_meta( $post->ID , 'oer_authoremail' , sanitize_email($_POST['oer_authoremail']));
 		}
 
 		if(isset($_POST['oer_authortype2']))
 		{
-			update_post_meta( $post->ID , 'oer_authortype2' , $_POST['oer_authortype2']);
+			update_post_meta( $post->ID , 'oer_authortype2' , sanitize_text_field($_POST['oer_authortype2']));
 		}
 
 		if(isset($_POST['oer_authorname2']))
 		{
-			update_post_meta( $post->ID , 'oer_authorname2' , $_POST['oer_authorname2']);
+			update_post_meta( $post->ID , 'oer_authorname2' , sanitize_text_field($_POST['oer_authorname2']));
 		}
 
 		if(isset($_POST['oer_authorurl2']))
@@ -527,17 +528,17 @@ function oer_save_customfields()
 					$oer_authorurl2 = 'http://'.$_POST['oer_authorurl2'];
 				}
 			}
-			update_post_meta( $post->ID , 'oer_authorurl2' , $oer_authorurl2);
+			update_post_meta( $post->ID , 'oer_authorurl2' , esc_url_raw($oer_authorurl2));
 		}
 
 		if(isset($_POST['oer_authoremail2']))
 		{
-			update_post_meta( $post->ID , 'oer_authoremail2' , $_POST['oer_authoremail2']);
+			update_post_meta( $post->ID , 'oer_authoremail2' , sanitize_email($_POST['oer_authoremail2']));
 		}
 
 		if(isset($_POST['oer_publishername']))
 		{
-			update_post_meta( $post->ID , 'oer_publishername' , $_POST['oer_publishername']);
+			update_post_meta( $post->ID , 'oer_publishername' , sanitize_text_field($_POST['oer_publishername']));
 		}
 
 		if(isset($_POST['oer_publisherurl']))
@@ -554,17 +555,17 @@ function oer_save_customfields()
 					$oer_publisherurl = 'http://'.$_POST['oer_publisherurl'];
 				}
 			}
-			update_post_meta( $post->ID , 'oer_publisherurl' , $oer_publisherurl);
+			update_post_meta( $post->ID , 'oer_publisherurl' , esc_url_raw($oer_publisherurl));
 		}
 
 		if(isset($_POST['oer_publisheremail']))
 		{
-			update_post_meta( $post->ID , 'oer_publisheremail' , $_POST['oer_publisheremail']);
+			update_post_meta( $post->ID , 'oer_publisheremail' , sanitize_email($_POST['oer_publisheremail']));
 		}
 		
 		if(!empty($_POST['oer_resourceurl']))
 		{
-			$url = $_POST['oer_resourceurl'];
+			$url = esc_url_raw($_POST['oer_resourceurl']);
 			$upload_dir = wp_upload_dir();
 			$file = '';
 
