@@ -8,7 +8,7 @@
 				<?php _e("Easily setup resource subject areas. See the spreadsheet template for data format specifications.", OER_SLUG); ?>
 			</div>
 			<div class="row-right alignRight">
-				<a href="<?php echo OER_URL."samples/subject_area_import.xls"; ?>" target="_blank"><?php _e("Download Spreadsheet Template", OER_SLUG); ?></a>
+				<a href="<?php echo esc_url(OER_URL."samples/subject_area_import.xls"); ?>" target="_blank"><?php _e("Download Spreadsheet Template", OER_SLUG); ?></a>
 			</div>
 		</div>
 		<div class="oer-import-row">

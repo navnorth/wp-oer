@@ -35,17 +35,17 @@ if(isset($_POST['standards_import']))
     $files = array();
 
     if (isset($_POST['oer_common_core_mathematics'])){
-	   $files[] = OER_PATH."samples/CCSS_Math.xml";
+	   $files[] = sanitize_file_name(OER_PATH."samples/CCSS_Math.xml");
     }
 
     if (isset($_POST['oer_common_core_english'])){
-	   $files[] = OER_PATH."samples/CCSS_ELA.xml";
+	   $files[] = sanitize_file_name(OER_PATH."samples/CCSS_ELA.xml");
     }
 
     if (isset($_POST['oer_next_generation_science'])){
-	   $files[] = OER_PATH."samples/NGSS.xml";
+	   $files[] = sanitize_file_name(OER_PATH."samples/NGSS.xml");
     }
-
+	
     foreach ($files as $file) {
     	$import = oer_importStandards($file);
     	if ($import['type']=="success") {
@@ -62,7 +62,7 @@ if(isset($_POST['standards_import']))
 }
 ?>
 <div class="wrap">
-    <div id="icon-themes" class="oer-logo"><img src="<?php echo OER_URL ?>images/wp-oer-admin-logo.png" /></div>
+    <div id="icon-themes" class="oer-logo"><img src="<?php echo esc_url(OER_URL . 'images/wp-oer-admin-logo.png'); ?>" /></div>
     <p class="oer_heading">Import - OER</p>
     <?php settings_errors(); ?>
     <div class="oer-import-body">
