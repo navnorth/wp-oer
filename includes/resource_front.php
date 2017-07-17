@@ -9,8 +9,8 @@ function oer_resource_front_form()
 	{
 		global $current_user;
 		get_currentuserinfo();
-		$user_id = $current_user->ID;
-		$oer_resourcettl = $_POST["oer_resourcettl"];
+		$user_id = (int)$current_user->ID;
+		$oer_resourcettl = sanitize_text_field($_POST["oer_resourcettl"]);
 		$post_name = strtolower($oer_resourcettl);
 		$post_name = str_replace(' ','_', $post_name);
 		$cs_date = date("Y-m-d H:i:s");
@@ -41,7 +41,7 @@ function oer_resource_front_form()
 					$oer_resourceurl = 'http://'.$_POST['oer_resourceurl'];
 				}
 			}
-			update_post_meta( $post_id , 'oer_resourceurl' , $oer_resourceurl);
+			update_post_meta( $post_id , 'oer_resourceurl' , esc_url_raw($oer_resourceurl));
 		}
 		if(isset($_POST['oer_highlight'])){
 			update_post_meta( $post_id , 'oer_highlight' , $_POST['oer_highlight']);
@@ -57,13 +57,13 @@ function oer_resource_front_form()
 			update_post_meta( $post_id , 'oer_datemodified' , $_POST['oer_datemodified']);
 		}
 		if(isset($_POST['oer_mediatype'])){
-			update_post_meta( $post_id , 'oer_mediatype' , $_POST['oer_mediatype']);
+			update_post_meta( $post_id , 'oer_mediatype' , sanitize_text_field($_POST['oer_mediatype']));
 		}
 		if(isset($_POST['oer_lrtype'])){
-			update_post_meta( $post_id , 'oer_lrtype' , $_POST['oer_lrtype']);
+			update_post_meta( $post_id , 'oer_lrtype' , sanitize_text_field($_POST['oer_lrtype']));
 		}
 		if(isset($_POST['oer_interactivity'])){
-			update_post_meta( $post_id , 'oer_interactivity' , $_POST['oer_interactivity']);
+			update_post_meta( $post_id , 'oer_interactivity' , sanitize_text_field($_POST['oer_interactivity']));
 		}
 		if(isset($_POST['oer_userightsurl'])){
 			$oer_userightsurl = $_POST['oer_userightsurl'];
@@ -78,7 +78,7 @@ function oer_resource_front_form()
 					$oer_userightsurl = 'http://'.$_POST['oer_userightsurl'];
 				}
 			}
-			update_post_meta( $post_id , 'oer_userightsurl' , $oer_userightsurl);
+			update_post_meta( $post_id , 'oer_userightsurl' , esc_url_raw($oer_userightsurl));
 		}
 		if(isset($_POST['oer_isbasedonurl'])){
 			$oer_isbasedonurl = $_POST['oer_isbasedonurl'];
@@ -93,7 +93,7 @@ function oer_resource_front_form()
 					$oer_isbasedonurl = 'http://'.$_POST['oer_isbasedonurl'];
 				}
 			}
-			update_post_meta( $post_id , 'oer_isbasedonurl' , $oer_isbasedonurl);
+			update_post_meta( $post_id , 'oer_isbasedonurl' , esc_url_raw($oer_isbasedonurl));
 		}
 		if(isset($_POST['oer_standard_alignment'])){
 			update_post_meta( $post_id , 'oer_standard_alignment' , $_POST['oer_standard_alignment']);
@@ -103,10 +103,10 @@ function oer_resource_front_form()
 			update_post_meta( $post_id , 'oer_standard' , $oer_standard);
 		}
 		if(isset($_POST['oer_authortype'])){
-			update_post_meta( $post_id , 'oer_authortype' , $_POST['oer_authortype']);
+			update_post_meta( $post_id , 'oer_authortype' , sanitize_text_field($_POST['oer_authortype']));
 		}
 		if(isset($_POST['oer_authorname'])){
-			update_post_meta( $post_id , 'oer_authorname' , $_POST['oer_authorname']);
+			update_post_meta( $post_id , 'oer_authorname' , sanitize_text_field($_POST['oer_authorname']));
 		}
 		if(isset($_POST['oer_authorurl'])){
 			$oer_authorurl = $_POST['oer_authorurl'];
@@ -121,16 +121,16 @@ function oer_resource_front_form()
 					$oer_authorurl = 'http://'.$_POST['oer_authorurl'];
 				}
 			}
-			update_post_meta( $post_id , 'oer_authorurl' , $oer_authorurl);
+			update_post_meta( $post_id , 'oer_authorurl' , esc_url_raw($oer_authorurl));
 		}
 		if(isset($_POST['oer_authoremail'])){
-			update_post_meta( $post_id , 'oer_authoremail' , $_POST['oer_authoremail']);
+			update_post_meta( $post_id , 'oer_authoremail' , sanitize_email($_POST['oer_authoremail']));
 		}
 		if(isset($_POST['oer_authortype2'])){
-			update_post_meta( $post_id , 'oer_authortype2' , $_POST['oer_authortype2']);
+			update_post_meta( $post_id , 'oer_authortype2' , sanitize_text_field($_POST['oer_authortype2']));
 		}
 		if(isset($_POST['oer_authorname2'])){
-			update_post_meta( $post_id , 'oer_authorname2' , $_POST['oer_authorname2']);
+			update_post_meta( $post_id , 'oer_authorname2' , sanitize_text_field($_POST['oer_authorname2']));
 		}
 		if(isset($_POST['oer_authorurl2'])){
 			$oer_authorurl2 = $_POST['oer_authorurl2'];
@@ -145,14 +145,14 @@ function oer_resource_front_form()
 					$oer_authorurl2 = 'http://'.$_POST['oer_authorurl2'];
 				}
 			}
-			update_post_meta( $post_id , 'oer_authorurl2' , $oer_authorurl2);
+			update_post_meta( $post_id , 'oer_authorurl2' , esc_url_raw($oer_authorurl2));
 		}
 		if(isset($_POST['oer_authoremail2'])){
-			update_post_meta( $post_id , 'oer_authoremail2' , $_POST['oer_authoremail2']);
+			update_post_meta( $post_id , 'oer_authoremail2' , sanitize_email($_POST['oer_authoremail2']));
 		}
 
 		if(isset($_POST['oer_publishername'])){
-			update_post_meta( $post_id , 'oer_publishername' , $_POST['oer_publishername']);
+			update_post_meta( $post_id , 'oer_publishername' , sanitize_text_field($_POST['oer_publishername']));
 		}
 		if(isset($_POST['oer_publisherurl'])){
 			$oer_publisherurl = $_POST['oer_publisherurl'];
@@ -167,10 +167,10 @@ function oer_resource_front_form()
 					$oer_publisherurl = 'http://'.$_POST['oer_publisherurl'];
 				}
 			}
-			update_post_meta( $post_id , 'oer_publisherurl' , $oer_publisherurl);
+			update_post_meta( $post_id , 'oer_publisherurl' , esc_url_raw($oer_publisherurl));
 		}
 		if(isset($_POST['oer_publisheremail'])){
-			update_post_meta( $post_id , 'oer_publisheremail' , $_POST['oer_publisheremail']);
+			update_post_meta( $post_id , 'oer_publisheremail' , sanitize_email($_POST['oer_publisheremail']));
 		}
 		//saving meta fields
 		

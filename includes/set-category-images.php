@@ -46,10 +46,10 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 			<td><?php echo $i ?></td>
 			<td><?php echo $category->cat_name; ?></td>
 			<td>
-				<span class="oer_spn_category" id="spn<?php echo $category->term_id;?>"><?php echo $image; ?></span>
-				<a id="a_spn<?php echo $category->term_id; ?>" alt="spn<?php echo $category->term_id; ?>" href="javascript:void" class="upload_category_image" title="upload"><?php if(!empty($image)) { _e("Update", OER_SLUG); } else { _e("Upload", OER_SLUG); } ?></a>
+				<span class="oer_spn_category" id="spn<?php echo esc_attr($category->term_id);?>"><?php echo $image; ?></span>
+				<a id="a_spn<?php echo esc_attr($category->term_id); ?>" alt="spn<?php echo esc_attr($category->term_id); ?>" href="javascript:void" class="upload_category_image" title="upload"><?php if(!empty($image)) { _e("Update", OER_SLUG); } else { _e("Upload", OER_SLUG); } ?></a>
 				/
-				<a id="r_spn<?php echo $category->term_id; ?>" onclick="remove_img(this);" title="remove" alt="spn<?php echo $category->term_id; ?>" href="javascript:void"><?php _e("Remove", OER_SLUG); ?></a>
+				<a id="r_spn<?php echo esc_attr($category->term_id); ?>" onclick="remove_img(this);" title="remove" alt="spn<?php echo esc_attr($category->term_id); ?>" href="javascript:void"><?php _e("Remove", OER_SLUG); ?></a>
 			</td>
 			<td>
 				<?php
@@ -61,10 +61,10 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 						$image_hover = '<img src = "'.$post_hover->guid.'" />';
 					}
 				?>
-				<span class="oer_spn_category" id="spn_hover<?php echo $category->term_id;?>"><?php echo $image_hover; ?></span>
-				<a id="a_spn_hover<?php echo $category->term_id; ?>" alt="spn_hover<?php echo $category->term_id; ?>" href="javascript:void" class="upload_category_image" title="upload_hover"><?php if(!empty($image)) { _e("Update", OER_SLUG); } else { _e("Upload", OER_SLUG); } ?></a>
+				<span class="oer_spn_category" id="spn_hover<?php echo esc_attr($category->term_id);?>"><?php echo $image_hover; ?></span>
+				<a id="a_spn_hover<?php echo $category->term_id; ?>" alt="spn_hover<?php echo esc_attr($category->term_id); ?>" href="javascript:void" class="upload_category_image" title="upload_hover"><?php if(!empty($image)) { _e("Update", OER_SLUG); } else { _e("Upload", OER_SLUG); } ?></a>
 				/
-				<a id="r_spn_hover<?php echo $category->term_id; ?>" title="remove_hover" onclick="remove_img(this);" alt="spn_hover<?php echo $category->term_id; ?>" href="javascript:void"><?php _e("Remove", OER_SLUG); ?></a>
+				<a id="r_spn_hover<?php echo $category->term_id; ?>" title="remove_hover" onclick="remove_img(this);" alt="spn_hover<?php echo esc_attr($category->term_id); ?>" href="javascript:void"><?php _e("Remove", OER_SLUG); ?></a>
 			</td>
 		</tr>
 		<?php
@@ -73,7 +73,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 		?>
 	<input type="hidden" id="currntspan"/>
 	</table>
-	<input type="hidden" id="plugin_path" value="<?php echo plugins_url('wp-oer'); ?>"/>
+	<input type="hidden" id="plugin_path" value="<?php echo esc_attr(plugins_url('wp-oer')); ?>"/>
 
 <script type="text/javascript">
 jQuery(document).ready(function() {

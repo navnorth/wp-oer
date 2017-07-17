@@ -116,11 +116,11 @@ function oer_show_subjects($atts) {
 				}
 			    }
 			    
-			    $content .= '<div class="oer_snglctwpr'.$column.'"><div class="'.$display_size.'" data-ownback="'.get_template_directory_uri().'/img/top-arrow.png" onMouseOver="changeonhover(this)" onMouseOut="changeonout(this);" '.$toggle_navigation.' data-id="'.$cnt.'" data-class="'.$lepcnt.'" data-normalimg="'.$icn_guid.'" data-hoverimg="'.$icn_hover_guid.'">
-				    <div class="oer-cat-icn" style="background: url('.$icn_guid.') no-repeat scroll center center; "></div>
+			    $content .= '<div class="oer_snglctwpr'.esc_attr($column).'"><div class="'.esc_attr($display_size).'" data-ownback="'.get_template_directory_uri().'/img/top-arrow.png" onMouseOver="changeonhover(this)" onMouseOut="changeonout(this);" '.esc_attr($toggle_navigation).' data-id="'.esc_attr($cnt).'" data-class="'.esc_attr($lepcnt).'" data-normalimg="'.esc_url($icn_guid).'" data-hoverimg="'.esc_attr($icn_hover_guid).'">
+				    <div class="oer-cat-icn" style="background: url('.esc_url($icn_guid).') no-repeat scroll center center; "></div>
 				    <div class="oer-cat-txt-btm-cntnr">
 					    <ul>
-						    <li><label class="oer-mne-sbjct-ttl" ><a href="'. site_url() .'/resource-subject-area/'. $category->slug .'">'. $category->name .'</a></label>'.$count_span.'</li>
+						    <li><label class="oer-mne-sbjct-ttl" ><a href="'. esc_url(site_url() .'/resource-subject-area/'. $category->slug) .'">'. $category->name .'</a></label>'.$count_span.'</li>
 					    </ul>
 				    </div>';
 			    

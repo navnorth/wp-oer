@@ -174,7 +174,7 @@ function oer_show_general_settings() {
 			<div class="oer-import-row">
 			<h2 class="hidden"></h2>
 			<?php if ($message) { ?>
-			<div class="notice notice-<?php echo $type; ?> is-dismissible">
+			<div class="notice notice-<?php echo esc_attr($type); ?> is-dismissible">
 			    <p><?php echo $message; ?></p>
 			</div>
 			<?php } ?>
@@ -237,7 +237,7 @@ function oer_show_setup_settings() {
 			<div class="oer-import-row">
 			<h2 class="hidden"></h2>
 			<?php if ($message) { ?>
-			<div class="notice notice-<?php echo $type; ?> is-dismissible">
+			<div class="notice notice-<?php echo esc_attr($type); ?> is-dismissible">
 			    <p><?php echo $message; ?></p>
 			</div>
 			<?php } ?>
@@ -272,7 +272,7 @@ function oer_show_reset_settings() {
 			<div class="oer-import-row">
 			<h2 class="hidden"></h2>
 			<?php if ($message) { ?>
-			<div class="notice notice-<?php echo $type; ?> is-dismissible">
+			<div class="notice notice-<?php echo esc_attr($type); ?> is-dismissible">
 			    <p><?php echo $message; ?></p>
 			</div>
 			<?php } ?>

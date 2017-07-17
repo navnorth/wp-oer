@@ -14,7 +14,7 @@ global $chck;
             </div>
             <div class="oer_fld">
             	<?php $oer_resourceurl = get_post_meta($post->ID, 'oer_resourceurl', true);?>
-                <input type="text" name="oer_resourceurl" value="<?php echo $oer_resourceurl;?>" />
+                <input type="text" name="oer_resourceurl" value="<?php echo esc_attr($oer_resourceurl);?>" />
             </div>
         </div>
 
@@ -154,7 +154,7 @@ global $chck;
             </div>
             <div class="oer_fld">
             	<?php $oer_userightsurl = get_post_meta($post->ID, 'oer_userightsurl', true);?>
-                <input type="text" name="oer_userightsurl" value="<?php echo $oer_userightsurl;?>" />
+                <input type="text" name="oer_userightsurl" value="<?php echo esc_attr($oer_userightsurl);?>" />
             </div>
         </div>
 
@@ -164,7 +164,7 @@ global $chck;
             </div>
             <div class="oer_fld">
             	<?php $oer_isbasedonurl = get_post_meta($post->ID, 'oer_isbasedonurl', true);?>
-                <input type="text" name="oer_isbasedonurl" value="<?php echo $oer_isbasedonurl;?>" />
+                <input type="text" name="oer_isbasedonurl" value="<?php echo esc_attr($oer_isbasedonurl);?>" />
             </div>
         </div>
 
@@ -175,6 +175,7 @@ global $chck;
            	<?php
 				$oer_standard_alignment = get_post_meta($post->ID, 'oer_standard_alignment', true);
 			 	$oer_standard = get_post_meta($post->ID, 'oer_standard', true);
+				$external_script_url = OER_URL."js/extrnl_script.js";
 			 ?>
 			 <div class="oer_fld">
 				<div class="oer_lstofstandrd ">
@@ -186,15 +187,15 @@ global $chck;
 								echo "<li class='oer_sbstndard oer_main'>
 										<div class='stndrd_ttl'>
 											<img src='".OER_URL."images/closed_arrow.png' data-pluginpath='".OER_URL."' class='tglimg' />
-											<input type='checkbox' ".$chck." name='oer_standard[]' value='".$value."' onclick='oer_check_all(this)' >
-											".$result['standard_name']."
+											<input type='checkbox' ".$chck." name='oer_standard[]' value='".esc_attr($value)."' onclick='oer_check_all(this)' >
+											".sanitize_text_field($result['standard_name'])."
 										</div><div class='oer_stndrd_desc'></div>";
 
 										oer_get_sub_standard($value, $oer_standard);
 								echo "</li>";
 							}
 						?>
-                   <script src="<?php echo OER_URL;?>/js/extrnl_script.js" type="text/javascript"></script>
+					<script src="<?php echo esc_url($external_script_url);?>" type="text/javascript"></script>
 				 </div>
             </div>
 
@@ -223,7 +224,7 @@ global $chck;
             </div>
             <div class="oer_fld">
             	<?php $oer_authorname = get_post_meta($post->ID, 'oer_authorname', true);?>
-                <input type="text" name="oer_authorname" value="<?php echo $oer_authorname;?>" />
+                <input type="text" name="oer_authorname" value="<?php echo esc_attr($oer_authorname);?>" />
             </div>
         </div>
 
@@ -233,7 +234,7 @@ global $chck;
             </div>
             <div class="oer_fld">
             	<?php $oer_authorurl = get_post_meta($post->ID, 'oer_authorurl', true);?>
-                <input type="text" name="oer_authorurl" value="<?php echo $oer_authorurl;?>" />
+                <input type="text" name="oer_authorurl" value="<?php echo esc_attr($oer_authorurl);?>" />
             </div>
         </div>
 
@@ -243,7 +244,7 @@ global $chck;
             </div>
             <div class="oer_fld">
             	<?php $oer_authoremail = get_post_meta($post->ID, 'oer_authoremail', true);?>
-                <input type="text" name="oer_authoremail" value="<?php echo $oer_authoremail;?>" />
+                <input type="text" name="oer_authoremail" value="<?php echo esc_attr($oer_authoremail);?>" />
             </div>
         </div>
 
@@ -257,7 +258,7 @@ global $chck;
 		?>
         	<div class="oer_authrcntr">
             	<div class="oer_cls" onClick="oer_removeauthor(this);">
-                	<img src="<?php echo OER_URL.'/images/close.png'?>" />
+                	<img src="<?php echo esc_url(OER_URL.'/images/close.png') ?>" />
                 </div>
 
                 <div class="oer_snglfld oer_hdngsngl">
@@ -283,7 +284,7 @@ global $chck;
                     </div>
                     <div class="oer_fld">
                         <?php $oer_authorname2 = get_post_meta($post->ID, 'oer_authorname2', true);?>
-                        <input type="text" name="oer_authorname2" value="<?php echo $oer_authorname2;?>" />
+                        <input type="text" name="oer_authorname2" value="<?php echo esc_attr($oer_authorname2);?>" />
                     </div>
                 </div>
 
@@ -293,7 +294,7 @@ global $chck;
                     </div>
                     <div class="oer_fld">
                         <?php $oer_authorurl2 = get_post_meta($post->ID, 'oer_authorurl2', true);?>
-                        <input type="text" name="oer_authorurl2" value="<?php echo $oer_authorurl2;?>" />
+                        <input type="text" name="oer_authorurl2" value="<?php echo esc_attr($oer_authorurl2);?>" />
                     </div>
                 </div>
 
@@ -303,7 +304,7 @@ global $chck;
                     </div>
                     <div class="oer_fld">
                         <?php $oer_authoremail2 = get_post_meta($post->ID, 'oer_authoremail2', true);?>
-                        <input type="text" name="oer_authoremail2" value="<?php echo $oer_authoremail2;?>" />
+                        <input type="text" name="oer_authoremail2" value="<?php echo esc_attr($oer_authoremail2);?>" />
                     </div>
                 </div>
             </div>
@@ -329,7 +330,7 @@ global $chck;
             </div>
             <div class="oer_fld">
             	<?php $oer_publishername = get_post_meta($post->ID, 'oer_publishername', true);?>
-                <input type="text" name="oer_publishername" value="<?php echo $oer_publishername;?>" />
+                <input type="text" name="oer_publishername" value="<?php echo esc_attr($oer_publishername);?>" />
             </div>
         </div>
 
@@ -339,7 +340,7 @@ global $chck;
             </div>
             <div class="oer_fld">
             	<?php $oer_publisherurl = get_post_meta($post->ID, 'oer_publisherurl', true);?>
-                <input type="text" name="oer_publisherurl" value="<?php echo $oer_publisherurl;?>" />
+                <input type="text" name="oer_publisherurl" value="<?php echo esc_attr($oer_publisherurl);?>" />
             </div>
         </div>
 
@@ -349,7 +350,7 @@ global $chck;
             </div>
             <div class="oer_fld">
             	<?php $oer_publisheremail = get_post_meta($post->ID, 'oer_publisheremail', true);?>
-                <input type="text" name="oer_publisheremail" value="<?php echo $oer_publisheremail;?>" />
+                <input type="text" name="oer_publisheremail" value="<?php echo esc_attr($oer_publisheremail);?>" />
             </div>
         </div>
 

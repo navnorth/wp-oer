@@ -28,7 +28,7 @@
 											}
 											
 										?>
-										<input name="oer_common_core_mathematics" id="oer_common_core_mathematics" type="checkbox" value="1" <?php echo $attr; ?>><label for="oer_common_core_mathematics" <?php echo $class; ?>><strong>Common Core Mathematics</strong> <?php if ($math): ?><span class="prev-import">(previously imported)</span><?php endif; ?></label>
+										<input name="oer_common_core_mathematics" id="oer_common_core_mathematics" type="checkbox" value="1" <?php echo esc_attr($attr); ?>><label for="oer_common_core_mathematics" <?php echo $class; ?>><strong>Common Core Mathematics</strong> <?php if ($math): ?><span class="prev-import">(previously imported)</span><?php endif; ?></label>
 									</td>
 								</tr>
 								<tr>
@@ -43,7 +43,7 @@
 											}
 											
 										?>
-										<input name="oer_common_core_english" id="oer_common_core_english" type="checkbox" value="1" <?php echo $attr; ?>><label for="oer_common_core_english" <?php echo $class; ?>><strong>Common Core English Language Arts</strong> <?php if ($english): ?><span class="prev-import">(previously imported)</span><?php endif; ?></label>
+										<input name="oer_common_core_english" id="oer_common_core_english" type="checkbox" value="1" <?php echo esc_attr($attr); ?>><label for="oer_common_core_english" <?php echo $class; ?>><strong>Common Core English Language Arts</strong> <?php if ($english): ?><span class="prev-import">(previously imported)</span><?php endif; ?></label>
 									</td>
 								</tr>
 								<tr>
@@ -58,7 +58,7 @@
 											}
 											
 										?>
-										<input name="oer_next_generation_science" id="oer_next_generation_science" type="checkbox" value="1" <?php echo $attr; ?>><label for="oer_next_generation_science" <?php echo $class; ?>><strong>Next Generation Science Standards</strong> <?php if ($science): ?><span class="prev-import">(previously imported)</span><?php endif; ?></label>
+										<input name="oer_next_generation_science" id="oer_next_generation_science" type="checkbox" value="1" <?php echo esc_attr($attr); ?>><label for="oer_next_generation_science" <?php echo $class; ?>><strong>Next Generation Science Standards</strong> <?php if ($science): ?><span class="prev-import">(previously imported)</span><?php endif; ?></label>
 									</td>
 								</tr>
 							</tbody>
@@ -68,7 +68,7 @@
 				</div>
 				<div class="row-right">
 					<div class="fields alignRight">
-						<input type="submit" id="standards_submit" name="" value="<?php _e("Import", OER_SLUG); ?>" class="button button-primary"/>
+						<input type="submit" id="standards_submit" name="" value="<?php esc_attr(_e("Import", OER_SLUG)); ?>" class="button button-primary"/>
 					</div>
 				</div>
 			</div>
