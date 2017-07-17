@@ -21,8 +21,8 @@ class OER_Subject_Area_Widget extends WP_Widget{
         }
         ?>
         <p>
-        <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Widget Title', 'wp_widget_plugin'); ?></label>
-        <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
+        <label for="<?php echo esc_attr($this->get_field_id('title')); ?>"><?php _e('Widget Title', 'wp_widget_plugin'); ?></label>
+        <input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>" name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text" value="<?php echo esc_attr($title); ?>" />
         </p>
         <?php
     }
@@ -32,7 +32,7 @@ class OER_Subject_Area_Widget extends WP_Widget{
         
         $instance = $old_instance;
         
-        $instance['title'] = strip_tags($new_instance['title']);
+        $instance['title'] = strip_tags(sanitize_text_field($new_instance['title']));
         
         return $instance;
     }
@@ -110,11 +110,11 @@ class OER_Subject_Area_Widget extends WP_Widget{
 				
 				if( !empty( $children ) )
 				{
-					echo '<li class="oer-sub-category has-child'.$class.'"><span onclick="toggleparent(this);"><a href="'. site_url() .'/'.$category->taxonomy.'/'. $category->slug .'" title="'. $category->name .'" >'. $category->name .'</a></span>';
+					echo '<li class="oer-sub-category has-child'.esc_attr($class).'"><span onclick="toggleparent(this);"><a href="'. esc_url(site_url() .'/'.$category->taxonomy.'/'. $category->slug) .'" title="'. esc_attr($category->name) .'" >'. $category->name .'</a></span>';
 				}
 				else
 				{
-					echo '<li class="oer-sub-category'.$class.'"><span onclick="toggleparent(this);"><a href="'. site_url() .'/'.$category->taxonomy.'/'. $category->slug .'"  title="'. $category->name .'" >'. $category->name .'</a></span>';
+					echo '<li class="oer-sub-category'.esc_attr($class).'"><span onclick="toggleparent(this);"><a href="'. esc_url(site_url() .'/'.$category->taxonomy.'/'. $category->slug) .'"  title="'. esc_attr($category->name) .'" >'. $category->name .'</a></span>';
 				}
 				
 				echo oer_get_category_child( $category->term_id, $rsltdata['term_id']);
