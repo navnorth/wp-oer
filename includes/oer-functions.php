@@ -563,13 +563,14 @@ if (!function_exists('oer_front_child_category')) {
 				$children = get_term_children($catchild->term_id, 'resource-subject-area');
 				$count = oer_get_post_count($catchild->term_id, "resource-subject-area");
 				$count = $count + $catchild->count;
+				$child_url = site_url() .'/resource-subject-area/'. $catchild->slug;
 				if( !empty( $children ) )
 				{
-					$rtrn .=  '<li class="oer-sub-category has-child"><span onclick="toggleparent(this); gethght(this);"><a href="'. site_url() .'/resource-subject-area/'. $catchild->slug .'">' . $catchild->name .'</a><label>'. $count .'</label></span>';
+					$rtrn .=  '<li class="oer-sub-category has-child"><span onclick="toggleparent(this); gethght(this);"><a href="'. esc_url($child_url) .'">' . $catchild->name .'</a><label>'. $count .'</label></span>';
 				}
 				else
 				{
-					$rtrn .=  '<li class="oer-sub-category"><span onclick="toggleparent(this);"><a href="'. site_url() .'/resource-subject-area/'. $catchild->slug .'">' . $catchild->name .'</a><label>'. $count .'</label></span>';
+					$rtrn .=  '<li class="oer-sub-category"><span onclick="toggleparent(this);"><a href="'. esc_url($child_url) .'">' . $catchild->name .'</a><label>'. $count .'</label></span>';
 				}
 				$rtrn .=  oer_front_child_category( $catchild->term_id);
 				$rtrn .= '</li>';
@@ -695,9 +696,9 @@ function oer_importStandards($file){
 			// Get Sub Standard
 			foreach($xml_arr as $key => $data)
 			{
-				$url = $key;
+				$url = esc_url_raw($key);
 				$ischild = $data['ischild'];
-				$title = $data['title'];
+				$title = sanitize_text_field($data['title']);
 				$parent = '';
 
 				$rsltset = $wpdb->get_results( $wpdb->prepare( "select id from " . $wpdb->prefix. "oer_core_standards where standard_url=%s" , $ischild ));
@@ -725,10 +726,10 @@ function oer_importStandards($file){
 			// Get Standard Notation
 			foreach($standard_notation as $st_key => $st_data)
 			{
-				$url = $st_key;
+				$url = esc_url_raw($st_key);
 				$ischild = $st_data['ischild'];
-				$notation = $st_data['title'];
-				$description = $st_data['description'];
+				$notation = sanitize_text_field($st_data['title']);
+				$description = sanitize_text_field($st_data['description']);
 				$parent = '';
 
 				$rsltset = $wpdb->get_results( $wpdb->prepare( "select id from " . $wpdb->prefix. "oer_sub_standards where url=%s" , $ischild ));
@@ -1163,7 +1164,7 @@ function oer_importResources($default=false) {
 							$oer_resourceurl = 'http://'.$oer_resourceurl;
 						}
 					}
-					update_post_meta( $post_id , 'oer_resourceurl' , $oer_resourceurl);
+					update_post_meta( $post_id , 'oer_resourceurl' , esc_url_raw($oer_resourceurl));
 				}
 
 				if(!empty($oer_highlight))
@@ -1204,15 +1205,15 @@ function oer_importResources($default=false) {
 
 				if(!empty($oer_mediatype))
 				{
-					update_post_meta( $post_id , 'oer_mediatype' , $oer_mediatype);
+					update_post_meta( $post_id , 'oer_mediatype' , sanitize_text_field($oer_mediatype));
 				}
 				if(!empty($oer_lrtype))
 				{
-					update_post_meta( $post_id , 'oer_lrtype' , $oer_lrtype);
+					update_post_meta( $post_id , 'oer_lrtype' , sanitize_text_field($oer_lrtype));
 				}
 				if(!empty($oer_interactivity))
 				{
-					update_post_meta( $post_id , 'oer_interactivity' , $oer_interactivity);
+					update_post_meta( $post_id , 'oer_interactivity' , sanitize_text_field($oer_interactivity));
 				}
 				if(!empty($oer_userightsurl))
 				{
@@ -1224,7 +1225,7 @@ function oer_importResources($default=false) {
 						{
 							$oer_userightsurl = 'http://'.$oer_userightsurl;
 						}
-					update_post_meta( $post_id , 'oer_userightsurl' , $oer_userightsurl);
+					update_post_meta( $post_id , 'oer_userightsurl' , esc_url_raw($oer_userightsurl));
 				}
 				if(!empty($oer_isbasedonurl))
 				{
@@ -1236,7 +1237,7 @@ function oer_importResources($default=false) {
 						{
 							$oer_isbasedonurl = 'http://'.$oer_isbasedonurl;
 						}
-					update_post_meta( $post_id , 'oer_isbasedonurl' , $oer_isbasedonurl);
+					update_post_meta( $post_id , 'oer_isbasedonurl' , esc_url_raw($oer_isbasedonurl));
 				}
 				if(!empty($oer_standard))
 				{
@@ -1268,11 +1269,11 @@ function oer_importResources($default=false) {
 				}
 				if(!empty($oer_authortype))
 				{
-					update_post_meta( $post_id , 'oer_authortype' , $oer_authortype);
+					update_post_meta( $post_id , 'oer_authortype' , sanitize_text_field($oer_authortype));
 				}
 				if(!empty($oer_authorname))
 				{
-					update_post_meta( $post_id , 'oer_authorname' , $oer_authorname);
+					update_post_meta( $post_id , 'oer_authorname' , sanitize_text_field($oer_authorname));
 				}
 				if(!empty($oer_authorurl))
 				{
@@ -1284,19 +1285,19 @@ function oer_importResources($default=false) {
 						{
 							$oer_authorurl = 'http://'.$oer_authorurl;
 						}
-					update_post_meta( $post_id , 'oer_authorurl' , $oer_authorurl);
+					update_post_meta( $post_id , 'oer_authorurl' , esc_url_raw($oer_authorurl));
 				}
 				if(!empty($oer_authoremail))
 				{
-					update_post_meta( $post_id , 'oer_authoremail' , $oer_authoremail);
+					update_post_meta( $post_id , 'oer_authoremail' , sanitize_email($oer_authoremail));
 				}
 				if(!empty($oer_authortype2))
 				{
-					update_post_meta( $post_id , 'oer_authortype2' , $oer_authortype2);
+					update_post_meta( $post_id , 'oer_authortype2' , sanitize_text_field($oer_authortype2));
 				}
 				if(!empty($oer_authorname2))
 				{
-					update_post_meta( $post_id , 'oer_authorname2' , $oer_authorname2);
+					update_post_meta( $post_id , 'oer_authorname2' , sanitize_text_field($oer_authorname2));
 				}
 				if(!empty($oer_authorurl2))
 				{
@@ -1308,16 +1309,16 @@ function oer_importResources($default=false) {
 						{
 							$oer_authorurl2 = 'http://'.$oer_authorurl2;
 						}
-					update_post_meta( $post_id , 'oer_authorurl2' , $oer_authorurl2);
+					update_post_meta( $post_id , 'oer_authorurl2' , esc_url_raw($oer_authorurl2));
 				}
 				if(!empty($oer_authoremail2))
 				{
-					update_post_meta( $post_id , 'oer_authoremail2' , $oer_authoremail2);
+					update_post_meta( $post_id , 'oer_authoremail2' , sanitize_email($oer_authoremail2));
 				}
 
 				if(!empty($oer_publishername))
 				{
-					update_post_meta( $post_id , 'oer_publishername' , $oer_publishername);
+					update_post_meta( $post_id , 'oer_publishername' , sanitize_text_field($oer_publishername));
 				}
 				if(!empty($oer_publisherurl))
 				{
@@ -1329,17 +1330,17 @@ function oer_importResources($default=false) {
 					{
 						$oer_publisherurl = 'http://'.$oer_publisherurl;
 					}
-						update_post_meta( $post_id , 'oer_publisherurl' , $oer_publisherurl);
+						update_post_meta( $post_id , 'oer_publisherurl' , esc_url_raw($oer_publisherurl));
 				}
 				if(!empty($oer_publisheremail))
 				{
-					update_post_meta( $post_id , 'oer_publisheremail' , $oer_publisheremail);
+					update_post_meta( $post_id , 'oer_publisheremail' , sanitize_email($oer_publisheremail));
 				}
 				//saving meta fields
 
 				if(!empty($oer_resourceurl))
 				{
-					$url = $oer_resourceurl;
+					$url = esc_url_raw($oer_resourceurl);
 					$upload_dir = wp_upload_dir();
 					$file = '';
 
@@ -1793,43 +1794,43 @@ function oer_delete_resources(){
 	global $wpdb;
 
 	//Check if term relationships data exist
-	$term_relationships = $wpdb->get_results("SELECT * FROM ". $wpdb->prefix."term_relationships WHERE object_id IN (
+	$term_relationships = $wpdb->get_results($wpdb->prepare("SELECT * FROM ". $wpdb->prefix."term_relationships WHERE object_id IN (
 						SELECT ID
 						FROM  ".$wpdb->prefix."posts
-						WHERE post_type =  'resource'
-						)", ARRAY_A);
+						WHERE post_type =  %s
+						)", "resource"), ARRAY_A);
 
 	/** Delete Term related to resources **/
 	if (count($term_relationships)>0) {
-		$wpdb->query("DELETE FROM  ". $wpdb->prefix ."term_relationships WHERE object_id IN (
+		$wpdb->query($wpdb->prepare("DELETE FROM  ". $wpdb->prefix ."term_relationships WHERE object_id IN (
 						SELECT ID
 						FROM  ".$wpdb->prefix."posts
-						WHERE post_type =  'resource'
-						)");
+						WHERE post_type =  %s
+						)","resource"));
 	}
 
 	//Check if postmeta data exist
-	$post_meta = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."postmeta WHERE post_id IN (
+	$post_meta = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."postmeta WHERE post_id IN (
 						SELECT ID
 						FROM  ".$wpdb->prefix."posts
-						WHERE post_type =  'resource'
-						)", ARRAY_A);
+						WHERE post_type =  %s
+						)","resource"), ARRAY_A);
 
 	/** Delete Post meta related to resources **/
 	if (count($post_meta)>0) {
-		$wpdb->query("DELETE FROM ".$wpdb->prefix."postmeta WHERE post_id IN (
+		$wpdb->query($wpdb->prepare("DELETE FROM ".$wpdb->prefix."postmeta WHERE post_id IN (
 						SELECT ID
 						FROM  ".$wpdb->prefix."posts
-						WHERE post_type =  'resource'
-						)");
+						WHERE post_type =  %s
+						)","resource"));
 	}
 
 	//Check if resources exist
-	$resources = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."posts WHERE post_type =  'resource'", ARRAY_A);
+	$resources = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."posts WHERE post_type = %s","resource"), ARRAY_A);
 
 	/** Delete all resources **/
 	if (count($resources)>0) {
-		$wpdb->query("DELETE FROM ".$wpdb->prefix."posts WHERE post_type =  'resource'");
+		$wpdb->query($wpdb->prepare("DELETE FROM ".$wpdb->prefix."posts WHERE post_type = %s","resource"));
 	}
 
 	$message = __("Successfully deleted all resources", OER_SLUG);
