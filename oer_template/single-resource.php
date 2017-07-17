@@ -76,7 +76,7 @@ if(!empty($post_terms))
     	    <div class="oer-rsrclftcntr-img col-md-5">
                 <!--Resource Image-->
                 <div class="oer-sngl-rsrc-img">
-                    <a class="oer-featureimg" href="<?php echo get_post_meta($post->ID, "oer_resourceurl", true)?>" target="_blank" >
+                    <a class="oer-featureimg" href="<?php echo esc_url(get_post_meta($post->ID, "oer_resourceurl", true)) ?>" target="_blank" >
     			<?php
     				$img_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ) , "full" );
     				$img_path = $new_img_path = parse_url($img_url[0]);
@@ -94,11 +94,11 @@ if(!empty($post_terms))
     					}
                     }
 
-    				echo '<img src="'.$new_image_url.'" alt="'.get_the_title().'"/>';
+    				echo '<img src="'.esc_url($new_image_url).'" alt="'.esc_attr(get_the_title()).'"/>';
 
     				?>
                 	</a>
-                    <a class="oer-rsrcurl" href="<?php echo get_post_meta($post->ID, "oer_resourceurl", true); ?>" target="_blank" >
+                    <a class="oer-rsrcurl" href="<?php echo esc_url(get_post_meta($post->ID, "oer_resourceurl", true)); ?>" target="_blank" >
                         <?php echo $url_domain; ?>
                     </a>
                 </div>
@@ -114,7 +114,7 @@ if(!empty($post_terms))
     			{
     				foreach($subjects as $subject)
     				{
-    					echo '<span><a href="'.site_url().'/'.$subject->taxonomy.'/'.$subject->slug.'" class="button">'.ucwords ($subject->name).'</a></span>';
+    					echo '<span><a href="'.esc_url(site_url().'/'.$subject->taxonomy.'/'.$subject->slug).'" class="button">'.ucwords ($subject->name).'</a></span>';
     				}
     			}
     			?>
@@ -137,7 +137,7 @@ if(!empty($post_terms))
     							{
     							?>
     								<h4><strong><?php _e("Creator:", OER_SLUG) ?></strong>
-    								<span><a href="<?php echo $oer_authorurl; ?>" target="_blank"><?php echo $oer_authorname; ?></a></span></h4>
+    								<span><a href="<?php echo esc_url($oer_authorurl); ?>" target="_blank"><?php echo $oer_authorname; ?></a></span></h4>
     							<?php } ?>
                         </div>
                             <?php
@@ -149,7 +149,7 @@ if(!empty($post_terms))
     			?>
     			<div id="" class="oer-publisherName oer-cbxl">
     				<h4><strong><?php _e("Publisher:", OER_SLUG) ?></strong>
-    				<span><a href="<?php echo $oer_publisherurl; ?>" target="_blank"><?php echo $oer_publishername; ?></a></span></h4>
+    				<span><a href="<?php echo esc_url($oer_publisherurl); ?>" target="_blank"><?php echo $oer_publishername; ?></a></span></h4>
     			</div>
     			<?php } ?>
                         <div id="" class="oer-mediaType oer-cbxl">
@@ -240,7 +240,7 @@ if(!empty($post_terms))
     							   <?php
     									foreach($keywords as $keyword)
     									{
-    										echo "<span><a href='".get_tag_link($keyword->term_id)."' class='button'>".ucwords($keyword->name)."</a></span>";
+    										echo "<span><a href='".esc_url(get_tag_link($keyword->term_id))."' class='button'>".ucwords($keyword->name)."</a></span>";
     									}
     								?>
     								</div>

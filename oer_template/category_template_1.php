@@ -32,11 +32,11 @@ $rsltdata = get_term_by( "name", $term, "resource-subject-area", ARRAY_A );
 				
 				if( !empty( $children ) )
 				{
-					echo '<li class="oer-sub-category has-child'.$class.'"><span onclick="toggleparent(this);"><a href="'. site_url() .'/'. $category->slug .'" title="'. $category->name .'" >'. $category->name .'</a></span>';
+					echo '<li class="oer-sub-category has-child'.esc_attr($class).'"><span onclick="toggleparent(this);"><a href="'. esc_url(site_url() .'/'. $category->slug) .'" title="'. esc_attr($category->name) .'" >'. $category->name .'</a></span>';
 				}
 				else
 				{
-					echo '<li class="oer-sub-category'.$class.'"><span onclick="toggleparent(this);"><a href="'. site_url() .'/'. $category->slug .'"  title="'. $category->name .'" >'. $category->name .'</a></span>';
+					echo '<li class="oer-sub-category'.esc_attr($class).'"><span onclick="toggleparent(this);"><a href="'. esc_url(site_url() .'/'. $category->slug) .'"  title="'. esc_attr($category->name) .'" >'. $category->name .'</a></span>';
 				}
 				echo get_category_child( $category->term_id);
 				echo '</li>';
@@ -60,12 +60,12 @@ $rsltdata = get_term_by( "name", $term, "resource-subject-area", ARRAY_A );
 					$parent = $top_cat[0];
 					
 					$catobj = get_category_by_slug($parent);
-					$getimage = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix.'postmeta'."  WHERE meta_key='category_image' AND meta_value='$catobj->term_id'");
+					$getimage = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->prefix.'postmeta'."  WHERE meta_key='category_image' AND meta_value=%s",$catobj->term_id));
 					if(!empty($getimage))
 					{
 						$attach_icn = get_post($getimage[0]->post_id);
 						$new_image_url = oer_resize_image( $attach_icn->guid, 32 , 32 , true );
-						echo '<li><img src="'. $new_image_url .'" alt="Breadcrumbs Icon" /></li>';
+						echo '<li><img src="'. esc_url($new_image_url) .'" alt="Breadcrumbs Icon" /></li>';
 					}
 					else
 					{
@@ -118,8 +118,8 @@ $rsltdata = get_term_by( "name", $term, "resource-subject-area", ARRAY_A );
 							}
 							$new_image_url = oer_resize_image( $image, 220, 180, true );
 							?>
-							<a href="<?php echo get_permalink($post->ID);?>"><div class="img"><img src="<?php echo $new_image_url;?>" alt="<?php echo $title;?>"></div></a>
-							<div class="ttl"><a href="<?php echo get_permalink($post->ID);?>"><?php echo $title;?></a></div>
+							<a href="<?php echo esc_url(get_permalink($post->ID));?>"><div class="img"><img src="<?php echo esc_url($new_image_url);?>" alt="<?php echo esc_attr($title);?>"></div></a>
+							<div class="ttl"><a href="<?php echo esc_url(get_permalink($post->ID));?>"><?php echo esc_attr($title);?></a></div>
 							<div class="desc"><?php echo apply_filters('the_content',$content); ?></div>
 						</div>
 					</li>
@@ -162,9 +162,9 @@ $rsltdata = get_term_by( "name", $term, "resource-subject-area", ARRAY_A );
 							}
 							$new_image_url = oer_resize_image( $image , 80 , 60 , true );
 							?>
-							<a href="<?php echo get_permalink($post->ID);?>"><div class="oer-snglimglft"><img src="<?php echo $new_image_url;?>" alt="<?php echo $title;?>"></div></a>
+							<a href="<?php echo esc_url(get_permalink($post->ID));?>"><div class="oer-snglimglft"><img src="<?php echo esc_url($new_image_url);?>" alt="<?php echo esc_attr($title);?>"></div></a>
 							<div class="oer-snglttldscrght <?php if(empty($image)){ echo 'snglttldscrghtfull';}?>">
-								<div class="ttl"><a href="<?php echo get_permalink($post->ID);?>"><?php echo $title;?></a></div>
+								<div class="ttl"><a href="<?php echo esc_url(get_permalink($post->ID));?>"><?php echo $title;?></a></div>
 								<div class="desc"><?php echo $content; ?></div>
 							</div>
 						</div>
@@ -224,7 +224,7 @@ $rsltdata = get_term_by( "name", $term, "resource-subject-area", ARRAY_A );
 							<div class="rght-sd-cntnr-cntnt">
 							<div class="psttl"><?php echo $title;?></div>
 							<div class="pstdesc"><?php echo $content; ?></div>
-							<div class="pstrdmr"><a href="<?php echo get_permalink($post->ID);?>">More</a></div>
+							<div class="pstrdmr"><a href="<?php echo esc_url(get_permalink($post->ID));?>">More</a></div>
 							<div class="pstmta">
 							    <span class="date-icn"><?php echo get_the_time( 'F j, Y', $post->ID );?></span>
 							    <span class="time-icn"><?php echo  date('H:i', get_post_time( 'U', true));?></span>

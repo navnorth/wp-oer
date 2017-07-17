@@ -111,7 +111,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 								$image_file = $image_editor->save($dest_file_name);
 							}
 						}
-						echo '<li><img src="'.$new_image_url.'" /></li>';
+						echo '<li><img src="'.esc_url($new_image_url).'" /></li>';
 					}
 					else
 					{
@@ -140,7 +140,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 					$on_front = get_option('show_on_front');
 					if ($on_front == "page") {
 						//$homelink = '<a'.$nofollow.'href="'.get_permalink(get_option('page_on_front')).'">'.$opt['home'].'</a>';
-						$bloglink = $homelink.' '.$opt['sep'].' <a href="'.get_permalink(get_option('page_for_posts')).'">'.$opt['blog'].'</a>';
+						$bloglink = $homelink.' '.$opt['sep'].' <a href="'.esc_url(get_permalink(get_option('page_for_posts'))).'">'.$opt['blog'].'</a>';
 					} else {
 						//$homelink = '<a'.$nofollow.'href="'.get_bloginfo('url').'">'.$opt['home'].'</a>';
 						$bloglink = $homelink;
@@ -191,7 +191,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 						foreach ( $links as $link ) {
 							//$output .= ' '.$opt['sep'].' ';
 							if (!$link['cur']) {
-								$output .= '<a href="'.$link['url'].'">'.$link['title'].'</a>';
+								$output .= '<a href="'.esc_url($link['url']).'">'.$link['title'].'</a>';
 							} else {
 								//$output .= $taxonomy->label .': '. $link['title'];
 								$output .= ': '. $link['title'];
@@ -228,7 +228,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 		if ( ! is_wp_error( $child_subjects ) ) {
 			foreach ( $child_subjects as $subject ) {
 				if ($subject->category_count>0)
-					echo '<span><a href="'.get_term_link($subject).'" class="button">'.ucwords ($subject->name).'</a></span>';
+					echo '<span><a href="'.esc_url(get_term_link($subject)).'" class="button">'.ucwords ($subject->name).'</a></span>';
 			}
 		}
 		?>
@@ -278,7 +278,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 		{ ?>
 		<div class="oer_right_featuredwpr">
 			<div class="oer-ftrdttl">Highlighted Resources</div>
-			<ul class="featuredwpr_bxslider" data-term-id="<?php echo $rsltdata['term_id']; ?>" data-max-page="<?php echo $max_limit; ?>" data-count="<?php echo $highlighted_resources_count; ?>">
+			<ul class="featuredwpr_bxslider" data-term-id="<?php echo esc_attr($rsltdata['term_id']); ?>" data-max-page="<?php echo esc_attr($max_limit); ?>" data-count="<?php echo esc_attr($highlighted_resources_count); ?>">
 				<?php
 				$i=1;
 				foreach($posts as $post)
@@ -307,8 +307,8 @@ $hide_title = get_option('oer_hide_subject_area_title');
 							}
 							$new_image_url = oer_resize_image( $image, 220, 180, true );
 							?>
-							<a href="<?php echo get_permalink($post->ID);?>"><div class="img"><img src="<?php echo $new_image_url;?>" alt="<?php echo $title;?>"></div></a>
-							<div class="ttl"><a href="<?php echo get_permalink($post->ID);?>"><?php echo $title;?></a></div>
+							<a href="<?php echo esc_url(get_permalink($post->ID));?>"><div class="img"><img src="<?php echo esc_url($new_image_url);?>" alt="<?php echo esc_attr($title);?>"></div></a>
+							<div class="ttl"><a href="<?php echo esc_url(get_permalink($post->ID));?>"><?php echo $title;?></a></div>
 							<div class="desc"><?php echo apply_filters('the_content',$content); ?></div>
 						</div>
 					<?php } ?>
@@ -348,7 +348,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 				$resource_count = count($resources);
 				?>
 			<div class="oer-snglrsrchdng"><?php printf(__("Browse All %d Resources", OER_SLUG), $resource_count); ?><?php oer_get_sort_box(array($rsltdata['term_id'])); ?></div>
-			<div class="oer-allftrdrsrccntr" id="content-resources" file-path="<?php echo get_template_directory_uri();?>/lib/ajax-scroll.php" data-id="<?php echo $rsltdata['term_id'];?>">
+			<div class="oer-allftrdrsrccntr" id="content-resources" file-path="<?php echo get_template_directory_uri();?>/lib/ajax-scroll.php" data-id="<?php echo esc_attr($rsltdata['term_id']);?>">
 				<?php
 				//Get number of pages
 				$items_per_page = 20;
@@ -425,10 +425,10 @@ $hide_title = get_option('oer_hide_subject_area_title');
 					?>
 						<div class="oer-snglrsrc">
 							<?php
-							echo '<a href="'.get_permalink($post->ID).'" class="oer-resource-link"><div class="oer-snglimglft"><img src="'.$new_image_url.'"></div></a>';
+							echo '<a href="'.esc_url(get_permalink($post->ID)).'" class="oer-resource-link"><div class="oer-snglimglft"><img src="'.esc_url($new_image_url).'"></div></a>';
 							?>
 							<div class="oer-snglttldscrght <?php if(empty($img_url)){ echo 'snglttldscrghtfull';}?>">
-								<div class="ttl"><a href="<?php echo get_permalink($post->ID);?>"><?php echo $title;?></a></div>
+								<div class="ttl"><a href="<?php echo esc_url(get_permalink($post->ID));?>"><?php echo $title;?></a></div>
 								<div class="desc"><?php echo $content; ?></div>
 							</div>
 						</div>
@@ -451,7 +451,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 					
 					if (strpos($base_url,"page"))
 							$base_url = substr($base_url,0,strpos($base_url, "page")-1);
-					echo '<div class="col-md-12 tagcloud resourcecloud"><a href="?page='.($paged+1).'" '.$_rsort.' data-subject-ids="'.json_encode(array($rsltdata['term_id'])).'" data-page-number="'.($paged+1).'" data-base-url="'.$base_url.'" class="button resource-load-more-button" data-max-page="'.$max_pages.'" class="btn-load-more">Load More</a></div>';
+					echo '<div class="col-md-12 tagcloud resourcecloud"><a href="?page='.($paged+1).'" '.$_rsort.' data-subject-ids="'.json_encode(array($rsltdata['term_id'])).'" data-page-number="'.($paged+1).'" data-base-url="'.esc_url($base_url).'" class="button resource-load-more-button" data-max-page="'.esc_attr($max_pages).'" class="btn-load-more">Load More</a></div>';
 				}
 				?>
 		   </div>
@@ -491,12 +491,12 @@ $hide_title = get_option('oer_hide_subject_area_title');
 							if(!empty($image)){
 								$new_image = oer_resize_image( $image , 220 , 180 , true );
 								?>
-							<div class="pstimg"><img src="<?php echo $new_image;?>" alt="<?php echo $title;?>"></div>
+							<div class="pstimg"><img src="<?php echo esc_url($new_image);?>" alt="<?php echo esc_attr($title);?>"></div>
 							<?php }?>
 							<div class="rght-sd-cntnr-cntnt">
 							<div class="psttl"><?php echo $title;?></div>
 							<div class="pstdesc"><?php echo $content; ?></div>
-							<div class="pstrdmr"><a href="<?php echo get_permalink($post->ID);?>">More</a></div>
+							<div class="pstrdmr"><a href="<?php echo esc_url(get_permalink($post->ID));?>">More</a></div>
 							<div class="pstmta">
 							    <span class="date-icn"><?php echo get_the_time( 'F j, Y', $post->ID );?></span>
 							    <span class="time-icn"><?php echo  date('H:i', get_post_time( 'U', true));?></span>
