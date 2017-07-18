@@ -1,2 +1,6 @@
 upload/*
 *.komodoproject
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
