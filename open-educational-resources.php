@@ -1085,20 +1085,18 @@ function oer_setup_settings_field( $arguments ) {
 			break;
 		case "checkbox":
 		case "radio":
+			$display_value = "";
 			if (isset($arguments['default'])) {
 				if ($arguments['default']==true){
 					$selected = "checked='checked'";
 				}
 			}
-			
-			if (isset($arguments['value']))
-				$value = $arguments['value'];
 				
-			if ($value==1 || $value=="on")
+			if ($value==1 || $value=="on"){
 				$selected = "checked='checked'";
-			else{
+				$display_value = "value='1'";
+			}else{
 				$selected = "";
-				$value = 1;
 			}
 			
 			if (isset($arguments['disabled'])){
@@ -1106,7 +1104,7 @@ function oer_setup_settings_field( $arguments ) {
 					$disabled = " disabled";
 			}
 			
-			echo '<input name="'.$arguments['uid'].'" id="'.$arguments['uid'].'" '.$class.' type="'.$arguments['type'].'" value="' . $value . '" ' . $size . ' ' .  $selected . ' ' . $disabled . '  /><label for="'.$arguments['uid'].'"><strong>'.$arguments['name'].'</strong></label>';
+			echo '<input name="'.$arguments['uid'].'" id="'.$arguments['uid'].'" '.$class.' type="'.$arguments['type'].'" ' . $display_value . ' ' . $size . ' ' .  $selected . ' ' . $disabled . '  /><label for="'.$arguments['uid'].'"><strong>'.$arguments['name'].'</strong></label>';
 			break;
 		case "textarea":
 			echo '<label for="'.$arguments['uid'].'"><h3><strong>'.$arguments['name'];
