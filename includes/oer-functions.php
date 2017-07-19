@@ -11,13 +11,13 @@ function oer_get_sub_standard($id, $oer_standard)
 	{
 		$stndrd_arr = explode(",",$oer_standard);
 	}
-
+	
 	if(!empty($results))
 	{
 		echo "<ul>";
 			foreach($results as $result)
 			{
-				$value = 'oer_sub_standards-'.$result['id'];
+				$value = 'sub_standards-'.$result['id'];
 				if(!empty($stndrd_arr))
 				{
 					if(in_array($value, $stndrd_arr))
@@ -80,7 +80,7 @@ function oer_get_standard_notation($id, $oer_standard)
 				$class = '';
 			  $id = 'standard_notation-'.$result['id'];
 			  $child = oer_check_child($id);
-			  $value = 'oer_standard_notation-'.$result['id'];
+			  $value = 'standard_notation-'.$result['id'];
 
 			  if(!empty($oer_standard))
 				{
@@ -141,13 +141,14 @@ function oer_get_core_standard($id) {
 
 /** Get Parent Standard **/
 function oer_get_parent_standard($standard_id) {
-	global $wpdb;
+	global $wpdb, $_oer_prefix;
 	
 	$stds = explode("-",$standard_id);
 	$table = $stds[0];
+	
 	$prefix = substr($standard_id,0,strpos($standard_id,"_")+1);
 	
-	$table_name = $wpdb->prefix.$table;
+	$table_name = $wpdb->prefix.$_oer_prefix.$table;
 	
 	$id = $stds[1];
 	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $table_name. " where id = %s" , $id ) , ARRAY_A);
@@ -156,10 +157,11 @@ function oer_get_parent_standard($standard_id) {
 
 		$stdrds = explode("-",$result['parent_id']);
 		$tbl = $stdrds[0];
+		
 		$tbls = array('sub_standards','standard_notation');
 		
 		if (in_array($tbl,$tbls)){
-			$results = oer_get_parent_standard("oer_".$result['parent_id']);
+			$results = oer_get_parent_standard($result['parent_id']);
 		}
 
 	}
@@ -956,7 +958,7 @@ function oer_resize_image($orig_img_url, $width, $height, $crop = false) {
 
 //Import Default Resources
 function oer_importResources($default=false) {
-	global $wpdb;
+	global $wpdb, $_oer_prefix;
 	require_once OER_PATH.'Excel/reader.php';
 
 	debug_log("OER Resources Importer: Initializing Excel Reader");
@@ -1244,15 +1246,18 @@ function oer_importResources($default=false) {
 					$gt_oer_standard = '';
 					for($l = 0; $l < count($oer_standard); $l++)
 					{
-
 						$results = $wpdb->get_row( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "oer_standard_notation where standard_notation =%s" , $oer_standard[$l] ),ARRAY_A);
+						
 						if(!empty($results))
 						{
-							$gt_oer_standard .= "oer_standard_notation-".$results['id'].",";
+							$gt_oer_standard .= "standard_notation-".$results['id'].",";
+							
 							$table = explode("-", $results['parent_id']);
+							
 							if(!empty($table))
 							{
-								$stndrd_algn = $wpdb->get_row( $wpdb->prepare( "SELECT * from  " . $wpdb->prefix. $table[0] . " where id =%s" , $table[1] ),ARRAY_A);
+								$stndrd_algn = $wpdb->get_row( $wpdb->prepare( "SELECT * from  " . $wpdb->prefix. $_oer_prefix . $table[0] . " where id =%s" , $table[1] ),ARRAY_A);
+								
 								if($stndrd_algn['parent_id'])
 								{
 									oer_fetch_stndrd($stndrd_algn['parent_id'], $post_id);

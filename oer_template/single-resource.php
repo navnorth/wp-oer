@@ -18,7 +18,7 @@ if ($theme == "Eleganto"){
 }
 
 global $post;
-global $wpdb;
+global $wpdb, $_oer_prefix;
 
 $url = get_post_meta($post->ID, "oer_resourceurl", true);
 $url_domain = oer_getDomainFromUrl($url);
@@ -325,14 +325,16 @@ if(!empty($post_terms))
 						$oer_standards = array();
 						
 						foreach ($standards as $standard) {
-							$stds = oer_get_parent_standard($standard);
-							foreach($stds as $std){
-								$core_std = oer_get_core_standard($std['parent_id']);
-								$oer_standards[] = array(
-											'id' => $standard,
-											'core_id' => $core_std[0]['id'],
-											'core_title' => $core_std[0]['standard_name']
-											 );
+							if ($standard!=""){
+								$stds = oer_get_parent_standard($standard);
+								foreach($stds as $std){
+									$core_std = oer_get_core_standard($std['parent_id']);
+									$oer_standards[] = array(
+												'id' => $standard,
+												'core_id' => $core_std[0]['id'],
+												'core_title' => $core_std[0]['standard_name']
+												 );
+								}
 							}
 						}
 						
@@ -340,7 +342,8 @@ if(!empty($post_terms))
 							$core[$key]  = $row['core_id'];
 						}
 						
-						array_multisort($core, SORT_ASC, $oer_standards);
+						if (!empty($oer_standards))
+							array_multisort($core, SORT_ASC, $oer_standards);
 						
     						if(!empty($stdrd_id) || !empty($oer_standards))
     						{
@@ -382,8 +385,8 @@ if(!empty($post_terms))
 							for($i=0; $i< count($stnd_arr); $i++)
 							{
 							    $table = explode("-",$stnd_arr[$i]);
-							    $prefix = substr($stnd_arr[$i],0,strpos($stnd_arr[$i],"_")+1);
-							    $table_name = $wpdb->prefix.$table[0];
+							    
+							    $table_name = $wpdb->prefix.$_oer_prefix.$table[0];
 							    
 							    $id = $table[1];
 							    

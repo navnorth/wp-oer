@@ -331,7 +331,7 @@ function oer_update_subject_area_meta( $term_id, $tt_id ){
 add_action('save_post', 'oer_save_customfields');
 function oer_save_customfields()
 {
-    global $post, $wpdb;
+    global $post, $wpdb, $_oer_prefix;
     
     //Check first if screenshot is enabled
     $screenshot_enabled = get_option( 'oer_enable_screenshot' );
@@ -451,11 +451,12 @@ function oer_save_customfields()
 				$results = $wpdb->get_row( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "oer_standard_notation where standard_notation =%s" , $gt_oer_standard[$l] ),ARRAY_A);
 				if(!empty($results))
 				{
-				    $gt_oer_standard_notation .= "oer_standard_notation-".$results['id'].",";
+				    $gt_oer_standard_notation .= "standard_notation-".$results['id'].",";
 				    $table = explode("-", $results['parent_id']);
+				    
 				    if(!empty($table))
 				    {
-					$stndrd_algn = $wpdb->get_row( $wpdb->prepare( "SELECT * from  " . $wpdb->prefix. $table[0] . " where id =%s" , $table[1] ),ARRAY_A);
+					$stndrd_algn = $wpdb->get_row( $wpdb->prepare( "SELECT * from  " . $wpdb->prefix. $_oer_prefix.$table[0] . " where id =%s" , $table[1] ),ARRAY_A);
 					if($stndrd_algn['parent_id'])
 					{
 						oer_fetch_stndrd($stndrd_algn['parent_id'], $post_id);
