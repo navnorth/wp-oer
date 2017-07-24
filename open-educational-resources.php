@@ -1815,4 +1815,109 @@ function oer_delete_plugin_files(){
 	if (!is_plugin_active(plugin_basename( __FILE__ )))
 		delete_plugins( array( plugin_basename( __FILE__ ) ) );
 }
+
+/** Extend Search **/
+ /* Filter to modify search query */
+add_filter( 'posts_search', 'oer_custom_query', 500, 2 );
+function oer_custom_query($search, $wp_query){
+	global $wpdb;
+	
+	if ( empty( $search ) || !empty($wp_query->query_vars['suppress_filters']) ) {
+            return $search; // skip processing - If no search term in query or suppress_filters is true
+        }
+
+	$q = $wp_query->query_vars;
+	$n = !empty($q['exact']) ? '' : '%';
+	$search = $searchand = '';
+	$terms_relation_type = 'OR';
+	
+	//Checks each term
+	foreach ((array)$q['search_terms'] as $term ) {
+		
+		$term = $n . $wpdb->esc_like( $term ) . $n;
+		
+		$OR = '';
+		
+		$search .= "{$searchand} (";
+		
+		//Search by meta keys
+		$meta_keys = array(
+				   'oer_authoremail',
+				   'oer_authorname',
+				   'oer_authortype',
+				   'oer_authorurl',
+				   'oer_datecreated',
+				   'oer_datemodified',
+				   'oer_grade',
+				   'oer_highlight',
+				   'oer_interactivity',
+				   'oer_isbasedonurl',
+				   'oer_lrtype',
+				   'oer_mediatype',
+				   'oer_publisheremail',
+				   'oer_publishername',
+				   'oer_publisherurl',
+				   'oer_resourceurl',
+				   'oer_standard',
+				   'oer_standard_alignment',
+				   'oer_userightsurl'
+				   );
+		
+		$meta_key_OR = '';
+		foreach ($meta_keys as $key_slug) {
+                        $search .= $OR;
+                        $search .= $wpdb->prepare("$meta_key_OR (pm.meta_key = '%s' AND pm.meta_value LIKE '%s')", $key_slug, $term);
+                        $OR = '';
+                        $meta_key_OR = ' OR ';
+                }
+		
+		$OR = ' OR ';
+		
+		//Search By Taxonomy
+		$taxonomies = array("post_tag","resource-subject-area");
+		$tax_OR = '';
+		foreach($taxonomies as $tax) {
+			$search .= $OR;
+                        $search .= $wpdb->prepare("$tax_OR (tt.taxonomy = '%s' AND t.name LIKE '%s')", $tax, $term);
+                        $OR = '';
+                        $tax_OR = ' OR ';
+		}
+		
+		$search .= ")";
+		
+		$searchand = " $terms_relation_type ";
+	}
+	
+	if ( ! empty( $search ) ) {
+		$search = " AND ({$search}) ";
+	}
+	
+	add_filter('posts_join_request', 'oer_join_table');
+		
+	/* Request distinct results */
+	add_filter('posts_distinct_request', 'oer_distinct');
+	
+	return $search;
+}
+
+/** Join Table for Custom Search **/
+function oer_join_table($join){
+	global $wpdb;
+	
+	// Meta keys join
+	$join .= " LEFT JOIN $wpdb->postmeta pm ON ($wpdb->posts.ID = pm.post_id) ";
+	
+	// Taxomomies join
+	$join .= " LEFT JOIN $wpdb->term_relationships tr ON ($wpdb->posts.ID = tr.object_id) ";
+        $join .= " LEFT JOIN $wpdb->term_taxonomy tt ON (tr.term_taxonomy_id = tt.term_taxonomy_id) ";
+        $join .= " LEFT JOIN $wpdb->terms t ON (tt.term_id = t.term_id) ";
+	
+	return $join;
+}
+
+/** Get Distinct Result **/
+function oer_distinct($distinct){
+	$distinct = 'DISTINCT';
+        return $distinct;
+}
 ?>
