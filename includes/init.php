@@ -106,12 +106,12 @@ function oer_backside_scripts($hook)
 {
     global $post;
     
-    if ((isset($_GET['post_type']) && $_GET['post_type']=='resource') || $post->post_type=='resource') {
+    if ((isset($_GET['post_type']) && $_GET['post_type']=='resource') || (isset($post->post_type) && $post->post_type=='resource')) {
 	wp_enqueue_style('jqueryui-styles', OER_URL.'css/jquery-ui.css');
 	wp_enqueue_style('back-styles', OER_URL.'css/back_styles.css');
 	wp_enqueue_style( 'thickbox' );
 
-	if ($post->post_type!=='resource') {
+	if (isset($post->post_type) && $post->post_type!=='resource') {
 	    wp_enqueue_script('jquery');
 	    /*wp_enqueue_script('min_jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');*/
 	}

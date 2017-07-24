@@ -340,15 +340,6 @@ function oer_tag_template( $template ) {
 	}
  }
 
-add_action( 'pre_get_posts', 'oer_cpt_tags' );
-function oer_cpt_tags( $query ) {
-	global $_search_post_ids;
-	
-	if ( $query->is_tag() && $query->is_main_query() ) {
-		$query->set( 'post_type', array( 'post', 'resource' ) );
-	}
-}
-
 function oer_get_search_posts($search_text) {
 	// Search Query
 	$args = array(
@@ -418,46 +409,6 @@ function oer_get_search_tags($search_text){
 	$tag_query = new WP_Query($args);
 	
 	return $tag_query->posts;
-}
-
-add_action( 'template_redirect' , 'oer_update_search_query' );
-function oer_update_search_query(){
-	global $_search_post_ids;
-	if ( !is_admin() && is_search() ) {
-		global $wp_query;
-		
-		$query_posts = array();
-		
-		$search_posts = oer_get_search_posts(sanitize_text_field($_REQUEST['s']));
-		if (is_array($search_posts))
-			$query_posts = array_merge($query_posts, $search_posts);
-			
-		$meta_posts = oer_get_search_meta(sanitize_text_field($_REQUEST['s']));
-		if (is_array($meta_posts))
-			$query_posts = array_merge($query_posts, $meta_posts);
-			
-		$tag_posts = oer_get_search_tags(sanitize_text_field($_REQUEST['s']));
-		if (is_array($tag_posts))
-			$query_posts = array_merge($query_posts, $tag_posts);
-		
-		$wpquery = new WP_Query();
-		$wpquery->posts = $query_posts;
-		
-		$post_ids = array();
-		foreach( $wpquery->posts as $item ) {
-		    $post_ids[] = $item->ID;
-		}
-		
-		$unique = array_unique($post_ids);
-		$_search_post_ids = $unique;
-		$args = array(
-			'post_status' => 'publish',
-			'posts_per_page' => -1,
-			'post__in' => $unique
-			);
-		
-		$wp_query = new WP_Query($args);
-	} 
 }
 
 function oer_query_post_type($query) {
