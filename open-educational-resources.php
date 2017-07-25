@@ -1840,6 +1840,15 @@ function oer_custom_query($search, $wp_query){
 		
 		$search .= "{$searchand} (";
 		
+		//Search in title
+		$search .= $wpdb->prepare("($wpdb->posts.post_title LIKE '%s')", $term);
+                $OR = ' OR ';
+		
+		//Search in content
+		$search .= $OR;
+                $search .= $wpdb->prepare("($wpdb->posts.post_content LIKE '%s')", $term);
+                $OR = ' OR ';
+		
 		//Search by meta keys
 		$meta_keys = array(
 				   'oer_authoremail',
