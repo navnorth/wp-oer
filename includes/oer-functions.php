@@ -1270,7 +1270,6 @@ function oer_importResources($default=false) {
 						}
 					}
 					$gt_oer_standard = trim($gt_oer_standard,",");
-					var_dump($gt_oer_standard);
 					update_post_meta( $post_id , 'oer_standard' , $gt_oer_standard);
 				}
 				if(!empty($oer_authortype))
