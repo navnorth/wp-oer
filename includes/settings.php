@@ -17,16 +17,6 @@ global $message, $type;
 				}
 			}
 			
-			//Import Default Resources
-			$import_resources = get_option('oer_import_sample_resources');
-			if ($import_resources) {
-				$response = oer_importResources(true);
-				if ($response) {
-					$message = $response["message"];
-					$type = $response["type"];
-				}
-			}
-			
 			//Import CCSS Standards
 			$import_ccss = get_option('oer_import_ccss');
 			if ($import_ccss) {
@@ -34,6 +24,16 @@ global $message, $type;
 				if ($response) {
 					$message .= $response["message"];
 					$type .= $response["type"];
+				}
+			}
+			
+			//Import Default Resources
+			$import_resources = get_option('oer_import_sample_resources');
+			if ($import_resources) {
+				$response = oer_importResources(true);
+				if ($response) {
+					$message = $response["message"];
+					$type = $response["type"];
 				}
 			}
 			

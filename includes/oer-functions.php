@@ -1270,6 +1270,7 @@ function oer_importResources($default=false) {
 						}
 					}
 					$gt_oer_standard = trim($gt_oer_standard,",");
+					var_dump($gt_oer_standard);
 					update_post_meta( $post_id , 'oer_standard' , $gt_oer_standard);
 				}
 				if(!empty($oer_authortype))
@@ -1567,10 +1568,11 @@ function oer_importDefaultStandards() {
 /** Fetch Standard **/
 function oer_fetch_stndrd($pId, $postid)
 {
-	global $wpdb;
+	global $wpdb, $_oer_prefix;
 	$table = explode("-", $pId);
-	$stndrd_algn = $wpdb->get_row( $wpdb->prepare( "SELECT * from  " . $wpdb->prefix. $table[0] . " where id =%s" , $table[1] ),ARRAY_A);
-
+	
+	$stndrd_algn = $wpdb->get_row( $wpdb->prepare( "SELECT * from  " . $wpdb->prefix.$_oer_prefix. $table[0] . " where id =%s" , $table[1] ),ARRAY_A);
+	
 	if(preg_match("/core_standards/", $table[0]))
 	{
 		$return = $stndrd_algn['id'];

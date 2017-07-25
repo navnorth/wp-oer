@@ -351,19 +351,19 @@ if(!empty($post_terms))
                         	<div class="alignedStandards">
                                 <h2><?php _e("Standards Alignment", OER_SLUG) ?></h2>
                                 <div class="oer_meta_container">
-                                    <div class="oer_stndrd_align">
+                                    <!--<div class="oer_stndrd_align">-->
                                     <?php
                                         if(!empty($stdrd_id))
                                         {
     					            ?>
-    					                   <h3><?php _e("Standard Alignment", OER_SLUG) ?></h3>
+    					                   <!--<h3><?php _e("Standard Alignment", OER_SLUG) ?></h3>-->
     					                   <?php
-                                             $res = $wpdb->get_row( $wpdb->prepare( "select standard_name from ".$wpdb->prefix."oer_core_standards where id=%d" , $stdrd_id ), ARRAY_A);
-                                             echo "<div class='stndrd_ttl'>".$res['standard_name']."</div>";
+                                             //$res = $wpdb->get_row( $wpdb->prepare( "select standard_name from ".$wpdb->prefix."oer_core_standards where id=%d" , $stdrd_id ), ARRAY_A);
+                                             //echo "<div class='stndrd_ttl'>".$res['standard_name']."</div>";
                                         }
                                     ?>
 
-                                    </div>
+                                    <!--</div>-->
 
                                     <div class="oer_stndrds_notn">
                                     <?php
