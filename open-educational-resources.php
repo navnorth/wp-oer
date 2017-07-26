@@ -655,6 +655,7 @@ function oer_styles_settings(){
 		array(
 			'uid' => 'oer_use_bootstrap',
 			'type' => 'checkbox',
+			'value' => '1',
 			'name' =>  __('Import Bootstrap CSS & JS libraries', OER_SLUG),
 			'description' => __('uncheck if your WP theme already included Bootstrap', OER_SLUG)
 		)
@@ -687,6 +688,7 @@ function oer_styles_settings(){
 		array(
 			'uid' => 'oer_hide_subject_area_title',
 			'type' => 'checkbox',
+			'value' => '1',
 			'name' =>  __('Subject Area pages', OER_SLUG),
 			'pre_html' => '<h3>Hide Page Titles</h3><p class="description hide-description">Some themes have built-in display of page titles.</p>'		)
 	);
@@ -701,6 +703,7 @@ function oer_styles_settings(){
 		array(
 			'uid' => 'oer_hide_resource_title',
 			'type' => 'checkbox',
+			'value' => '1',
 			'name' =>  __('Resource pages', OER_SLUG),
 			'class' => 'hide-title-setting'
 		)
@@ -764,6 +767,8 @@ function oer_setup_settings(){
 		array(
 			'uid' => 'oer_import_sample_resources',
 			'type' => 'checkbox',
+			'value' => '1',
+			'default' => true,
 			'name' =>  __('Import Example Set of Resources', OER_SLUG),
 			'description' => __('A collection of over 50 Open Educational Resources has been provided as a base - you can easily remove these later.', OER_SLUG)
 		)
@@ -796,6 +801,8 @@ function oer_setup_settings(){
 		array(
 			'uid' => 'oer_import_ccss',
 			'type' => 'checkbox',
+			'value' => '1',
+			'default' => true,
 			'name' =>  __('Import Common Core State Standards', OER_SLUG),
 			'description' => __('Enable use of CCSS as an optional alignment option for resources.', OER_SLUG)
 		)
@@ -1011,9 +1018,9 @@ function oer_setup_settings_field( $arguments ) {
 	$size = "";
 	$class = "";
 	$disabled = "";
-
+	
 	$value = get_option($arguments['uid']);
-
+	
 	if (isset($arguments['indent'])){
 		echo '<div class="indent">';
 	}
@@ -1037,16 +1044,19 @@ function oer_setup_settings_field( $arguments ) {
 		case "checkbox":
 		case "radio":
 			$display_value = "";
-			if (isset($arguments['default'])) {
-				if ($arguments['default']==true){
-					$selected = "checked='checked'";
-				}
-			}
-				
-			if ($value==1 || $value=="on"){
+			$selected = "";
+			
+			if ($value=="1" || $value=="on"){
 				$selected = "checked='checked'";
 				$display_value = "value='1'";
-			}else{
+			} elseif ($value===false){
+				$selected = "";
+				if (isset($arguments['default'])) {
+					if ($arguments['default']==true){
+						$selected = "checked='checked'";
+					}
+				}
+			} else {
 				$selected = "";
 			}
 			

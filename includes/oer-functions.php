@@ -1876,35 +1876,35 @@ function oer_remove_plugin_settings(){
 	if (get_option('oer_enable_screenshot'))
 		delete_option('oer_enable_screenshot');
 
-	if (get_option('oer_use_xvfb'))
+	//if (get_option('oer_use_xvfb'))
 		delete_option('oer_use_xvfb');
 
-	if (get_option('oer_python_install'))
+	//if (get_option('oer_python_install'))
 		delete_option('oer_python_install');
 
-	if (get_option('oer_python_path'))
+	//if (get_option('oer_python_path'))
 		delete_option('oer_python_path');
 
-	if (get_option('oer_external_screenshots'))
+	//if (get_option('oer_external_screenshots'))
 		delete_option('oer_external_screenshots');
 
 	if (get_option('oer_service_url'))
 		delete_option('oer_service_url');
 
 	//Styles Settings
-	if (get_option('oer_use_bootstrap'))
+	//if (get_option('oer_use_bootstrap'))
 		delete_option('oer_use_bootstrap');
 
-	if (get_option('oer_display_subject_area'))
+	//if (get_option('oer_display_subject_area'))
 		delete_option('oer_display_subject_area');
 
-	if (get_option('oer_hide_subject_area_title'))
+	//if (get_option('oer_hide_subject_area_title'))
 		delete_option('oer_hide_subject_area_title');
 
-	if (get_option('oer_hide_resource_title'))
+	//if (get_option('oer_hide_resource_title'))
 		delete_option('oer_hide_resource_title');
 
-	if (get_option('oer_additional_css'))
+	//if (get_option('oer_additional_css'))
 		delete_option('oer_additional_css');
 
 
@@ -1918,7 +1918,7 @@ function oer_remove_plugin_settings(){
 	if (get_option('oer_import_ccss'))
 		delete_option('oer_import_ccss');
 
-	if (get_option('oer_use_bootstrap'))
+	//if (get_option('oer_use_bootstrap'))
 		delete_option('oer_use_bootstrap');
 
 	$message = __("Successfully removed all plugin settings", OER_SLUG);
