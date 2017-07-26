@@ -808,10 +808,10 @@ function oer_setup_settings(){
 		)
 	);
 	
-	if ($_w_bootstrap) {
+	/*if ($_w_bootstrap) {
 		$bootstrap_disabled = true;
 		$load_bootstrap = false;
-	}
+	}*/
 	
 	//Add Settings field for Importing Bootstrap CSS & JS Libraries
 	add_settings_field(
@@ -825,7 +825,7 @@ function oer_setup_settings(){
 			'type' => 'checkbox',
 			'value' => 1,
 			'default' => $load_bootstrap,
-			'disabled' => $bootstrap_disabled,
+			/*'disabled' => $bootstrap_disabled,*/
 			'name' =>  __('Import Bootstrap CSS & JS libraries', OER_SLUG),
 			'description' => __('Your theme does not appear to have bootstrap. Uncheck if your WP theme already included Bootstrap', OER_SLUG)
 		)
