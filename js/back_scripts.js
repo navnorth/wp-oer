@@ -205,6 +205,11 @@ function importStandards(frm,btn) {
 		return(false);
 	}
 	jQuery(btn).prop('value','Processing...');
+	setTimeout(function() {
+		var Top = document.documentElement.scrollTop || document.body.scrollTop;
+		jQuery('.loader .loader-img').css({'padding-top':Top + 'px'});
+		jQuery('.loader').show();
+		} ,1000);
 	jQuery('.oer_imprtrwpr .oer-import-row input[type=submit]').prop('disabled',true);
 	return(true);
 }

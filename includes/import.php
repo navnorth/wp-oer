@@ -3,80 +3,14 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /** Import Page **/
 global $wpdb;
-require_once OER_PATH.'includes/oer-functions.php';
 
-$message = null;
-$type = null;
+$message = isset($_GET['message'])?urldecode($_GET['message']):null;
+$type = isset($_GET['type'])?urldecode($_GET['type']):null;
 
 if (!current_user_can('manage_options')) {
 	wp_die( "You don't have permission to access this page!" );
 }
 
-//Resource Import
-if(isset($_POST['resrc_imprt']))
-{
-	if (!isset($_POST['oer_resources_nonce_field']) || !wp_verify_nonce( $_POST['oer_resources_nonce_field'], 'oer_resources_importer_action' )) {
-		wp_die('Nonce verification failed');
-	}
-	
-	$import_response = oer_importResources();
-	if ($import_response){
-	    $message = $import_response["message"];
-	    $type = $import_response["type"];
-	}
-}
-
-//Subject Areas Bulk Import
-if(isset($_POST['bulk_imprt']))
-{
-	
-	if (!isset($_POST['oer_subject_area_nonce_field']) || !wp_verify_nonce( $_POST['oer_subject_area_nonce_field'], 'oer_subject_area_importer_action' )) {
-		wp_die('Nonce verification failed');
-	}
-	
-    $import_response = oer_importSubjectAreas();
-    if ($import_response){
-	$message = $import_response["message"];
-	$type = $import_response["type"];
-    }
-}
-
-//Categories Bulk Import
-//Standards Bulk Import
-if(isset($_POST['standards_import']))
-{
-	if (!isset($_POST['oer_standards_nonce_field']) || !wp_verify_nonce( $_POST['oer_standards_nonce_field'], 'oer_standards_importer_action' )) {
-		wp_die('Nonce verification failed');
-	}
-	
-    $files = array();
-
-    if (isset($_POST['oer_common_core_mathematics'])){
-	   $files[] = sanitize_file_name(OER_PATH."samples/CCSS_Math.xml");
-    }
-
-    if (isset($_POST['oer_common_core_english'])){
-	   $files[] = sanitize_file_name(OER_PATH."samples/CCSS_ELA.xml");
-    }
-
-    if (isset($_POST['oer_next_generation_science'])){
-	   $files[] = sanitize_file_name(OER_PATH."samples/NGSS.xml");
-    }
-	
-    foreach ($files as $file) {
-    	$import = oer_importStandards($file);
-    	if ($import['type']=="success") {
-    	    if (strpos($file,'Math')) {
-    		$message .= "Successfully imported Common Core Mathematics Standards. \n";
-    	    } elseif (strpos($file,'ELA')) {
-    		$message .= "Successfully imported Common Core English Language Arts Standards. \n";
-    	    } else {
-    		$message .= "Successfully imported Next Generation Science Standards. \n";
-    	    }
-    	}
-    	$type = $import['type'];
-    }
-}
 ?>
 <div class="wrap">
     <div id="icon-themes" class="oer-logo"><img src="<?php echo esc_url(OER_URL . 'images/wp-oer-admin-logo.png'); ?>" /></div>

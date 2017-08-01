@@ -299,21 +299,22 @@ function oer_edit_upload_image_fields( $term, $taxonomy ) {
  **/
 add_action( 'created_resource-subject-area', 'oer_save_subject_area_meta', 10, 2 );
 function oer_save_subject_area_meta( $term_id, $tt_id ){
-    if (!isset($_POST['oer_add_upload_image_action_nonce_field']) || !wp_verify_nonce( $_POST['oer_add_upload_image_action_nonce_field'], 'oer_add_upload_image_action' )) {
-	wp_die('Nonce verification failed');
-    }
-    if( isset( $_POST['mainIcon'] ) && '' !== $_POST['mainIcon'] ){
-        add_term_meta( $term_id, 'mainIcon', esc_url_raw($_POST['mainIcon']), true );
-    }
-     if( isset( $_POST['hoverIcon'] ) && '' !== $_POST['hoverIcon'] ){
-        add_term_meta( $term_id, 'hoverIcon', esc_url_raw($_POST['hoverIcon']), true );
+    if (isset($_POST['mainIcon']) || isset($_POST['hoverIcon'])) {
+	if (!isset($_POST['oer_add_upload_image_action_nonce_field']) || !wp_verify_nonce( $_POST['oer_add_upload_image_action_nonce_field'], 'oer_add_upload_image_action' )) {
+	    wp_die('Nonce verification failed');
+	}
+	if( '' !== $_POST['mainIcon'] ){
+	    add_term_meta( $term_id, 'mainIcon', esc_url_raw($_POST['mainIcon']), true );
+	}
+	 if( '' !== $_POST['hoverIcon'] ){
+	    add_term_meta( $term_id, 'hoverIcon', esc_url_raw($_POST['hoverIcon']), true );
+	}
     }
 }
 
 /** Update Subject Area Meta **/
 add_action( 'edited_resource-subject-area', 'oer_update_subject_area_meta', 10, 2 );
 function oer_update_subject_area_meta( $term_id, $tt_id ){
-
     if (!isset($_POST['oer_edit_upload_image_action_nonce_field']) || !wp_verify_nonce( $_POST['oer_edit_upload_image_action_nonce_field'], 'oer_edit_upload_image_action' )) {
 	wp_die('Nonce verification failed');
     }
@@ -341,16 +342,16 @@ function oer_save_customfields()
 {
     global $post, $wpdb, $_oer_prefix;
     
-    if (!isset($_POST['oer_metabox_nonce_field']) || !wp_verify_nonce( $_POST['oer_metabox_nonce_field'], 'oer_metabox_action' )) {
-	wp_die('Nonce verification failed');
-    }
-    
     //Check first if screenshot is enabled
     $screenshot_enabled = get_option( 'oer_enable_screenshot' );
     $external_screenshot = get_option('oer_external_screenshots');
     
     //Check first if $post is not empty
     if ($post) {
+	
+	if (!isset($_POST['oer_metabox_nonce_field']) || !wp_verify_nonce( $_POST['oer_metabox_nonce_field'], 'oer_metabox_action' )) {
+	    wp_die('Nonce verification failed');
+	}
 	if($post->post_type == 'resource')
 	{
 		if(isset($_POST['oer_resourceurl']))
@@ -650,5 +651,112 @@ function oer_setngpgfn()
 {
 	global $wpdb;
 	include_once(OER_PATH.'includes/settings.php');
+}
+
+/**
+ * Process Import Resources form
+ **/
+add_action("admin_action_import_resources","process_import_resources");
+function process_import_resources(){
+    $message = null;
+    $type = null;
+
+    if (!current_user_can('manage_options')) {
+	    wp_die( "You don't have permission to access this page!" );
+    }
+    
+    //Resource Import
+    if(isset($_POST['resrc_imprt']))
+    {
+	check_admin_referer('oer_resources_nonce_field');
+	    
+	    $import_response = oer_importResources();
+	    if ($import_response){
+		$message = urlencode($import_response["message"]);
+		$type = urlencode($import_response["type"]);
+	    }
+    }
+    
+    wp_safe_redirect( admin_url("edit.php?post_type=resource&page=oer_import&message=$message&type=$type"));
+    exit;
+}
+
+/**
+ * Process Import Subject Areas
+ **/
+add_action("admin_action_import_subjects","process_import_subjects");
+function process_import_subjects(){
+    $message = null;
+    $type = null;
+
+    if (!current_user_can('manage_options')) {
+	    wp_die( "You don't have permission to access this page!" );
+    }
+    
+    //Subject Areas Bulk Import
+    if(isset($_POST['bulk_imprt']))
+    {
+	    check_admin_referer('oer_subject_area_nonce_field');
+	    
+	$import_response = oer_importSubjectAreas();
+	if ($import_response){
+	    $message = urlencode($import_response["message"]);
+	    $type = urlencode($import_response["type"]);
+	}
+    }
+    
+    wp_safe_redirect( admin_url("edit.php?post_type=resource&page=oer_import&message=$message&type=$type"));
+    exit;
+}
+
+/**
+ * Process Import Standards
+ **/
+add_action("admin_action_import_standards","process_import_standards");
+function process_import_standards(){
+    $message = null;
+    $type = null;
+
+    if (!current_user_can('manage_options')) {
+	    wp_die( "You don't have permission to access this page!" );
+    }
+    
+    //Standards Bulk Import
+    if(isset($_POST['standards_import']))
+    {
+	check_admin_referer('oer_standards_nonce_field');
+	    
+	$files = array();
+    
+	if (isset($_POST['oer_common_core_mathematics'])){
+	       $files[] = OER_PATH."samples/CCSS_Math.xml";
+	}
+    
+	if (isset($_POST['oer_common_core_english'])){
+	       $files[] = OER_PATH."samples/CCSS_ELA.xml";
+	}
+    
+	if (isset($_POST['oer_next_generation_science'])){
+	       $files[] = OER_PATH."samples/NGSS.xml";
+	}
+	    
+	foreach ($files as $file) {
+	    $import = oer_importStandards($file);
+	    if ($import['type']=="success") {
+		if (strpos($file,'Math')) {
+		    $message .= "Successfully imported Common Core Mathematics Standards. \n";
+		} elseif (strpos($file,'ELA')) {
+		    $message .= "Successfully imported Common Core English Language Arts Standards. \n";
+		} else {
+		    $message .= "Successfully imported Next Generation Science Standards. \n";
+		}
+	    }
+	    $type = urlencode($import['type']);
+	}
+	$message = urlencode($message);
+    }
+    
+    wp_safe_redirect( admin_url("edit.php?post_type=resource&page=oer_import&message=$message&type=$type"));
+    exit;
 }
 ?>

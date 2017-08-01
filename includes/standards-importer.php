@@ -1,6 +1,6 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly  ?>
 <div id="col-container" class="oer_imprtrwpr">
-	<form method="post" id="standards_form" onsubmit="return importStandards('#standards_form','#standards_submit')">
+	<form method="post" id="standards_form" action="<?php echo esc_url( admin_url('admin.php') ); ?>" onsubmit="return importStandards('#standards_form','#standards_submit')">
 		<fieldset>
 			<legend><div class="oer_heading"><?php _e("Import Academic Standards", OER_SLUG); ?></div></legend>
 			<div class="oer-import-row">
@@ -68,7 +68,8 @@
 				</div>
 				<div class="row-right">
 					<div class="fields alignRight">
-						<?php echo wp_nonce_field( 'oer_standards_importer_action' , 'oer_standards_nonce_field' ); ?>
+						<input type="hidden" name="action" value="import_standards">
+						<?php wp_nonce_field( 'oer_standards_nonce_field' ); ?>
 						<input type="submit" id="standards_submit" name="" value="<?php esc_attr(_e("Import", OER_SLUG)); ?>" class="button button-primary"/>
 					</div>
 				</div>

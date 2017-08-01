@@ -1,6 +1,6 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <div class="oer_imprtrwpr">
-    <form method="post" enctype="multipart/form-data" onsubmit="return processImport('#subject_submit','bulk_import')">
+    <form method="post" enctype="multipart/form-data" action="<?php echo esc_url( admin_url('admin.php') ); ?>" onsubmit="return processImport('#subject_submit','bulk_import')">
 	<fieldset>
 		<legend><div class="oer_heading"><?php _e("Import Subject Areas", OER_SLUG); ?></div></legend>
 		<div class="oer-import-row">
@@ -21,7 +21,8 @@
 			</div>
 			<div class="row-right">
 				<div class="fields alignRight">
-				    <?php echo wp_nonce_field( 'oer_subject_area_importer_action' , 'oer_subject_area_nonce_field' ); ?>
+				    <input type="hidden" name="action" value="import_subjects">
+				    <?php wp_nonce_field( 'oer_subject_area_nonce_field' ); ?>
 					<input type="submit" id="subject_submit" name="" value="<?php _e("Import", OER_SLUG); ?>" class="button button-primary"/>
 				</div>
 			</div>

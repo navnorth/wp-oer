@@ -1,6 +1,6 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <div class="oer_imprtrwpr">
-    <form method="post" enctype="multipart/form-data" onsubmit="return processImport('#resource_submit','resource_import')">
+    <form method="post" enctype="multipart/form-data" action="<?php echo esc_url( admin_url('admin.php') ); ?>" onsubmit="return processImport('#resource_submit','resource_import')">
 	<fieldset>
 		<legend><div class="oer_heading"><?php _e("Import Resources", OER_SLUG); ?></div></legend>
 		<div class="oer-import-row">
@@ -21,7 +21,8 @@
 			</div>
 			<div class="row-right">
 				<div class="fields alignRight">
-				    <?php echo wp_nonce_field( 'oer_resources_importer_action' , 'oer_resources_nonce_field' ); ?>
+				    <input type="hidden" name="action" value="import_resources">
+				    <?php wp_nonce_field( 'oer_resources_nonce_field' ); ?>
 					<input type="submit" id="resource_submit" name="resource_submit" value="<?php esc_attr(_e("Import", OER_SLUG)); ?>" class="button button-primary"/>
 				</div>
 			</div>
