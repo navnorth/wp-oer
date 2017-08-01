@@ -248,7 +248,9 @@ function oer_create_resource_taxonomies() {
 add_action( 'resource-subject-area_add_form_fields', 'oer_add_upload_image_fields', 10 );
 function oer_add_upload_image_fields($taxonomy) {
     global $feature_groups;
-    ?><div class="form-field term-group">
+    ?>
+    <?php wp_nonce_field( 'oer_add_upload_image_action', 'oer_add_upload_image_action_nonce_field' ); ?>
+    <div class="form-field term-group">
         <label for="main-icon-group"><?php _e('Subject Area Main Icon', OER_SLUG); ?></label>
 	<a id="main_icon_button" href="javascript:void(0);" class="button">Set Main Icon</a>
 	<a id="remove_main_icon_button" href="javascript:void(0);" class="button hidden">Remove Main Icon</a>
@@ -270,7 +272,9 @@ add_action( 'resource-subject-area_edit_form_fields', 'oer_edit_upload_image_fie
 function oer_edit_upload_image_fields( $term, $taxonomy ) {
     
     $mainIcon = get_term_meta( $term->term_id, 'mainIcon', true );
-     ?><tr class="form-field term-group-wrap">
+     ?>
+     <?php wp_nonce_field( 'oer_edit_upload_image_action', 'oer_edit_upload_image_action_nonce_field' ); ?>
+     <tr class="form-field term-group-wrap">
         <th scope="row"><label for="feature-group"><?php _e('Subject Area Main Icon', OER_SLUG); ?></label></th>
         <td>
 	    <div class="main_icon_button_img"><img src="<?php echo $mainIcon; ?>" /></div>
@@ -297,6 +301,9 @@ function oer_edit_upload_image_fields( $term, $taxonomy ) {
  **/
 add_action( 'created_resource-subject-area', 'oer_save_subject_area_meta', 10, 2 );
 function oer_save_subject_area_meta( $term_id, $tt_id ){
+    if (!isset($_POST['oer_add_upload_image_action_nonce_field']) || !wp_verify_nonce( $_POST['oer_add_upload_image_action_nonce_field'], 'oer_add_upload_image_action' )) {
+	wp_die('Nonce verification failed');
+    }
     if( isset( $_POST['mainIcon'] ) && '' !== $_POST['mainIcon'] ){
         add_term_meta( $term_id, 'mainIcon', esc_url_raw($_POST['mainIcon']), true );
     }
@@ -309,6 +316,9 @@ function oer_save_subject_area_meta( $term_id, $tt_id ){
 add_action( 'edited_resource-subject-area', 'oer_update_subject_area_meta', 10, 2 );
 function oer_update_subject_area_meta( $term_id, $tt_id ){
 
+    if (!isset($_POST['oer_edit_upload_image_action_nonce_field']) || !wp_verify_nonce( $_POST['oer_edit_upload_image_action_nonce_field'], 'oer_edit_upload_image_action' )) {
+	wp_die('Nonce verification failed');
+    }
    if( isset( $_POST['mainIcon'] ) && '' !== $_POST['mainIcon'] ){
         update_term_meta( $term_id, 'mainIcon', esc_url_raw($_POST['mainIcon']) );
     } else {
@@ -332,6 +342,10 @@ add_action('save_post', 'oer_save_customfields');
 function oer_save_customfields()
 {
     global $post, $wpdb, $_oer_prefix;
+    
+    if (!isset($_POST['oer_metabox_nonce_field']) || !wp_verify_nonce( $_POST['oer_metabox_nonce_field'], 'oer_metabox_action' )) {
+	wp_die('Nonce verification failed');
+    }
     
     //Check first if screenshot is enabled
     $screenshot_enabled = get_option( 'oer_enable_screenshot' );

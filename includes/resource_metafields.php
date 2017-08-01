@@ -12,6 +12,7 @@ global $chck;
         	<div class="oer_txt">
 			<?php _e("Resource URL:", OER_SLUG); ?>
             </div>
+		<?php echo wp_nonce_field( 'oer_metabox_action' , 'oer_metabox_nonce_field' ); ?>
             <div class="oer_fld">
             	<?php $oer_resourceurl = get_post_meta($post->ID, 'oer_resourceurl', true);?>
                 <input type="text" name="oer_resourceurl" value="<?php echo esc_attr($oer_resourceurl);?>" />
