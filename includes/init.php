@@ -113,10 +113,8 @@ function oer_backside_scripts($hook)
 
 	if (isset($post->post_type) && $post->post_type!=='resource') {
 	    wp_enqueue_script('jquery');
-	    /*wp_enqueue_script('min_jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');*/
 	}
 	
-	/*wp_enqueue_script('jqueryui-scripts', OER_URL.'js/jquery-ui.js');*/
 	wp_enqueue_script( 'jquery-ui-core' );
 	wp_enqueue_script( 'jquery-ui-widgets' );
 	wp_enqueue_script( 'jquery-ui-tabs' );
@@ -148,7 +146,7 @@ function oer_frontside_scripts()
 	wp_enqueue_script( 'jquery-ui-widgets' );
 	wp_enqueue_script( 'jquery-ui-tabs' );
 	wp_enqueue_script( 'jquery-ui-datepicker' );
-	/*wp_enqueue_script('jqueryui-scripts', OER_URL.'js/jquery-ui.js');*/
+	
 	wp_enqueue_script('front-scripts', OER_URL.'js/front_scripts.js');
 	wp_enqueue_style( "resource-category-styles", OER_URL . "css/resource-category-style.css" );
 }
