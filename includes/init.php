@@ -597,9 +597,6 @@ function oer_save_customfields()
 				$attach_id = wp_insert_attachment( $attachment, $file, $post->ID );
 				update_post_meta($post->ID, "_thumbnail_id", $attach_id);
 
-				// Make sure that this file is included, as wp_generate_attachment_metadata() depends on it.
-				require_once( ABSPATH . 'wp-admin/includes/image.php' );
-
 				// Generate the metadata for the attachment, and update the database record.
 				$attach_data = wp_generate_attachment_metadata( $attach_id, $file );
 				wp_update_attachment_metadata( $attach_id, $attach_data );

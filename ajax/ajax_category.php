@@ -1,9 +1,6 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-$parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
-require_once($parse_uri[0].'/wp-load.php');
-
 global $wpdb;
 extract($_POST);
 
@@ -29,7 +26,7 @@ if($action == "insert_image" || $action== "insert_hover_image")
 	  'post_mime_type'=> $filetype['type']
 	);
 	$post_id = wp_insert_attachment( $my_post, $image_path,'' );
-	require_once( $parse_uri[0] . '/wp-admin/includes/image.php' );
+	
 	$attach_data = wp_generate_attachment_metadata( $post_id, $image_path );
 	wp_update_attachment_metadata( $post_id, $attach_data );
 
