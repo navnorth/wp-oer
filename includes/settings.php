@@ -4,6 +4,10 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 global $message, $type;
 
 	if (isset($_REQUEST['settings-updated'])) {
+		if (!current_user_can('manage_options')) {
+			wp_die( "You don't have permission to access this page!" );
+		}
+		
 		//When submitting settings tab
 		if (isset($_REQUEST['tab']) && $_REQUEST['tab']=="setup") {
 			

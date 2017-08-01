@@ -8,9 +8,17 @@ require_once OER_PATH.'includes/oer-functions.php';
 $message = null;
 $type = null;
 
+if (!current_user_can('manage_options')) {
+	wp_die( "You don't have permission to access this page!" );
+}
+
 //Resource Import
 if(isset($_POST['resrc_imprt']))
 {
+	if (!isset($_POST['oer_resources_nonce_field']) || !wp_verify_nonce( $_POST['oer_resources_nonce_field'], 'oer_resources_importer_action' )) {
+		wp_die('Nonce verification failed');
+	}
+	
 	$import_response = oer_importResources();
 	if ($import_response){
 	    $message = $import_response["message"];
@@ -21,6 +29,11 @@ if(isset($_POST['resrc_imprt']))
 //Subject Areas Bulk Import
 if(isset($_POST['bulk_imprt']))
 {
+	
+	if (!isset($_POST['oer_subject_area_nonce_field']) || !wp_verify_nonce( $_POST['oer_subject_area_nonce_field'], 'oer_subject_area_importer_action' )) {
+		wp_die('Nonce verification failed');
+	}
+	
     $import_response = oer_importSubjectAreas();
     if ($import_response){
 	$message = $import_response["message"];
@@ -32,6 +45,10 @@ if(isset($_POST['bulk_imprt']))
 //Standards Bulk Import
 if(isset($_POST['standards_import']))
 {
+	if (!isset($_POST['oer_standards_nonce_field']) || !wp_verify_nonce( $_POST['oer_standards_nonce_field'], 'oer_standards_importer_action' )) {
+		wp_die('Nonce verification failed');
+	}
+	
     $files = array();
 
     if (isset($_POST['oer_common_core_mathematics'])){

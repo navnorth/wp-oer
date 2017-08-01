@@ -614,11 +614,6 @@ function oer_rsrcimprtr(){
 	add_submenu_page('edit.php?post_type=resource','Settings','Settings','add_users','oer_settings','oer_setngpgfn');
 }
 
-function oer_setcatimage()
-{
-	global $wpdb;
-	include_once(OER_PATH."includes/set-category-images.php");
-}
 function oer_rsrcimprtrfn()
 {
 	global $wpdb;
@@ -638,11 +633,6 @@ function oer_stndrdsimprtfn()
 function oer_import() {
 	global $wpdb;
 	include_once(OER_PATH.'includes/import.php');
-}
-function oer_assign_categories()
-{
-	global $wpdb;
-	include_once(OER_PATH.'includes/assign_categories.php');
 }
 function oer_setngpgfn()
 {

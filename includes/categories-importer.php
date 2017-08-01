@@ -21,6 +21,7 @@
 			</div>
 			<div class="row-right">
 				<div class="fields alignRight">
+				    <?php echo wp_nonce_field( 'oer_subject_area_importer_action' , 'oer_subject_area_nonce_field' ); ?>
 					<input type="submit" id="subject_submit" name="" value="<?php _e("Import", OER_SLUG); ?>" class="button button-primary"/>
 				</div>
 			</div>

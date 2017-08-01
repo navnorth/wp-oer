@@ -21,6 +21,7 @@
 			</div>
 			<div class="row-right">
 				<div class="fields alignRight">
+				    <?php echo wp_nonce_field( 'oer_resources_importer_action' , 'oer_resources_nonce_field' ); ?>
 					<input type="submit" id="resource_submit" name="resource_submit" value="<?php esc_attr(_e("Import", OER_SLUG)); ?>" class="button button-primary"/>
 				</div>
 			</div>

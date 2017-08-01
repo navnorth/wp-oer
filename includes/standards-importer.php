@@ -68,6 +68,7 @@
 				</div>
 				<div class="row-right">
 					<div class="fields alignRight">
+						<?php echo wp_nonce_field( 'oer_standards_importer_action' , 'oer_standards_nonce_field' ); ?>
 						<input type="submit" id="standards_submit" name="" value="<?php esc_attr(_e("Import", OER_SLUG)); ?>" class="button button-primary"/>
 					</div>
 				</div>
