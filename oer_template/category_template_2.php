@@ -130,7 +130,7 @@ if($rsltdata['parent'] != 0)
 					?>
 						<div class="oer-snglrsrc">
 							<?php if(empty($image)){
-								$image = site_url().'/wp-content/plugins/wp-oer/images/default-icon.png';
+								$image = OER_URL.'images/default-icon.png';
 							}
 							$new_image_url = oer_resize_image( $image , 80 , 60 , true );
 							?>

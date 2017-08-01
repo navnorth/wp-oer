@@ -303,7 +303,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 						<div class="frtdsnglwpr">
 							<?php
 							if(empty($image)){
-								$image = site_url().'/wp-content/plugins/wp-oer/images/default-icon.png';
+								$image = OER_URL.'images/default-icon.png';
 							}
 							$new_image_url = oer_resize_image( $image, 220, 180, true );
 							?>
