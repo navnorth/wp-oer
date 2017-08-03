@@ -164,7 +164,7 @@ if(!empty($post_terms))
     					<?php
     						$grades =  trim(get_post_meta($post->ID, "oer_grade", true),",");
     						$grades = explode(",",$grades);
-
+						
     						if(is_array($grades) && !empty($grades) && array_filter($grades))
     						{
     					?>
@@ -186,10 +186,9 @@ if(!empty($post_terms))
     									$fltrarr = array_filter($grades, 'strlen');
     									$flag = array();
     									$elmnt = $fltrarr[min(array_keys($fltrarr))];
-									
     									for($i =0; $i < count($fltrarr); $i++)
     									{
-    										if($elmnt == $fltrarr[$i])
+    										if($elmnt == $fltrarr[$i] || "k" == strtolower($fltrarr[$i]))
     										{
     											$flag[] = 1;
     										}
@@ -208,8 +207,14 @@ if(!empty($post_terms))
     									{
     										$arr_flt = array_keys($fltrarr);
     										$end_filter = end($arr_flt);
-										if (count($fltrarr)>1)
-											echo $fltrarr[0]."-".$fltrarr[$end_filter];
+										if (count($fltrarr)>1) {
+											if (strtolower($fltrarr[$end_filter])=="k") {
+												$last_index = count($fltrarr)-2;
+												echo $fltrarr[$end_filter]."-".$fltrarr[$last_index];
+											}
+											else
+												echo $fltrarr[0]."-".$fltrarr[$end_filter];
+										}
 										else
 											echo $fltrarr[0];
     									}

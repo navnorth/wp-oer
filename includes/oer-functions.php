@@ -1176,12 +1176,17 @@ function oer_importResources($default=false) {
 
 				if(!empty($oer_grade))
 				{
+					$oer_grades = "";
 					$oer_grade = trim($oer_grade, '"');
 					if(strpos($oer_grade , "-"))
 					{
 						$oer_grade = explode("-",$oer_grade);
 						if(is_array($oer_grade))
 						{
+							if (strtolower($oer_grade[0])=="k"){
+								$oer_grades .= "K,";
+								$oer_grade[0] = 1;
+							}
 							for($j = $oer_grade[0]; $j <= $oer_grade[1]; $j++)
 							{
 								$oer_grades .= $j.",";
