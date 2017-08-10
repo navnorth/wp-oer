@@ -479,7 +479,7 @@ function oer_save_customfields()
 				}
 			    }
 			}
-			$oer_standard = implode(",", sanitize_text_field($_POST['oer_standard']));
+			$oer_standard = implode(",", $gt_oer_standard);
 			update_post_meta( $post->ID , 'oer_standard' , $oer_standard);
 		}
 		else
