@@ -388,12 +388,12 @@ function oer_save_customfields()
 
 		if(isset($_POST['oer_datecreated']))
 		{
-			update_post_meta( $post->ID , 'oer_datecreated' , $_POST['oer_datecreated']);
+			update_post_meta( $post->ID , 'oer_datecreated' , sanitize_text_field($_POST['oer_datecreated']));
 		}
 
 		if(isset($_POST['oer_datemodified']))
 		{
-			update_post_meta( $post->ID , 'oer_datemodified' , $_POST['oer_datemodified']);
+			update_post_meta( $post->ID , 'oer_datemodified' , sanitize_text_field($_POST['oer_datemodified']));
 		}
 
 		if(isset($_POST['oer_mediatype']))
@@ -456,7 +456,7 @@ function oer_save_customfields()
 
 		if(isset($_POST['oer_standard']))
 		{
-			$gt_oer_standard = $_POST['oer_standard'];
+			$gt_oer_standard = sanitize_text_field($_POST['oer_standard']);
 			
 			if(!empty($gt_oer_standard)) {
 			    for($l = 0; $l < count($gt_oer_standard); $l++)
@@ -478,8 +478,8 @@ function oer_save_customfields()
 				}
 			    }
 			}
-			$oer_standard = implode(",", $_POST['oer_standard']);
-			update_post_meta( $post->ID , 'oer_standard' , sanitize_text_field($oer_standard));
+			$oer_standard = implode(",", sanitize_text_field($_POST['oer_standard']));
+			update_post_meta( $post->ID , 'oer_standard' , $oer_standard);
 		}
 		else
 		{

@@ -963,7 +963,7 @@ function oer_importResources($default=false) {
 
 	debug_log("OER Resources Importer: Initializing Excel Reader");
 
-	$excl_obj = new Spreadsheet_Excel_Reader();
+	$excl_obj = new Oer_Spreadsheet_Excel_Reader();
 	$excl_obj->setOutputEncoding('CP1251');
 	$time = time();
 	$date = date($time);
@@ -1424,7 +1424,7 @@ function oer_importSubjectAreas($default=false) {
 
 	debug_log("OER Subject Areas Importer: Initializing Excel Reader");
 
-	$excl_obj = new Spreadsheet_Excel_Reader();
+	$excl_obj = new Oer_Spreadsheet_Excel_Reader();
 	$excl_obj->setOutputEncoding('CP1251');
 	$time = time();
 	$date = date($time);
