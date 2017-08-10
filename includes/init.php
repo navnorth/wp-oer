@@ -456,7 +456,8 @@ function oer_save_customfields()
 
 		if(isset($_POST['oer_standard']))
 		{
-			$gt_oer_standard = sanitize_text_field($_POST['oer_standard']);
+			$gt_oer_standard = $_POST['oer_standard'];
+			$gt_oer_standard = array_map( 'sanitize_text_field', $_POST['oer_standard']) ;
 			
 			if(!empty($gt_oer_standard)) {
 			    for($l = 0; $l < count($gt_oer_standard); $l++)
