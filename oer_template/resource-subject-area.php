@@ -26,7 +26,11 @@ if ($theme == "Eleganto"){
 	get_template_part( 'template-part', 'head' );
 }
 
-global $_subjectarea;
+global $_subjectarea, $oer_session;
+
+// Initialize OER_WP_Session
+if (!isset($oer_session))
+	$oer_session = OER_WP_Session::get_instance();
 
 //Get ID of Resource Category
 $term_id = get_queried_object_id();
@@ -446,8 +450,8 @@ $hide_title = get_option('oer_hide_subject_area_title');
 				if ($resource_count>$items_per_page & $paged<(int)$max_pages) {
 					$base_url = "http" . (($_SERVER['SERVER_PORT'] == 443) ? "s://" : "://") . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 					
-					if (isset($_SESSION['resource_sort']))
-						$_rsort = " data-sort='".(int)$_SESSION['resource_sort']."'";
+					if (isset($oer_session['resource_sort']))
+						$_rsort = " data-sort='".(int)$oer_session['resource_sort']."'";
 					
 					if (strpos($base_url,"page"))
 							$base_url = substr($base_url,0,strpos($base_url, "page")-1);

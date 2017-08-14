@@ -1635,9 +1635,14 @@ function oer_get_subject_resource_count($subject_id) {
 
 /** Display Sort Box **/
 function oer_get_sort_box($subjects=array()){
+	global $oer_session;
+	
+	if (!isset($oer_session))
+		$oer_session = OER_WP_Session::get_instance();
+	
 	$sort = 0;
-	if (isset($_SESSION['resource_sort']))
-		$sort = (int)$_SESSION['resource_sort'];
+	if (isset($oer_session['resource_sort']))
+		$sort = (int)$oer_session['resource_sort'];
 	?>
 	<div class="sort-box">
 		<span class="sortoption"></span>
@@ -1662,9 +1667,14 @@ function oer_get_sort_box($subjects=array()){
 
 /** Apply Sort Arguments **/
 function oer_apply_sort_args($args){
+	global $oer_session;
+	
+	if (!isset($oer_session))
+		$oer_session = OER_WP_Session::get_instance();
+	
 	$sort = 0;
-	if (isset($_SESSION['resource_sort']))
-		$sort = (int)$_SESSION['resource_sort'];
+	if (isset($oer_session['resource_sort']))
+		$sort = (int)$oer_session['resource_sort'];
 
 	switch($sort){
 		case 0:

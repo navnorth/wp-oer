@@ -44,7 +44,21 @@ include_once(OER_PATH.'includes/shortcode.php');
 include_once(OER_PATH.'widgets/class-subject-area-widget.php');
 
 //define global variable $debug_mode and get value from settings
-global $_debug, $_bootstrap, $_css, $_subjectarea, $_search_post_ids, $_w_bootstrap, $_oer_prefix;
+global $_debug, $_bootstrap, $_css, $_subjectarea, $_search_post_ids, $_w_bootstrap, $_oer_prefix, $oer_session;
+
+if( ! defined( 'WP_SESSION_COOKIE' ) )
+	define( 'WP_SESSION_COOKIE', '_oer_session' );
+
+if ( ! class_exists( 'OER_Recursive_ArrayAccess' ) ) {
+	require_once( OER_PATH.'/classes/class-recursive-arrayaccess.php' );
+}
+
+// Only include the functionality if it's not pre-defined.
+if ( ! class_exists( 'OER_WP_Session' ) ) {
+	require_once( OER_PATH.'/classes/class-wp-session.php' );
+	require_once( OER_PATH.'/classes/wp-session.php' );
+}
+
 $_debug = get_option('oer_debug_mode');
 $_bootstrap = get_option('oer_use_bootstrap');
 $_css = get_option('oer_additional_css');
@@ -1210,11 +1224,14 @@ add_action('wp_ajax_nopriv_load_more', 'oer_load_more_resources');
 
 /** Sort Resources **/
 function oer_sort_resources(){
-	global $wpdb;
+	global $wpdb, $oer_session;
 
+	if (!isset($oer_session))
+		$oer_session = OER_WP_Session::get_instance();
+		
 	if (isset($_POST["sort"])) {
 
-		$_SESSION['resource_sort'] = intval($_POST['sort']);
+		$oer_session['resource_sort'] = intval($_POST['sort']);
 
 		$terms = json_decode($_POST["subjects"]);
 		
@@ -1454,14 +1471,6 @@ function oer_load_highlight() {
 }
 add_action('wp_ajax_load_highlight', 'oer_load_highlight');
 add_action('wp_ajax_nopriv_load_highlight', 'oer_load_highlight');
-
-/** Start session to store sort option **/
-add_action( 'init', 'oer_initSession', 1 );
-function oer_initSession(){
-	if(!session_id()) {
-		session_start();
-	}
-}
 
 /** Parse Request **/
 function oer_parse_request( $obj ) {
