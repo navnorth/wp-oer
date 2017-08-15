@@ -3,7 +3,7 @@
  Plugin Name:  WP OER
  Plugin URI:   https://www.wp-oer.com
  Description:  Open Educational Resource management and curation, metadata publishing, and alignment to Common Core State Standards.
- Version:      0.5.5
+ Version:      0.5.7
  Author:       Navigation North
  Author URI:   https://www.navigationnorth.com
  Text Domain:  wp-oer
@@ -36,7 +36,7 @@ define( 'OER_FILE',__FILE__);
 // Plugin Name and Version
 define( 'OER_PLUGIN_NAME', 'WP OER Plugin' );
 define( 'OER_ADMIN_PLUGIN_NAME', 'WP OER Plugin');
-define( 'OER_VERSION', '0.5.5' );
+define( 'OER_VERSION', '0.5.7' );
 
 include_once(OER_PATH.'includes/oer-functions.php');
 include_once(OER_PATH.'includes/init.php');
@@ -70,7 +70,7 @@ function oer_create_csv_import_table()
 {
 	global $wpdb;
 	$subprefix = "oer_";
-	
+
 	//Change hard-coded table prefix to $wpdb->prefix
 	$table_name = $wpdb->prefix . $subprefix . "core_standards";
 	if($wpdb->get_var("show tables like '$table_name'") != $table_name)
@@ -259,7 +259,7 @@ function oer_add_settings_link( $links, $file ){
  * Get the Custom Template if set
  **/
 function oer_get_template_hierarchy( $template ) {
-	
+
 	//get template file
 	if ($template=="search"){
 		$template = $template . '.php';
@@ -267,7 +267,7 @@ function oer_get_template_hierarchy( $template ) {
 		$template_slug = rtrim( $template , '.php' );
 		$template = $template_slug . '.php';
 	}
-	
+
 	//Check if custom template exists in theme folder
 	if ($theme_file = locate_template( array( 'oer_template/' . $template ) )) {
 		$file = $theme_file;
@@ -276,7 +276,7 @@ function oer_get_template_hierarchy( $template ) {
 	} else {
 		$file = OER_PATH . '/oer_template/' . $template;
 	}
-	
+
 	return apply_filters( 'oer_repl_template' . $template , $file  );
 }
 
@@ -363,7 +363,7 @@ function oer_get_search_posts($search_text) {
 			's' => $search_text
 	);
 	$search_query = new WP_Query($args);
-	
+
 	return $search_query->posts;
 }
 
@@ -388,7 +388,7 @@ function oer_get_search_meta($search_text) {
 		),
 	);
 	$meta_query = new WP_Query($args);
-	
+
 	return $meta_query->posts;
 }
 
@@ -407,7 +407,7 @@ function oer_get_search_taxonomies($search_text) {
 		)
 	);
 	$tax_query = new WP_Query($args);
-	
+
 	return $tax_query->posts;
 }
 
@@ -419,9 +419,9 @@ function oer_get_search_tags($search_text){
 		'posts_per_page' => -1,
 		'tag' => $search_text
 	);
-	
+
 	$tag_query = new WP_Query($args);
-	
+
 	return $tag_query->posts;
 }
 
@@ -504,7 +504,7 @@ add_action('wp_enqueue_scripts', 'oer_front_scripts');
 function oer_front_scripts()
 {
 	global $_bootstrap;
-	
+
 	if ($_bootstrap) {
 		wp_enqueue_style('bootstrap-style', OER_URL.'css/bootstrap.min.css');
 		wp_enqueue_script('bootstrap-script', OER_URL.'js/bootstrap.min.js');
@@ -650,7 +650,7 @@ function oer_general_settings_callback() {
 //Initialize Style Settings Tab
 add_action( 'admin_init' , 'oer_styles_settings' );
 function oer_styles_settings(){
-	
+
 	//Create Styles Section
 	add_settings_section(
 		'oer_styles_settings',
@@ -658,7 +658,7 @@ function oer_styles_settings(){
 		'oer_styles_settings_callback',
 		'styles_settings_section'
 	);
-	
+
 	//Add Settings field for Importing Bootstrap CSS & JS Libraries
 	add_settings_field(
 		'oer_use_bootstrap',
@@ -754,15 +754,15 @@ function oer_styles_settings_callback(){
 add_action( 'admin_init' , 'oer_setup_settings' );
 function oer_setup_settings(){
 	global $_w_bootstrap;
-	
+
 	if (isset($_REQUEST['post_type']) && $_REQUEST['post_type']=="resource"){
 		if (oer_is_bootstrap_loaded())
 			$_w_bootstrap = true;
 	}
-	
+
 	$bootstrap_disabled = false;
 	$load_bootstrap = true;
-	
+
 	//Create Setup Section
 	add_settings_section(
 		'oer_setup_settings',
@@ -821,12 +821,12 @@ function oer_setup_settings(){
 			'description' => __('Enable use of CCSS as an optional alignment option for resources.', OER_SLUG)
 		)
 	);
-	
+
 	/*if ($_w_bootstrap) {
 		$bootstrap_disabled = true;
 		$load_bootstrap = false;
 	}*/
-	
+
 	//Add Settings field for Importing Bootstrap CSS & JS Libraries
 	add_settings_field(
 		'oer_use_bootstrap',
@@ -1032,9 +1032,9 @@ function oer_setup_settings_field( $arguments ) {
 	$size = "";
 	$class = "";
 	$disabled = "";
-	
+
 	$value = get_option($arguments['uid']);
-	
+
 	if (isset($arguments['indent'])){
 		echo '<div class="indent">';
 	}
@@ -1059,7 +1059,7 @@ function oer_setup_settings_field( $arguments ) {
 		case "radio":
 			$display_value = "";
 			$selected = "";
-			
+
 			if ($value=="1" || $value=="on"){
 				$selected = "checked='checked'";
 				$display_value = "value='1'";
@@ -1073,12 +1073,12 @@ function oer_setup_settings_field( $arguments ) {
 			} else {
 				$selected = "";
 			}
-			
+
 			if (isset($arguments['disabled'])){
 				if ($arguments['disabled']==true)
 					$disabled = " disabled";
 			}
-			
+
 			echo '<input name="'.$arguments['uid'].'" id="'.$arguments['uid'].'" '.$class.' type="'.$arguments['type'].'" ' . $display_value . ' ' . $size . ' ' .  $selected . ' ' . $disabled . '  /><label for="'.$arguments['uid'].'"><strong>'.$arguments['name'].'</strong></label>';
 			break;
 		case "textarea":
@@ -1138,13 +1138,13 @@ function oer_load_more_resources() {
 	if (isset($_POST["post_var"])) {
 		$page_num = intval($_POST["post_var"]);
 		$terms = json_decode($_POST["subjects"]);
-		
+
 		if (is_array($terms)){
 			$terms = array_map("sanitize_subject", $terms);
 		} else {
 			$terms = intval($terms);
 		}
-		
+
 		$args = array(
 				'post_type' => 'resource',
 				'posts_per_page' => 20,
@@ -1228,13 +1228,13 @@ function oer_sort_resources(){
 
 	if (!isset($oer_session))
 		$oer_session = OER_WP_Session::get_instance();
-		
+
 	if (isset($_POST["sort"])) {
 
 		$oer_session['resource_sort'] = intval($_POST['sort']);
 
 		$terms = json_decode($_POST["subjects"]);
-		
+
 		if (is_array($terms)){
 			$terms = array_map("sanitize_subject",$terms);
 		} else {
@@ -1281,9 +1281,9 @@ function oer_sort_resources(){
 			$args['posts_per_page'] = 20 * $paged;
 		else
 			$args['posts_per_page'] = -1;
-		
+
 		$postquery = get_posts($args);
-		
+
 		if(!empty($postquery)) {
 			foreach($postquery as $post) {
 
@@ -1840,7 +1840,7 @@ function oer_delete_plugin_files(){
 add_filter( 'posts_search', 'oer_custom_query', 500, 2 );
 function oer_custom_query($search, $wp_query){
 	global $wpdb;
-	
+
 	if ( empty( $search ) || !empty($wp_query->query_vars['suppress_filters']) ) {
             return $search; // skip processing - If no search term in query or suppress_filters is true
         }
@@ -1849,25 +1849,25 @@ function oer_custom_query($search, $wp_query){
 	$n = !empty($q['exact']) ? '' : '%';
 	$search = $searchand = '';
 	$terms_relation_type = 'OR';
-	
+
 	//Checks each term
 	foreach ((array)$q['search_terms'] as $term ) {
-		
+
 		$term = $n . $wpdb->esc_like( $term ) . $n;
-		
+
 		$OR = '';
-		
+
 		$search .= "{$searchand} (";
-		
+
 		//Search in title
 		$search .= $wpdb->prepare("($wpdb->posts.post_title LIKE '%s')", $term);
                 $OR = ' OR ';
-		
+
 		//Search in content
 		$search .= $OR;
                 $search .= $wpdb->prepare("($wpdb->posts.post_content LIKE '%s')", $term);
                 $OR = ' OR ';
-		
+
 		//Search by meta keys
 		$meta_keys = array(
 				   'oer_authoremail',
@@ -1890,7 +1890,7 @@ function oer_custom_query($search, $wp_query){
 				   'oer_standard_alignment',
 				   'oer_userightsurl'
 				   );
-		
+
 		$meta_key_OR = '';
 		foreach ($meta_keys as $key_slug) {
                         $search .= $OR;
@@ -1898,9 +1898,9 @@ function oer_custom_query($search, $wp_query){
                         $OR = '';
                         $meta_key_OR = ' OR ';
                 }
-		
+
 		$OR = ' OR ';
-		
+
 		//Search By Taxonomy
 		$taxonomies = array("post_tag","resource-subject-area");
 		$tax_OR = '';
@@ -1910,36 +1910,36 @@ function oer_custom_query($search, $wp_query){
                         $OR = '';
                         $tax_OR = ' OR ';
 		}
-		
+
 		$search .= ")";
-		
+
 		$searchand = " $terms_relation_type ";
 	}
-	
+
 	if ( ! empty( $search ) ) {
 		$search = " AND ({$search}) ";
 	}
-	
+
 	add_filter('posts_join_request', 'oer_join_table');
-		
+
 	/* Request distinct results */
 	add_filter('posts_distinct_request', 'oer_distinct');
-	
+
 	return $search;
 }
 
 /** Join Table for Custom Search **/
 function oer_join_table($join){
 	global $wpdb;
-	
+
 	// Meta keys join
 	$join .= " LEFT JOIN $wpdb->postmeta pm ON ($wpdb->posts.ID = pm.post_id) ";
-	
+
 	// Taxomomies join
 	$join .= " LEFT JOIN $wpdb->term_relationships tr ON ($wpdb->posts.ID = tr.object_id) ";
         $join .= " LEFT JOIN $wpdb->term_taxonomy tt ON (tr.term_taxonomy_id = tt.term_taxonomy_id) ";
         $join .= " LEFT JOIN $wpdb->terms t ON (tt.term_id = t.term_id) ";
-	
+
 	return $join;
 }
 
