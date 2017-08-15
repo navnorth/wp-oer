@@ -1,8 +1,8 @@
 === WP OER ===
-Contributors: navigationnorth
+Contributors: navigationnorth, joehobson, arobotnamedchris
 Tags: OER, Open Educational Resources, Education, Learning
 Requires at least: WordPress. 4.4
-Tested up to: WordPress 4.7
+Tested up to: WordPress 4.8
 Stable tag: 0.5.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -16,12 +16,12 @@ Open Educational Resources (OER) are freely accessible, openly licensed document
 
 Alternative and more flexible licensing options have become available as a result of the work of Creative Commons, an organization providing ready-made licensing agreements less restrictive than the "all rights reserved" terms of standard international copyright. These new options have become a "critical infrastructure service for the OER movement." Another license, typically used by developers of OER software, is the GNU General Public License from the free and open-source software (FOSS) community.
 
-More information about Open Education and the U.S. Department of Education’s #GoOpen campaign can be found on the Office of Educational Technology’s website.
+More information about Open Education and the U.S. Department of Education's #GoOpen campaign can be found on the Office of Educational Technology's website.
 
 This project has been funded at least or in part with Federal funds from the U.S. Department of Education under Contract Number ED-OOS-13-R-0064. The content of this publication does not necessarily reflect the views or policies of the U.S. Department of Education nor does mention of trade names, commercial products, or organizations imply endorsement by the U.S. Government.
 
 == Installation ==
-1. Log in to your site’s Dashboard (e.g. www.yourwebsite.com/wp-admin)
+1. Log in to your site's Dashboard (e.g. www.yourwebsite.com/wp-admin)
 2. Click on the "Plugins" tab in the left panel, then click "Add New".
 3. Search for "WP OER" and the latest version will appear at the top of the list of results.
 4. Install it by clicking the "Install Now" link.
