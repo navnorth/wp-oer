@@ -1,5 +1,5 @@
 === WP OER ===
-Contributors: navigationnorth, joehobson, arobotnamedchris
+Contributors: navigationnorth, joehobson, arobotnamedchris, johnpaulbalagolan
 Tags: OER, Open Educational Resources, Education, Learning
 Requires at least: WordPress. 4.4
 Tested up to: WordPress 4.8
