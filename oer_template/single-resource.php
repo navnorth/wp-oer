@@ -23,6 +23,8 @@ global $wpdb, $_oer_prefix;
 $url = get_post_meta($post->ID, "oer_resourceurl", true);
 $url_domain = oer_getDomainFromUrl($url);
 
+$youtube = oer_is_youtube_url($url);
+
 $hide_title = get_option('oer_hide_resource_title');
 
 // Resource Subject Areas

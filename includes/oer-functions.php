@@ -1942,7 +1942,20 @@ function oer_remove_plugin_settings(){
 	return $response;
 }
 
-function sanitize_subject($subject) {
+function oer_sanitize_subject($subject) {
 	return intval($subject);
 }
+
+function oer_is_youtube_url($url) {
+	$match = false;
+	
+	$pattern = '/^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/.+/';
+	$pattern_match = preg_match($pattern, $url, $matches);
+	
+	if ($pattern_match == 1)
+		$match = true;
+		
+	return $match;
+}
+
 ?>

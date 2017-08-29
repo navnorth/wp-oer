@@ -1140,7 +1140,7 @@ function oer_load_more_resources() {
 		$terms = json_decode($_POST["subjects"]);
 
 		if (is_array($terms)){
-			$terms = array_map("sanitize_subject", $terms);
+			$terms = array_map("oer_sanitize_subject", $terms);
 		} else {
 			$terms = intval($terms);
 		}
@@ -1236,7 +1236,7 @@ function oer_sort_resources(){
 		$terms = json_decode($_POST["subjects"]);
 
 		if (is_array($terms)){
-			$terms = array_map("sanitize_subject",$terms);
+			$terms = array_map("oer_sanitize_subject",$terms);
 		} else {
 			$terms = intval($terms);
 		}
