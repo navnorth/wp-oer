@@ -392,6 +392,8 @@ $hide_title = get_option('oer_hide_subject_area_title');
 						if (empty($img_url)) {
 							$w_image = false;
 							$new_image_url = OER_URL . 'images/default-icon-220x180.png';
+						} else {
+							$new_image_url = $img_url[0];
 						}
 						
 						$title =  $post->post_title;

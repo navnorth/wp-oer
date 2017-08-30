@@ -916,17 +916,17 @@ function oer_is_bootstrap_loaded(){
 
 /** Resize Image **/
 function oer_resize_image($orig_img_url, $width, $height, $crop = false) {
-	$new_image_url = "";
+	$new_image_url = $orig_img_url;
 
 	$suffix = "{$width}x{$height}";
 
 	$img_path = $new_img_path = parse_url($orig_img_url);
 	$img_path = $_SERVER['DOCUMENT_ROOT'] . $img_path['path'];
-
+	
 	if (!empty($img_path)) {
 		//Resize Image using WP_Image_Editor class
 		$image_editor = wp_get_image_editor($img_path);
-
+		
 		if ( !is_wp_error($image_editor) ) {
 			$new_image = $image_editor->resize( $width, $height, $crop );
 

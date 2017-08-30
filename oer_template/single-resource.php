@@ -88,14 +88,14 @@ if(!empty($post_terms))
 				$img_height = oer_get_image_height('large');
 				
 			if(!empty($img_url))
-    				{
-    					if ( is_wp_error($img_url) ) {
-						debug_log("Can't get Image editor to resize Resource screenshot.");
-					} else {
-						$new_image_url = oer_resize_image($img_url[0], $img_width, $img_height, true);
-    					}
-                    }
-
+    			{
+				if ( is_wp_error($img_url) ) {
+					debug_log("Can't get Image editor to resize Resource screenshot.");
+				} else {
+					$new_image_url = oer_resize_image($img_url[0], $img_width, $img_height, true);
+				}
+			}
+			
     				echo '<img src="'.esc_url($new_image_url).'" alt="'.esc_attr(get_the_title()).'"/>';
 
     				?>
