@@ -348,12 +348,11 @@ function oer_save_customfields()
     
     //Check first if $post is not empty
     if ($post) {
-	
-	if (!isset($_POST['oer_metabox_nonce_field']) || !wp_verify_nonce( $_POST['oer_metabox_nonce_field'], 'oer_metabox_action' )) {
-	    wp_die('Nonce verification failed');
-	}
 	if($post->post_type == 'resource')
 	{
+	    if (!isset($_POST['oer_metabox_nonce_field']) || !wp_verify_nonce( $_POST['oer_metabox_nonce_field'], 'oer_metabox_action' )) {
+		wp_die('Nonce verification failed');
+	    }
 		if(isset($_POST['oer_resourceurl']))
 		{
 			$oer_resourceurl = $_POST['oer_resourceurl'];
