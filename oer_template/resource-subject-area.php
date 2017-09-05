@@ -3,6 +3,9 @@
  * Template Name: Default Category Page Template
  */
 
+/** Load WordPress Theme Header **/
+get_header();
+
 /** Add default stylesheet for Resource Category page **/
 wp_enqueue_style('bxslider-style', OER_URL.'/css/jquery.bxslider.css');
 wp_register_style( "resource-category-styles", OER_URL . "css/resource-category-style.css" );
@@ -14,9 +17,6 @@ wp_register_script( "resource-script" , OER_URL ."js/resource-category.js" );
 wp_enqueue_script( "resource-script" );
 wp_enqueue_script( "ajax-script", OER_URL."js/front_ajax.js", array("jquery"));
 wp_localize_script( "ajax-script", "oer_ajax_object", array("ajaxurl" => admin_url( 'admin-ajax.php' )));
-
-/** Load WordPress Theme Header **/
-get_header();
 
 //Add this hack to display top nav and head section on Eleganto theme
 $cur_theme = wp_get_theme();
