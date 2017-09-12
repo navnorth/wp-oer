@@ -75,7 +75,7 @@ if(!empty($post_terms))
             <h1 class="entry-title"><?php echo $post->post_title;?></h1>
         </header>
 	<?php endif; ?>
-    	    <div class="oer-rsrclftcntr-img col-md-5">
+    	    <div class="oer-rsrclftcntr-img col-md-5 col-sm-12 col-xs-12">
                 <!--Resource Image-->
                 <div class="oer-sngl-rsrc-img">
                     <a class="oer-featureimg" href="<?php echo esc_url(get_post_meta($post->ID, "oer_resourceurl", true)) ?>" target="_blank" >
@@ -111,7 +111,7 @@ if(!empty($post_terms))
                 </div>
             </div>
 
-    		<div class="oer-rsrcrghtcntr col-md-7">
+    		<div class="oer-rsrcrghtcntr col-md-7 col-sm-12 col-xs-12">
 			<div class="oer-rsrcctgries tagcloud">
                 	<?php
 			/** Resource Subject Areas **/

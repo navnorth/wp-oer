@@ -61,4 +61,8 @@
 /** For Mobile styles **/
 @media screen and (min-width: 960px) {
     .oer-sngl-rsrc-dscrptn { width: 100%; }
+    
+}
+@media screen and (max-width: 600px) {
+    .oer-rsrclftcntr-img { margin-bottom:15px; overflow:hidden; }
 }
