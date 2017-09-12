@@ -1958,4 +1958,27 @@ function oer_is_youtube_url($url) {
 	return $match;
 }
 
+//Generate youtube embed code
+function oer_generate_youtube_embed_code($url) {
+	$youtube_id = "";
+	$embed_code = "";
+	if (preg_match('/youtube\.com\/watch\?v=([^\&\?\/]+)/', $url, $id)) {
+		$youtube_id = $id[1];
+	} else if (preg_match('/youtube\.com\/embed\/([^\&\?\/]+)/', $url, $id)) {
+		$youtube_id = $id[1];
+	} else if (preg_match('/youtube\.com\/v\/([^\&\?\/]+)/', $url, $id)) {
+		$youtube_id = $id[1];
+	} else if (preg_match('/youtu\.be\/([^\&\?\/]+)/', $url, $id)) {
+		$youtube_id = $id[1];
+	} else if (preg_match('/youtube\.com\/verify_age\?next_url=\/watch%3Fv%3D([^\&\?\/]+)/', $url, $id)) {
+		$youtube_id = $id[1];
+	}
+	
+	//Generate embed code
+	if ($youtube_id) {
+		$embed_code = '<div class="videoWrapper"><iframe width="640" height="360" src="https://www.youtube.com/embed/'.$youtube_id.'?rel=0" frameborder="0" allowfullscreen></iframe></div>';
+	}
+	return $embed_code;
+}
+
 ?>

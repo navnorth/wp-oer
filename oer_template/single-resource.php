@@ -79,6 +79,10 @@ if(!empty($post_terms))
                 <!--Resource Image-->
                 <div class="oer-sngl-rsrc-img">
                     <a class="oer-featureimg" href="<?php echo esc_url(get_post_meta($post->ID, "oer_resourceurl", true)) ?>" target="_blank" >
+			<?php if ($youtube) { 
+				$embed = oer_generate_youtube_embed_code($url);
+				echo $embed;
+			 } else { ?>
     			<?php
     				$img_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ) , "full" );
     				$img_path = $new_img_path = parse_url($img_url[0]);
@@ -100,6 +104,7 @@ if(!empty($post_terms))
 
     				?>
                 	</a>
+			<?php } ?>
                     <a class="oer-rsrcurl" href="<?php echo esc_url(get_post_meta($post->ID, "oer_resourceurl", true)); ?>" target="_blank" >
                         <?php echo $url_domain; ?>
                     </a>

@@ -11,7 +11,7 @@
 .oer-sngl-rsrc-url a { text-decoration: none; color: #333; }
 .oer-sngl-rsrc-img { position: relative; border: 2px solid #dddddd; float: left; width: 100%; }
 .oer-sngl-rsrc-img:hover { border: 2px solid #444; }
-.oer-sngl-rsrc-img .oer-featureimg { width: auto; float: left; }
+.oer-sngl-rsrc-img .oer-featureimg { width: auto; }
 .oer-sngl-rsrc-img a { color: #444; text-decoration: none; }
 .oer-sngl-rsrc-img .oer-rsrcurl { background: none repeat scroll 0 0 #a8aaab; bottom: 0; left: 0; right: 0; padding: 10px; position: absolute; width: auto; /*color: #0c5598; font-style: italic;*/ text-align: right; /*font-size:1.15rem;*/ white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .oer-rsrcrghtcntr .oer-rsrcctgries { float: left; margin: 0px; width: 100%; padding-bottom: 5px; }
@@ -45,6 +45,19 @@
 .oer-core-title h4 { float:none; }
 .oer_sngl_notation { margin-right:5px; }
 .oer_sngl_stndrd { clear:both; }
+.videoWrapper {
+	position: relative;
+	padding-bottom: 56.25%; /* 16:9 */
+	padding-top: 25px;
+	height: 0;
+}
+.videoWrapper iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
 /** For Mobile styles **/
 @media screen and (min-width: 960px) {
     .oer-sngl-rsrc-dscrptn { width: 100%; }
