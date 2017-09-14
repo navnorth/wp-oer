@@ -3,7 +3,7 @@ Contributors: navigationnorth, joehobson, arobotnamedchris, johnpaulbalagolan
 Tags: OER, Open Educational Resources, Education, Learning
 Requires at least: WordPress. 4.4
 Tested up to: WordPress 4.8
-Stable tag: 0.5.7
+Stable tag: 0.5.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -40,6 +40,11 @@ No frequently asked questions.
 3. Display educational resources on your WordPress website!
 
 == Changelog ==
+
+= 0.5.8 =
+* Display YouTube resources as video embeds
+* Fix bug with nonce verification when saving resource edits
+* Add fallback for image resizing when gd library not installed
 
 = 0.5.7 =
 * Updates to adhere to WordPress plugin directory requirements
