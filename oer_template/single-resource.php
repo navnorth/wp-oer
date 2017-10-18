@@ -105,9 +105,13 @@ if(!empty($post_terms))
     				?>
                 	</a>
 			<?php } ?>
-                    <a class="oer-rsrcurl" href="<?php echo esc_url(get_post_meta($post->ID, "oer_resourceurl", true)); ?>" target="_blank" >
-                        <?php echo $url_domain; ?>
-                    </a>
+			<?php if ($youtube) { ?>
+				<div class="oer-rsrcurl left">Original Resource: <a href="<?php echo esc_url(get_post_meta($post->ID, "oer_resourceurl", true)); ?>" target="_blank" ><?php echo esc_url(get_post_meta($post->ID, "oer_resourceurl", true)); ?></a></div>
+			<?php } else { ?>
+				<a class="oer-rsrcurl" href="<?php echo esc_url(get_post_meta($post->ID, "oer_resourceurl", true)); ?>" target="_blank" >
+				    <?php echo $url_domain; ?>
+				</a>
+			<?php } ?>
                 </div>
             </div>
 

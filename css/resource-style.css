@@ -58,6 +58,7 @@
 	width: 100%;
 	height: 100%;
 }
+.oer-sngl-rsrc-img .oer-rsrcurl.left { text-align:left; }
 /** For Mobile styles **/
 @media screen and (min-width: 960px) {
     .oer-sngl-rsrc-dscrptn { width: 100%; }
