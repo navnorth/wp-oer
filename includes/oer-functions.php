@@ -834,6 +834,39 @@ function oer_getImageFromExternalURL($url) {
 	return $file;
 }
 
+function oer_save_image_to_file($image_url) {
+	$ch = curl_init ($image_url);
+
+	curl_setopt($ch, CURLOPT_HEADER, 0);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
+	curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+
+	$raw=curl_exec($ch);
+	curl_close ($ch);
+
+	$upload_dir = wp_upload_dir();
+	$path = $upload_dir['basedir'].'/resource-images/';
+
+	if(!file_exists($path))
+	{
+		mkdir($path, 0777, true);
+		debug_log("OER : create upload directory");
+	}
+
+	if(!file_exists($file = $path.'Screenshot'.preg_replace('/https?|:|#|\?|\&|\//i', '-', $image_url).'.jpg'))
+	{
+		debug_log("OER : start screenshot function");
+
+		$fp = fopen($file,'wb');
+		fwrite($fp, $raw);
+		fclose($fp);
+
+		debug_log("OER : end of screenshot function");
+	}
+	return $file;
+}
+
 //Get External Thumbnail Image
 function oer_getExternalThumbnailImage($url, $local=false) {
 	global $_debug;
@@ -1995,7 +2028,9 @@ function oer_get_youtube_thumbnail($youtube_url){
 	
 	$thumbnail_url = "https://i.ytimg.com/vi/".$youtube_id."/hqdefault.jpg";
 	
-	return $thumbnail_url;
+	$thumbnail_file = oer_save_image_to_file($thumbnail_url);
+	
+	return $thumbnail_file;
 }
 
 ?>

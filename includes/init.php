@@ -599,8 +599,7 @@ function oer_save_customfields()
 			    if ( $youtube )
 				$file = oer_get_youtube_thumbnail($url);
 			}
-			var_dump($file);
-			exit();
+			
 			if(file_exists($file))
 			{
 				$filetype = wp_check_filetype( basename( $file ), null );
