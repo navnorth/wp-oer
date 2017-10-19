@@ -1960,8 +1960,20 @@ function oer_is_youtube_url($url) {
 
 //Generate youtube embed code
 function oer_generate_youtube_embed_code($url) {
-	$youtube_id = "";
 	$embed_code = "";
+	
+	$youtube_id = oer_get_youtube_id($url);
+	
+	//Generate embed code
+	if ($youtube_id) {
+		$embed_code = '<div class="videoWrapper"><iframe width="640" height="360" src="https://www.youtube.com/embed/'.$youtube_id.'?rel=0" frameborder="0" allowfullscreen></iframe></div>';
+	}
+	return $embed_code;
+}
+
+function oer_get_youtube_id($url) {
+	$youtube_id = null;
+	
 	if (preg_match('/youtube\.com\/watch\?v=([^\&\?\/]+)/', $url, $id)) {
 		$youtube_id = $id[1];
 	} else if (preg_match('/youtube\.com\/embed\/([^\&\?\/]+)/', $url, $id)) {
@@ -1974,11 +1986,16 @@ function oer_generate_youtube_embed_code($url) {
 		$youtube_id = $id[1];
 	}
 	
-	//Generate embed code
-	if ($youtube_id) {
-		$embed_code = '<div class="videoWrapper"><iframe width="640" height="360" src="https://www.youtube.com/embed/'.$youtube_id.'?rel=0" frameborder="0" allowfullscreen></iframe></div>';
-	}
-	return $embed_code;
+	return $youtube_id;
+}
+
+// Get Youtube Thumbnail
+function oer_get_youtube_thumbnail($youtube_url){
+	$youtube_id = oer_get_youtube_id($youtube_url);
+	
+	$thumbnail_url = "https://i.ytimg.com/vi/".$youtube_id."/hqdefault.jpg";
+	
+	return $thumbnail_url;
 }
 
 ?>

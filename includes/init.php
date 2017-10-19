@@ -580,6 +580,9 @@ function oer_save_customfields()
 		if(!empty($_POST['oer_resourceurl']))
 		{
 			$url = esc_url_raw($_POST['oer_resourceurl']);
+			
+			$youtube = oer_is_youtube_url($url);
+			
 			$upload_dir = wp_upload_dir();
 			$file = '';
 
@@ -592,8 +595,12 @@ function oer_save_customfields()
 			    // if external screenshot utility enabled
 			    if ( $external_screenshot )
 				$file = oer_getImageFromExternalURL($url);
+				
+			    if ( $youtube )
+				$file = oer_get_youtube_thumbnail($url);
 			}
-
+			var_dump($file);
+			exit();
 			if(file_exists($file))
 			{
 				$filetype = wp_check_filetype( basename( $file ), null );
