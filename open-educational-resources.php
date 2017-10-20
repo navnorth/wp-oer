@@ -1948,4 +1948,12 @@ function oer_distinct($distinct){
 	$distinct = 'DISTINCT';
         return $distinct;
 }
+
+/** Include Post Type Tag **/
+function oer_resource_taxonomy_queries( $query ) {
+    if ( $query->is_tag() && $query->is_main_query() ) {
+            $query->set( 'post_type', array( 'post', 'resource' ) );
+    }
+}
+add_action( 'pre_get_posts', 'oer_resource_taxonomy_queries' );
 ?>
