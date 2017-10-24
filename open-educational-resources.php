@@ -1956,4 +1956,18 @@ function oer_resource_taxonomy_queries( $query ) {
     }
 }
 add_action( 'pre_get_posts', 'oer_resource_taxonomy_queries' );
+
+function oer_custom_search_template($template){
+    global $wp_query;
+    if (!$wp_query->is_search)
+        return $template;
+	
+	$current_theme = wp_get_theme();
+	
+	if ($current_theme=="Avada")
+		return OER_PATH . 'oer_template/avada-search.php';
+	else
+		return OER_PATH . 'oer_template/search.php';
+}
+add_filter('template_include','oer_custom_search_template');
 ?>

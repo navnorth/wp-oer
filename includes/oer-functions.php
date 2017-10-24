@@ -2033,4 +2033,45 @@ function oer_get_youtube_thumbnail($youtube_url){
 	return $thumbnail_file;
 }
 
+// Get Subject Areas
+function oer_get_subject_areas($resource_id){
+	// Resource Subject Areas
+	$subject_areas = array();
+	$post_terms = get_the_terms( $resource_id, 'resource-subject-area' );
+
+	if(!empty($post_terms))
+	{
+		foreach($post_terms as $term)
+		{
+			if($term->parent != 0)
+			{
+				$parent[] = oer_get_parent_term($term->term_id);
+			}
+			else
+			{
+				$subject_areas[] = $term;
+			}
+		}
+	
+		if(!empty($parent) && array_filter($parent))
+		{
+			$recur_multi_dimen_arr_obj =  new RecursiveArrayIterator($parent);
+			$recur_flat_arr_obj =  new RecursiveIteratorIterator($recur_multi_dimen_arr_obj);
+			$flat_arr = iterator_to_array($recur_flat_arr_obj, false);
+	
+			$flat_arr = array_values(array_unique($flat_arr));
+			
+			for($k=0; $k < count($flat_arr); $k++)
+			{
+				//$idObj = get_category_by_slug($flat_arr[$k]);
+				$idObj = get_term_by( 'slug' , $flat_arr[$k] , 'resource-subject-area' );
+				
+				if(!empty($idObj->name))
+					$subject_areas[] = $idObj;
+			}
+		}
+	}
+	return $subject_areas;
+}
+
 ?>

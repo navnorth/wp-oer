@@ -433,6 +433,11 @@ li.oer_sbstndard{
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+.search-results #content .fusion-post-content h2.fusion-post-title { margin-bottom:0; }
+.search-results #content .fusion-post-content h5.fusion-post-meta { margin-bottom:25px; margin-top:0; }
+.search-results #content .fusion-post-content h5.fusion-post-meta .fusion-post-meta-box { margin-right:15px; }
+.search-results #content .fusion-post-content .fusion-subject-areas { overflow:hidden; margin-top:15px; }
+.search-results #content .fusion-post-content .fusion-subject-areas span { margin-right:5px; }
 
 @media screen and (max-width: 600px) {
 	.oer_blgpst .oer-feature-image { width:100%; float:none; margin-bottom:10px; }
