@@ -438,7 +438,9 @@ li.oer_sbstndard{
 .search-results #content .fusion-post-content h5.fusion-post-meta .fusion-post-meta-box { margin-right:15px; }
 .search-results #content .fusion-post-content .fusion-subject-areas { overflow:hidden; margin-top:15px; }
 .search-results #content .fusion-post-content .fusion-subject-areas span { margin-right:5px; }
-
+.search-results .type-resource .entry-header h2.entry-title { margin-bottom:0; }
+.search-results .type-resource .entry-header h5.post-meta { margin-bottom:1.05em; }
+.search-results .type-resource .entry-header h5.post-meta .post-meta-box { margin-right:15px; }
 @media screen and (max-width: 600px) {
 	.oer_blgpst .oer-feature-image { width:100%; float:none; margin-bottom:10px; }
 	.oer_blgpst .rght-sd-cntnr-blg { width:100%; float:none; }

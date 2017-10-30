@@ -119,6 +119,26 @@
 
 	<div class="entry-summary">
 		<?php the_excerpt(); ?>
+		<?php
+		// Display subject areas
+		if ($subjects) {
+			$oer_subjects = array_unique($subjects, SORT_REGULAR);
+
+			if(!empty($oer_subjects))
+			{
+				?>
+				<div class="tagcloud">
+				<?php
+				foreach($oer_subjects as $subject)
+				{
+					echo '<span><a href="'.esc_url(site_url().'/'.$subject->taxonomy.'/'.$subject->slug).'" class="button">'.ucwords ($subject->name).'</a></span>';
+				}
+				?>
+				</div>
+				<?php
+			}
+		}
+		?>
 	</div><!-- .entry-summary -->
 
 </article><!-- #post-## -->
