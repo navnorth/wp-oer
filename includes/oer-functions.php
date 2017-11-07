@@ -928,7 +928,11 @@ function oer_is_bootstrap_loaded(){
 	$js = "";
 	$url = get_site_url();
 	
-	$content = file_get_contents($url);
+	if (ini_get('allow_url_fopen'))
+		$content = file_get_contents($url);
+	else
+		$content = oer_curlRequest($url);
+	
 	$content = htmlentities($content);
 	
 	preg_match_all("#(<head[^>]*>.*?<\/head>)#ims", $content, $head);
@@ -945,6 +949,16 @@ function oer_is_bootstrap_loaded(){
 		$bootstrap = true;
 	
 	return $bootstrap;
+}
+
+/** Get resource via curl **/
+function oer_curlRequest($url) {
+   $ch = curl_init();
+   curl_setopt($ch, CURLOPT_URL, $url);
+   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+   $data = curl_exec($ch);
+   curl_close($ch);
+   return $data;
 }
 
 /** Resize Image **/
