@@ -19,18 +19,15 @@ get_header(); ?>
 			</header><!-- .page-header -->
 
 			<?php
-			// Start the loop.
-			while ( have_posts() ) : the_post();
+			
+			/**
+			 * Run the loop for the search to output the results.
+			 * If you want to overload this in a child theme then include a file
+			 * called content-search.php and that will be used instead.
+			 */
+			load_template(OER_PATH.'oer_template/search-content.php');
 
-				/**
-				 * Run the loop for the search to output the results.
-				 * If you want to overload this in a child theme then include a file
-				 * called content-search.php and that will be used instead.
-				 */
-				load_template(OER_PATH.'oer_template/search-content.php');
-
-			// End the loop.
-			endwhile;
+			
 
 			// Previous/next page navigation.
 			the_posts_pagination( array(
@@ -41,7 +38,7 @@ get_header(); ?>
 
 		// If no content, include the "No posts found" template.
 		else :
-			get_template_part( 'template-parts/content', 'none' );
+			load_template(OER_PATH.'oer_template/search-none.php');
 
 		endif;
 		?>

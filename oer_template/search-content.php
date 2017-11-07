@@ -11,25 +11,13 @@
  * @since 1.0
  * @version 1.2
  */
-
+// Start the loop.
+while ( have_posts() ) : the_post();
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
 	<header class="entry-header">
-		<?php if ( 'post' === get_post_type() ) : ?>
-			<div class="entry-meta">
-				<?php
-				echo twentyseventeen_time_link();
-				edit_link();
-				?>
-			</div><!-- .entry-meta -->
-		<?php elseif ( 'page' === get_post_type() && get_edit_post_link() ) : ?>
-			<div class="entry-meta">
-				<?php edit_link(); ?>
-			</div><!-- .entry-meta -->
-		<?php endif; ?>
-
 		<?php if ( is_front_page() && ! is_home() ) {
 
 			// The excerpt is being displayed within a front page section, so it's a lower hierarchy than h2.
@@ -142,3 +130,7 @@
 	</div><!-- .entry-summary -->
 
 </article><!-- #post-## -->
+<?php
+// End the loop.
+endwhile;
+?>
