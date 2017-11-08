@@ -357,7 +357,7 @@ if ( is_search() && Avada()->settings->get( 'search_results_per_page' ) ) {
 						<?php // Render post meta for alternate layouts. ?>
 						<?php echo avada_render_post_metadata( 'alternate' ); // WPCS: XSS ok. ?>
 					<?php endif; ?>
-
+					<?php if (strlen(trim($post->post_content))>0): ?>
 					<div class="fusion-post-content-container">
 						<?php
 						/**
@@ -368,6 +368,7 @@ if ( is_search() && Avada()->settings->get( 'search_results_per_page' ) ) {
 						do_action( 'avada_blog_post_content' );
 						?>
 					</div>
+					<?php endif; ?>
 					<?php
 					// Display subject areas
 					if ($subjects) {
