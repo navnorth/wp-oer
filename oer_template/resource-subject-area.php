@@ -397,7 +397,8 @@ $hide_title = get_option('oer_hide_subject_area_title');
 						}
 						
 						$title =  $post->post_title;
-						$content =  $post->post_content;
+						$content = strip_tags($post->post_content);
+						
 						$ellipsis = "...";
 						if (strlen($post->post_content)<180)
 							$ellipsis = "";
