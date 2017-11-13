@@ -105,13 +105,6 @@ if(!empty($post_terms))
     				?>
                 	</a>
 			<?php } ?>
-			<?php if ($youtube) { ?>
-				<div class="oer-rsrcurl left">Original Resource: <a href="<?php echo esc_url(get_post_meta($post->ID, "oer_resourceurl", true)); ?>" target="_blank" ><?php echo esc_url(get_post_meta($post->ID, "oer_resourceurl", true)); ?></a></div>
-			<?php } else { ?>
-				<a class="oer-rsrcurl" href="<?php echo esc_url(get_post_meta($post->ID, "oer_resourceurl", true)); ?>" target="_blank" >
-				    <?php echo $url_domain; ?>
-				</a>
-			<?php } ?>
                 </div>
             </div>
 
@@ -137,6 +130,12 @@ if(!empty($post_terms))
 					<h2><?php _e("Description", OER_SLUG) ?></h2>
 					<?php echo $content = apply_filters ("the_content", $post->post_content); ?>
 				</div>
+			<?php } ?>
+			
+			<?php if ($youtube) { ?>
+				<div class="oer-rsrcurl oer-cbxl"><h4><strong>Original Resource:</strong> <a href="<?php echo esc_url(get_post_meta($post->ID, "oer_resourceurl", true)); ?>" target="_blank" ><?php echo esc_url(get_post_meta($post->ID, "oer_resourceurl", true)); ?></a></h4></div>
+			<?php } else { ?>
+				<div class="oer-rsrcurl oer-cbxl"><h4><strong>Original Resource:</strong> <a href="<?php echo esc_url(get_post_meta($post->ID, "oer_resourceurl", true)); ?>" target="_blank" ><?php echo $url_domain; ?></a></h4></div>
 			<?php } ?>
 
                         <div id="" class="oer-authorName oer-cbxl">
