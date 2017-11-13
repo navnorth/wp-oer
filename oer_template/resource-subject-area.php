@@ -291,16 +291,18 @@ $hide_title = get_option('oer_hide_subject_area_title');
 					$image = wp_get_attachment_url( get_post_thumbnail_id($post->ID) );
 					$title =  $post->post_title;
 					//$content =  $post->post_content;
+					$highlight_content = strip_tags($post->post_content);
+					
 					$offset = 0;
 					$ellipsis = "...";
-					if (strlen($post->post_content)>150) {
-						$offset = strpos($post->post_content, ' ', 150);
+					if (strlen($highlight_content)>150) {
+						$offset = strpos($highlight_content, ' ', 150);
 					} else
 						$ellipsis = "";
 					
 					$length = 150;
 					
-					$content =  trim(substr($post->post_content,0,$length)).$ellipsis;
+					$content =  trim(substr($highlight_content,0,$length)).$ellipsis;
 				?>
 					<li data-id="<?php echo $post->ID; ?>">
 					<?php if ($i<=$items_per_load) { ?>
@@ -313,7 +315,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 							?>
 							<a href="<?php echo esc_url(get_permalink($post->ID));?>"><div class="img"><img src="<?php echo esc_url($new_image_url);?>" alt="<?php echo esc_attr($title);?>"></div></a>
 							<div class="ttl"><a href="<?php echo esc_url(get_permalink($post->ID));?>"><?php echo $title;?></a></div>
-							<div class="desc"><?php echo apply_filters('the_content',$content); ?></div>
+							<div class="desc"><?php echo $content; ?></div>
 						</div>
 					<?php } ?>
 					</li>
