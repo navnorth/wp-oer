@@ -3,7 +3,7 @@ Contributors: navigationnorth, joehobson, arobotnamedchris, johnpaulbalagolan
 Tags: OER, Open Educational Resources, Education, Learning
 Requires at least: WordPress. 4.4
 Tested up to: WordPress 4.9
-Stable tag: 0.5.8
+Stable tag: 0.5.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -40,6 +40,15 @@ No frequently asked questions.
 3. Display educational resources on your WordPress website!
 
 == Changelog ==
+
+= 0.5.9 =
+* Make Youtube video display responsive
+* Get Youtube thumbnail image and use as featured image for youtube resource
+* Add original resource link below resource description
+* Add metadata such as grade and domain to resources in search result
+* Fix broken resource tag links
+* Fix bug showing nonce error when deleting resource
+* Trim search result and subject area resource description to 3 lines with ellipsis using pure css
 
 = 0.5.8 =
 * Display YouTube resources as video embeds

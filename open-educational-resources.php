@@ -755,7 +755,7 @@ add_action( 'admin_init' , 'oer_setup_settings' );
 function oer_setup_settings(){
 	global $_w_bootstrap;
 
-	if (isset($_REQUEST['post_type']) && $_REQUEST['post_type']=="resource"){
+	if ((isset($_REQUEST['post_type']) && $_REQUEST['post_type']=="resource") && (isset($_REQUEST['page']) && $_REQUEST['page']=="oer_settings")){
 		if (oer_is_bootstrap_loaded())
 			$_w_bootstrap = true;
 	}
