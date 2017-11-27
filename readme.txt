@@ -3,9 +3,9 @@ Contributors: navigationnorth, joehobson, arobotnamedchris, johnpaulbalagolan
 Tags: OER, Open Educational Resources, Education, Learning
 Requires at least: WordPress. 4.4
 Tested up to: WordPress 4.9
-Stable tag: 0.5.9
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Stable tag: 0.6.0
+License: GPLv3
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 Open Educational Resource (OER) management and curation, metadata publishing, and alignment to Common Core State Standards.
 
@@ -40,6 +40,10 @@ No frequently asked questions.
 3. Display educational resources on your WordPress website!
 
 == Changelog ==
+
+= 0.6.0 =
+* additional keyboard accessibility fixes
+* allow null values for Learning Resource Type and Interactivity
 
 = 0.5.9 =
 * Make Youtube video display responsive
