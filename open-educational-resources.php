@@ -3,7 +3,7 @@
  Plugin Name:  WP OER
  Plugin URI:   https://www.wp-oer.com
  Description:  Open Educational Resource management and curation, metadata publishing, and alignment to Common Core State Standards.
- Version:      0.5.8
+ Version:      0.5.9
  Author:       Navigation North
  Author URI:   https://www.navigationnorth.com
  Text Domain:  wp-oer
@@ -36,7 +36,7 @@ define( 'OER_FILE',__FILE__);
 // Plugin Name and Version
 define( 'OER_PLUGIN_NAME', 'WP OER Plugin' );
 define( 'OER_ADMIN_PLUGIN_NAME', 'WP OER Plugin');
-define( 'OER_VERSION', '0.5.8' );
+define( 'OER_VERSION', '0.5.9' );
 
 include_once(OER_PATH.'includes/oer-functions.php');
 include_once(OER_PATH.'includes/init.php');
@@ -1961,9 +1961,9 @@ function oer_custom_search_template($template){
     global $wp_query;
     if (!$wp_query->is_search)
         return $template;
-	
+
 	$current_theme = wp_get_theme();
-	
+
 	if ($current_theme=="Avada")
 		return OER_PATH . 'oer_template/avada-search.php';
 	else
