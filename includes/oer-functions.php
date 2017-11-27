@@ -1693,7 +1693,7 @@ function oer_get_sort_box($subjects=array()){
 	?>
 	<div class="sort-box">
 		<span class="sortoption"></span>
-		<span class="sort-resources" title="Sort stories"><i class="fa fa-sort" aria-hidden="true"></i></span>
+		<span class="sort-resources" title="Sort stories" tabindex="0" role="button"><i class="fa fa-sort" aria-hidden="true"></i></span>
 		<div class="sort-options">
 			<ul>
 				<li data-value="0"<?php if ($sort==0): ?> class="cs-selected"<?php endif; ?>><a href="javascript:void(0);"><span>Newest</span></a></li>

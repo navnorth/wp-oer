@@ -51,6 +51,11 @@ jQuery(document).ready(function(){
     jQuery('.sort-resources').click(function(){
       jQuery('.sort-options').fadeToggle('fast');
     });
+    jQuery('.sort-resources').keydown(function(e){
+	if (e.which==13 || e.which==32) {
+	    jQuery('.sort-options').fadeToggle('fast');
+	}
+    });
     
     jQuery('.sort-options ul li a').click(function(){
       jQuery('.sort-options ul li').removeClass('cs-selected');
