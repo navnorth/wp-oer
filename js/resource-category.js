@@ -24,6 +24,9 @@ jQuery(document).ready(function(){
 			    next_resource.append(jQuery.trim(response));
 			});
 		    }
+		},
+		onSliderLoad: function(currentIndex) {
+		    jQuery('.featuredwpr_bxslider').css({'visibility':'visible','height':'auto'});
 		}
 	};
     
