@@ -1,5 +1,5 @@
 jQuery(document).ready(function(e) {
-	jQuery( ".oer_datepicker" ).datepicker();
+	jQuery( ".oer_datepicker" ).datepicker( { dateFormat: 'MM d, yy' } );
 	jQuery( ".oer_datepicker" ).datepicker( "option", "showAnim", "slideDown" );
 	
 	jQuery( "input.screenshot_option").on("change",function(){
