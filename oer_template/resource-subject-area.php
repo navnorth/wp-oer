@@ -596,6 +596,9 @@ $hide_title = get_option('oer_hide_subject_area_title');
 					<li>
 						<div class="allftrdsngl">
 							<?php
+							if (empty($image)) {
+								$image = OER_URL.'images/default-icon.png';
+							}
 							if(!empty($image)){
 								$new_image = oer_resize_image( $image , 220 , 180 , true );
 								?>
