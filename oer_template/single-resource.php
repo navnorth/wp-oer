@@ -33,18 +33,20 @@ $post_terms = get_the_terms( $post->ID, 'resource-subject-area' );
 
 if(!empty($post_terms))
 {
+	$subjects = array();
 	foreach($post_terms as $term)
 	{
 		if($term->parent != 0)
 		{
-			$parent[] = oer_get_parent_term($term->term_id);
+			$parent[] = oer_get_parent_term_list($term->term_id);
+			$subjects[] = $term;
 		}
 		else
 		{
 			$subject_areas[] = $term;
 		}
 	}
-
+	
 	if(!empty($parent) && array_filter($parent))
 	{
 		$recur_multi_dimen_arr_obj =  new RecursiveArrayIterator($parent);
@@ -62,6 +64,8 @@ if(!empty($post_terms))
 				$subject_areas[] = $idObj;
 		}
 	}
+	if (count($subjects)>0)
+		$subject_areas = array_merge($subject_areas,$subjects);
 }
 
 ?>

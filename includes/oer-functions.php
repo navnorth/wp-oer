@@ -517,6 +517,21 @@ if (!function_exists('oer_get_parent_term')) {
 	}
 }
 
+if (!function_exists('oer_get_parent_term_list')) {
+	function oer_get_parent_term_list($id) {
+		$args = array(
+			'format' => 'name',
+			'separator' => '/',
+			'link' => false,
+			'inclusive' => false
+			      );
+		$curr_cat = get_term_parents_list($id, 'resource-subject-area', $args);
+		$curr_cat = explode('/',$curr_cat);
+		
+		return $curr_cat;
+	}
+}
+
 if (!function_exists('oer_get_term_top_most_parent')) {
 	function oer_get_term_top_most_parent($term_id, $taxonomy="resource-subject-area"){
 	    // start from the current term
