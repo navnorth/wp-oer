@@ -72,7 +72,8 @@
 .oer_right_featuredwpr .bx-wrapper .bx-prev { background: #ccc url(../images/bxprev.png) no-repeat scroll 0 0; left: auto; right: 36px; }
 .oer_right_featuredwpr .bx-wrapper .bx-next { background: #ccc url(../images/bxnext.png) no-repeat scroll 0 0; }
 .oer_right_featuredwpr .bx-wrapper .featuredwpr_bxslider li p { color:#444; }
-ul.featuredwpr_bxslider, ul.allftrdpst_slider { visibility:hidden; height:0; }
+ul.featuredwpr_bxslider { visibility:hidden; height:0; }
+ul.allftrdpst_slider { visibility:hidden; height:190px; overflow:hidden; }
 .clear { clear:both; }
 #oer-content { overflow:hidden; width:100%; }
 .allftrdsngl { color:#444; }
