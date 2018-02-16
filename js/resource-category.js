@@ -39,7 +39,10 @@ jQuery(document).ready(function(){
     });
 
     jQuery('.allftrdpst_slider').bxSlider({
-	    pager: false
+	    pager: false,
+	    onSliderLoad: function(currentIndex) {
+		jQuery('.allftrdpst_slider').css({'visibility':'visible','height':'auto'});
+	    }
     });
     if (jQuery('.oer_right_featuredwpr .bx-wrapper').is(':visible')) {
 	jQuery('.bx-loading').hide();
