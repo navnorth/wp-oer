@@ -7,7 +7,7 @@ require_once OER_PATH.'includes/oer-functions.php';
 function oer_filter_term_args( $args, $taxonomies )
 {
     global $pagenow;
-    
+	
 	$user_id = get_current_user_id();
 	
 	$client_terms = get_user_meta($user_id, 'oer_userasgnctgries', true);
@@ -23,7 +23,7 @@ function oer_filter_term_args( $args, $taxonomies )
 	}
 	return $args;
 }
-add_filter( 'get_terms_args', 'oer_filter_term_args', 10, 2 );
+//add_filter( 'get_terms_args', 'oer_filter_term_args', 10, 2 );
 
 //Filter Posts , Pages and Resources According Categories Assignment
 add_action('load-edit.php', 'oer_load_edit_php_action');
@@ -387,7 +387,7 @@ function oer_save_customfields()
 		{
 			update_post_meta( $post->ID , 'oer_grade' , '');
 		}
-
+		
 		if(isset($_POST['oer_datecreated']))
 		{
 			update_post_meta( $post->ID , 'oer_datecreated' , sanitize_text_field($_POST['oer_datecreated']));
