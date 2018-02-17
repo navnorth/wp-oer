@@ -41,6 +41,12 @@ No frequently asked questions.
 
 == Changelog ==
 
+= 0.6.1 =
+* improved display of featured resources on subject pages
+* display default image on Recommended Content slider if none available
+* fix saving and display of created and modified dates
+* fix taxonomy query on subject area resource lists
+
 = 0.6.0 =
 * additional keyboard accessibility fixes
 * allow null values for Learning Resource Type and Interactivity
