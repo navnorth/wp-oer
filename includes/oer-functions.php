@@ -2115,7 +2115,11 @@ function replace_pdf_to_embed($content){
     foreach ($matches[0] as $match) {
 	$match_url = strip_tags($match);
 	if(shortcode_exists('wonderplugin_pdf')) {
-	    $embed_code = "[wonderplugin_pdf src='".$match_url."' width='100%']";
+		$embed_code = "[wonderplugin_pdf src='".$match_url."' width='100%']";
+	} elseif(shortcode_exists('pdf-embedder')){
+		$embed_code = "[pdf-embedder url='".$match_url."' width='100%']";
+	} elseif(shortcode_exists('pdfviewer')){
+		$embed_code = "[pdfviewer width='100%']".$match_url."[/pdfviewer]";
 	}
 	if ($embed_code) 
 	    $content = str_replace($match, $embed_code, $content);
