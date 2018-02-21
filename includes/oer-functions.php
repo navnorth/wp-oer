@@ -2103,4 +2103,23 @@ function oer_get_subject_areas($resource_id){
 	return $subject_areas;
 }
 
+//Replace PDF Url to embedded PDF
+add_filter( 'the_content' , 'replace_pdf_to_embed' );
+function replace_pdf_to_embed($content){
+    $pattern = '/http:\/\/.*?\.pdf\b/i';
+
+    $matches = array();
+
+    preg_match_all($pattern, $content, $matches);
+    
+    foreach ($matches[0] as $match) {
+	$match_url = strip_tags($match);
+	if(shortcode_exists('wonderplugin_pdf')) {
+	    $embed_code = "[wonderplugin_pdf src='".$match_url."' width='100%']";
+	}
+	if ($embed_code) 
+	    $content = str_replace($match, $embed_code, $content);
+    }
+    return $content;
+}
 ?>
