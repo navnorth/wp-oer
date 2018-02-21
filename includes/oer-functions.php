@@ -2106,7 +2106,7 @@ function oer_get_subject_areas($resource_id){
 //Replace PDF Url to embedded PDF
 add_filter( 'the_content' , 'replace_pdf_to_embed' );
 function replace_pdf_to_embed($content){
-    $pattern = '/http:\/\/.*?\.pdf\b/i';
+    $pattern = '/(http|https):\/\/.*?\.pdf\b/i';
 
     $matches = array();
 
