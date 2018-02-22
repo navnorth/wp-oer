@@ -2120,6 +2120,9 @@ function replace_pdf_to_embed($content){
 		$embed_code = "[pdf-embedder url='".$match_url."' width='100%']";
 	} elseif(shortcode_exists('pdfviewer')){
 		$embed_code = "[pdfviewer width='100%']".$match_url."[/pdfviewer]";
+	} else {
+		$pdf_url = OER_URL."pdfjs/web/viewer.html?file=".urlencode($match_url);
+		$embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.$pdf_url.'"></iframe>';
 	}
 	if ($embed_code) 
 	    $content = str_replace($match, $embed_code, $content);
