@@ -97,7 +97,7 @@ if(!empty($post_terms))
 					$embed_code = "[pdfviewer width='100%']".$url."[/pdfviewer]";
 					echo do_shortcode($embed_code);
 				} else {
-					$pdf_url = OER_URL."pdfjs/web/viewer.html?file=".urlencode($match_url);
+					$pdf_url = OER_URL."pdfjs/web/viewer.html?file=".urlencode($url);
 					$embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.$pdf_url.'"></iframe>';
 					echo $embed_code;
 				}
