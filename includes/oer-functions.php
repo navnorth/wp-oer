@@ -2104,7 +2104,7 @@ function oer_get_subject_areas($resource_id){
 }
 
 //Replace PDF Url to embedded PDF
-add_filter( 'the_content' , 'replace_pdf_to_embed' );
+//add_filter( 'the_content' , 'replace_pdf_to_embed' );
 function replace_pdf_to_embed($content){
     $pattern = '/(http|https):\/\/.*?\.pdf\b/i';
 
@@ -2128,5 +2128,14 @@ function replace_pdf_to_embed($content){
 	    $content = str_replace($match, $embed_code, $content);
     }
     return $content;
+}
+
+function is_pdf_resource($url) {
+	$is_pdf = false;
+	
+	if (preg_match('/(http|https):\/\/.*?\.pdf\b/i', $url, $id)) 
+		$is_pdf = true;
+
+	return $is_pdf;
 }
 ?>

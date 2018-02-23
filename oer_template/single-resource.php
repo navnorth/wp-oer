@@ -24,6 +24,7 @@ $url = get_post_meta($post->ID, "oer_resourceurl", true);
 $url_domain = oer_getDomainFromUrl($url);
 
 $youtube = oer_is_youtube_url($url);
+$isPDF = is_pdf_resource($url);
 
 $hide_title = get_option('oer_hide_resource_title');
 
@@ -85,7 +86,22 @@ if(!empty($post_terms))
 			<?php if ($youtube) { 
 				$embed = oer_generate_youtube_embed_code($url);
 				echo $embed;
-			 } else { ?>
+			} elseif($isPDF) {
+				if(shortcode_exists('wonderplugin_pdf')) {
+					$embed_code = "[wonderplugin_pdf src='".$url."' width='100%']";
+					echo do_shortcode($embed_code);
+				} elseif(shortcode_exists('pdf-embedder')){
+					$embed_code = "[pdf-embedder url='".$url."' width='100%']";
+					echo do_shortcode($embed_code);
+				} elseif(shortcode_exists('pdfviewer')){
+					$embed_code = "[pdfviewer width='100%']".$url."[/pdfviewer]";
+					echo do_shortcode($embed_code);
+				} else {
+					$pdf_url = OER_URL."pdfjs/web/viewer.html?file=".urlencode($match_url);
+					$embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.$pdf_url.'"></iframe>';
+					echo $embed_code;
+				}
+			} else { ?>
 			 <a class="oer-featureimg" href="<?php echo esc_url(get_post_meta($post->ID, "oer_resourceurl", true)) ?>" target="_blank" >
     			<?php
     				$img_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ) , "full" );
