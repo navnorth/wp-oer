@@ -2138,4 +2138,16 @@ function is_pdf_resource($url) {
 
 	return $is_pdf;
 }
+
+function is_external_url($url) {
+	$is_external = false;
+	
+	$base_host = parse_url(home_url(), PHP_URL_HOST);
+	$url_host = parse_url($url, PHP_URL_HOST);
+	
+	if ($base_host !== $url_host)
+		$is_external = true;
+	
+	return $is_external;
+}
 ?>

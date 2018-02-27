@@ -25,6 +25,7 @@ $url_domain = oer_getDomainFromUrl($url);
 
 $youtube = oer_is_youtube_url($url);
 $isPDF = is_pdf_resource($url);
+$isExternal = is_external_url($url);
 
 $hide_title = get_option('oer_hide_resource_title');
 
@@ -97,7 +98,10 @@ if(!empty($post_terms))
 					$embed_code = "[pdfviewer width='100%']".$url."[/pdfviewer]";
 					echo do_shortcode($embed_code);
 				} else {
-					$pdf_url = OER_URL."pdfjs/web/viewer.html?file=".urlencode($url);
+					if ($isExternal)
+						$pdf_url = "https://docs.google.com/gview?url=".$url."&embedded=true";
+					else
+						$pdf_url = OER_URL."pdfjs/web/viewer.html?file=".urlencode($url);
 					$embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.$pdf_url.'"></iframe>';
 					echo $embed_code;
 				}
