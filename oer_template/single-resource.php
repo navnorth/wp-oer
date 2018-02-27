@@ -88,22 +88,25 @@ if(!empty($post_terms))
 				$embed = oer_generate_youtube_embed_code($url);
 				echo $embed;
 			} elseif($isPDF) {
-				if(shortcode_exists('wonderplugin_pdf')) {
-					$embed_code = "[wonderplugin_pdf src='".$url."' width='100%']";
-					echo do_shortcode($embed_code);
-				} elseif(shortcode_exists('pdf-embedder')){
-					$embed_code = "[pdf-embedder url='".$url."' width='100%']";
-					echo do_shortcode($embed_code);
-				} elseif(shortcode_exists('pdfviewer')){
-					$embed_code = "[pdfviewer width='100%']".$url."[/pdfviewer]";
-					echo do_shortcode($embed_code);
-				} else {
-					if ($isExternal)
-						$pdf_url = "https://docs.google.com/gview?url=".$url."&embedded=true";
-					else
-						$pdf_url = OER_URL."pdfjs/web/viewer.html?file=".urlencode($url);
+				if ($isExternal) {
+					$pdf_url = "https://docs.google.com/gview?url=".$url."&embedded=true";
 					$embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.$pdf_url.'"></iframe>';
 					echo $embed_code;
+				} else {
+					if(shortcode_exists('wonderplugin_pdf')) {
+						$embed_code = "[wonderplugin_pdf src='".$url."' width='100%']";
+						echo do_shortcode($embed_code);
+					} elseif(shortcode_exists('pdf-embedder')){
+						$embed_code = "[pdf-embedder url='".$url."' width='100%']";
+						echo do_shortcode($embed_code);
+					} elseif(shortcode_exists('pdfviewer')){
+						$embed_code = "[pdfviewer width='100%']".$url."[/pdfviewer]";
+						echo do_shortcode($embed_code);
+					} else {
+						$pdf_url = OER_URL."pdfjs/web/viewer.html?file=".urlencode($url);
+						$embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.$pdf_url.'"></iframe>';
+						echo $embed_code;
+					}
 				}
 			} else { ?>
 			 <a class="oer-featureimg" href="<?php echo esc_url(get_post_meta($post->ID, "oer_resourceurl", true)) ?>" target="_blank" >
