@@ -2164,4 +2164,17 @@ function get_standards_count(){
 	
 	return $cnt;
 }
+
+/**
+ * Get Standards
+ **/
+function get_standards(){
+	global $wpdb;
+	
+	$query = "SELECT * FROM {$wpdb->prefix}oer_core_standards";
+	
+	$standards = $wpdb->get_results($query);
+	
+	return $standards;
+}
 ?>
