@@ -1970,4 +1970,20 @@ function oer_custom_search_template($template){
 		return OER_PATH . 'oer_template/search.php';
 }
 add_filter('template_include','oer_custom_search_template');
+
+function assign_standard_template($template) {
+	global $wp_query;
+	$url_path = trim(parse_url(add_query_arg(array()), PHP_URL_PATH), '/');
+	if ( $url_path === 'openk12xchange/resource/standards' ){
+	//if ( $url_path === 'resource/standards' ) {
+		// load the file if exists
+		$wp_query->is_404 = false;
+		$template = locate_template('oer_template/template-standards.php', true);
+		if (!$template) {
+			$template = dirname(__FILE__) . '/oer_template/template-standards.php';
+		}
+	}
+	return $template;
+}
+add_action( 'template_include' , 'assign_standard_template' );
 ?>
