@@ -2150,4 +2150,18 @@ function is_external_url($url) {
 	
 	return $is_external;
 }
+
+/**
+ * Get Standards Count
+ **/
+function get_standards_count(){
+	global $wpdb;
+	$cnt = 0;
+	
+	$query = "SELECT count(*) FROM {$wpdb->prefix}oer_core_standards";
+
+	$cnt = $wpdb->get_var($query);
+	
+	return $cnt;
+}
 ?>
