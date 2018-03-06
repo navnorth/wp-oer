@@ -1973,7 +1973,9 @@ add_filter('template_include','oer_custom_search_template');
 
 function assign_standard_template($template) {
 	global $wp_query;
+	
 	$url_path = trim(parse_url(add_query_arg(array()), PHP_URL_PATH), '/');
+	
 	//if ( $url_path === 'openk12xchange/resource/standards' ){
 	if ( $url_path === 'resource/standards' ) {
 		// load the file if exists
@@ -1982,8 +1984,28 @@ function assign_standard_template($template) {
 		if (!$template) {
 			$template = dirname(__FILE__) . '/oer_template/template-standards.php';
 		}
+	} elseif (get_query_var('standard')){
+		$wp_query->is_404 = false;
+		$template = locate_template('oer_template/template-substandards.php', true);
+		if (!$template) {
+			$template = dirname(__FILE__) . '/oer_template/template-substandards.php';
+		}
 	}
 	return $template;
 }
 add_action( 'template_include' , 'assign_standard_template' );
+
+// Add rewrite rule for substandards
+function oer_add_rewrites()
+{
+	add_rewrite_tag( '%standard%', '([^&]+)' );
+	add_rewrite_rule( '^resource/standards/([^/]*)/?', 'index.php?pagename=standards&standard=$matches[1]', 'top' );
+}
+add_action( 'init', 'oer_add_rewrites', 10, 0 );
+
+function oer_add_query_vars( $vars ){
+	$vars[] = "standard";
+	return $vars;
+}
+add_filter( 'query_vars', 'oer_add_query_vars' );
 ?>

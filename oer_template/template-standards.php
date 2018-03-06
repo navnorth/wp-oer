@@ -25,7 +25,7 @@ $standards = get_standards();
 			    <?php if ($standards) {  ?>
 			    <ul class="oer-standards">
 				<?php foreach($standards as $standard) {
-				    $slug = "resource/".sanitize_title($standard->standard_name);
+				    $slug = "resource/standards/".sanitize_title($standard->standard_name);
 				?>
 				<li><a href="<?php echo home_url($slug); ?>"><?php echo $standard->standard_name; ?></a></li>
 				<?php } ?>

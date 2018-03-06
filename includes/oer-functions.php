@@ -2177,4 +2177,24 @@ function get_standards(){
 	
 	return $standards;
 }
+
+/**
+ * Get Standard By Slug
+ **/
+function get_standard_by_slug($slug){
+	global $wpdb;
+	
+	$std = null;
+	
+	$query = "SELECT * FROM {$wpdb->prefix}oer_core_standards";
+	
+	$standards = $wpdb->get_results($query);
+	
+	foreach($standards as $standard){
+		if (sanitize_title($standard->standard_name)===$slug)
+			$std = $standard;
+	}
+	
+	return $std;
+}
 ?>
