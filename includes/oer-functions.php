@@ -2197,4 +2197,21 @@ function get_standard_by_slug($slug){
 	
 	return $std;
 }
+
+/**
+ * Get child standards of a core standard
+ **/
+function get_substandards($standard_id){
+	global $wpdb;
+	
+	$std_id = "core_standards-".$standard_id;
+	
+	$substandards = array();
+	
+	$query = "SELECT * FROM {$wpdb->prefix}oer_sub_standards where parent_id='%s'";
+	
+	$substandards = $wpdb->get_results($wpdb->prepare($query, $std_id));
+	
+	return $substandards;
+}
 ?>

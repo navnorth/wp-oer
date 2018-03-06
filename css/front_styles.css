@@ -444,9 +444,9 @@ li.oer_sbstndard{
 .standards-template #content, .substandards-template #content { width:100%; }
 .oer-pdf-viewer { /*min-height:1250px;*/min-height:500px; height:100%; }
 .standards-template #content ul.oer-standards li,
-.substandards-template #content ul.oer-standards li{ list-style-type:none;  }
-.standards-template #content ul.oer-standards,
-.substandards-template #content ul.oer-standards{ padding-left:0; margin-top:10px;}
+.substandards-template #content ul.oer-substandards li{ list-style-type:none;  }
+.standards-template #content ul.oer-standards{ padding-left:0; margin-top:10px;}
+.substandards-template #content ul.oer-substandards { margin-top:10px; padding-left:20px; }
 @media screen and (max-width: 600px) {
 	.oer_blgpst .oer-feature-image { width:100%; float:none; margin-bottom:10px; }
 	.oer_blgpst .rght-sd-cntnr-blg { width:100%; float:none; }
