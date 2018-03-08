@@ -441,10 +441,12 @@ li.oer_sbstndard{
 .search-results .type-resource .entry-header h2.entry-title { margin-bottom:0; }
 .search-results .type-resource .entry-header h5.post-meta { margin-bottom:1.05em; }
 .search-results .type-resource .entry-header h5.post-meta .post-meta-box { margin-right:15px; }
-.standards-template #content, .substandards-template #content { width:100%; }
+.oer-standards #content, .standards-template #content, .substandards-template #content { width:100%; }
 .oer-pdf-viewer { /*min-height:1250px;*/min-height:500px; height:100%; }
+.oer-standards #content ul.oer-standards li,
 .standards-template #content ul.oer-standards li,
 .substandards-template #content ul.oer-substandards li{ list-style-type:none;  }
+.oer-standards #content ul.oer-standards,
 .standards-template #content ul.oer-standards{ padding-left:0; margin-top:10px;}
 .substandards-template #content ul.oer-substandards { margin-top:10px; padding-left:20px; }
 @media screen and (max-width: 600px) {

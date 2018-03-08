@@ -1980,15 +1980,15 @@ function assign_standard_template($template) {
 	if ( $url_path === 'resource/standards' ) {
 		// load the file if exists
 		$wp_query->is_404 = false;
-		$template = locate_template('oer_template/template-standards.php', true);
+		$template = locate_template('oer_template/standards.php', true);
 		if (!$template) {
-			$template = dirname(__FILE__) . '/oer_template/template-standards.php';
+			$template = dirname(__FILE__) . '/oer_template/standards.php';
 		}
 	} elseif (get_query_var('standard')){
 		$wp_query->is_404 = false;
-		$template = locate_template('oer_template/template-substandards.php', true);
+		$template = locate_template('oer_template/template-standard.php', true);
 		if (!$template) {
-			$template = dirname(__FILE__) . '/oer_template/template-substandards.php';
+			$template = dirname(__FILE__) . '/oer_template/template-standard.php';
 		}
 	}
 	return $template;
@@ -1999,7 +1999,7 @@ add_action( 'template_include' , 'assign_standard_template' );
 function oer_add_rewrites()
 {
 	add_rewrite_tag( '%standard%', '([^&]+)' );
-	add_rewrite_rule( '^resource/standards/([^/]*)/?', 'index.php?pagename=standards&standard=$matches[1]', 'top' );
+	add_rewrite_rule( '^resource/standards/([^/]*)/', 'index.php?pagename=standards&standard=$matches[1]', 'top' );
 }
 add_action( 'init', 'oer_add_rewrites', 10, 0 );
 
