@@ -2199,12 +2199,54 @@ function get_standard_by_slug($slug){
 }
 
 /**
- * Get child standards of a core standard
+ * Get Standard By Id
  **/
-function get_substandards($standard_id){
+function get_standard_by_id($id){
 	global $wpdb;
 	
-	$std_id = "core_standards-".$standard_id;
+	$std = null;
+	
+	$query = "SELECT * FROM {$wpdb->prefix}oer_core_standards WHERE id = %d";
+	
+	$standards = $wpdb->get_results($wpdb->prepare($query,$id));
+	
+	foreach($standards as $standard){
+			$std = $standard;
+	}
+	
+	return $std;
+}
+
+/**
+ * Get SubStandard By Slug
+ **/
+function get_substandard_by_slug($slug){
+	global $wpdb;
+	
+	$std = null;
+	
+	$query = "SELECT * FROM {$wpdb->prefix}oer_sub_standards";
+	
+	$substandards = $wpdb->get_results($query);
+	
+	foreach($substandards as $substandard){
+		if (sanitize_title($substandard->standard_title)===$slug)
+			$std = $substandard;
+	}
+	
+	return $std;
+}
+
+/**
+ * Get child standards of a core standard
+ **/
+function get_substandards($standard_id, $core=true){
+	global $wpdb;
+	
+	if ($core)
+		$std_id = "core_standards-".$standard_id;
+	else
+		$std_id = "sub_standards-".$standard_id;
 	
 	$substandards = array();
 	
@@ -2213,5 +2255,26 @@ function get_substandards($standard_id){
 	$substandards = $wpdb->get_results($wpdb->prepare($query, $std_id));
 	
 	return $substandards;
+}
+
+/**
+ * Get Standard Notations under a Sub Standard
+ **/
+function get_standard_notations($standard_id){
+	global $wpdb;
+	
+	$std_id = "sub_standards-".$standard_id;
+	
+	$notations = array();
+	
+	$query = "SELECT * FROM {$wpdb->prefix}oer_standard_notation where parent_id='%s'";
+	
+	$result = $wpdb->get_results($wpdb->prepare($query, $std_id));
+	
+	foreach ($result as $row){
+		$notations[] = $row;
+	}
+	
+	return $notations;
 }
 ?>
