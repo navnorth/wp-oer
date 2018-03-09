@@ -1,11 +1,11 @@
 <?php
 /*
- * Template Name: Substandard Page Template
+ * Template Name: Notation Page Template
  */
 add_filter( 'body_class','standards_body_classes' );
 function standards_body_classes( $classes ) {
  
-    $classes[] = 'substandards-template';
+    $classes[] = 'notation-template';
      
     return $classes;
      
