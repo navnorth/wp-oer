@@ -15,20 +15,9 @@ get_header();
 
 global $wp_query;
 
-$standard_name_slug = $wp_query->query_vars['substandard'];
-$standard = get_substandard_by_slug($standard_name_slug);
+$notation_slug = $wp_query->query_vars['notation'];
+$notation = get_substandard_by_slug($notation_slug);
 
-$parent_id = 0;
-if (strpos($standard->parent_id,"core_standards")!==false){
-    $pIds = explode("-",$standard->parent_id);
-    if (count($pIds)>1)
-	$parent_id=(int)$pIds[1];
-}
-
-$core_standard = get_standard_by_id($parent_id);
-
-$sub_standards = get_substandards($standard->id, false);
-$notations = get_standard_notations($standard->id);
 ?>
 <div class="oer-cntnr">
 	<section id="primary" class="site-content">

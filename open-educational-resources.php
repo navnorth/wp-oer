@@ -1984,17 +1984,23 @@ function assign_standard_template($template) {
 		if (!$template) {
 			$template = dirname(__FILE__) . '/oer_template/standards.php';
 		}
-	} elseif (get_query_var('standard') && !get_query_var('substandard')){
+	} elseif (get_query_var('standard') && !get_query_var('substandard') && !get_query_var('notation')){
 		$wp_query->is_404 = false;
 		$template = locate_template('oer_template/template-standard.php', true);
 		if (!$template) {
 			$template = dirname(__FILE__) . '/oer_template/template-standard.php';
 		}
-	} elseif (get_query_var('standard') && get_query_var('substandard')){
+	} elseif (get_query_var('standard') && get_query_var('substandard') && !get_query_var('notation')){
 		$wp_query->is_404 = false;
 		$template = locate_template('oer_template/template-substandard.php', true);
 		if (!$template) {
 			$template = dirname(__FILE__) . '/oer_template/template-substandard.php';
+		}
+	} elseif (get_query_var('standard') && get_query_var('substandard') && get_query_var('notation')){
+		$wp_query->is_404 = false;
+		$template = locate_template('oer_template/template-notation.php', true);
+		if (!$template) {
+			$template = dirname(__FILE__) . '/oer_template/template-notation.php';
 		}
 	}
 	return $template;
@@ -2006,14 +2012,17 @@ function oer_add_rewrites()
 {
 	add_rewrite_tag( '%standard%', '([^/]*)' );
 	add_rewrite_tag( '%substandard%' , '([^&]+)' );
+	add_rewrite_tag( '%notation%' , '([^&]+)' );
 	add_rewrite_rule( '^resource/standards/([^/]*)/?$', 'index.php?pagename=standards&standard=$matches[1]', 'top' );
 	add_rewrite_rule( '^resource/standards/([^/]*)/([^/]*)/?$', 'index.php?pagename=standards&standard=$matches[1]&substandard=$matches[2]', 'top' );
+	add_rewrite_rule( '^resource/standards/([^/]*)/([^/]*)/([^/]*)/?$', 'index.php?pagename=standards&standard=$matches[1]&substandard=$matches[2]&notation=$matches[3]', 'top' );
 }
 add_action( 'init', 'oer_add_rewrites', 10, 0 );
 
 function oer_add_query_vars( $vars ){
 	$vars[] = "standard";
 	$vars[] = "substandard";
+	$vars[] = "notation";
 	return $vars;
 }
 add_filter( 'query_vars', 'oer_add_query_vars' );
