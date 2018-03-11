@@ -2277,4 +2277,23 @@ function get_standard_notations($standard_id){
 	
 	return $notations;
 }
+
+/**
+ * Get Parent Sub Standard by Notation
+ **/
+function get_substandard_by_notation($notation) {
+	global $wpdb;
+	
+	$std = null;
+	
+	$query = "SELECT * FROM {$wpdb->prefix}oer_standard_notation WHERE standard_notation = '%s'";
+	
+	$substandards = $wpdb->get_results($wpdb->prepare($query, $notation));
+	
+	foreach($substandards as $substandard){
+		$std = $substandard;
+	}
+	
+	return $std;
+}
 ?>

@@ -16,7 +16,7 @@ get_header();
 global $wp_query;
 
 $notation_slug = $wp_query->query_vars['notation'];
-$notation = get_substandard_by_slug($notation_slug);
+$notation = get_substandard_by_notation($notation_slug);
 
 ?>
 <div class="oer-cntnr">
@@ -36,13 +36,9 @@ $notation = get_substandard_by_slug($notation_slug);
 					<?php } ?>
 				    </ul>
 				    <?php } ?>
-				    <?php if ($notations) {  ?>
+				    <?php if ($notation) {  ?>
 				    <ul class="oer-notations">
-					<?php foreach($notations as $notation) {
-					    $slug = "resource/standards/".sanitize_title($core_standard->standard_name)."/".$standard_name_slug."/".$notation->standard_notation;
-					?>
-					<li><a href="<?php echo home_url($slug); ?>"><strong><?php echo $notation->standard_notation; ?></strong> <?php echo $notation->description; ?></a></li>
-					<?php } ?>
+					<li><h4><strong><?php echo $notation->standard_notation; ?></strong> <?php echo $notation->description; ?></h4></li>
 				    </ul>
 				    <?php } ?>
 				</li>
