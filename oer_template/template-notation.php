@@ -19,6 +19,7 @@ $notation_slug = $wp_query->query_vars['notation'];
 $notation = get_substandard_by_notation($notation_slug);
 $substandards = get_substandards_by_notation($notation_slug);
 $standard = get_standard_by_notation($notation_slug);
+$resources = get_resources_by_notation($notation->id);
 
 ?>
 <div class="oer-cntnr">
@@ -26,7 +27,7 @@ $standard = get_standard_by_notation($notation_slug);
 		<div id="content" role="main">
 		    <div class="oer-allftrdrsrc">
 			<div class="oer-snglrsrchdng"><a href="<?php echo home_url("resource/standards/".sanitize_title($standard->standard_name)); ?>"><?php printf(__("%s", OER_SLUG), $standard->standard_name); ?></a></div>
-			<div class="oer-allftrdrsrccntr">
+			<div class="oer-allftrdrsrccntr-notation">
 			    <ul class="oer-substandards">
 			    <?php if ($substandards) {  ?>
 				<?php foreach($substandards as $substandard) {
@@ -39,6 +40,16 @@ $standard = get_standard_by_notation($notation_slug);
 				<li><ul class="oer-notations"><li><h4><strong><?php echo $notation->standard_notation; ?></strong> <?php echo $notation->description; ?></h4></li></li></ul>
 			    <?php } ?>
 			    </ul>
+			</div>
+			<div class="oer_standard_resources">
+			    <?php if ($resources) { ?>
+				<h4><?php _e("Resources:", OER_SLUG); ?></h4>
+				<ul class="oer-resources">
+				    <?php foreach($resources as $resource) { ?>
+				    <li><a href="<?php echo get_the_permalink($resource->ID); ?>"><?php echo $resource->post_title; ?></a></li>
+				    <?php } ?>
+				</ul>
+			    <?php } ?>
 			</div>
 		    </div>
 		</div><!-- #content -->

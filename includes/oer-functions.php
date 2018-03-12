@@ -2346,6 +2346,9 @@ function get_substandards_by_notation($notation){
 	return $std;
 }
 
+/**
+ * Get hierarchical substandards by substandard id
+ **/
 function get_hierarchical_substandards($substandard_id) {
 	global $wpdb;
 	
@@ -2361,5 +2364,31 @@ function get_hierarchical_substandards($substandard_id) {
 	}
 	
 	return $stds;
+}
+
+/**
+ * Get Resources by notation
+ **/
+function get_resources_by_notation($notation_id) {
+	global $wpdb;
+	
+	$notation = "standard_notation-".$notation_id;
+	
+	//later in the request
+	$args = array(
+		'post_type'  => 'resource', //or a post type of your choosing
+		'posts_per_page' => -1,
+		'meta_query' => array(
+			array(
+			'key' => 'oer_standard',
+			'value' => $notation,
+			'compare' => 'like'
+			)
+		)
+	);
+	
+	$query = new WP_Query($args);
+	
+	return $query->posts;
 }
 ?>
