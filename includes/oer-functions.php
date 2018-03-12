@@ -2325,4 +2325,41 @@ function get_standard_by_notation($notation){
 	
 	return $std;
 }
+
+/**
+ * Get Substandard(s) by Notation
+ **/
+function get_substandards_by_notation($notation){
+	global $wpdb;
+	
+	$std = null;
+	
+	$query = "SELECT * FROM {$wpdb->prefix}oer_standard_notation WHERE standard_notation = '%s'";
+	
+	$standard_notation = $wpdb->get_results($wpdb->prepare($query, $notation));
+	
+	if ($standard_notation){
+		$substandard_id = $standard_notation[0]->parent_id;
+		$std = get_hierarchical_substandards($substandard_id);
+	}
+	
+	return $std;
+}
+
+function get_hierarchical_substandards($substandard_id) {
+	global $wpdb;
+	
+	$stds = null;
+	
+	$substandard = oer_get_parent_standard($substandard_id);
+	foreach($substandard as $std){
+		$stds[] = $std;
+	}
+	
+	if (strpos($substandard[0]['parent_id'],"sub_standards")!==false){
+		$stds[] = get_hierarchical_substandards($substandard[0]['parent_id']);
+	}
+	
+	return $stds;
+}
 ?>
