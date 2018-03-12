@@ -2296,4 +2296,33 @@ function get_substandard_by_notation($notation) {
 	
 	return $std;
 }
+
+/**
+ * Get Core Standard by Notation
+ **/
+function get_standard_by_notation($notation){
+	global $wpdb;
+	
+	$std = null;
+	
+	$query = "SELECT * FROM {$wpdb->prefix}oer_standard_notation WHERE standard_notation = '%s'";
+	
+	$standard_notation = $wpdb->get_results($wpdb->prepare($query, $notation));
+	
+	if ($standard_notation){
+		$substandard_id = $standard_notation[0]->parent_id;
+		$substandard = oer_get_parent_standard($substandard_id);
+		
+		if (strpos($substandard[0]['parent_id'],"core_standards")!==false){
+			$pIds = explode("-",$substandard[0]['parent_id']);
+			
+			if (count($pIds)>1){
+			    $parent_id=(int)$pIds[1];
+			    $std = get_standard_by_id($parent_id);
+			}
+		}
+	}
+	
+	return $std;
+}
 ?>
