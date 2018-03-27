@@ -642,10 +642,70 @@ function oer_settings_page() {
 
 //General settings callback
 function oer_general_settings_callback() {
-
+	
 }
 
+add_action( 'admin_init' , 'oer_embed_settings' );
+function oer_embed_settings(){
+	//Create General Section
+	add_settings_section(
+		'oer_embed_settings',
+		'',
+		'oer_embed_settings_callback',
+		'embed_settings'
+	);
+	
+	//Add Settings field for Disable Screenshots
+	add_settings_field(
+		'oer_local_pdf_viewer',
+		'',
+		'oer_setup_settings_field',
+		'embed_settings',
+		'oer_embed_settings',
+		array(
+			'uid' => 'oer_local_pdf_viewer',
+			'type' => 'select',
+			'class' => 'local_pdf_viewer',
+			'name' =>  __('Local PDF Resources', OER_SLUG),
+			'options' =>  array(
+					    "0" => "embed disabled(download only)",
+					    "1" => "Google Viewer",
+					    "2" => "Mozilla PDFJS",
+					    "3" => "Wonderplugin PDF Embed",
+					    "4" => "PDF Embedder",
+					    "5" => "PDF Viewer"
+					    ),
+			'default' => '1'
+		)
+	);
 
+	//Add Settings field for Server Side Screenshots
+	add_settings_field(
+		'oer_external_pdf_viewer',
+		'',
+		'oer_setup_settings_field',
+		'embed_settings',
+		'oer_embed_settings',
+		array(
+			'uid' => 'oer_external_pdf_viewer',
+			'type' => 'select',
+			'class' => 'external_pdf_viewer',
+			'name' =>  __('External PDF Resources', OER_SLUG),
+			'options' => array(
+					"0" => "embed disabled (download only)",
+					"1" => "Google Viewer"
+					),
+			'default' => '1'
+		)
+	);
+	
+	register_setting( 'oer_embed_settings' , 'oer_disable_screenshots' );
+	register_setting( 'oer_embed_settings' , 'oer_enable_screenshot' );
+}
+
+function oer_embed_settings_callback(){
+	
+}
 
 //Initialize Style Settings Tab
 add_action( 'admin_init' , 'oer_styles_settings' );
@@ -1080,6 +1140,29 @@ function oer_setup_settings_field( $arguments ) {
 			}
 
 			echo '<input name="'.$arguments['uid'].'" id="'.$arguments['uid'].'" '.$class.' type="'.$arguments['type'].'" ' . $display_value . ' ' . $size . ' ' .  $selected . ' ' . $disabled . '  /><label for="'.$arguments['uid'].'"><strong>'.$arguments['name'].'</strong></label>';
+			break;
+		case "select":
+			if (isset($arguments['name']))
+				$title = $arguments['name'];
+			echo '<label for="'.$arguments['uid'].'"><strong>'.$title.'</strong></label>';
+			echo '<select name="'.$arguments['uid'].'" id="'.$arguments['uid'].'">';
+			
+			if (isset($arguments['options']))
+				$options = $arguments['options'];
+			
+			foreach($options as $key=>$desc){
+				$selected = "";
+				if ($value===false){
+					if ($key==$arguments['default'])
+						$selected = " selected";
+				} else {
+					if ($key==$value)
+						$selected = " selected";
+				}
+				echo '<option value="'.$key.'"'.$selected.'>'.$desc.'</option>';
+			}
+			
+			echo '<select>';
 			break;
 		case "textarea":
 			echo '<label for="'.$arguments['uid'].'"><h3><strong>'.$arguments['name'];
@@ -1976,8 +2059,8 @@ function assign_standard_template($template) {
 	
 	$url_path = trim(parse_url(add_query_arg(array()), PHP_URL_PATH), '/');
 	
-	//if ( $url_path === 'openk12xchange/resource/standards' ){
-	if ( $url_path === 'resource/standards' ) {
+	if ( $url_path === 'openk12xchange/resource/standards' ){
+	//if ( $url_path === 'resource/standards' ) {
 		// load the file if exists
 		$wp_query->is_404 = false;
 		$template = locate_template('oer_template/standards.php', true);

@@ -191,16 +191,23 @@ function oer_show_general_settings() {
 			</ul>
 		</div>
 	</div>
-	<div class="oer-plugin-row">
-		<form method="post" class="oer_settings_form" action="options.php"  onsubmit="return processInitialSettings(this)">
+	<form method="post" class="oer_settings_form" action="options.php"  onsubmit="return processInitialSettings(this)">
+		<div class="oer-plugin-row plugin-row-first">
+			<fieldset>
+				<legend><div class="oer_hdng"><?php _e("PDF Embeds", OER_SLUG); ?></div></legend>
+				<?php settings_fields("oer_embed_settings"); ?>
+				<?php do_settings_sections("embed_settings"); ?>
+			</fieldset>
+		</div>
+		<div class="oer-plugin-row">
 			<fieldset>
 				<legend><div class="oer_hdng"><?php _e("Screenshot Utility", OER_SLUG); ?></div></legend>
 				<?php settings_fields("oer_general_settings"); ?>
 				<?php do_settings_sections("oer_settings"); ?>
-				<?php submit_button(); ?>
 			</fieldset>
-		</form>
-	</div>
+		</div>
+		<?php submit_button(); ?>
+	</form>
 </div>
 
 <?php

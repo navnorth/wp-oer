@@ -273,3 +273,5 @@ tr.hide-title-setting td { padding:0 10px 15px !important; }
 }
 .loader .loader-img { display: table; overflow: hidden; height:100%; width:100%; }
 .loader .loader-img div { display:table-cell; top:30%; position:relative; }
+p.submit { margin-top:0; padding: 15px; }
+.oer_settings_form .plugin-row-first{ padding-top:0px; }
