@@ -514,6 +514,61 @@ function oer_front_scripts()
 //Initialize settings page
 add_action( 'admin_init' , 'oer_settings_page' );
 function oer_settings_page() {
+	//Create Embed Section
+	add_settings_section(
+		'oer_embed_settings',
+		'',
+		'oer_embed_settings_callback',
+		'embed_settings'
+	);
+	
+	//Add Settings field for Local PDF Resources Viewer
+	add_settings_field(
+		'oer_local_pdf_viewer',
+		'',
+		'oer_setup_settings_field',
+		'embed_settings',
+		'oer_embed_settings',
+		array(
+			'uid' => 'oer_local_pdf_viewer',
+			'type' => 'select',
+			'class' => 'local_pdf_viewer',
+			'name' =>  __('Local PDF Resources', OER_SLUG),
+			'options' =>  array(
+					    "0" => "embed disabled(download only)",
+					    "1" => "Google Viewer",
+					    "2" => "Mozilla PDFJS",
+					    "3" => "Wonderplugin PDF Embed",
+					    "4" => "PDF Embedder",
+					    "5" => "PDF Viewer"
+					    ),
+			'default' => '1'
+		)
+	);
+
+	//Add Settings field for External PDF Resources Viewer
+	add_settings_field(
+		'oer_external_pdf_viewer',
+		'',
+		'oer_setup_settings_field',
+		'embed_settings',
+		'oer_embed_settings',
+		array(
+			'uid' => 'oer_external_pdf_viewer',
+			'type' => 'select',
+			'class' => 'external_pdf_viewer',
+			'name' =>  __('External PDF Resources', OER_SLUG),
+			'options' => array(
+					"0" => "embed disabled (download only)",
+					"1" => "Google Viewer"
+					),
+			'default' => '1'
+		)
+	);
+	
+	register_setting( 'oer_general_settings' , 'oer_local_pdf_viewer' );
+	register_setting( 'oer_general_settings' , 'oer_external_pdf_viewer' );
+	
 	//Create General Section
 	add_settings_section(
 		'oer_general_settings',
@@ -643,64 +698,6 @@ function oer_settings_page() {
 //General settings callback
 function oer_general_settings_callback() {
 	
-}
-
-add_action( 'admin_init' , 'oer_embed_settings' );
-function oer_embed_settings(){
-	//Create General Section
-	add_settings_section(
-		'oer_embed_settings',
-		'',
-		'oer_embed_settings_callback',
-		'embed_settings'
-	);
-	
-	//Add Settings field for Disable Screenshots
-	add_settings_field(
-		'oer_local_pdf_viewer',
-		'',
-		'oer_setup_settings_field',
-		'embed_settings',
-		'oer_embed_settings',
-		array(
-			'uid' => 'oer_local_pdf_viewer',
-			'type' => 'select',
-			'class' => 'local_pdf_viewer',
-			'name' =>  __('Local PDF Resources', OER_SLUG),
-			'options' =>  array(
-					    "0" => "embed disabled(download only)",
-					    "1" => "Google Viewer",
-					    "2" => "Mozilla PDFJS",
-					    "3" => "Wonderplugin PDF Embed",
-					    "4" => "PDF Embedder",
-					    "5" => "PDF Viewer"
-					    ),
-			'default' => '1'
-		)
-	);
-
-	//Add Settings field for Server Side Screenshots
-	add_settings_field(
-		'oer_external_pdf_viewer',
-		'',
-		'oer_setup_settings_field',
-		'embed_settings',
-		'oer_embed_settings',
-		array(
-			'uid' => 'oer_external_pdf_viewer',
-			'type' => 'select',
-			'class' => 'external_pdf_viewer',
-			'name' =>  __('External PDF Resources', OER_SLUG),
-			'options' => array(
-					"0" => "embed disabled (download only)",
-					"1" => "Google Viewer"
-					),
-			'default' => '1'
-		)
-	);
-	
-	register_setting( 'oer_embed_settings' , 'oer_disable_screenshots' );
-	register_setting( 'oer_embed_settings' , 'oer_enable_screenshot' );
 }
 
 function oer_embed_settings_callback(){
@@ -1094,7 +1091,7 @@ function oer_setup_settings_field( $arguments ) {
 	$disabled = "";
 
 	$value = get_option($arguments['uid']);
-
+	
 	if (isset($arguments['indent'])){
 		echo '<div class="indent">';
 	}
@@ -1159,7 +1156,24 @@ function oer_setup_settings_field( $arguments ) {
 					if ($key==$value)
 						$selected = " selected";
 				}
-				echo '<option value="'.$key.'"'.$selected.'>'.$desc.'</option>';
+				$disabled = "";
+				switch ($key){
+					case 3:
+						if(!shortcode_exists('wonderplugin_pdf'))
+							$disabled = " disabled";
+						break;
+					case 4:
+						if (!shortcode_exists('pdf-embedder'))
+							$disabled = " disabled";
+						break;
+					case 5:
+						if(!shortcode_exists('pdfviewer'))
+							$disabled = " disabled";
+						break;
+					default:
+						break;
+				}
+				echo '<option value="'.$key.'"'.$selected.''.$disabled.'>'.$desc.'</option>';
 			}
 			
 			echo '<select>';
