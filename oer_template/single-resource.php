@@ -69,7 +69,7 @@ if(!empty($post_terms))
 	if (count($subjects)>0)
 		$subject_areas = array_merge($subject_areas,$subjects);
 }
-
+$embed_disabled = false;
 ?>
 <!--<div id="primary" class="content-area">-->
     <main id="oer_main" class="site-main" role="main">
@@ -89,49 +89,61 @@ if(!empty($post_terms))
 				echo $embed;
 			} elseif($isPDF) {
 				if ($isExternal) {
-					$pdf_url = "https://docs.google.com/gview?url=".$url."&embedded=true";
-					$embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.$pdf_url.'"></iframe>';
-					echo $embed_code;
+					$external_option = get_option("oer_external_pdf_viewer");
+					if ($external_option==1) {
+						$pdf_url = "https://docs.google.com/gview?url=".$url."&embedded=true";
+						echo get_embed_code($pdf_url);
+					} elseif($external_option==0) {
+						$embed_disabled = true;
+					}
 				} else {
-					if(shortcode_exists('wonderplugin_pdf')) {
-						$embed_code = "[wonderplugin_pdf src='".$url."' width='100%']";
-						echo do_shortcode($embed_code);
-					} elseif(shortcode_exists('pdf-embedder')){
-						$embed_code = "[pdf-embedder url='".$url."' width='100%']";
-						echo do_shortcode($embed_code);
-					} elseif(shortcode_exists('pdfviewer')){
-						$embed_code = "[pdfviewer width='100%']".$url."[/pdfviewer]";
-						echo do_shortcode($embed_code);
-					} else {
-						$pdf_url = OER_URL."pdfjs/web/viewer.html?file=".urlencode($url);
-						$embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.$pdf_url.'"></iframe>';
-						echo $embed_code;
+					$local_option = get_option("oer_local_pdf_viewer");
+					switch ($local_option){
+						case 0:
+							$embed_disabled = true;
+							break;
+						case 1:
+							$pdf_url = "https://docs.google.com/gview?url=".$url."&embedded=true";
+							echo get_embed_code($pdf_url);
+							break;
+						case 2:
+							$pdf_url = OER_URL."pdfjs/web/viewer.html?file=".urlencode($url);
+							$embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.$pdf_url.'"></iframe>';
+							echo $embed_code;
+							break;
+						case 3:
+							if(shortcode_exists('wonderplugin_pdf')) {
+								$embed_code = "[wonderplugin_pdf src='".$url."' width='100%']";
+								echo do_shortcode($embed_code);
+							} else {
+								$embed_disabled = true;
+							}
+							break;
+						case 4:
+							if(shortcode_exists('pdf-embedder')){
+								$embed_code = "[pdf-embedder url='".$url."' width='100%']";
+								echo do_shortcode($embed_code);
+							} else {
+								$embed_disabled = true;
+							}
+							break;
+						case 5:
+							if(shortcode_exists('pdfviewer')){
+								$embed_code = "[pdfviewer width='100%']".$url."[/pdfviewer]";
+								echo do_shortcode($embed_code);
+							} else {
+								$embed_disabled = true;
+							}
+							break;
 					}
 				}
-			} else { ?>
-			 <a class="oer-featureimg" href="<?php echo esc_url(get_post_meta($post->ID, "oer_resourceurl", true)) ?>" target="_blank" >
-    			<?php
-    				$img_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ) , "full" );
-    				$img_path = $new_img_path = parse_url($img_url[0]);
-    				$img_path = $_SERVER['DOCUMENT_ROOT'] . $img_path['path'];
-    				$new_image_url = OER_URL.'images/default-icon-528x455.png';
-				$img_width = oer_get_image_width('large');
-				$img_height = oer_get_image_height('large');
-				
-			if(!empty($img_url))
-    			{
-				if ( is_wp_error($img_url) ) {
-					debug_log("Can't get Image editor to resize Resource screenshot.");
-				} else {
-					$new_image_url = oer_resize_image($img_url[0], $img_width, $img_height, true);
-				}
+			} else {
+				echo display_default_thumbnail($post);
 			}
-			
-    				echo '<img src="'.esc_url($new_image_url).'" alt="'.esc_attr(get_the_title()).'"/>';
-
-    				?>
-                	</a>
-			<?php } ?>
+			if ($embed_disabled){
+				echo display_default_thumbnail($post);
+			}
+			?>
                 </div>
             </div>
 
@@ -463,6 +475,34 @@ if(!empty($post_terms))
 <?php
 if ($theme == "Eleganto"){
 	get_template_part( 'template-part', 'footernav' );
+}
+
+function display_default_thumbnail($post){
+	$html = '<a class="oer-featureimg" href="'.esc_url(get_post_meta($post->ID, "oer_resourceurl", true)).'" target="_blank" >';
+		$img_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ) , "full" );
+		$img_path = $new_img_path = parse_url($img_url[0]);
+		$img_path = $_SERVER['DOCUMENT_ROOT'] . $img_path['path'];
+		$new_image_url = OER_URL.'images/default-icon-528x455.png';
+		$img_width = oer_get_image_width('large');
+		$img_height = oer_get_image_height('large');
+		
+	if(!empty($img_url))
+	{
+		if ( is_wp_error($img_url) ) {
+			debug_log("Can't get Image editor to resize Resource screenshot.");
+		} else {
+			$new_image_url = oer_resize_image($img_url[0], $img_width, $img_height, true);
+		}
+	}
+	
+	$html .= '<img src="'.esc_url($new_image_url).'" alt="'.esc_attr(get_the_title()).'"/>';
+
+	$html .= '</a>';
+	return $html;
+}
+function get_embed_code($url){
+	$embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.$url.'"></iframe>';
+	return $embed_code;
 }
 
 get_footer();
