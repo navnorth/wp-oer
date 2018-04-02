@@ -2391,4 +2391,30 @@ function get_resources_by_notation($notation_id) {
 	
 	return $query->posts;
 }
+
+/**
+ * Get Resource Count By Notation
+ **/
+function get_resource_count_by_notation($notation_id){
+	global $wpdb;
+	
+	$notation = "standard_notation-".$notation_id;
+	
+	//later in the request
+	$args = array(
+		'post_type'  => 'resource', //or a post type of your choosing
+		'posts_per_page' => -1,
+		'meta_query' => array(
+			array(
+			'key' => 'oer_standard',
+			'value' => $notation,
+			'compare' => 'like'
+			)
+		)
+	);
+	
+	$query = new WP_Query($args);
+	
+	return count($query->posts);
+}
 ?>

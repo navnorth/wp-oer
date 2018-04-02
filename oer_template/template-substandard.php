@@ -50,9 +50,10 @@ $notations = get_standard_notations($standard->id);
 				    <?php if ($notations) {  ?>
 				    <ul class="oer-notations">
 					<?php foreach($notations as $notation) {
+					    $cnt = get_resource_count_by_notation($notation->id);
 					    $slug = "resource/standards/".sanitize_title($core_standard->standard_name)."/".$standard_name_slug."/".$notation->standard_notation;
 					?>
-					<li><a href="<?php echo home_url($slug); ?>"><strong><?php echo $notation->standard_notation; ?></strong> <?php echo $notation->description; ?></a></li>
+					<li><a href="<?php echo home_url($slug); ?>"><strong><?php echo $notation->standard_notation; ?></strong> <?php echo $notation->description; ?></a> <span class="res-count"><?php echo $cnt; ?></span></li>
 					<?php } ?>
 				    </ul>
 				    <?php } ?>
