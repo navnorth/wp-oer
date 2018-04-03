@@ -2417,4 +2417,28 @@ function get_resource_count_by_notation($notation_id){
 	
 	return count($query->posts);
 }
+
+/**
+ * Get Resource Count By Sub-Standard
+ **/
+function get_resource_count_by_substandard($substandard_id){
+	global $wpdb;
+	
+	$cnt = 0;
+	
+	$child_substandards = get_substandards($substandard_id, false);
+	if(count($child_substandards)>0){
+		foreach($child_substandards as $child_substandard){
+			$cnt += get_resource_count_by_substandard($child_substandard->id);
+		}
+	}
+	$notations = get_standard_notations($substandard_id);
+	
+	if ($notations){
+		foreach($notations as $notation){
+			$cnt += get_resource_count_by_notation($notation->id);
+		}
+	}
+	return $cnt;
+}
 ?>
