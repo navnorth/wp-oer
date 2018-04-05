@@ -25,7 +25,7 @@ $standards = get_standards();
 			    <?php if ($standards) {  ?>
 			    <ul class="oer-standards">
 				<?php foreach($standards as $standard) {
-				    $cnt = get_resource_count_by_substandard($standard->id);
+				    $cnt = get_resource_count_by_standard($standard->id);
 				    $slug = "resource/standards/".sanitize_title($standard->standard_name);
 				?>
 				<li><a href="<?php echo home_url($slug); ?>"><?php echo $standard->standard_name; ?></a> <span class="res-count"><?php echo $cnt; ?></span></li>

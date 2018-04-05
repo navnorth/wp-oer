@@ -2350,7 +2350,6 @@ function get_substandards_by_notation($notation){
  * Get hierarchical substandards by substandard id
  **/
 function get_hierarchical_substandards($substandard_id) {
-	global $wpdb;
 	
 	$stds = null;
 	
@@ -2370,7 +2369,6 @@ function get_hierarchical_substandards($substandard_id) {
  * Get Resources by notation
  **/
 function get_resources_by_notation($notation_id) {
-	global $wpdb;
 	
 	$notation = "standard_notation-".$notation_id;
 	
@@ -2396,7 +2394,6 @@ function get_resources_by_notation($notation_id) {
  * Get Resource Count By Notation
  **/
 function get_resource_count_by_notation($notation_id){
-	global $wpdb;
 	
 	$notation = "standard_notation-".$notation_id;
 	
@@ -2422,7 +2419,6 @@ function get_resource_count_by_notation($notation_id){
  * Get Resource Count By Sub-Standard
  **/
 function get_resource_count_by_substandard($substandard_id){
-	global $wpdb;
 	
 	$cnt = 0;
 	
@@ -2446,14 +2442,14 @@ function get_resource_count_by_substandard($substandard_id){
  * Get Resource Count By Standard
  **/
 function get_resource_count_by_standard($standard_id){
-	global $wpdb;
 	
 	$cnt = 0;
 	
 	$substandards = get_substandards($standard_id);
+	
 	if(count($substandards)>0){
 		foreach($substandards as $substandard){
-			$cnt += get_resource_count_by_substandard($substandard);
+			$cnt += get_resource_count_by_substandard($substandard->id);
 		}
 	}
 	$notations = get_standard_notations($standard_id);
