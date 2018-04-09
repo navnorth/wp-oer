@@ -2390,10 +2390,23 @@ function get_resources_by_notation($notation_id) {
 	return $query->posts;
 }
 
+function get_child_notations($notation_id){
+	global $wpdb;
+	
+	$notation = "standard_notation-".$notation_id;
+	
+	$query = "SELECT * FROM {$wpdb->prefix}oer_standard_notation WHERE parent_id = '%s'";
+	
+	$standard_notations = $wpdb->get_results($wpdb->prepare($query, $notation));
+	
+	return $standard_notations;
+}
+
 /**
  * Get Resource Count By Notation
  **/
 function get_resource_count_by_notation($notation_id){
+	$cnt = 0;
 	
 	$notation = "standard_notation-".$notation_id;
 	
@@ -2412,20 +2425,30 @@ function get_resource_count_by_notation($notation_id){
 	
 	$query = new WP_Query($args);
 	
-	return count($query->posts);
+	$cnt += count($query->posts);
+	
+	$child_notations = get_child_notations($notation_id);
+	
+	if ($child_notations){
+		foreach ($child_notations as $child_notation){
+			$cnt += get_resource_count_by_notation($child_notation->id);
+		}
+	}
+	
+	return $cnt;
 }
 
 /**
  * Get Resource Count By Sub-Standard
  **/
 function get_resource_count_by_substandard($substandard_id){
-	
 	$cnt = 0;
 	
 	$child_substandards = get_substandards($substandard_id, false);
+	
 	if(count($child_substandards)>0){
 		foreach($child_substandards as $child_substandard){
-			$cnt += get_resource_count_by_substandard($child_substandard->id);
+			$cnt += get_resource_count_by_substandard($child_substandard->id, false);
 		}
 	}
 	$notations = get_standard_notations($substandard_id);
