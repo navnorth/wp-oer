@@ -41,9 +41,10 @@ $notations = get_standard_notations($standard->id);
 				    <?php if ($sub_standards) {  ?>
 				    <ul class="oer-substandards">
 					<?php foreach($sub_standards as $sub_standard) {
+					     $cnt = get_resource_count_by_substandard($sub_standard->id);
 					    $slug = "resource/standards/".sanitize_title($core_standard->standard_name)."/".sanitize_title($sub_standard->standard_title);
 					?>
-					<li><a href="<?php echo home_url($slug); ?>"><?php echo $sub_standard->standard_title; ?></a></li>
+					<li><a href="<?php echo home_url($slug); ?>"><?php echo $sub_standard->standard_title; ?></a> <span class="res-count"><?php echo $cnt; ?></span></li>
 					<?php } ?>
 				    </ul>
 				    <?php } ?>
