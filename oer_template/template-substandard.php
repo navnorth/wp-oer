@@ -23,9 +23,11 @@ if (strpos($standard->parent_id,"core_standards")!==false){
     $pIds = explode("-",$standard->parent_id);
     if (count($pIds)>1)
 	$parent_id=(int)$pIds[1];
+    
+    $core_standard = get_standard_by_id($parent_id);
+} else {
+    $core_standard = get_corestandard_by_standard($standard->parent_id);
 }
-
-$core_standard = get_standard_by_id($parent_id);
 
 $sub_standards = get_substandards($standard->id, false);
 $notations = get_standard_notations($standard->id);

@@ -2484,4 +2484,30 @@ function get_resource_count_by_standard($standard_id){
 	}
 	return $cnt;
 }
+
+/**
+ * Get Core Standard by standard or substandard ID
+ **/
+function get_corestandard_by_standard($parent_id){
+	global $wpdb;
+	
+	$standard = null;
+	$parent = explode("-",$parent_id);
+	if ($parent[0]=="sub_standards") {
+		$query = "SELECT * FROM {$wpdb->prefix}oer_sub_standards WHERE id = '%s'";
+		$substandards = $wpdb->get_results($wpdb->prepare($query, $parent[1]));
+		
+		foreach($substandards as $substandard){
+			$standard = get_corestandard_by_standard($substandard->parent_id);
+		}
+	} else {
+		$query = "SELECT * FROM {$wpdb->prefix}oer_core_standards WHERE id = '%s'";
+		$standards = $wpdb->get_results($wpdb->prepare($query, $parent[1]));
+		foreach($standards as $std){
+			$standard = $std;
+		}
+	}
+	
+	return $standard;
+}
 ?>
