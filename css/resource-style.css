@@ -6,6 +6,11 @@
 .oer-cntnr { width:100%; margin:0 auto; overflow:hidden; }
 .oer_sngl_resource_wrapper { width: 100%; margin-bottom: 10px; overflow:hidden; }
 .oer-rsrclftcntr-img { float: left; width: 42%; /*margin-right: 35px;*/ }
+.oer-rsrclftcntr-video { padding-right:0; overflow:hidden; }
+.oer-rsrclftcntr-video .videoWrapper { padding-top:0; }
+.oer-rsrccntr-details { margin-top:15px; }
+.oer-rsrclftcntr .oer-sngl-rsrc-dscrptn h2 { margin-top:0; }
+.oer-rsrclftcntr .oer-sngl-rsrc-dscrptn { padding-bottom:0; }
 .oer-rsrcrghtcntr { float: left; width: 54%; padding: 0 0 0 15px; box-sizing: border-box; }
 .oer-sngl-rsrc-url { float: left; font-size: 26px; padding: 0 0 10px 0; line-height: 28px; text-align: left; width: 100%; }
 .oer-sngl-rsrc-url a { text-decoration: none; color: #333; }
