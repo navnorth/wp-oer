@@ -2020,6 +2020,19 @@ function oer_is_youtube_url($url) {
 	return $match;
 }
 
+function oer_is_sll_resource($url) {
+	$match = false;
+	
+	//$pattern = '/^(http(s)?:\/\/)?((w){3}.)?learninglab.si?(\.edu)?\/.+/';
+	$pattern = '/^(http(s)?:\/\/)?((w){3}.)?learninglab.si?(\.edu)?\/resource(s)\/view\/.+/';
+	$pattern_match = preg_match($pattern, $url, $matches);
+	
+	if ($pattern_match == 1)
+		$match = true;
+		
+	return $match;
+}
+
 //Generate youtube embed code
 function oer_generate_youtube_embed_code($url) {
 	$embed_code = "";
@@ -2060,6 +2073,28 @@ function oer_get_youtube_thumbnail($youtube_url){
 	$thumbnail_file = oer_save_image_to_file($thumbnail_url);
 	
 	return $thumbnail_file;
+}
+
+function oer_generate_sll_resource_embed_code($url){
+	$embed_code = "";
+	
+	$sll_resource_id = oer_get_ssl_resource_id($url);
+	
+	//Generate embed code
+	if ($sll_resource_id) {
+		$embed_code = '<script type="text/javascript" src="https://learninglab.si.edu/embed/widget/q/r/'.$sll_resource_id.'/embed.js"></script><div class="sll-embed" data-widget-type="r" data-widget-key="'.$sll_resource_id.'"></div>';
+	}
+	return $embed_code;
+}
+
+function oer_get_ssl_resource_id($url){
+	$resource_id = null;
+	
+	if (preg_match('/learninglab\.si\.edu\/resources\/view\/([^\&\?\/]+)/', $url, $id)) {
+		$resource_id = $id[1];
+	}
+	
+	return $resource_id;
 }
 
 // Get Subject Areas

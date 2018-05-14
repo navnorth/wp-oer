@@ -1,10 +1,18 @@
-<div class="oer-rsrclftcntr-video col-md-12 col-sm-12 col-xs-12">
-    <div class="videoWrapper">
+<div class="oer-rsrclftcntr-video col-md-12 col-sm-12 col-xs-12">    
         <?php
-            $embed = oer_generate_youtube_embed_code($url);
-            echo $embed;
+            if ($youtube){
+                echo '<div class="videoWrapper">';
+                $embed = oer_generate_youtube_embed_code($url);
+                echo $embed;
+                echo '</div>';
+            } elseif($isSSLResource){
+                echo '<div class="SLLWrapper">';
+                $embed = oer_generate_sll_resource_embed_code($url);
+                echo $embed;
+                echo '</div>';
+            }
+            
         ?>
-    </div>
 </div>
 <div class="oer-rsrccntr-details col-md-12 col-sm-12 col-xs-12">
     <div class="oer-rsrclftcntr col-md-6 col-sm-12 col-xs-12">

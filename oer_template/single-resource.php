@@ -24,6 +24,7 @@ $url = get_post_meta($post->ID, "oer_resourceurl", true);
 $url_domain = oer_getDomainFromUrl($url);
 
 $youtube = oer_is_youtube_url($url);
+$isSSLResource = oer_is_sll_resource($url);
 $isPDF = is_pdf_resource($url);
 $isExternal = is_external_url($url);
 
@@ -83,7 +84,7 @@ $embed_disabled = false;
 	<?php endif; ?>
     	
 	<?php
-	if ($youtube)
+	if ($youtube || $isSSLResource)
 		include(OER_PATH.'oer_template/single-resource-youtube.php');
 	else
 		include(OER_PATH.'oer_template/single-resource-standard.php');
