@@ -2033,6 +2033,19 @@ function oer_is_sll_resource($url) {
 	return $match;
 }
 
+function oer_is_sll_collection($url) {
+	$match = false;
+	
+	//$pattern = '/^(http(s)?:\/\/)?((w){3}.)?learninglab.si?(\.edu)?\/.+/';
+	$pattern = '/^(http(s)?:\/\/)?((w){3}.)?learninglab.si?(\.edu)?\/(collection(s)|q)\/.+/';
+	$pattern_match = preg_match($pattern, $url, $matches);
+	
+	if ($pattern_match == 1)
+		$match = true;
+		
+	return $match;
+}
+
 //Generate youtube embed code
 function oer_generate_youtube_embed_code($url) {
 	$embed_code = "";
@@ -2095,6 +2108,34 @@ function oer_get_ssl_resource_id($url){
 	}
 	
 	return $resource_id;
+}
+
+function oer_generate_sll_collection_embed_code($url){
+	$embed_code = "";
+	
+	$sll_collection_id = oer_get_ssl_collection_id($url);
+	
+	//Generate embed code
+	if ($sll_collection_id) {
+		$embed_code = '<script type="text/javascript" src="https://learninglab.si.edu/embed/widget/q/c/'.$sll_collection_id.'/embed.js"></script><div class="sll-embed" data-widget-type="c" data-widget-key="'.$sll_collection_id.'"></div>';
+	}
+	return $embed_code;
+}
+
+function oer_get_ssl_collection_id($url){
+	$collection_id = null;
+	
+	if (preg_match('/learninglab\.si\.edu\/collections\/[A-Za-z0-9\_\@\.\/\#\&\+\-]*\/([^\&\?\/]+)/', $url, $id)) {
+		$collection_id = $id[1];
+	}elseif (preg_match('/learninglab\.si\.edu\/q\/[A-Za-z0-9\_\@\.\/\#\&\+\-]*\/([^\&\?\/]+)/', $url, $id)) {
+		$collection_id = $id[1];
+	}
+	
+	if (substr($collection_id,-2)=="#r"){
+		$collection_id = substr($collection_id,0,strrpos($collection_id,"#r"));
+	}
+	
+	return $collection_id;
 }
 
 // Get Subject Areas
