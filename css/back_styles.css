@@ -220,6 +220,8 @@ ul.oer_slctstandard > li
 .oer-import-row { padding:0; }
 .oer-plugin-row .oer-row-left, .oer-import-row .row-left { width:63%; float:left; }
 .oer-plugin-row .oer-row-right, .oer-import-row .row-right { width:35%; float:right; }
+.oer-import-row .row2-left { width:85%; float:left; }
+.oer-import-row .row2-right { width:13%; float:right; }
 .oer-plugin-row fieldset, .oer-import-row fieldset { margin-bottom:15px; }
 .oer-plugin-row .form-table th { width:0; display:none; }
 .oer-plugin-row .form-table td label { margin-right:10px; }
