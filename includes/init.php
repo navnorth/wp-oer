@@ -690,6 +690,30 @@ function process_import_resources(){
     exit;
 }
 
+add_action("admin_action_import_lr_resources","process_import_lr_resources");
+function process_import_lr_resources(){
+    $message = null;
+    $type = null;
+
+    if (!current_user_can('manage_options')) {
+	    wp_die( "You don't have permission to access this page!" );
+    }
+    
+    //Resource Import
+    if(isset($_POST['lr_resrc_imprt'])){
+	check_admin_referer('oer_lr_nonce_field');
+	
+	$import_response = oer_importLRResources();
+	if ($import_response){
+	    $message = urlencode($import_response["message"]);
+	    $type = urlencode($import_response["type"]);
+	}
+    }
+    
+    wp_safe_redirect( admin_url("edit.php?post_type=resource&page=oer_import&message=$message&type=$type"));
+    exit;
+}
+
 /**
  * Process Import Subject Areas
  **/

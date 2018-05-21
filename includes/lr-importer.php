@@ -15,14 +15,14 @@
 			<div class="row2-left">
 				<div class="fields">
 					<input type="text" id="lr_import" name="lr_import" class="large-text"/>
-					<input type="hidden" value="" name="resrc_imprt" />
+					<input type="hidden" value="" name="lr_resrc_imprt" />
 					<div class="lr-resource-import-notice"></div>
 				</div>
 			</div>
 			<div class="row2-right">
 				<div class="fields alignRight">
 				    <input type="hidden" name="action" value="import_lr_resources">
-				    <?php wp_nonce_field( 'oer_resources_nonce_field' ); ?>
+				    <?php wp_nonce_field( 'oer_lr_nonce_field' ); ?>
 					<input type="submit" id="lr_submit" name="lr_submit" value="<?php esc_attr(_e("Import", OER_SLUG)); ?>" class="button button-primary"/>
 				</div>
 			</div>

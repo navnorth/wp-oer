@@ -1479,6 +1479,11 @@ function oer_importResources($default=false) {
 	return $response;
 }
 
+// Import LR Resources
+function oer_importLRResources(){
+	
+}
+
 //Import Subject Areas
 function oer_importSubjectAreas($default=false) {
 	global $wpdb;
