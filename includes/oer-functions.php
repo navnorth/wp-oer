@@ -1481,7 +1481,44 @@ function oer_importResources($default=false) {
 
 // Import LR Resources
 function oer_importLRResources(){
-	
+	$lr_url = $_POST['lr_import'];
+	$resources = null;
+	$schema = array(
+			"LRMI",
+			"JSON-LD",
+			"json",
+			"schema.org"
+		);
+	if ($lr_url){
+		$resources = file_get_contents($lr_url);
+		$resources = json_decode($resources);
+	}
+	foreach($resources->documents as $document){
+		foreach ($document as $doc) {
+			if ($doc[0]->doc_type=="resource_data"){
+				$exists = custom_array_intersect($schema, $doc[0]->payload_schema);
+				if (!empty($exists)){
+					var_dump(json_encode($doc[0]->resource_data));
+					exit();
+				}
+			}
+		}
+	}
+}
+
+function custom_array_intersect($firstArray, $secondArray){
+  $intersection = [];
+  foreach ($firstArray as $a){
+      $A = mb_strtolower($a);
+      foreach ($secondArray as $b) {
+	  $B = mb_strtolower($b);
+	  if ($A === $B) {
+	      $intersection[] = array($a,$b);
+	      break;
+	  }
+      }
+  }
+  return $intersection;
 }
 
 //Import Subject Areas

@@ -709,7 +709,7 @@ function process_import_lr_resources(){
 	    $type = urlencode($import_response["type"]);
 	}
     }
-    
+    exit;
     wp_safe_redirect( admin_url("edit.php?post_type=resource&page=oer_import&message=$message&type=$type"));
     exit;
 }
