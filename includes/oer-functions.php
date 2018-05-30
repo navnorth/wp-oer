@@ -1494,45 +1494,67 @@ function oer_importLRResources(){
 		$resources = file_get_contents($lr_url);
 		$resources = json_decode($resources);
 	}
+	$index = 0;
 	foreach($resources->documents as $document){
+		$lr_resource = array();
+		
 		foreach ($document as $doc) {
-			var_dump($doc);
 			if ($doc[0]->doc_type=="resource_data"){
 				$exists = custom_array_intersect($schema, $doc[0]->payload_schema);
+		
 				if (!empty($exists)){
-					foreach($doc[0]->resource_data as $resource){
-						$lr_resource['resource_url'] = $resource[0]->properties->url[0];
-						if (strtolower($resource[0]->properties->educationalAlignment[0]->properties->alignmentType[0])=="educationlevel"){
-							if (strpos($resource[0]->properties->educationalAlignment[0]->properties->targetName[0],"Fourth")>=0){
-								$lr_resource['grade'] = "4";
+					if ($doc[0]->resource_data->items){
+						foreach($doc[0]->resource_data as $resource){
+							
+							$lr_resource['resource_url'] = $resource[0]->properties->url[0];
+							if (strtolower($resource[0]->properties->educationalAlignment[0]->properties->alignmentType[0])=="educationlevel"){
+								if (strpos($resource[0]->properties->educationalAlignment[0]->properties->targetName[0],"Fourth")>=0){
+									$lr_resource['grade'] = "4";
+								}
 							}
+							if (strpos($resource[0]->properties->author[0]->type[0],"Person")){
+								$lr_resource['author_type'] = "person";
+							} else {
+								$lr_resource['author_type'] = "organization";
+							}
+							$lr_resource['author_url'] = $resource[0]->properties->author[0]->properties->url[0][0];
+							if ($resource[0]->properties->author[0]->properties->name[0])
+								$lr_resource['author_name'] = $resource[0]->properties->author[0]->properties->name[0];
+							else
+								$lr_resource['author_name'] = $resource[0]->properties->author[0]->properties->name[0][0];
+							$lr_resource['author_email'] = $resource[0]->properties->author[0]->properties->email[0][0];
+							if (strpos($resource[0]->properties->publisher[0]->type[0],"Organization")){
+								$lr_resource['publisher_name'] = $resource[0]->properties->publisher[0]->properties->name[0];
+								$lr_resource['publisher_url'] = $resource[0]->properties->publisher[0]->properties->url[0];
+							}
+							$lr_resource['interactivity'] = $resource[0]->properties->interactivityType[0];
+							$lr_resource['title'] = $resource[0]->properties->name[0];
+							$lr_resource['media_type'] = strtolower($resource[0]->properties->mediaType[0]);
+							$lr_resource['date_created'] = $resource[0]->properties->dateCreated[0];
+							$lr_resource['lr_type'] = strtolower($resource[0]->properties->learningResourceType[0]);
+							$lr_resource['description'] = $resource[0]->properties->description[0];
+							$lr_resource['tags'] = $resource[0]->properties->keywords[0];
+							$lr_resources[] = $lr_resource;
 						}
-						if (strpos($resource[0]->properties->publisher[0]->type[0],"Person")){
-							$lr_resource['author_type'] = "person";
-						} else {
-							$lr_resource['author_type'] = "organization";
-						}
-						$lr_resource['author_url'] = $resource[0]->properties->author[0]->properties->url[0][0];
-						$lr_resource['author_name'] = $resource[0]->properties->author[0]->properties->name[0][0];
-						$lr_resource['author_email'] = $resource[0]->properties->author[0]->properties->email[0][0];
-						if (strpos($resource[0]->properties->publisher[0]->type[0],"Organization")){
-							$lr_resource['publisher_name'] = $resource[0]->properties->publisher[0]->properties->name[0];
-							$lr_resource['publisher_url'] = $resource[0]->properties->publisher[0]->properties->url[0];
-						}
-						$lr_resource['interactivity'] = $resource[0]->properties->interactivityType[0];
-						$lr_resource['title'] = $resource[0]->properties->name[0];
-						$lr_resource['media_type'] = strtolower($resource[0]->properties->mediaType[0]);
-						$lr_resource['date_created'] = $resource[0]->properties->dateCreated[0];
-						$lr_resource['lr_type'] = strtolower($resource[0]->properties->learningResourceType[0]);
-						$lr_resource['description'] = $resource[0]->properties->description[0];
-						$lr_resource['tags'] = $resource[0]->properties->keywords[0];
+					} else {
+						$resource = $doc[0]->resource_data;
+						
+						$lr_resource['resource_url'] = $resource->url;
+						$lr_resource['description'] = $resource->description[0];
+						$lr_resource['title'] = $resource->name[0];
+						$lr_resource['publisher_name'] = $resource->publisher[0]->name;
+						$lr_resource['author_name'] = $resource->author[0]->name;
+						$lr_resource['based_on_url'] = $resource->isBasedOnURL[0];
+						$lr_resource['date_created'] = $resource->dateCreated[0];
+						$lr_resource['subject_areas'] = $resource->about;
+						$lr_resources[] = $lr_resource;	
 					}
-					$lr_resources[] = $lr_resource;
 				}
 			}
 		}
+		$index++;
 	}
-	var_dump($lr_resources);
+	return $lr_resources;
 }
 
 function custom_array_intersect($firstArray, $secondArray){
