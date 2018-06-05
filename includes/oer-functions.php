@@ -2679,4 +2679,55 @@ function get_corestandard_by_standard($parent_id){
 	
 	return $standard;
 }
+
+/**
+ * Add OER Resource
+ **/
+function oer_add_resource($resource) {
+	$post_name = "";
+	$oer_resourceurl = "";
+	
+	//Check if resource title is set
+	if ( isset( $resource['title'] ) ){
+		$post_name = strtolower($resource['title']);
+		$post_name = str_replace(' ','_', $post_name);
+	}
+
+	if(!empty($resource['title']) && !empty($resource['resource_url']))
+	{
+		/** Get Current WP User **/
+		$user_id = get_current_user_id();
+		/** Get Current Timestamp for post_date **/
+		$cs_date = current_time('mysql');
+
+		$post = array('post_content' => $resource['description'], 'post_name' => $post_name, 'post_title' => $resource['title'], 'post_status' => 'publish', 'post_type' => 'resource', 'post_author' => $user_id , 'post_date' => $cs_date, 'post_date_gmt'  => $cs_date, 'comment_status' => 'open');
+		/** Set $wp_error to false to return 0 when error occurs **/
+		$post_id = wp_insert_post( $post, false );
+
+		// Set Tages
+		$oer_kywrd = strtolower(trim($resource['tags'],","));
+		wp_set_post_tags(  $post_id, $oer_kywrd , true );
+	}
+
+
+	if($resource['resource_url'])
+	{
+		if( !empty($resource['resource_url']) )
+		{
+			if ( preg_match('/http/',$resource['resource_url']) )
+			{
+				$oer_resourceurl = $resource['resource_url'];
+			}
+			else
+			{
+				$oer_resourceurl = 'http://'.$resource['resource_url'];
+			}
+		}
+		update_post_meta( $post_id , 'oer_resourceurl' , esc_url_raw($oer_resourceurl));
+	}
+	
+	if(!empty($resource['date_created'])){
+		update_post_meta( $post_id , 'oer_datecreated' , $resource['date_created']);
+	}
+}
 ?>

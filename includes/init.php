@@ -703,13 +703,16 @@ function process_import_lr_resources(){
     if(isset($_POST['lr_resrc_imprt'])){
 	check_admin_referer('oer_lr_nonce_field');
 	
-	$import_response = oer_importLRResources();
-	if ($import_response){
-	    $message = urlencode($import_response["message"]);
-	    $type = urlencode($import_response["type"]);
+	$resources = oer_importLRResources();
+	
+	if ($resources){
+	    foreach($resources as $resource) {
+		oer_add_resource($resource);
+	    }
+	    //$message = urlencode($import_response["message"]);
+	    //$type = urlencode($import_response["type"]);
 	}
     }
-    exit;
     wp_safe_redirect( admin_url("edit.php?post_type=resource&page=oer_import&message=$message&type=$type"));
     exit;
 }
