@@ -709,8 +709,6 @@ function process_import_lr_resources(){
 	    foreach($resources as $resource) {
 		oer_add_resource($resource);
 	    }
-	    //$message = urlencode($import_response["message"]);
-	    //$type = urlencode($import_response["type"]);
 	}
     }
     wp_safe_redirect( admin_url("edit.php?post_type=resource&page=oer_import&message=$message&type=$type"));

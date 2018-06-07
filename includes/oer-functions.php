@@ -2693,6 +2693,7 @@ function oer_add_resource($resource) {
 		$post_name = str_replace(' ','_', $post_name);
 	}
 
+	// Save resource title
 	if(!empty($resource['title']) && !empty($resource['resource_url']))
 	{
 		/** Get Current WP User **/
@@ -2708,8 +2709,8 @@ function oer_add_resource($resource) {
 		$oer_kywrd = strtolower(trim($resource['tags'],","));
 		wp_set_post_tags(  $post_id, $oer_kywrd , true );
 	}
-
-
+	
+	// Save Resource URL
 	if($resource['resource_url'])
 	{
 		if( !empty($resource['resource_url']) )
@@ -2726,8 +2727,59 @@ function oer_add_resource($resource) {
 		update_post_meta( $post_id , 'oer_resourceurl' , esc_url_raw($oer_resourceurl));
 	}
 	
+	// Save Date Created
 	if(!empty($resource['date_created'])){
 		update_post_meta( $post_id , 'oer_datecreated' , $resource['date_created']);
+	}
+	
+	// Save Author Type
+	if(!empty($resource['author_type'])){
+		update_post_meta( $post_id , 'oer_authortype' , sanitize_text_field($resource['author_type']));
+	}
+	
+	// Save Author Name
+	if(!empty($resource['author_name'])){
+		update_post_meta( $post_id , 'oer_authorname' , sanitize_text_field($resource['author_name']));
+	}
+	
+	// Save Author Url
+	if(!empty($resource['author_url'])){
+		$oer_authorurl = $resource['author_url'];
+		if ( preg_match('/http/',$oer_authorurl) ){
+			$oer_authorurl = $oer_authorurl;
+		}
+		else{
+			$oer_authorurl = 'http://'.$oer_authorurl;
+		}
+		update_post_meta( $post_id , 'oer_authorurl' , esc_url_raw($oer_authorurl));
+	}
+	
+	// Save Publisher name
+	if(isset($resource['publisher_name'])){
+		update_post_meta( $post_id , 'oer_publishername' , sanitize_text_field($resource['publisher_name']));
+	}
+
+	// Save publisher url
+	if(isset($resource['publisher_url']))
+	{
+		$oer_publisherurl = $resource['publisher_url'];
+		if( !empty($resource['publisher_url']) )
+		{
+			if ( preg_match('/http/',$oer_publisherurl) )
+			{
+				$oer_publisherurl = $resource['publisher_url'];
+			}
+			else
+			{
+				$oer_publisherurl = 'http://'.$resource['publisher_url'];
+			}
+		}
+		update_post_meta( $post_id , 'oer_publisherurl' , esc_url_raw($oer_publisherurl));
+	}
+	
+	// Save media type
+	if(!empty($resource['media_type'])){
+		update_post_meta( $post_id , 'oer_mediatype' , sanitize_text_field($resource['media_type']));
 	}
 }
 ?>
