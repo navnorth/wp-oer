@@ -1505,7 +1505,6 @@ function oer_importLRResources(){
 				if (!empty($exists)){
 					if ($doc[0]->resource_data->items){
 						foreach($doc[0]->resource_data as $resource){
-							
 							$lr_resource['resource_url'] = $resource[0]->properties->url[0];
 							if (strtolower($resource[0]->properties->educationalAlignment[0]->properties->alignmentType[0])=="educationlevel"){
 								if (strpos($resource[0]->properties->educationalAlignment[0]->properties->targetName[0],"Fourth")>=0){
@@ -1518,7 +1517,7 @@ function oer_importLRResources(){
 								$lr_resource['author_type'] = "organization";
 							}
 							$lr_resource['author_url'] = $resource[0]->properties->author[0]->properties->url[0][0];
-							if ($resource[0]->properties->author[0]->properties->name[0])
+							if (!is_array($resource[0]->properties->author[0]->properties->name[0]))
 								$lr_resource['author_name'] = $resource[0]->properties->author[0]->properties->name[0];
 							else
 								$lr_resource['author_name'] = $resource[0]->properties->author[0]->properties->name[0][0];
@@ -2780,6 +2779,16 @@ function oer_add_resource($resource) {
 	// Save media type
 	if(!empty($resource['media_type'])){
 		update_post_meta( $post_id , 'oer_mediatype' , sanitize_text_field($resource['media_type']));
+	}
+	
+	// Save Learning Resource Type
+	if(!empty($resource['lr_type'])){
+		update_post_meta( $post_id , 'oer_lrtype' , sanitize_text_field($resource['media_type']));
+	}
+	
+	// Save Interactivity
+	if(!empty($resource['interactivity'])){
+		update_post_meta( $post_id , 'oer_interactivity' , sanitize_text_field($resource['interactivity']));
 	}
 }
 ?>
