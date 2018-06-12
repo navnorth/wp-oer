@@ -1505,6 +1505,7 @@ function oer_importLRResources(){
 				if (!empty($exists)){
 					if ($doc[0]->resource_data->items){
 						foreach($doc[0]->resource_data as $resource){
+							var_dump($resource);
 							$lr_resource['resource_url'] = $resource[0]->properties->url[0];
 							if (strtolower($resource[0]->properties->educationalAlignment[0]->properties->alignmentType[0])=="educationlevel"){
 								if (strpos($resource[0]->properties->educationalAlignment[0]->properties->targetName[0],"Fourth")>=0){
@@ -1537,7 +1538,7 @@ function oer_importLRResources(){
 						}
 					} else {
 						$resource = $doc[0]->resource_data;
-						
+						var_dump($resource);
 						$lr_resource['resource_url'] = $resource->url;
 						$lr_resource['description'] = $resource->description[0];
 						$lr_resource['title'] = $resource->name[0];
@@ -1550,6 +1551,7 @@ function oer_importLRResources(){
 					}
 				}
 			}
+			exit();
 		}
 		$index++;
 	}
