@@ -1,6 +1,6 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <div class="oer_imprtrwpr">
-    <form method="post" enctype="multipart/form-data" action="<?php echo esc_url( admin_url('admin.php') ); ?>" onsubmit="return processImport('#lr_submit','lr_import')">
+    <form method="post" enctype="multipart/form-data" action="<?php echo esc_url( admin_url('admin.php') ); ?>" onsubmit="return processLRImport('#lr_submit','lr_import')">
 	<fieldset>
 		<legend><div class="oer_heading"><?php _e("Import Resources from the Learning Registry (beta)", OER_SLUG); ?></div></legend>
 		<div class="oer-import-row">

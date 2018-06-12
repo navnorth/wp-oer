@@ -199,6 +199,26 @@ function processImport(btn, file) {
 	return(true); 
 }
 
+//Import LR Resources
+function processLRImport(btn, input) {
+	if ( document.getElementById(input).value === "" ) {
+		return false;
+	}
+	if (jQuery('.notice-red').length>0) {
+		jQuery('.notice-red').remove();
+	}
+	
+	jQuery(btn).prop('value','Processing...');
+	
+	setTimeout(function() {
+		var Top = document.documentElement.scrollTop || document.body.scrollTop;
+		jQuery('.loader .loader-img').css({'padding-top':Top + 'px'});
+		jQuery('.loader').show();
+		} ,1000);
+	jQuery('.oer_imprtrwpr .oer-import-row input[type=submit]').prop('disabled',true);
+	return(true); 
+}
+
 //Import Standards
 function importStandards(frm,btn) {
 	if (jQuery(frm).find(':checkbox:checked').length==0){
