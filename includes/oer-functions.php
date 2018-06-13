@@ -1482,6 +1482,7 @@ function oer_importResources($default=false) {
 // Import LR Resources
 function oer_importLRResources(){
 	$lr_url = $_POST['lr_import'];
+	
 	$resources = null;
 	$lr_resources = array();
 	$schema = array(
@@ -1491,7 +1492,11 @@ function oer_importLRResources(){
 			"schema.org"
 		);
 	if ($lr_url){
-		$resources = file_get_contents($lr_url);
+		if( ini_get('allow_url_fopen') ) {
+			$resources = file_get_contents($lr_url);
+		} else {
+			$resources = curlResources($lr_url);
+		}
 		$resources = json_decode($resources);
 	}
 	$index = 0;
@@ -1553,6 +1558,18 @@ function oer_importLRResources(){
 		$index++;
 	}
 	return $lr_resources;
+}
+
+function curlResources($url){
+	if (!function_exists('curl_init')){ 
+		die('CURL is not installed!');
+	}
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	$response = curl_exec($ch);
+	curl_close($ch);
+	return $response;
 }
 
 function custom_array_intersect($firstArray, $secondArray){
