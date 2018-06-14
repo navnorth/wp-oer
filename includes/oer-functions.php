@@ -1554,6 +1554,7 @@ function oer_importLRResources(){
 					}
 				}
 			}
+			
 		}
 		$index++;
 	}
@@ -2807,5 +2808,11 @@ function oer_add_resource($resource) {
 	if(!empty($resource['interactivity'])){
 		update_post_meta( $post_id , 'oer_interactivity' , sanitize_text_field($resource['interactivity']));
 	}
+	
+	// Save Based On URL
+	if(!empty($resource['based_on_url'])){
+		update_post_meta( $post_id , 'oer_isbasedonurl' , sanitize_text_field($resource['based_on_url']));
+	}
+	
 }
 ?>
