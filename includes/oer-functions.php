@@ -2703,6 +2703,30 @@ function oer_add_resource($resource) {
 	$post_name = "";
 	$oer_resourceurl = "";
 	$post_id = null;
+	$category_id = array();
+	
+	// Save Subject Areas
+	if(!empty($resource['subject_areas'])){
+		$oer_categories = $resource['subject_areas'];
+		if (is_array($oer_categories)) {
+			foreach($oer_categories as $category)
+			{
+				if(!empty($category))
+				{
+				    $cat = get_term_by( 'name', trim($category), 'resource-subject-area' );
+				    if($cat)
+				    {
+					    $category_id[$i] = $cat->term_id;
+				    }
+				    else
+				    {
+					    // Categories are not found then assign as keyword
+					    $oer_kywrd .= ",".$category;
+				    }
+				}
+			}
+		}
+	}
 	
 	//Check if resource title is set
 	if ( isset( $resource['title'] ) ){
