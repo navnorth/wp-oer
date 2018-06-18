@@ -2704,25 +2704,37 @@ function oer_add_resource($resource) {
 	$oer_resourceurl = "";
 	$post_id = null;
 	$category_id = array();
+	$oer_kywrd = null;
+	
+	if (!empty($resource['tags'])){
+		$oer_kywrd = $resource['tags'];	
+	}
 	
 	// Save Subject Areas
 	if(!empty($resource['subject_areas'])){
 		$oer_categories = $resource['subject_areas'];
 		if (is_array($oer_categories)) {
-			foreach($oer_categories as $category)
+			$categories = array();
+			foreach($oer_categories as $cat)
 			{
-				if(!empty($category))
-				{
-				    $cat = get_term_by( 'name', trim($category), 'resource-subject-area' );
-				    if($cat)
-				    {
-					    $category_id[$i] = $cat->term_id;
-				    }
-				    else
-				    {
-					    // Categories are not found then assign as keyword
-					    $oer_kywrd .= ",".$category;
-				    }
+				if (strpos($cat,"--")){
+					$cats = explode(" -- ", $cat);
+					$categories = array_merge($categories, $cats);
+				} else {
+					$categories[] = $cat;	
+				}
+			}
+			$categories = array_unique($categories);
+			if(!empty($categories)){
+				foreach($categories as $category){
+					$cat = get_term_by( 'name', trim($category), 'resource-subject-area' );
+					if($cat){
+						$category_id[$i] = $cat->term_id;
+					}
+					else{
+						// Categories are not found then assign as keyword
+						$oer_kywrd .= ",".$category;
+					}
 				}
 			}
 		}
@@ -2749,8 +2761,9 @@ function oer_add_resource($resource) {
 		//Set Category of Resources
 		$tax_ids = wp_set_object_terms( $post_id, $category_id, 'resource-subject-area', true );
 
-		// Set Tages
-		$oer_kywrd = strtolower(trim($resource['tags'],","));
+		// Set Tags
+		$oer_kywrd = strtolower(trim($oer_kywrd,","));
+		
 		wp_set_post_tags(  $post_id, $oer_kywrd , true );
 	}
 	
