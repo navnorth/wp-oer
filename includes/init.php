@@ -708,7 +708,7 @@ function process_import_lr_resources(){
 	if ($resources){
 	    $cnt = 0;
 	    foreach($resources as $resource) {
-		if (!post_exists($resource['title'])){
+		if (!resource_exists($resource)){
 		    oer_add_resource($resource);
 		    $cnt++;
 		}

@@ -1510,7 +1510,7 @@ function oer_importLRResources(){
 				if (!empty($exists)){
 					if ($doc[0]->resource_data->items){
 						foreach($doc[0]->resource_data as $resource){
-							$lr_resource['resource_url'] = $resource[0]->properties->url[0];
+							$lr_resource['resource_url'] = trim($resource[0]->properties->url[0]);
 							if (strtolower($resource[0]->properties->educationalAlignment[0]->properties->alignmentType[0])=="educationlevel"){
 								if (strpos($resource[0]->properties->educationalAlignment[0]->properties->targetName[0],"Fourth")>=0){
 									$lr_resource['grade'] = "4";
@@ -1542,7 +1542,7 @@ function oer_importLRResources(){
 						}
 					} else {
 						$resource = $doc[0]->resource_data;
-						$lr_resource['resource_url'] = $resource->url;
+						$lr_resource['resource_url'] = trim($resource->url);
 						$lr_resource['description'] = $resource->description[0];
 						$lr_resource['title'] = $resource->name[0];
 						$lr_resource['publisher_name'] = $resource->publisher[0]->name;
@@ -2768,18 +2768,15 @@ function oer_add_resource($resource) {
 	}
 	
 	// Save Resource URL
-	if($resource['resource_url'])
+	if( !empty($resource['resource_url']) )
 	{
-		if( !empty($resource['resource_url']) )
+		if ( preg_match('/http/',$resource['resource_url']) )
 		{
-			if ( preg_match('/http/',$resource['resource_url']) )
-			{
-				$oer_resourceurl = $resource['resource_url'];
-			}
-			else
-			{
-				$oer_resourceurl = 'http://'.$resource['resource_url'];
-			}
+			$oer_resourceurl = $resource['resource_url'];
+		}
+		else
+		{
+			$oer_resourceurl = 'http://'.$resource['resource_url'];
 		}
 		update_post_meta( $post_id , 'oer_resourceurl' , esc_url_raw($oer_resourceurl));
 	}
@@ -2854,5 +2851,28 @@ function oer_add_resource($resource) {
 		update_post_meta( $post_id , 'oer_isbasedonurl' , sanitize_text_field($resource['based_on_url']));
 	}
 	
+}
+
+// Checks if resource exists
+function resource_exists($resource){
+	$exists = false;
+	
+	$args = array(
+		'fields' => 'ids',
+		'post_type'  => 'resource',
+		'meta_query' => array(
+			array(
+				'key' => 'oer_resourceurl',
+				'value' => $resource['resource_url']
+			)
+		)
+	);
+	
+	$my_query = new WP_Query( $args );
+	
+	if( $my_query->post_count>0 ) {
+		$exists = true;
+	}
+	return $exists;
 }
 ?>
