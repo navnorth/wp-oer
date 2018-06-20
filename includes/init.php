@@ -706,10 +706,14 @@ function process_import_lr_resources(){
 	$resources = oer_importLRResources();
 	
 	if ($resources){
+	    $cnt = 0;
 	    foreach($resources as $resource) {
-		oer_add_resource($resource);
+		if (!post_exists($resource['title'])){
+		    oer_add_resource($resource);
+		    $cnt++;
+		}
 	    }
-	    $message = "success";
+	    $message = $cnt;
 	    $type = "lr";
 	}
 	

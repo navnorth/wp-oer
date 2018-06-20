@@ -7,6 +7,17 @@ global $wpdb;
 $message = isset($_GET['message'])?urldecode($_GET['message']):null;
 $type = isset($_GET['type'])?urldecode($_GET['type']):null;
 
+if ($type=="lr"){
+	if ($message=="0")
+		$message = "No record was imported.";
+	elseif ($message=="1")
+		$message .= " record imported.";
+	else
+		$message .= " records imported.";
+	
+	$type="success";
+}
+
 if (!current_user_can('manage_options')) {
 	wp_die( "You don't have permission to access this page!" );
 }
