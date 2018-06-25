@@ -202,7 +202,6 @@ function processImport(btn, file) {
 //Import LR Resources
 function processLRImport(btn, input) {
 	var max_time = jQuery(btn).attr('data-max-time');
-	console.log(max_time);
 	
 	if ( document.getElementById(input).value === "" ) {
 		return false;

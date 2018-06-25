@@ -1562,8 +1562,31 @@ function oer_importLRResources(){
 			$index++;
 		}
 	} else {
+		$lr_resources = get_sliceLRResources($lr_url);
+	}
+	return $lr_resources;
+}
+
+// Import LR Resources with slice and resumption token
+function get_sliceLRResources($lr_url){
+	$lr_resources = array();
+	
+	$lrUrl = $lr_url;
+	
+	do {
+		// Get LR Resources based on initial slice URL
+		if( ini_get('allow_url_fopen') ) {
+			$resources = file_get_contents($lrUrl);
+		} else {
+			$resources = curlResources($lrUrl);
+		}
+		$resources = json_decode($resources);
+		
+		// Exit loop if no resources returned
+		if (empty($resources->documents))
+		    break;
+		
 		// Getting LR Imports through Slice
-		$index = 0;
 		foreach($resources->documents as $document){
 			$lr_resource = array();
 			
@@ -1589,10 +1612,15 @@ function oer_importLRResources(){
 				$lr_resource['subject_areas'] = $resource_data->keywords;
 				
 				$lr_resources[] = $lr_resource;
-				$index++;
 			}
 		}
-	}
+		
+		// get resumption token for next batch of resources
+		$resume_token = $resources->resumption_token;
+		$lrUrl = $lr_url."&resumption_token=".$resume_token;
+		
+	} while(!empty($resources->resumption_token));
+	
 	return $lr_resources;
 }
 
