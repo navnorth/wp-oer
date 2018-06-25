@@ -1,4 +1,7 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
+<?php
+$max_time = ini_get('max_execution_time');
+?>
 <div class="oer_imprtrwpr">
     <form method="post" enctype="multipart/form-data" action="<?php echo esc_url( admin_url('admin.php') ); ?>" onsubmit="return processLRImport('#lr_submit','lr_import')">
 	<fieldset>
@@ -23,7 +26,7 @@
 				<div class="fields alignRight">
 				    <input type="hidden" name="action" value="import_lr_resources">
 				    <?php wp_nonce_field( 'oer_lr_nonce_field' ); ?>
-					<input type="submit" id="lr_submit" name="lr_submit" value="<?php esc_attr(_e("Import", OER_SLUG)); ?>" class="button button-primary"/>
+					<input type="submit" id="lr_submit" name="lr_submit" value="<?php esc_attr(_e("Import", OER_SLUG)); ?>" data-max-time="<?php echo $max_time; ?>" class="button button-primary"/>
 				</div>
 			</div>
 		</div>

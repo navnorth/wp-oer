@@ -201,6 +201,9 @@ function processImport(btn, file) {
 
 //Import LR Resources
 function processLRImport(btn, input) {
+	var max_time = jQuery(btn).attr('data-max-time');
+	console.log(max_time);
+	
 	if ( document.getElementById(input).value === "" ) {
 		return false;
 	}
@@ -213,6 +216,7 @@ function processLRImport(btn, input) {
 	setTimeout(function() {
 		var Top = document.documentElement.scrollTop || document.body.scrollTop;
 		jQuery('.loader .loader-img').css({'padding-top':Top + 'px'});
+		jQuery('.loader .loader-img > div').append("<div class='loader-notice'>LR Import Execution Timeout: " + max_time + " seconds</div>");
 		jQuery('.loader').show();
 		} ,1000);
 	jQuery('.oer_imprtrwpr .oer-import-row input[type=submit]').prop('disabled',true);
