@@ -1491,6 +1491,7 @@ function oer_importLRResources(){
 			"json",
 			"schema.org"
 		);
+	
 	if ($lr_url){
 		if( ini_get('allow_url_fopen') ) {
 			$resources = file_get_contents($lr_url);
@@ -1499,6 +1500,7 @@ function oer_importLRResources(){
 		}
 		$resources = json_decode($resources);
 	}
+	
 	$index = 0;
 	
 	if(strpos($lr_url,"slice") === false) {
@@ -1650,9 +1652,9 @@ function curlResources($url){
 function custom_array_intersect($firstArray, $secondArray){
   $intersection = [];
   foreach ($firstArray as $a){
-      $A = mb_strtolower($a);
+      $A = strtolower($a);
       foreach ($secondArray as $b) {
-	  $B = mb_strtolower($b);
+	  $B = strtolower($b);
 	  if ($A === $B) {
 	      $intersection[] = array($a,$b);
 	      break;
