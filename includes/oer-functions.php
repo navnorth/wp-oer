@@ -2765,6 +2765,7 @@ function get_corestandard_by_standard($parent_id){
 function oer_add_resource($resource) {
 	$post_name = "";
 	$oer_resourceurl = "";
+	$file = "";
 	$post_id = null;
 	$category_id = array();
 	$oer_kywrd = null;
@@ -2830,7 +2831,7 @@ function oer_add_resource($resource) {
 		wp_set_post_tags(  $post_id, $oer_kywrd , true );
 	}
 	
-	// Save Resource URL
+	// Save Resource URL and Create Screenshot
 	if( !empty($resource['resource_url']) )
 	{
 		if ( preg_match('/http/',$resource['resource_url']) )
@@ -2842,6 +2843,50 @@ function oer_add_resource($resource) {
 			$oer_resourceurl = 'http://'.$resource['resource_url'];
 		}
 		update_post_meta( $post_id , 'oer_resourceurl' , esc_url_raw($oer_resourceurl));
+		
+		//Create Screenshot
+		//--------------------------------------
+		$url = esc_url_raw($oer_resourceurl);
+		$upload_dir = wp_upload_dir();
+
+		//if screenshot is enabled
+		$screenshot_enabled = get_option( 'oer_enable_screenshot' );
+		//if external service screenshot is enabled
+		$external_screenshot = get_option( 'oer_external_screenshots' );
+
+		if(!has_post_thumbnail( $post_id ))
+		{
+			if ($screenshot_enabled) {
+				$file = oer_getScreenshotFile($url);
+			} elseif ( $external_screenshot ) {
+				// if external screenshot utility enabled
+				$file = oer_getImageFromExternalURL($url);
+			}
+		}
+		
+		if(file_exists($file))
+		{
+			$filetype = wp_check_filetype( basename( $file ), null );
+			$wp_upload_dir = wp_upload_dir();
+			
+			$guid = $wp_upload_dir['url'] . '/' . basename( $file );
+
+			$attachment = array(
+				'guid'           => $guid,
+				'post_mime_type' => $filetype['type'],
+				'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $file ) ),
+				'post_content'   => '',
+				'post_status'    => 'inherit'
+			);
+			
+			$attach_id = wp_insert_attachment( $attachment, $file, $post_id );
+			update_post_meta($post_id, "_thumbnail_id", $attach_id);
+
+			// Generate the metadata for the attachment, and update the database record.
+			$attach_data = wp_generate_attachment_metadata( $attach_id, $file );
+			wp_update_attachment_metadata( $attach_id, $attach_data );
+		}
+		//--------------------------------------
 	}
 	
 	// Save Date Created
