@@ -1509,7 +1509,7 @@ function oer_importLRResources(){
 			foreach ($document as $doc) {
 				if ($doc[0]->doc_type=="resource_data"){
 					$exists = custom_array_intersect($schema, $doc[0]->payload_schema);
-			
+					
 					if (!empty($exists)){
 						if ($doc[0]->resource_data->items){
 							foreach($doc[0]->resource_data as $resource){
@@ -1545,14 +1545,25 @@ function oer_importLRResources(){
 							}
 						} else {
 							$resource = $doc[0]->resource_data;
-							$lr_resource['resource_url'] = trim($resource->url);
-							$lr_resource['description'] = $resource->description[0];
-							$lr_resource['title'] = $resource->name[0];
-							$lr_resource['publisher_name'] = $resource->publisher[0]->name;
-							$lr_resource['author_name'] = $resource->author[0]->name;
-							$lr_resource['based_on_url'] = $resource->isBasedOnURL[0];
-							$lr_resource['date_created'] = $resource->dateCreated[0];
-							$lr_resource['subject_areas'] = $resource->about;
+							if (!is_object($resource)){
+								$resource = json_decode($resource);
+								$lr_resource['resource_url'] = trim($resource->url);
+								$lr_resource['description'] = $resource->description;
+								$lr_resource['title'] = $resource->name;
+								$lr_resource['publisher_name'] = $resource->publisher->name;
+								$lr_resource['author_name'] = $resource->author->name;
+								$lr_resource['date_created'] = $resource->dateCreated;
+								$lr_resource['tags'] = $resource->keywords;
+							} else {
+								$lr_resource['resource_url'] = trim($resource->url);
+								$lr_resource['description'] = $resource->description[0];
+								$lr_resource['title'] = $resource->name[0];
+								$lr_resource['publisher_name'] = $resource->publisher[0]->name;
+								$lr_resource['author_name'] = $resource->author[0]->name;
+								$lr_resource['based_on_url'] = $resource->isBasedOnURL[0];
+								$lr_resource['date_created'] = $resource->dateCreated[0];
+								$lr_resource['subject_areas'] = $resource->about;
+							}
 							$lr_resources[] = $lr_resource;	
 						}
 					}
@@ -2771,7 +2782,7 @@ function oer_add_resource($resource) {
 	$oer_kywrd = null;
 	
 	if (!empty($resource['tags'])){
-		$oer_kywrd = $resource['tags'];	
+		$oer_kywrd = $resource['tags'];
 	}
 	
 	// Save Subject Areas
@@ -2797,7 +2808,7 @@ function oer_add_resource($resource) {
 					}
 					else{
 						// Categories are not found then assign as keyword
-						$oer_kywrd .= ",".$category;
+						$oer_kywrd[] = $category;
 					}
 				}
 			}
@@ -2826,7 +2837,8 @@ function oer_add_resource($resource) {
 		$tax_ids = wp_set_object_terms( $post_id, $category_id, 'resource-subject-area', true );
 
 		// Set Tags
-		$oer_kywrd = strtolower(trim($oer_kywrd,","));
+		if (!is_array($oer_kywrd))
+			$oer_kywrd = explode(",", $oer_kywrd);
 		
 		wp_set_post_tags(  $post_id, $oer_kywrd , true );
 	}
