@@ -17,6 +17,7 @@ global $wp_query;
 
 $notation_slug = $wp_query->query_vars['notation'];
 $notation = get_substandard_by_notation($notation_slug);
+$subnotations = get_child_notations($notation->id);
 $substandards = get_substandards_by_notation($notation_slug);
 $standard = get_standard_by_notation($notation_slug);
 $resources = get_resources_by_notation($notation->id);
@@ -37,7 +38,29 @@ $resources = get_resources_by_notation($notation->id);
 				<?php } ?>
 			    <?php } ?>
 			    <?php if ($notation) {  ?>
-				<li><ul class="oer-notations"><li><h4><strong><?php echo $notation->standard_notation; ?></strong> <?php echo $notation->description; ?></h4></li></li></ul>
+				<li>
+				    <ul class="oer-notations">
+					<li>
+					    <h4><strong><?php echo $notation->standard_notation; ?></strong> <?php echo $notation->description; ?></h4>
+					</li>
+					<?php
+					if (!empty($subnotations)) {
+					?>
+					<li>
+					    <ul class="oer-subnotations">
+						<?php
+						foreach($subnotations as $subnotation) {
+						    $subnote_slug = $subnotation->standard_notation;
+						?>
+						<li>
+						    <a href="<?php echo $subnote_slug; ?>"><strong><?php echo $subnotation->standard_notation; ?></strong> <?php echo $subnotation->description; ?></a>
+						</li>
+						<?php } ?>
+					    </ul>
+					</li>    
+					<?php } ?>
+				    </ul>
+				</li>
 			    <?php } ?>
 			    </ul>
 			</div>
