@@ -50,10 +50,11 @@ $resources = get_resources_by_notation($notation->id);
 					    <ul class="oer-subnotations">
 						<?php
 						foreach($subnotations as $subnotation) {
+						    $cnt = get_resource_count_by_notation($subnotation->id);
 						    $subnote_slug = $subnotation->standard_notation;
 						?>
 						<li>
-						    <a href="<?php echo $subnote_slug; ?>"><strong><?php echo $subnotation->standard_notation; ?></strong> <?php echo $subnotation->description; ?></a>
+						    <a href="<?php echo $subnote_slug; ?>"><strong><?php echo $subnotation->standard_notation; ?></strong> <?php echo $subnotation->description; ?></a>  <span class="res-count"><?php echo $cnt; ?></span>
 						</li>
 						<?php } ?>
 					    </ul>
