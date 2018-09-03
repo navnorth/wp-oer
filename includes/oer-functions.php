@@ -3004,12 +3004,14 @@ function get_hierarchical_notations($notation_id){
 	$notations = array();
 	$hierarchy = "";
 	$ids = explode("-",$notation_id);
-	do {
-		$notation = get_notation_details($ids[1]);
-		$ids = explode("-", $notation[0]['parent_id']);
-		$notations[] = $notation;
-	} while(strpos($notation[0]['parent_id'],"standard_notation")!==false);
-	return $notation;
+	if (strpos($notation_id,"sub_standards")!==false) {
+		do {
+			$notation = get_notation_details($ids[1]);
+			$ids = explode("-", $notation[0]['parent_id']);
+			$notations[] = $notation;
+		} while(strpos($notation[0]['parent_id'],"standard_notation")!==false);
+	}
+	return $notations;
 }
 
 // Get Notation Details
@@ -3017,5 +3019,35 @@ function get_notation_details($notation_id){
 	global $wpdb; 
 	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "oer_standard_notation where id = %s" , $notation_id  ) , ARRAY_A);
 	return $results;
+}
+
+// Get Hierarchical Substandards
+function oer_get_hierarchical_substandards($substandard_id){
+	$substandard=null;
+	$substandards = null;
+	$hierarchy = "";
+	$ids = explode("-",$substandard_id);
+	if (strpos($substandard_id,"sub_standards")!==false) {
+		do {
+			
+			$substandard = oer_get_substandard_details($ids[1]);
+			$ids = explode("-", $substandard['parent_id']);
+			$substandards[] = $substandard;
+			
+		} while(strpos($substandard['parent_id'],"sub_standards")!==false);
+	}
+	
+	return $substandards;
+}
+
+// Get Substandard Details
+function oer_get_substandard_details($substandard_id){
+	global $wpdb;
+	$substandards = null;
+	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "oer_sub_standards where id = %s" , $substandard_id  ) , ARRAY_A);
+	foreach ($results as $row){
+		$substandards = $row;
+	}
+	return $substandards;
 }
 ?>
