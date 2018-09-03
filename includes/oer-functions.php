@@ -2997,4 +2997,25 @@ function resource_exists($resource){
 	}
 	return $exists;
 }
+
+// Get Hierarchical Notations
+function get_hierarchical_notations($notation_id){
+	$notation=null;
+	$notations = array();
+	$hierarchy = "";
+	$ids = explode("-",$notation_id);
+	do {
+		$notation = get_notation_details($ids[1]);
+		$ids = explode("-", $notation[0]['parent_id']);
+		$notations[] = $notation;
+	} while(strpos($notation[0]['parent_id'],"standard_notation")!==false);
+	return $notation;
+}
+
+// Get Notation Details
+function get_notation_details($notation_id){
+	global $wpdb; 
+	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "oer_standard_notation where id = %s" , $notation_id  ) , ARRAY_A);
+	return $results;
+}
 ?>

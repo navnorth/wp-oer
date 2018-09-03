@@ -14,9 +14,16 @@ function standards_body_classes( $classes ) {
 get_header();
 
 global $wp_query;
+$upnotations = null;
+$end_upnote = "";
 
 $notation_slug = $wp_query->query_vars['notation'];
 $notation = get_substandard_by_notation($notation_slug);
+
+if (strpos($notation->parent_id,"standard_notation")!==false){
+    $upnotations = get_hierarchical_notations($notation->parent_id);
+}
+
 $subnotations = get_child_notations($notation->id);
 $substandards = get_substandards_by_notation($notation_slug);
 $standard = get_standard_by_notation($notation_slug);
@@ -30,14 +37,27 @@ $resources = get_resources_by_notation($notation->id);
 			<div class="oer-snglrsrchdng"><a href="<?php echo home_url("resource/standards/".sanitize_title($standard->standard_name)); ?>"><?php printf(__("%s", OER_SLUG), $standard->standard_name); ?></a></div>
 			<div class="oer-allftrdrsrccntr-notation">
 			    <ul class="oer-substandards">
-			    <?php if ($substandards) {  ?>
-				<?php foreach($substandards as $substandard) {
+			    <?php if ($substandards) {
+				foreach($substandards as $substandard) {
 				    $slug = "resource/standards/".sanitize_title($standard->standard_name)."/".sanitize_title($substandard['standard_title']);
 				?>
 				<li><a href="<?php echo home_url($slug); ?>"><?php echo $substandard['standard_title']; ?></a></li>
-				<?php } ?>
-			    <?php } ?>
-			    <?php if ($notation) {  ?>
+				<?php }
+				}
+			    if ($upnotations) {
+				foreach($upnotations as $upnotation){
+				    $upnote_slug = $upnotation['standard_notation'];
+				    ?>
+				    <li class="upnotation">
+					<ul class="oer-notations">
+					    <li><a href="<?php echo $upnote_slug; ?>"><strong><?php echo $upnotation['standard_notation']; ?></strong> <?php echo $upnotation['description']; ?></a></li>
+					
+				    <?php
+				    $end_upnote .= '</ul>
+				    </li>';
+				}
+			    }
+			    if ($notation) {  ?>
 				<li>
 				    <ul class="oer-notations">
 					<li>
@@ -62,7 +82,10 @@ $resources = get_resources_by_notation($notation->id);
 					<?php } ?>
 				    </ul>
 				</li>
-			    <?php } ?>
+			    <?php } 
+			    if ($end_upnote)
+				echo $end_upnote;
+			    ?>
 			    </ul>
 			</div>
 			<div class="oer_standard_resources">
