@@ -46,6 +46,9 @@ $standard = get_standard_by_notation($notation_slug);
 $resources = get_resources_by_notation($notation->id);
 
 ?>
+<div class="oer-backlink">
+    <a href="<?php echo home_url('resource/standards'); ?>"><?php _e("< Back to Standards",OER_SLUG); ?></a>
+</div>
 <div class="oer-cntnr">
 	<section id="primary" class="site-content">
 		<div id="content" role="main">
