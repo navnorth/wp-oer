@@ -451,6 +451,7 @@ li.oer_sbstndard{
 .standards-template #content ul.oer-standards{ padding-left:0; margin-top:10px;}
 #content ul.oer-substandards,
 #content ul.oer-standard { margin-top:10px; padding-left:20px; }
+#content ul.oer-hsubstandards { padding-left:20px; }
 #content ul.oer-notations { padding-left:20px; }
 #content ul.oer-substandards li, 
 #content ul.oer-standard li,

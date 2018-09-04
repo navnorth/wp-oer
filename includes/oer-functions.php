@@ -2615,6 +2615,7 @@ function get_hierarchical_substandards($substandard_id) {
 	$stds = null;
 	
 	$substandard = oer_get_parent_standard($substandard_id);
+	
 	foreach($substandard as $std){
 		$stds[] = $std;
 	}
@@ -3004,7 +3005,7 @@ function get_hierarchical_notations($notation_id){
 	$notations = array();
 	$hierarchy = "";
 	$ids = explode("-",$notation_id);
-	if (strpos($notation_id,"sub_standards")!==false) {
+	if (strpos($notation_id,"standard_notation")!==false) {
 		do {
 			$notation = get_notation_details($ids[1]);
 			$ids = explode("-", $notation[0]['parent_id']);
@@ -3016,9 +3017,13 @@ function get_hierarchical_notations($notation_id){
 
 // Get Notation Details
 function get_notation_details($notation_id){
-	global $wpdb; 
+	global $wpdb;
+	$notations = null;
 	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "oer_standard_notation where id = %s" , $notation_id  ) , ARRAY_A);
-	return $results;
+	foreach ($results as $row){
+		$notations = $row;
+	}
+	return $notations;
 }
 
 // Get Hierarchical Substandards
