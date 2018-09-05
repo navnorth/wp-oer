@@ -32,11 +32,10 @@ if (strpos($standard->parent_id,"core_standards")!==false){
 }
 
 $parent_substandards = oer_get_hierarchical_substandards($standard->parent_id);
-
 $sub_standards = get_substandards($standard->id, false);
-//var_dump($sub_standards);
 $notations = get_standard_notations($standard->id);
-//var_dump($notations);
+
+display_custom_styles();
 ?>
 <div class="oer-backlink">
     <a href="<?php echo home_url('resource/standards'); ?>"><?php _e("< Back to Standards",OER_SLUG); ?></a>
@@ -77,7 +76,7 @@ $notations = get_standard_notations($standard->id);
 				}
 				?>
 				<li><?php if ($parent_substandards) { ?>
-					<ul class="oer-substandards">
+					<ul class="oer-hsubstandards">
 					    <li><?php echo $standard->standard_title; ?></li>
 					
 					<?php

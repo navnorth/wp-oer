@@ -17,6 +17,8 @@ global $wp_query;
 $standard_name_slug = $wp_query->query_vars['standard'];
 $standard = get_standard_by_slug($standard_name_slug);
 $sub_standards = get_substandards($standard->id);
+
+display_custom_styles();
 ?>
 <div class="oer-backlink">
     <a href="<?php echo home_url('resource/standards'); ?>"><?php _e("< Back to Standards",OER_SLUG); ?></a>

@@ -45,6 +45,7 @@ $substandards = get_substandards_by_notation($notation_slug);
 $standard = get_standard_by_notation($notation_slug);
 $resources = get_resources_by_notation($notation->id);
 
+display_custom_styles();
 ?>
 <div class="oer-backlink">
     <a href="<?php echo home_url('resource/standards'); ?>"><?php _e("< Back to Standards",OER_SLUG); ?></a>
@@ -55,7 +56,7 @@ $resources = get_resources_by_notation($notation->id);
 		    <div class="oer-allftrdrsrc">
 			<div class="oer-snglrsrchdng"><?php printf(__("Browse %s", OER_SLUG), '<a href="'.home_url("resource/standards/".sanitize_title($standard->standard_name)).'">'.$standard->standard_name.'</a>'); ?></div>
 			<div class="oer-allftrdrsrccntr-notation">
-			    <ul class="oer-substandards">
+			    <ul class="oer-standard">
 			    <?php  if ($upstandards){
 				foreach($upstandards as $upstandard) {
 				    $slug = "resource/standards/".sanitize_title($standard->standard_name)."/".sanitize_title($upstandard['standard_title']);
