@@ -48,38 +48,35 @@ $notations = get_standard_notations($standard->id);
 			<div class="oer-snglrsrchdng"><?php printf(__("Browse %s", OER_SLUG), '<a href="'.home_url("resource/standards/".sanitize_title($core_standard->standard_name)).'">'.$core_standard->standard_name.'</a>'); ?></div>
 			<div class="oer-allftrdrsrccntr">
 			    <ul class="oer-standard">
-				<?php
-				    if ($parent_substandards) {
-					?>
-					<li>
-					<?php
-					$cnt = count($parent_substandards);
-					$index = 1;
-					foreach($parent_substandards as $parent_substandard){
-					    $slug = "resource/standards/".sanitize_title($core_standard->standard_name)."/".sanitize_title($parent_substandard['standard_title']);
-					    if ($cnt>1) {
-					    ?>
+				<?php if ($parent_substandards) { 
+				    echo "<li>";
+				    
+				    $cnt = count($parent_substandards);
+				    $index = 1;
+				    
+				    foreach($parent_substandards as $parent_substandard){
+					
+					$slug = "resource/standards/".sanitize_title($core_standard->standard_name)."/".sanitize_title($parent_substandard['standard_title']);
+					
+					if ($cnt>1) { ?>
 					    <ul class="oer-substandards">
 						<li>
 						    <a href="<?php echo home_url($slug); ?>"><?php echo $parent_substandard['standard_title']; ?></a>
 						</li>
-					    <?php
+					<?php
 					    $end_html .= '</ul>';
-					    } else {
-						?>
-						<li>
-						    <a href="<?php echo home_url($slug); ?>"><?php echo $parent_substandard['standard_title']; ?></a>
-						</li>
-						<?php
-					    }
-					    $index++;
-					} 
-					$end_html .= '</li>';
-				    }
-				    ?>
-				<li><?php
-				    if ($parent_substandards) {
-					?>
+					} else { ?>
+					    <li>
+						<a href="<?php echo home_url($slug); ?>"><?php echo $parent_substandard['standard_title']; ?></a>
+					    </li>
+					<?php
+					}
+					$index++;
+				    } 
+				    $end_html .= '</li>';
+				}
+				?>
+				<li><?php if ($parent_substandards) { ?>
 					<ul class="oer-substandards">
 					    <li><?php echo $standard->standard_title; ?></li>
 					
@@ -88,28 +85,27 @@ $notations = get_standard_notations($standard->id);
 					$output_html .= '</li>';
 				    } else
 					echo $standard->standard_title;
-				    ?>
-				    <?php if ($sub_standards) {  ?>
-				    <ul class="oer-substandards">
-					<?php foreach($sub_standards as $sub_standard) {
-					     $cnt = get_resource_count_by_substandard($sub_standard->id);
-					    $slug = "resource/standards/".sanitize_title($core_standard->standard_name)."/".sanitize_title($sub_standard->standard_title);
-					?>
-					<li><a href="<?php echo home_url($slug); ?>"><?php echo $sub_standard->standard_title; ?></a> <span class="res-count"><?php echo $cnt; ?></span></li>
-					<?php } ?>
-				    </ul>
-				    <?php } ?>
-				    <?php if ($notations) {  ?>
-				    <ul class="oer-notations">
-					<?php foreach($notations as $notation) {
-					    $cnt = get_resource_count_by_notation($notation->id);
-					    $slug = "resource/standards/".sanitize_title($core_standard->standard_name)."/".$standard_name_slug."/".$notation->standard_notation;
-					?>
-					<li><a href="<?php echo home_url($slug); ?>"><strong><?php echo $notation->standard_notation; ?></strong> <?php echo $notation->description; ?></a> <span class="res-count"><?php echo $cnt; ?></span></li>
-					<?php } ?>
-				    </ul>
-				    <?php } ?>
-				    <?php
+				    
+				    if ($sub_standards) {  ?>
+					<ul class="oer-substandards">
+					    <?php foreach($sub_standards as $sub_standard) {
+						 $cnt = get_resource_count_by_substandard($sub_standard->id);
+						$slug = "resource/standards/".sanitize_title($core_standard->standard_name)."/".sanitize_title($sub_standard->standard_title);
+					    ?>
+					    <li><a href="<?php echo home_url($slug); ?>"><?php echo $sub_standard->standard_title; ?></a> <span class="res-count"><?php echo $cnt; ?></span></li>
+					    <?php } ?>
+					</ul>
+				    <?php }
+				    if ($notations) {  ?>
+					<ul class="oer-notations">
+					    <?php foreach($notations as $notation) {
+						$cnt = get_resource_count_by_notation($notation->id);
+						$slug = "resource/standards/".sanitize_title($core_standard->standard_name)."/".$standard_name_slug."/".$notation->standard_notation;
+					    ?>
+					    <li><a href="<?php echo home_url($slug); ?>"><strong><?php echo $notation->standard_notation; ?></strong> <?php echo $notation->description; ?></a> <span class="res-count"><?php echo $cnt; ?></span></li>
+					    <?php } ?>
+					</ul>
+				    <?php } 
 				    if ($output_html)
 					echo $output_html;
 				    ?>

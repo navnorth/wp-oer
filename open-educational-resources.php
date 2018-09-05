@@ -39,6 +39,7 @@ define( 'OER_ADMIN_PLUGIN_NAME', 'WP OER Plugin');
 define( 'OER_VERSION', '0.6.1' );
 
 include_once(OER_PATH.'includes/oer-functions.php');
+include_once(OER_PATH.'includes/template-functions.php');
 include_once(OER_PATH.'includes/init.php');
 include_once(OER_PATH.'includes/shortcode.php');
 include_once(OER_PATH.'widgets/class-subject-area-widget.php');
@@ -2073,8 +2074,8 @@ function assign_standard_template($template) {
 	
 	$url_path = trim(parse_url(add_query_arg(array()), PHP_URL_PATH), '/');
 	
-	//if ( $url_path === 'openk12xchange/resource/standards' ){
-	if ( $url_path === 'resource/standards' ) {
+	if ( $url_path === 'openk12xchange/resource/standards' ){
+	//if ( $url_path === 'resource/standards' ) {
 		// load the file if exists
 		$wp_query->is_404 = false;
 		$template = locate_template('oer_template/standards.php', true);
