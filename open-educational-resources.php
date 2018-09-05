@@ -880,11 +880,6 @@ function oer_setup_settings(){
 		)
 	);
 
-	/*if ($_w_bootstrap) {
-		$bootstrap_disabled = true;
-		$load_bootstrap = false;
-	}*/
-
 	//Add Settings field for Importing Bootstrap CSS & JS Libraries
 	add_settings_field(
 		'oer_use_bootstrap',
@@ -2074,8 +2069,8 @@ function assign_standard_template($template) {
 	
 	$url_path = trim(parse_url(add_query_arg(array()), PHP_URL_PATH), '/');
 	
-	if ( $url_path === 'openk12xchange/resource/standards' ){
-	//if ( $url_path === 'resource/standards' ) {
+	//if ( $url_path === 'openk12xchange/resource/standards' ){
+	if ( $url_path === 'resource/standards' ) {
 		// load the file if exists
 		$wp_query->is_404 = false;
 		$template = locate_template('oer_template/standards.php', true);
