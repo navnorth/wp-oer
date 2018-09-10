@@ -30,7 +30,7 @@ function display_custom_styles(){
         .substandards-template #content ul.oer-substandards > li:not(:active),
         .standards-template #content ul.oer-standards > li,
         .substandards-template #content ul.oer-notations > li,
-        .notation-template #content ul.oer-notations > li:not(:active) { background:url(<?php echo OER_URL."/images/arrow-right.png"; ?>) no-repeat top left; padding-left:28px; }
+        .notation-template #content ul.oer-subnotations > li { background:url(<?php echo OER_URL."/images/arrow-right.png"; ?>) no-repeat top left; padding-left:28px; }
     </style>
     <?php
 }

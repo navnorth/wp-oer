@@ -2069,6 +2069,7 @@ function assign_standard_template($template) {
 	
 	$url_path = trim(parse_url(add_query_arg(array()), PHP_URL_PATH), '/');
 	
+	status_header(200);
 	//if ( $url_path === 'openk12xchange/resource/standards' ){
 	if ( $url_path === 'resource/standards' ) {
 		// load the file if exists
@@ -2100,15 +2101,35 @@ function assign_standard_template($template) {
 }
 add_action( 'template_include' , 'assign_standard_template' );
 
+// Assign template
+function oer_template_redirect(){
+	global $wp, $wp_query;
+	
+	$template = $wp->query_vars;
+	
+	if ( array_key_exists( 'resource', $template ) && 'standards' == $template['name'] ) {
+		$wp_query->is_404 = false;
+		status_header(200);
+		include( dirname(__FILE__) . '/oer_template/standards.php' );
+		exit;
+	}
+}
+//add_action( 'template_redirect' , 'oer_template_redirect' );
+
 // Add rewrite rule for substandards
 function oer_add_rewrites()
 {
+	global $wp_rewrite;
 	add_rewrite_tag( '%standard%', '([^/]*)' );
 	add_rewrite_tag( '%substandard%' , '([^&]+)' );
 	add_rewrite_tag( '%notation%' , '([^&]+)' );
 	add_rewrite_rule( '^resource/standards/([^/]*)/?$', 'index.php?pagename=standards&standard=$matches[1]', 'top' );
 	add_rewrite_rule( '^resource/standards/([^/]*)/([^/]*)/?$', 'index.php?pagename=standards&standard=$matches[1]&substandard=$matches[2]', 'top' );
 	add_rewrite_rule( '^resource/standards/([^/]*)/([^/]*)/([^/]*)/?$', 'index.php?pagename=standards&standard=$matches[1]&substandard=$matches[2]&notation=$matches[3]', 'top' );
+	add_rewrite_endpoint( 'standard', EP_PERMALINK | EP_PAGES );
+	add_rewrite_endpoint( 'substandard', EP_PERMALINK | EP_PAGES );
+	add_rewrite_endpoint( 'notation', EP_PERMALINK | EP_PAGES );
+	//$wp_rewrite->flush_rules();
 }
 add_action( 'init', 'oer_add_rewrites', 10, 0 );
 
