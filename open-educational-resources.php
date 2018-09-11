@@ -134,11 +134,13 @@ function oer_create_csv_import_table()
 	}
 
    update_option('setup_notify', true);
+   update_option( "oer_rewrite_rules", false ); 
 
    //Trigger CPT and Taxonomy creation
    oer_postcreation();
    oer_create_resource_taxonomies();
 
+   oer_add_rewrites();
    //Trigger permalink reset
    flush_rewrite_rules();
 }
@@ -2129,7 +2131,13 @@ function oer_add_rewrites()
 	add_rewrite_endpoint( 'standard', EP_PERMALINK | EP_PAGES );
 	add_rewrite_endpoint( 'substandard', EP_PERMALINK | EP_PAGES );
 	add_rewrite_endpoint( 'notation', EP_PERMALINK | EP_PAGES );
-	//$wp_rewrite->flush_rules();
+	
+	$flush_rewrite = get_option('oer_rewrite_rules');
+	if ($flush_rewrite==false) {
+		$wp_rewrite->init();
+		$wp_rewrite->flush_rules();
+		update_option('oer_rewrite_rules', true);
+	}
 }
 add_action( 'init', 'oer_add_rewrites', 10, 0 );
 
