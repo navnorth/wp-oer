@@ -184,6 +184,7 @@ function oer_postcreation(){
         'labels'        => $labels,
 	'show_ui' => true,
 	'show_in_menu' => true,
+	'show_in_rest' => true,
 	'menu_position' => 5,
         'description'   => 'Create Resources',
         'public'        => true,
