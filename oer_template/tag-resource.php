@@ -38,7 +38,10 @@ get_header();
 							the_post_thumbnail("thumbnail");
 						endif; ?>
 						</div>
-					<?php }?>
+					<?php } else {
+					    $new_image_url = OER_URL . 'images/default-icon-220x180.png';
+					    echo '<div class="oer-feature-image col-md-3"><a href="'.esc_url(get_permalink($post->ID)).'"><img src="'.esc_url($new_image_url).'"></a></div>';
+					}?>
 					
                     <div class="rght-sd-cntnr-blg col-md-9">
                         <h4><a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h4>

@@ -461,6 +461,8 @@ li.oer_sbstndard{
 .oer_standard_resources ul.oer-resources { padding-left:20px; }
 .oer_standard_resources li { list-style-type:none; }
 .oer-backlink { margin-bottom:10px; }
+#content ul.oer-substandards { margin-top:0; }
+.oer_blgpst .rght-sd-cntnr-blg h4 { margin-top:0; }
 @media screen and (max-width: 600px) {
 	.oer_blgpst .oer-feature-image { width:100%; float:none; margin-bottom:10px; }
 	.oer_blgpst .rght-sd-cntnr-blg { width:100%; float:none; }
