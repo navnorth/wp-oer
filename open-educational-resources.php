@@ -899,11 +899,28 @@ function oer_setup_settings(){
 			'description' => __('Your theme does not appear to have bootstrap. Uncheck if your WP theme already included Bootstrap', OER_SLUG)
 		)
 	);
+	
+	//Add Settings field to Enabled Gutenberg editor
+	add_settings_field(
+		'oer_use_gutenberg',
+		'',
+		'oer_setup_settings_field',
+		'setup_settings_section',
+		'oer_setup_settings',
+		array(
+			'uid' => 'oer_use_gutenberg',
+			'type' => 'checkbox',
+			'value' => '1',
+			'default' => true,
+			'name' =>  __('Use Gutenberg Editor', OER_SLUG)
+		)
+	);
 
 	register_setting( 'oer_setup_settings' , 'oer_import_sample_resources' );
 	register_setting( 'oer_setup_settings' , 'oer_import_default_subject_areas' );
 	register_setting( 'oer_setup_settings' , 'oer_import_ccss' );
 	register_setting( 'oer_setup_settings' , 'oer_setup_bootstrap' );
+	register_setting( 'oer_setup_settings' , 'oer_use_gutenberg' );
 }
 
 //Setup Setting Callback
@@ -2148,4 +2165,5 @@ function oer_add_query_vars( $vars ){
 	return $vars;
 }
 add_filter( 'query_vars', 'oer_add_query_vars' );
+
 ?>
