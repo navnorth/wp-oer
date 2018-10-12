@@ -45,7 +45,7 @@ include_once(OER_PATH.'includes/shortcode.php');
 include_once(OER_PATH.'widgets/class-subject-area-widget.php');
 
 //define global variable $debug_mode and get value from settings
-global $_debug, $_bootstrap, $_css, $_subjectarea, $_search_post_ids, $_w_bootstrap, $_oer_prefix, $oer_session;
+global $_debug, $_bootstrap, $_css, $_subjectarea, $_search_post_ids, $_w_bootstrap, $_oer_prefix, $oer_session, $_gutenberg, $_use_gutenberg;
 
 if( ! defined( 'WP_SESSION_COOKIE' ) )
 	define( 'WP_SESSION_COOKIE', '_oer_session' );
@@ -62,6 +62,7 @@ if ( ! class_exists( 'OER_WP_Session' ) ) {
 
 $_debug = get_option('oer_debug_mode');
 $_bootstrap = get_option('oer_use_bootstrap');
+$_use_gutenberg = get_option('oer_use_gutenberg');
 $_css = get_option('oer_additional_css');
 $_subjectarea = get_option('oer_display_subject_area');
 $_oer_prefix = "oer_";
@@ -813,7 +814,7 @@ function oer_styles_settings_callback(){
 //Initialize Setup Settings Tab
 add_action( 'admin_init' , 'oer_setup_settings' );
 function oer_setup_settings(){
-	global $_w_bootstrap;
+	global $_w_bootstrap, $_gutenberg;
 
 	if ((isset($_REQUEST['post_type']) && $_REQUEST['post_type']=="resource") && (isset($_REQUEST['page']) && $_REQUEST['page']=="oer_settings")){
 		if (oer_is_bootstrap_loaded())
@@ -900,27 +901,33 @@ function oer_setup_settings(){
 		)
 	);
 	
-	//Add Settings field to Enabled Gutenberg editor
-	add_settings_field(
-		'oer_use_gutenberg',
-		'',
-		'oer_setup_settings_field',
-		'setup_settings_section',
-		'oer_setup_settings',
-		array(
-			'uid' => 'oer_use_gutenberg',
-			'type' => 'checkbox',
-			'value' => '1',
-			'default' => true,
-			'name' =>  __('Use Gutenberg Editor', OER_SLUG)
-		)
-	);
+	if ( function_exists( 'register_block_type' ) ) {
+		$_gutenberg = true;
+	}
+	
+	if ($_gutenberg)
+		//Add Settings field to Enabled Gutenberg editor
+		add_settings_field(
+			'oer_use_gutenberg',
+			'',
+			'oer_setup_settings_field',
+			'setup_settings_section',
+			'oer_setup_settings',
+			array(
+				'uid' => 'oer_use_gutenberg',
+				'type' => 'checkbox',
+				'value' => '1',
+				'default' => true,
+				'name' =>  __('Use Gutenberg Editor', OER_SLUG)
+			)
+		);
 
 	register_setting( 'oer_setup_settings' , 'oer_import_sample_resources' );
 	register_setting( 'oer_setup_settings' , 'oer_import_default_subject_areas' );
 	register_setting( 'oer_setup_settings' , 'oer_import_ccss' );
 	register_setting( 'oer_setup_settings' , 'oer_setup_bootstrap' );
-	register_setting( 'oer_setup_settings' , 'oer_use_gutenberg' );
+	if ($_gutenberg)
+		register_setting( 'oer_setup_settings' , 'oer_use_gutenberg' );
 }
 
 //Setup Setting Callback

@@ -167,6 +167,7 @@ function oer_add_style_block(){
 //register custom post
 add_action( 'init' , 'oer_postcreation' );
 function oer_postcreation(){
+    global $_use_gutenberg;
 	$labels = array(
         'name'               => _x( 'Resource', 'post type general name' ),
         'singular_name'      => _x( 'Resource', 'post type singular name' ),
@@ -184,7 +185,6 @@ function oer_postcreation(){
         'labels'        => $labels,
 	'show_ui' => true,
 	'show_in_menu' => true,
-	'show_in_rest' => true,
 	'menu_position' => 5,
         'description'   => 'Create Resources',
         'public'        => true,
@@ -198,7 +198,11 @@ function oer_postcreation(){
         'has_archive'   => true,
 	'register_meta_box_cb' => 'oer_resources_custom_metaboxes'
     );
-	register_post_type( 'resource', $args);
+    
+    if ($_use_gutenberg=="on" or $_use_gutenberg=="1")
+	$args['show_in_rest'] = true;
+	
+    register_post_type( 'resource', $args);
 }
 
 function oer_resources_custom_metaboxes(){
@@ -215,30 +219,35 @@ function oermeta_callback()
 //register custom category
 add_action( 'init', 'oer_create_resource_taxonomies', 0 );
 function oer_create_resource_taxonomies() {
-	$labels = array(
-		'name'              => _x( 'Subject Area', 'taxonomy general name' ),
-		'singular_name'     => _x( 'Subject Area', 'taxonomy singular name' ),
-		'search_items'      => __( 'Search Subject Areas' ),
-		'all_items'         => __( 'All Subject Areas' ),
-		'parent_item'       => __( 'Parent Subject Area' ),
-		'parent_item_colon' => __( 'Parent Subject Area:' ),
-		'edit_item'         => __( 'Edit Subject Area' ),
-		'update_item'       => __( 'Update Subject Area' ),
-		'add_new_item'      => __( 'Add New Subject Area' ),
-		'new_item_name'     => __( 'New Genre Subject Area' ),
-		'menu_name'         => __( 'Subject Areas' ),
-	);
-	
-	$args = array(
-		'hierarchical'      => true,
-		'labels'            => $labels,
-		'show_ui'           => true,
-		'show_in_rest'	    => true,
-		'show_admin_column' => true,
-		'query_var'         => true,
-		'rewrite'           => array( 'slug' => 'resource-subject-area' ),
-	);
-	register_taxonomy( 'resource-subject-area', array( 'resource' ), $args );
+    global $_use_gutenberg;
+    
+    $labels = array(
+	    'name'              => _x( 'Subject Area', 'taxonomy general name' ),
+	    'singular_name'     => _x( 'Subject Area', 'taxonomy singular name' ),
+	    'search_items'      => __( 'Search Subject Areas' ),
+	    'all_items'         => __( 'All Subject Areas' ),
+	    'parent_item'       => __( 'Parent Subject Area' ),
+	    'parent_item_colon' => __( 'Parent Subject Area:' ),
+	    'edit_item'         => __( 'Edit Subject Area' ),
+	    'update_item'       => __( 'Update Subject Area' ),
+	    'add_new_item'      => __( 'Add New Subject Area' ),
+	    'new_item_name'     => __( 'New Genre Subject Area' ),
+	    'menu_name'         => __( 'Subject Areas' ),
+    );
+    
+    $args = array(
+	    'hierarchical'      => true,
+	    'labels'            => $labels,
+	    'show_ui'           => true,
+	    'show_admin_column' => true,
+	    'query_var'         => true,
+	    'rewrite'           => array( 'slug' => 'resource-subject-area' ),
+    );
+    
+    if ($_use_gutenberg=="on" or $_use_gutenberg=="1")
+	$args['show_in_rest'] = true;
+    
+    register_taxonomy( 'resource-subject-area', array( 'resource' ), $args );
 }
 //register cutsom category
 
