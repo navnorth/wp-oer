@@ -102,7 +102,7 @@ final class OER_WP_Session extends OER_Recursive_ArrayAccess implements Iterator
 
 		$this->read_data();
 
-		$this->set_cookie();
+		add_action( 'init', array( $this, 'set_cookie' ) );
 
 	}
 
@@ -132,7 +132,7 @@ final class OER_WP_Session extends OER_Recursive_ArrayAccess implements Iterator
 	/**
 	 * Set the session cookie
 	 */
-	protected function set_cookie() {
+	public function set_cookie() {
 		@setcookie( WP_SESSION_COOKIE, $this->session_id . '||' . $this->expires . '||' . $this->exp_variant , $this->expires, COOKIEPATH, COOKIE_DOMAIN );
 	}
 
@@ -330,3 +330,5 @@ final class OER_WP_Session extends OER_Recursive_ArrayAccess implements Iterator
 		return count( $this->container );
 	}
 }
+
+$oer_session = OER_WP_Session::get_instance();
