@@ -2173,4 +2173,9 @@ function oer_add_query_vars( $vars ){
 }
 add_filter( 'query_vars', 'oer_add_query_vars' );
 
+add_action( 'init', function () {
+	if (isset($_REQUEST['tab']) && $_REQUEST['tab']=="setup") {
+		ob_start();
+	}
+} );
 ?>
