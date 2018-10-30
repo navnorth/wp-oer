@@ -2097,7 +2097,8 @@ function assign_standard_template($template) {
 	
 	status_header(200);
 	//if ( $url_path === 'openk12xchange/resource/standards' ){
-	if ( $url_path === 'resource/standards' ) {
+//	if ( $url_path === 'resource/standards' ) {
+	if ( strpos( $url_path,'resource/standards' ) !== false && !get_query_var('standard') && !get_query_var('substandard') && !get_query_var('notation') ) {
 		// load the file if exists
 		$wp_query->is_404 = false;
 		$template = locate_template('oer_template/standards.php', true);
@@ -2173,9 +2174,9 @@ function oer_add_query_vars( $vars ){
 }
 add_filter( 'query_vars', 'oer_add_query_vars' );
 
+// Quick fix for the headers already sent error after submitting setup tab on the settings page
 add_action( 'init', function () {
 	if (isset($_REQUEST['tab']) && $_REQUEST['tab']=="setup") {
 		ob_start();
 	}
 } );
-?>
