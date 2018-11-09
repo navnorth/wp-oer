@@ -654,7 +654,7 @@ function oer_importStandards($file){
 			$doc->load( $file );
 
 			$StandardDocuments = $doc->getElementsByTagName('StandardDocument');
-
+			
 			$xml_arr = array();
 			$m = 0;
 			foreach( $StandardDocuments as $StandardDocument)
@@ -697,6 +697,8 @@ function oer_importStandards($file){
 				$i++;
 			}
 
+			var_dump($core_standard);
+			exit();
 			// Get Core Standard
 			foreach($core_standard as $cskey => $csdata)
 			{
@@ -3055,4 +3057,9 @@ function oer_get_substandard_details($substandard_id){
 	}
 	return $substandards;
 }
+
+function oer_download_xmlstandards($url){
+	
+}
+
 ?>
