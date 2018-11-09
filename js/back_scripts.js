@@ -47,6 +47,17 @@ jQuery(document).ready(function(e) {
 		jQuery('.hover_icon_button_img').remove();
 		jQuery(this).addClass('hidden');
 	});
+	
+	/** Import Other Standards URL **/
+	jQuery('#oer_standard_other').on("change", function(){
+		var std_url = jQuery("#oer_standard_other_url")
+		if (jQuery(this).is(":checked")) {
+			std_url.attr("disabled", false)
+			std_url.focus()
+		} else {
+			std_url.attr("disabled", true)
+		}
+	});
 });
 
 
