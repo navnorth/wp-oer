@@ -585,7 +585,7 @@ function oer_settings_page() {
 	add_settings_field(
 		'oer_disable_screenshots',
 		'',
-		'oer_setup_settings_field',
+		'oer_setup_radio_field',
 		'oer_settings',
 		'oer_general_settings',
 		array(
@@ -593,7 +593,7 @@ function oer_settings_page() {
 			'type' => 'radio',
 			'class' => 'screenshot_option',
 			'name' =>  __('Disable Screenshots', OER_SLUG),
-			'value' => '1'
+			'value' => '0'
 		)
 	);
 
@@ -601,7 +601,7 @@ function oer_settings_page() {
 	add_settings_field(
 		'oer_enable_screenshot',
 		'',
-		'oer_setup_settings_field',
+		'oer_setup_radio_field',
 		'oer_settings',
 		'oer_general_settings',
 		array(
@@ -662,7 +662,7 @@ function oer_settings_page() {
 	add_settings_field(
 		'oer_external_screenshots',
 		'',
-		'oer_setup_settings_field',
+		'oer_setup_radio_field',
 		'oer_settings',
 		'oer_general_settings',
 		array(
@@ -670,7 +670,7 @@ function oer_settings_page() {
 			'type' => 'radio',
 			'class' => 'screenshot_option',
 			'name' =>  __('Use external screenshot service', OER_SLUG),
-			'value' => '1'
+			'value' => '2'
 		)
 	);
 
@@ -1135,7 +1135,6 @@ function oer_setup_settings_field( $arguments ) {
 			echo '<label for="'.$arguments['uid'].'"><strong>'.$title.'</strong></label><input name="'.$arguments['uid'].'" id="'.$arguments['uid'].'" type="'.$arguments['type'].'" value="' . $value . '" ' . $size . ' ' .  $selected . ' />';
 			break;
 		case "checkbox":
-		case "radio":
 			$display_value = "";
 			$selected = "";
 
@@ -1224,6 +1223,19 @@ function oer_setup_settings_field( $arguments ) {
 	if (isset($arguments['indent'])){
 		echo '</div>';
 	}
+}
+
+function oer_setup_radio_field($arguments){
+	$class="";
+	
+	if (isset($arguments['class'])) {
+		$class = $arguments['class'];
+		$class = " class='".$class."' ";
+	}
+	
+	$val = get_option($arguments['uid']);
+
+	echo '<input name="'.$arguments['uid'].'" value="'.$arguments['value'].'" id="'.$arguments['uid'].'" '.$class.' type="'.$arguments['type'].'" ' . checked($arguments['value'], $val, false) . ' /><label for="'.$arguments['uid'].'"><strong>'.$arguments['name'].'</strong></label>';
 }
 
 /** Initialize Subject Area Sidebar widget **/
