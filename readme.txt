@@ -1,8 +1,8 @@
 === WP OER ===
 Contributors: navigationnorth, joehobson, johnpaulbalagolan, tomozaidem, arobotnamedchris
 Tags: OER, Open Educational Resources, Education, Learning
-Requires at least: WordPress. 4.4
-Tested up to: WordPress 4.9.8
+Requires at least: 4.4
+Tested up to: 4.9.8
 Stable tag: 0.6.5
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
