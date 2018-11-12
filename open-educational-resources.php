@@ -3,7 +3,7 @@
  Plugin Name:  WP OER
  Plugin URI:   https://www.wp-oer.com
  Description:  Open Educational Resource management and curation, metadata publishing, and alignment to Common Core State Standards.
- Version:      0.6.1
+ Version:      0.6.5
  Author:       Navigation North
  Author URI:   https://www.navigationnorth.com
  Text Domain:  wp-oer
@@ -36,7 +36,7 @@ define( 'OER_FILE',__FILE__);
 // Plugin Name and Version
 define( 'OER_PLUGIN_NAME', 'WP OER Plugin' );
 define( 'OER_ADMIN_PLUGIN_NAME', 'WP OER Plugin');
-define( 'OER_VERSION', '0.6.1' );
+define( 'OER_VERSION', '0.6.5' );
 
 include_once(OER_PATH.'includes/oer-functions.php');
 include_once(OER_PATH.'includes/template-functions.php');
@@ -135,7 +135,7 @@ function oer_create_csv_import_table()
 	}
 
    update_option('setup_notify', true);
-   update_option( "oer_rewrite_rules", false ); 
+   update_option( "oer_rewrite_rules", false );
 
    //Trigger CPT and Taxonomy creation
    oer_postcreation();
@@ -525,7 +525,7 @@ function oer_settings_page() {
 		'oer_embed_settings_callback',
 		'embed_settings'
 	);
-	
+
 	//Add Settings field for Local PDF Resources Viewer
 	add_settings_field(
 		'oer_local_pdf_viewer',
@@ -569,10 +569,10 @@ function oer_settings_page() {
 			'default' => '1'
 		)
 	);
-	
+
 	register_setting( 'oer_general_settings' , 'oer_local_pdf_viewer' );
 	register_setting( 'oer_general_settings' , 'oer_external_pdf_viewer' );
-	
+
 	//Create General Section
 	add_settings_section(
 		'oer_general_settings',
@@ -701,11 +701,11 @@ function oer_settings_page() {
 
 //General settings callback
 function oer_general_settings_callback() {
-	
+
 }
 
 function oer_embed_settings_callback(){
-	
+
 }
 
 //Initialize Style Settings Tab
@@ -900,11 +900,11 @@ function oer_setup_settings(){
 			'description' => __('Your theme does not appear to have bootstrap. Uncheck if your WP theme already included Bootstrap', OER_SLUG)
 		)
 	);
-	
+
 	if ( function_exists( 'register_block_type' ) ) {
 		$_gutenberg = true;
 	}
-	
+
 	if ($_gutenberg)
 		//Add Settings field to Enabled Gutenberg editor
 		add_settings_field(
@@ -1113,7 +1113,7 @@ function oer_setup_settings_field( $arguments ) {
 	$disabled = "";
 
 	$value = get_option($arguments['uid']);
-	
+
 	if (isset($arguments['indent'])){
 		echo '<div class="indent">';
 	}
@@ -1165,10 +1165,10 @@ function oer_setup_settings_field( $arguments ) {
 				$title = $arguments['name'];
 			echo '<label for="'.$arguments['uid'].'"><strong>'.$title.'</strong></label>';
 			echo '<select name="'.$arguments['uid'].'" id="'.$arguments['uid'].'">';
-			
+
 			if (isset($arguments['options']))
 				$options = $arguments['options'];
-			
+
 			foreach($options as $key=>$desc){
 				$selected = "";
 				if ($value===false){
@@ -1197,7 +1197,7 @@ function oer_setup_settings_field( $arguments ) {
 				}
 				echo '<option value="'.$key.'"'.$selected.''.$disabled.'>'.$desc.'</option>';
 			}
-			
+
 			echo '<select>';
 			break;
 		case "textarea":
@@ -2092,9 +2092,9 @@ add_filter('template_include','oer_custom_search_template');
 
 function assign_standard_template($template) {
 	global $wp_query;
-	
+
 	$url_path = trim(parse_url(add_query_arg(array()), PHP_URL_PATH), '/');
-	
+
 	status_header(200);
 	//if ( $url_path === 'openk12xchange/resource/standards' ){
 //	if ( $url_path === 'resource/standards' ) {
@@ -2131,9 +2131,9 @@ add_action( 'template_include' , 'assign_standard_template' );
 // Assign template
 function oer_template_redirect(){
 	global $wp, $wp_query;
-	
+
 	$template = $wp->query_vars;
-	
+
 	if ( array_key_exists( 'resource', $template ) && 'standards' == $template['name'] ) {
 		$wp_query->is_404 = false;
 		status_header(200);
@@ -2156,7 +2156,7 @@ function oer_add_rewrites()
 	add_rewrite_endpoint( 'standard', EP_PERMALINK | EP_PAGES );
 	add_rewrite_endpoint( 'substandard', EP_PERMALINK | EP_PAGES );
 	add_rewrite_endpoint( 'notation', EP_PERMALINK | EP_PAGES );
-	
+
 	$flush_rewrite = get_option('oer_rewrite_rules');
 	if ($flush_rewrite==false) {
 		$wp_rewrite->init();
