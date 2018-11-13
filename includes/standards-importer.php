@@ -61,6 +61,11 @@
 										<input name="oer_next_generation_science" id="oer_next_generation_science" type="checkbox" value="1" <?php echo esc_attr($attr); ?>><label for="oer_next_generation_science" <?php echo $class; ?>><strong>Next Generation Science Standards</strong> <?php if ($science): ?><span class="prev-import">(previously imported)</span><?php endif; ?></label>
 									</td>
 								</tr>
+								<tr>
+									<td>
+										<input name="oer_standard_other" id="oer_standard_other" type="checkbox" value="1"><label for="oer_other_standards"><strong>Other</strong></label> <input name="oer_standard_other_url" class="large-text auto-width" id="oer_standard_other_url" type="textbox" disabled>
+									</td>
+								</tr>
 							</tbody>
 						</table>
 						<input type="hidden" value="" name="standards_import" />

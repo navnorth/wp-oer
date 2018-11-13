@@ -766,6 +766,9 @@ function process_import_subjects(){
  **/
 add_action("admin_action_import_standards","process_import_standards");
 function process_import_standards(){
+    require_once(OER_PATH."classes/class-standards-importer.php");
+    $standard_importer = new oer_standards_importer;
+    
     $message = null;
     $type = null;
 
@@ -791,7 +794,11 @@ function process_import_standards(){
 	if (isset($_POST['oer_next_generation_science'])){
 	       $files[] = OER_PATH."samples/NGSS.xml";
 	}
-	    
+	
+	if (isset($_POST['oer_standard_other']) && isset($_POST['oer_standard_other_url'])){
+	       $files[] = $standard_importer->download_standard($_POST['oer_standard_other_url']);
+	}
+	
 	foreach ($files as $file) {
 	    $import = oer_importStandards($file);
 	    if ($import['type']=="success") {

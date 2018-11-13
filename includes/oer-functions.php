@@ -697,8 +697,6 @@ function oer_importStandards($file){
 				$i++;
 			}
 
-			var_dump($core_standard);
-			exit();
 			// Get Core Standard
 			foreach($core_standard as $cskey => $csdata)
 			{
