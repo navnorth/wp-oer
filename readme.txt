@@ -3,7 +3,7 @@ Contributors: navigationnorth, joehobson, johnpaulbalagolan, tomozaidem, arobotn
 Tags: OER, Open Educational Resources, Education, Learning
 Requires at least: 4.4
 Tested up to: 4.9.8
-Stable tag: 0.6.5
+Stable tag: 0.6.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 

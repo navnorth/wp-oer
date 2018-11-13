@@ -3,7 +3,7 @@
  Plugin Name:  WP OER
  Plugin URI:   https://www.wp-oer.com
  Description:  Open Educational Resource management and curation, metadata publishing, and alignment to Common Core State Standards.
- Version:      0.6.5
+ Version:      0.6.6
  Author:       Navigation North
  Author URI:   https://www.navigationnorth.com
  Text Domain:  wp-oer
@@ -36,7 +36,7 @@ define( 'OER_FILE',__FILE__);
 // Plugin Name and Version
 define( 'OER_PLUGIN_NAME', 'WP OER Plugin' );
 define( 'OER_ADMIN_PLUGIN_NAME', 'WP OER Plugin');
-define( 'OER_VERSION', '0.6.5' );
+define( 'OER_VERSION', '0.6.6' );
 
 include_once(OER_PATH.'includes/oer-functions.php');
 include_once(OER_PATH.'includes/template-functions.php');
@@ -1227,12 +1227,12 @@ function oer_setup_settings_field( $arguments ) {
 
 function oer_setup_radio_field($arguments){
 	$class="";
-	
+
 	if (isset($arguments['class'])) {
 		$class = $arguments['class'];
 		$class = " class='".$class."' ";
 	}
-	
+
 	$val = get_option($arguments['uid']);
 
 	echo '<input name="'.$arguments['uid'].'" value="'.$arguments['value'].'" id="'.$arguments['uid'].'" '.$class.' type="'.$arguments['type'].'" ' . checked($arguments['value'], $val, false) . ' /><label for="'.$arguments['uid'].'"><strong>'.$arguments['name'].'</strong></label>';
