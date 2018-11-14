@@ -771,6 +771,7 @@ function process_import_standards(){
     
     $message = null;
     $type = null;
+    $other = false;
 
     if (!current_user_can('manage_options')) {
 	    wp_die( "You don't have permission to access this page!" );
@@ -797,15 +798,18 @@ function process_import_standards(){
 	
 	if (isset($_POST['oer_standard_other']) && isset($_POST['oer_standard_other_url'])){
 	       $files[] = $standard_importer->download_standard($_POST['oer_standard_other_url']);
+	       $other = true;
 	}
 	
 	foreach ($files as $file) {
-	    $import = oer_importStandards($file);
+	    $import = $standard_importer->import_standard($file, $other);
 	    if ($import['type']=="success") {
 		if (strpos($file,'Math')) {
 		    $message .= "Successfully imported Common Core Mathematics Standards. \n";
 		} elseif (strpos($file,'ELA')) {
 		    $message .= "Successfully imported Common Core English Language Arts Standards. \n";
+		} elseif (strpos($file,'NGSS')) {
+		    $message .= "Successfully imported Next Generation Science Standards. \n";
 		} else {
 		    $message .= "Successfully imported Next Generation Science Standards. \n";
 		}

@@ -46,9 +46,10 @@ class oer_standards_importer {
     }
     
     /** Import Standards **/
-    function import_standard($file){
+    function import_standard($file, $other = false){
 	global $wpdb;
 
+	$standard_title = "";
 	$time = time();
 	$date = date($time);
 
@@ -79,7 +80,7 @@ class oer_standards_importer {
                     {
                             $url = $StandardDocuments->item($m)->getAttribute('rdf:about');
                             $titles = $StandardDocuments->item($m)->getElementsByTagName('title');
-                            $core_standard[$url]['title'] = $titles->item($m)->nodeValue;
+                            $standard_title = $core_standard[$url]['title'] = $titles->item($m)->nodeValue;
                     }
 
                     $Statements = $doc->getElementsByTagName('Statement');
@@ -201,6 +202,18 @@ class oer_standards_importer {
             }
             // Log Finished Import
             debug_log("OER Standards Importer: Finished Bulk Import of Standards");
+	    
+	    // save other title or url
+	    if ($other==true){
+		$others = get_option("oer_standard_others");
+		$others[] = array("other_title" => $standard_title);
+		if ($others){
+		    update_option("oer_standard_others", $others);
+		} else {
+		    add_option("oer_standard_others", $others);
+		}
+	    }
+	    
             // Get Standard Notation
             $response = array(
                     'message' => 'successful',

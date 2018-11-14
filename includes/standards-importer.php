@@ -61,6 +61,25 @@
 										<input name="oer_next_generation_science" id="oer_next_generation_science" type="checkbox" value="1" <?php echo esc_attr($attr); ?>><label for="oer_next_generation_science" <?php echo $class; ?>><strong>Next Generation Science Standards</strong> <?php if ($science): ?><span class="prev-import">(previously imported)</span><?php endif; ?></label>
 									</td>
 								</tr>
+								<?php
+								if ($others = get_option("oer_standard_others")) {
+									$class = "class='disabled'";
+									$oIndex = 1;
+									if (is_array($others)) {
+										foreach($others as $other){
+								?>
+								<tr>
+									<td>
+										
+										<label for="oer_other_standard_<?php echo $oIndex; ?>" <?php echo $class; ?>><strong><?php echo $other['other_title']; ?></strong> <span class="prev-import">(previously imported)</span></label>
+									</td>
+								</tr>
+								<?php
+											$oIndex++;
+										}
+									}
+								}
+								?>
 								<tr>
 									<td>
 										<input name="oer_standard_other" id="oer_standard_other" type="checkbox" value="1"><label for="oer_other_standards"><strong>Other</strong></label> <input name="oer_standard_other_url" class="large-text auto-width" id="oer_standard_other_url" type="textbox" disabled>
