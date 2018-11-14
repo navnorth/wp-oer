@@ -82,7 +82,8 @@
 								?>
 								<tr>
 									<td>
-										<input name="oer_standard_other" id="oer_standard_other" type="checkbox" value="1"><label for="oer_other_standards"><strong>Other</strong></label> <input name="oer_standard_other_url" class="large-text auto-width" id="oer_standard_other_url" type="textbox" disabled>
+										<input name="oer_standard_other" id="oer_standard_other" type="checkbox" value="1"><label for="oer_other_standards"><strong>Other</strong></label> <input name="oer_standard_other_url" class="large-text auto-width" id="oer_standard_other_url" type="textbox" disabled> <span class="field-error hidden notice-red">Invalid format! Only XML is allowed</span>
+										<p class="description">Supports any XML standard set available from <a href="http://asn.desire2learn.com/resources/ASNJurisdiction" target="_blank">Achievement Standards Network</a></p>
 									</td>
 								</tr>
 							</tbody>
