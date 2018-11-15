@@ -811,7 +811,7 @@ function process_import_standards(){
 		} elseif (strpos($file,'NGSS')) {
 		    $message .= "Successfully imported Next Generation Science Standards. \n";
 		} else {
-		    $message .= "Successfully imported Next Generation Science Standards. \n";
+		    $message .= "Successfully imported standards. \n";
 		}
 	    }
 	    $type = urlencode($import['type']);

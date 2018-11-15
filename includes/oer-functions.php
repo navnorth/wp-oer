@@ -2038,6 +2038,9 @@ function oer_delete_standards() {
 	if (count($core_standards)>0){
 		$wpdb->query("TRUNCATE TABLE ".$wpdb->prefix."oer_core_standards");
 	}
+	
+	if (get_option("oer_standard_others"))
+		delete_option("oer_standard_others");
 
 	$message = __("Successfully deleted standards", OER_SLUG);
 	$type = "success";

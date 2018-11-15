@@ -2,7 +2,7 @@
 
 class oer_standards_importer {
     private $_debug;
-    private $_sample_dir =  OER_PATH . "/samples/";
+    private $_sample_dir =  OER_PATH . "samples/";
     
     function __construct(){
         
@@ -50,6 +50,7 @@ class oer_standards_importer {
 	global $wpdb;
 
 	$standard_title = "";
+	$new = false;
 	$time = time();
 	$date = date($time);
 
@@ -125,6 +126,7 @@ class oer_standards_importer {
                             if(empty($results))
                             {
                                     $wpdb->get_results( $wpdb->prepare( 'INSERT INTO ' . $wpdb->prefix. 'oer_core_standards values("", %s , %s)' , $title , $url ));
+				    $new = true;
                             }
                     }
                     // Get Core Standard
@@ -208,7 +210,8 @@ class oer_standards_importer {
 		$others = get_option("oer_standard_others");
 		$others[] = array("other_title" => $standard_title);
 		if ($others){
-		    update_option("oer_standard_others", $others);
+		    if ($new==true)
+			update_option("oer_standard_others", $others);
 		} else {
 		    add_option("oer_standard_others", $others);
 		}
