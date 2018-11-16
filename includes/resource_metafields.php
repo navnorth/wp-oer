@@ -15,7 +15,7 @@ global $chck;
 		<?php echo wp_nonce_field( 'oer_metabox_action' , 'oer_metabox_nonce_field' ); ?>
             <div class="oer_fld">
             	<?php $oer_resourceurl = get_post_meta($post->ID, 'oer_resourceurl', true);?>
-                <input type="text" name="oer_resourceurl" id="oer_resourceurl" value="<?php echo esc_attr($oer_resourceurl);?>" /> <button name="oer_local_resource_button" id="oer_local_resource_button">Set Local Resource</button>
+                <input type="text" name="oer_resourceurl" id="oer_resourceurl" value="<?php echo esc_attr($oer_resourceurl);?>" /> <button name="oer_local_resource_button" id="oer_local_resource_button" class="ui-button" alt="Set Local Resource">...</button>
             </div>
         </div>
 

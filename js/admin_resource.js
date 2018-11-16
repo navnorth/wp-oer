@@ -1,11 +1,10 @@
 jQuery(document).ready(function($) {
     var frame,
         metabox = jQuery("#oer_metaboxid.postbox"),
-        btn = metabox.find('#oer_local_resource_button'),
+        btn = metabox.find('button#oer_local_resource_button'),
         input = metabox.find('#oer_resourceurl');
     
     btn.on("click", function( e ){
-        console.log(e);
         e.preventDefault();
         
         if (frame) {
