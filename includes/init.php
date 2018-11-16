@@ -122,6 +122,7 @@ function oer_backside_scripts($hook)
 	wp_enqueue_script( 'media-upload' );
 	wp_enqueue_script( 'thickbox' );
 	wp_enqueue_script('back-scripts', OER_URL.'js/back_scripts.js',array( 'jquery','media-upload','thickbox','set-post-thumbnail' ));
+	wp_enqueue_script('admin-resource', OER_URL.'js/admin_resource.js');
     }
     
     // Adds our JS file to the queue that WordPress will load
