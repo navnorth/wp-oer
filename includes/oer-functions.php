@@ -2403,6 +2403,24 @@ function is_pdf_resource($url) {
 	return $is_pdf;
 }
 
+function is_file_resource($url) {
+	$supported_files = array(
+			 "xls","xlsx", // Excel Spreadsheets
+			 "doc", "docx", // Word Documents
+			 "ppt", "pptx", "pps", "ppsx", // Powerpoint presentations
+			 "odt", // Open Document
+			 "txt" // Text File
+			);
+	
+	$is_file = false;
+	
+	$file_ext = pathinfo($url, PATHINFO_EXTENSION);
+	if (in_array($file_ext, $supported_files))
+		$is_file = true;
+		
+	return $is_file;
+}
+
 function is_external_url($url) {
 	$is_external = false;
 	

@@ -28,6 +28,7 @@ $isSSLResource = oer_is_sll_resource($url);
 $isSLLCollection = oer_is_sll_collection($url);
 $isPDF = is_pdf_resource($url);
 $isExternal = is_external_url($url);
+$isFile = is_file_resource($url);
 
 $hide_title = get_option('oer_hide_resource_title');
 
@@ -87,6 +88,8 @@ $embed_disabled = false;
 	<?php
 	if ($youtube || $isSSLResource || $isSLLCollection)
 		include(OER_PATH.'oer_template/single-resource-youtube.php');
+	elseif ($isFile)
+		include(OER_PATH.'oer_template/single-resource-file.php');
 	else
 		include(OER_PATH.'oer_template/single-resource-standard.php');
 	?>
