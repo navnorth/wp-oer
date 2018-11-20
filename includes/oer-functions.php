@@ -3089,6 +3089,7 @@ function oer_get_fileinfo($url) {
 	$info['size'] = $filesize;
 	$info['sizeKb'] = $filesize/1024 . " Kb";
 	$info['filetype'] = oer_readable_filetype($filetype);
+	$info['thumbnail'] = oer_get_filethumbnail($filetype);
 	
 	// Get filename
 	$filename = basename($url);
@@ -3120,6 +3121,32 @@ function oer_readable_filetype($type) {
 	}
 	
 	return $type;
+}
+
+function oer_get_filethumbnail($type) {
+	$thumbnail = "";
+	switch ($type){
+		case "text/csv":
+			$thumbnail = OER_URL."/assets/file-text.svg";
+			break;
+		case "application/msword":
+		case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+			$thumbnail = OER_URL."/assets/file-word.svg";
+			break;
+		case "application/pdf":
+			$thumbnail = OER_URL."/assets/file-pdf.svg";
+			break;
+		case "application/vnd.ms-powerpoint":
+		case "application/vnd.openxmlformats-officedocument.presentationml.presentation":
+			$thumbnail = OER_URL."/assets/file-powerpoint.svg";
+			break;
+		case "application/vnd.ms-excel":
+		case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+			$thumbnail = OER_URL."/assets/file-excel.svg";
+			break;
+	}
+	
+	return $thumbnail;
 }
 
 ?>

@@ -64,6 +64,28 @@
 	height: 100%;
 }
 .oer-sngl-rsrc-img .oer-rsrcurl.left { text-align:left; }
+.oer-file-resource-img {
+	position: relative;
+	border: 2px solid #cdcdcd;
+	float: left;
+	width: 100%;
+	background-color: #e3e3e3;
+	padding:25px 20px;
+	overflow:hidden;
+}
+.oer_file_thumbnail { width:50%; float:left; }
+.oer_file_info { width:50%; float:right; }
+.oer_file_info .file-info { overflow:hidden; margin:5px 0; }
+.oer_file_info .file-info span.bold { font-weight:bold; width:45px; float:left; }
+.oer_file_info .file-download { margin-top:15px; }
+.oer_file_info .file-download .file-download-button {
+	padding: 10px 20px;
+	background-color: #680a82;
+	color: #ffffff;
+	border-radius: 10px;
+	font-weight:bold; 
+}
+.uppercase { text-transform:uppercase; }
 /** For Mobile styles **/
 @media screen and (min-width: 960px) {
     .oer-sngl-rsrc-dscrptn { width: 100%; }

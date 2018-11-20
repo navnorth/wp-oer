@@ -1,11 +1,11 @@
 <div class="oer-rsrclftcntr-img col-md-5 col-sm-12 col-xs-12">
     <!--Resource Image-->
-    <div class="oer-sngl-rsrc-img">
+    <div class="oer-file-resource-img">
         <?php
         $fInfo = oer_get_fileinfo($url);
         ?>
         <div class="oer_file_thumbnail">
-            
+            <img src="<?php echo $fInfo['thumbnail']; ?>" class="file-thumbnail" />
         </div>
         <div class="oer_file_info">
             <div class="file-info"><span class="bold">File:</span> <?php echo $fInfo['filename']; ?></div>
