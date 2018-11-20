@@ -1,7 +1,18 @@
 <div class="oer-rsrclftcntr-img col-md-5 col-sm-12 col-xs-12">
     <!--Resource Image-->
     <div class="oer-sngl-rsrc-img">
-        File Image
+        <?php
+        $fInfo = oer_get_fileinfo($url);
+        ?>
+        <div class="oer_file_thumbnail">
+            
+        </div>
+        <div class="oer_file_info">
+            <div class="file-info"><span class="bold">File:</span> <?php echo $fInfo['filename']; ?></div>
+            <div class="file-info"><span class="bold">Type:</span> <?php echo $fInfo['filetype']; ?></div>
+            <div class="file-info"><span class="bold">Size:</span> <?php echo ($fInfo['size']>1024)?$fInfo['sizeKb']:$fInfo['size']." bytes"; ?></div>
+            <div class="file-download"><a href="<?php echo $fInfo['url']; ?>" class="file-download-button ui-button uppercase" target="_blank">Download File</a></div>
+        </div>
     </div>
 </div>
 <div class="oer-rsrcrghtcntr col-md-7 col-sm-12 col-xs-12">

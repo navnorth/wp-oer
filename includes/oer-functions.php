@@ -3077,8 +3077,49 @@ function oer_get_substandard_details($substandard_id){
 	return $substandards;
 }
 
-function oer_download_xmlstandards($url){
+function oer_get_fileinfo($url) {
+	$info = null;
 	
+	$info['url'] = $url;
+	
+	// Get File size
+	$head = array_change_key_case(get_headers($url, TRUE));
+	$filesize = $head['content-length'];
+	$filetype = $head['content-type'];
+	$info['size'] = $filesize;
+	$info['sizeKb'] = $filesize/1024 . " Kb";
+	$info['filetype'] = oer_readable_filetype($filetype);
+	
+	// Get filename
+	$filename = basename($url);
+	$info['filename'] = $filename;
+	
+	return $info;
+}
+
+function oer_readable_filetype($type) {
+	switch ($type){
+		case "text/csv":
+			$type = "Comma-separated values(CSV)";
+			break;
+		case "application/msword":
+		case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+			$type = "Microsoft Word";
+			break;
+		case "application/pdf":
+			$type = "Adobe PDF";
+			break;
+		case "application/vnd.ms-powerpoint":
+		case "application/vnd.openxmlformats-officedocument.presentationml.presentation":
+			$type = "Microsoft PowerPoint";
+			break;
+		case "application/vnd.ms-excel":
+		case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+			$type = "Microsoft Excel";
+			break;
+	}
+	
+	return $type;
 }
 
 ?>
