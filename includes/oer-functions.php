@@ -3091,12 +3091,11 @@ function oer_get_fileinfo($url) {
 	]);
 	
 	// Get File size
-	try {
-		$head = array_change_key_case(get_headers($url, TRUE));
-	} catch(Exception $e){
-		$head = oer_curl_fileinfo($url);	
-	}
+	$head = array_change_key_case(get_headers($url, TRUE));
 	
+	if (!$head) {
+		$head = oer_curl_fileinfo($url);
+	} 
 	
 	$filesize = $head['content-length'];
 	$filetype = $head['content-type'];	
@@ -3115,25 +3114,26 @@ function oer_get_fileinfo($url) {
 
 function oer_curl_fileinfo($url){
 	$response = null;
-	
+	//var_dump($url);
 	$ch = curl_init();
-	curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
-	curl_setopt ($ch, CURLOPT_URL, $url);
-	curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 20);
-	curl_setopt ($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
-	curl_setopt ($ch, CURLOPT_FOLLOWLOCATION, true);
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($ch, CURLOPT_HEADER, true); 
 	curl_setopt($ch, CURLOPT_NOBODY, true);
       
 	$content = curl_exec ($ch);
+	//var_dump($content);
 	
-	
+	$info = curl_getinfo($ch);
+	//var_dump($info);
 	$contentType = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
 	$contentSize = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
 	
 	$response['content-type'] = $contentType;
 	$response['content-length'] = $contentSize;
 	
+	curl_close($ch);
+	//var_dump($response);
 	return $response;
 }
 
