@@ -3114,18 +3114,27 @@ function oer_get_fileinfo($url) {
 
 function oer_curl_fileinfo($url){
 	$response = null;
-	//var_dump($url);
+	$wAuth = false;
+	
+	$urls = parse_url($url);
+	if ($urls['host']=="k12x-test.navigationnorth.com")
+		$wAuth = true;
+	
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $url);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	if ($wAuth){
+		$username = "guest";
+		$password = "wordpress";
+		curl_setopt($ch, CURLOPT_USERPWD, $username . ":" . $password);	
+	}
 	curl_setopt($ch, CURLOPT_HEADER, true); 
 	curl_setopt($ch, CURLOPT_NOBODY, true);
       
 	$content = curl_exec ($ch);
-	//var_dump($content);
 	
 	$info = curl_getinfo($ch);
-	//var_dump($info);
+
 	$contentType = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
 	$contentSize = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
 	
@@ -3133,7 +3142,7 @@ function oer_curl_fileinfo($url){
 	$response['content-length'] = $contentSize;
 	
 	curl_close($ch);
-	//var_dump($response);
+	
 	return $response;
 }
 
@@ -3166,22 +3175,22 @@ function oer_get_filethumbnail($type) {
 	$thumbnail = "";
 	switch ($type){
 		case "text/csv":
-			$thumbnail = OER_URL."/assets/file-text.svg";
+			$thumbnail = OER_URL."assets/file-text.svg";
 			break;
 		case "application/msword":
 		case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-			$thumbnail = OER_URL."/assets/file-word.svg";
+			$thumbnail = OER_URL."assets/file-word.svg";
 			break;
 		case "application/pdf":
-			$thumbnail = OER_URL."/assets/file-pdf.svg";
+			$thumbnail = OER_URL."assets/file-pdf.svg";
 			break;
 		case "application/vnd.ms-powerpoint":
 		case "application/vnd.openxmlformats-officedocument.presentationml.presentation":
-			$thumbnail = OER_URL."/assets/file-powerpoint.svg";
+			$thumbnail = OER_URL."assets/file-powerpoint.svg";
 			break;
 		case "application/vnd.ms-excel":
 		case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
-			$thumbnail = OER_URL."/assets/file-excel.svg";
+			$thumbnail = OER_URL."assets/file-excel.svg";
 			break;
 	}
 	
