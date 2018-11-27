@@ -1,19 +1,41 @@
 <div class="oer-rsrclftcntr-img col-md-5 col-sm-12 col-xs-12">
     <!--Resource Image-->
-    <div class="oer-file-resource-img">
+    <?php
+    $bg_img = "";
+    $w_featured_image = false;
+    if (has_post_thumbnail()){
+        $img_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ) , "full" );
+        $image = $img_url[0];
+        $img_width = oer_get_image_width('large');
+	$img_height = oer_get_image_height('large');
+        $new_image_url = oer_resize_image($img_url[0], $img_width, $img_height, true);
+        $bg_img = "<img src='".esc_url($new_image_url)."' alt='".esc_attr(get_the_title())."'/>";
+        $w_featured_image = true;
+    }
+    
+    if ($w_featured_image)
+        echo "<div class='oer-file-resource-img-container'>".$bg_img;
+        
+    display_default_thumbnail($post);
+    ?>
+    <div class="oer-file-resource-img<?php if ($w_featured_image) echo " oer-file-resource-img-opaque"; ?>">
         <?php
         $fInfo = oer_get_fileinfo($url);
         ?>
-        <div class="oer_file_thumbnail">
+        <div class="oer_file_thumbnail<?php if ($w_featured_image) echo " hidden"; ?>">
             <img src="<?php echo $fInfo['thumbnail']; ?>" class="file-thumbnail" />
         </div>
-        <div class="oer_file_info">
+        <div class="oer_file_info<?php if ($w_featured_image) echo "-full"; ?>">
             <div class="file-info"><span class="bold">File:</span> <?php echo $fInfo['filename']; ?></div>
             <div class="file-info"><span class="bold">Type:</span> <?php echo $fInfo['filetype']; ?></div>
             <div class="file-info"><span class="bold">Size:</span> <?php echo ($fInfo['size']>1024)?$fInfo['sizeKb']:$fInfo['size']." bytes"; ?></div>
             <div class="file-download"><a href="<?php echo $fInfo['url']; ?>" class="file-download-button ui-button uppercase" target="_blank">Download File</a></div>
         </div>
     </div>
+    <?php
+    if ($w_featured_image)
+        echo "</div>";
+    ?>
 </div>
 <div class="oer-rsrcrghtcntr col-md-7 col-sm-12 col-xs-12">
     <div class="oer-rsrcctgries tagcloud">

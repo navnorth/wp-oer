@@ -73,12 +73,28 @@
 	padding:25px 20px;
 	overflow:hidden;
 }
+.oer-file-resource-img-container { overflow:hidden; position:relative; }
+.oer-file-resource-img-opaque {
+	background-color: rgba(0,0,0,0.75);
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 100%;
+	padding:10%;
+}
 .oer_file_thumbnail { width:50%; float:left; }
 .oer_file_info { width:50%; float:right; }
-.oer_file_info .file-info { overflow:hidden; margin:5px 0; }
-.oer_file_info .file-info span.bold { font-weight:bold; width:45px; float:left; }
-.oer_file_info .file-download { margin-top:15px; }
-.oer_file_info .file-download .file-download-button {
+.oer_file_info-full { width:100%; float:none; }
+.oer_file_info .file-info,
+.oer_file_info-full .file-info{ overflow:hidden; margin:5px 0; }
+.oer_file_info-full .file-info { color:#fff; }
+.oer_file_info .file-info span.bold,
+.oer_file_info-full .file-info span.bold{ font-weight:bold; width:45px; float:left; }
+.oer_file_info .file-download,
+.oer_file_info-full .file-download{ margin-top:15px; }
+.oer_file_info .file-download .file-download-button,
+.oer_file_info-full .file-download .file-download-button{
 	padding: 10px 20px;
 	background-color: #680a82;
 	color: #ffffff;
