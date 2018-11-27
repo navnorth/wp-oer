@@ -394,6 +394,13 @@ $hide_title = get_option('oer_hide_subject_area_title');
 						if (empty($img_url)) {
 							$w_image = false;
 							$new_image_url = OER_URL . 'images/default-icon-220x180.png';
+							
+							$url = get_post_meta($post->ID, "oer_resourceurl", true);
+							$isFile = is_file_resource($url);
+							if ($isFile) {
+								$fInfo = oer_get_fileinfo($url);
+								$new_image_url = $fInfo['thumbnail'];
+							}
 						} else {
 							$new_image_url = $img_url[0];
 						}
@@ -409,6 +416,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 						
 						$img_path = $new_img_path = parse_url($img_url[0]);
 						$img_path = $_SERVER['DOCUMENT_ROOT'] . $img_path['path'];
+						
 						if(!empty($img_url))
 						{
 							//Resize Image using WP_Image_Editor
