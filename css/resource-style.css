@@ -102,6 +102,7 @@
 	font-weight:bold; 
 }
 .uppercase { text-transform:uppercase; }
+.hidden { display:none; }
 /** For Mobile styles **/
 @media screen and (min-width: 960px) {
     .oer-sngl-rsrc-dscrptn { width: 100%; }
