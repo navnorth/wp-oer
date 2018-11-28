@@ -34,6 +34,13 @@ get_header();
 			    </div>
 			<?php } else {
 			    $new_image_url = OER_URL . 'images/default-icon-220x180.png';
+			    
+			    $url = get_post_meta($post->ID, "oer_resourceurl", true);
+			    $isFile = is_file_resource($url);
+			    if ($isFile) {
+				$fInfo = oer_get_fileinfo($url);
+				$new_image_url = $fInfo['thumbnail'];
+			    }
 			    echo '<div class="oer-feature-image col-md-3"><a href="'.esc_url(get_permalink($post->ID)).'"><img src="'.esc_url($new_image_url).'"></a></div>';
 			}?>
 				    
