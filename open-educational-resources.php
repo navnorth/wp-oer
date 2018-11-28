@@ -263,7 +263,7 @@ function oer_add_settings_link( $links, $file ){
  * Get the Custom Template if set
  **/
 function oer_get_template_hierarchy( $template ) {
-
+	
 	//get template file
 	if ($template=="search"){
 		$template = $template . '.php';
@@ -271,16 +271,16 @@ function oer_get_template_hierarchy( $template ) {
 		$template_slug = rtrim( $template , '.php' );
 		$template = $template_slug . '.php';
 	}
-
+	
 	//Check if custom template exists in theme folder
 	if ($theme_file = locate_template( array( 'oer_template/' . $template ) )) {
 		$file = $theme_file;
 	} elseif ($theme_file = locate_template( array( $template ) )) {
 		$file = $theme_file;
 	} else {
-		$file = OER_PATH . '/oer_template/' . $template;
+		$file = OER_PATH . 'oer_template/' . $template;
 	}
-
+	
 	return apply_filters( 'oer_repl_template' . $template , $file  );
 }
 
@@ -323,7 +323,7 @@ function oer_category_template( $template ) {
 
 	// Get Current Object if it belongs to Resource Category taxonomy
 	$resource_term = get_term_by( 'id' , $_id , 'resource-subject-area' );
-
+	//var_dump($resource_term);
 	//Check if the loaded resource is a category
 	if ($resource_term && !is_wp_error( $resource_term )) {
 		return oer_get_template_hierarchy('resource-subject-area');
@@ -349,13 +349,33 @@ function oer_tag_template( $template ) {
 	$_id = $wp_query->get_queried_object_id();
 
 	$resource_tag = is_tag($_id);
-
+	
 	//Check if the loaded resource is a category
 	if ($resource_tag && !is_wp_error( $resource_tag )) {
 		return oer_get_template_hierarchy('tag-resource');
+	} elseif (is_post_type_archive('resource')) {
+		return oer_get_template_hierarchy('archive-resource');
 	} else {
 		return $template;
 	}
+ }
+ 
+ /**
+ * Add filter to use plugin default archive template
+ **/
+add_filter( 'archive_template' , 'oer_custom_archive_template' );
+
+/**
+ * Function to choose template for the resource archive
+ **/
+function oer_custom_archive_template( $template ) {
+	global $wp_query;
+	
+	if (is_post_type_archive('resource')) {
+		$template = realpath(oer_get_template_hierarchy('archive-resource'));
+	}
+	
+	return $template;
  }
 
 function oer_get_search_posts($search_text) {
