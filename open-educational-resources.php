@@ -709,6 +709,54 @@ function oer_settings_page() {
 			'description' => __('use $url for where the Resource URL parameter should be placed', OER_SLUG)
 		)
 	);
+	
+	//Add Settings field for Url2PNG Screenshots
+	add_settings_field(
+		'oer_url2png_screenshot',
+		'',
+		'oer_setup_radio_field',
+		'oer_settings',
+		'oer_general_settings',
+		array(
+			'uid' => 'oer_url2png_screenshot',
+			'type' => 'radio',
+			'class' => 'screenshot_option',
+			'name' =>  __('Url2PNG', OER_SLUG),
+			'value' => '3'
+		)
+	);
+	
+	//Set API Key for Url2PNG
+	add_settings_field(
+		'oer_url2png_api_key',
+		__("Url2PNG API Key", OER_SLUG),
+		'oer_setup_settings_field',
+		'oer_settings',
+		'oer_general_settings',
+		array(
+			'uid' => 'oer_url2png_api_key',
+			'type' => 'textbox',
+			'indent' => true,
+			'class' => 'url2png_setting',
+			'title' => __('API Key', OER_SLUG)
+		)
+	);
+	
+	//Set API Secret for Url2PNG
+	add_settings_field(
+		'oer_url2png_api_secret',
+		__("Url2PNG API Secret", OER_SLUG),
+		'oer_setup_settings_field',
+		'oer_settings',
+		'oer_general_settings',
+		array(
+			'uid' => 'oer_url2png_api_secret',
+			'type' => 'textbox',
+			'indent' => true,
+			'class' => 'url2png_setting',
+			'title' => __('API Secret', OER_SLUG)
+		)
+	);
 
 	register_setting( 'oer_general_settings' , 'oer_disable_screenshots' );
 	register_setting( 'oer_general_settings' , 'oer_enable_screenshot' );
@@ -717,6 +765,9 @@ function oer_settings_page() {
 	register_setting( 'oer_general_settings' , 'oer_python_install' );
 	register_setting( 'oer_general_settings' , 'oer_external_screenshots' );
 	register_setting( 'oer_general_settings' , 'oer_service_url' );
+	register_setting( 'oer_general_settings' , 'oer_url2png_screenshot' );
+	register_setting( 'oer_general_settings' , 'oer_url2png_api_key' );
+	register_setting( 'oer_general_settings' , 'oer_url2png_api_secret' );
 }
 
 //General settings callback
