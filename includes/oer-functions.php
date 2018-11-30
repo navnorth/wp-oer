@@ -3219,4 +3219,24 @@ function oer_mask_string($text, $start = 0, $length = 0){
 	return $mask_string;
 }
 
+function oer_url2png($url, $args = array()) {
+
+	$URL2PNG_APIKEY = get_option('oer_url2png_api_key');
+	$URL2PNG_SECRET = get_option('oer_url2png_api_secret');;
+      
+	# urlencode request target
+	$options['url'] = urlencode($url);
+      
+	$options += $args;
+      
+	# create the query string based on the options
+	foreach($options as $key => $value) { $_parts[] = "$key=$value"; }
+      
+	# create a token from the ENTIRE query string
+	$query_string = implode("&", $_parts);
+	$TOKEN = md5($query_string . $URL2PNG_SECRET);
+      
+	return "https://api.url2png.com/v6/$URL2PNG_APIKEY/$TOKEN/png/?$query_string";
+}
+
 ?>
