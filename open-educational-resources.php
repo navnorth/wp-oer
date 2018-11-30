@@ -737,6 +737,7 @@ function oer_settings_page() {
 			'uid' => 'oer_url2png_api_key',
 			'type' => 'textbox',
 			'indent' => true,
+			'wrapper_class' => 'url2png-setting hidden',
 			'class' => 'url2png_setting',
 			'title' => __('API Key', OER_SLUG)
 		)
@@ -753,8 +754,10 @@ function oer_settings_page() {
 			'uid' => 'oer_url2png_api_secret',
 			'type' => 'textbox',
 			'indent' => true,
+			'wrapper_class' => 'url2png-setting hidden',
 			'class' => 'url2png_setting',
-			'title' => __('API Secret', OER_SLUG)
+			'title' => __('API Secret', OER_SLUG),
+			'masked' => true
 		)
 	);
 
@@ -1182,11 +1185,18 @@ function oer_setup_settings_field( $arguments ) {
 	$size = "";
 	$class = "";
 	$disabled = "";
+	$wrapper_class = "";
 
 	$value = get_option($arguments['uid']);
+	
+	if (isset($arguments['masked'])){
+		$value = oer_mask_string($value, 4, 7);
+	}
 
 	if (isset($arguments['indent'])){
-		echo '<div class="indent">';
+		if (isset($arguments['wrapper_class']))
+			$wrapper_class = $arguments['wrapper_class'];
+		echo '<div class="indent '.$wrapper_class.'">';
 	}
 
 	if (isset($arguments['class'])) {

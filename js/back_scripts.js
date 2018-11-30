@@ -58,6 +58,18 @@ jQuery(document).ready(function(e) {
 			std_url.attr("disabled", true)
 		}
 	});
+	
+	jQuery('#oer_url2png_screenshot').on("change", function(){
+		if (jQuery(this).is(":checked")) {
+			jQuery('.url2png-setting').removeClass('hidden');
+		} else {
+			jQuery('.url2png-setting').addClass('hidden');
+		}
+	});
+	
+	if (jQuery('#oer_url2png_screenshot').is(":checked")) {
+		jQuery('.url2png-setting').removeClass('hidden');
+	} 
 });
 
 

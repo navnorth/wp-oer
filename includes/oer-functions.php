@@ -3197,4 +3197,26 @@ function oer_get_filethumbnail($type) {
 	return $thumbnail;
 }
 
+function oer_mask_string($text, $start = 0, $length = 0){
+	$mask_string = "";
+	$count = 0;
+	$offset = 0;
+	
+	if ($length==0)
+		$count = strlen($text);
+	else
+		$count = $length;
+	
+	if ($start>0)
+		$mask_string .= substr($text, 0, $start);
+	
+	$mask_string .= str_repeat("*", $count);
+	
+	if ($length>0){
+		$offset = strlen($text) - ($start + $length);
+		$mask_string .= substr($text, -($offset));
+	}
+	return $mask_string;
+}
+
 ?>
