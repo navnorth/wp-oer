@@ -357,6 +357,7 @@ function oer_save_customfields()
     //Check first if screenshot is enabled
     $screenshot_enabled = get_option( 'oer_enable_screenshot' );
     $external_screenshot = get_option('oer_external_screenshots');
+    $url2png_screenshot = get_option('oer_url2png_screenshot');
     
     //Check first if $post is not empty
     if ($post) {
@@ -600,7 +601,7 @@ function oer_save_customfields()
 			
 			$upload_dir = wp_upload_dir();
 			$file = '';
-
+			
 			//Change $post_id as it is undefined to $post->ID
 			if(!has_post_thumbnail( $post->ID ))
 			{
@@ -613,6 +614,11 @@ function oer_save_customfields()
 				
 			    if ( $youtube )
 				$file = oer_get_youtube_thumbnail($url);
+			    
+			    if ($url2png_screenshot){
+				$screenshot_url = oer_url2png($url);
+				$file = oer_save_image_to_file($screenshot_url, $url);
+			    }
 			}
 			
 			if(file_exists($file))
@@ -627,7 +633,7 @@ function oer_save_customfields()
 					'post_content'   => '',
 					'post_status'    => 'inherit'
 				);
-
+				
 				$attach_id = wp_insert_attachment( $attachment, $file, $post->ID );
 				update_post_meta($post->ID, "_thumbnail_id", $attach_id);
 

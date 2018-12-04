@@ -849,10 +849,11 @@ function oer_getImageFromExternalURL($url) {
 	return $file;
 }
 
-function oer_save_image_to_file($image_url) {
+function oer_save_image_to_file($image_url, $orig_url = "") {
 	$ch = curl_init ($image_url);
 
 	curl_setopt($ch, CURLOPT_HEADER, 0);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 	curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
 	curl_setopt($ch, CURLOPT_TIMEOUT, 30);
@@ -869,6 +870,10 @@ function oer_save_image_to_file($image_url) {
 		debug_log("OER : create upload directory");
 	}
 
+	// Change naming convention to resource url instead of external resource url
+	if ($orig_url!=="")
+		$image_url = $orig_url;
+		
 	if(!file_exists($file = $path.'Screenshot'.preg_replace('/https?|:|#|\?|\&|\//i', '-', $image_url).'.jpg'))
 	{
 		debug_log("OER : start screenshot function");
@@ -1420,6 +1425,8 @@ function oer_importResources($default=false) {
 					$screenshot_enabled = get_option( 'oer_enable_screenshot' );
 					//Check if external service screenshot is enabled
 					$external_screenshot = get_option( 'oer_external_screenshots' );
+					//Check if URL2PNG screenshot is enabled
+					$url2png_screenshot = get_option('oer_url2png_screenshot');
 
 					if(!has_post_thumbnail( $post_id ))
 					{
@@ -1435,6 +1442,9 @@ function oer_importResources($default=false) {
 						} elseif ( $external_screenshot ) {
 							// if external screenshot utility enabled
 							$file = oer_getImageFromExternalURL($url);
+						} elseif ( $url2png_screenshot ) {
+							$screenshot_url = oer_url2png($url);
+							$file = oer_save_image_to_file($screenshot_url, $url);
 						}
 					}
 					
@@ -2889,6 +2899,8 @@ function oer_add_resource($resource) {
 		$screenshot_enabled = get_option( 'oer_enable_screenshot' );
 		//if external service screenshot is enabled
 		$external_screenshot = get_option( 'oer_external_screenshots' );
+		//if URL2PNG screenshot is enabled
+		$url2png_screenshot = get_option('oer_url2png_screenshot');
 
 		if(!has_post_thumbnail( $post_id ))
 		{
@@ -2897,6 +2909,9 @@ function oer_add_resource($resource) {
 			} elseif ( $external_screenshot ) {
 				// if external screenshot utility enabled
 				$file = oer_getImageFromExternalURL($url);
+			} elseif ( $url2png_screenshot ) {
+				$screenshot_url = oer_url2png($url);
+				$file = oer_save_image_to_file($screenshot_url, $url);
 			}
 		}
 		
@@ -3220,13 +3235,13 @@ function oer_mask_string($text, $start = 0, $length = 0){
 }
 
 function oer_url2png($url, $args = array()) {
-
+	
 	$URL2PNG_APIKEY = get_option('oer_url2png_api_key');
 	$URL2PNG_SECRET = get_option('oer_url2png_api_secret');;
-      
+	
 	# urlencode request target
 	$options['url'] = urlencode($url);
-      
+	
 	$options += $args;
       
 	# create the query string based on the options
