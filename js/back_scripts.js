@@ -1,3 +1,4 @@
+var oSecret;
 jQuery(document).ready(function(e) {
 	jQuery( ".oer_datepicker" ).datepicker( { dateFormat: 'MM d, yy' } );
 	jQuery( ".oer_datepicker" ).datepicker( "option", "showAnim", "slideDown" );
@@ -69,7 +70,15 @@ jQuery(document).ready(function(e) {
 	
 	if (jQuery('#oer_url2png_screenshot').is(":checked")) {
 		jQuery('.url2png-setting').removeClass('hidden');
-	} 
+	}
+	
+	if (jQuery('#oer_url2png_api_secret').length) {
+		hide_secret();
+	}
+
+	jQuery('#oer_url2png_api_secret').on('focus', function(){
+		jQuery(this).val(oSecret);
+	});
 });
 
 
@@ -133,6 +142,40 @@ function oer_check_myChild(ref)
 			});
 		}
 	}
+}
+
+function masked_string(text,start,length) {
+	var mask_string = "";
+	var count = 0;
+	var offset = 0;
+	var mask_char = "*";
+	
+	if (length==0)
+		count = text.length;
+	else
+		count = length;
+	
+	if (start>0)
+		mask_string = text.substr(0, start);
+	
+	mask_string += mask_char.repeat(count);
+	
+	if (length>0){
+		offset = start + length;
+		mask_string += text.substr(offset, text.length);
+	}
+	return mask_string;
+}
+
+function hide_secret() {
+	var secret = jQuery('#oer_url2png_api_secret')
+	oSecret = secret.attr('data-hidden');
+	var fSecret = masked_string(oSecret,4, 7);
+	secret.val(fSecret);
+}
+
+function unmasked_string(masked_string) {
+	return oSecret;
 }
 
 function oer_select_all()

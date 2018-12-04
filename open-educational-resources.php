@@ -1186,10 +1186,12 @@ function oer_setup_settings_field( $arguments ) {
 	$class = "";
 	$disabled = "";
 	$wrapper_class = "";
+	$data_masked = "";
 
 	$value = get_option($arguments['uid']);
 	
 	if (isset($arguments['masked'])){
+		$data_masked = "data-hidden='".$value."'";
 		$value = oer_mask_string($value, 4, 7);
 	}
 
@@ -1213,7 +1215,7 @@ function oer_setup_settings_field( $arguments ) {
 			$size = 'size="50"';
 			if (isset($arguments['title']))
 				$title = $arguments['title'];
-			echo '<label for="'.$arguments['uid'].'"><strong>'.$title.'</strong></label><input name="'.$arguments['uid'].'" id="'.$arguments['uid'].'" type="'.$arguments['type'].'" value="' . $value . '" ' . $size . ' ' .  $selected . ' />';
+			echo '<label for="'.$arguments['uid'].'"><strong>'.$title.'</strong></label><input name="'.$arguments['uid'].'" id="'.$arguments['uid'].'" type="'.$arguments['type'].'" value="' . $value . '" ' . $size . ' ' .  $selected . ' ' . $data_masked . ' />';
 			break;
 		case "checkbox":
 			$display_value = "";
