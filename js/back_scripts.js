@@ -150,6 +150,10 @@ function masked_string(text,start,length) {
 	var offset = 0;
 	var mask_char = "*";
 	
+	if (text.length==0) {
+		return "";
+	}
+	
 	if (length==0)
 		count = text.length;
 	else

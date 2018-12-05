@@ -3217,6 +3217,9 @@ function oer_mask_string($text, $start = 0, $length = 0){
 	$count = 0;
 	$offset = 0;
 	
+	if (strlen($text)==0)
+		return "";
+	
 	if ($length==0)
 		$count = strlen($text);
 	else
