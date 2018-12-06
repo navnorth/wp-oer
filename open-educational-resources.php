@@ -2275,3 +2275,18 @@ add_action( 'init', function () {
 		ob_start();
 	}
 } );
+
+/* Enqueue script and css for Gutenberg Resource block */
+function oer_enqueue_resource_block(){
+	wp_enqueue_script(
+		'resource-block-js', 
+		plugins_url('/js/oer_resource_block.js', dirname(__FILE__)),
+		array('wp-blocks', 'wp-i18n', 'wp-element')
+	);
+	wp_enqueue_style(
+		'resource-block-css', 
+		plugins_url('/css/oer_resource_block.css', dirname(__FILE__)),
+		array('wp-edit-blocks')
+	);
+}
+add_action('enqueue_block_editor_assets', 'oer_enqueue_resource_block');
