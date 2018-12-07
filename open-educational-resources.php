@@ -2280,12 +2280,12 @@ add_action( 'init', function () {
 function oer_enqueue_resource_block(){
 	wp_enqueue_script(
 		'resource-block-js', 
-		plugins_url('/js/oer_resource_block.js', dirname(__FILE__)),
+		OER_URL . "/js/oer_resource_block.js",
 		array('wp-blocks', 'wp-i18n', 'wp-element')
 	);
 	wp_enqueue_style(
 		'resource-block-css', 
-		plugins_url('/css/oer_resource_block.css', dirname(__FILE__)),
+		OER_URL . "/css/oer_resource_block.css",
 		array('wp-edit-blocks')
 	);
 }
