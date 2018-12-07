@@ -22,8 +22,12 @@ registerBlockType( 'wp-oer-plugin/oer-resource-block', {
             selector: '.oer-resource-dropdown'
         }
     },
-    edit: function( attributes ){
-        return elem( 'div', attributes.resource , 'Edit Embed Resource' );
+    edit: function( props ){
+        function onChange(event) {
+            props.setAttributes( { resource: event.target.value } );
+        }
+        
+        return elem('select', { value: props.attributes.resource, onChange: onChange });
     },
     save: function( attributes ) {
         return elem( 'p', attributes.resource, 'Saved Embed Resource' );
