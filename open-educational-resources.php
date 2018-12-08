@@ -2280,7 +2280,7 @@ add_action( 'init', function () {
 function oer_enqueue_resource_block(){
 	wp_enqueue_script(
 		'resource-block-js', 
-		OER_URL . "/js/oer_resource_block.js",
+		OER_URL . "/js/oer_resource_block.build.js",
 		array('wp-blocks', 'wp-i18n', 'wp-element')
 	);
 	wp_enqueue_style(

@@ -1,7 +1,43 @@
-const { registerBlockType } = window.wp.blocks;
-const { __ } = window.wp.i18n;
-const { Button, Dropdown } = window.wp.components;
+const { __ } = wp.i18n;
+const { registerBlockType, InspectorControls } = wp.blocks;
+const { SelectControl } = wp.components;
+const { Component } = wp.element;
 var elem = wp.element.createElement;
+
+class selectResource extends Component {
+    
+    static getInitialState ( selectedResource ) {
+        return {
+            posts: [],
+            selectedPost: selectedResource,
+            post: {}
+        }
+    }
+    
+    constructor() {
+        super( ...arguments );
+        
+        this.state = this.constructor.getInitialState( this.props.attributes.selectedResource );
+    }
+    
+    render() {
+        
+        let options = [ { value:0, label: __('Select a resource') } ];
+        
+        return [
+            !! this.props.isSelected && ( <InspectorControls key='inspector'>
+                <SelectControl 
+                // Selected value.
+                value={ this.props.attributes.selectedResource } 
+                label={ __( 'Select a Resource' ) } 
+                options={ options } />
+              </InspectorControls>
+            ), 
+            'Load Resource Placeholder'
+        ];
+        
+    }
+}
 
 registerBlockType( 'wp-oer-plugin/oer-resource-block', {
     title: __( 'OER Resource' ),
@@ -16,20 +52,13 @@ registerBlockType( 'wp-oer-plugin/oer-resource-block', {
         __( 'History' )
     ],
     attributes: {
-        resource: {
-            type: 'string',
-            source: 'html',
-            selector: '.oer-resource-dropdown'
+        selectedResource: {
+            type: 'number',
+            default: 0
         }
     },
-    edit: function( props ){
-        function onChange(event) {
-            props.setAttributes( { resource: event.target.value } );
-        }
-        
-        return elem('select', { value: props.attributes.resource, onChange: onChange });
-    },
-    save: function( attributes ) {
-        return elem( 'p', attributes.resource, 'Saved Embed Resource' );
+    edit: selectResource,
+    save: function( props ) {
+        return elem( 'p', props.attributes.resource, 'Saved Embed Resource' );
     }
 } );
