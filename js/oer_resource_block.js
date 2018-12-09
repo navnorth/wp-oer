@@ -9,7 +9,7 @@ class selectResource extends Component {
     static getInitialState ( selectedResource ) {
         return {
             posts: [],
-            selectedPost: selectedResource,
+            selectedResource: selectedResource,
             post: {}
         }
     }
@@ -23,19 +23,25 @@ class selectResource extends Component {
     render() {
         
         let options = [ { value:0, label: __('Select a resource') } ];
+        let output = __( 'Loading Resources' );
         
-        return [
-            !! this.props.isSelected && ( <InspectorControls key='inspector'>
-                <SelectControl 
-                // Selected value.
-                value={ this.props.attributes.selectedResource } 
-                label={ __( 'Select a Resource' ) } 
-                options={ options } />
-              </InspectorControls>
-            ), 
-            'Load Resource Placeholder'
-        ];
+        if (this.state.posts.length > 0) {
+            const loading = __( 'We have %d resources. Choose one.' );
+            output = loading.replace( '%d', this.state.posts.length );
+            this.state.posts.forEach((post) => {
+                options.push({ value:post.id, label:post.title.rendered });
+            });
+        } else {
+            output = __( 'No resource found. Please create some first.' );
+        }
         
+        return (
+                <InspectorControls key='inspector'>
+                    <SelectControl
+                        label={__('Select a Resource')}
+                    />
+                </InspectorControls>
+        )
     }
 }
 
@@ -52,6 +58,19 @@ registerBlockType( 'wp-oer-plugin/oer-resource-block', {
         __( 'History' )
     ],
     attributes: {
+        content: {
+            type: 'array',
+            source: 'children',
+            selector: 'p'
+        },
+        title: {
+            type: 'string',
+            selector: 'h2'
+        },
+        link: {
+            type: 'string',
+            selector: 'a'
+        },
         selectedResource: {
             type: 'number',
             default: 0
@@ -59,6 +78,6 @@ registerBlockType( 'wp-oer-plugin/oer-resource-block', {
     },
     edit: selectResource,
     save: function( props ) {
-        return elem( 'p', props.attributes.resource, 'Saved Embed Resource' );
+        return elem( 'p', props.attributes.content, 'Saved Embed Resource' );
     }
 } );

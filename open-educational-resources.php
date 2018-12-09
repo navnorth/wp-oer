@@ -2281,7 +2281,7 @@ function oer_enqueue_resource_block(){
 	wp_enqueue_script(
 		'resource-block-js', 
 		OER_URL . "/js/oer_resource_block.build.js",
-		array('wp-blocks', 'wp-i18n', 'wp-element')
+		array('wp-blocks', 'wp-i18n', 'wp-element', 'wp-components')
 	);
 	wp_enqueue_style(
 		'resource-block-css', 
@@ -2290,3 +2290,12 @@ function oer_enqueue_resource_block(){
 	);
 }
 add_action('enqueue_block_editor_assets', 'oer_enqueue_resource_block');
+
+/* Register Block */
+
+function oer_register_resource_block(){
+	register_block_type('wp-oer-plugin/oer-resource-block', array(
+		'editor_script' => 'resource-block-js',
+		'editor_style' => 'resource-block-css'
+	));
+}
