@@ -76,18 +76,16 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var __ = wp.i18n.__;
-var _wp$blocks = wp.blocks,
-    registerBlockType = _wp$blocks.registerBlockType,
-    InspectorControls = _wp$blocks.InspectorControls;
+var registerBlockType = wp.blocks.registerBlockType;
+var InspectorControls = wp.editor.InspectorControls;
 var SelectControl = wp.components.SelectControl;
 var Component = wp.element.Component;
-
 var elem = wp.element.createElement;
 
-var selectResource = function (_Component) {
-    _inherits(selectResource, _Component);
+var mySelectResource = function (_Component) {
+    _inherits(mySelectResource, _Component);
 
-    _createClass(selectResource, null, [{
+    _createClass(mySelectResource, null, [{
         key: 'getInitialState',
         value: function getInitialState(selectedResource) {
             return {
@@ -98,16 +96,20 @@ var selectResource = function (_Component) {
         }
     }]);
 
-    function selectResource() {
-        _classCallCheck(this, selectResource);
+    function mySelectResource() {
+        _classCallCheck(this, mySelectResource);
 
-        var _this = _possibleConstructorReturn(this, (selectResource.__proto__ || Object.getPrototypeOf(selectResource)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (mySelectResource.__proto__ || Object.getPrototypeOf(mySelectResource)).apply(this, arguments));
 
         _this.state = _this.constructor.getInitialState(_this.props.attributes.selectedResource);
+
+        _this.getOptions = _this.getOptions.bind(_this);
+
+        _this.getOptions();
         return _this;
     }
 
-    _createClass(selectResource, [{
+    _createClass(mySelectResource, [{
         key: 'render',
         value: function render() {
 
@@ -124,17 +126,15 @@ var selectResource = function (_Component) {
                 output = __('No resource found. Please create some first.');
             }
 
-            return wp.element.createElement(
+            return [!!this.props.isSelected && wp.element.createElement(
                 InspectorControls,
                 { key: 'inspector' },
-                wp.element.createElement(SelectControl, {
-                    label: __('Select a Resource')
-                })
-            );
+                wp.element.createElement(SelectControl, { value: this.props.attributes.selectedResource, label: __('Select a Resource'), options: options })
+            ), output];
         }
     }]);
 
-    return selectResource;
+    return mySelectResource;
 }(Component);
 
 registerBlockType('wp-oer-plugin/oer-resource-block', {
@@ -164,7 +164,7 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
             default: 0
         }
     },
-    edit: selectResource,
+    edit: mySelectResource,
     save: function save(props) {
         return elem('p', props.attributes.content, 'Saved Embed Resource');
     }

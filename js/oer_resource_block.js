@@ -1,10 +1,11 @@
-const { __ } = wp.i18n;
-const { registerBlockType, InspectorControls } = wp.blocks;
-const { SelectControl } = wp.components;
-const { Component } = wp.element;
+var __  = wp.i18n.__;
+var registerBlockType = wp.blocks.registerBlockType;
+var InspectorControls = wp.editor.InspectorControls;
+var SelectControl = wp.components.SelectControl;
+var Component = wp.element.Component;
 var elem = wp.element.createElement;
 
-class selectResource extends Component {
+class mySelectResource extends Component{
     
     static getInitialState ( selectedResource ) {
         return {
@@ -18,6 +19,10 @@ class selectResource extends Component {
         super( ...arguments );
         
         this.state = this.constructor.getInitialState( this.props.attributes.selectedResource );
+        
+        this.getOptions = this.getOptions.bind(this);
+        
+        this.getOptions();
     }
     
     render() {
@@ -35,13 +40,14 @@ class selectResource extends Component {
             output = __( 'No resource found. Please create some first.' );
         }
         
-        return (
+        return [
+            !! this.props.isSelected && (
                 <InspectorControls key='inspector'>
-                    <SelectControl
-                        label={__('Select a Resource')}
-                    />
-                </InspectorControls>
-        )
+                    <SelectControl value={ this.props.attributes.selectedResource } label={ __('Select a Resource') } options={ options } />
+                </InspectorControls>        
+            ),
+            output
+        ]
     }
 }
 
@@ -76,7 +82,7 @@ registerBlockType( 'wp-oer-plugin/oer-resource-block', {
             default: 0
         }
     },
-    edit: selectResource,
+    edit: mySelectResource,
     save: function( props ) {
         return elem( 'p', props.attributes.content, 'Saved Embed Resource' );
     }
