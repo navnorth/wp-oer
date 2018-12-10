@@ -25,6 +25,17 @@ class mySelectResource extends Component{
         this.getOptions();
     }
     
+    getOptions(){
+        return( new wp.api.collections.Posts() ).fetch({ data: { type: 'resource' } }).then( ( posts ) => {
+            if (posts && 0!==this.state.selectedResource) {
+                const post = posts.find( (item) => { return item.id == this.state.selectedResource });
+                this.setState( {post, posts} );
+            } else {
+                this.setState( {posts} );
+            }
+        });
+    }
+    
     render() {
         
         let options = [ { value:0, label: __('Select a resource') } ];

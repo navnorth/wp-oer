@@ -110,6 +110,22 @@ var mySelectResource = function (_Component) {
     }
 
     _createClass(mySelectResource, [{
+        key: 'getOptions',
+        value: function getOptions() {
+            var _this2 = this;
+
+            return new wp.api.collections.Posts().fetch({ data: { type: 'resource' } }).then(function (posts) {
+                if (posts && 0 !== _this2.state.selectedResource) {
+                    var post = posts.find(function (item) {
+                        return item.id == _this2.state.selectedResource;
+                    });
+                    _this2.setState({ post: post, posts: posts });
+                } else {
+                    _this2.setState({ posts: posts });
+                }
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
 

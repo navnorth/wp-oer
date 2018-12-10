@@ -2281,7 +2281,7 @@ function oer_enqueue_resource_block(){
 	wp_enqueue_script(
 		'resource-block-js', 
 		OER_URL . "/js/oer_resource_block.build.js",
-		array('wp-blocks', 'wp-i18n', 'wp-element', 'wp-components', 'wp-editor')
+		array('wp-blocks', 'wp-i18n', 'wp-element', 'wp-components', 'wp-editor', 'wp-api')
 	);
 	wp_enqueue_style(
 		'resource-block-css', 
