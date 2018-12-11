@@ -2299,3 +2299,12 @@ function oer_register_resource_block(){
 		'editor_style' => 'resource-block-css'
 	));
 }
+
+function oer_add_resources_rest_args() {
+    global $wp_post_types;
+
+    $wp_post_types['resource']->show_in_rest = true;
+    $wp_post_types['resource']->rest_base = 'resource';
+    $wp_post_types['resource']->rest_controller_class = 'WP_REST_Posts_Controller';
+}
+add_action( 'init', 'oer_add_resources_rest_args', 30 );

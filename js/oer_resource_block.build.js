@@ -106,15 +106,35 @@ var mySelectResource = function (_Component) {
         _this.getOptions = _this.getOptions.bind(_this);
 
         _this.getOptions();
+
+        _this.onChangeSelectResource = _this.onChangeSelectResource.bind(_this);
         return _this;
     }
 
     _createClass(mySelectResource, [{
+        key: 'onChangeSelectResource',
+        value: function onChangeSelectResource(value) {
+            var post = this.state.posts.find(function (item) {
+                return item.id == parseInt(value);
+            });
+
+            this.setState({ selectedResource: parseInt(value), post: post });
+
+            this.props.setAttributes({
+                selectedResource: parseInt(value),
+                title: post.title.rendered,
+                content: post.content.rendered,
+                link: post.link
+            });
+        }
+    }, {
         key: 'getOptions',
         value: function getOptions() {
             var _this2 = this;
 
-            return new wp.api.collections.Posts().fetch({ data: { type: 'resource' } }).then(function (posts) {
+            var resources = new wp.api.collections.Resource();
+
+            return resources.fetch().then(function (posts) {
                 if (posts && 0 !== _this2.state.selectedResource) {
                     var post = posts.find(function (item) {
                         return item.id == _this2.state.selectedResource;
@@ -142,11 +162,31 @@ var mySelectResource = function (_Component) {
                 output = __('No resource found. Please create some first.');
             }
 
+            if (this.state.post.hasOwnProperty('title')) {
+                output = wp.element.createElement(
+                    'div',
+                    { className: 'post' },
+                    wp.element.createElement(
+                        'a',
+                        { href: this.state.post.link },
+                        wp.element.createElement('h2', { dangerouslySetInnerHTML: { __html: this.state.post.title.rendered } })
+                    ),
+                    wp.element.createElement('p', { dangerouslySetInnerHTML: { __html: this.state.post.content.rendered } })
+                );
+                this.props.className += ' has-post';
+            } else {
+                this.props.className += ' no-post';
+            }
+
             return [!!this.props.isSelected && wp.element.createElement(
                 InspectorControls,
                 { key: 'inspector' },
-                wp.element.createElement(SelectControl, { value: this.props.attributes.selectedResource, label: __('Select a Resource'), options: options })
-            ), output];
+                wp.element.createElement(SelectControl, { onChange: this.onChangeSelectResource, value: this.props.attributes.selectedResource, label: __('Resource:'), options: options })
+            ), wp.element.createElement(
+                'div',
+                { className: this.props.className },
+                output
+            )];
         }
     }]);
 
@@ -182,7 +222,20 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
     },
     edit: mySelectResource,
     save: function save(props) {
-        return elem('p', props.attributes.content, 'Saved Embed Resource');
+        return wp.element.createElement(
+            'div',
+            { className: props.className },
+            wp.element.createElement(
+                'div',
+                { className: 'post' },
+                wp.element.createElement(
+                    'a',
+                    { href: props.attributes.link },
+                    wp.element.createElement('h2', { dangerouslySetInnerHTML: { __html: props.attributes.title } })
+                ),
+                wp.element.createElement('p', { dangerouslySetInnerHTML: { __html: props.attributes.content } })
+            )
+        );
     }
 });
 
