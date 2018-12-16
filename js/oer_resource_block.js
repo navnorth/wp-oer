@@ -69,9 +69,8 @@ class mySelectResource extends Component{
         }
         
         if (this.state.post.hasOwnProperty('title')) {
-            output = <div className="post">
+            output = <div className="resource">
             <a href={ this.state.post.link }><h2 dangerouslySetInnerHTML={ { __html: this.state.post.title.rendered } }></h2></a>
-            <p dangerouslySetInnerHTML={ { __html: this.state.post.content.rendered } }></p>
             </div>;
             this.props.className += ' has-post';
         } else {
@@ -103,9 +102,8 @@ registerBlockType( 'wp-oer-plugin/oer-resource-block', {
     ],
     attributes: {
         content: {
-            type: 'array',
-            source: 'children',
-            selector: 'p'
+            type: 'string',
+            source: 'text',
         },
         title: {
             type: 'string',
@@ -123,12 +121,12 @@ registerBlockType( 'wp-oer-plugin/oer-resource-block', {
     edit: mySelectResource,
     save: function( props ) {
     return (
-        <div className={ props.className }>
-          <div className="post">
+            <div className={ props.className }>
+          <div className="resource">
             <a href={ props.attributes.link }><h2 dangerouslySetInnerHTML={ { __html: props.attributes.title } }></h2></a>
             <p dangerouslySetInnerHTML={ { __html: props.attributes.content } }></p>
           </div>
-        </div>
+          </div>
       );
     }
 } );

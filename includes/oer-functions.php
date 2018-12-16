@@ -806,8 +806,11 @@ function oer_isStandardExisting($standard) {
 
 //Get Domain from Url
 function oer_getDomainFromUrl($url) {
+	$host = "";
 	$url_details = parse_url($url);
-	return $url_details['host'];
+	if ($url_details)
+		$host= $url_details['host'];
+	return $host;
 }
 
 //Get Image from External URL
@@ -3234,6 +3237,7 @@ function oer_mask_string($text, $start = 0, $length = 0){
 		$offset = strlen($text) - ($start + $length);
 		$mask_string .= substr($text, -($offset));
 	}
+	
 	return $mask_string;
 }
 

@@ -165,13 +165,12 @@ var mySelectResource = function (_Component) {
             if (this.state.post.hasOwnProperty('title')) {
                 output = wp.element.createElement(
                     'div',
-                    { className: 'post' },
+                    { className: 'resource' },
                     wp.element.createElement(
                         'a',
                         { href: this.state.post.link },
                         wp.element.createElement('h2', { dangerouslySetInnerHTML: { __html: this.state.post.title.rendered } })
-                    ),
-                    wp.element.createElement('p', { dangerouslySetInnerHTML: { __html: this.state.post.content.rendered } })
+                    )
                 );
                 this.props.className += ' has-post';
             } else {
@@ -203,9 +202,8 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
     keywords: [__('OER'), __('Resource'), __('History')],
     attributes: {
         content: {
-            type: 'array',
-            source: 'children',
-            selector: 'p'
+            type: 'string',
+            source: 'text'
         },
         title: {
             type: 'string',
@@ -227,7 +225,7 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
             { className: props.className },
             wp.element.createElement(
                 'div',
-                { className: 'post' },
+                { className: 'resource' },
                 wp.element.createElement(
                     'a',
                     { href: props.attributes.link },
