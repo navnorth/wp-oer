@@ -3,6 +3,7 @@ var registerBlockType = wp.blocks.registerBlockType;
 var InspectorControls = wp.editor.InspectorControls;
 var SelectControl = wp.components.SelectControl;
 var Component = wp.element.Component;
+var CheckboxControl = wp.components.CheckboxControl;
 var elem = wp.element.createElement;
 
 class mySelectResource extends Component{
@@ -35,7 +36,7 @@ class mySelectResource extends Component{
         this.props.setAttributes( {
             selectedResource: parseInt(value),
             title: post.title.rendered,
-            content: post.content.rendered,
+            content: post.content,
             link: post.link,
         } );
     }
@@ -69,7 +70,7 @@ class mySelectResource extends Component{
         }
         
         if (this.state.post.hasOwnProperty('title')) {
-            output = <div className="resource">
+            output = <div className="post">
             <a href={ this.state.post.link }><h2 dangerouslySetInnerHTML={ { __html: this.state.post.title.rendered } }></h2></a>
             </div>;
             this.props.className += ' has-post';
@@ -77,11 +78,23 @@ class mySelectResource extends Component{
             this.props.className += ' no-post';
         }
         
-        return [
+        /*return [
             !! this.props.isSelected && (
                 <InspectorControls key='inspector'>
                     <SelectControl onChange={this.onChangeSelectResource} value={ this.props.attributes.selectedResource } label={ __('Resource:') } options={ options } />
                 </InspectorControls>        
+            ),
+            <div className={this.props.className}>{output}</div>
+        ]*/
+        return [
+            (
+                <InspectorControls key='inspector'>
+                    <SelectControl onChange={this.onChangeSelectResource} value={ this.props.attributes.selectedResource } label={ __('Resource:') } options={ options } />
+                    <CheckboxControl label={__('Show Title') }/>
+                    <CheckboxControl label={__('Show Description') }/>
+                    <CheckboxControl label={__('Show Subject Areas') }/>
+                    <CheckboxControl label={__('Show Grade Levels') }/>
+                </InspectorControls>
             ),
             <div className={this.props.className}>{output}</div>
         ]
@@ -103,7 +116,6 @@ registerBlockType( 'wp-oer-plugin/oer-resource-block', {
     attributes: {
         content: {
             type: 'string',
-            source: 'text',
         },
         title: {
             type: 'string',
@@ -121,10 +133,10 @@ registerBlockType( 'wp-oer-plugin/oer-resource-block', {
     edit: mySelectResource,
     save: function( props ) {
     return (
-            <div className={ props.className }>
-          <div className="resource">
+        <div className={ props.className }>
+          <div className="post">
             <a href={ props.attributes.link }><h2 dangerouslySetInnerHTML={ { __html: props.attributes.title } }></h2></a>
-            <p dangerouslySetInnerHTML={ { __html: props.attributes.content } }></p>
+            <p dangerouslySetInnerHTML={ { __html: props.attributes.content }}></p>
           </div>
           </div>
       );

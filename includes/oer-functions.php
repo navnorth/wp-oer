@@ -808,7 +808,7 @@ function oer_isStandardExisting($standard) {
 function oer_getDomainFromUrl($url) {
 	$host = "";
 	$url_details = parse_url($url);
-	if ($url_details)
+	if (isset($url_details['host']))
 		$host= $url_details['host'];
 	return $host;
 }

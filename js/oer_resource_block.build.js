@@ -80,6 +80,7 @@ var registerBlockType = wp.blocks.registerBlockType;
 var InspectorControls = wp.editor.InspectorControls;
 var SelectControl = wp.components.SelectControl;
 var Component = wp.element.Component;
+var CheckboxControl = wp.components.CheckboxControl;
 var elem = wp.element.createElement;
 
 var mySelectResource = function (_Component) {
@@ -123,7 +124,7 @@ var mySelectResource = function (_Component) {
             this.props.setAttributes({
                 selectedResource: parseInt(value),
                 title: post.title.rendered,
-                content: post.content.rendered,
+                content: post.content,
                 link: post.link
             });
         }
@@ -165,7 +166,7 @@ var mySelectResource = function (_Component) {
             if (this.state.post.hasOwnProperty('title')) {
                 output = wp.element.createElement(
                     'div',
-                    { className: 'resource' },
+                    { className: 'post' },
                     wp.element.createElement(
                         'a',
                         { href: this.state.post.link },
@@ -177,10 +178,22 @@ var mySelectResource = function (_Component) {
                 this.props.className += ' no-post';
             }
 
-            return [!!this.props.isSelected && wp.element.createElement(
+            /*return [
+                !! this.props.isSelected && (
+                    <InspectorControls key='inspector'>
+                        <SelectControl onChange={this.onChangeSelectResource} value={ this.props.attributes.selectedResource } label={ __('Resource:') } options={ options } />
+                    </InspectorControls>        
+                ),
+                <div className={this.props.className}>{output}</div>
+            ]*/
+            return [wp.element.createElement(
                 InspectorControls,
                 { key: 'inspector' },
-                wp.element.createElement(SelectControl, { onChange: this.onChangeSelectResource, value: this.props.attributes.selectedResource, label: __('Resource:'), options: options })
+                wp.element.createElement(SelectControl, { onChange: this.onChangeSelectResource, value: this.props.attributes.selectedResource, label: __('Resource:'), options: options }),
+                wp.element.createElement(CheckboxControl, { label: __('Show Title') }),
+                wp.element.createElement(CheckboxControl, { label: __('Show Description') }),
+                wp.element.createElement(CheckboxControl, { label: __('Show Subject Areas') }),
+                wp.element.createElement(CheckboxControl, { label: __('Show Grade Levels') })
             ), wp.element.createElement(
                 'div',
                 { className: this.props.className },
@@ -202,8 +215,7 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
     keywords: [__('OER'), __('Resource'), __('History')],
     attributes: {
         content: {
-            type: 'string',
-            source: 'text'
+            type: 'string'
         },
         title: {
             type: 'string',
@@ -225,7 +237,7 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
             { className: props.className },
             wp.element.createElement(
                 'div',
-                { className: 'resource' },
+                { className: 'post' },
                 wp.element.createElement(
                     'a',
                     { href: props.attributes.link },
