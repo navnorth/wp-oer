@@ -26,6 +26,14 @@ class mySelectResource extends Component{
         this.getOptions();
         
         this.onChangeSelectResource = this.onChangeSelectResource.bind(this);
+        
+        this.onChangeShowTitle = this.onChangeShowTitle.bind(this);
+        
+        this.onChangeShowDescription = this.onChangeShowDescription.bind(this);
+        
+        this.onChangeShowSubjects = this.onChangeShowSubjects.bind(this);
+        
+        this.onChangeShowGradeLevels = this.onChangeShowGradeLevels.bind(this);
     }
     
     onChangeSelectResource( value ) {
@@ -39,6 +47,22 @@ class mySelectResource extends Component{
             content: post.content.rendered,
             link: post.link,
         } );
+    }
+    
+    onChangeShowTitle( checked ) {
+        this.props.setAttributes( { showTitle: checked } );
+    }
+    
+    onChangeShowDescription( checked ) {
+        this.props.setAttributes( { showDescription: checked } );
+    }
+    
+    onChangeShowSubjects( checked ) {
+        this.props.setAttributes( { showSubjectAreas: checked } );
+    }
+    
+    onChangeShowGradeLevels ( checked ) {
+        this.props.setAttributes( { showGradeLevels: checked } );
     }
     
     getOptions(){
@@ -83,10 +107,26 @@ class mySelectResource extends Component{
              !! this.props.isSelected && (
                 <InspectorControls key='inspector'>
                     <SelectControl onChange={this.onChangeSelectResource} value={ this.props.attributes.selectedResource } label={ __('Resource:') } options={ options } />
-                    <CheckboxControl label={__('Show Title') }/>
-                    <CheckboxControl label={__('Show Description') }/>
-                    <CheckboxControl label={__('Show Subject Areas') }/>
-                    <CheckboxControl label={__('Show Grade Levels') }/>
+                    <CheckboxControl
+                        id="oerShowTitle"
+                        label={__('Show Title') }
+                        checked={ this.props.attributes.showTitle }
+                        onChange={ this.onChangeShowTitle } />
+                    <CheckboxControl
+                        id="oerShowDesc"
+                        label={__('Show Description') }
+                        checked={ this.props.attributes.showDescription }
+                        onChange={ this.onChangeShowDescription } />
+                    <CheckboxControl
+                        id="oerShowSubjects"
+                        label={__('Show Subject Areas') }
+                        checked={ this.props.attributes.showSubjectAreas }
+                        onChange={ this.onChangeShowSubjects } />
+                    <CheckboxControl
+                        id="oerShowGradeLevels"
+                        label={__('Show Grade Levels') }
+                        checked={ this.props.attributes.showGradeLevels }
+                        onChange={ this.onChangeShowGradeLevels } />
                 </InspectorControls>
             ),
             <div className={this.props.className}>{output}</div>
@@ -122,6 +162,18 @@ registerBlockType( 'wp-oer-plugin/oer-resource-block', {
         selectedResource: {
             type: 'number',
             default: 0
+        },
+        showTitle: {
+            type: 'boolean'
+        },
+        showDescription: {
+            type: 'boolean'
+        },
+        showSubjectAreas: {
+            type: 'boolean'
+        },
+        showGradeLevels: {
+            type: 'boolean'
         }
     },
     edit: mySelectResource,

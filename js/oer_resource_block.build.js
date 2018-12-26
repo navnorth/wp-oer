@@ -109,6 +109,14 @@ var mySelectResource = function (_Component) {
         _this.getOptions();
 
         _this.onChangeSelectResource = _this.onChangeSelectResource.bind(_this);
+
+        _this.onChangeShowTitle = _this.onChangeShowTitle.bind(_this);
+
+        _this.onChangeShowDescription = _this.onChangeShowDescription.bind(_this);
+
+        _this.onChangeShowSubjects = _this.onChangeShowSubjects.bind(_this);
+
+        _this.onChangeShowGradeLevels = _this.onChangeShowGradeLevels.bind(_this);
         return _this;
     }
 
@@ -127,6 +135,26 @@ var mySelectResource = function (_Component) {
                 content: post.content.rendered,
                 link: post.link
             });
+        }
+    }, {
+        key: 'onChangeShowTitle',
+        value: function onChangeShowTitle(checked) {
+            this.props.setAttributes({ showTitle: checked });
+        }
+    }, {
+        key: 'onChangeShowDescription',
+        value: function onChangeShowDescription(checked) {
+            this.props.setAttributes({ showDescription: checked });
+        }
+    }, {
+        key: 'onChangeShowSubjects',
+        value: function onChangeShowSubjects(checked) {
+            this.props.setAttributes({ showSubjectAreas: checked });
+        }
+    }, {
+        key: 'onChangeShowGradeLevels',
+        value: function onChangeShowGradeLevels(checked) {
+            this.props.setAttributes({ showGradeLevels: checked });
         }
     }, {
         key: 'getOptions',
@@ -179,10 +207,26 @@ var mySelectResource = function (_Component) {
                 InspectorControls,
                 { key: 'inspector' },
                 wp.element.createElement(SelectControl, { onChange: this.onChangeSelectResource, value: this.props.attributes.selectedResource, label: __('Resource:'), options: options }),
-                wp.element.createElement(CheckboxControl, { label: __('Show Title') }),
-                wp.element.createElement(CheckboxControl, { label: __('Show Description') }),
-                wp.element.createElement(CheckboxControl, { label: __('Show Subject Areas') }),
-                wp.element.createElement(CheckboxControl, { label: __('Show Grade Levels') })
+                wp.element.createElement(CheckboxControl, {
+                    id: 'oerShowTitle',
+                    label: __('Show Title'),
+                    checked: this.props.attributes.showTitle,
+                    onChange: this.onChangeShowTitle }),
+                wp.element.createElement(CheckboxControl, {
+                    id: 'oerShowDesc',
+                    label: __('Show Description'),
+                    checked: this.props.attributes.showDescription,
+                    onChange: this.onChangeShowDescription }),
+                wp.element.createElement(CheckboxControl, {
+                    id: 'oerShowSubjects',
+                    label: __('Show Subject Areas'),
+                    checked: this.props.attributes.showSubjectAreas,
+                    onChange: this.onChangeShowSubjects }),
+                wp.element.createElement(CheckboxControl, {
+                    id: 'oerShowGradeLevels',
+                    label: __('Show Grade Levels'),
+                    checked: this.props.attributes.showGradeLevels,
+                    onChange: this.onChangeShowGradeLevels })
             ), wp.element.createElement(
                 'div',
                 { className: this.props.className },
@@ -218,6 +262,18 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
         selectedResource: {
             type: 'number',
             default: 0
+        },
+        showTitle: {
+            type: 'boolean'
+        },
+        showDescription: {
+            type: 'boolean'
+        },
+        showSubjectAreas: {
+            type: 'boolean'
+        },
+        showGradeLevels: {
+            type: 'boolean'
         }
     },
     edit: mySelectResource,
