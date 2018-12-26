@@ -3,14 +3,14 @@
  Plugin Name:  WP OER
  Plugin URI:   https://www.wp-oer.com
  Description:  Open Educational Resource management and curation, metadata publishing, and alignment to Common Core State Standards.
- Version:      0.6.7
+ Version:      0.6.6
  Author:       Navigation North
  Author URI:   https://www.navigationnorth.com
  Text Domain:  wp-oer
  License:      GPL3
  License URI:  https://www.gnu.org/licenses/gpl-3.0.html
 
- Copyright (C) 2018 Navigation North
+ Copyright (C) 2017 Navigation North
 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ define( 'OER_FILE',__FILE__);
 // Plugin Name and Version
 define( 'OER_PLUGIN_NAME', 'WP OER Plugin' );
 define( 'OER_ADMIN_PLUGIN_NAME', 'WP OER Plugin');
-define( 'OER_VERSION', '0.6.7' );
+define( 'OER_VERSION', '0.6.6' );
 
 include_once(OER_PATH.'includes/oer-functions.php');
 include_once(OER_PATH.'includes/template-functions.php');
@@ -263,7 +263,7 @@ function oer_add_settings_link( $links, $file ){
  * Get the Custom Template if set
  **/
 function oer_get_template_hierarchy( $template ) {
-
+	
 	//get template file
 	if ($template=="search"){
 		$template = $template . '.php';
@@ -271,7 +271,7 @@ function oer_get_template_hierarchy( $template ) {
 		$template_slug = rtrim( $template , '.php' );
 		$template = $template_slug . '.php';
 	}
-
+	
 	//Check if custom template exists in theme folder
 	if ($theme_file = locate_template( array( 'oer_template/' . $template ) )) {
 		$file = $theme_file;
@@ -280,7 +280,7 @@ function oer_get_template_hierarchy( $template ) {
 	} else {
 		$file = OER_PATH . 'oer_template/' . $template;
 	}
-
+	
 	return apply_filters( 'oer_repl_template' . $template , $file  );
 }
 
@@ -349,7 +349,7 @@ function oer_tag_template( $template ) {
 	$_id = $wp_query->get_queried_object_id();
 
 	$resource_tag = is_tag($_id);
-
+	
 	//Check if the loaded resource is a category
 	if ($resource_tag && !is_wp_error( $resource_tag )) {
 		return oer_get_template_hierarchy('tag-resource');
@@ -359,7 +359,7 @@ function oer_tag_template( $template ) {
 		return $template;
 	}
  }
-
+ 
  /**
  * Add filter to use plugin default archive template
  **/
@@ -370,11 +370,11 @@ add_filter( 'archive_template' , 'oer_custom_archive_template' );
  **/
 function oer_custom_archive_template( $template ) {
 	global $wp_query;
-
+	
 	if (is_post_type_archive('resource')) {
 		$template = realpath(oer_get_template_hierarchy('archive-resource'));
 	}
-
+	
 	return $template;
  }
 
@@ -2288,17 +2288,13 @@ function oer_enqueue_resource_block(){
 		OER_URL . "/css/oer_resource_block.css",
 		array('wp-edit-blocks')
 	);
-}
-add_action('enqueue_block_editor_assets', 'oer_enqueue_resource_block');
-
-/* Register Block */
-
-function oer_register_resource_block(){
+	/* Register Block */
 	register_block_type('wp-oer-plugin/oer-resource-block', array(
 		'editor_script' => 'resource-block-js',
 		'editor_style' => 'resource-block-css'
 	));
 }
+add_action('enqueue_block_editor_assets', 'oer_enqueue_resource_block');
 
 function oer_add_resources_rest_args() {
     global $wp_post_types;

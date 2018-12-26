@@ -12,7 +12,7 @@ class mySelectResource extends Component{
         return {
             posts: [],
             selectedResource: selectedResource,
-            post: {}
+            post: {},
         }
     }
     
@@ -36,7 +36,7 @@ class mySelectResource extends Component{
         this.props.setAttributes( {
             selectedResource: parseInt(value),
             title: post.title.rendered,
-            content: post.content,
+            content: post.content.rendered,
             link: post.link,
         } );
     }
@@ -47,9 +47,9 @@ class mySelectResource extends Component{
         return resources.fetch().then( ( posts ) => {
             if (posts && 0!==this.state.selectedResource) {
                 const post = posts.find( (item) => { return item.id == this.state.selectedResource });
-                this.setState( {post:post, posts:posts} );
+                this.setState( { post, posts} );
             } else {
-                this.setState( {posts:posts} );
+                this.setState( { posts } );
             }
         });
     }
@@ -71,23 +71,16 @@ class mySelectResource extends Component{
         
         if (this.state.post.hasOwnProperty('title')) {
             output = <div className="post">
-            <a href={ this.state.post.link }><h2 dangerouslySetInnerHTML={ { __html: this.state.post.title.rendered } }></h2></a>
+                <h2 dangerouslySetInnerHTML={ { __html: this.state.post.title.rendered } }></h2>
+                <p dangerouslySetInnerHTML={ { __html: this.state.post.content.rendered } }></p>
             </div>;
             this.props.className += ' has-post';
         } else {
             this.props.className += ' no-post';
         }
         
-        /*return [
-            !! this.props.isSelected && (
-                <InspectorControls key='inspector'>
-                    <SelectControl onChange={this.onChangeSelectResource} value={ this.props.attributes.selectedResource } label={ __('Resource:') } options={ options } />
-                </InspectorControls>        
-            ),
-            <div className={this.props.className}>{output}</div>
-        ]*/
         return [
-            (
+             !! this.props.isSelected && (
                 <InspectorControls key='inspector'>
                     <SelectControl onChange={this.onChangeSelectResource} value={ this.props.attributes.selectedResource } label={ __('Resource:') } options={ options } />
                     <CheckboxControl label={__('Show Title') }/>
@@ -116,6 +109,7 @@ registerBlockType( 'wp-oer-plugin/oer-resource-block', {
     attributes: {
         content: {
             type: 'string',
+            selector: 'p'
         },
         title: {
             type: 'string',
@@ -136,9 +130,9 @@ registerBlockType( 'wp-oer-plugin/oer-resource-block', {
         <div className={ props.className }>
           <div className="post">
             <a href={ props.attributes.link }><h2 dangerouslySetInnerHTML={ { __html: props.attributes.title } }></h2></a>
-            <p dangerouslySetInnerHTML={ { __html: props.attributes.content }}></p>
+            <p dangerouslySetInnerHTML={ { __html: props.attributes.content } }></p>
           </div>
-          </div>
+        </div>
       );
     }
 } );

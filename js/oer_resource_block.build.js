@@ -124,7 +124,7 @@ var mySelectResource = function (_Component) {
             this.props.setAttributes({
                 selectedResource: parseInt(value),
                 title: post.title.rendered,
-                content: post.content,
+                content: post.content.rendered,
                 link: post.link
             });
         }
@@ -167,26 +167,15 @@ var mySelectResource = function (_Component) {
                 output = wp.element.createElement(
                     'div',
                     { className: 'post' },
-                    wp.element.createElement(
-                        'a',
-                        { href: this.state.post.link },
-                        wp.element.createElement('h2', { dangerouslySetInnerHTML: { __html: this.state.post.title.rendered } })
-                    )
+                    wp.element.createElement('h2', { dangerouslySetInnerHTML: { __html: this.state.post.title.rendered } }),
+                    wp.element.createElement('p', { dangerouslySetInnerHTML: { __html: this.state.post.content.rendered } })
                 );
                 this.props.className += ' has-post';
             } else {
                 this.props.className += ' no-post';
             }
 
-            /*return [
-                !! this.props.isSelected && (
-                    <InspectorControls key='inspector'>
-                        <SelectControl onChange={this.onChangeSelectResource} value={ this.props.attributes.selectedResource } label={ __('Resource:') } options={ options } />
-                    </InspectorControls>        
-                ),
-                <div className={this.props.className}>{output}</div>
-            ]*/
-            return [wp.element.createElement(
+            return [!!this.props.isSelected && wp.element.createElement(
                 InspectorControls,
                 { key: 'inspector' },
                 wp.element.createElement(SelectControl, { onChange: this.onChangeSelectResource, value: this.props.attributes.selectedResource, label: __('Resource:'), options: options }),
@@ -215,7 +204,8 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
     keywords: [__('OER'), __('Resource'), __('History')],
     attributes: {
         content: {
-            type: 'string'
+            type: 'string',
+            selector: 'p'
         },
         title: {
             type: 'string',
