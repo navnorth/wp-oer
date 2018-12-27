@@ -77,11 +77,11 @@ msgstr ""
 
 #: includes/assign-categories.php:88
 msgid "Assign Category"
-msgstr "Asignar �rea tem�tica"
+msgstr "Asignar Área Temática"
 
 #: includes/assign-categories.php:143 includes/assign-categories.php:178
 msgid "Assign Categories"
-msgstr "Asignar �rea tem�ticas"
+msgstr "Asignar Área Temáticas"
 
 #: includes/assign-categories.php:143
 msgid "Select User"
@@ -105,11 +105,11 @@ msgstr ""
 
 #: includes/categories-importer.php:116
 msgid "Categories Import Successfully."
-msgstr "�reas tem�ticas importadas con �xito."
+msgstr "Área Temáticas importadas con Èxito."
 
 #: includes/categories-importer.php:132
 msgid "Categories Bulk Import"
-msgstr "�reas de estudio Importaci�n a granel"
+msgstr "Área Temáticas Importación a Granel"
 
 #: includes/categories-importer.php:138 includes/resources-importer.php:138
 #: includes/standards-importer.php:188
@@ -369,7 +369,7 @@ msgstr ""
 
 #: includes/set-category-images.php:24
 msgid "Category Name"
-msgstr "Subject Area Name"
+msgstr "Nombre del Área Temática"
 
 #: includes/set-category-images.php:25
 msgid "Upload/Remove"
@@ -393,7 +393,7 @@ msgstr ""
 
 #: includes/settings.php:52
 msgid "Assign Page Template to Category Pages"
-msgstr "Asignar plantilla de p�gina a las p�ginas del �rea tem�tica"
+msgstr "Asignar Plantilla de Página a las Páginas del Área Temática"
 
 #: includes/settings.php:59 includes/settings.php:71 includes/settings.php:83
 #: includes/settings.php:107
