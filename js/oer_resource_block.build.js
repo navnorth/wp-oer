@@ -196,7 +196,7 @@ var mySelectResource = function (_Component) {
                     'div',
                     { className: 'post' },
                     wp.element.createElement('h2', { dangerouslySetInnerHTML: { __html: this.state.post.title.rendered } }),
-                    wp.element.createElement('p', { dangerouslySetInnerHTML: { __html: this.state.post.content.rendered } })
+                    this.props.showDescription === true && wp.element.createElement('p', { dangerouslySetInnerHTML: { __html: this.state.post.content.rendered } })
                 );
                 this.props.className += ' has-post';
             } else {
@@ -284,12 +284,12 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
             wp.element.createElement(
                 'div',
                 { className: 'post' },
-                wp.element.createElement(
+                props.attributes.showTitle === true && wp.element.createElement(
                     'a',
                     { href: props.attributes.link },
                     wp.element.createElement('h2', { dangerouslySetInnerHTML: { __html: props.attributes.title } })
                 ),
-                wp.element.createElement('p', { dangerouslySetInnerHTML: { __html: props.attributes.content } })
+                props.attributes.showDescription === true && wp.element.createElement('p', { dangerouslySetInnerHTML: { __html: props.attributes.content } })
             )
         );
     }

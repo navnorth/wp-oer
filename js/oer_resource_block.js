@@ -96,7 +96,7 @@ class mySelectResource extends Component{
         if (this.state.post.hasOwnProperty('title')) {
             output = <div className="post">
                 <h2 dangerouslySetInnerHTML={ { __html: this.state.post.title.rendered } }></h2>
-                <p dangerouslySetInnerHTML={ { __html: this.state.post.content.rendered } }></p>
+                { this.props.showDescription===true && (<p dangerouslySetInnerHTML={ { __html: this.state.post.content.rendered } }></p>)}
             </div>;
             this.props.className += ' has-post';
         } else {
@@ -181,8 +181,8 @@ registerBlockType( 'wp-oer-plugin/oer-resource-block', {
     return (
         <div className={ props.className }>
           <div className="post">
-            <a href={ props.attributes.link }><h2 dangerouslySetInnerHTML={ { __html: props.attributes.title } }></h2></a>
-            <p dangerouslySetInnerHTML={ { __html: props.attributes.content } }></p>
+            { props.attributes.showTitle===true && (<a href={ props.attributes.link }><h2 dangerouslySetInnerHTML={ { __html: props.attributes.title } }></h2></a>)}
+            { props.attributes.showDescription===true && (<p dangerouslySetInnerHTML={ { __html: props.attributes.content } }></p>)}
           </div>
         </div>
       );
