@@ -2297,10 +2297,14 @@ function oer_enqueue_resource_block(){
 add_action('enqueue_block_editor_assets', 'oer_enqueue_resource_block');
 
 function oer_add_resources_rest_args() {
-    global $wp_post_types;
+    global $wp_post_types, $wp_taxonomies;
 
     $wp_post_types['resource']->show_in_rest = true;
     $wp_post_types['resource']->rest_base = 'resource';
     $wp_post_types['resource']->rest_controller_class = 'WP_REST_Posts_Controller';
+    
+    $wp_taxonomies['resource-subject-area']->show_in_rest = true;
+    $wp_taxonomies['resource-subject-area']->rest_base = 'resource-subject-area';
+    $wp_taxonomies['resource-subject-area']->rest_controller_class = 'WP_REST_Terms_Controller';
 }
 add_action( 'init', 'oer_add_resources_rest_args', 30 );

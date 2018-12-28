@@ -91,6 +91,7 @@ var mySelectResource = function (_Component) {
         value: function getInitialState(selectedResource) {
             return {
                 posts: [],
+                subjectAreas: [],
                 selectedResource: selectedResource,
                 post: {}
             };
@@ -162,12 +163,14 @@ var mySelectResource = function (_Component) {
             var _this2 = this;
 
             var resources = new wp.api.collections.Resource();
-
+            var subjects = new wp.api.models.ResourceSubjectArea();
             return resources.fetch().then(function (posts) {
                 if (posts && 0 !== _this2.state.selectedResource) {
                     var post = posts.find(function (item) {
                         return item.id == _this2.state.selectedResource;
                     });
+                    var subs = post['resource-subject-area'];
+                    console.log(subs);
                     _this2.setState({ post: post, posts: posts });
                 } else {
                     _this2.setState({ posts: posts });
@@ -274,6 +277,10 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
         },
         showGradeLevels: {
             type: 'boolean'
+        },
+        subjectAreas: {
+            type: 'array',
+            source: 'ul li'
         }
     },
     edit: mySelectResource,

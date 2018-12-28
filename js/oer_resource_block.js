@@ -11,6 +11,7 @@ class mySelectResource extends Component{
     static getInitialState ( selectedResource ) {
         return {
             posts: [],
+            subjectAreas: [],
             selectedResource: selectedResource,
             post: {},
         }
@@ -67,10 +68,12 @@ class mySelectResource extends Component{
     
     getOptions(){
         var resources = new wp.api.collections.Resource();
-        
+        var subjects = new wp.api.models.ResourceSubjectArea();
         return resources.fetch().then( ( posts ) => {
             if (posts && 0!==this.state.selectedResource) {
                 const post = posts.find( (item) => { return item.id == this.state.selectedResource });
+                const subs = post['resource-subject-area'];
+                console.log(subs);
                 this.setState( { post, posts} );
             } else {
                 this.setState( { posts } );
@@ -174,6 +177,10 @@ registerBlockType( 'wp-oer-plugin/oer-resource-block', {
         },
         showGradeLevels: {
             type: 'boolean'
+        },
+        subjectAreas: {
+            type: 'array',
+            source: 'ul li'
         }
     },
     edit: mySelectResource,
