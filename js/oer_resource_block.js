@@ -194,25 +194,12 @@ registerBlockType( 'wp-oer-plugin/oer-resource-block', {
     },
     edit: mySelectResource,
     save: function( props ) {
-    
-    /*var subject;
-    var subjects = [];*/
-    
-    /*const subs = post['resource-subject-area'];
-                
-    for (i=0;i<subs.length;i++) {
-        subject = new wp.api.models.ResourceSubjectArea({ id: subs[i] }).fetch().then( ( subs ) => {
-            subjects.push(subs);
-        } );
-    }*/
-    
-        console.log(props.attributes.subjectAreas.length);
     return (
         <div className={ props.className }>
           <div className="post">
             { props.attributes.showTitle===true && (<a href={ props.attributes.link }><h2 dangerouslySetInnerHTML={ { __html: props.attributes.title } }></h2></a>)}
             { props.attributes.showDescription===true && (<p dangerouslySetInnerHTML={ { __html: props.attributes.content } }></p>)}
-            { (props.attributes.showDescription===true && props.attributes.subjectAreas.length>0) && ( props.attributes.subjectAreas.map((d) => <li key={d.name}>{d.name}</li>)
+            { (props.attributes.showSubjectAreas===true && props.attributes.subjectAreas.length>0) && ( props.attributes.subjectAreas.map((d) => <li key={d.name}>{d.name}</li>)
                                                          )}
           </div>
         </div>

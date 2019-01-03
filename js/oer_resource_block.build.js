@@ -294,19 +294,6 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
     },
     edit: mySelectResource,
     save: function save(props) {
-
-        /*var subject;
-        var subjects = [];*/
-
-        /*const subs = post['resource-subject-area'];
-                    
-        for (i=0;i<subs.length;i++) {
-            subject = new wp.api.models.ResourceSubjectArea({ id: subs[i] }).fetch().then( ( subs ) => {
-                subjects.push(subs);
-            } );
-        }*/
-
-        console.log(props.attributes.subjectAreas.length);
         return wp.element.createElement(
             'div',
             { className: props.className },
@@ -319,7 +306,7 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
                     wp.element.createElement('h2', { dangerouslySetInnerHTML: { __html: props.attributes.title } })
                 ),
                 props.attributes.showDescription === true && wp.element.createElement('p', { dangerouslySetInnerHTML: { __html: props.attributes.content } }),
-                props.attributes.showDescription === true && props.attributes.subjectAreas.length > 0 && props.attributes.subjectAreas.map(function (d) {
+                props.attributes.showSubjectAreas === true && props.attributes.subjectAreas.length > 0 && props.attributes.subjectAreas.map(function (d) {
                     return wp.element.createElement(
                         'li',
                         { key: d.name },
