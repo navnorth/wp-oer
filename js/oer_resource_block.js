@@ -38,7 +38,17 @@ class mySelectResource extends Component{
     }
     
     onChangeSelectResource( value ) {
+        var subject;
+        var subjects = [];
+        
         const post = this.state.posts.find( ( item ) => { return item.id == parseInt( value ) } );
+        const subs = post['resource-subject-area'];
+                
+        for (i=0;i<subs.length;i++) {
+            subject = new wp.api.models.ResourceSubjectArea({ id: subs[i] }).fetch().then( ( subs ) => {
+                subjects.push(subs);
+            } );
+        }
         
         this.setState( { selectedResource: parseInt(value), post } );
         
@@ -47,6 +57,7 @@ class mySelectResource extends Component{
             title: post.title.rendered,
             content: post.content.rendered,
             link: post.link,
+            subjectAreas: subjects
         } );
     }
     
@@ -68,13 +79,12 @@ class mySelectResource extends Component{
     
     getOptions(){
         var resources = new wp.api.collections.Resource();
-        var subjects = new wp.api.models.ResourceSubjectArea();
+        
         return resources.fetch().then( ( posts ) => {
             if (posts && 0!==this.state.selectedResource) {
                 const post = posts.find( (item) => { return item.id == this.state.selectedResource });
-                const subs = post['resource-subject-area'];
-                console.log(subs);
-                this.setState( { post, posts} );
+                
+                this.setState( { post, posts } );
             } else {
                 this.setState( { posts } );
             }
@@ -185,6 +195,7 @@ registerBlockType( 'wp-oer-plugin/oer-resource-block', {
     },
     edit: mySelectResource,
     save: function( props ) {
+        console.log(props);
     return (
         <div className={ props.className }>
           <div className="post">

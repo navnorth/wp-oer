@@ -124,9 +124,19 @@ var mySelectResource = function (_Component) {
     _createClass(mySelectResource, [{
         key: 'onChangeSelectResource',
         value: function onChangeSelectResource(value) {
+            var subject;
+            var subjects = [];
+
             var post = this.state.posts.find(function (item) {
                 return item.id == parseInt(value);
             });
+            var subs = post['resource-subject-area'];
+
+            for (i = 0; i < subs.length; i++) {
+                subject = new wp.api.models.ResourceSubjectArea({ id: subs[i] }).fetch().then(function (subs) {
+                    subjects.push(subs);
+                });
+            }
 
             this.setState({ selectedResource: parseInt(value), post: post });
 
@@ -134,7 +144,8 @@ var mySelectResource = function (_Component) {
                 selectedResource: parseInt(value),
                 title: post.title.rendered,
                 content: post.content.rendered,
-                link: post.link
+                link: post.link,
+                subjectAreas: subjects
             });
         }
     }, {
@@ -163,14 +174,13 @@ var mySelectResource = function (_Component) {
             var _this2 = this;
 
             var resources = new wp.api.collections.Resource();
-            var subjects = new wp.api.models.ResourceSubjectArea();
+
             return resources.fetch().then(function (posts) {
                 if (posts && 0 !== _this2.state.selectedResource) {
                     var post = posts.find(function (item) {
                         return item.id == _this2.state.selectedResource;
                     });
-                    var subs = post['resource-subject-area'];
-                    console.log(subs);
+
                     _this2.setState({ post: post, posts: posts });
                 } else {
                     _this2.setState({ posts: posts });
@@ -285,6 +295,7 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
     },
     edit: mySelectResource,
     save: function save(props) {
+        console.log(props);
         return wp.element.createElement(
             'div',
             { className: props.className },
