@@ -145,7 +145,8 @@ var mySelectResource = function (_Component) {
                 title: post.title.rendered,
                 content: post.content.rendered,
                 link: post.link,
-                subjectAreas: subjects
+                subjectAreas: subjects,
+                gradeLevels: post.oer_grade
             });
         }
     }, {
@@ -180,7 +181,6 @@ var mySelectResource = function (_Component) {
                     var post = posts.find(function (item) {
                         return item.id == _this2.state.selectedResource;
                     });
-
                     _this2.setState({ post: post, posts: posts });
                 } else {
                     _this2.setState({ posts: posts });
@@ -290,6 +290,9 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
         },
         subjectAreas: {
             type: 'array'
+        },
+        gradeLevels: {
+            type: 'string'
         }
     },
     edit: mySelectResource,
@@ -312,7 +315,8 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
                         { key: d.name },
                         d.name
                     );
-                })
+                }),
+                props.attributes.showGradeLevels === true && wp.element.createElement('p', { dangerouslySetInnerHTML: { __html: '<strong>Grade Levels</strong> : ' + props.attributes.gradeLevels } })
             )
         );
     }

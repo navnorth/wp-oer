@@ -2308,3 +2308,18 @@ function oer_add_resources_rest_args() {
     $wp_taxonomies['resource-subject-area']->rest_controller_class = 'WP_REST_Terms_Controller';
 }
 add_action( 'init', 'oer_add_resources_rest_args', 30 );
+
+function oer_add_meta_to_api() {
+	register_rest_field( 'resource',
+			    'oer_grade',
+			    array(
+				'get_callback' => 'oer_rest_get_meta_field',
+				'update_callback' => null,
+				'schema' => null
+				  ) );
+}
+add_action( 'rest_api_init', 'oer_add_meta_to_api');
+
+function oer_rest_get_meta_field($resource, $field, $request){
+	return get_post_meta($resource['id'], $field, true);
+}

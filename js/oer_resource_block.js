@@ -57,7 +57,8 @@ class mySelectResource extends Component{
             title: post.title.rendered,
             content: post.content.rendered,
             link: post.link,
-            subjectAreas: subjects
+            subjectAreas: subjects,
+            gradeLevels: post.oer_grade
         } );
     }
     
@@ -83,7 +84,6 @@ class mySelectResource extends Component{
         return resources.fetch().then( ( posts ) => {
             if (posts && 0!==this.state.selectedResource) {
                 const post = posts.find( (item) => { return item.id == this.state.selectedResource });
-                
                 this.setState( { post, posts } );
             } else {
                 this.setState( { posts } );
@@ -190,6 +190,9 @@ registerBlockType( 'wp-oer-plugin/oer-resource-block', {
         },
         subjectAreas: {
             type: 'array'
+        },
+        gradeLevels: {
+            type: 'string'
         }
     },
     edit: mySelectResource,
@@ -199,8 +202,10 @@ registerBlockType( 'wp-oer-plugin/oer-resource-block', {
           <div className="post">
             { props.attributes.showTitle===true && (<a href={ props.attributes.link }><h2 dangerouslySetInnerHTML={ { __html: props.attributes.title } }></h2></a>)}
             { props.attributes.showDescription===true && (<p dangerouslySetInnerHTML={ { __html: props.attributes.content } }></p>)}
-            { (props.attributes.showSubjectAreas===true && props.attributes.subjectAreas.length>0) && ( props.attributes.subjectAreas.map((d) => <li key={d.name}>{d.name}</li>)
-                                                         )}
+            { (props.attributes.showSubjectAreas===true && props.attributes.subjectAreas.length>0) && (
+                 props.attributes.subjectAreas.map((d) => <li key={d.name}>{d.name}</li>)
+            )}
+            { props.attributes.showGradeLevels===true && (<p dangerouslySetInnerHTML={ { __html: '<strong>Grade Levels</strong> : ' + props.attributes.gradeLevels } }></p>)}
           </div>
         </div>
       );
