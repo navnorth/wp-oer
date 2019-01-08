@@ -61,7 +61,8 @@ class mySelectResource extends Component{
             link: post.link,
             subjectAreas: subjects,
             gradeLevels: post.oer_grade,
-            featuredImage: post.fimg_url
+            featuredImage: post.fimg_url,
+            resourceUrl: post.oer_resourceurl
         } );
     }
     
@@ -212,6 +213,9 @@ registerBlockType( 'wp-oer-plugin/oer-resource-block', {
         featuredImage: {
             type: 'string',
             selector: 'img'
+        },
+        resourceUrl: {
+            type: 'string'
         }
     },
     edit: mySelectResource,
@@ -229,7 +233,7 @@ registerBlockType( 'wp-oer-plugin/oer-resource-block', {
     return (
         <div className={ props.className }>
           <div className="post">
-            { (wImage) && (<div className="col-md-5"><img src={props.attributes.featuredImage} /></div>)}
+            { (wImage) && (<div className="col-md-5"><a href={props.attributes.resourceUrl}><img src={props.attributes.featuredImage} /></a></div>)}
             <div className={imgClass}>
             { props.attributes.showTitle===true && (<a href={ props.attributes.link }><h2 dangerouslySetInnerHTML={ { __html: props.attributes.title } }></h2></a>)}
             { props.attributes.showDescription===true && (<p dangerouslySetInnerHTML={ { __html: props.attributes.content } }></p>)}

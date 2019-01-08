@@ -149,7 +149,8 @@ var mySelectResource = function (_Component) {
                 link: post.link,
                 subjectAreas: subjects,
                 gradeLevels: post.oer_grade,
-                featuredImage: post.fimg_url
+                featuredImage: post.fimg_url,
+                resourceUrl: post.oer_resourceurl
             });
         }
     }, {
@@ -313,6 +314,9 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
         featuredImage: {
             type: 'string',
             selector: 'img'
+        },
+        resourceUrl: {
+            type: 'string'
         }
     },
     edit: mySelectResource,
@@ -341,7 +345,11 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
                 wImage && wp.element.createElement(
                     'div',
                     { className: 'col-md-5' },
-                    wp.element.createElement('img', { src: props.attributes.featuredImage })
+                    wp.element.createElement(
+                        'a',
+                        { href: props.attributes.resourceUrl },
+                        wp.element.createElement('img', { src: props.attributes.featuredImage })
+                    )
                 ),
                 wp.element.createElement(
                     'div',
