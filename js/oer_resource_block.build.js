@@ -118,6 +118,8 @@ var mySelectResource = function (_Component) {
         _this.onChangeShowSubjects = _this.onChangeShowSubjects.bind(_this);
 
         _this.onChangeShowGradeLevels = _this.onChangeShowGradeLevels.bind(_this);
+
+        _this.onChangeShowThumbnail = _this.onChangeShowThumbnail.bind(_this);
         return _this;
     }
 
@@ -146,7 +148,8 @@ var mySelectResource = function (_Component) {
                 content: post.content.rendered,
                 link: post.link,
                 subjectAreas: subjects,
-                gradeLevels: post.oer_grade
+                gradeLevels: post.oer_grade,
+                featuredImage: post.fimg_url
             });
         }
     }, {
@@ -168,6 +171,11 @@ var mySelectResource = function (_Component) {
         key: 'onChangeShowGradeLevels',
         value: function onChangeShowGradeLevels(checked) {
             this.props.setAttributes({ showGradeLevels: checked });
+        }
+    }, {
+        key: 'onChangeShowThumbnail',
+        value: function onChangeShowThumbnail(checked) {
+            this.props.setAttributes({ showThumbnail: checked });
         }
     }, {
         key: 'getOptions',
@@ -220,6 +228,11 @@ var mySelectResource = function (_Component) {
                 InspectorControls,
                 { key: 'inspector' },
                 wp.element.createElement(SelectControl, { onChange: this.onChangeSelectResource, value: this.props.attributes.selectedResource, label: __('Resource:'), options: options }),
+                wp.element.createElement(CheckboxControl, {
+                    id: 'oerShowThumbnail',
+                    label: __('Show Thumbnail'),
+                    checked: this.props.attributes.showThumbnail,
+                    onChange: this.onChangeShowThumbnail }),
                 wp.element.createElement(CheckboxControl, {
                     id: 'oerShowTitle',
                     label: __('Show Title'),
@@ -288,35 +301,73 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
         showGradeLevels: {
             type: 'boolean'
         },
+        showThumbnail: {
+            type: 'boolean'
+        },
         subjectAreas: {
             type: 'array'
         },
         gradeLevels: {
             type: 'string'
+        },
+        featuredImage: {
+            type: 'string',
+            selector: 'img'
         }
     },
     edit: mySelectResource,
     save: function save(props) {
+        var wImage = false;
+        var imgClass = "col-md-12";
+        var wSubjects = false;
+        if (props.attributes.showThumbnail === true && props.attributes.featuredImage !== "") {
+            wImage = true;
+            imgClass = "col-md-7";
+        }
+        if (props.attributes.showSubjectAreas === true && props.attributes.subjectAreas.length > 0) wSubjects = true;
+        var listItems = props.attributes.subjectAreas.map(function (d) {
+            return wp.element.createElement(
+                'li',
+                { key: d.name },
+                d.name
+            );
+        });
         return wp.element.createElement(
             'div',
             { className: props.className },
             wp.element.createElement(
                 'div',
                 { className: 'post' },
-                props.attributes.showTitle === true && wp.element.createElement(
-                    'a',
-                    { href: props.attributes.link },
-                    wp.element.createElement('h2', { dangerouslySetInnerHTML: { __html: props.attributes.title } })
+                wImage && wp.element.createElement(
+                    'div',
+                    { className: 'col-md-5' },
+                    wp.element.createElement('img', { src: props.attributes.featuredImage })
                 ),
-                props.attributes.showDescription === true && wp.element.createElement('p', { dangerouslySetInnerHTML: { __html: props.attributes.content } }),
-                props.attributes.showSubjectAreas === true && props.attributes.subjectAreas.length > 0 && props.attributes.subjectAreas.map(function (d) {
-                    return wp.element.createElement(
-                        'li',
-                        { key: d.name },
-                        d.name
-                    );
-                }),
-                props.attributes.showGradeLevels === true && wp.element.createElement('p', { dangerouslySetInnerHTML: { __html: '<strong>Grade Levels</strong> : ' + props.attributes.gradeLevels } })
+                wp.element.createElement(
+                    'div',
+                    { className: imgClass },
+                    props.attributes.showTitle === true && wp.element.createElement(
+                        'a',
+                        { href: props.attributes.link },
+                        wp.element.createElement('h2', { dangerouslySetInnerHTML: { __html: props.attributes.title } })
+                    ),
+                    props.attributes.showDescription === true && wp.element.createElement('p', { dangerouslySetInnerHTML: { __html: props.attributes.content } }),
+                    wSubjects && wp.element.createElement(
+                        'h5',
+                        null,
+                        'Subjects:'
+                    ),
+                    wSubjects && wp.element.createElement(
+                        'div',
+                        null,
+                        wp.element.createElement(
+                            'ul',
+                            null,
+                            listItems
+                        )
+                    ),
+                    props.attributes.showGradeLevels === true && wp.element.createElement('p', { dangerouslySetInnerHTML: { __html: '<strong>Grade Levels</strong> : ' + props.attributes.gradeLevels } })
+                )
             )
         );
     }

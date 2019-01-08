@@ -35,6 +35,8 @@ class mySelectResource extends Component{
         this.onChangeShowSubjects = this.onChangeShowSubjects.bind(this);
         
         this.onChangeShowGradeLevels = this.onChangeShowGradeLevels.bind(this);
+        
+        this.onChangeShowThumbnail = this.onChangeShowThumbnail.bind(this);
     }
     
     onChangeSelectResource( value ) {
@@ -58,7 +60,8 @@ class mySelectResource extends Component{
             content: post.content.rendered,
             link: post.link,
             subjectAreas: subjects,
-            gradeLevels: post.oer_grade
+            gradeLevels: post.oer_grade,
+            featuredImage: post.fimg_url
         } );
     }
     
@@ -76,6 +79,10 @@ class mySelectResource extends Component{
     
     onChangeShowGradeLevels ( checked ) {
         this.props.setAttributes( { showGradeLevels: checked } );
+    }
+    
+    onChangeShowThumbnail ( checked ) {
+        this.props.setAttributes( { showThumbnail: checked } );
     }
     
     getOptions(){
@@ -120,6 +127,11 @@ class mySelectResource extends Component{
              !! this.props.isSelected && (
                 <InspectorControls key='inspector'>
                     <SelectControl onChange={this.onChangeSelectResource} value={ this.props.attributes.selectedResource } label={ __('Resource:') } options={ options } />
+                    <CheckboxControl
+                        id="oerShowThumbnail"
+                        label={__('Show Thumbnail') }
+                        checked={ this.props.attributes.showThumbnail }
+                        onChange={ this.onChangeShowThumbnail } />
                     <CheckboxControl
                         id="oerShowTitle"
                         label={__('Show Title') }
@@ -188,24 +200,43 @@ registerBlockType( 'wp-oer-plugin/oer-resource-block', {
         showGradeLevels: {
             type: 'boolean'
         },
+        showThumbnail: {
+            type: 'boolean'  
+        },
         subjectAreas: {
             type: 'array'
         },
         gradeLevels: {
             type: 'string'
+        },
+        featuredImage: {
+            type: 'string',
+            selector: 'img'
         }
     },
     edit: mySelectResource,
     save: function( props ) {
+        var wImage = false;
+        var imgClass = "col-md-12";
+        var wSubjects = false;
+        if (props.attributes.showThumbnail===true && props.attributes.featuredImage!==""){
+            wImage = true;
+            imgClass = "col-md-7";
+        }
+        if (props.attributes.showSubjectAreas===true && props.attributes.subjectAreas.length>0)
+            wSubjects = true;
+        const listItems = props.attributes.subjectAreas.map((d) => <li key={d.name}>{d.name}</li>);
     return (
         <div className={ props.className }>
           <div className="post">
+            { (wImage) && (<div className="col-md-5"><img src={props.attributes.featuredImage} /></div>)}
+            <div className={imgClass}>
             { props.attributes.showTitle===true && (<a href={ props.attributes.link }><h2 dangerouslySetInnerHTML={ { __html: props.attributes.title } }></h2></a>)}
             { props.attributes.showDescription===true && (<p dangerouslySetInnerHTML={ { __html: props.attributes.content } }></p>)}
-            { (props.attributes.showSubjectAreas===true && props.attributes.subjectAreas.length>0) && (
-                 props.attributes.subjectAreas.map((d) => <li key={d.name}>{d.name}</li>)
-            )}
+            { wSubjects && (<h5>Subjects:</h5>)}
+            { wSubjects && (<div><ul>{listItems}</ul></div>)}
             { props.attributes.showGradeLevels===true && (<p dangerouslySetInnerHTML={ { __html: '<strong>Grade Levels</strong> : ' + props.attributes.gradeLevels } }></p>)}
+            </div>
           </div>
         </div>
       );
