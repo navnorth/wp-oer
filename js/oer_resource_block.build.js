@@ -360,10 +360,10 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
         });
         return wp.element.createElement(
             'div',
-            { className: props.className },
+            { className: props.className, style: { textAlign: aCenter == true ? 'center' : 'auto' } },
             wp.element.createElement(
                 'div',
-                { className: 'post', style: { float: aLign } },
+                { className: 'post', style: { float: aLign, textAlign: 'left' } },
                 wImage && wp.element.createElement(
                     'div',
                     { className: 'col-md-5' },
