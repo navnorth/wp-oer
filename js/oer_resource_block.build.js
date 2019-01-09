@@ -111,6 +111,8 @@ var mySelectResource = function (_Component) {
 
         _this.onChangeSelectResource = _this.onChangeSelectResource.bind(_this);
 
+        _this.onChangeAlignment = _this.onChangeAlignment.bind(_this);
+
         _this.onChangeShowTitle = _this.onChangeShowTitle.bind(_this);
 
         _this.onChangeShowDescription = _this.onChangeShowDescription.bind(_this);
@@ -151,6 +153,13 @@ var mySelectResource = function (_Component) {
                 gradeLevels: post.oer_grade,
                 featuredImage: post.fimg_url,
                 resourceUrl: post.oer_resourceurl
+            });
+        }
+    }, {
+        key: 'onChangeAlignment',
+        value: function onChangeAlignment(value) {
+            this.props.setAttributes({
+                alignment: value
             });
         }
     }, {
@@ -201,6 +210,7 @@ var mySelectResource = function (_Component) {
         value: function render() {
 
             var options = [{ value: 0, label: __('Select a resource') }];
+            var aOptions = [{ value: 'none', label: __('Select Alignment') }, { value: 'left', label: __('Left') }, { value: 'center', label: __('Center') }, { value: 'right', label: __('Right') }];
             var output = __('Loading Resources');
 
             if (this.state.posts.length > 0) {
@@ -229,6 +239,7 @@ var mySelectResource = function (_Component) {
                 InspectorControls,
                 { key: 'inspector' },
                 wp.element.createElement(SelectControl, { onChange: this.onChangeSelectResource, value: this.props.attributes.selectedResource, label: __('Resource:'), options: options }),
+                wp.element.createElement(SelectControl, { onChange: this.onChangeAlignment, value: this.props.attributes.alignment, label: __('Alignment:'), options: aOptions }),
                 wp.element.createElement(CheckboxControl, {
                     id: 'oerShowThumbnail',
                     label: __('Show Thumbnail'),
@@ -317,6 +328,10 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
         },
         resourceUrl: {
             type: 'string'
+        },
+        alignment: {
+            type: 'string',
+            default: 'none'
         }
     },
     edit: mySelectResource,
@@ -324,6 +339,13 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
         var wImage = false;
         var imgClass = "col-md-12";
         var wSubjects = false;
+        var aCenter = false;
+        var aLign = "none";
+        if (props.attributes.alignment == "center") {
+            aCenter = true;
+        } else {
+            aLign = props.attributes.alignment;
+        }
         if (props.attributes.showThumbnail === true && props.attributes.featuredImage !== "") {
             wImage = true;
             imgClass = "col-md-7";
@@ -341,7 +363,7 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
             { className: props.className },
             wp.element.createElement(
                 'div',
-                { className: 'post' },
+                { className: 'post', style: { float: aLign } },
                 wImage && wp.element.createElement(
                     'div',
                     { className: 'col-md-5' },
