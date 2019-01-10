@@ -4,6 +4,7 @@ var InspectorControls = wp.editor.InspectorControls;
 var SelectControl = wp.components.SelectControl;
 var Component = wp.element.Component;
 var CheckboxControl = wp.components.CheckboxControl;
+var TextControl = wp.components.TextControl;
 var elem = wp.element.createElement;
 
 class mySelectResource extends Component{
@@ -39,6 +40,8 @@ class mySelectResource extends Component{
         this.onChangeShowGradeLevels = this.onChangeShowGradeLevels.bind(this);
         
         this.onChangeShowThumbnail = this.onChangeShowThumbnail.bind(this);
+        
+        this.onChangeWidth = this.onChangeWidth.bind(this);
     }
     
     onChangeSelectResource( value ) {
@@ -94,6 +97,10 @@ class mySelectResource extends Component{
         this.props.setAttributes( { showThumbnail: checked } );
     }
     
+    onChangeWidth ( value ) {
+        this.props.setAttributes( { blockWidth: value } );
+    }
+    
     getOptions(){
         var resources = new wp.api.collections.Resource();
         
@@ -138,6 +145,7 @@ class mySelectResource extends Component{
                 <InspectorControls key='inspector'>
                     <SelectControl onChange={this.onChangeSelectResource} value={ this.props.attributes.selectedResource } label={ __('Resource:') } options={ options } />
                     <SelectControl onChange={this.onChangeAlignment} value={ this.props.attributes.alignment } label={ __('Alignment:') } options={ aOptions } />
+                    <TextControl onChange={ this.onChangeWidth } value={ this.props.attributes.blockWidth } label={ __('Width(optional)') } />
                     <CheckboxControl
                         id="oerShowThumbnail"
                         label={__('Show Thumbnail') }
@@ -230,6 +238,9 @@ registerBlockType( 'wp-oer-plugin/oer-resource-block', {
         alignment: {
             type: 'string',
             default: 'none'
+        },
+        blockWidth: {
+            type: 'integer'
         }
     },
     edit: mySelectResource,
@@ -239,6 +250,7 @@ registerBlockType( 'wp-oer-plugin/oer-resource-block', {
         var wSubjects = false;
         var aCenter = false;
         var aLign = "none";
+        var width = "auto";
         if (props.attributes.alignment=="center") {
             aCenter = true;
         } else {
@@ -250,10 +262,13 @@ registerBlockType( 'wp-oer-plugin/oer-resource-block', {
         }
         if (props.attributes.showSubjectAreas===true && props.attributes.subjectAreas.length>0)
             wSubjects = true;
+        if (props.attributes.blockWidth!=="") {
+            width = props.attributes.blockWidth + "px";
+        }
         const listItems = props.attributes.subjectAreas.map((d) => <li key={d.name}>{d.name}</li>);
     return (   
         <div className={ props.className } style={{ textAlign: aCenter==true ? 'center': 'auto' }}>
-          <div className="post" style={{ float: aLign, textAlign:'left'}}>
+          <div className="post" style={{ float: aLign, textAlign:'left', width:width, overflow:'hidden' }}>
             { (wImage) && (<div className="col-md-5"><a href={props.attributes.resourceUrl}><img src={props.attributes.featuredImage} /></a></div>)}
             <div className={imgClass}>
             { props.attributes.showTitle===true && (<a href={ props.attributes.link }><h2 dangerouslySetInnerHTML={ { __html: props.attributes.title } }></h2></a>)}
