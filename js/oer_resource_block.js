@@ -42,6 +42,8 @@ class mySelectResource extends Component{
         this.onChangeShowThumbnail = this.onChangeShowThumbnail.bind(this);
         
         this.onChangeWidth = this.onChangeWidth.bind(this);
+        
+        this.onChangeWithBorder = this.onChangeWithBorder.bind(this);
     }
     
     onChangeSelectResource( value ) {
@@ -99,6 +101,10 @@ class mySelectResource extends Component{
     
     onChangeWidth ( value ) {
         this.props.setAttributes( { blockWidth: value } );
+    }
+    
+    onChangeWithBorder ( checked ) {
+        this.props.setAttributes( { withBorder: checked } );
     }
     
     getOptions(){
@@ -171,6 +177,11 @@ class mySelectResource extends Component{
                         label={__('Show Grade Levels') }
                         checked={ this.props.attributes.showGradeLevels }
                         onChange={ this.onChangeShowGradeLevels } />
+                    <CheckboxControl
+                        id="oerWithBorder"
+                        label={__('Show Block with Border') }
+                        checked={ this.props.attributes.withBorder }
+                        onChange={ this.onChangeWithBorder } />
                 </InspectorControls>
             ),
             <div className={this.props.className}>{output}</div>
@@ -241,6 +252,9 @@ registerBlockType( 'wp-oer-plugin/oer-resource-block', {
         },
         blockWidth: {
             type: 'integer'
+        },
+        withBorder: {
+            type: 'boolean'
         }
     },
     edit: mySelectResource,
@@ -251,6 +265,7 @@ registerBlockType( 'wp-oer-plugin/oer-resource-block', {
         var aCenter = false;
         var aLign = "none";
         var width = "auto";
+        var border = "none";
         if (props.attributes.alignment=="center") {
             aCenter = true;
         } else {
@@ -265,10 +280,13 @@ registerBlockType( 'wp-oer-plugin/oer-resource-block', {
         if (props.attributes.blockWidth!=="") {
             width = props.attributes.blockWidth + "px";
         }
+        if (props.attributes.withBorder===true) {
+            border = "1px solid #cdcdcd";
+        }
         const listItems = props.attributes.subjectAreas.map((d) => <li key={d.name}>{d.name}</li>);
     return (   
         <div className={ props.className } style={{ textAlign: aCenter==true ? 'center': 'auto' }}>
-          <div className="post" style={{ float: aLign, textAlign:'left', width:width, overflow:'hidden' }}>
+          <div className="post" style={{ float: aLign, textAlign:'left', width:width, overflow:'hidden', border: border }}>
             { (wImage) && (<div className="col-md-5"><a href={props.attributes.resourceUrl}><img src={props.attributes.featuredImage} /></a></div>)}
             <div className={imgClass}>
             { props.attributes.showTitle===true && (<a href={ props.attributes.link }><h2 dangerouslySetInnerHTML={ { __html: props.attributes.title } }></h2></a>)}

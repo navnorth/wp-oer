@@ -125,6 +125,8 @@ var mySelectResource = function (_Component) {
         _this.onChangeShowThumbnail = _this.onChangeShowThumbnail.bind(_this);
 
         _this.onChangeWidth = _this.onChangeWidth.bind(_this);
+
+        _this.onChangeWithBorder = _this.onChangeWithBorder.bind(_this);
         return _this;
     }
 
@@ -194,6 +196,11 @@ var mySelectResource = function (_Component) {
         key: 'onChangeWidth',
         value: function onChangeWidth(value) {
             this.props.setAttributes({ blockWidth: value });
+        }
+    }, {
+        key: 'onChangeWithBorder',
+        value: function onChangeWithBorder(checked) {
+            this.props.setAttributes({ withBorder: checked });
         }
     }, {
         key: 'getOptions',
@@ -273,7 +280,12 @@ var mySelectResource = function (_Component) {
                     id: 'oerShowGradeLevels',
                     label: __('Show Grade Levels'),
                     checked: this.props.attributes.showGradeLevels,
-                    onChange: this.onChangeShowGradeLevels })
+                    onChange: this.onChangeShowGradeLevels }),
+                wp.element.createElement(CheckboxControl, {
+                    id: 'oerWithBorder',
+                    label: __('Show Block with Border'),
+                    checked: this.props.attributes.withBorder,
+                    onChange: this.onChangeWithBorder })
             ), wp.element.createElement(
                 'div',
                 { className: this.props.className },
@@ -344,6 +356,9 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
         },
         blockWidth: {
             type: 'integer'
+        },
+        withBorder: {
+            type: 'boolean'
         }
     },
     edit: mySelectResource,
@@ -354,6 +369,7 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
         var aCenter = false;
         var aLign = "none";
         var width = "auto";
+        var border = "none";
         if (props.attributes.alignment == "center") {
             aCenter = true;
         } else {
@@ -367,6 +383,9 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
         if (props.attributes.blockWidth !== "") {
             width = props.attributes.blockWidth + "px";
         }
+        if (props.attributes.withBorder === true) {
+            border = "1px solid #cdcdcd";
+        }
         var listItems = props.attributes.subjectAreas.map(function (d) {
             return wp.element.createElement(
                 'li',
@@ -379,7 +398,7 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
             { className: props.className, style: { textAlign: aCenter == true ? 'center' : 'auto' } },
             wp.element.createElement(
                 'div',
-                { className: 'post', style: { float: aLign, textAlign: 'left', width: width, overflow: 'hidden' } },
+                { className: 'post', style: { float: aLign, textAlign: 'left', width: width, overflow: 'hidden', border: border } },
                 wImage && wp.element.createElement(
                     'div',
                     { className: 'col-md-5' },
