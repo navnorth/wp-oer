@@ -24,7 +24,7 @@
         <!--Resource Description-->
         <?php if(!empty($post->post_content)) {?>
             <div class="oer-sngl-rsrc-dscrptn">
-                    <h2><?php _e("Description", OER_SLUG) ?></h2>
+                    <h2><?php _e("Description", 'wp-oer') ?></h2>
                     <?php echo $content = apply_filters ("the_content", $post->post_content); ?>
             </div>
         <?php } ?>
@@ -55,7 +55,7 @@
         if(!empty($oer_authorname) && !empty($oer_authorurl))
         {
         ?>
-            <h4><strong><?php _e("Creator:", OER_SLUG) ?></strong>
+            <h4><strong><?php _e("Creator:", 'wp-oer') ?></strong>
             <span><a href="<?php echo esc_url($oer_authorurl); ?>" target="_blank"><?php echo $oer_authorname; ?></a></span></h4>
         <?php } ?>
     </div>
@@ -67,7 +67,7 @@
     {
     ?>
     <div id="" class="oer-publisherName oer-cbxl">
-        <h4><strong><?php _e("Publisher:", OER_SLUG) ?></strong>
+        <h4><strong><?php _e("Publisher:", 'wp-oer') ?></strong>
         <span><a href="<?php echo esc_url($oer_publisherurl); ?>" target="_blank"><?php echo $oer_publishername; ?></a></span></h4>
     </div>
     <?php } ?>
@@ -76,7 +76,7 @@
             $oer_mediatype = get_post_meta($post->ID, "oer_mediatype", true);
             if(!empty($oer_mediatype))
             { ?>
-                <h4><strong><?php _e("Type:", OER_SLUG) ?></strong>
+                <h4><strong><?php _e("Type:", 'wp-oer') ?></strong>
                 <span><?php echo ucwords($oer_mediatype); ?></span></h4>
         <?php } ?>
     </div>
@@ -90,9 +90,9 @@
         <div class="oer-rsrcgrd oer-cbxl">
             <h4><strong><?php
             if (count($grades)>1)
-                _e("Grades:", OER_SLUG);
+                _e("Grades:", 'wp-oer');
             else
-                _e("Grade:", OER_SLUG)
+                _e("Grade:", 'wp-oer')
             ?></strong>
             <span>
         <?php
@@ -159,7 +159,7 @@
             {
     ?>
                     <div class="oer-rsrckeyword">
-                            <h4><strong><?php _e("Keywords:", OER_SLUG) ?></strong></h4>
+                            <h4><strong><?php _e("Keywords:", 'wp-oer') ?></strong></h4>
                             <div class="oer_meta_container tagcloud">
                        <?php
                                     foreach($keywords as $keyword)

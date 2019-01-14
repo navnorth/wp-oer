@@ -21,13 +21,13 @@ $sub_standards = get_substandards($standard->id);
 display_custom_styles();
 ?>
 <div class="oer-backlink">
-    <a href="<?php echo home_url('resource/standards'); ?>"><?php _e("< Back to Standards",OER_SLUG); ?></a>
+    <a href="<?php echo home_url('resource/standards'); ?>"><?php _e("< Back to Standards",'wp-oer'); ?></a>
 </div>
 <div class="oer-cntnr">
 	<section id="primary" class="site-content">
 		<div id="content" role="main">
 		    <div class="oer-allftrdrsrc">
-			<div class="oer-snglrsrchdng"><?php printf(__("Browse %s", OER_SLUG), $standard->standard_name); ?></div>
+			<div class="oer-snglrsrchdng"><?php printf(__("Browse %s", 'wp-oer'), $standard->standard_name); ?></div>
 			<div class="oer-allftrdrsrccntr">
 			    <?php if ($sub_standards) {  ?>
 			    <ul class="oer-standards">

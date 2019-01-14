@@ -163,7 +163,7 @@ global $message, $type;
 </div><!-- /.wrap -->
 <div class="oer-plugin-footer">
 	<div class="oer-plugin-info"><?php echo OER_ADMIN_PLUGIN_NAME . " " . OER_VERSION .""; ?></div>
-	<div class="oer-plugin-link"><a href='https://www.wp-oer.com/' target='_blank'><?php _e("More Information", OER_SLUG); ?></a></div>
+	<div class="oer-plugin-link"><a href='https://www.wp-oer.com/' target='_blank'><?php _e("More Information", 'wp-oer'); ?></a></div>
 	<div class="clear"></div>
 </div>
 
@@ -174,7 +174,7 @@ function oer_show_general_settings() {
 <div class="oer-plugin-body">
 	<div class="oer-plugin-row">
 		<div class="oer-row-left">
-			<?php _e("Adjust settings below as necessary for your installation. For additional information on these options check the support forums or <a href='https://www.wp-oer.com/' target='_blank'>wp-oer.com</a>", OER_SLUG); ?>
+			<?php _e("Adjust settings below as necessary for your installation. For additional information on these options check the support forums or <a href='https://www.wp-oer.com/' target='_blank'>wp-oer.com</a>", 'wp-oer'); ?>
 			<div class="oer-import-row">
 			<h2 class="hidden"></h2>
 			<?php if ($message) { ?>
@@ -185,9 +185,9 @@ function oer_show_general_settings() {
 			</div>
 		</div>
 		<div class="oer-row-right">
-			<strong><?php _e("Support Options", OER_SLUG); ?></strong>
+			<strong><?php _e("Support Options", 'wp-oer'); ?></strong>
 			<ul>
-				<li><a href="https://www.wp-oer.com/get-help/" target="_blank"><?php _e("WP OER Plugin Support", OER_SLUG); ?></a></li>
+				<li><a href="https://www.wp-oer.com/get-help/" target="_blank"><?php _e("WP OER Plugin Support", 'wp-oer'); ?></a></li>
 			</ul>
 		</div>
 	</div>
@@ -195,13 +195,13 @@ function oer_show_general_settings() {
 		<?php settings_fields("oer_general_settings"); ?>
 		<div class="oer-plugin-row plugin-row-first">
 			<fieldset>
-				<legend><div class="oer_hdng"><?php _e("PDF Embeds", OER_SLUG); ?></div></legend>
+				<legend><div class="oer_hdng"><?php _e("PDF Embeds", 'wp-oer'); ?></div></legend>
 				<?php do_settings_sections("embed_settings"); ?>
 			</fieldset>
 		</div>
 		<div class="oer-plugin-row">
 			<fieldset>
-				<legend><div class="oer_hdng"><?php _e("Screenshot Utility", OER_SLUG); ?></div></legend>
+				<legend><div class="oer_hdng"><?php _e("Screenshot Utility", 'wp-oer'); ?></div></legend>
 				<?php do_settings_sections("oer_settings"); ?>
 			</fieldset>
 		</div>
@@ -217,12 +217,12 @@ function oer_show_styles_settings() {
 <div class="oer-plugin-body">
 	<div class="oer-plugin-row">
 		<div class="oer-row-left">
-			<?php _e("Use the options below to make adjustments to the look and feel of the OER pages. For more fine-tune customizations, additional CSS can be provided to include on all OER pages.", OER_SLUG); ?>
+			<?php _e("Use the options below to make adjustments to the look and feel of the OER pages. For more fine-tune customizations, additional CSS can be provided to include on all OER pages.", 'wp-oer'); ?>
 		</div>
 		<div class="oer-row-right">
-			<strong><?php _e("Support Options", OER_SLUG); ?></strong>
+			<strong><?php _e("Support Options", 'wp-oer'); ?></strong>
 			<ul>
-				<li><a href="https://www.wp-oer.com/get-help/" target="_blank"><?php _e("WP OER Plugin Support", OER_SLUG); ?></a></li>
+				<li><a href="https://www.wp-oer.com/get-help/" target="_blank"><?php _e("WP OER Plugin Support", 'wp-oer'); ?></a></li>
 			</ul>
 		</div>
 	</div>
@@ -243,7 +243,7 @@ function oer_show_setup_settings() {
 <div class="oer-plugin-body">
 	<div class="oer-plugin-row">
 		<div class="oer-row-left">
-			<?php _e("When first setting up the plugin, the following options will give you the base set of data to see how everything works. All of these options will be available to you in other settings and features at a later time if you want to skip any or all of these options.", OER_SLUG); ?>
+			<?php _e("When first setting up the plugin, the following options will give you the base set of data to see how everything works. All of these options will be available to you in other settings and features at a later time if you want to skip any or all of these options.", 'wp-oer'); ?>
 			<div class="oer-import-row">
 			<h2 class="hidden"></h2>
 			<?php if ($message) { ?>
@@ -254,9 +254,9 @@ function oer_show_setup_settings() {
 			</div>
 		</div>
 		<div class="oer-row-right">
-			<strong><?php _e("Support Options", OER_SLUG); ?></strong>
+			<strong><?php _e("Support Options", 'wp-oer'); ?></strong>
 			<ul>
-				<li><a href="https://www.wp-oer.com/get-help/" target="_blank"><?php _e("WP OER Plugin Support", OER_SLUG); ?></a></li>
+				<li><a href="https://www.wp-oer.com/get-help/" target="_blank"><?php _e("WP OER Plugin Support", 'wp-oer'); ?></a></li>
 			</ul>
 		</div>
 	</div>
@@ -277,8 +277,8 @@ function oer_show_reset_settings() {
 <div class="oer-plugin-body">
 	<div class="oer-plugin-row">
 		<div class="oer-row-left">
-			<h3><?php _e("Reset OER Plugin Setup", OER_SLUG); ?></h3>
-			<?php _e("This function is provided just to assist with testing. Be careful with the options below as each of them will remove data from your Wordpress site.", OER_SLUG); ?>
+			<h3><?php _e("Reset OER Plugin Setup", 'wp-oer'); ?></h3>
+			<?php _e("This function is provided just to assist with testing. Be careful with the options below as each of them will remove data from your Wordpress site.", 'wp-oer'); ?>
 			<div class="oer-import-row">
 			<h2 class="hidden"></h2>
 			<?php if ($message) { ?>
@@ -289,9 +289,9 @@ function oer_show_reset_settings() {
 			</div>
 		</div>
 		<div class="oer-row-right">
-			<strong><?php _e("Support Options", OER_SLUG); ?></strong>
+			<strong><?php _e("Support Options", 'wp-oer'); ?></strong>
 			<ul>
-				<li><a href="https://www.wp-oer.com/get-help/" target="_blank"><?php _e("WP OER Plugin Support", OER_SLUG); ?></a></li>
+				<li><a href="https://www.wp-oer.com/get-help/" target="_blank"><?php _e("WP OER Plugin Support", 'wp-oer'); ?></a></li>
 			</ul>
 		</div>
 	</div>

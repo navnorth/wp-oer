@@ -20,7 +20,7 @@ get_header();
 
 		<?php if ( have_posts() ) : ?>
 			<header class="archive-header">
-				<h1 class="archive-title"><?php printf( __( 'Tag Archives: %s', OER_SLUG ), '<span>' .single_tag_title( '', false ).'</span>' );?></h1>
+				<h1 class="archive-title"><?php printf( __( 'Tag Archives: %s', 'wp-oer' ), '<span>' .single_tag_title( '', false ).'</span>' );?></h1>
 
 			<?php if ( tag_description() ) : // Show an optional tag description ?>
 				<div class="archive-meta"><?php echo tag_description(); ?></div>
@@ -58,11 +58,11 @@ get_header();
 		<?php else : ?>
 			<article id="post-0" class="post no-results not-found">
 				<header class="entry-header">
-					<h1 class="entry-title"><?php _e( 'Nothing Found', OER_SLUG ); ?></h1>
+					<h1 class="entry-title"><?php _e( 'Nothing Found', 'wp-oer' ); ?></h1>
 				</header>
 
 				<div class="entry-content">
-					<p><?php _e( 'Sorry, but nothing matched your search criteria. Please try again with some different keywords.', OER_SLUG ); ?></p>
+					<p><?php _e( 'Sorry, but nothing matched your search criteria. Please try again with some different keywords.', 'wp-oer' ); ?></p>
 				</div><!-- .entry-content -->
 			</article><!-- #post-0 -->
 		<?php endif; ?>

@@ -11,7 +11,7 @@ function oer_get_sub_standard($id, $oer_standard)
 	{
 		$stndrd_arr = explode(",",$oer_standard);
 	}
-	
+
 	if(!empty($results))
 	{
 		echo "<ul>";
@@ -63,7 +63,7 @@ function oer_get_sub_standard($id, $oer_standard)
 function oer_get_standard_notation($id, $oer_standard)
 {
 	global $wpdb;
-	
+
 	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "oer_standard_notation where parent_id = %s" , $id ) , ARRAY_A);
 
 	if(!empty($oer_standard))
@@ -131,7 +131,7 @@ function oer_get_substandard_children($id)
 function oer_get_core_standard($id) {
 	global $wpdb;
 	$results = null;
-	
+
 	if ($id!=="") {
 		$stds = explode("-",$id);
 		$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "oer_core_standards where id = %s" , $stds[1] ) , ARRAY_A);
@@ -142,24 +142,24 @@ function oer_get_core_standard($id) {
 /** Get Parent Standard **/
 function oer_get_parent_standard($standard_id) {
 	global $wpdb, $_oer_prefix;
-	
+
 	$stds = explode("-",$standard_id);
 	$table = $stds[0];
-	
+
 	$prefix = substr($standard_id,0,strpos($standard_id,"_")+1);
-	
+
 	$table_name = $wpdb->prefix.$_oer_prefix.$table;
-	
+
 	$id = $stds[1];
 	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $table_name. " where id = %s" , $id ) , ARRAY_A);
-	
+
 	foreach($results as $result) {
 
 		$stdrds = explode("-",$result['parent_id']);
 		$tbl = $stdrds[0];
-		
+
 		$tbls = array('sub_standards','standard_notation');
-		
+
 		if (in_array($tbl,$tbls)){
 			$results = oer_get_parent_standard($result['parent_id']);
 		}
@@ -498,7 +498,7 @@ if (!function_exists('oer_get_custom_category_parents')) {
 
 		if ( $link ) {
 			// $chain .= '<a href="' . esc_url( get_category_link( $parent->term_id ) ) . '" title="' . esc_attr( sprintf( __( "View all posts in %s" ), $parent->name ) ) . '">'.$name.'</a>' . $separator;
-			$chain .= '<a href="' . esc_url( get_term_link( (int) $parent->term_id, $taxonomy ) ) . '" title="' . esc_attr( sprintf( __( "View all posts in %s" ), $parent->name ) ) . '">'.$name.'</a>' . $separator;
+			$chain .= '<a href="' . esc_url( get_term_link( (int) $parent->term_id, $taxonomy ) ) . '" title="' . esc_attr( sprintf( __( "View all posts in %s", 'wp-oer' ), $parent->name ) ) . '">'.$name.'</a>' . $separator;
 		} else {
 			$chain .= $name.$separator;
 		}
@@ -512,7 +512,7 @@ if (!function_exists('oer_get_parent_term')) {
 	{
 		$curr_cat = get_category_parents($id, false, '/' ,true);
 		$curr_cat = explode('/',$curr_cat);
-		
+
 		return $curr_cat;
 	}
 }
@@ -527,7 +527,7 @@ if (!function_exists('oer_get_parent_term_list')) {
 			      );
 		$curr_cat = get_term_parents_list($id, 'resource-subject-area', $args);
 		$curr_cat = explode('/',$curr_cat);
-		
+
 		return $curr_cat;
 	}
 }
@@ -885,9 +885,9 @@ function oer_save_image_to_file($image_url) {
 //Get External Thumbnail Image
 function oer_getExternalThumbnailImage($url, $local=false) {
 	global $_debug;
-	
+
 	$local_filename = $url;
-	
+
 	if ($local) {
 		$url = OER_URL.$url;
 	} else {
@@ -898,14 +898,14 @@ function oer_getExternalThumbnailImage($url, $local=false) {
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-	
+
 		$raw=curl_exec($ch);
 		curl_close ($ch);
 	}
-	
+
 	$upload_dir = wp_upload_dir();
 	$path = $upload_dir['basedir'].'/resource-images/';
-	
+
 	if ($local){
 		$source_thumbnail_url = OER_PATH.$local_filename;
 		$ext = ".".pathinfo($local_filename, PATHINFO_EXTENSION);
@@ -942,27 +942,27 @@ function oer_is_bootstrap_loaded(){
 	$bootstrap = false;
 	$js = "";
 	$url = get_site_url();
-	
+
 	if (ini_get('allow_url_fopen'))
 		$content = file_get_contents($url);
 	else
 		$content = oer_curlRequest($url);
-	
+
 	$content = htmlentities($content);
-	
+
 	preg_match_all("#(<head[^>]*>.*?<\/head>)#ims", $content, $head);
 	$content = implode('',$head[0]);
-	
+
 	preg_match_all("#<script(.*?)<\/script>#is", $content, $matches);
 	foreach ($matches[0] as $value) {
 		$js .= $value;
 	}
-	
+
 	$locate_bootstrap = strpos($js,"bootstrap.");
-	
+
 	if ($locate_bootstrap>0)
 		$bootstrap = true;
-	
+
 	return $bootstrap;
 }
 
@@ -984,11 +984,11 @@ function oer_resize_image($orig_img_url, $width, $height, $crop = false) {
 
 	$img_path = $new_img_path = parse_url($orig_img_url);
 	$img_path = $_SERVER['DOCUMENT_ROOT'] . $img_path['path'];
-	
+
 	if (!empty($img_path)) {
 		//Resize Image using WP_Image_Editor class
 		$image_editor = wp_get_image_editor($img_path);
-		
+
 		if ( !is_wp_error($image_editor) ) {
 			$new_image = $image_editor->resize( $width, $height, $crop );
 
@@ -1157,7 +1157,7 @@ function oer_importResources($default=false) {
 					$oer_authoremail2   = $fnldata['cells'][$k][26];
 				if (isset($fnldata['cells'][$k][27]))
 					$oer_thumbnailurl   = $fnldata['cells'][$k][27];
-					
+
 				if(!empty($oer_standard) && (!is_array($oer_standard)))
 				{
 					$oer_standard = explode(",", $oer_standard);
@@ -1314,17 +1314,17 @@ function oer_importResources($default=false) {
 					for($l = 0; $l < count($oer_standard); $l++)
 					{
 						$results = $wpdb->get_row( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "oer_standard_notation where standard_notation =%s" , $oer_standard[$l] ),ARRAY_A);
-						
+
 						if(!empty($results))
 						{
 							$gt_oer_standard .= "standard_notation-".$results['id'].",";
-							
+
 							$table = explode("-", $results['parent_id']);
-							
+
 							if(!empty($table))
 							{
 								$stndrd_algn = $wpdb->get_row( $wpdb->prepare( "SELECT * from  " . $wpdb->prefix. $_oer_prefix . $table[0] . " where id =%s" , $table[1] ),ARRAY_A);
-								
+
 								if($stndrd_algn['parent_id'])
 								{
 									oer_fetch_stndrd($stndrd_algn['parent_id'], $post_id);
@@ -1426,9 +1426,9 @@ function oer_importResources($default=false) {
 						if (!empty($oer_thumbnailurl)) {
 							if (substr(trim($oer_thumbnailurl),0,2)=="./") {
 								$oer_thumbnailurl = substr(trim($oer_thumbnailurl),2);
-								$file = oer_getExternalThumbnailImage($oer_thumbnailurl, true);	
+								$file = oer_getExternalThumbnailImage($oer_thumbnailurl, true);
 							} else {
-								$file = oer_getExternalThumbnailImage($oer_thumbnailurl);	
+								$file = oer_getExternalThumbnailImage($oer_thumbnailurl);
 							}
 						} elseif ($screenshot_enabled) {
 							$file = oer_getScreenshotFile($url);
@@ -1437,12 +1437,12 @@ function oer_importResources($default=false) {
 							$file = oer_getImageFromExternalURL($url);
 						}
 					}
-					
+
 					if(file_exists($file))
 					{
 						$filetype = wp_check_filetype( basename( $file ), null );
 						$wp_upload_dir = wp_upload_dir();
-						
+
 						$guid = $wp_upload_dir['url'] . '/' . basename( $file );
 
 						$attachment = array(
@@ -1452,7 +1452,7 @@ function oer_importResources($default=false) {
 							'post_content'   => '',
 							'post_status'    => 'inherit'
 						);
-						
+
 						$attach_id = wp_insert_attachment( $attachment, $file, $post_id );
 						update_post_meta($post_id, "_thumbnail_id", $attach_id);
 
@@ -1473,7 +1473,7 @@ function oer_importResources($default=false) {
 	}
 	// Log finish of import process
 	debug_log("OER Resources Importer: Finished Bulk Import of Resources");
-	$message = sprintf(__("Successfully imported %s resources.", OER_SLUG), $cnt);
+	$message = sprintf(__("Successfully imported %s resources.", 'wp-oer'), $cnt);
 	$type = "success";
 	$response = array('message' => $message, 'type' => $type);
 	return $response;
@@ -1482,7 +1482,7 @@ function oer_importResources($default=false) {
 // Import LR Resources
 function oer_importLRResources(){
 	$lr_url = $_POST['lr_import'];
-	
+
 	$resources = null;
 	$lr_resources = array();
 	$schema = array(
@@ -1491,7 +1491,7 @@ function oer_importLRResources(){
 			"json",
 			"schema.org"
 		);
-	
+
 	if ($lr_url){
 		if( ini_get('allow_url_fopen') ) {
 			$resources = file_get_contents($lr_url);
@@ -1500,18 +1500,18 @@ function oer_importLRResources(){
 		}
 		$resources = json_decode($resources);
 	}
-	
+
 	$index = 0;
-	
+
 	if(strpos($lr_url,"slice") === false) {
 		// Getting LR Imports through Obtain
 		foreach($resources->documents as $document){
 			$lr_resource = array();
-			
+
 			foreach ($document as $doc) {
 				if ($doc[0]->doc_type=="resource_data"){
 					$exists = custom_array_intersect($schema, $doc[0]->payload_schema);
-					
+
 					if (!empty($exists)){
 						if ($doc[0]->resource_data->items){
 							foreach($doc[0]->resource_data as $resource){
@@ -1566,11 +1566,11 @@ function oer_importLRResources(){
 								$lr_resource['date_created'] = $resource->dateCreated[0];
 								$lr_resource['subject_areas'] = $resource->about;
 							}
-							$lr_resources[] = $lr_resource;	
+							$lr_resources[] = $lr_resource;
 						}
 					}
 				}
-				
+
 			}
 			$index++;
 		}
@@ -1583,9 +1583,9 @@ function oer_importLRResources(){
 // Import LR Resources with slice and resumption token
 function get_sliceLRResources($lr_url){
 	$lr_resources = array();
-	
+
 	$lrUrl = $lr_url;
-	
+
 	do {
 		// Get LR Resources based on initial slice URL
 		if( ini_get('allow_url_fopen') ) {
@@ -1594,51 +1594,51 @@ function get_sliceLRResources($lr_url){
 			$resources = curlResources($lrUrl);
 		}
 		$resources = json_decode($resources);
-		
+
 		// Exit loop if no resources returned
 		if (empty($resources->documents))
 		    break;
-		
+
 		// Getting LR Imports through Slice
 		foreach($resources->documents as $document){
 			$lr_resource = array();
-			
+
 			if($document->resource_data_description->doc_type=="resource_data"){
 				$resource = $document->resource_data_description;
 				$resource_data = json_decode($resource->resource_data);
-				
+
 				$lr_resource['resource_url'] = $resource->resource_locator;
 				$lr_resource['title'] = $resource_data->name;
 				$lr_resource['description'] = $resource_data->description;
 				$lr_resource['date_created'] = $resource_data->dateCreated;
 				$lr_resource['lr_type'] = $resource_data->learningResourceType;
 				$lr_resource['thumbnail_url'] = $resource_data->thumbnailUrl;
-				
+
 				if($resource_data->author->{'@type'}=="Organization")
 					$lr_resource['author_type'] = "organization";
 				else
 					$lr_resource['author_type'] = "person";
-					
+
 				$lr_resource['author_name'] = $resource_data->author->name;
 				$lr_resource['publisher_name'] = $resource_data->publisher->name;
 				$lr_resource['publisher_url'] = $resource_data->publisher->url;
 				$lr_resource['subject_areas'] = $resource_data->keywords;
-				
+
 				$lr_resources[] = $lr_resource;
 			}
 		}
-		
+
 		// get resumption token for next batch of resources
 		$resume_token = $resources->resumption_token;
 		$lrUrl = $lr_url."&resumption_token=".$resume_token;
-		
+
 	} while(!empty($resources->resumption_token));
-	
+
 	return $lr_resources;
 }
 
 function curlResources($url){
-	if (!function_exists('curl_init')){ 
+	if (!function_exists('curl_init')){
 		die('CURL is not installed!');
 	}
 	$ch = curl_init();
@@ -1788,7 +1788,7 @@ function oer_importSubjectAreas($default=false) {
 	// Log finish of import process
 	debug_log("OER Subject Areas Importer: Finished Bulk Import ");
 
-	$message = sprintf(__("Successfully imported %s subject areas.", OER_SLUG), $cnt);
+	$message = sprintf(__("Successfully imported %s subject areas.", 'wp-oer'), $cnt);
 	$type = "success";
 	$response = array('message' => $message, 'type' => $type);
 	return $response;
@@ -1821,9 +1821,9 @@ function oer_fetch_stndrd($pId, $postid)
 {
 	global $wpdb, $_oer_prefix;
 	$table = explode("-", $pId);
-	
+
 	$stndrd_algn = $wpdb->get_row( $wpdb->prepare( "SELECT * from  " . $wpdb->prefix.$_oer_prefix. $table[0] . " where id =%s" , $table[1] ),ARRAY_A);
-	
+
 	if(preg_match("/core_standards/", $table[0]))
 	{
 		$return = $stndrd_algn['id'];
@@ -1883,10 +1883,10 @@ function oer_get_subject_resource_count($subject_id) {
 /** Display Sort Box **/
 function oer_get_sort_box($subjects=array()){
 	global $oer_session;
-	
+
 	if (!isset($oer_session))
 		$oer_session = OER_WP_Session::get_instance();
-	
+
 	$sort = 0;
 	if (isset($oer_session['resource_sort']))
 		$sort = (int)$oer_session['resource_sort'];
@@ -1915,10 +1915,10 @@ function oer_get_sort_box($subjects=array()){
 /** Apply Sort Arguments **/
 function oer_apply_sort_args($args){
 	global $oer_session;
-	
+
 	if (!isset($oer_session))
 		$oer_session = OER_WP_Session::get_instance();
-	
+
 	$sort = 0;
 	if (isset($oer_session['resource_sort']))
 		$sort = (int)$oer_session['resource_sort'];
@@ -2039,7 +2039,7 @@ function oer_delete_standards() {
 		$wpdb->query("TRUNCATE TABLE ".$wpdb->prefix."oer_core_standards");
 	}
 
-	$message = __("Successfully deleted standards", OER_SLUG);
+	$message = __("Successfully deleted standards", 'wp-oer');
 	$type = "success";
 	$response = array( 'message' => $message, 'type' => $type );
 	return $response;
@@ -2051,7 +2051,7 @@ function oer_delete_subject_areas(){
 	foreach($terms as $term) {
 		wp_delete_term( $term->term_id, 'resource-subject-area' );
 	}
-	$message = __("Successfully deleted all subject areas", OER_SLUG);
+	$message = __("Successfully deleted all subject areas", 'wp-oer');
 	$type = "success";
 	$response = array( 'message' => $message, 'type' => $type );
 	return $response;
@@ -2101,7 +2101,7 @@ function oer_delete_resources(){
 		$wpdb->query($wpdb->prepare("DELETE FROM ".$wpdb->prefix."posts WHERE post_type = %s","resource"));
 	}
 
-	$message = __("Successfully deleted all resources", OER_SLUG);
+	$message = __("Successfully deleted all resources", 'wp-oer');
 	$type = "success";
 	$response = array( 'message' => $message, 'type' => $type );
 	return $response;
@@ -2123,7 +2123,7 @@ function oer_delete_resource_media() {
 			wp_delete_attachment($post->ID);
 		}
 	}
-	$message = __("Successfully deleted resource media", OER_SLUG);
+	$message = __("Successfully deleted resource media", 'wp-oer');
 	$type = "success";
 	$response = array( 'message' => $message, 'type' => $type );
 	return $response;
@@ -2183,7 +2183,7 @@ function oer_remove_plugin_settings(){
 	//if (get_option('oer_use_bootstrap'))
 		delete_option('oer_use_bootstrap');
 
-	$message = __("Successfully removed all plugin settings", OER_SLUG);
+	$message = __("Successfully removed all plugin settings", 'wp-oer');
 	$type = "success";
 	$response = array( 'message' => $message, 'type' => $type );
 	return $response;
@@ -2195,48 +2195,48 @@ function oer_sanitize_subject($subject) {
 
 function oer_is_youtube_url($url) {
 	$match = false;
-	
+
 	$pattern = '/^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/.+/';
 	$pattern_match = preg_match($pattern, $url, $matches);
-	
+
 	if ($pattern_match == 1)
 		$match = true;
-		
+
 	return $match;
 }
 
 function oer_is_sll_resource($url) {
 	$match = false;
-	
+
 	//$pattern = '/^(http(s)?:\/\/)?((w){3}.)?learninglab.si?(\.edu)?\/.+/';
 	$pattern = '/^(http(s)?:\/\/)?((w){3}.)?learninglab.si?(\.edu)?\/resource(s)\/view\/.+/';
 	$pattern_match = preg_match($pattern, $url, $matches);
-	
+
 	if ($pattern_match == 1)
 		$match = true;
-		
+
 	return $match;
 }
 
 function oer_is_sll_collection($url) {
 	$match = false;
-	
+
 	//$pattern = '/^(http(s)?:\/\/)?((w){3}.)?learninglab.si?(\.edu)?\/.+/';
 	$pattern = '/^(http(s)?:\/\/)?((w){3}.)?learninglab.si?(\.edu)?\/(collection(s)|q)\/.+/';
 	$pattern_match = preg_match($pattern, $url, $matches);
-	
+
 	if ($pattern_match == 1)
 		$match = true;
-		
+
 	return $match;
 }
 
 //Generate youtube embed code
 function oer_generate_youtube_embed_code($url) {
 	$embed_code = "";
-	
+
 	$youtube_id = oer_get_youtube_id($url);
-	
+
 	//Generate embed code
 	if ($youtube_id) {
 		$embed_code = '<div class="videoWrapper"><iframe width="640" height="360" src="https://www.youtube.com/embed/'.$youtube_id.'?rel=0" frameborder="0" allowfullscreen></iframe></div>';
@@ -2246,7 +2246,7 @@ function oer_generate_youtube_embed_code($url) {
 
 function oer_get_youtube_id($url) {
 	$youtube_id = null;
-	
+
 	if (preg_match('/youtube\.com\/watch\?v=([^\&\?\/]+)/', $url, $id)) {
 		$youtube_id = $id[1];
 	} else if (preg_match('/youtube\.com\/embed\/([^\&\?\/]+)/', $url, $id)) {
@@ -2258,26 +2258,26 @@ function oer_get_youtube_id($url) {
 	} else if (preg_match('/youtube\.com\/verify_age\?next_url=\/watch%3Fv%3D([^\&\?\/]+)/', $url, $id)) {
 		$youtube_id = $id[1];
 	}
-	
+
 	return $youtube_id;
 }
 
 // Get Youtube Thumbnail
 function oer_get_youtube_thumbnail($youtube_url){
 	$youtube_id = oer_get_youtube_id($youtube_url);
-	
+
 	$thumbnail_url = "https://i.ytimg.com/vi/".$youtube_id."/hqdefault.jpg";
-	
+
 	$thumbnail_file = oer_save_image_to_file($thumbnail_url);
-	
+
 	return $thumbnail_file;
 }
 
 function oer_generate_sll_resource_embed_code($url){
 	$embed_code = "";
-	
+
 	$sll_resource_id = oer_get_ssl_resource_id($url);
-	
+
 	//Generate embed code
 	if ($sll_resource_id) {
 		$embed_code = '<script type="text/javascript" src="https://learninglab.si.edu/embed/widget/q/r/'.$sll_resource_id.'/embed.js"></script><div class="sll-embed" data-widget-type="r" data-widget-key="'.$sll_resource_id.'"></div>';
@@ -2287,19 +2287,19 @@ function oer_generate_sll_resource_embed_code($url){
 
 function oer_get_ssl_resource_id($url){
 	$resource_id = null;
-	
+
 	if (preg_match('/learninglab\.si\.edu\/resources\/view\/([^\&\?\/]+)/', $url, $id)) {
 		$resource_id = $id[1];
 	}
-	
+
 	return $resource_id;
 }
 
 function oer_generate_sll_collection_embed_code($url){
 	$embed_code = "";
-	
+
 	$sll_collection_id = oer_get_ssl_collection_id($url);
-	
+
 	//Generate embed code
 	if ($sll_collection_id) {
 		$embed_code = '<script type="text/javascript" src="https://learninglab.si.edu/embed/widget/q/c/'.$sll_collection_id.'/embed.js"></script><div class="sll-embed" data-widget-type="c" data-widget-key="'.$sll_collection_id.'"></div>';
@@ -2309,17 +2309,17 @@ function oer_generate_sll_collection_embed_code($url){
 
 function oer_get_ssl_collection_id($url){
 	$collection_id = null;
-	
+
 	if (preg_match('/learninglab\.si\.edu\/collections\/[A-Za-z0-9\_\@\.\/\#\&\+\-]*\/([^\&\?\/]+)/', $url, $id)) {
 		$collection_id = $id[1];
 	}elseif (preg_match('/learninglab\.si\.edu\/q\/[A-Za-z0-9\_\@\.\/\#\&\+\-]*\/([^\&\?\/]+)/', $url, $id)) {
 		$collection_id = $id[1];
 	}
-	
+
 	if (substr($collection_id,-2)=="#r"){
 		$collection_id = substr($collection_id,0,strrpos($collection_id,"#r"));
 	}
-	
+
 	return $collection_id;
 }
 
@@ -2342,20 +2342,20 @@ function oer_get_subject_areas($resource_id){
 				$subject_areas[] = $term;
 			}
 		}
-	
+
 		if(!empty($parent) && array_filter($parent))
 		{
 			$recur_multi_dimen_arr_obj =  new RecursiveArrayIterator($parent);
 			$recur_flat_arr_obj =  new RecursiveIteratorIterator($recur_multi_dimen_arr_obj);
 			$flat_arr = iterator_to_array($recur_flat_arr_obj, false);
-	
+
 			$flat_arr = array_values(array_unique($flat_arr));
-			
+
 			for($k=0; $k < count($flat_arr); $k++)
 			{
 				//$idObj = get_category_by_slug($flat_arr[$k]);
 				$idObj = get_term_by( 'slug' , $flat_arr[$k] , 'resource-subject-area' );
-				
+
 				if(!empty($idObj->name))
 					$subject_areas[] = $idObj;
 			}
@@ -2372,7 +2372,7 @@ function replace_pdf_to_embed($content){
     $matches = array();
 
     preg_match_all($pattern, $content, $matches);
-    
+
     foreach ($matches[0] as $match) {
 	$match_url = strip_tags($match);
 	if(shortcode_exists('wonderplugin_pdf')) {
@@ -2385,7 +2385,7 @@ function replace_pdf_to_embed($content){
 		$pdf_url = OER_URL."pdfjs/web/viewer.html?file=".urlencode($match_url);
 		$embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.$pdf_url.'"></iframe>';
 	}
-	if ($embed_code) 
+	if ($embed_code)
 	    $content = str_replace($match, $embed_code, $content);
     }
     return $content;
@@ -2393,8 +2393,8 @@ function replace_pdf_to_embed($content){
 
 function is_pdf_resource($url) {
 	$is_pdf = false;
-	
-	if (preg_match('/(http|https):\/\/.*?\.pdf\b/i', $url, $id)) 
+
+	if (preg_match('/(http|https):\/\/.*?\.pdf\b/i', $url, $id))
 		$is_pdf = true;
 
 	return $is_pdf;
@@ -2402,13 +2402,13 @@ function is_pdf_resource($url) {
 
 function is_external_url($url) {
 	$is_external = false;
-	
+
 	$base_host = parse_url(home_url(), PHP_URL_HOST);
 	$url_host = parse_url($url, PHP_URL_HOST);
-	
+
 	if ($base_host !== $url_host)
 		$is_external = true;
-	
+
 	return $is_external;
 }
 
@@ -2418,11 +2418,11 @@ function is_external_url($url) {
 function get_standards_count(){
 	global $wpdb;
 	$cnt = 0;
-	
+
 	$query = "SELECT count(*) FROM {$wpdb->prefix}oer_core_standards";
 
 	$cnt = $wpdb->get_var($query);
-	
+
 	return $cnt;
 }
 
@@ -2431,11 +2431,11 @@ function get_standards_count(){
  **/
 function get_standards(){
 	global $wpdb;
-	
+
 	$query = "SELECT * FROM {$wpdb->prefix}oer_core_standards";
-	
+
 	$standards = $wpdb->get_results($query);
-	
+
 	return $standards;
 }
 
@@ -2444,18 +2444,18 @@ function get_standards(){
  **/
 function get_standard_by_slug($slug){
 	global $wpdb;
-	
+
 	$std = null;
-	
+
 	$query = "SELECT * FROM {$wpdb->prefix}oer_core_standards";
-	
+
 	$standards = $wpdb->get_results($query);
-	
+
 	foreach($standards as $standard){
 		if (sanitize_title($standard->standard_name)===$slug)
 			$std = $standard;
 	}
-	
+
 	return $std;
 }
 
@@ -2464,17 +2464,17 @@ function get_standard_by_slug($slug){
  **/
 function get_standard_by_id($id){
 	global $wpdb;
-	
+
 	$std = null;
-	
+
 	$query = "SELECT * FROM {$wpdb->prefix}oer_core_standards WHERE id = %d";
-	
+
 	$standards = $wpdb->get_results($wpdb->prepare($query,$id));
-	
+
 	foreach($standards as $standard){
 			$std = $standard;
 	}
-	
+
 	return $std;
 }
 
@@ -2483,18 +2483,18 @@ function get_standard_by_id($id){
  **/
 function get_substandard_by_slug($slug){
 	global $wpdb;
-	
+
 	$std = null;
-	
+
 	$query = "SELECT * FROM {$wpdb->prefix}oer_sub_standards";
-	
+
 	$substandards = $wpdb->get_results($query);
-	
+
 	foreach($substandards as $substandard){
 		if (sanitize_title($substandard->standard_title)===$slug)
 			$std = $substandard;
 	}
-	
+
 	return $std;
 }
 
@@ -2503,18 +2503,18 @@ function get_substandard_by_slug($slug){
  **/
 function get_substandards($standard_id, $core=true){
 	global $wpdb;
-	
+
 	if ($core)
 		$std_id = "core_standards-".$standard_id;
 	else
 		$std_id = "sub_standards-".$standard_id;
-	
+
 	$substandards = array();
-	
+
 	$query = "SELECT * FROM {$wpdb->prefix}oer_sub_standards where parent_id='%s'";
-	
+
 	$substandards = $wpdb->get_results($wpdb->prepare($query, $std_id));
-	
+
 	return $substandards;
 }
 
@@ -2523,19 +2523,19 @@ function get_substandards($standard_id, $core=true){
  **/
 function get_standard_notations($standard_id){
 	global $wpdb;
-	
+
 	$std_id = "sub_standards-".$standard_id;
-	
+
 	$notations = array();
-	
+
 	$query = "SELECT * FROM {$wpdb->prefix}oer_standard_notation where parent_id='%s'";
-	
+
 	$result = $wpdb->get_results($wpdb->prepare($query, $std_id));
-	
+
 	foreach ($result as $row){
 		$notations[] = $row;
 	}
-	
+
 	return $notations;
 }
 
@@ -2544,17 +2544,17 @@ function get_standard_notations($standard_id){
  **/
 function get_substandard_by_notation($notation) {
 	global $wpdb;
-	
+
 	$std = null;
-	
+
 	$query = "SELECT * FROM {$wpdb->prefix}oer_standard_notation WHERE standard_notation = '%s'";
-	
+
 	$substandards = $wpdb->get_results($wpdb->prepare($query, $notation));
-	
+
 	foreach($substandards as $substandard){
 		$std = $substandard;
 	}
-	
+
 	return $std;
 }
 
@@ -2563,27 +2563,27 @@ function get_substandard_by_notation($notation) {
  **/
 function get_standard_by_notation($notation){
 	global $wpdb;
-	
+
 	$std = null;
-	
+
 	$query = "SELECT * FROM {$wpdb->prefix}oer_standard_notation WHERE standard_notation = '%s'";
-	
+
 	$standard_notation = $wpdb->get_results($wpdb->prepare($query, $notation));
-	
+
 	if ($standard_notation){
 		$substandard_id = $standard_notation[0]->parent_id;
 		$substandard = oer_get_parent_standard($substandard_id);
-		
+
 		if (strpos($substandard[0]['parent_id'],"core_standards")!==false){
 			$pIds = explode("-",$substandard[0]['parent_id']);
-			
+
 			if (count($pIds)>1){
 			    $parent_id=(int)$pIds[1];
 			    $std = get_standard_by_id($parent_id);
 			}
 		}
 	}
-	
+
 	return $std;
 }
 
@@ -2592,18 +2592,18 @@ function get_standard_by_notation($notation){
  **/
 function get_substandards_by_notation($notation){
 	global $wpdb;
-	
+
 	$std = null;
-	
+
 	$query = "SELECT * FROM {$wpdb->prefix}oer_standard_notation WHERE standard_notation = '%s'";
-	
+
 	$standard_notation = $wpdb->get_results($wpdb->prepare($query, $notation));
-	
+
 	if ($standard_notation){
 		$substandard_id = $standard_notation[0]->parent_id;
 		$std = get_hierarchical_substandards($substandard_id);
 	}
-	
+
 	return $std;
 }
 
@@ -2611,19 +2611,19 @@ function get_substandards_by_notation($notation){
  * Get hierarchical substandards by substandard id
  **/
 function get_hierarchical_substandards($substandard_id) {
-	
+
 	$stds = null;
-	
+
 	$substandard = oer_get_parent_standard($substandard_id);
-	
+
 	foreach($substandard as $std){
 		$stds[] = $std;
 	}
-	
+
 	if (strpos($substandard[0]['parent_id'],"sub_standards")!==false){
 		$stds[] = get_hierarchical_substandards($substandard[0]['parent_id']);
 	}
-	
+
 	return $stds;
 }
 
@@ -2631,9 +2631,9 @@ function get_hierarchical_substandards($substandard_id) {
  * Get Resources by notation
  **/
 function get_resources_by_notation($notation_id) {
-	
+
 	$notation = "standard_notation-".$notation_id;
-	
+
 	//later in the request
 	$args = array(
 		'post_type'  => 'resource', //or a post type of your choosing
@@ -2646,21 +2646,21 @@ function get_resources_by_notation($notation_id) {
 			)
 		)
 	);
-	
+
 	$query = new WP_Query($args);
-	
+
 	return $query->posts;
 }
 
 function get_child_notations($notation_id){
 	global $wpdb;
-	
+
 	$notation = "standard_notation-".$notation_id;
-	
+
 	$query = "SELECT * FROM {$wpdb->prefix}oer_standard_notation WHERE parent_id = '%s'";
-	
+
 	$standard_notations = $wpdb->get_results($wpdb->prepare($query, $notation));
-	
+
 	return $standard_notations;
 }
 
@@ -2669,9 +2669,9 @@ function get_child_notations($notation_id){
  **/
 function get_resource_count_by_notation($notation_id){
 	$cnt = 0;
-	
+
 	$notation = "standard_notation-".$notation_id;
-	
+
 	//later in the request
 	$args = array(
 		'post_type'  => 'resource', //or a post type of your choosing
@@ -2684,19 +2684,19 @@ function get_resource_count_by_notation($notation_id){
 			)
 		)
 	);
-	
+
 	$query = new WP_Query($args);
-	
+
 	$cnt += count($query->posts);
-	
+
 	$child_notations = get_child_notations($notation_id);
-	
+
 	if ($child_notations){
 		foreach ($child_notations as $child_notation){
 			$cnt += get_resource_count_by_notation($child_notation->id);
 		}
 	}
-	
+
 	return $cnt;
 }
 
@@ -2705,16 +2705,16 @@ function get_resource_count_by_notation($notation_id){
  **/
 function get_resource_count_by_substandard($substandard_id){
 	$cnt = 0;
-	
+
 	$child_substandards = get_substandards($substandard_id, false);
-	
+
 	if(count($child_substandards)>0){
 		foreach($child_substandards as $child_substandard){
 			$cnt += get_resource_count_by_substandard($child_substandard->id, false);
 		}
 	}
 	$notations = get_standard_notations($substandard_id);
-	
+
 	if ($notations){
 		foreach($notations as $notation){
 			$cnt += get_resource_count_by_notation($notation->id);
@@ -2727,18 +2727,18 @@ function get_resource_count_by_substandard($substandard_id){
  * Get Resource Count By Standard
  **/
 function get_resource_count_by_standard($standard_id){
-	
+
 	$cnt = 0;
-	
+
 	$substandards = get_substandards($standard_id);
-	
+
 	if(count($substandards)>0){
 		foreach($substandards as $substandard){
 			$cnt += get_resource_count_by_substandard($substandard->id);
 		}
 	}
 	$notations = get_standard_notations($standard_id);
-	
+
 	if ($notations){
 		foreach($notations as $notation){
 			$cnt += get_resource_count_by_notation($notation->id);
@@ -2752,13 +2752,13 @@ function get_resource_count_by_standard($standard_id){
  **/
 function get_corestandard_by_standard($parent_id){
 	global $wpdb;
-	
+
 	$standard = null;
 	$parent = explode("-",$parent_id);
 	if ($parent[0]=="sub_standards") {
 		$query = "SELECT * FROM {$wpdb->prefix}oer_sub_standards WHERE id = '%s'";
 		$substandards = $wpdb->get_results($wpdb->prepare($query, $parent[1]));
-		
+
 		foreach($substandards as $substandard){
 			$standard = get_corestandard_by_standard($substandard->parent_id);
 		}
@@ -2769,7 +2769,7 @@ function get_corestandard_by_standard($parent_id){
 			$standard = $std;
 		}
 	}
-	
+
 	return $standard;
 }
 
@@ -2783,11 +2783,11 @@ function oer_add_resource($resource) {
 	$post_id = null;
 	$category_id = array();
 	$oer_kywrd = null;
-	
+
 	if (!empty($resource['tags'])){
 		$oer_kywrd = $resource['tags'];
 	}
-	
+
 	// Save Subject Areas
 	if(!empty($resource['subject_areas'])){
 		$oer_categories = $resource['subject_areas'];
@@ -2799,7 +2799,7 @@ function oer_add_resource($resource) {
 					$cats = explode(" -- ", $cat);
 					$categories = array_merge($categories, $cats);
 				} else {
-					$categories[] = $cat;	
+					$categories[] = $cat;
 				}
 			}
 			$categories = array_unique($categories);
@@ -2817,7 +2817,7 @@ function oer_add_resource($resource) {
 			}
 		}
 	}
-	
+
 	//Check if resource title is set
 	if ( isset( $resource['title'] ) ){
 		$post_name = strtolower($resource['title']);
@@ -2835,17 +2835,17 @@ function oer_add_resource($resource) {
 		$post = array('post_content' => $resource['description'], 'post_name' => $post_name, 'post_title' => $resource['title'], 'post_status' => 'publish', 'post_type' => 'resource', 'post_author' => $user_id , 'post_date' => $cs_date, 'post_date_gmt'  => $cs_date, 'comment_status' => 'open');
 		/** Set $wp_error to false to return 0 when error occurs **/
 		$post_id = wp_insert_post( $post, false );
-		
+
 		//Set Category of Resources
 		$tax_ids = wp_set_object_terms( $post_id, $category_id, 'resource-subject-area', true );
 
 		// Set Tags
 		if (!is_array($oer_kywrd))
 			$oer_kywrd = explode(",", $oer_kywrd);
-		
+
 		wp_set_post_tags(  $post_id, $oer_kywrd , true );
 	}
-	
+
 	// Save Resource URL and Create Screenshot
 	if( !empty($resource['resource_url']) )
 	{
@@ -2858,7 +2858,7 @@ function oer_add_resource($resource) {
 			$oer_resourceurl = 'http://'.$resource['resource_url'];
 		}
 		update_post_meta( $post_id , 'oer_resourceurl' , esc_url_raw($oer_resourceurl));
-		
+
 		//Create Screenshot
 		//--------------------------------------
 		$url = esc_url_raw($oer_resourceurl);
@@ -2878,12 +2878,12 @@ function oer_add_resource($resource) {
 				$file = oer_getImageFromExternalURL($url);
 			}
 		}
-		
+
 		if(file_exists($file))
 		{
 			$filetype = wp_check_filetype( basename( $file ), null );
 			$wp_upload_dir = wp_upload_dir();
-			
+
 			$guid = $wp_upload_dir['url'] . '/' . basename( $file );
 
 			$attachment = array(
@@ -2893,7 +2893,7 @@ function oer_add_resource($resource) {
 				'post_content'   => '',
 				'post_status'    => 'inherit'
 			);
-			
+
 			$attach_id = wp_insert_attachment( $attachment, $file, $post_id );
 			update_post_meta($post_id, "_thumbnail_id", $attach_id);
 
@@ -2903,22 +2903,22 @@ function oer_add_resource($resource) {
 		}
 		//--------------------------------------
 	}
-	
+
 	// Save Date Created
 	if(!empty($resource['date_created'])){
 		update_post_meta( $post_id , 'oer_datecreated' , $resource['date_created']);
 	}
-	
+
 	// Save Author Type
 	if(!empty($resource['author_type'])){
 		update_post_meta( $post_id , 'oer_authortype' , sanitize_text_field($resource['author_type']));
 	}
-	
+
 	// Save Author Name
 	if(!empty($resource['author_name'])){
 		update_post_meta( $post_id , 'oer_authorname' , sanitize_text_field($resource['author_name']));
 	}
-	
+
 	// Save Author Url
 	if(!empty($resource['author_url'])){
 		$oer_authorurl = $resource['author_url'];
@@ -2930,7 +2930,7 @@ function oer_add_resource($resource) {
 		}
 		update_post_meta( $post_id , 'oer_authorurl' , esc_url_raw($oer_authorurl));
 	}
-	
+
 	// Save Publisher name
 	if(isset($resource['publisher_name'])){
 		update_post_meta( $post_id , 'oer_publishername' , sanitize_text_field($resource['publisher_name']));
@@ -2953,33 +2953,33 @@ function oer_add_resource($resource) {
 		}
 		update_post_meta( $post_id , 'oer_publisherurl' , esc_url_raw($oer_publisherurl));
 	}
-	
+
 	// Save media type
 	if(!empty($resource['media_type'])){
 		update_post_meta( $post_id , 'oer_mediatype' , sanitize_text_field($resource['media_type']));
 	}
-	
+
 	// Save Learning Resource Type
 	if(!empty($resource['lr_type'])){
 		update_post_meta( $post_id , 'oer_lrtype' , sanitize_text_field($resource['media_type']));
 	}
-	
+
 	// Save Interactivity
 	if(!empty($resource['interactivity'])){
 		update_post_meta( $post_id , 'oer_interactivity' , sanitize_text_field($resource['interactivity']));
 	}
-	
+
 	// Save Based On URL
 	if(!empty($resource['based_on_url'])){
 		update_post_meta( $post_id , 'oer_isbasedonurl' , sanitize_text_field($resource['based_on_url']));
 	}
-	
+
 }
 
 // Checks if resource exists
 function resource_exists($resource){
 	$exists = false;
-	
+
 	$args = array(
 		'fields' => 'ids',
 		'post_type'  => 'resource',
@@ -2990,9 +2990,9 @@ function resource_exists($resource){
 			)
 		)
 	);
-	
+
 	$my_query = new WP_Query( $args );
-	
+
 	if( $my_query->post_count>0 ) {
 		$exists = true;
 	}
@@ -3034,14 +3034,14 @@ function oer_get_hierarchical_substandards($substandard_id){
 	$ids = explode("-",$substandard_id);
 	if (strpos($substandard_id,"sub_standards")!==false) {
 		do {
-			
+
 			$substandard = oer_get_substandard_details($ids[1]);
 			$ids = explode("-", $substandard['parent_id']);
 			$substandards[] = $substandard;
-			
+
 		} while(strpos($substandard['parent_id'],"sub_standards")!==false);
 	}
-	
+
 	return $substandards;
 }
 

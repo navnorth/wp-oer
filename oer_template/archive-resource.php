@@ -18,7 +18,7 @@ get_header();
 
 	    <?php if ( have_posts() ) : ?>
 		<header class="archive-header">
-		    <h1 class="archive-title"><?php printf( __( 'Archives: %s', OER_SLUG ), '<span>' .post_type_archive_title('', false).'</span>' );?></h1>
+		    <h1 class="archive-title"><?php printf( __( 'Archives: %s', 'wp-oer' ), '<span>' .post_type_archive_title('', false).'</span>' );?></h1>
 		</header><!-- .archive-header -->
 
 		<?php /* Start the Loop */ ?>
@@ -52,11 +52,11 @@ get_header();
 	    <?php else : ?>
 		<article id="post-0" class="post no-results not-found">
 		    <header class="entry-header">
-			<h1 class="entry-title"><?php _e( 'Nothing Found', OER_SLUG ); ?></h1>
+			<h1 class="entry-title"><?php _e( 'Nothing Found', 'wp-oer' ); ?></h1>
 		    </header>
 
 		    <div class="entry-content">
-			<p><?php _e( 'Sorry, but there are no resources to display.', OER_SLUG ); ?></p>
+			<p><?php _e( 'Sorry, but there are no resources to display.', 'wp-oer' ); ?></p>
 		    </div><!-- .entry-content -->
 		</article><!-- #post-0 -->
 	    <?php endif; ?>

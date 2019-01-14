@@ -169,7 +169,7 @@ function oer_dismiss_activation_notice() {
 	// Send success message
 	wp_send_json( array(
 		'status' => 'success',
-		'message' => __( 'Your request was successful.', OER_SLUG )
+		'message' => __( 'Your request was successful.', 'wp-oer' )
 	) );
 }
 
@@ -197,7 +197,7 @@ function oer_deactivate_oer_plugin() {
 //Load localization directory
 add_action('plugins_loaded', 'oer_load_textdomain');
 function oer_load_textdomain() {
-	load_plugin_textdomain( 'open-educational-resource', false, dirname( plugin_basename(__FILE__) ) . '/lang/' );
+	load_plugin_textdomain( 'wp-oer', false, dirname( plugin_basename(__FILE__) ) . '/lang/' );
 }
 
 //Create Page Templates
@@ -557,7 +557,7 @@ function oer_settings_page() {
 			'uid' => 'oer_local_pdf_viewer',
 			'type' => 'select',
 			'class' => 'local_pdf_viewer',
-			'name' =>  __('Local PDF Resources', OER_SLUG),
+			'name' =>  __('Local PDF Resources', 'wp-oer'),
 			'options' =>  array(
 					    "0" => "embed disabled(download only)",
 					    "1" => "Google Viewer",
@@ -581,7 +581,7 @@ function oer_settings_page() {
 			'uid' => 'oer_external_pdf_viewer',
 			'type' => 'select',
 			'class' => 'external_pdf_viewer',
-			'name' =>  __('External PDF Resources', OER_SLUG),
+			'name' =>  __('External PDF Resources', 'wp-oer'),
 			'options' => array(
 					"0" => "embed disabled (download only)",
 					"1" => "Google Viewer"
@@ -612,7 +612,7 @@ function oer_settings_page() {
 			'uid' => 'oer_disable_screenshots',
 			'type' => 'radio',
 			'class' => 'screenshot_option',
-			'name' =>  __('Disable Screenshots', OER_SLUG),
+			'name' =>  __('Disable Screenshots', 'wp-oer'),
 			'value' => '0'
 		)
 	);
@@ -628,7 +628,7 @@ function oer_settings_page() {
 			'uid' => 'oer_enable_screenshot',
 			'type' => 'radio',
 			'class' => 'screenshot_option',
-			'name' =>  __('Enable Server-side screenshots', OER_SLUG),
+			'name' =>  __('Enable Server-side screenshots', 'wp-oer'),
 			'value' => '1'
 		)
 	);
@@ -644,14 +644,14 @@ function oer_settings_page() {
 			'uid' => 'oer_use_xvfb',
 			'type' => 'checkbox',
 			'indent' => true,
-			'name' =>  __('Use xvfb -- typically necessary on Linux installations', OER_SLUG)
+			'name' =>  __('Use xvfb -- typically necessary on Linux installations', 'wp-oer')
 		)
 	);
 
 	//Set Path for Python Installation
 	add_settings_field(
 		'oer_python_install',
-		__("Python executable", OER_SLUG),
+		__("Python executable", 'wp-oer'),
 		'oer_setup_settings_field',
 		'oer_settings',
 		'oer_general_settings',
@@ -659,14 +659,14 @@ function oer_settings_page() {
 			'uid' => 'oer_python_install',
 			'type' => 'textbox',
 			'indent' => true,
-			'title' => __('Python executable', OER_SLUG)
+			'title' => __('Python executable', 'wp-oer')
 		)
 	);
 
 	//Set Path for Python Executable Script
 	add_settings_field(
 		'oer_python_path',
-		__("Python Screenshot script", OER_SLUG),
+		__("Python Screenshot script", 'wp-oer'),
 		'oer_setup_settings_field',
 		'oer_settings',
 		'oer_general_settings',
@@ -674,7 +674,7 @@ function oer_settings_page() {
 			'uid' => 'oer_python_path',
 			'type' => 'textbox',
 			'indent' => true,
-			'title' => __('Python Screenshot script', OER_SLUG)
+			'title' => __('Python Screenshot script', 'wp-oer')
 		)
 	);
 
@@ -689,7 +689,7 @@ function oer_settings_page() {
 			'uid' => 'oer_external_screenshots',
 			'type' => 'radio',
 			'class' => 'screenshot_option',
-			'name' =>  __('Use external screenshot service', OER_SLUG),
+			'name' =>  __('Use external screenshot service', 'wp-oer'),
 			'value' => '2'
 		)
 	);
@@ -697,7 +697,7 @@ function oer_settings_page() {
 	//Set Path for Python Executable Script
 	add_settings_field(
 		'oer_service_url',
-		__("Service URL", OER_SLUG),
+		__("Service URL", 'wp-oer'),
 		'oer_setup_settings_field',
 		'oer_settings',
 		'oer_general_settings',
@@ -705,8 +705,8 @@ function oer_settings_page() {
 			'uid' => 'oer_service_url',
 			'type' => 'textbox',
 			'indent' => true,
-			'title' => __("Service URL", OER_SLUG),
-			'description' => __('use $url for where the Resource URL parameter should be placed', OER_SLUG)
+			'title' => __("Service URL", 'wp-oer'),
+			'description' => __('use $url for where the Resource URL parameter should be placed', 'wp-oer')
 		)
 	);
 
@@ -751,8 +751,8 @@ function oer_styles_settings(){
 			'uid' => 'oer_use_bootstrap',
 			'type' => 'checkbox',
 			'value' => '1',
-			'name' =>  __('Import Bootstrap CSS & JS libraries', OER_SLUG),
-			'description' => __('uncheck if your WP theme already included Bootstrap', OER_SLUG)
+			'name' =>  __('Import Bootstrap CSS & JS libraries', 'wp-oer'),
+			'description' => __('uncheck if your WP theme already included Bootstrap', 'wp-oer')
 		)
 	);
 
@@ -768,8 +768,8 @@ function oer_styles_settings(){
 			'type' => 'checkbox',
 			'value' => '1',
 			'default' => true,
-			'name' =>  __('Display Subjects menu on Subject Area pages', OER_SLUG),
-			'description' => __('Lists all subject areas in left column of Subject Area pages - may conflict with themes using left navigation.', OER_SLUG)
+			'name' =>  __('Display Subjects menu on Subject Area pages', 'wp-oer'),
+			'description' => __('Lists all subject areas in left column of Subject Area pages - may conflict with themes using left navigation.', 'wp-oer')
 		)
 	);
 
@@ -784,7 +784,7 @@ function oer_styles_settings(){
 			'uid' => 'oer_hide_subject_area_title',
 			'type' => 'checkbox',
 			'value' => '1',
-			'name' =>  __('Subject Area pages', OER_SLUG),
+			'name' =>  __('Subject Area pages', 'wp-oer'),
 			'pre_html' => '<h3>Hide Page Titles</h3><p class="description hide-description">Some themes have built-in display of page titles.</p>'		)
 	);
 
@@ -799,7 +799,7 @@ function oer_styles_settings(){
 			'uid' => 'oer_hide_resource_title',
 			'type' => 'checkbox',
 			'value' => '1',
-			'name' =>  __('Resource pages', OER_SLUG),
+			'name' =>  __('Resource pages', 'wp-oer'),
 			'class' => 'hide-title-setting'
 		)
 	);
@@ -814,8 +814,8 @@ function oer_styles_settings(){
 		array(
 			'uid' => 'oer_additional_css',
 			'type' => 'textarea',
-			'name' =>  __('Additional CSS', OER_SLUG),
-			'inline_description' => __('easily customize the look and feel with your own CSS', OER_SLUG)
+			'name' =>  __('Additional CSS', 'wp-oer'),
+			'inline_description' => __('easily customize the look and feel with your own CSS', 'wp-oer')
 		)
 	);
 
@@ -864,8 +864,8 @@ function oer_setup_settings(){
 			'type' => 'checkbox',
 			'value' => '1',
 			'default' => true,
-			'name' =>  __('Import Example Set of Resources', OER_SLUG),
-			'description' => __('A collection of over 50 Open Educational Resources has been provided as a base - you can easily remove these later.', OER_SLUG)
+			'name' =>  __('Import Example Set of Resources', 'wp-oer'),
+			'description' => __('A collection of over 50 Open Educational Resources has been provided as a base - you can easily remove these later.', 'wp-oer')
 		)
 	);
 
@@ -881,8 +881,8 @@ function oer_setup_settings(){
 			'type' => 'checkbox',
 			'value' => '1',
 			'default' => true,
-			'name' =>  __('Import Default Subject Areas', OER_SLUG),
-			'description' => __('A general listing of the most common subject areas.', OER_SLUG)
+			'name' =>  __('Import Default Subject Areas', 'wp-oer'),
+			'description' => __('A general listing of the most common subject areas.', 'wp-oer')
 		)
 	);
 
@@ -898,8 +898,8 @@ function oer_setup_settings(){
 			'type' => 'checkbox',
 			'value' => '1',
 			'default' => true,
-			'name' =>  __('Import Common Core State Standards', OER_SLUG),
-			'description' => __('Enable use of CCSS as an optional alignment option for resources.', OER_SLUG)
+			'name' =>  __('Import Common Core State Standards', 'wp-oer'),
+			'description' => __('Enable use of CCSS as an optional alignment option for resources.', 'wp-oer')
 		)
 	);
 
@@ -916,8 +916,8 @@ function oer_setup_settings(){
 			'value' => 1,
 			'default' => $load_bootstrap,
 			/*'disabled' => $bootstrap_disabled,*/
-			'name' =>  __('Import Bootstrap CSS & JS libraries', OER_SLUG),
-			'description' => __('Your theme does not appear to have bootstrap. Uncheck if your WP theme already included Bootstrap', OER_SLUG)
+			'name' =>  __('Import Bootstrap CSS & JS libraries', 'wp-oer'),
+			'description' => __('Your theme does not appear to have bootstrap. Uncheck if your WP theme already included Bootstrap', 'wp-oer')
 		)
 	);
 
@@ -938,7 +938,7 @@ function oer_setup_settings(){
 				'type' => 'checkbox',
 				'value' => '1',
 				'default' => true,
-				'name' =>  __('Use Gutenberg Editor', OER_SLUG)
+				'name' =>  __('Use Gutenberg Editor', 'wp-oer')
 			)
 		);
 
@@ -977,7 +977,7 @@ function oer_import_standards(){
 		array(
 			'uid' => 'oer_common_core_mathematics',
 			'type' => 'checkbox',
-			'name' =>  __('Common Core Mathematics', OER_SLUG)
+			'name' =>  __('Common Core Mathematics', 'wp-oer')
 		)
 	);
 
@@ -991,7 +991,7 @@ function oer_import_standards(){
 		array(
 			'uid' => 'oer_common_core_english',
 			'type' => 'checkbox',
-			'name' =>  __('Common Core English Language Arts', OER_SLUG)
+			'name' =>  __('Common Core English Language Arts', 'wp-oer')
 		)
 	);
 
@@ -1024,7 +1024,7 @@ function oer_reset_settings(){
 		array(
 			'uid' => 'oer_delete_standards_data',
 			'type' => 'checkbox',
-			'name' =>  __('Delete standards data', OER_SLUG)
+			'name' =>  __('Delete standards data', 'wp-oer')
 		)
 	);
 
@@ -1038,7 +1038,7 @@ function oer_reset_settings(){
 		array(
 			'uid' => 'oer_delete_subject_areas_taxonomies',
 			'type' => 'checkbox',
-			'name' =>  __('Delete all resource subject area taxonomies', OER_SLUG)
+			'name' =>  __('Delete all resource subject area taxonomies', 'wp-oer')
 		)
 	);
 
@@ -1052,7 +1052,7 @@ function oer_reset_settings(){
 		array(
 			'uid' => 'oer_delete_resources',
 			'type' => 'checkbox',
-			'name' =>  __('Delete all resources', OER_SLUG)
+			'name' =>  __('Delete all resources', 'wp-oer')
 		)
 	);
 
@@ -1066,7 +1066,7 @@ function oer_reset_settings(){
 		array(
 			'uid' => 'oer_delete_resource_media',
 			'type' => 'checkbox',
-			'name' =>  __('Delete media associated with resources(screenshots)', OER_SLUG)
+			'name' =>  __('Delete media associated with resources(screenshots)', 'wp-oer')
 		)
 	);
 
@@ -1080,7 +1080,7 @@ function oer_reset_settings(){
 		array(
 			'uid' => 'oer_remove_all_settings',
 			'type' => 'checkbox',
-			'name' =>  __('Remove all OER plugin settings', OER_SLUG)
+			'name' =>  __('Remove all OER plugin settings', 'wp-oer')
 		)
 	);
 
@@ -1094,7 +1094,7 @@ function oer_reset_settings(){
 		array(
 			'uid' => 'oer_deactivate_plugin',
 			'type' => 'checkbox',
-			'name' =>  __('Deactivate OER plugin', OER_SLUG)
+			'name' =>  __('Deactivate OER plugin', 'wp-oer')
 		)
 	);
 
@@ -1108,7 +1108,7 @@ function oer_reset_settings(){
 		array(
 			'uid' => 'oer_delete_plugin_files',
 			'type' => 'checkbox',
-			'name' =>  __('Delete the OER plugin files', OER_SLUG)
+			'name' =>  __('Delete the OER plugin files', 'wp-oer')
 		)
 	);
 
