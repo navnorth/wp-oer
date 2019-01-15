@@ -424,7 +424,7 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
                     ),
                     wSubjects && wp.element.createElement(
                         'div',
-                        null,
+                        { 'class': 'oer-rsrcctgries tagcloud' },
                         wp.element.createElement(
                             'ul',
                             null,

@@ -2339,7 +2339,13 @@ function oer_add_meta_to_api() {
 add_action( 'rest_api_init', 'oer_add_meta_to_api');
 
 function oer_rest_get_meta_field($resource, $field, $request){
-	return get_post_meta($resource['id'], $field, true);
+	if ($field=="oer_grade") {
+		$grades = trim(get_post_meta($resource['id'], $field, true),",");
+		$grades = explode(",",$grades);
+		
+		return oer_grade_levels($grades);
+	} else
+		return get_post_meta($resource['id'], $field, true);
 }
 
 function oer_get_rest_featured_image($resource, $field, $request) {
