@@ -255,7 +255,7 @@ var mySelectResource = function (_Component) {
                 { key: 'inspector' },
                 wp.element.createElement(SelectControl, { onChange: this.onChangeSelectResource, value: this.props.attributes.selectedResource, label: __('Resource:'), options: options }),
                 wp.element.createElement(SelectControl, { onChange: this.onChangeAlignment, value: this.props.attributes.alignment, label: __('Alignment:'), options: aOptions }),
-                wp.element.createElement(TextControl, { onChange: this.onChangeWidth, value: this.props.attributes.blockWidth, label: __('Width(optional)') }),
+                wp.element.createElement(TextControl, { onChange: this.onChangeWidth, value: this.props.attributes.blockWidth, label: __('Width in pixels(optional)') }),
                 wp.element.createElement(CheckboxControl, {
                     id: 'oerShowThumbnail',
                     label: __('Show Thumbnail'),
@@ -390,7 +390,15 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
             return wp.element.createElement(
                 'li',
                 { key: d.name },
-                d.name
+                wp.element.createElement(
+                    'span',
+                    null,
+                    wp.element.createElement(
+                        'a',
+                        { href: d.link },
+                        d.name
+                    )
+                )
             );
         });
         return wp.element.createElement(
@@ -399,6 +407,11 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
             wp.element.createElement(
                 'div',
                 { className: 'post', style: { float: aLign, textAlign: 'left', width: width, overflow: 'hidden', border: border } },
+                props.attributes.showTitle === true && wp.element.createElement(
+                    'a',
+                    { href: props.attributes.link },
+                    wp.element.createElement('h2', { dangerouslySetInnerHTML: { __html: props.attributes.title } })
+                ),
                 wImage && wp.element.createElement(
                     'div',
                     { className: 'col-md-5' },
@@ -411,28 +424,18 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
                 wp.element.createElement(
                     'div',
                     { className: imgClass },
-                    props.attributes.showTitle === true && wp.element.createElement(
-                        'a',
-                        { href: props.attributes.link },
-                        wp.element.createElement('h2', { dangerouslySetInnerHTML: { __html: props.attributes.title } })
-                    ),
-                    props.attributes.showDescription === true && wp.element.createElement('p', { dangerouslySetInnerHTML: { __html: props.attributes.content } }),
-                    wSubjects && wp.element.createElement(
-                        'h5',
+                    props.attributes.showDescription === true && wp.element.createElement('div', { dangerouslySetInnerHTML: { __html: props.attributes.content } })
+                ),
+                wSubjects && wp.element.createElement(
+                    'div',
+                    { 'class': 'row resource-block-subjects oer-rsrcctgries tagcloud' },
+                    wp.element.createElement(
+                        'ul',
                         null,
-                        'Subjects:'
-                    ),
-                    wSubjects && wp.element.createElement(
-                        'div',
-                        { 'class': 'oer-rsrcctgries tagcloud' },
-                        wp.element.createElement(
-                            'ul',
-                            null,
-                            listItems
-                        )
-                    ),
-                    props.attributes.showGradeLevels === true && wp.element.createElement('p', { dangerouslySetInnerHTML: { __html: '<strong>Grade Levels</strong> : ' + props.attributes.gradeLevels } })
-                )
+                        listItems
+                    )
+                ),
+                props.attributes.showGradeLevels === true && wp.element.createElement('div', { dangerouslySetInnerHTML: { __html: '<strong>Grade Levels</strong> : ' + props.attributes.gradeLevels } })
             )
         );
     }

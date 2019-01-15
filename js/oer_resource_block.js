@@ -151,7 +151,7 @@ class mySelectResource extends Component{
                 <InspectorControls key='inspector'>
                     <SelectControl onChange={this.onChangeSelectResource} value={ this.props.attributes.selectedResource } label={ __('Resource:') } options={ options } />
                     <SelectControl onChange={this.onChangeAlignment} value={ this.props.attributes.alignment } label={ __('Alignment:') } options={ aOptions } />
-                    <TextControl onChange={ this.onChangeWidth } value={ this.props.attributes.blockWidth } label={ __('Width(optional)') } />
+                    <TextControl onChange={ this.onChangeWidth } value={ this.props.attributes.blockWidth } label={ __('Width in pixels(optional)') } />
                     <CheckboxControl
                         id="oerShowThumbnail"
                         label={__('Show Thumbnail') }
@@ -283,18 +283,17 @@ registerBlockType( 'wp-oer-plugin/oer-resource-block', {
         if (props.attributes.withBorder===true) {
             border = "1px solid #cdcdcd";
         }
-        const listItems = props.attributes.subjectAreas.map((d) => <li key={d.name}>{d.name}</li>);
+        const listItems = props.attributes.subjectAreas.map((d) => <li key={d.name}><span><a href={d.link}>{d.name}</a></span></li>);
     return (   
         <div className={ props.className } style={{ textAlign: aCenter==true ? 'center': 'auto' }}>
           <div className="post" style={{ float: aLign, textAlign:'left', width:width, overflow:'hidden', border: border }}>
+            { props.attributes.showTitle===true && (<a href={ props.attributes.link }><h2 dangerouslySetInnerHTML={ { __html: props.attributes.title } }></h2></a>)}
             { (wImage) && (<div className="col-md-5"><a href={props.attributes.resourceUrl}><img src={props.attributes.featuredImage} /></a></div>)}
             <div className={imgClass}>
-            { props.attributes.showTitle===true && (<a href={ props.attributes.link }><h2 dangerouslySetInnerHTML={ { __html: props.attributes.title } }></h2></a>)}
-            { props.attributes.showDescription===true && (<p dangerouslySetInnerHTML={ { __html: props.attributes.content } }></p>)}
-            { wSubjects && (<h5>Subjects:</h5>)}
-            { wSubjects && (<div class="oer-rsrcctgries tagcloud"><ul>{listItems}</ul></div>)}
-            { props.attributes.showGradeLevels===true && (<p dangerouslySetInnerHTML={ { __html: '<strong>Grade Levels</strong> : ' + props.attributes.gradeLevels } }></p>)}
+            { props.attributes.showDescription===true && (<div dangerouslySetInnerHTML={ { __html: props.attributes.content } }></div>)}
             </div>
+            { wSubjects && (<div class="row resource-block-subjects oer-rsrcctgries tagcloud"><ul>{listItems}</ul></div>)}
+            { props.attributes.showGradeLevels===true && (<div dangerouslySetInnerHTML={ { __html: '<strong>Grade Levels</strong> : ' + props.attributes.gradeLevels } }></div>)}
           </div>
         </div>
       );
