@@ -464,6 +464,8 @@ li.oer_sbstndard{
 #content ul.oer-substandards { margin-top:0; }
 .oer_blgpst .rght-sd-cntnr-blg h4 { margin-top:0; }
 .wp-block-wp-oer-plugin-oer-resource-block .post { padding:15px; }
+.wp-block-wp-oer-plugin-oer-resource-block .post .resource-block-subjects ul { overflow:hidden; }
+.wp-block-wp-oer-plugin-oer-resource-block .post .resource-block-subjects ul li { list-style:none; }
 @media screen and (max-width: 600px) {
 	.oer_blgpst .oer-feature-image { width:100%; float:none; margin-bottom:10px; }
 	.oer_blgpst .rght-sd-cntnr-blg { width:100%; float:none; }
