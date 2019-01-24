@@ -3306,4 +3306,22 @@ function oer_grade_levels($grade_levels){
 	}
 }
 
+// Get Title or Description of Standard or Notation
+function oer_get_standard_label($slug){
+	global $wpdb;
+	$slugs = explode("-", $slug);
+	$table_name = "oer_".$slugs[0];
+	$id = $slugs[1];
+	$standard = null;
+	
+	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. $table_name . " where id = %s" , $id ) , ARRAY_A);
+	if (!empty($results)){
+		foreach($results as $result) {
+			$standard = $result['description'];
+		}
+	}
+	
+	return $standard;
+}
+
 ?>

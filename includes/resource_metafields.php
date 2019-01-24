@@ -174,15 +174,19 @@ global $chck;
 		<div class="oer_txt"><?php _e("Standards:", OER_SLUG); ?></div>
 		<div class="oer_fld">
 			<?php
-			$oer_standard = get_post_meta($post->ID, 'oer_standard', true);
-			var_dump($oer_standard);
+			$oStandard = get_post_meta($post->ID, 'oer_standard', true);
+			$standards = explode(",", $oStandard);
+			foreach($standards as $standard){
+				$std_name = oer_get_standard_label($standard);
+				echo "<span class='standard-label'>".$std_name."<a href='javascript:void(0)' class='remove-standard'><span class='dashicons dashicons-no-alt'></span></a></span>";
+			}
 			?>
 		</div>
 	</div>
 	<div class="oer_snglfld">
         	<div class="oer_txt">
 			<?php _e("Standards Alignment:", OER_SLUG); ?>
-            </div>
+		</div>
            	<?php
 				$oer_standard_alignment = get_post_meta($post->ID, 'oer_standard_alignment', true);
 			 	$oer_standard = get_post_meta($post->ID, 'oer_standard', true);
@@ -208,7 +212,7 @@ global $chck;
 						?>
 					<script src="<?php echo esc_url($external_script_url);?>" type="text/javascript"></script>
 				 </div>
-            </div>
+		</div>
 
         </div>
 

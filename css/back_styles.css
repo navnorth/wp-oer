@@ -281,3 +281,10 @@ p.submit { margin-top:0; padding: 15px; }
 .oer-import-row .auto-width { width:85%; }
 #oer_local_resource_button.ui-button { padding:6px 10px; }
 .oer_snglfld .oer_fld #oer_resourceurl { width:92%; }
+.standard-label {
+	padding: 5px 10px;
+	border: 1px solid #cdcdcd;
+	border-radius: 15px;
+	margin-right: 5px;
+	background: #f1f1f1;
+}
