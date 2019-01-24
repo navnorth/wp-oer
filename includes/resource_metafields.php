@@ -170,8 +170,16 @@ global $chck;
                 <input type="text" name="oer_isbasedonurl" value="<?php echo esc_attr($oer_isbasedonurl);?>" />
             </div>
         </div>
-
-		<div class="oer_snglfld">
+	<div class="oer_snglfld">
+		<div class="oer_txt"><?php _e("Standards:", OER_SLUG); ?></div>
+		<div class="oer_fld">
+			<?php
+			$oer_standard = get_post_meta($post->ID, 'oer_standard', true);
+			var_dump($oer_standard);
+			?>
+		</div>
+	</div>
+	<div class="oer_snglfld">
         	<div class="oer_txt">
 			<?php _e("Standards Alignment:", OER_SLUG); ?>
             </div>
