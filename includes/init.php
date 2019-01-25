@@ -108,6 +108,7 @@ function oer_backside_scripts($hook)
     
     if ((isset($_GET['post_type']) && $_GET['post_type']=='resource') || (isset($post->post_type) && $post->post_type=='resource')) {
 	wp_enqueue_style('jqueryui-styles', OER_URL.'css/jquery-ui.css');
+	wp_enqueue_style('bootstrap-css', OER_URL.'css/bootstrap.min.css');
 	wp_enqueue_style('back-styles', OER_URL.'css/back_styles.css');
 	wp_enqueue_style( 'thickbox' );
 
@@ -121,6 +122,7 @@ function oer_backside_scripts($hook)
 	wp_enqueue_script( 'jquery-ui-datepicker' );
 	wp_enqueue_script( 'media-upload' );
 	wp_enqueue_script( 'thickbox' );
+	wp_enqueue_script( 'bootstrap-js', OER_URL.'js/bootstrap.min.js', array('jquery'));
 	wp_enqueue_script('back-scripts', OER_URL.'js/back_scripts.js',array( 'jquery','media-upload','thickbox','set-post-thumbnail' ));
 	wp_enqueue_script('admin-resource', OER_URL.'js/admin_resource.js');
     }
@@ -202,7 +204,7 @@ function oer_postcreation(){
     
     if ($_use_gutenberg=="on" or $_use_gutenberg=="1")
 	$args['show_in_rest'] = true;
-	
+    
     register_post_type( 'resource', $args);
 }
 
@@ -828,5 +830,10 @@ function process_import_standards(){
     
     wp_safe_redirect( admin_url("edit.php?post_type=resource&page=oer_import&message=$message&type=$type"));
     exit;
+}
+
+add_action( "wp_footer" , "oer_add_modal" );
+function oer_add_modal(){
+    
 }
 ?>
