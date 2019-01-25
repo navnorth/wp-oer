@@ -181,7 +181,7 @@ global $chck;
 				echo "<span class='standard-label'>".$std_name."<a href='javascript:void(0)' class='remove-standard'><span class='dashicons dashicons-no-alt'></span></a></span>";
 			}
 			?>
-			<button id="add-new-standard" class="ui-button components-button is-button is-default">Add Standard</button>
+			<button id="add-new-standard" data-toggle="modal" data-target="#standardModal" class="ui-button components-button is-button is-default">Add Standard</button>
 		</div>
 	</div>
 	<div class="oer_snglfld">

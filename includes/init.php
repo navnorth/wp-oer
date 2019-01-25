@@ -832,8 +832,8 @@ function process_import_standards(){
     exit;
 }
 
-add_action( "wp_footer" , "oer_add_modal" );
+add_action( "admin_footer" , "oer_add_modal" );
 function oer_add_modal(){
-    
+    include_once(OER_PATH."oer_template/modals/standard_modal.php");
 }
 ?>
