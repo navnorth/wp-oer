@@ -172,7 +172,7 @@ global $chck;
         </div>
 	<div class="oer_snglfld">
 		<div class="oer_txt"><?php _e("Standards:", OER_SLUG); ?></div>
-		<div class="oer_fld">
+		<div class="oer_fld auto-width">
 			<?php
 			$oStandard = get_post_meta($post->ID, 'oer_standard', true);
 			$standards = explode(",", $oStandard);
@@ -181,6 +181,7 @@ global $chck;
 				echo "<span class='standard-label'>".$std_name."<a href='javascript:void(0)' class='remove-standard'><span class='dashicons dashicons-no-alt'></span></a></span>";
 			}
 			?>
+			<button id="add-new-standard" class="ui-button components-button is-button is-default">Add Standard</button>
 		</div>
 	</div>
 	<div class="oer_snglfld">
