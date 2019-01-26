@@ -7,7 +7,17 @@
         <h4 class="modal-title" id="standardModalLabel">Add Standard</h4>
       </div>
       <div class="modal-body">
-        ...
+        <?php
+        global $wpdb;
+        $results = $wpdb->get_results("SELECT * from " . $wpdb->prefix. "oer_core_standards",ARRAY_A);
+        if ($results){
+          echo "<ul>";
+          foreach($results as $row){
+            echo "<li>".$row['standard_name']."</li>";
+          }
+          echo "</ul>";
+        }
+        ?>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
