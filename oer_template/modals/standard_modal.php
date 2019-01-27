@@ -6,16 +6,28 @@
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
         <h4 class="modal-title" id="standardModalLabel">Add Standard</h4>
       </div>
-      <div class="modal-body">
+      <div id="standards-list" class="modal-body">
         <?php
-        global $wpdb;
+        global $wpdb, $post;
+        
+        $std = get_post_meta($post->ID, 'oer_standard', true);
         $results = $wpdb->get_results("SELECT * from " . $wpdb->prefix. "oer_core_standards",ARRAY_A);
         if ($results){
-          echo "<ul>";
+        ?>
+          <ul class='standard-list'>
+        <?php
           foreach($results as $row){
-            echo "<li>".$row['standard_name']."</li>";
+            $value = 'core_standards-'.$row['id'];
+            ?>
+            <li class='core-standard'>
+              <a data-toggle='collapse' data-target='#core_standards-<?php echo $row['id']; ?>'><?php echo $row['standard_name']; ?></a>
+            </li>
+        <?php
+            oer_child_standards($value, $std);
           }
-          echo "</ul>";
+        ?>
+          </ul>
+        <?php
         }
         ?>
       </div>

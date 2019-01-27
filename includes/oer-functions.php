@@ -3324,4 +3324,64 @@ function oer_get_standard_label($slug){
 	return $standard;
 }
 
+/** Get Sub Standard **/
+function oer_child_standards($id, $oer_standard)
+{
+	global $wpdb;
+	global $chck, $class;
+	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "oer_sub_standards where parent_id = %s" , $id ) ,ARRAY_A);
+	if(!empty($oer_standard))
+	{
+		$stndrd_arr = explode(",",$oer_standard);
+	}
+	
+	if(!empty($results))
+	{
+		echo "<div id='".$id."' class='collapse'>";
+			echo "<ul>";
+			foreach($results as $result)
+			{
+				$value = 'sub_standards-'.$result['id'];
+				if(!empty($stndrd_arr))
+				{
+					if(in_array($value, $stndrd_arr))
+					{
+						$chck = 'checked="checked"';
+						$class = 'selected';
+					}
+					else
+					{
+						$chck = '';
+						$class = '';
+					}
+				}
+
+				$id = 'sub_standards-'.$result['id'];
+				$subchildren = oer_get_substandard_children($id);
+				$child = oer_check_child($id);
+
+				echo "<li class='oer_sbstndard ". $class ."'>
+						<div class='stndrd_ttl'>";
+
+				if(!empty($subchildren) || !empty($child))
+					{
+						echo "<img src='".OER_URL."images/closed_arrow.png' data-pluginpath='".OER_URL."' />";
+					}
+
+				echo			"<input type='checkbox' ".$chck." name='oer_standard[]' value='".$value."' onclick='oer_check_all(this)' >
+							".$result['standard_title']."
+						</div><div class='oer_stndrd_desc'></div>";
+
+						$id = 'sub_standards-'.$result['id'];
+						oer_get_sub_standard($id, $oer_standard);
+
+						$sid = 'sub_standards-'.$result['id'];
+						oer_get_standard_notation($sid, $oer_standard);
+				echo "</li>";
+			}
+			echo "</ul>";
+		echo "</div>";
+	}
+}
+
 ?>
