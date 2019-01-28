@@ -3360,26 +3360,83 @@ function oer_child_standards($id, $oer_standard)
 				$subchildren = oer_get_substandard_children($id);
 				$child = oer_check_child($id);
 
-				echo "<li class='oer_sbstndard ". $class ."'>
-						<div class='stndrd_ttl'>";
+				echo "<li class='oer_sbstndard ". $class ."'>";
+				
+				if (!empty($subchildren)){
+					echo "<a data-toggle='collapse' data-target='#".$id."'>".$result['standard_title']."</a>";
+				}
 
-				if(!empty($subchildren) || !empty($child))
+				if(empty($subchildren) && empty($child)) {
+					echo "<input type='checkbox' ".$chck." name='oer_standard[]' value='".$value."' onclick='oer_check_all(this)' >
+						".$result['standard_title']."
+						<div class='oer_stndrd_desc'></div>";
+				}
+				
+				$id = 'sub_standards-'.$result['id'];
+				oer_child_standards($id, $oer_standard);
+				
+				if (!empty($child)) {
+					echo "<a data-toggle='collapse' data-target='#".$id."'>".$result['standard_title']."</a>";
+					$sid = 'sub_standards-'.$result['id'];
+					oer_child_standard_notations($sid, $oer_standard);
+				}
+				echo "</li>";
+			}
+			echo "</ul>";
+		echo "</div>";
+	}
+}
+
+/** Get Standard Notation **/
+function oer_child_standard_notations($id, $oer_standard)
+{
+	global $wpdb;
+	
+	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "oer_standard_notation where parent_id = %s" , $id ) , ARRAY_A);
+
+	if(!empty($oer_standard))
+	{
+		$stndrd_arr = explode(",",$oer_standard);
+	}
+
+	if(!empty($results))
+	{
+		echo "<div id='".$id."' class='collapse'>";
+		echo "<ul>";
+			foreach($results as $result)
+			{
+				$chck = '';
+				$class = '';
+			  $id = 'standard_notation-'.$result['id'];
+			  $child = oer_check_child($id);
+			  $value = 'standard_notation-'.$result['id'];
+
+			  if(!empty($oer_standard))
+				{
+					if(in_array($value, $stndrd_arr))
+					{
+						$chck = 'checked="checked"';
+						$class = 'selected';
+					}
+				}
+
+			  echo "<li class='".$class."'>
+				   <div class='stndrd_ttl'>";
+					if(!empty($child))
 					{
 						echo "<img src='".OER_URL."images/closed_arrow.png' data-pluginpath='".OER_URL."' />";
 					}
 
-				echo			"<input type='checkbox' ".$chck." name='oer_standard[]' value='".$value."' onclick='oer_check_all(this)' >
-							".$result['standard_title']."
-						</div><div class='oer_stndrd_desc'></div>";
+			  echo "<input type='checkbox' ".$chck." name='oer_standard[]' value='".$value."' onclick='oer_check_myChild(this)'>
+			 	   ". $result['standard_notation']."
+				   </div>
+				   <div class='oer_stndrd_desc'> ". $result['description']." </div>";
 
-						$id = 'sub_standards-'.$result['id'];
-						oer_get_sub_standard($id, $oer_standard);
+				   oer_child_standard_notations($id, $oer_standard);
 
-						$sid = 'sub_standards-'.$result['id'];
-						oer_get_standard_notation($sid, $oer_standard);
-				echo "</li>";
+				   echo "</li>";
 			}
-			echo "</ul>";
+		echo "</ul>";
 		echo "</div>";
 	}
 }

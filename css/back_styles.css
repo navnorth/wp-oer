@@ -291,3 +291,5 @@ p.submit { margin-top:0; padding: 15px; }
 a.remove-standard { text-decoration:none; }
 a.remove-standard span { line-height:1.25em; }
 .auto-width { width:auto !important; }
+#standardModal ul ul { margin-left:40px; }
+#standardModal #standards-list { max-height:400px; overflow-y:auto; }
