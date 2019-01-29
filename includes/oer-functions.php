@@ -3428,9 +3428,9 @@ function oer_child_standard_notations($id, $oer_standard)
 				}
 
 				if (empty($child))
-					echo "<input type='checkbox' ".$chck." name='oer_standard[]' value='".$value."' onclick='oer_check_myChild(this)'>
-			 	   
-				echo ". $result['standard_notation']."
+					echo "<input type='checkbox' ".$chck." name='oer_standard[]' value='".$value."' onclick='oer_check_myChild(this)'>";
+					
+				echo  $result['standard_notation']."
 					<div class='oer_stndrd_desc'> ". $result['description']." </div>";
 
 				oer_child_standard_notations($id, $oer_standard);

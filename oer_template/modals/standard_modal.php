@@ -32,7 +32,7 @@
         ?>
       </div>
       <div class="modal-footer">
-        <button type="button" id="btnSave" class="btn btn-default btn-sm" data-dismiss="modal">Select</button>
+        <button type="button" id="btnSaveStandards" class="btn btn-default btn-sm" data-dismiss="modal">Select</button>
       </div>
     </div>
   </div>

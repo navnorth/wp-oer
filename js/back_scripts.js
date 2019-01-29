@@ -86,9 +86,24 @@ jQuery(document).ready(function(e) {
 		std.parent().remove();
 		jQuery(".stndrd_ttl input[value='"+std_id+"']").attr('checked',false);
 	});
+	jQuery('#btnSaveStandards').on('click', function(e){
+		e.preventDefault();
+		var selected = [];
+		jQuery('#add-new-standard').prevAll('.standard-label').remove();
+		jQuery.each(jQuery('#standardModal input[type=checkbox]:checked'), function(){
+			var sId = jQuery(this).val();
+			jQuery(".stndrd_ttl input[value='"+sId+"']").attr('checked',true);
+			var title = jQuery(this).next('.oer_stndrd_desc').text();
+			displaySelectedStandard(sId, title);
+			selected.push(sId);
+		});
+		jQuery('#standardModal').modal('close');
+	});
 });
 
-
+function displaySelectedStandard(sId, title) {
+	jQuery('#add-new-standard').before("<span class='standard-label'>" + title + "<a href='javascript:void(0)' class='remove-standard' data-id='" + sId + "'><span class='dashicons dashicons-no-alt'></span></a></span>");
+}
 
 //adding author
 function oer_addauthor(ref)
