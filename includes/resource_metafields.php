@@ -183,7 +183,7 @@ global $chck;
 				}
 			}
 			?>
-			<button id="add-new-standard" data-toggle="modal" data-target="#standardModal" class="ui-button components-button is-button is-default">Add Standard</button>
+			<button id="add-new-standard" data-toggle="modal" data-target="#standardModal" class="ui-button components-button is-button is-default">Add Standards</button>
 		</div>
 	</div>
 	<div class="oer_snglfld" style="display:none;">
