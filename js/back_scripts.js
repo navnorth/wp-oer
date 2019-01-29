@@ -82,7 +82,9 @@ jQuery(document).ready(function(e) {
 	
 	jQuery('.remove-standard').on('focus', function(){
 		var std = jQuery(this);
+		var std_id = std.attr('data-id');
 		std.parent().remove();
+		jQuery(".stndrd_ttl input[value='"+std_id+"']").attr('checked',false);
 	});
 });
 
