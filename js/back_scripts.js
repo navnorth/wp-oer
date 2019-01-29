@@ -79,6 +79,11 @@ jQuery(document).ready(function(e) {
 	jQuery('#oer_url2png_api_secret').on('focus', function(){
 		jQuery(this).val(oSecret);
 	});
+	
+	jQuery('.remove-standard').on('focus', function(){
+		var std = jQuery(this);
+		std.parent().remove();
+	});
 });
 
 

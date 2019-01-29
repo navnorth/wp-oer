@@ -177,14 +177,16 @@ global $chck;
 			$oStandard = get_post_meta($post->ID, 'oer_standard', true);
 			$standards = explode(",", $oStandard);
 			foreach($standards as $standard){
-				$std_name = oer_get_standard_label($standard);
-				echo "<span class='standard-label'>".$std_name."<a href='javascript:void(0)' class='remove-standard'><span class='dashicons dashicons-no-alt'></span></a></span>";
+				if ($standard!=="") {
+					$std_name = oer_get_standard_label($standard);
+					echo "<span class='standard-label'>".$std_name."<a href='javascript:void(0)' class='remove-standard' data-id='".$standard."'><span class='dashicons dashicons-no-alt'></span></a></span>";
+				}
 			}
 			?>
 			<button id="add-new-standard" data-toggle="modal" data-target="#standardModal" class="ui-button components-button is-button is-default">Add Standard</button>
 		</div>
 	</div>
-	<div class="oer_snglfld">
+	<div class="oer_snglfld" style="display:none;">
         	<div class="oer_txt">
 			<?php _e("Standards Alignment:", OER_SLUG); ?>
 		</div>

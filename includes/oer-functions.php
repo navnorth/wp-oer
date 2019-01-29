@@ -3309,6 +3309,7 @@ function oer_grade_levels($grade_levels){
 // Get Title or Description of Standard or Notation
 function oer_get_standard_label($slug){
 	global $wpdb;
+	
 	$slugs = explode("-", $slug);
 	$table_name = "oer_".$slugs[0];
 	$id = $slugs[1];
@@ -3407,11 +3408,11 @@ function oer_child_standard_notations($id, $oer_standard)
 			{
 				$chck = '';
 				$class = '';
-			  $id = 'standard_notation-'.$result['id'];
-			  $child = oer_check_child($id);
-			  $value = 'standard_notation-'.$result['id'];
-
-			  if(!empty($oer_standard))
+				$id = 'standard_notation-'.$result['id'];
+				$child = oer_check_child($id);
+				$value = 'standard_notation-'.$result['id'];
+      
+				if(!empty($oer_standard))
 				{
 					if(in_array($value, $stndrd_arr))
 					{
@@ -3420,21 +3421,21 @@ function oer_child_standard_notations($id, $oer_standard)
 					}
 				}
 
-			  echo "<li class='".$class."'>
-				   <div class='stndrd_ttl'>";
-					if(!empty($child))
-					{
-						echo "<img src='".OER_URL."images/closed_arrow.png' data-pluginpath='".OER_URL."' />";
-					}
+				echo "<li class='".$class."'>";
+				if(!empty($child))
+				{
+					echo "<a data-toggle='collapse' data-target='#".$id."'>".$result['standard_notation']."</a>";
+				}
 
-			  echo "<input type='checkbox' ".$chck." name='oer_standard[]' value='".$value."' onclick='oer_check_myChild(this)'>
-			 	   ". $result['standard_notation']."
-				   </div>
-				   <div class='oer_stndrd_desc'> ". $result['description']." </div>";
+				if (empty($child))
+					echo "<input type='checkbox' ".$chck." name='oer_standard[]' value='".$value."' onclick='oer_check_myChild(this)'>
+			 	   
+				echo ". $result['standard_notation']."
+					<div class='oer_stndrd_desc'> ". $result['description']." </div>";
 
-				   oer_child_standard_notations($id, $oer_standard);
+				oer_child_standard_notations($id, $oer_standard);
 
-				   echo "</li>";
+				echo "</li>";
 			}
 		echo "</ul>";
 		echo "</div>";
