@@ -296,3 +296,38 @@ a.remove-standard span { line-height:1.25em; }
 #standardModal ul ul { margin-left:40px; }
 #standardModal #standards-list { max-height:400px; overflow-y:auto; }
 #add-new-standard { margin:3px; height:32px; }
+#standardModal .search-bar {
+	margin-bottom: 15px;
+	margin-top: auto;
+	height: 40px;
+	padding: 0;
+	position:relative;
+	border:1px solid #cdcdcd;
+}
+.search-standard-text {
+	color: white;
+	border: 0 !important;
+	outline: none !important;
+	background: none !important;
+	line-height: 40px;
+	transition: width 0.4s linear;
+	padding: 0 10px;
+}
+.search-standard-text:focus { border-color:transparent !important; box-shadow:none !important;}
+.search-bar:hover > .search_std_btn{
+    background: white;
+    color: #e74c3c;
+}
+.search_std_btn{
+    height: 30px;
+    width: 30px;
+    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color:white;
+    position:absolute;
+    right:2.5px;
+    top:2.5px;
+}

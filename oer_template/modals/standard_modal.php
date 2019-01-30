@@ -7,6 +7,10 @@
         <h4 class="modal-title" id="standardModalLabel">Add Standard</h4>
       </div>
       <div id="standards-list" class="modal-body">
+        <div class="search-bar">
+          <input type="text" name="searchStandard" class="search-standard-text form-control">
+          <button class="search_std_btn"><span class='dashicons dashicons-search'></span></button>
+        </div>
         <?php
         global $wpdb, $post;
         
