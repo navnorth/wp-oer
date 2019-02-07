@@ -141,7 +141,7 @@ function oer_create_csv_import_table()
    oer_postcreation();
    oer_create_resource_taxonomies();
 
-   oer_add_rewrites();
+   //oer_add_rewrites();
    //Trigger permalink reset
    flush_rewrite_rules();
 }
@@ -2185,14 +2185,13 @@ function oer_custom_search_template($template){
 }
 add_filter('template_include','oer_custom_search_template');
 
-function assign_standard_template($template) {
+/*function assign_standard_template($template) {
 	global $wp_query;
 
 	$url_path = trim(parse_url(add_query_arg(array()), PHP_URL_PATH), '/');
 
 	status_header(200);
-	//if ( $url_path === 'openk12xchange/resource/standards' ){
-//	if ( $url_path === 'resource/standards' ) {
+
 	if ( strpos( $url_path,'resource/standards' ) !== false && !get_query_var('standard') && !get_query_var('substandard') && !get_query_var('notation') ) {
 		// load the file if exists
 		$wp_query->is_404 = false;
@@ -2221,10 +2220,10 @@ function assign_standard_template($template) {
 	}
 	return $template;
 }
-add_action( 'template_include' , 'assign_standard_template' );
+add_action( 'template_include' , 'assign_standard_template' );*/
 
 // Assign template
-function oer_template_redirect(){
+/*function oer_template_redirect(){
 	global $wp, $wp_query;
 
 	$template = $wp->query_vars;
@@ -2235,11 +2234,11 @@ function oer_template_redirect(){
 		include( dirname(__FILE__) . '/oer_template/standards.php' );
 		exit;
 	}
-}
+}*/
 //add_action( 'template_redirect' , 'oer_template_redirect' );
 
 // Add rewrite rule for substandards
-function oer_add_rewrites()
+/*function oer_add_rewrites()
 {
 	global $wp_rewrite;
 	add_rewrite_tag( '%standard%', '([^/]*)' );
@@ -2267,7 +2266,7 @@ function oer_add_query_vars( $vars ){
 	$vars[] = "notation";
 	return $vars;
 }
-add_filter( 'query_vars', 'oer_add_query_vars' );
+add_filter( 'query_vars', 'oer_add_query_vars' );*/
 
 // Quick fix for the headers already sent error after submitting setup tab on the settings page
 add_action( 'init', function () {

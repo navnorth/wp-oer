@@ -55,11 +55,6 @@ if (!current_user_can('manage_options')) {
 				include_once(OER_PATH.'includes/categories-importer.php');
 			    ?>
 			</div>
-			<div class="oer-import-row">
-			    <?php
-				include_once(OER_PATH.'includes/standards-importer.php');
-			    ?>
-			</div>
 		</div>
 		<div class="row-right">
 			<strong><?php _e("Support Options", OER_SLUG); ?></strong>

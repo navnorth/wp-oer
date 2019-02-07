@@ -12,26 +12,9 @@
           <button class="search_std_btn"><span class='dashicons dashicons-search'></span></button>
         </div>
         <?php
-        global $wpdb, $post;
-        
-        $std = get_post_meta($post->ID, 'oer_standard', true);
-        $results = $wpdb->get_results("SELECT * from " . $wpdb->prefix. "oer_core_standards",ARRAY_A);
-        if ($results){
-        ?>
-          <ul class='standard-list'>
-        <?php
-          foreach($results as $row){
-            $value = 'core_standards-'.$row['id'];
-            ?>
-            <li class='core-standard'>
-              <a data-toggle='collapse' data-target='#core_standards-<?php echo $row['id']; ?>'><?php echo $row['standard_name']; ?></a>
-            </li>
-        <?php
-            oer_child_standards($value, $std);
-          }
-        ?>
-          </ul>
-        <?php
+        if (function_exists('was_selectable_admin_standards')){
+          global $post;
+          was_selectable_admin_standards($post->id);
         }
         ?>
       </div>
