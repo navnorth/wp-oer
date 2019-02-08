@@ -473,31 +473,7 @@ function oer_save_customfields()
 
 		if(isset($_POST['oer_standard']))
 		{
-			$gt_oer_standard = $_POST['oer_standard'];
-			$gt_oer_standard = array_map( 'sanitize_text_field', $_POST['oer_standard']) ;
-			
-			if(!empty($gt_oer_standard)) {
-			    for($l = 0; $l < count($gt_oer_standard); $l++)
-			    {
-				$results = $wpdb->get_row( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "oer_standard_notation where standard_notation =%s" , $gt_oer_standard[$l] ),ARRAY_A);
-				if(!empty($results))
-				{
-				    $gt_oer_standard_notation .= "standard_notation-".$results['id'].",";
-				    $table = explode("-", $results['parent_id']);
-				    
-				    if(!empty($table))
-				    {
-					$stndrd_algn = $wpdb->get_row( $wpdb->prepare( "SELECT * from  " . $wpdb->prefix. $_oer_prefix.$table[0] . " where id =%s" , $table[1] ),ARRAY_A);
-					if($stndrd_algn['parent_id'])
-					{
-						oer_fetch_stndrd($stndrd_algn['parent_id'], $post_id);
-					}
-				    }
-				}
-			    }
-			}
-			$oer_standard = implode(",", $gt_oer_standard);
-			update_post_meta( $post->ID , 'oer_standard' , $oer_standard);
+			update_post_meta( $post->ID , 'oer_standard' , sanitize_text_field($_POST['oer_standard']));
 		}
 		else
 		{

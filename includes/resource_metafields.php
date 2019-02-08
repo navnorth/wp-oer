@@ -187,39 +187,6 @@ global $chck;
 			<button id="add-new-standard" data-toggle="modal" data-target="#standardModal" class="ui-button components-button is-button is-default">Add Standards</button>
 		</div>
 	</div>
-	<div class="oer_snglfld" style="display:none;">
-        	<div class="oer_txt">
-			<?php _e("Standards Alignment:", OER_SLUG); ?>
-		</div>
-           	<?php
-				$oer_standard_alignment = get_post_meta($post->ID, 'oer_standard_alignment', true);
-			 	$oer_standard = get_post_meta($post->ID, 'oer_standard', true);
-				$external_script_url = OER_URL."js/extrnl_script.js";
-			 ?>
-			 <div class="oer_fld">
-				<div class="oer_lstofstandrd ">
-				 	  <?php
-							$results = $wpdb->get_results("SELECT * from " . $wpdb->prefix. "oer_core_standards",ARRAY_A);
-							foreach($results as $result)
-							{
-								$value = 'core_standards-'.$result['id'];
-								echo "<li class='oer_sbstndard oer_main'>
-										<div class='stndrd_ttl'>
-											<img src='".OER_URL."images/closed_arrow.png' data-pluginpath='".OER_URL."' class='tglimg' />
-											<input type='checkbox' ".$chck." name='oer_standard[]' value='".esc_attr($value)."' onclick='oer_check_all(this)' >
-											".sanitize_text_field($result['standard_name'])."
-										</div><div class='oer_stndrd_desc'></div>";
-
-										oer_get_sub_standard($value, $oer_standard);
-								echo "</li>";
-							}
-						?>
-					<script src="<?php echo esc_url($external_script_url);?>" type="text/javascript"></script>
-				 </div>
-		</div>
-
-        </div>
-
         <div class="oer_snglfld oer_hdngsngl">
 		<?php _e("Author Information:", OER_SLUG); ?>
         </div>
