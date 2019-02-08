@@ -97,6 +97,8 @@ jQuery(document).ready(function(e) {
 			displaySelectedStandard(sId, title);
 			selected.push(sId);
 		});
+		var standards = selected.join();
+		jQuery(".oer_metainrwpr input[name='oer_standard']").val(standards);
 		jQuery('#standardModal').modal('close');
 	});
 });

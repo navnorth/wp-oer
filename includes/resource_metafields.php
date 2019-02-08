@@ -98,7 +98,7 @@ global $chck;
             <div class="oer_fld">
             	<?php $oer_mediatype = strtolower(get_post_meta($post->ID, 'oer_mediatype', true)); ?>
                 <select name="oer_mediatype">
-					   <option value="website" <?php if($oer_mediatype == 'website'){echo 'selected="selected"';}?>><?php _e("Website", OER_SLUG); ?></option>
+			<option value="website" <?php if($oer_mediatype == 'website'){echo 'selected="selected"';}?>><?php _e("Website", OER_SLUG); ?></option>
                        <option value="audio" <?php if($oer_mediatype == 'audio'){echo 'selected="selected"';}?>><?php _e("Audio", OER_SLUG); ?></option>
                        <option value="document" <?php if($oer_mediatype == 'document'){echo 'selected="selected"';}?>><?php _e("Document", OER_SLUG); ?></option>
                        <option value="image" <?php if($oer_mediatype == 'image'){echo 'selected="selected"';}?>><?php _e("Image", OER_SLUG); ?></option>
@@ -116,7 +116,7 @@ global $chck;
             	<?php $oer_lrtype = strtolower(get_post_meta($post->ID, 'oer_lrtype', true)); ?>
                 <select name="oer_lrtype">
 			<option value=""></option>
-					   <option value="website" <?php if($oer_lrtype == 'website'){echo 'selected="selected"';}?>><?php _e("Assessment", OER_SLUG); ?></option>
+			<option value="website" <?php if($oer_lrtype == 'website'){echo 'selected="selected"';}?>><?php _e("Assessment", OER_SLUG); ?></option>
                        <option value="audio" <?php if($oer_lrtype == 'audio'){echo 'selected="selected"';}?>><?php _e("Audio", OER_SLUG); ?></option>
                        <option value="calculator" <?php if($oer_lrtype == 'calculator'){echo 'selected="selected"';}?>><?php _e("Calculator", OER_SLUG); ?></option>
                        <option value="demonstration" <?php if($oer_lrtype == 'demonstration'){echo 'selected="selected"';}?>><?php _e("Demonstration", OER_SLUG); ?></option>
@@ -139,7 +139,7 @@ global $chck;
             	<?php $oer_interactivity = strtolower(get_post_meta($post->ID, 'oer_interactivity', true)); ?>
                 <select name="oer_interactivity">
 			<option value=""></option>
-					   <option value="interactive" <?php if($oer_interactivity == 'interactive'){echo 'selected="selected"';}?>><?php _e("Interactive", OER_SLUG); ?></option>
+			<option value="interactive" <?php if($oer_interactivity == 'interactive'){echo 'selected="selected"';}?>><?php _e("Interactive", OER_SLUG); ?></option>
                        <option value="passive" <?php if($oer_interactivity == 'passive'){echo 'selected="selected"';}?>><?php _e("Passive", OER_SLUG); ?></option>
                        <option value="social" <?php if($oer_interactivity == 'social'){echo 'selected="selected"';}?>><?php _e("Social", OER_SLUG); ?></option>
                        <option value="prgorammatic" <?php if($oer_interactivity == 'prgorammatic'){echo 'selected="selected"';}?>><?php _e("Programmatic", OER_SLUG); ?></option>
@@ -183,6 +183,7 @@ global $chck;
 				}
 			}
 			?>
+			<input type="hidden" name="oer_standard" value="<?php echo $oStandard; ?>" />
 			<button id="add-new-standard" data-toggle="modal" data-target="#standardModal" class="ui-button components-button is-button is-default">Add Standards</button>
 		</div>
 	</div>

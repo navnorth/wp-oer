@@ -14,7 +14,7 @@
         <?php
         if (function_exists('was_selectable_admin_standards')){
           global $post;
-          was_selectable_admin_standards($post->id);
+          was_selectable_admin_standards($post->ID);
         }
         ?>
       </div>

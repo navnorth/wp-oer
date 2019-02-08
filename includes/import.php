@@ -45,11 +45,6 @@ if (!current_user_can('manage_options')) {
 				include_once(OER_PATH.'includes/resources-importer.php');
 			    ?>
 			</div>
-			<!--<div class="oer-import-row">-->
-			    <?php
-				//include_once(OER_PATH.'includes/lr-importer.php');
-			    ?>
-			<!--</div>-->
 			<div class="oer-import-row">
 			    <?php
 				include_once(OER_PATH.'includes/categories-importer.php');
