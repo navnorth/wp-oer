@@ -941,7 +941,7 @@ function oer_setup_settings(){
 	);
 
 	//Add Settings field for Importing Common Core State Standards
-	add_settings_field(
+	/*add_settings_field(
 		'oer_import_ccss',
 		'',
 		'oer_setup_settings_field',
@@ -955,7 +955,7 @@ function oer_setup_settings(){
 			'name' =>  __('Import Common Core State Standards', OER_SLUG),
 			'description' => __('Enable use of CCSS as an optional alignment option for resources.', OER_SLUG)
 		)
-	);
+	);*/
 
 	//Add Settings field for Importing Bootstrap CSS & JS Libraries
 	add_settings_field(
@@ -998,7 +998,7 @@ function oer_setup_settings(){
 
 	register_setting( 'oer_setup_settings' , 'oer_import_sample_resources' );
 	register_setting( 'oer_setup_settings' , 'oer_import_default_subject_areas' );
-	register_setting( 'oer_setup_settings' , 'oer_import_ccss' );
+	//register_setting( 'oer_setup_settings' , 'oer_import_ccss' );
 	register_setting( 'oer_setup_settings' , 'oer_setup_bootstrap' );
 	if ($_gutenberg)
 		register_setting( 'oer_setup_settings' , 'oer_use_gutenberg' );
@@ -2184,89 +2184,6 @@ function oer_custom_search_template($template){
 		return OER_PATH . 'oer_template/search.php';
 }
 add_filter('template_include','oer_custom_search_template');
-
-/*function assign_standard_template($template) {
-	global $wp_query;
-
-	$url_path = trim(parse_url(add_query_arg(array()), PHP_URL_PATH), '/');
-
-	status_header(200);
-
-	if ( strpos( $url_path,'resource/standards' ) !== false && !get_query_var('standard') && !get_query_var('substandard') && !get_query_var('notation') ) {
-		// load the file if exists
-		$wp_query->is_404 = false;
-		$template = locate_template('oer_template/standards.php', true);
-		if (!$template) {
-			$template = dirname(__FILE__) . '/oer_template/standards.php';
-		}
-	} elseif (get_query_var('standard') && !get_query_var('substandard') && !get_query_var('notation')){
-		$wp_query->is_404 = false;
-		$template = locate_template('oer_template/template-standard.php', true);
-		if (!$template) {
-			$template = dirname(__FILE__) . '/oer_template/template-standard.php';
-		}
-	} elseif (get_query_var('standard') && get_query_var('substandard') && !get_query_var('notation')){
-		$wp_query->is_404 = false;
-		$template = locate_template('oer_template/template-substandard.php', true);
-		if (!$template) {
-			$template = dirname(__FILE__) . '/oer_template/template-substandard.php';
-		}
-	} elseif (get_query_var('standard') && get_query_var('substandard') && get_query_var('notation')){
-		$wp_query->is_404 = false;
-		$template = locate_template('oer_template/template-notation.php', true);
-		if (!$template) {
-			$template = dirname(__FILE__) . '/oer_template/template-notation.php';
-		}
-	}
-	return $template;
-}
-add_action( 'template_include' , 'assign_standard_template' );*/
-
-// Assign template
-/*function oer_template_redirect(){
-	global $wp, $wp_query;
-
-	$template = $wp->query_vars;
-
-	if ( array_key_exists( 'resource', $template ) && 'standards' == $template['name'] ) {
-		$wp_query->is_404 = false;
-		status_header(200);
-		include( dirname(__FILE__) . '/oer_template/standards.php' );
-		exit;
-	}
-}*/
-//add_action( 'template_redirect' , 'oer_template_redirect' );
-
-// Add rewrite rule for substandards
-/*function oer_add_rewrites()
-{
-	global $wp_rewrite;
-	add_rewrite_tag( '%standard%', '([^/]*)' );
-	add_rewrite_tag( '%substandard%' , '([^&]+)' );
-	add_rewrite_tag( '%notation%' , '([^&]+)' );
-	add_rewrite_rule( '^resource/standards/([^/]*)/?$', 'index.php?pagename=standards&standard=$matches[1]', 'top' );
-	add_rewrite_rule( '^resource/standards/([^/]*)/([^/]*)/?$', 'index.php?pagename=standards&standard=$matches[1]&substandard=$matches[2]', 'top' );
-	add_rewrite_rule( '^resource/standards/([^/]*)/([^/]*)/([^/]*)/?$', 'index.php?pagename=standards&standard=$matches[1]&substandard=$matches[2]&notation=$matches[3]', 'top' );
-	add_rewrite_endpoint( 'standard', EP_PERMALINK | EP_PAGES );
-	add_rewrite_endpoint( 'substandard', EP_PERMALINK | EP_PAGES );
-	add_rewrite_endpoint( 'notation', EP_PERMALINK | EP_PAGES );
-
-	$flush_rewrite = get_option('oer_rewrite_rules');
-	if ($flush_rewrite==false) {
-		$wp_rewrite->init();
-		$wp_rewrite->flush_rules();
-		update_option('oer_rewrite_rules', true);
-	}
-}
-add_action( 'init', 'oer_add_rewrites', 10, 0 );
-
-function oer_add_query_vars( $vars ){
-	$vars[] = "standard";
-	$vars[] = "substandard";
-	$vars[] = "notation";
-	return $vars;
-}
-add_filter( 'query_vars', 'oer_add_query_vars' );*/
 
 // Quick fix for the headers already sent error after submitting setup tab on the settings page
 add_action( 'init', function () {

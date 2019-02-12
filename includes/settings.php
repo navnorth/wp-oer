@@ -22,14 +22,14 @@ global $message, $type;
 			}
 			
 			//Import CCSS Standards
-			$import_ccss = get_option('oer_import_ccss');
+			/*$import_ccss = get_option('oer_import_ccss');
 			if ($import_ccss) {
 				$response = oer_importDefaultStandards();
 				if ($response) {
 					$message .= $response["message"];
 					$type .= $response["type"];
 				}
-			}
+			}*/
 			
 			//Import Default Resources
 			$import_resources = get_option('oer_import_sample_resources');
