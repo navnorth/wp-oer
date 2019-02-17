@@ -1,4 +1,5 @@
 <!-- Modal -->
+<?php global $post; ?>
 <div class="modal fade" id="standardModal" tabindex="-1" role="dialog" aria-labelledby="standardModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -9,17 +10,18 @@
       <div id="standards-list" class="modal-body">
         <div class="search-bar">
           <input type="text" name="searchStandard" class="search-standard-text form-control">
-          <button class="search_std_btn"><span class='dashicons dashicons-search'></span></button>
+          <button class="search_std_btn" data-postid="<?php echo $post->ID; ?>"><span class='dashicons dashicons-search'></span></button>
         </div>
+        <div id="oer_standards_list">
         <?php
         if (function_exists('was_selectable_admin_standards')){
-          global $post;
           was_selectable_admin_standards($post->ID);
         }
         ?>
+        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" id="btnSaveStandards" class="btn btn-default btn-sm" data-dismiss="modal">Select</button>
+        <button type="button" id="btnSaveStandards" class="btn btn-default btn-sm" data-postid="<?php echo $post->ID; ?>" data-dismiss="modal">Select</button>
       </div>
     </div>
   </div>

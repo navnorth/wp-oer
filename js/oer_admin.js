@@ -19,4 +19,37 @@ jQuery(document).ready(function($) {
 
 		return false;
 	});
+	
+	$('.search-standard-text').on("change", function(){
+		if ($(this).val().length>0) {
+			$('.search_std_btn').click();
+		} else {
+			displaydefaultStandards($('.search_std_btn').attr('data-postid'));
+		}
+	});
+	
+	/**
+	 *
+	 * Search Standard Button Click
+	 *
+	 **/
+	$('.search_std_btn').on("click", function(){
+		data = {
+			action: 'load_searched_standards',
+			post_id: $(this).attr('data-postid'),
+			keyword: $('.search-standard-text').val()
+		}
+		
+		//* Process the AJAX POST request
+		$.post(
+                       ajaxurl,
+                       data
+		       ).done( function(response) {
+			list = $('#standardModal #oer_standards_list');
+			list.html("");
+			list.html(response);
+			});
+
+		return false;
+	});
 });
