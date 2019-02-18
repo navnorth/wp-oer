@@ -19,6 +19,12 @@
         }
         ?>
         </div>
+        <div id="oer_search_results_list">
+          <button class="search_close_btn" alt="Clear Search"><span class='dashicons dashicons-no'></span></button>
+          <div class="search_results_list">
+            
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" id="btnSaveStandards" class="btn btn-default btn-sm" data-postid="<?php echo $post->ID; ?>" data-dismiss="modal">Select</button>

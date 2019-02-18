@@ -24,7 +24,7 @@ jQuery(document).ready(function($) {
 		if ($(this).val().length>0) {
 			$('.search_std_btn').click();
 		} else {
-			displaydefaultStandards($('.search_std_btn').attr('data-postid'));
+			displaydefaultStandards();
 		}
 	});
 	
@@ -45,9 +45,11 @@ jQuery(document).ready(function($) {
                        ajaxurl,
                        data
 		       ).done( function(response) {
-			list = $('#standardModal #oer_standards_list');
+			list = $('#standardModal #oer_search_results_list .search_results_list');
 			list.html("");
 			list.html(response);
+			$('#standardModal #oer_standards_list').hide();
+			$('#standardModal #oer_search_results_list').show();
 			});
 
 		return false;

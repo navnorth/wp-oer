@@ -237,6 +237,8 @@ ul.oer_slctstandard > li
 .oer_imprtrwpr form legend {
 	font-size: 25px;
 	padding: 20px 0;
+	width:auto;
+	border:none;
 }
 .oer-import-row .oer_imprtrwpr {
     float: left;
@@ -331,3 +333,19 @@ a.remove-standard span { line-height:1.25em; }
     right:2.5px;
     top:2.5px;
 }
+.search_close_btn {
+	height: 30px;
+	width: 30px;
+	float: right;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+	color: white;
+	position: absolute;
+	right: 2.5px;
+	top: 2.5px;
+}
+.search_close_btn .dashicons { color:#000000; }
+#oer_search_results_list { display:none; }
+#oer_search_results_list{ position:relative; }

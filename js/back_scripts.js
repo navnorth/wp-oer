@@ -99,8 +99,12 @@ jQuery(document).ready(function(e) {
 		});
 		var standards = selected.join();
 		jQuery(".oer_metainrwpr input[name='oer_standard']").val(standards);
-		displaydefaultStandards($(this).attr('data-postid'));
+		jQuery(".search-standard-text").text("");
+		displaydefaultStandards();
 		jQuery('#standardModal').modal('close');
+	});
+	jQuery('.search_close_btn').on("click", function(e){
+		displaydefaultStandards();
 	});
 });
 
@@ -108,23 +112,9 @@ function displaySelectedStandard(sId, title) {
 	jQuery('#add-new-standard').before("<span class='standard-label'>" + title + "<a href='javascript:void(0)' class='remove-standard' data-id='" + sId + "'><span class='dashicons dashicons-no-alt'></span></a></span>");
 }
 
-function displaydefaultStandards(postid) {
-	data = {
-			action: 'load_default_standards',
-			post_id: postid
-		}
-		
-		//* Process the AJAX POST request
-		$.post(
-                       ajaxurl,
-                       data
-		       ).done( function(response) {
-			list = $('#standardModal #oer_standards_list');
-			list.html("");
-			list.html(response);
-			});
-
-		return false;
+function displaydefaultStandards() {
+	$('#standardModal #oer_standards_list').show();
+	$('#standardModal #oer_search_results_list').hide();
 }
 
 //adding author
