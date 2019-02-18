@@ -99,7 +99,7 @@ jQuery(document).ready(function(e) {
 		});
 		var standards = selected.join();
 		jQuery(".oer_metainrwpr input[name='oer_standard']").val(standards);
-		jQuery(".search-standard-text").text("");
+		jQuery(".search-standard-text").val("");
 		displaydefaultStandards();
 		jQuery('#standardModal').modal('close');
 	});

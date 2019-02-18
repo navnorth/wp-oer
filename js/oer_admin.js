@@ -20,11 +20,13 @@ jQuery(document).ready(function($) {
 		return false;
 	});
 	
-	$('.search-standard-text').on("change", function(){
-		if ($(this).val().length>0) {
-			$('.search_std_btn').click();
-		} else {
-			displaydefaultStandards();
+	$('.search-standard-text').on("keypress", function(e){
+		if (e.which == 13) {
+			if ($(this).val().length>0) {
+				$('.search_std_btn').click();
+			} else {
+				displaydefaultStandards();
+			}
 		}
 	});
 	
