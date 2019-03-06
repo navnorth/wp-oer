@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 global $message, $type;
 
-	if (isset($_REQUEST['settings-updated']) && $_REQUEST['post_type']=="resource") {
+	if (isset($_REQUEST['settings-updated']) && $_REQUEST['page']=="oer_settings") {
 		if (!current_user_can('manage_options')) {
 			wp_die( "You don't have permission to access this page!" );
 		}

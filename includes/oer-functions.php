@@ -628,7 +628,7 @@ function oer_slugify($text)
 }
 
 /** Import Standards **/
-function oer_importStandards($file){
+/*function oer_importStandards($file){
 	global $wpdb;
 
 	$time = time();
@@ -790,7 +790,7 @@ function oer_importStandards($file){
 		);
 		return $response;
 	}
-}
+}*/
 
 //Check if Standard Exists
 function oer_isStandardExisting($standard) {
@@ -1808,7 +1808,7 @@ function oer_importSubjectAreas($default=false) {
 }
 
 //Import Default CCSS
-function oer_importDefaultStandards() {
+/*function oer_importDefaultStandards() {
 	$files = array(
 		OER_PATH."samples/CCSS_Math.xml",
 		OER_PATH."samples/CCSS_ELA.xml",
@@ -1827,7 +1827,7 @@ function oer_importDefaultStandards() {
 	}
 	$response = array( 'message' => $message, 'type' => $type );
 	return $response;
-}
+}*/
 
 /** Fetch Standard **/
 function oer_fetch_stndrd($pId, $postid)
