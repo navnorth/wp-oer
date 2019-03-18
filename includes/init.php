@@ -403,6 +403,11 @@ function oer_save_customfields()
 			update_post_meta( $post->ID , 'oer_grade' , '');
 		}
 		
+		if(isset($_POST['oer_format']))
+		{
+			update_post_meta( $post->ID , 'oer_format' , sanitize_text_field($_POST['oer_format']));
+		}
+		
 		if(isset($_POST['oer_datecreated']))
 		{
 			update_post_meta( $post->ID , 'oer_datecreated' , sanitize_text_field($_POST['oer_datecreated']));

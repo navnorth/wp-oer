@@ -1109,6 +1109,7 @@ function oer_importResources($default=false) {
 				$oer_authorurl2     	= "";
 				$oer_authoremail2   	= "";
 				$oer_thumbnailurl	= "";
+				$oer_format		= "";
 
 				/** Check first if column is set **/
 				if (isset($fnldata['cells'][$k][1]))
@@ -1165,6 +1166,8 @@ function oer_importResources($default=false) {
 					$oer_authoremail2   = $fnldata['cells'][$k][26];
 				if (isset($fnldata['cells'][$k][27]))
 					$oer_thumbnailurl   = $fnldata['cells'][$k][27];
+				if (isset($fnldata['cells'][$k][28]))
+					$oer_format   = $fnldata['cells'][$k][28];
 					
 				if(!empty($oer_standard) && (!is_array($oer_standard)))
 				{
@@ -1291,6 +1294,10 @@ function oer_importResources($default=false) {
 				if(!empty($oer_interactivity))
 				{
 					update_post_meta( $post_id , 'oer_interactivity' , sanitize_text_field($oer_interactivity));
+				}
+				if(!empty($oer_format))
+				{
+					update_post_meta( $post_id , 'oer_format' , sanitize_text_field($oer_format));
 				}
 				if(!empty($oer_userightsurl))
 				{
@@ -3262,6 +3269,8 @@ function oer_url2png($url, $args = array()) {
 }
 
 function oer_grade_levels($grade_levels){
+	$elmnt = 0;
+	
 	sort($grade_levels);
 
 	for($x=0; $x < count($grade_levels); $x++)
@@ -3271,7 +3280,9 @@ function oer_grade_levels($grade_levels){
 	
 	$fltrarr = array_filter($grade_levels, 'strlen');
 	$flag = array();
-	$elmnt = $fltrarr[min(array_keys($fltrarr))];
+	if (is_array($fltrarr))
+		$elmnt = $fltrarr[min(array_keys($fltrarr))];
+		
 	for($i =0; $i < count($fltrarr); $i++)
 	{
 		if($elmnt == $fltrarr[$i] || "k" == strtolower($fltrarr[$i]))
