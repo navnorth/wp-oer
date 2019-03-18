@@ -318,13 +318,14 @@ add_filter( 'template_include' , 'oer_category_template' );
 function oer_category_template( $template ) {
 	global $wp_query;
 
+	$object = $wp_query->get_queried_object();
+	var_dump($object);
 	//Post ID
 	$_id = $wp_query->get_queried_object_id();
 
 	// Get Current Object if it belongs to Resource Category taxonomy
 	$resource_term = get_term_by( 'id' , $_id , 'resource-subject-area' );
-	var_dump($resource_term);
-	//var_dump($resource_term);
+	
 	//Check if the loaded resource is a category
 	if ($resource_term && !is_wp_error( $resource_term )) {
 		return oer_get_template_hierarchy('resource-subject-area');
