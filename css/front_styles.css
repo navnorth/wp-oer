@@ -467,7 +467,7 @@ li.oer_sbstndard{
 .wp-block-wp-oer-plugin-oer-resource-block .post .resource-block-subjects ul { overflow:hidden; }
 .wp-block-wp-oer-plugin-oer-resource-block .post .resource-block-subjects ul li { list-style:none; }
 .entry-header { width:100%; }
-.oer_meta_container.tagcloud a {
+.oer_meta_container.tagcloud a, .oer-rsrcctgries.tagcloud a {
     font-size: 13px;
     display: inline-block;
     padding: 0 10px;
