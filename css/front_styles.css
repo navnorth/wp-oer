@@ -467,6 +467,16 @@ li.oer_sbstndard{
 .wp-block-wp-oer-plugin-oer-resource-block .post .resource-block-subjects ul { overflow:hidden; }
 .wp-block-wp-oer-plugin-oer-resource-block .post .resource-block-subjects ul li { list-style:none; }
 .entry-header { width:100%; }
+.oer_meta_container.tagcloud a {
+    font-size: 13px;
+    display: inline-block;
+    padding: 0 10px;
+    min-height: 28px;
+    line-height: 28px;
+    border: 1px solid;
+    margin: 2px 0;
+    transition: all .2s;
+}
 @media screen and (max-width: 600px) {
 	.oer_blgpst .oer-feature-image { width:100%; float:none; margin-bottom:10px; }
 	.oer_blgpst .rght-sd-cntnr-blg { width:100%; float:none; }
