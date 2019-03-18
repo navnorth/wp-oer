@@ -319,21 +319,23 @@ function oer_category_template( $template ) {
 	global $wp_query;
 
 	$object = $wp_query->get_queried_object();
-	var_dump($object);
-	//Post ID
-	$_id = $wp_query->get_queried_object_id();
-
-	// Get Current Object if it belongs to Resource Category taxonomy
-	$resource_term = get_term_by( 'id' , $_id , 'resource-subject-area' );
 	
-	//Check if the loaded resource is a category
-	if ($resource_term && !is_wp_error( $resource_term )) {
-		return oer_get_template_hierarchy('resource-subject-area');
-	} else {
-		if ($wp_query->is_search)
-			return oer_get_template_hierarchy("search");
-		return $template;
+	if (is_a($object,"WP_Term")) {
+		//Post ID
+		$_id = $wp_query->get_queried_object_id();
+	
+		// Get Current Object if it belongs to Resource Category taxonomy
+		$resource_term = get_term_by( 'id' , $_id , 'resource-subject-area' );
+		
+		//Check if the loaded resource is a category
+		if ($resource_term && !is_wp_error( $resource_term )) {
+			return oer_get_template_hierarchy('resource-subject-area');
+		} else {
+			if ($wp_query->is_search)
+				return oer_get_template_hierarchy("search");
+		}
 	}
+	return $template;
  }
 
  /**
