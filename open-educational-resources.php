@@ -323,6 +323,7 @@ function oer_category_template( $template ) {
 
 	// Get Current Object if it belongs to Resource Category taxonomy
 	$resource_term = get_term_by( 'id' , $_id , 'resource-subject-area' );
+	var_dump($resource_term);
 	//var_dump($resource_term);
 	//Check if the loaded resource is a category
 	if ($resource_term && !is_wp_error( $resource_term )) {
