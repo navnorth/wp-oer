@@ -412,10 +412,20 @@ function oer_save_customfields()
 		{
 			update_post_meta( $post->ID , 'oer_datecreated' , sanitize_text_field($_POST['oer_datecreated']));
 		}
+		
+		if(isset($_POST['oer_datecreated_estimate']))
+		{
+			update_post_meta( $post->ID , 'oer_datecreated_estimate' , sanitize_text_field($_POST['oer_datecreated_estimate']));
+		}
 
 		if(isset($_POST['oer_datemodified']))
 		{
 			update_post_meta( $post->ID , 'oer_datemodified' , sanitize_text_field($_POST['oer_datemodified']));
+		}
+		
+		if(isset($_POST['oer_transcription']))
+		{
+			update_post_meta( $post->ID , 'oer_transcription' , sanitize_textarea_field($_POST['oer_transcription']));
 		}
 
 		if(isset($_POST['oer_mediatype']))

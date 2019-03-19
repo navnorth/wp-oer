@@ -90,6 +90,16 @@ global $chck;
                 <input type="text" name="oer_datecreated" value="<?php echo $oer_datecreated;?>" class="oer_datepicker"/>
             </div>
         </div>
+	
+	<div class="oer_snglfld">
+        	<div class="oer_txt">
+			<?php _e("Date Created Estimate:", OER_SLUG); ?>
+            </div>
+            <div class="oer_fld">
+            	<?php $oer_datecreated_estimate = get_post_meta($post->ID, 'oer_datecreated_estimate', true);?>
+                <input type="text" name="oer_datecreated_estimate" value="<?php echo $oer_datecreated_estimate;?>" />
+            </div>
+        </div>
 
         <div class="oer_snglfld">
         	<div class="oer_txt">
@@ -100,6 +110,17 @@ global $chck;
                 <input type="text" name="oer_datemodified" value="<?php echo $oer_datemodified;?>" class="oer_datepicker"/>
             </div>
         </div>
+	
+	<div class="oer_snglfld">
+        	<div class="oer_txt">
+			<?php _e("Transcription:", OER_SLUG); ?>
+            </div>
+            <div class="oer_fld">
+            	<?php 	$oer_transcription = get_post_meta($post->ID, 'oer_transcription', true);
+			wp_editor( $oer_transcription, 'oer_transcription', array( "media_buttons"  => true, "tinymce" => true ) ); ?>
+            </div>
+        </div>
+
 
         <div class="oer_snglfld">
         	<div class="oer_txt">
