@@ -48,13 +48,13 @@ $resources = get_resources_by_notation($notation->id);
 display_custom_styles();
 ?>
 <div class="oer-backlink">
-    <a href="<?php echo home_url('resource/standards'); ?>"><?php _e("< Back to Standards",OER_SLUG); ?></a>
+    <a href="<?php echo home_url('resource/standards'); ?>"><?php _e("< Back to Standards",'wp-oer'); ?></a>
 </div>
 <div class="oer-cntnr">
 	<section id="primary" class="site-content">
 		<div id="content" role="main">
 		    <div class="oer-allftrdrsrc">
-			<div class="oer-snglrsrchdng"><?php printf(__("Browse %s", OER_SLUG), '<a href="'.home_url("resource/standards/".sanitize_title($standard->standard_name)).'">'.$standard->standard_name.'</a>'); ?></div>
+			<div class="oer-snglrsrchdng"><?php printf(__("Browse %s", 'wp-oer'), '<a href="'.home_url("resource/standards/".sanitize_title($standard->standard_name)).'">'.$standard->standard_name.'</a>'); ?></div>
 			<div class="oer-allftrdrsrccntr-notation">
 			    <ul class="oer-standard">
 			    <?php  if ($upstandards){
@@ -115,7 +115,7 @@ display_custom_styles();
 			</div>
 			<div class="oer_standard_resources">
 			    <?php if ($resources) { ?>
-				<h4><?php _e("Resources:", OER_SLUG); ?></h4>
+				<h4><?php _e("Resources:", 'wp-oer'); ?></h4>
 				<ul class="oer-resources">
 				    <?php foreach($resources as $resource) { ?>
 				    <li><a href="<?php echo get_the_permalink($resource->ID); ?>"><?php echo $resource->post_title; ?></a></li>

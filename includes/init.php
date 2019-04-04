@@ -7,9 +7,9 @@ require_once OER_PATH.'includes/oer-functions.php';
 function oer_filter_term_args( $args, $taxonomies )
 {
     global $pagenow;
-	
+
 	$user_id = get_current_user_id();
-	
+
 	$client_terms = get_user_meta($user_id, 'oer_userasgnctgries', true);
   	$client_terms = unserialize($client_terms);
 
@@ -105,7 +105,7 @@ add_action('admin_enqueue_scripts', 'oer_backside_scripts');
 function oer_backside_scripts($hook)
 {
     global $post;
-    
+
     if ((isset($_GET['post_type']) && $_GET['post_type']=='resource') || (isset($post->post_type) && $post->post_type=='resource')) {
 	wp_enqueue_style('jqueryui-styles', OER_URL.'css/jquery-ui.css');
 	wp_enqueue_style('back-styles', OER_URL.'css/back_styles.css');
@@ -114,7 +114,7 @@ function oer_backside_scripts($hook)
 	if (isset($post->post_type) && $post->post_type!=='resource') {
 	    wp_enqueue_script('jquery');
 	}
-	
+
 	wp_enqueue_script( 'jquery-ui-core' );
 	wp_enqueue_script( 'jquery-ui-widgets' );
 	wp_enqueue_script( 'jquery-ui-tabs' );
@@ -123,7 +123,7 @@ function oer_backside_scripts($hook)
 	wp_enqueue_script( 'thickbox' );
 	wp_enqueue_script('back-scripts', OER_URL.'js/back_scripts.js',array( 'jquery','media-upload','thickbox','set-post-thumbnail' ));
     }
-    
+
     // Adds our JS file to the queue that WordPress will load
     wp_enqueue_script( 'wp_ajax_oer_admin_script', OER_URL . 'js/oer_admin.js', array( 'jquery' ), null, true );
 
@@ -146,7 +146,7 @@ function oer_frontside_scripts()
 	wp_enqueue_script( 'jquery-ui-widgets' );
 	wp_enqueue_script( 'jquery-ui-tabs' );
 	wp_enqueue_script( 'jquery-ui-datepicker' );
-	
+
 	wp_enqueue_script('front-scripts', OER_URL.'js/front_scripts.js');
 	wp_enqueue_style( "resource-category-styles", OER_URL . "css/resource-category-style.css" );
 }
@@ -155,7 +155,7 @@ function oer_frontside_scripts()
 add_action( 'wp_head' , 'oer_add_style_block', 99  );
 function oer_add_style_block(){
     global $_css;
-    
+
     if ($_css) {
 	$output = "<style>"."\n";
 	$output .= $_css."\n";
@@ -169,24 +169,24 @@ add_action( 'init' , 'oer_postcreation' );
 function oer_postcreation(){
     global $_use_gutenberg;
 	$labels = array(
-        'name'               => _x( 'Resource', 'post type general name' ),
-        'singular_name'      => _x( 'Resource', 'post type singular name' ),
-        'add_new'            => _x( 'Add Resource', 'book' ),
-        'add_new_item'       => __( 'Add Resource' ),
-        'edit_item'          => __( 'Edit Resource' ),
-        'new_item'           => __( 'New Resource' ),
-        'all_items'          => __( 'All Resources' ),
-        'view_item'          => __( 'View Resource' ),
-        'search_items'       => __( 'Search' ),
+        'name'               => _x( 'Resource', 'post type general name', 'wp-oer' ),
+        'singular_name'      => _x( 'Resource', 'post type singular name', 'wp-oer' ),
+        'add_new'            => _x( 'Add Resource', 'book', 'wp-oer' ),
+        'add_new_item'       => __( 'Add Resource', 'wp-oer' ),
+        'edit_item'          => __( 'Edit Resource', 'wp-oer' ),
+        'new_item'           => __( 'New Resource', 'wp-oer' ),
+        'all_items'          => __( 'All Resources', 'wp-oer' ),
+        'view_item'          => __( 'View Resource', 'wp-oer' ),
+        'search_items'       => __( 'Search', 'wp-oer' ),
         'menu_name'          => 'OER'
     );
-    
+
     $args = array(
         'labels'        => $labels,
 	'show_ui' => true,
 	'show_in_menu' => true,
 	'menu_position' => 5,
-        'description'   => 'Create Resources',
+        'description'   => __('Create Resources', 'wp-oer'),
         'public'        => true,
 	'publicly_queryable'        => true,
 	'exclude_from_search' => false,
@@ -198,10 +198,10 @@ function oer_postcreation(){
         'has_archive'   => true,
 	'register_meta_box_cb' => 'oer_resources_custom_metaboxes'
     );
-    
+
     if ($_use_gutenberg=="on" or $_use_gutenberg=="1")
 	$args['show_in_rest'] = true;
-	
+
     register_post_type( 'resource', $args);
 }
 
@@ -220,21 +220,21 @@ function oermeta_callback()
 add_action( 'init', 'oer_create_resource_taxonomies', 0 );
 function oer_create_resource_taxonomies() {
     global $_use_gutenberg;
-    
+
     $labels = array(
-	    'name'              => _x( 'Subject Area', 'taxonomy general name' ),
-	    'singular_name'     => _x( 'Subject Area', 'taxonomy singular name' ),
-	    'search_items'      => __( 'Search Subject Areas' ),
-	    'all_items'         => __( 'All Subject Areas' ),
-	    'parent_item'       => __( 'Parent Subject Area' ),
-	    'parent_item_colon' => __( 'Parent Subject Area:' ),
-	    'edit_item'         => __( 'Edit Subject Area' ),
-	    'update_item'       => __( 'Update Subject Area' ),
-	    'add_new_item'      => __( 'Add New Subject Area' ),
-	    'new_item_name'     => __( 'New Genre Subject Area' ),
-	    'menu_name'         => __( 'Subject Areas' ),
+	    'name'              => _x( 'Subject Area', 'taxonomy general name', 'wp-oer' ),
+	    'singular_name'     => _x( 'Subject Area', 'taxonomy singular name', 'wp-oer' ),
+	    'search_items'      => __( 'Search Subject Areas', 'wp-oer' ),
+	    'all_items'         => __( 'All Subject Areas', 'wp-oer' ),
+	    'parent_item'       => __( 'Parent Subject Area', 'wp-oer' ),
+	    'parent_item_colon' => __( 'Parent Subject Area:', 'wp-oer' ),
+	    'edit_item'         => __( 'Edit Subject Area', 'wp-oer' ),
+	    'update_item'       => __( 'Update Subject Area', 'wp-oer' ),
+	    'add_new_item'      => __( 'Add New Subject Area', 'wp-oer' ),
+	    'new_item_name'     => __( 'New Genre Subject Area', 'wp-oer' ),
+	    'menu_name'         => __( 'Subject Areas', 'wp-oer' ),
     );
-    
+
     $args = array(
 	    'hierarchical'      => true,
 	    'labels'            => $labels,
@@ -243,10 +243,10 @@ function oer_create_resource_taxonomies() {
 	    'query_var'         => true,
 	    'rewrite'           => array( 'slug' => 'resource-subject-area' ),
     );
-    
+
     if ($_use_gutenberg=="on" or $_use_gutenberg=="1")
 	$args['show_in_rest'] = true;
-    
+
     register_taxonomy( 'resource-subject-area', array( 'resource' ), $args );
 }
 //register cutsom category
@@ -260,13 +260,13 @@ function oer_add_upload_image_fields($taxonomy) {
     ?>
     <?php wp_nonce_field( 'oer_add_upload_image_action', 'oer_add_upload_image_action_nonce_field' ); ?>
     <div class="form-field term-group">
-        <label for="main-icon-group"><?php _e('Subject Area Main Icon', OER_SLUG); ?></label>
+        <label for="main-icon-group"><?php _e('Subject Area Main Icon', 'wp-oer'); ?></label>
 	<a id="main_icon_button" href="javascript:void(0);" class="button">Set Main Icon</a>
 	<a id="remove_main_icon_button" href="javascript:void(0);" class="button hidden">Remove Main Icon</a>
 	<input id="mainIcon" type="hidden" size="36" name="mainIcon" value="" />
     </div>
     <div class="form-field term-group">
-        <label for="hover-icon-group"><?php _e('Subject Area Hover Icon', OER_SLUG); ?></label>
+        <label for="hover-icon-group"><?php _e('Subject Area Hover Icon', 'wp-oer'); ?></label>
 	<a id="hover_icon_button" href="javascript:void(0);" class="button">Set Hover Icon</a>
 	<a id="remove_hover_icon_button" href="javascript:void(0);" class="button hidden">Remove Hover Icon</a>
 	<input id="hoverIcon" type="hidden" size="36" name="hoverIcon" value="" />
@@ -279,12 +279,12 @@ function oer_add_upload_image_fields($taxonomy) {
  **/
 add_action( 'resource-subject-area_edit_form_fields', 'oer_edit_upload_image_fields', 10, 2 );
 function oer_edit_upload_image_fields( $term, $taxonomy ) {
-    
+
     $mainIcon = get_term_meta( $term->term_id, 'mainIcon', true );
      ?>
      <?php wp_nonce_field( 'oer_edit_upload_image_action', 'oer_edit_upload_image_action_nonce_field' ); ?>
      <tr class="form-field term-group-wrap">
-        <th scope="row"><label for="feature-group"><?php _e('Subject Area Main Icon', OER_SLUG); ?></label></th>
+        <th scope="row"><label for="feature-group"><?php _e('Subject Area Main Icon', 'wp-oer'); ?></label></th>
         <td>
 	    <div class="main_icon_button_img"><img src="<?php echo $mainIcon; ?>" /></div>
 	    <a id="main_icon_button" href="javascript:void(0);" class="button">Set Main Icon</a>
@@ -292,10 +292,10 @@ function oer_edit_upload_image_fields( $term, $taxonomy ) {
 	    <input id="mainIcon" type="hidden" size="36" name="mainIcon" value="<?php echo $mainIcon; ?>" />
 	</td>
     </tr><?php
-    
+
     $hoverIcon = get_term_meta( $term->term_id, 'hoverIcon', true );
     ?><tr class="form-field term-group-wrap">
-        <th scope="row"><label for="feature-group"><?php _e('Subject Area Hover Icon', OER_SLUG); ?></label></th>
+        <th scope="row"><label for="feature-group"><?php _e('Subject Area Hover Icon', 'wp-oer'); ?></label></th>
         <td>
 	    <div class="hover_icon_button_img"><img src="<?php echo $hoverIcon; ?>" /></div>
 	    <a id="hover_icon_button" href="javascript:void(0);" class="button">Set Hover Icon</a>
@@ -352,17 +352,17 @@ add_action('save_post', 'oer_save_customfields');
 function oer_save_customfields()
 {
     global $post, $wpdb, $_oer_prefix;
-    
+
     //Check first if screenshot is enabled
     $screenshot_enabled = get_option( 'oer_enable_screenshot' );
     $external_screenshot = get_option('oer_external_screenshots');
-    
+
     //Check first if $post is not empty
     if ($post) {
 	if($post->post_type == 'resource')
 	{
 	    if (isset($_GET['action']) && ($_GET['action']=="trash" || $_GET['action']=="untrash")){
-		return; 
+		return;
 	    }
 	    if (!isset($_POST['oer_metabox_nonce_field']) || !wp_verify_nonce( $_POST['oer_metabox_nonce_field'], 'oer_metabox_action' )) {
 		    wp_die('Nonce verification failed');
@@ -398,7 +398,7 @@ function oer_save_customfields()
 		{
 			update_post_meta( $post->ID , 'oer_grade' , '');
 		}
-		
+
 		if(isset($_POST['oer_datecreated']))
 		{
 			update_post_meta( $post->ID , 'oer_datecreated' , sanitize_text_field($_POST['oer_datecreated']));
@@ -457,7 +457,7 @@ function oer_save_customfields()
 			}
 			update_post_meta( $post->ID , 'oer_isbasedonurl' , esc_url_raw($oer_isbasedonurl));
 		}
-		
+
 		if(isset($_POST['oer_standard_alignment']))
 		{
 			update_post_meta( $post->ID , 'oer_standard_alignment' , sanitize_text_field($_POST['oer_standard_alignment']));
@@ -471,7 +471,7 @@ function oer_save_customfields()
 		{
 			$gt_oer_standard = $_POST['oer_standard'];
 			$gt_oer_standard = array_map( 'sanitize_text_field', $_POST['oer_standard']) ;
-			
+
 			if(!empty($gt_oer_standard)) {
 			    for($l = 0; $l < count($gt_oer_standard); $l++)
 			    {
@@ -480,7 +480,7 @@ function oer_save_customfields()
 				{
 				    $gt_oer_standard_notation .= "standard_notation-".$results['id'].",";
 				    $table = explode("-", $results['parent_id']);
-				    
+
 				    if(!empty($table))
 				    {
 					$stndrd_algn = $wpdb->get_row( $wpdb->prepare( "SELECT * from  " . $wpdb->prefix. $_oer_prefix.$table[0] . " where id =%s" , $table[1] ),ARRAY_A);
@@ -590,13 +590,13 @@ function oer_save_customfields()
 		{
 			update_post_meta( $post->ID , 'oer_publisheremail' , sanitize_email($_POST['oer_publisheremail']));
 		}
-		
+
 		if(!empty($_POST['oer_resourceurl']))
 		{
 			$url = esc_url_raw($_POST['oer_resourceurl']);
-			
+
 			$youtube = oer_is_youtube_url($url);
-			
+
 			$upload_dir = wp_upload_dir();
 			$file = '';
 
@@ -605,15 +605,15 @@ function oer_save_customfields()
 			{
 			    if ( $screenshot_enabled )
 				$file = oer_getScreenshotFile($url);
-			    
+
 			    // if external screenshot utility enabled
 			    if ( $external_screenshot )
 				$file = oer_getImageFromExternalURL($url);
-				
+
 			    if ( $youtube )
 				$file = oer_get_youtube_thumbnail($url);
 			}
-			
+
 			if(file_exists($file))
 			{
 				$filetype = wp_check_filetype( basename( $file ), null );
@@ -684,19 +684,19 @@ function process_import_resources(){
     if (!current_user_can('manage_options')) {
 	    wp_die( "You don't have permission to access this page!" );
     }
-    
+
     //Resource Import
     if(isset($_POST['resrc_imprt']))
     {
 	check_admin_referer('oer_resources_nonce_field');
-	    
+
 	    $import_response = oer_importResources();
 	    if ($import_response){
 		$message = urlencode($import_response["message"]);
 		$type = urlencode($import_response["type"]);
 	    }
     }
-    
+
     wp_safe_redirect( admin_url("edit.php?post_type=resource&page=oer_import&message=$message&type=$type"));
     exit;
 }
@@ -709,13 +709,13 @@ function process_import_lr_resources(){
     if (!current_user_can('manage_options')) {
 	    wp_die( "You don't have permission to access this page!" );
     }
-    
+
     //Resource Import
     if(isset($_POST['lr_resrc_imprt'])){
 	check_admin_referer('oer_lr_nonce_field');
-	
+
 	$resources = oer_importLRResources();
-	
+
 	if ($resources){
 	    $cnt = 0;
 	    foreach($resources as $resource) {
@@ -727,7 +727,7 @@ function process_import_lr_resources(){
 	    $message = $cnt;
 	    $type = "lr";
 	}
-	
+
     }
     wp_safe_redirect( admin_url("edit.php?post_type=resource&page=oer_import&message=$message&type=$type"));
     exit;
@@ -744,19 +744,19 @@ function process_import_subjects(){
     if (!current_user_can('manage_options')) {
 	    wp_die( "You don't have permission to access this page!" );
     }
-    
+
     //Subject Areas Bulk Import
     if(isset($_POST['bulk_imprt']))
     {
 	    check_admin_referer('oer_subject_area_nonce_field');
-	    
+
 	$import_response = oer_importSubjectAreas();
 	if ($import_response){
 	    $message = urlencode($import_response["message"]);
 	    $type = urlencode($import_response["type"]);
 	}
     }
-    
+
     wp_safe_redirect( admin_url("edit.php?post_type=resource&page=oer_import&message=$message&type=$type"));
     exit;
 }
@@ -772,26 +772,26 @@ function process_import_standards(){
     if (!current_user_can('manage_options')) {
 	    wp_die( "You don't have permission to access this page!" );
     }
-    
+
     //Standards Bulk Import
     if(isset($_POST['standards_import']))
     {
 	check_admin_referer('oer_standards_nonce_field');
-	    
+
 	$files = array();
-    
+
 	if (isset($_POST['oer_common_core_mathematics'])){
 	       $files[] = OER_PATH."samples/CCSS_Math.xml";
 	}
-    
+
 	if (isset($_POST['oer_common_core_english'])){
 	       $files[] = OER_PATH."samples/CCSS_ELA.xml";
 	}
-    
+
 	if (isset($_POST['oer_next_generation_science'])){
 	       $files[] = OER_PATH."samples/NGSS.xml";
 	}
-	    
+
 	foreach ($files as $file) {
 	    $import = oer_importStandards($file);
 	    if ($import['type']=="success") {
@@ -807,7 +807,7 @@ function process_import_standards(){
 	}
 	$message = urlencode($message);
     }
-    
+
     wp_safe_redirect( admin_url("edit.php?post_type=resource&page=oer_import&message=$message&type=$type"));
     exit;
 }

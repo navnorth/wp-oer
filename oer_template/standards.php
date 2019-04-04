@@ -20,7 +20,7 @@ $standards = get_standards();
 	<section id="primary" class="site-content">
 		<div id="content" role="main">
 		    <div class="oer-allftrdrsrc">
-			<div class="oer-snglrsrchdng"><?php printf(__("Browse All %d Standards", OER_SLUG), $std_count); ?></div>
+			<div class="oer-snglrsrchdng"><?php printf(__("Browse All %d Standards", 'wp-oer'), $std_count); ?></div>
 			<div class="oer-allftrdrsrccntr">
 			    <?php if ($standards) {  ?>
 			    <ul class="oer-standards">

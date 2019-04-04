@@ -1,0 +1,785 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WP OER\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-01-14 15:08+0000\n"
+"PO-Revision-Date: 2019-01-14 15:10+0000\n"
+"Last-Translator: Mario Badilla <mario.badilla@gmail.com>\n"
+"Language-Team: Español\n"
+"Language: es_ES\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.2.0; wp-4.9.9"
+
+#: includes/resource_metafields.php:57
+msgid "1"
+msgstr ""
+
+#: includes/resource_metafields.php:66
+msgid "10"
+msgstr ""
+
+#: includes/resource_metafields.php:67
+msgid "11"
+msgstr ""
+
+#: includes/resource_metafields.php:68
+msgid "12"
+msgstr ""
+
+#: includes/resource_metafields.php:58
+msgid "2"
+msgstr ""
+
+#: includes/resource_metafields.php:59
+msgid "3"
+msgstr ""
+
+#: includes/resource_metafields.php:60
+msgid "4"
+msgstr ""
+
+#: includes/resource_metafields.php:61
+msgid "5"
+msgstr ""
+
+#: includes/resource_metafields.php:62
+msgid "6"
+msgstr ""
+
+#: includes/resource_metafields.php:63
+msgid "7"
+msgstr ""
+
+#: includes/resource_metafields.php:64
+msgid "8"
+msgstr ""
+
+#: includes/resource_metafields.php:65
+msgid "9"
+msgstr ""
+
+#: oer_template/template-standard.php:24
+#: oer_template/template-substandard.php:41
+#: oer_template/template-notation.php:51
+msgid "< Back to Standards"
+msgstr "< Regresar a estándares"
+
+#: open-educational-resources.php:868
+msgid ""
+"A collection of over 50 Open Educational Resources has been provided as a "
+"base - you can easily remove these later."
+msgstr ""
+"Una colección de más de 50 REA están disponibles como base. Usted puede "
+"quitarlos después."
+
+#: open-educational-resources.php:885
+msgid "A general listing of the most common subject areas."
+msgstr "Un listado general de las áreas temáticas más comunes."
+
+#: includes/resource_metafields.php:320
+msgid "Add Author"
+msgstr "Agregar autor"
+
+#: includes/init.php:233
+msgid "Add New Subject Area"
+msgstr "Agregar área temática nueva"
+
+#: includes/init.php:175
+msgid "Add Resource"
+msgstr ""
+
+#: open-educational-resources.php:817
+msgid "Additional CSS"
+msgstr ""
+
+#: includes/settings.php:177
+msgid ""
+"Adjust settings below as necessary for your installation. For additional "
+"information on these options check the support forums or <a href='https:"
+"//www.wp-oer.com/' target='_blank'>wp-oer.com</a>"
+msgstr ""
+
+#: includes/init.php:178
+msgid "All Resources"
+msgstr ""
+
+#: includes/init.php:228
+msgid "All Subject Areas"
+msgstr ""
+
+#: oer_template/archive-resource.php:21
+#, php-format
+msgid "Archives: %s"
+msgstr ""
+
+#: includes/standards-importer.php:11
+msgid "ASN Standards Info"
+msgstr ""
+
+#: includes/resource_metafields.php:119
+msgid "Assessment"
+msgstr ""
+
+#: includes/resource_metafields.php:147
+msgid "Async"
+msgstr ""
+
+#: includes/resource_metafields.php:102 includes/resource_metafields.php:120
+msgid "Audio"
+msgstr ""
+
+#: includes/resource_metafields.php:208 includes/resource_metafields.php:268
+msgid "Author Information:"
+msgstr ""
+
+#: includes/init.php:174
+msgctxt "book"
+msgid "Add Resource"
+msgstr ""
+
+#: oer_template/template-standard.php:30
+#: oer_template/template-substandard.php:47
+#: oer_template/template-notation.php:57
+#, php-format
+msgid "Browse %s"
+msgstr ""
+
+#: oer_template/resource-subject-area.php:356
+#, php-format
+msgid "Browse All %d Resources"
+msgstr ""
+
+#: oer_template/standards.php:23
+#, php-format
+msgid "Browse All %d Standards"
+msgstr ""
+
+#: includes/resource_metafields.php:121
+msgid "Calculator"
+msgstr ""
+
+#: open-educational-resources.php:994
+msgid "Common Core English Language Arts"
+msgstr ""
+
+#: open-educational-resources.php:980
+msgid "Common Core Mathematics"
+msgstr ""
+
+#: includes/init.php:189
+msgid "Create Resources"
+msgstr ""
+
+#: oer_template/single-resource-standard.php:104
+#: oer_template/single-resource-youtube.php:58
+msgid "Creator:"
+msgstr ""
+
+#: includes/resource_metafields.php:76
+msgid "Date Created:"
+msgstr ""
+
+#: includes/resource_metafields.php:86
+msgid "Date Modified:"
+msgstr ""
+
+#: open-educational-resources.php:1097
+msgid "Deactivate OER plugin"
+msgstr ""
+
+#: open-educational-resources.php:1041
+msgid "Delete all resource subject area taxonomies"
+msgstr ""
+
+#: open-educational-resources.php:1055
+msgid "Delete all resources"
+msgstr ""
+
+#: open-educational-resources.php:1069
+msgid "Delete media associated with resources(screenshots)"
+msgstr ""
+
+#: open-educational-resources.php:1027
+msgid "Delete standards data"
+msgstr ""
+
+#: open-educational-resources.php:1111
+msgid "Delete the OER plugin files"
+msgstr ""
+
+#: includes/resource_metafields.php:122
+msgid "Demonstration"
+msgstr ""
+
+#: oer_template/single-resource-standard.php:85
+#: oer_template/single-resource-youtube.php:27
+msgid "Description"
+msgstr ""
+
+#: open-educational-resources.php:615
+msgid "Disable Screenshots"
+msgstr ""
+
+#: open-educational-resources.php:771
+msgid "Display Subjects menu on Subject Area pages"
+msgstr ""
+
+#: includes/resource_metafields.php:103
+msgid "Document"
+msgstr ""
+
+#: includes/resources-importer.php:11 includes/categories-importer.php:11
+msgid "Download Spreadsheet Template"
+msgstr ""
+
+#: open-educational-resources.php:818
+msgid "easily customize the look and feel with your own CSS"
+msgstr ""
+
+#: includes/categories-importer.php:8
+msgid ""
+"Easily setup resource subject areas. See the spreadsheet template for data "
+"format specifications."
+msgstr ""
+
+#: includes/init.php:176
+msgid "Edit Resource"
+msgstr ""
+
+#: includes/init.php:231
+msgid "Edit Subject Area"
+msgstr ""
+
+#: includes/resource_metafields.php:246 includes/resource_metafields.php:306
+#: includes/resource_metafields.php:352
+msgid "Email Address:"
+msgstr ""
+
+#: open-educational-resources.php:631
+msgid "Enable Server-side screenshots"
+msgstr ""
+
+#: open-educational-resources.php:902
+msgid "Enable use of CCSS as an optional alignment option for resources."
+msgstr ""
+
+#: open-educational-resources.php:584
+msgid "External PDF Resources"
+msgstr ""
+
+#: includes/resource_metafields.php:29
+msgid "False"
+msgstr ""
+
+#: includes/lr-importer.php:11
+msgid ""
+"For bulk imports of resources from the Learning Registry, with automatic "
+"matching of subjects and grades, similar to the spreadsheet importer."
+msgstr ""
+
+#: includes/resources-importer.php:8
+msgid ""
+"For bulk upload of resources. Import file must match the spreadsheet "
+"template. If screenshot processing is enabled, a maximum of 50 records per "
+"transaction is suggested."
+msgstr ""
+
+#: includes/resource_metafields.php:123
+msgid "Game"
+msgstr ""
+
+#: oer_template/single-resource-standard.php:141
+#: oer_template/single-resource-youtube.php:95
+#: includes/resource_metafields.php:35
+msgid "Grade:"
+msgstr ""
+
+#: oer_template/single-resource-standard.php:139
+#: oer_template/single-resource-youtube.php:93
+msgid "Grades:"
+msgstr ""
+
+#: includes/resource_metafields.php:149
+msgid "Group"
+msgstr ""
+
+#: includes/resource_metafields.php:24
+msgid "Highlight:"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://www.navigationnorth.com"
+msgstr ""
+
+#. URI of the plugin
+msgid "https://www.wp-oer.com"
+msgstr ""
+
+#: includes/resource_metafields.php:104
+msgid "Image"
+msgstr ""
+
+#: includes/lr-importer.php:29 includes/resources-importer.php:26
+#: includes/standards-importer.php:73 includes/categories-importer.php:26
+msgid "Import"
+msgstr ""
+
+#: includes/standards-importer.php:5
+msgid "Import Academic Standards"
+msgstr ""
+
+#: open-educational-resources.php:754 open-educational-resources.php:919
+msgid "Import Bootstrap CSS & JS libraries"
+msgstr ""
+
+#: open-educational-resources.php:901
+msgid "Import Common Core State Standards"
+msgstr ""
+
+#: open-educational-resources.php:884
+msgid "Import Default Subject Areas"
+msgstr ""
+
+#: open-educational-resources.php:867
+msgid "Import Example Set of Resources"
+msgstr ""
+
+#: includes/resources-importer.php:5
+msgid "Import Resources"
+msgstr ""
+
+#: includes/lr-importer.php:8
+msgid "Import Resources from the Learning Registry (beta)"
+msgstr ""
+
+#: includes/categories-importer.php:5
+msgid "Import Subject Areas"
+msgstr ""
+
+#: includes/resource_metafields.php:142
+msgid "Interactive"
+msgstr ""
+
+#: includes/resource_metafields.php:136
+msgid "Interactivity:"
+msgstr ""
+
+#: includes/resource_metafields.php:124
+msgid "Interview"
+msgstr ""
+
+#: includes/resource_metafields.php:166
+msgid "Is based on URL:"
+msgstr ""
+
+#: includes/resource_metafields.php:56
+msgid "K (Kindergarten)"
+msgstr ""
+
+#: oer_template/single-resource-standard.php:208
+#: oer_template/single-resource-youtube.php:162
+msgid "Keywords:"
+msgstr ""
+
+#: includes/lr-importer.php:14
+msgid "Learning Registry Info"
+msgstr ""
+
+#: includes/resource_metafields.php:113 includes/resource_metafields.php:129
+msgid "Learning Resource Type:"
+msgstr ""
+
+#: includes/resource_metafields.php:125
+msgid "Lecture"
+msgstr ""
+
+#: includes/resource_metafields.php:126
+msgid "Lesson Plan"
+msgstr ""
+
+#: open-educational-resources.php:772
+msgid ""
+"Lists all subject areas in left column of Subject Area pages - may conflict "
+"with themes using left navigation."
+msgstr ""
+
+#: open-educational-resources.php:560
+msgid "Local PDF Resources"
+msgstr ""
+
+#: includes/resource_metafields.php:96
+msgid "Media Type:"
+msgstr ""
+
+#: includes/import.php:75 includes/settings.php:166
+msgid "More Information"
+msgstr ""
+
+#: includes/resource_metafields.php:226 includes/resource_metafields.php:286
+#: includes/resource_metafields.php:332
+msgid "Name:"
+msgstr ""
+
+#. Author of the plugin
+msgid "Navigation North"
+msgstr ""
+
+#: includes/init.php:234
+msgid "New Genre Subject Area"
+msgstr ""
+
+#: includes/init.php:177
+msgid "New Resource"
+msgstr ""
+
+#: oer_template/tag-resource.php:61 oer_template/archive-resource.php:55
+msgid "Nothing Found"
+msgstr ""
+
+#: includes/resource_metafields.php:146
+msgid "One-on-One"
+msgstr ""
+
+#. Description of the plugin
+msgid ""
+"Open Educational Resource management and curation, metadata publishing, and "
+"alignment to Common Core State Standards."
+msgstr ""
+
+#: includes/resource_metafields.php:219 includes/resource_metafields.php:279
+msgid "Organization"
+msgstr ""
+
+#: includes/resource_metafields.php:106
+msgid "Other"
+msgstr ""
+
+#: includes/init.php:229
+msgid "Parent Subject Area"
+msgstr ""
+
+#: includes/init.php:230
+msgid "Parent Subject Area:"
+msgstr ""
+
+#: includes/resource_metafields.php:143
+msgid "Passive"
+msgstr ""
+
+#: includes/settings.php:198
+msgid "PDF Embeds"
+msgstr ""
+
+#: includes/resource_metafields.php:218 includes/resource_metafields.php:278
+msgid "Person"
+msgstr ""
+
+#: includes/init.php:172
+msgctxt "post type general name"
+msgid "Resource"
+msgstr ""
+
+#: includes/init.php:173
+msgctxt "post type singular name"
+msgid "Resource"
+msgstr ""
+
+#: includes/resource_metafields.php:55
+msgid "Pre-K"
+msgstr ""
+
+#: includes/resource_metafields.php:128
+msgid "Presentation"
+msgstr ""
+
+#: includes/resource_metafields.php:145
+msgid "Programmatic"
+msgstr ""
+
+#: includes/resource_metafields.php:327
+msgid "Publisher Information:"
+msgstr ""
+
+#: oer_template/single-resource-standard.php:116
+#: oer_template/single-resource-youtube.php:70
+msgid "Publisher:"
+msgstr ""
+
+#: open-educational-resources.php:654 open-educational-resources.php:662
+msgid "Python executable"
+msgstr ""
+
+#: open-educational-resources.php:669 open-educational-resources.php:677
+msgid "Python Screenshot script"
+msgstr ""
+
+#: oer_template/resource-subject-area.php:580
+#, php-format
+msgid "Recommended %s Content"
+msgstr ""
+
+#: open-educational-resources.php:1083
+msgid "Remove all OER plugin settings"
+msgstr ""
+
+#: includes/settings.php:280
+msgid "Reset OER Plugin Setup"
+msgstr ""
+
+#: open-educational-resources.php:802
+msgid "Resource pages"
+msgstr ""
+
+#: includes/resource_metafields.php:13
+msgid "Resource URL:"
+msgstr ""
+
+#: includes/standards-importer.php:8
+msgid ""
+"Resources can be easily tagged to standards to provide additional alignment "
+"information to viewers. Datasets for the standards listed below are included "
+"with the plugin."
+msgstr ""
+
+#: oer_template/template-notation.php:118
+msgid "Resources:"
+msgstr ""
+
+#: includes/settings.php:204
+msgid "Screenshot Utility"
+msgstr ""
+
+#: includes/init.php:180
+msgid "Search"
+msgstr ""
+
+#: includes/init.php:227
+msgid "Search Subject Areas"
+msgstr ""
+
+#: open-educational-resources.php:700 open-educational-resources.php:708
+msgid "Service URL"
+msgstr ""
+
+#: includes/resource_metafields.php:127
+msgid "Simulation"
+msgstr ""
+
+#: includes/resource_metafields.php:144
+msgid "Social"
+msgstr ""
+
+#: oer_template/tag-resource.php:65
+msgid ""
+"Sorry, but nothing matched your search criteria. Please try again with some "
+"different keywords."
+msgstr ""
+
+#: oer_template/archive-resource.php:59
+msgid "Sorry, but there are no resources to display."
+msgstr ""
+
+#: oer_template/single-resource-standard.php:329
+msgid "Standard Alignment"
+msgstr ""
+
+#: oer_template/single-resource-standard.php:322
+msgid "Standards Alignment"
+msgstr ""
+
+#: includes/resource_metafields.php:176
+msgid "Standards Alignment:"
+msgstr ""
+
+#: includes/init.php:269 includes/init.php:298
+msgid "Subject Area Hover Icon"
+msgstr ""
+
+#: includes/init.php:263 includes/init.php:287
+msgid "Subject Area Main Icon"
+msgstr ""
+
+#: open-educational-resources.php:787
+msgid "Subject Area pages"
+msgstr ""
+
+#: widgets/class-subject-area-widget.php:9
+msgid "Subject Area Widget"
+msgstr ""
+
+#: includes/init.php:235
+msgid "Subject Areas"
+msgstr ""
+
+#: includes/oer-functions.php:2104
+msgid "Successfully deleted all resources"
+msgstr ""
+
+#: includes/oer-functions.php:2054
+msgid "Successfully deleted all subject areas"
+msgstr ""
+
+#: includes/oer-functions.php:2126
+msgid "Successfully deleted resource media"
+msgstr ""
+
+#: includes/oer-functions.php:2042
+msgid "Successfully deleted standards"
+msgstr ""
+
+#: includes/oer-functions.php:1476
+#, php-format
+msgid "Successfully imported %s resources."
+msgstr ""
+
+#: includes/oer-functions.php:1791
+#, php-format
+msgid "Successfully imported %s subject areas."
+msgstr ""
+
+#: includes/oer-functions.php:2186
+msgid "Successfully removed all plugin settings"
+msgstr ""
+
+#: includes/import.php:65 includes/settings.php:188 includes/settings.php:223
+#: includes/settings.php:257 includes/settings.php:292
+msgid "Support Options"
+msgstr ""
+
+#: includes/resource_metafields.php:148
+msgid "Sync"
+msgstr ""
+
+#: oer_template/tag-resource.php:23
+#, php-format
+msgid "Tag Archives: %s"
+msgstr ""
+
+#: includes/init.php:225
+msgctxt "taxonomy general name"
+msgid "Subject Area"
+msgstr ""
+
+#: includes/init.php:226
+msgctxt "taxonomy singular name"
+msgid "Subject Area"
+msgstr ""
+
+#: oer_template/resource-subject-area.php:550
+#, php-format
+msgid "There are no resources available for %s"
+msgstr ""
+
+#: includes/settings.php:281
+msgid ""
+"This function is provided just to assist with testing. Be careful with the "
+"options below as each of them will remove data from your Wordpress site."
+msgstr ""
+
+#: widgets/class-subject-area-widget.php:10
+msgid "This is the Subject Area widget"
+msgstr ""
+
+#: includes/resource_metafields.php:28
+msgid "True"
+msgstr ""
+
+#: oer_template/single-resource-standard.php:125
+#: oer_template/single-resource-youtube.php:79
+#: includes/resource_metafields.php:213 includes/resource_metafields.php:273
+msgid "Type:"
+msgstr ""
+
+#: open-educational-resources.php:755
+msgid "uncheck if your WP theme already included Bootstrap"
+msgstr ""
+
+#: includes/init.php:232
+msgid "Update Subject Area"
+msgstr ""
+
+#: includes/resource_metafields.php:236 includes/resource_metafields.php:296
+#: includes/resource_metafields.php:342
+msgid "URL:"
+msgstr ""
+
+#: open-educational-resources.php:709
+msgid "use $url for where the Resource URL parameter should be placed"
+msgstr ""
+
+#: open-educational-resources.php:692
+msgid "Use external screenshot service"
+msgstr ""
+
+#: open-educational-resources.php:941
+msgid "Use Gutenberg Editor"
+msgstr ""
+
+#: includes/resource_metafields.php:156
+msgid "Use Rights URL:"
+msgstr ""
+
+#: includes/import.php:33
+msgid ""
+"Use the options below to import data sets to the OER tool. Additional "
+"information can be found on the support forums or wp-oer.com."
+msgstr ""
+
+#: includes/settings.php:220
+msgid ""
+"Use the options below to make adjustments to the look and feel of the OER "
+"pages. For more fine-tune customizations, additional CSS can be provided to "
+"include on all OER pages."
+msgstr ""
+
+#: open-educational-resources.php:647
+msgid "Use xvfb -- typically necessary on Linux installations"
+msgstr ""
+
+#: includes/resource_metafields.php:105
+msgid "Video"
+msgstr ""
+
+#: includes/oer-functions.php:501
+#, php-format
+msgid "View all posts in %s"
+msgstr ""
+
+#: includes/init.php:179
+msgid "View Resource"
+msgstr ""
+
+#: includes/resource_metafields.php:101
+msgid "Website"
+msgstr ""
+
+#: includes/settings.php:246
+msgid ""
+"When first setting up the plugin, the following options will give you the "
+"base set of data to see how everything works. All of these options will be "
+"available to you in other settings and features at a later time if you want "
+"to skip any or all of these options."
+msgstr ""
+
+#. Name of the plugin
+msgid "WP OER"
+msgstr ""
+
+#: includes/import.php:67 includes/settings.php:190 includes/settings.php:225
+#: includes/settings.php:259 includes/settings.php:294
+msgid "WP OER Plugin Support"
+msgstr ""
+
+#: open-educational-resources.php:172
+msgid "Your request was successful."
+msgstr ""
+
+#: open-educational-resources.php:920
+msgid ""
+"Your theme does not appear to have bootstrap. Uncheck if your WP theme "
+"already included Bootstrap"
+msgstr ""

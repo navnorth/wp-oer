@@ -353,7 +353,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 				$resources = get_posts($args);
 				$resource_count = count($resources);
 				?>
-			<div class="oer-snglrsrchdng"><?php printf(__("Browse All %d Resources", OER_SLUG), $resource_count); ?><?php oer_get_sort_box(array($rsltdata['term_id'])); ?></div>
+			<div class="oer-snglrsrchdng"><?php printf(__("Browse All %d Resources", 'wp-oer'), $resource_count); ?><?php oer_get_sort_box(array($rsltdata['term_id'])); ?></div>
 			<div class="oer-allftrdrsrccntr" id="content-resources" file-path="<?php echo get_template_directory_uri();?>/lib/ajax-scroll.php" data-id="<?php echo esc_attr($rsltdata['term_id']);?>">
 				<?php
 				//Get number of pages
@@ -547,7 +547,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 				else
 				{
 					?>
-					<div class='oer-snglrsrc'><?php sprintf(__("There are no resources available for %s", OER_SLUG), $term); ?></div>
+					<div class='oer-snglrsrc'><?php sprintf(__("There are no resources available for %s", 'wp-oer'), $term); ?></div>
 					<?php
 				}
 				//Show load more button
@@ -577,7 +577,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 		if(!empty($posts))
 		{ ?>
 		<div class="oer-allftrdpst">
-			<div class="oer-alltrdpsthdng"><?php printf( __( 'Recommended %s Content', OER_SLUG ) , $termObj->name ); ?></div>
+			<div class="oer-alltrdpsthdng"><?php printf( __( 'Recommended %s Content', 'wp-oer' ) , $termObj->name ); ?></div>
 			<div class="oer-inrftrdpstwpr">
 				<ul class="allftrdpst_slider">
 				<?php

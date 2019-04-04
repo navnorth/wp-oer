@@ -6,8 +6,8 @@ class OER_Subject_Area_Widget extends WP_Widget{
     function __construct(){
         parent::__construct(
                           false,
-                          $name = __('Subject Area Widget', OER_SLUG),
-                          array('description'=>__('This is the Subject Area widget', OER_SLUG))
+                          $name = __('Subject Area Widget', 'wp-oer'),
+                          array('description'=>__('This is the Subject Area widget', 'wp-oer'))
                           );
     }
     

@@ -30,7 +30,7 @@ if (!current_user_can('manage_options')) {
     <div class="oer-import-body">
 	<div class="oer-import-row">
 		<div class="row-left">
-			<?php _e("Use the options below to import data sets to the OER tool. Additional information can be found on the support forums or wp-oer.com.", OER_SLUG); ?>
+			<?php _e("Use the options below to import data sets to the OER tool. Additional information can be found on the support forums or wp-oer.com.", 'wp-oer'); ?>
 			<div class="oer-import-row">
 			<h2 class="hidden"></h2>
 			<?php if ($message) { ?>
@@ -62,9 +62,9 @@ if (!current_user_can('manage_options')) {
 			</div>
 		</div>
 		<div class="row-right">
-			<strong><?php _e("Support Options", OER_SLUG); ?></strong>
+			<strong><?php _e("Support Options", 'wp-oer'); ?></strong>
 			<ul>
-				<li><a href="https://www.wp-oer.com/get-help/" target="_blank"><?php _e("WP OER Plugin Support", OER_SLUG); ?></a></li>
+				<li><a href="https://www.wp-oer.com/get-help/" target="_blank"><?php _e("WP OER Plugin Support", 'wp-oer'); ?></a></li>
 			</ul>
 		</div>
 	</div>
@@ -72,7 +72,7 @@ if (!current_user_can('manage_options')) {
 </div><!-- /.wrap -->
 <div class="plugin-footer">
 	<div class="plugin-info"><?php echo OER_ADMIN_PLUGIN_NAME . " " . OER_VERSION .""; ?></div>
-	<div class="plugin-link"><a href='https://www.wp-oer.com/' target='_blank'><?php _e("More Information", OER_SLUG); ?></a></div>
+	<div class="plugin-link"><a href='https://www.wp-oer.com/' target='_blank'><?php _e("More Information", 'wp-oer'); ?></a></div>
 	<div class="clear"></div>
 </div>
 <?php oer_display_loader(); ?>

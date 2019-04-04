@@ -38,13 +38,13 @@ $notations = get_standard_notations($standard->id);
 display_custom_styles();
 ?>
 <div class="oer-backlink">
-    <a href="<?php echo home_url('resource/standards'); ?>"><?php _e("< Back to Standards",OER_SLUG); ?></a>
+    <a href="<?php echo home_url('resource/standards'); ?>"><?php _e("< Back to Standards",'wp-oer'); ?></a>
 </div>
 <div class="oer-cntnr">
 	<section id="primary" class="site-content">
 		<div id="content" role="main">
 		    <div class="oer-allftrdrsrc">
-			<div class="oer-snglrsrchdng"><?php printf(__("Browse %s", OER_SLUG), '<a href="'.home_url("resource/standards/".sanitize_title($core_standard->standard_name)).'">'.$core_standard->standard_name.'</a>'); ?></div>
+			<div class="oer-snglrsrchdng"><?php printf(__("Browse %s", 'wp-oer'), '<a href="'.home_url("resource/standards/".sanitize_title($core_standard->standard_name)).'">'.$core_standard->standard_name.'</a>'); ?></div>
 			<div class="oer-allftrdrsrccntr">
 			    <ul class="oer-standard">
 				<?php if ($parent_substandards) { 
