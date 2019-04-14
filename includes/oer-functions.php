@@ -2365,7 +2365,7 @@ function oer_get_subject_areas($resource_id){
 	// Resource Subject Areas
 	$subject_areas = array();
 	$post_terms = get_the_terms( $resource_id, 'resource-subject-area' );
-
+	
 	if(!empty($post_terms))
 	{
 		foreach($post_terms as $term)
@@ -3464,6 +3464,12 @@ function oer_child_standard_notations($id, $oer_standard)
 			}
 		echo "</ul>";
 		echo "</div>";
+	}
+}
+
+if (!function_exists('oer_get_resource_metadata')){
+	function oer_get_resource_metadata($resource_id){
+		return get_post_meta($resource_id);
 	}
 }
 
