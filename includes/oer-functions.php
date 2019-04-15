@@ -2455,6 +2455,24 @@ function is_file_resource($url) {
 	return $is_file;
 }
 
+function is_image_resource($url) {
+	$supported_files = array(
+			 "jpg","png",
+			 "bmp", "gif", 
+			 "jpeg", "tif",
+			 "tiff", "svg", 
+			 "ico"
+			);
+	
+	$is_image = false;
+	
+	$file_ext = pathinfo($url, PATHINFO_EXTENSION);
+	if (in_array($file_ext, $supported_files))
+		$is_image = true;
+		
+	return $is_image;
+}
+
 function is_external_url($url) {
 	$is_external = false;
 	
