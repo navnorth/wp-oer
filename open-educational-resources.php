@@ -77,15 +77,15 @@ function oer_create_csv_import_table()
 	$table_name = $wpdb->prefix . $subprefix . "core_standards";
 	if($wpdb->get_var("show tables like '$table_name'") != $table_name)
 	{
-	  $sql = "CREATE TABLE IF NOT EXISTS $table_name (
-			    id int(20) NOT NULL AUTO_INCREMENT,
-			    standard_name varchar(255) NOT NULL,
-			    standard_url varchar(255) NOT NULL,
-			    PRIMARY KEY (id)
-			    );";
-	  require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-	  dbDelta($sql);
-       }
+		$sql = "CREATE TABLE IF NOT EXISTS $table_name (
+			id int(20) NOT NULL AUTO_INCREMENT,
+			standard_name varchar(255) NOT NULL,
+			standard_url varchar(255) NOT NULL,
+			PRIMARY KEY (id)
+			);";
+		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+		dbDelta($sql);
+	}
 
 	//Change hard-coded table prefix to $wpdb->prefix
 	$table_name = $wpdb->prefix . $subprefix . "sub_standards";
@@ -534,8 +534,10 @@ function oer_front_scripts()
 	global $_bootstrap;
 
 	if ($_bootstrap) {
-		wp_enqueue_style('bootstrap-style', OER_URL.'css/bootstrap.min.css');
-		wp_enqueue_script('bootstrap-script', OER_URL.'js/bootstrap.min.js');
+		if (!wp_style_is('bootstrap','enqueued'))
+			wp_enqueue_style('bootstrap-css', OER_URL.'css/bootstrap.min.css');
+		if (!wp_script_is('bootstrap','enqueued'))
+			wp_enqueue_script('bootstrap-js', OER_URL.'js/bootstrap.min.js');
 	}
 }
 
