@@ -1112,6 +1112,7 @@ function oer_importResources($default=false) {
 				$oer_thumbnailurl	= "";
 				$oer_format		= "";
 				$oer_transcription	= "";
+				$oer_citation		= "";
 
 				/** Check first if column is set **/
 				if (isset($fnldata['cells'][$k][1]))
@@ -1174,6 +1175,8 @@ function oer_importResources($default=false) {
 					$oer_format   = $fnldata['cells'][$k][29];
 				if (isset($fnldata['cells'][$k][30]))
 					$oer_transcription   = $fnldata['cells'][$k][30];
+				if (isset($fnldata['cells'][$k][31]))
+					$oer_citation   = $fnldata['cells'][$k][31];
 					
 				if(!empty($oer_standard) && (!is_array($oer_standard)))
 				{
@@ -1495,6 +1498,10 @@ function oer_importResources($default=false) {
 				
 				if(!empty($oer_transcription)){
 					update_post_meta( $post_id , 'oer_transcription' , sanitize_textarea_field($oer_transcription));
+				}
+				
+				if(!empty($oer_citation)){
+					update_post_meta( $post_id , 'oer_citation' , sanitize_textarea_field($oer_citation));
 				}
 				$cnt++;
 			}

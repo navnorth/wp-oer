@@ -121,7 +121,6 @@ global $chck;
             </div>
         </div>
 
-
         <div class="oer_snglfld">
         	<div class="oer_txt">
 			<?php _e("Media Type:", OER_SLUG); ?>
@@ -370,6 +369,16 @@ global $chck;
                 <input type="text" name="oer_publisheremail" value="<?php echo esc_attr($oer_publisheremail);?>" />
             </div>
         </div>
+	
+	<div class="oer_snglfld">
+        	<div class="oer_txt">
+			<?php _e("Citation:", OER_SLUG); ?>
+            </div>
+            <div class="oer_fld">
+            	<?php 	$oer_citation = get_post_meta($post->ID, 'oer_citation', true);
+			wp_editor( $oer_citation, 'oer_citation', array( "media_buttons"  => true, "tinymce" => true ) ); ?>
+            </div>
+        </div><!-- Citation Section -->
 
     </div>
 </div>

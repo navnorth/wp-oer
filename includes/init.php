@@ -636,6 +636,11 @@ function oer_save_customfields()
 			}
 
 		}//Create Screeenshot
+		
+		if(isset($_POST['oer_citation']))
+		{
+		    update_post_meta( $post->ID , 'oer_citation' , sanitize_textarea_field($_POST['oer_citation']));
+		}
 
 	}
     }
