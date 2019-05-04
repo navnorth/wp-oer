@@ -110,16 +110,6 @@ global $chck;
                 <input type="text" name="oer_datemodified" value="<?php echo $oer_datemodified;?>" class="oer_datepicker"/>
             </div>
         </div>
-	
-	<div class="oer_snglfld">
-        	<div class="oer_txt">
-			<?php _e("Transcription:", OER_SLUG); ?>
-            </div>
-            <div class="oer_fld">
-            	<?php 	$oer_transcription = get_post_meta($post->ID, 'oer_transcription', true);
-			wp_editor( $oer_transcription, 'oer_transcription', array( "media_buttons"  => true, "tinymce" => true ) ); ?>
-            </div>
-        </div>
 
         <div class="oer_snglfld">
         	<div class="oer_txt">
@@ -379,6 +369,26 @@ global $chck;
 			wp_editor( $oer_citation, 'oer_citation', array( "media_buttons"  => true, "tinymce" => true ) ); ?>
             </div>
         </div><!-- Citation Section -->
+	
+	<div class="oer_snglfld">
+        	<div class="oer_txt">
+			<?php _e("Sensitive Material Warning:", OER_SLUG); ?>
+            </div>
+            <div class="oer_fld">
+            	<?php 	$oer_sensitive_material = get_post_meta($post->ID, 'oer_sensitive_material', true);
+			wp_editor( $oer_sensitive_material, 'oer_sensitive_material', array( "media_buttons"  => true, "tinymce" => true ) ); ?>
+            </div>
+        </div><!-- Transcription field -->
+	
+	<div class="oer_snglfld">
+        	<div class="oer_txt">
+			<?php _e("Transcription:", OER_SLUG); ?>
+            </div>
+            <div class="oer_fld">
+            	<?php 	$oer_transcription = get_post_meta($post->ID, 'oer_transcription', true);
+			wp_editor( $oer_transcription, 'oer_transcription', array( "media_buttons"  => true, "tinymce" => true ) ); ?>
+            </div>
+        </div><!-- Transcription field -->
 
     </div>
 </div>
