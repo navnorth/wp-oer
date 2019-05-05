@@ -1220,12 +1220,14 @@ function oer_importResources($default=false) {
 
 				if(!empty($oer_title) && !empty($oer_resourceurl))
 				{
+					$oer_title = iconv('ISO-8859-1','UTF-8', $oer_title);
+					
 					/** Get Current WP User **/
 					$user_id = get_current_user_id();
 					/** Get Current Timestamp for post_date **/
 					$cs_date = current_time('mysql');
 
-					$post = array('post_content' => $oer_description, 'post_name' => $post_name, 'post_title' => $oer_title, 'post_status' => 'publish', 'post_type' => 'resource', 'post_author' => $user_id , 'post_date' => $cs_date, 'post_date_gmt'  => $cs_date, 'comment_status' => 'open');
+					$post = array('post_content' => $oer_description, 'post_name' => $post_name, 'post_title' => htmlspecialchars($oer_title), 'post_status' => 'publish', 'post_type' => 'resource', 'post_author' => $user_id , 'post_date' => $cs_date, 'post_date_gmt'  => $cs_date, 'comment_status' => 'open');
 					/** Set $wp_error to false to return 0 when error occurs **/
 					$post_id = wp_insert_post( $post, false );
 
