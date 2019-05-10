@@ -3328,7 +3328,7 @@ function oer_grade_levels($grade_levels){
 	
 	$fltrarr = array_filter($grade_levels, 'strlen');
 	$flag = array();
-	if (is_array($fltrarr))
+	if (is_array($fltrarr) && count($fltrarr)>0)
 		$elmnt = $fltrarr[min(array_keys($fltrarr))];
 		
 	for($i =0; $i < count($fltrarr); $i++)
@@ -3360,8 +3360,10 @@ function oer_grade_levels($grade_levels){
 			else
 				return $fltrarr[0]."-".$fltrarr[$end_filter];
 		}
-		else
-			return $fltrarr[0];
+		else{
+			if (isset($fltrarr[0]))
+				return $fltrarr[0];
+		}
 	}
 }
 
@@ -3512,101 +3514,113 @@ if (!function_exists('oer_get_meta_label')){
 		$label = "";
 		switch ($key){
 			case "oer_highlight":
-				$label = "Highlight:";
+				$label = __("Highlight:", OER_SLUG);
 				break;
 			case "oer_grade":
-				$label = "Grade:";
+				$label = __("Grade:", OER_SLUG);
 				break;
 			case "oer_format":
-				$label = "Format:";
+				$label = __("Format:", OER_SLUG);
 				break;
 			case "oer_datecreated":
-				$label = "Date Created:";
+				$label = __("Date Created:", OER_SLUG);
 				break;
 			case "oer_datecreated_estimate":
-				$label = "Date Created Estimate:";
+				$label = __("Date Created Estimate:", OER_SLUG);
 				break;
 			case "oer_datemodified":
-				$label = "Date Modified:";
+				$label = __("Date Modified:", OER_SLUG);
 				break;
 			case "oer_mediatype":
-				$label = "Media Type:";
+				$label = __("Media Type:", OER_SLUG);
 				break;
 			case "oer_lrtype":
-				$label = "Learning Resource Type:";
+				$label = __("Learning Resource Type:", OER_SLUG);
 				break;
 			case "oer_interactivity":
-				$label = "Interactivity:";
+				$label = __("Interactivity:", OER_SLUG);
 				break;
 			case "oer_userightsurl":
-				$label = "Use Rights URL:";
+				$label = __("Use Rights URL:", OER_SLUG);
 				break;
 			case "oer_isbasedonurl":
-				$label = "Is based on URL:";
+				$label = __("Is based on URL:", OER_SLUG);
 				break;
 			case "oer_standard":
-				$label = "Standards:";
+				$label = __("Standards:", OER_SLUG);
 				break;
 			case "oer_standard_alignment":
-				$label = "Standard Alignment:";
+				$label = __("Standard Alignment:", OER_SLUG);
 				break;
 			case "oer_authortype":
-				$label = "Type:";
+				$label = __("Type:", OER_SLUG);
 				break;
 			case "oer_authorname":
-				$label = "Name:";
+				$label = __("Name:", OER_SLUG);
 				break;
 			case "oer_authorurl":
-				$label = "URL:";
+				$label = __("URL:", OER_SLUG);
 				break;
 			case "oer_authoremail":
-				$label = "Email Address:";
+				$label = __("Email Address:", OER_SLUG);
 				break;
 			case "oer_authortype2":
-				$label = "Type:";
+				$label = __("Type:", OER_SLUG);
 				break;
 			case "oer_authorname2":
-				$label = "Name:";
+				$label = __("Name:", OER_SLUG);
 				break;
 			case "oer_authorurl2":
-				$label = "URL:";
+				$label = __("URL:", OER_SLUG);
 				break;
 			case "oer_authoremail2":
-				$label = "Email Address:";
+				$label = __("Email Address:", OER_SLUG);
 				break;
 			case "oer_publishername":
-				$label = "Name:";
+				$label = __("Name:", OER_SLUG);
 				break;
 			case "oer_publisherurl":
-				$label = "URL:";
+				$label = __("URL:", OER_SLUG);
 				break;
 			case "oer_publisheremail":
-				$label = "Email Address:";
+				$label = __("Email Address:", OER_SLUG);
 				break;
 			case "oer_citation":
-				$label = "Citation:";
-				break;
-			case "oer_citation":
-				$label = "Citation:";
+				$label = __("Citation:", OER_SLUG);
 				break;
 			case "oer_sensitive_material":
-				$label = "Sensitive Material Warning:";
+				$label = __("Sensitive Material Warning:", OER_SLUG);
 				break;
 			case "oer_transcription":
-				$label = "Transcription:";
+				$label = __("Transcription:", OER_SLUG);
 				break;
 		}
 		return $label;
 	}
 }
 
-function oer_get_all_meta($type){
-	global $wpdb;
-	$result = $wpdb->get_results($wpdb->prepare(
-	"SELECT post_id, meta_key, meta_value FROM ".$wpdb->prefix."posts,".$wpdb->prefix."postmeta WHERE post_type=%s
-		AND ".$wpdb->prefix."posts.ID=".$wpdb->prefix."postmeta.post_id", $type
-	), ARRAY_A);
-	return $result;
+if (!function_exists('oer_get_all_meta')){
+	function oer_get_all_meta($type){
+		global $wpdb;
+		$result = $wpdb->get_results($wpdb->prepare(
+		"SELECT post_id, meta_key, meta_value FROM ".$wpdb->prefix."posts,".$wpdb->prefix."postmeta WHERE post_type=%s
+			AND ".$wpdb->prefix."posts.ID=".$wpdb->prefix."postmeta.post_id", $type
+		), ARRAY_A);
+		return $result;
+	}
+}
+
+if (!function_exists('oer_save_metadata_options')){
+	function oer_save_metadata_options($post_data){
+		foreach($post_data as $key=>$value){
+			if (strpos($key,"oer_")!==false){
+				if (get_option($key))
+					update_option($key, $value);
+				else
+					add_option($key, $value);
+			}
+		}
+	}
 }
 
 ?>

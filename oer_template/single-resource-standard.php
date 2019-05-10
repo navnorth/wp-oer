@@ -93,6 +93,14 @@
         <div class="oer-rsrcurl oer-cbxl"><h4><strong>Original Resource:</strong> <a href="<?php echo esc_url(get_post_meta($post->ID, "oer_resourceurl", true)); ?>" target="_blank" ><?php echo $url_domain; ?></a></h4></div>
     <?php } ?>
 
+    <?php
+    // Author Name
+    $option_set = false;
+    if (get_option('oer_authorname_label')){
+            $option_set = true;
+    }
+    if (($option_set && get_option('oer_authorname_enabled')) || !$option_set) {
+    ?>
     <div id="" class="oer-authorName oer-cbxl">
         <?php
         $oer_authorname = get_post_meta($post->ID, "oer_authorname", true);
@@ -101,103 +109,176 @@
         if(!empty($oer_authorname) && !empty($oer_authorurl))
         {
         ?>
-            <h4><strong><?php _e("Creator:", OER_SLUG) ?></strong>
+            <h4><strong>
+                <?php
+                if (!$option_set)
+                        _e("Creator:", OER_SLUG);
+                else
+                        echo get_option('oer_authorname_label');
+                ?>
+            </strong>
             <span><a href="<?php echo esc_url($oer_authorurl); ?>" target="_blank"><?php echo $oer_authorname; ?></a></span></h4>
         <?php } ?>
     </div>
-    <?php
-    $oer_publishername = get_post_meta($post->ID, "oer_publishername", true);
-    $oer_publisherurl = get_post_meta($post->ID, "oer_publisherurl", true);
-
-    if(!empty($oer_publishername) && !empty($oer_publisherurl))
-    {
-    ?>
-    <div id="" class="oer-publisherName oer-cbxl">
-        <h4><strong><?php _e("Publisher:", OER_SLUG) ?></strong>
-        <span><a href="<?php echo esc_url($oer_publisherurl); ?>" target="_blank"><?php echo $oer_publishername; ?></a></span></h4>
-    </div>
     <?php } ?>
-    <div id="" class="oer-mediaType oer-cbxl">
-        <?php
-            $oer_mediatype = get_post_meta($post->ID, "oer_mediatype", true);
-            if(!empty($oer_mediatype))
-            { ?>
-                <h4><strong><?php _e("Type:", OER_SLUG) ?></strong>
-                <span><?php echo ucwords($oer_mediatype); ?></span></h4>
-        <?php } ?>
-    </div>
-    <?php
-    $grades =  trim(get_post_meta($post->ID, "oer_grade", true),",");
-    $grades = explode(",",$grades);
     
-    if(is_array($grades) && !empty($grades) && array_filter($grades))
-    {
-    ?>
-        <div class="oer-rsrcgrd oer-cbxl">
-            <h4><strong><?php
-            if (count($grades)>1)
-                _e("Grades:", OER_SLUG);
-            else
-                _e("Grade:", OER_SLUG)
-            ?></strong>
-            <span>
-        <?php
-            sort($grades);
-
-            for($x=0; $x < count($grades); $x++)
-            {
-              $grades[$x];
-            }
-            $fltrarr = array_filter($grades, 'strlen');
-            $flag = array();
-            $elmnt = $fltrarr[min(array_keys($fltrarr))];
-            for($i =0; $i < count($fltrarr); $i++)
-            {
-                    if($elmnt == $fltrarr[$i] || "k" == strtolower($fltrarr[$i]))
-                    {
-                            $flag[] = 1;
-                    }
-                    else
-                    {
-                            $flag[] = 0;
-                    }
-                    $elmnt++;
-            }
-
-            if(in_array('0',$flag))
-            {
-                    echo implode(",",array_unique($fltrarr));
-            }
-            else
-            {
-                    $arr_flt = array_keys($fltrarr);
-                    $end_filter = end($arr_flt);
-                    if (count($fltrarr)>1) {
-                            if (strtolower($fltrarr[$end_filter])=="k") {
-                                    $last_index = count($fltrarr)-2;
-                                    echo $fltrarr[$end_filter]."-".$fltrarr[$last_index];
-                            }
-                            else
-                                    echo $fltrarr[0]."-".$fltrarr[$end_filter];
-                    }
-                    else
-                            echo $fltrarr[0];
-            }
-            ?>
-            </span></h4>
+    <?php
+    // Publisher Name
+    $option_set = false;
+    if (get_option('oer_publishername_label')){
+            $option_set = true;
+    }
+    if (($option_set && get_option('oer_publishername_enabled')) || !$option_set) {
+        
+        $oer_publishername = get_post_meta($post->ID, "oer_publishername", true);
+        $oer_publisherurl = get_post_meta($post->ID, "oer_publisherurl", true);
+    
+        if(!empty($oer_publishername) && !empty($oer_publisherurl))
+        {
+        ?>
+        <div id="" class="oer-publisherName oer-cbxl">
+            <h4><strong>
+            <?php
+                if (!$option_set)
+                    _e("Publisher:", OER_SLUG);
+                else
+                    echo get_option('oer_publishername_label');
+                ?>
+            </strong>
+            <span><a href="<?php echo esc_url($oer_publisherurl); ?>" target="_blank"><?php echo $oer_publishername; ?></a></span></h4>
         </div>
-    <?php }?>
+        <?php }
+    }
+    
+    // Media Type
+    $option_set = false;
+    if (get_option('oer_mediatype_label')){
+            $option_set = true;
+    }
+    if (($option_set && get_option('oer_mediatype_enabled')) || !$option_set) {
+    ?>
+        <div id="" class="oer-mediaType oer-cbxl">
+            <?php
+                $oer_mediatype = get_post_meta($post->ID, "oer_mediatype", true);
+                if(!empty($oer_mediatype))
+                { ?>
+                    <h4><strong>
+                    <?php
+                    if (!$option_set)
+                        _e("Type:", OER_SLUG);
+                    else
+                        echo get_option('oer_mediatype_label');
+                    ?>
+                    </strong>
+                    <span><?php echo ucwords($oer_mediatype); ?></span></h4>
+            <?php } ?>
+        </div>
+    <?php
+    }
+    
+    // Grade Level
+    $option_set = false;
+    if (get_option('oer_grade_label')){
+            $option_set = true;
+    }
+    if (($option_set && get_option('oer_grade_enabled')) || !$option_set) {
+        
+        $grades =  trim(get_post_meta($post->ID, "oer_grade", true),",");
+        $grades = explode(",",$grades);
+        
+        if(is_array($grades) && !empty($grades) && array_filter($grades))
+        {
+        ?>
+            <div class="oer-rsrcgrd oer-cbxl">
+                <h4><strong>
+                <?php
+                    if (!$option_set){
+                        if (count($grades)>1)
+                            _e("Grades:", OER_SLUG);
+                        else
+                            _e("Grade:", OER_SLUG);
+                    }
+                    else
+                        echo get_option('oer_grade_label');
+                    ?>
+                </strong>
+                <span>
+            <?php
+                sort($grades);
+    
+                for($x=0; $x < count($grades); $x++)
+                {
+                  $grades[$x];
+                }
+                $fltrarr = array_filter($grades, 'strlen');
+                $flag = array();
+                $elmnt = $fltrarr[min(array_keys($fltrarr))];
+                for($i =0; $i < count($fltrarr); $i++)
+                {
+                        if($elmnt == $fltrarr[$i] || "k" == strtolower($fltrarr[$i]))
+                        {
+                                $flag[] = 1;
+                        }
+                        else
+                        {
+                                $flag[] = 0;
+                        }
+                        $elmnt++;
+                }
+    
+                if(in_array('0',$flag))
+                {
+                        echo implode(",",array_unique($fltrarr));
+                }
+                else
+                {
+                        $arr_flt = array_keys($fltrarr);
+                        $end_filter = end($arr_flt);
+                        if (count($fltrarr)>1) {
+                                if (strtolower($fltrarr[$end_filter])=="k") {
+                                        $last_index = count($fltrarr)-2;
+                                        echo $fltrarr[$end_filter]."-".$fltrarr[$last_index];
+                                }
+                                else
+                                        echo $fltrarr[0]."-".$fltrarr[$end_filter];
+                        }
+                        else
+                                echo $fltrarr[0];
+                }
+                ?>
+                </span></h4>
+            </div>
+        <?php }
+    }
+    ?>
 
     <?php
-            $oer_datecreated = get_post_meta($post->ID, "oer_datecreated", true);
-            if(!empty($oer_datecreated))
-            {
+    // Date Created
+    $option_set = false;
+    if (get_option('oer_datecreated_label')){
+            $option_set = true;
+    }
+    if (($option_set && get_option('oer_datecreated_enabled')) || !$option_set) {
+    
+        $oer_datecreated = get_post_meta($post->ID, "oer_datecreated", true);
+        if(!empty($oer_datecreated))
+        {
+        ?>
+        <div class="oer-created oer-cbxl">
+            <h4><strong>
+            <?php
+            if (!$option_set)
+                _e("Created:", OER_SLUG);
+            else
+                echo get_option('oer_datecreated_label');
             ?>
-    <div class="oer-created oer-cbxl">
-        <h4><strong>Created:</strong>
-        <span><?php echo $oer_datecreated; ?></span></h4>
-    </div>
-    <?php } ?>
+            Created:
+            </strong>
+            <span><?php echo $oer_datecreated; ?></span></h4>
+        </div>
+        <?php }
+    }
+    ?>
 
     <?php
             $keywords = wp_get_post_tags($post->ID);

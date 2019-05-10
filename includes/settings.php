@@ -242,24 +242,24 @@ function oer_show_styles_settings() {
 }
 
 function oer_show_metadata_settings() {
-	$resources = get_posts(array(
-				'post_type'   => 'resource',
-				'post_status' => 'publish',
-				'posts_per_page' => -1,
-				'fields' => 'ids',
-				'orderby' => 'ID',
-				'order' => 'ASC'
-				)
-			);
-	if (count($resources)>0)
-		$resource_id = $resources[0];
 	$metas = oer_get_all_meta("resource");
 	$metadata = null;
+	
 	foreach($metas as $met){
-		if (strpos($met['meta_key'],"oer_")!==false)
+		if (strpos($met['meta_key'],"oer_")!==false){
 			$metadata[] = $met['meta_key'];
+			delete_option($met['meta_key']."_enabled");
+		}
 	}
+	
 	$meta = array_unique($metadata);
+	
+	// Save Option
+	if ($_POST){
+		if ($_REQUEST['tab'] && $_REQUEST['tab']=="metadata") {
+			oer_save_metadata_options($_POST);
+		}
+	}
 ?>
 <div class="oer-plugin-body">
 	<div class="oer-plugin-row">
@@ -270,7 +270,7 @@ function oer_show_metadata_settings() {
 		</div>
 	</div>
 	<div class="oer-plugin-row">
-		<form method="post" class="oer_settings_form" action="options.php"  onsubmit="return processInitialSettings(this)">
+		<form method="post" class="oer_settings_form" onsubmit="return processInitialSettings(this)">
 			<table class="table">
 				<thead>
 					<tr>
@@ -283,27 +283,31 @@ function oer_show_metadata_settings() {
 					<?php foreach($meta as $key) {
 						$label = "";
 						$enabled = "0";
+						$option_set = false;
 						if ($key!=="oer_resourceurl"){
-							if (get_option($key."_label"))
+							if (get_option($key."_label")){
 								$label = get_option($key."_label");
+								$option_set = true;
+							}
 							else
 								$label = oer_get_meta_label($key);
 							
 							if (get_option($key."_enabled"))
-								$enabled = (get_option($key."_enabled")=="1");
-							else
+								$enabled = (get_option($key."_enabled")=="1")?true:false;
+							elseif ($option_set==false)
 								$enabled = "1";
+							
 					?>
 					<tr>
 						<td><?php echo $key; ?></td>
 						<td><input type="text" name="<?php echo $key."_label"; ?>" value="<?php echo $label; ?>" /></td>
-						<td><input type="checkbox" name="<?php echo $key."_enabled"; ?> value="1" <?php checked($enabled,"1",true); ?>/></td>
+						<td><input type="checkbox" name="<?php echo $key."_enabled"; ?>" value="1" <?php checked($enabled,"1",true); ?>/></td>
 					</tr>
 					<?php 	}
 					} ?>
 				</tbody>
 			</table>
-			<?php submit_button("Save Options"); ?>
+			<?php submit_button("Save Metadata Options"); ?>
 		</form>
 	</div>
 </div>
