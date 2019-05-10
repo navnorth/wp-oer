@@ -3507,4 +3507,106 @@ if (!function_exists('oer_get_resource_metadata')){
 	}
 }
 
+if (!function_exists('oer_get_meta_label')){
+	function oer_get_meta_label($key){
+		$label = "";
+		switch ($key){
+			case "oer_highlight":
+				$label = "Highlight:";
+				break;
+			case "oer_grade":
+				$label = "Grade:";
+				break;
+			case "oer_format":
+				$label = "Format:";
+				break;
+			case "oer_datecreated":
+				$label = "Date Created:";
+				break;
+			case "oer_datecreated_estimate":
+				$label = "Date Created Estimate:";
+				break;
+			case "oer_datemodified":
+				$label = "Date Modified:";
+				break;
+			case "oer_mediatype":
+				$label = "Media Type:";
+				break;
+			case "oer_lrtype":
+				$label = "Learning Resource Type:";
+				break;
+			case "oer_interactivity":
+				$label = "Interactivity:";
+				break;
+			case "oer_userightsurl":
+				$label = "Use Rights URL:";
+				break;
+			case "oer_isbasedonurl":
+				$label = "Is based on URL:";
+				break;
+			case "oer_standard":
+				$label = "Standards:";
+				break;
+			case "oer_standard_alignment":
+				$label = "Standard Alignment:";
+				break;
+			case "oer_authortype":
+				$label = "Type:";
+				break;
+			case "oer_authorname":
+				$label = "Name:";
+				break;
+			case "oer_authorurl":
+				$label = "URL:";
+				break;
+			case "oer_authoremail":
+				$label = "Email Address:";
+				break;
+			case "oer_authortype2":
+				$label = "Type:";
+				break;
+			case "oer_authorname2":
+				$label = "Name:";
+				break;
+			case "oer_authorurl2":
+				$label = "URL:";
+				break;
+			case "oer_authoremail2":
+				$label = "Email Address:";
+				break;
+			case "oer_publishername":
+				$label = "Name:";
+				break;
+			case "oer_publisherurl":
+				$label = "URL:";
+				break;
+			case "oer_publisheremail":
+				$label = "Email Address:";
+				break;
+			case "oer_citation":
+				$label = "Citation:";
+				break;
+			case "oer_citation":
+				$label = "Citation:";
+				break;
+			case "oer_sensitive_material":
+				$label = "Sensitive Material Warning:";
+				break;
+			case "oer_transcription":
+				$label = "Transcription:";
+				break;
+		}
+		return $label;
+	}
+}
+
+function oer_get_all_meta($type){
+	global $wpdb;
+	$result = $wpdb->get_results($wpdb->prepare(
+	"SELECT post_id, meta_key, meta_value FROM ".$wpdb->prefix."posts,".$wpdb->prefix."postmeta WHERE post_type=%s
+		AND ".$wpdb->prefix."posts.ID=".$wpdb->prefix."postmeta.post_id", $type
+	), ARRAY_A);
+	return $result;
+}
+
 ?>
