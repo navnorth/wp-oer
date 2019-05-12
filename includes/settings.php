@@ -248,7 +248,6 @@ function oer_show_metadata_settings() {
 	foreach($metas as $met){
 		if (strpos($met['meta_key'],"oer_")!==false){
 			$metadata[] = $met['meta_key'];
-			delete_option($met['meta_key']."_enabled");
 		}
 	}
 	
@@ -257,6 +256,12 @@ function oer_show_metadata_settings() {
 	// Save Option
 	if ($_POST){
 		if ($_REQUEST['tab'] && $_REQUEST['tab']=="metadata") {
+			// Remove meta key enabled option
+			foreach($metas as $met){
+				if (strpos($met['meta_key'],"oer_")!==false){
+					delete_option($met['meta_key']."_enabled");
+				}
+			}
 			oer_save_metadata_options($_POST);
 		}
 	}
