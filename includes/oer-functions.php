@@ -3529,85 +3529,85 @@ if (!function_exists('oer_get_meta_label')){
 		$label = "";
 		switch ($key){
 			case "oer_highlight":
-				$label = __("Highlight:", OER_SLUG);
+				$label = __("Highlight", OER_SLUG);
 				break;
 			case "oer_grade":
-				$label = __("Grade:", OER_SLUG);
+				$label = __("Grade", OER_SLUG);
 				break;
 			case "oer_format":
-				$label = __("Format:", OER_SLUG);
+				$label = __("Format", OER_SLUG);
 				break;
 			case "oer_datecreated":
-				$label = __("Date Created:", OER_SLUG);
+				$label = __("Date Created", OER_SLUG);
 				break;
 			case "oer_datecreated_estimate":
-				$label = __("Date Created Estimate:", OER_SLUG);
+				$label = __("Date Created Estimate", OER_SLUG);
 				break;
 			case "oer_datemodified":
-				$label = __("Date Modified:", OER_SLUG);
+				$label = __("Date Modified", OER_SLUG);
 				break;
 			case "oer_mediatype":
-				$label = __("Media Type:", OER_SLUG);
+				$label = __("Media Type", OER_SLUG);
 				break;
 			case "oer_lrtype":
-				$label = __("Learning Resource Type:", OER_SLUG);
+				$label = __("Learning Resource Type", OER_SLUG);
 				break;
 			case "oer_interactivity":
-				$label = __("Interactivity:", OER_SLUG);
+				$label = __("Interactivity", OER_SLUG);
 				break;
 			case "oer_userightsurl":
-				$label = __("Use Rights URL:", OER_SLUG);
+				$label = __("Use Rights URL", OER_SLUG);
 				break;
 			case "oer_isbasedonurl":
-				$label = __("Is based on URL:", OER_SLUG);
+				$label = __("Is based on URL", OER_SLUG);
 				break;
 			case "oer_standard":
-				$label = __("Standards:", OER_SLUG);
+				$label = __("Standards", OER_SLUG);
 				break;
 			case "oer_standard_alignment":
-				$label = __("Standard Alignment:", OER_SLUG);
+				$label = __("Standard Alignment", OER_SLUG);
 				break;
 			case "oer_authortype":
-				$label = __("Type:", OER_SLUG);
+				$label = __("Type", OER_SLUG);
 				break;
 			case "oer_authorname":
-				$label = __("Name:", OER_SLUG);
+				$label = __("Name", OER_SLUG);
 				break;
 			case "oer_authorurl":
-				$label = __("URL:", OER_SLUG);
+				$label = __("URL", OER_SLUG);
 				break;
 			case "oer_authoremail":
-				$label = __("Email Address:", OER_SLUG);
+				$label = __("Email Address", OER_SLUG);
 				break;
 			case "oer_authortype2":
-				$label = __("Type:", OER_SLUG);
+				$label = __("Type", OER_SLUG);
 				break;
 			case "oer_authorname2":
-				$label = __("Name:", OER_SLUG);
+				$label = __("Name", OER_SLUG);
 				break;
 			case "oer_authorurl2":
-				$label = __("URL:", OER_SLUG);
+				$label = __("URL", OER_SLUG);
 				break;
 			case "oer_authoremail2":
-				$label = __("Email Address:", OER_SLUG);
+				$label = __("Email Address", OER_SLUG);
 				break;
 			case "oer_publishername":
-				$label = __("Name:", OER_SLUG);
+				$label = __("Name", OER_SLUG);
 				break;
 			case "oer_publisherurl":
-				$label = __("URL:", OER_SLUG);
+				$label = __("URL", OER_SLUG);
 				break;
 			case "oer_publisheremail":
-				$label = __("Email Address:", OER_SLUG);
+				$label = __("Email Address", OER_SLUG);
 				break;
 			case "oer_citation":
-				$label = __("Citation:", OER_SLUG);
+				$label = __("Citation", OER_SLUG);
 				break;
 			case "oer_sensitive_material":
-				$label = __("Sensitive Material Warning:", OER_SLUG);
+				$label = __("Sensitive Material Warning", OER_SLUG);
 				break;
 			case "oer_transcription":
-				$label = __("Transcription:", OER_SLUG);
+				$label = __("Transcription", OER_SLUG);
 				break;
 		}
 		return $label;

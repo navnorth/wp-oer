@@ -33,7 +33,7 @@ global $chck;
 			if (!$option_set)
 				_e("Highlight:", OER_SLUG);
 			else
-				echo get_option('oer_highlight_label');
+				echo get_option('oer_highlight_label').":";
 			?>
             </div>
             <div class="oer_fld">
@@ -58,7 +58,7 @@ global $chck;
 			if (!$option_set)
 				_e("Grade:", OER_SLUG);
 			else
-				echo get_option('oer_grade_label');
+				echo get_option('oer_grade_label').":";
 			?>
             </div>
             <div class="oer_fld">
@@ -113,7 +113,7 @@ global $chck;
 			if (!$option_set)
 				_e("Format:", OER_SLUG);
 			else
-				echo get_option('oer_format_label');
+				echo get_option('oer_format_label').":";
 			?>
             </div>
             <div class="oer_fld">
@@ -137,7 +137,7 @@ global $chck;
 			if (!$option_set)
 				_e("Date Created:", OER_SLUG);
 			else
-				echo get_option('oer_datecreated_label');
+				echo get_option('oer_datecreated_label').":";
 			?>
             </div>
             <div class="oer_fld">
@@ -161,7 +161,7 @@ global $chck;
 			if (!$option_set)
 				_e("Date Created Estimate:", OER_SLUG);
 			else
-				echo get_option('oer_datecreated_estimate_label');
+				echo get_option('oer_datecreated_estimate_label').":";
 			?>
             </div>
             <div class="oer_fld">
@@ -185,7 +185,7 @@ global $chck;
 			if (!$option_set)
 				_e("Date Modified:", OER_SLUG);
 			else
-				echo get_option('oer_datemodified_label');
+				echo get_option('oer_datemodified_label').":";
 			?>
             </div>
             <div class="oer_fld">
@@ -209,7 +209,7 @@ global $chck;
 			if (!$option_set)
 				_e("Media Type:", OER_SLUG);
 			else
-				echo get_option('oer_mediatype_label');
+				echo get_option('oer_mediatype_label').":";
 			?>
             </div>
             <div class="oer_fld">
@@ -240,7 +240,7 @@ global $chck;
 			if (!$option_set)
 				_e("Learning Resource Type:", OER_SLUG);
 			else
-				echo get_option('oer_lrtype_label');
+				echo get_option('oer_lrtype_label').":";
 			?>
             </div>
             <div class="oer_fld">
@@ -277,7 +277,7 @@ global $chck;
 			if (!$option_set)
 				_e("Interactivity:", OER_SLUG);
 			else
-				echo get_option('oer_interactivity_label');
+				echo get_option('oer_interactivity_label').":";
 			?>
             </div>
             <div class="oer_fld">
@@ -311,7 +311,7 @@ global $chck;
 			if (!$option_set)
 				_e("Use Rights URL:", OER_SLUG);
 			else
-				echo get_option('oer_userightsurl_label');
+				echo get_option('oer_userightsurl_label').":";
 			?>
             </div>
             <div class="oer_fld">
@@ -335,7 +335,7 @@ global $chck;
 			if (!$option_set)
 				_e("Is based on URL:", OER_SLUG);
 			else
-				echo get_option('oer_isbasedonurl_label');
+				echo get_option('oer_isbasedonurl_label').":";
 			?>
             </div>
             <div class="oer_fld">
@@ -359,7 +359,7 @@ global $chck;
 			if (!$option_set)
 				_e("Standards:", OER_SLUG);
 			else
-				echo get_option('oer_standard_label');
+				echo get_option('oer_standard_label').":";
 			?>
 		</div>
 		<div class="oer_fld auto-width">
@@ -397,7 +397,7 @@ global $chck;
 			if (!$option_set)
 				_e("Type:", OER_SLUG);
 			else
-				echo get_option('oer_authortype_label');
+				echo get_option('oer_authortype_label').":";
 			?>
             </div>
             <div class="oer_fld">
@@ -424,7 +424,7 @@ global $chck;
 			if (!$option_set)
 				_e("Name:", OER_SLUG);
 			else
-				echo get_option('oer_authorname_label');
+				echo get_option('oer_authorname_label').":";
 			?>
             </div>
             <div class="oer_fld">
@@ -448,7 +448,7 @@ global $chck;
 			if (!$option_set)
 				_e("URL:", OER_SLUG);
 			else
-				echo get_option('oer_authorurl_label');
+				echo get_option('oer_authorurl_label').":";
 			?>
             </div>
             <div class="oer_fld">
@@ -472,7 +472,7 @@ global $chck;
 			if (!$option_set)
 				_e("Email Address:", OER_SLUG);
 			else
-				echo get_option('oer_authoremail_label');
+				echo get_option('oer_authoremail_label').":";
 			?>
             </div>
             <div class="oer_fld">
@@ -513,7 +513,7 @@ global $chck;
 			if (!$option_set)
 				_e("Type:", OER_SLUG);
 			else
-				echo get_option('oer_authortype2_label');
+				echo get_option('oer_authortype2_label').":";
 			?>
                     </div>
                     <div class="oer_fld">
@@ -540,7 +540,7 @@ global $chck;
 			if (!$option_set)
 				_e("Name:", OER_SLUG);
 			else
-				echo get_option('oer_authorname2_label');
+				echo get_option('oer_authorname2_label').":";
 			?>
                     </div>
                     <div class="oer_fld">
@@ -564,7 +564,7 @@ global $chck;
 			if (!$option_set)
 				_e("URL:", OER_SLUG);
 			else
-				echo get_option('oer_authorurl2_label');
+				echo get_option('oer_authorurl2_label').":";
 			?>
                     </div>
                     <div class="oer_fld">
@@ -588,7 +588,7 @@ global $chck;
 			if (!$option_set)
 				_e("Email Address:", OER_SLUG);
 			else
-				echo get_option('oer_authoremail2_label');
+				echo get_option('oer_authoremail2_label').":";
 			?>
                     </div>
                     <div class="oer_fld">
@@ -628,7 +628,7 @@ global $chck;
 			if (!$option_set)
 				_e("Name:", OER_SLUG);
 			else
-				echo get_option('oer_publishername_label');
+				echo get_option('oer_publishername_label').":";
 			?>
 		</div>
 		<div class="oer_fld">
@@ -652,7 +652,7 @@ global $chck;
 			if (!$option_set)
 				_e("URL:", OER_SLUG);
 			else
-				echo get_option('oer_publisherurl_label');
+				echo get_option('oer_publisherurl_label').":";
 			?>
 		</div>
 		<div class="oer_fld">
@@ -676,7 +676,7 @@ global $chck;
 			if (!$option_set)
 				_e("Email Address:", OER_SLUG);
 			else
-				echo get_option('oer_publisheremail_label');
+				echo get_option('oer_publisheremail_label').":";
 			?>
             </div>
             <div class="oer_fld">
@@ -700,7 +700,7 @@ global $chck;
 			if (!$option_set)
 				_e("Citation:", OER_SLUG);
 			else
-				echo get_option('oer_citation_label');
+				echo get_option('oer_citation_label').":";
 			?>
             </div>
             <div class="oer_fld">
@@ -724,7 +724,7 @@ global $chck;
 			if (!$option_set)
 				_e("Sensitive Material Warning:", OER_SLUG);
 			else
-				echo get_option('oer_sensitive_material_label');
+				echo get_option('oer_sensitive_material_label').":";
 			?>
             </div>
             <div class="oer_fld">
@@ -748,7 +748,7 @@ global $chck;
 			if (!$option_set)
 				_e("Transcription:", OER_SLUG);
 			else
-				echo get_option('oer_transcription_label');
+				echo get_option('oer_transcription_label').":";
 			?>
             </div>
             <div class="oer_fld">
