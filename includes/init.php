@@ -595,6 +595,8 @@ function oer_save_customfields()
 			$upload_dir = wp_upload_dir();
 			$file = '';
 			
+			$local_image = false;
+			
 			//Change $post_id as it is undefined to $post->ID
 			if(!has_post_thumbnail( $post->ID ))
 			{
@@ -603,7 +605,7 @@ function oer_save_customfields()
 			    $image = is_image_resource($url);
 			    
 			    if ($local && $image){
-				$file = oer_save_image_to_file($url);
+				$local_image = true;
 			    } else {
 				if ( $screenshot_enabled )
 				    $file = oer_getScreenshotFile($url);
@@ -622,7 +624,14 @@ function oer_save_customfields()
 			    }
 			}
 			
-			if(file_exists($file))
+			if ($local_image){
+			    $image_id = attachment_url_to_postid($url);
+			    update_post_meta($post->ID, "_thumbnail_id", $image_id);
+
+			    // Generate the metadata for the attachment, and update the database record.
+			    $attach_data = wp_generate_attachment_metadata( $image_id, $file );
+			    wp_update_attachment_metadata( $image_id, $attach_data );
+			} elseif(file_exists($file))
 			{
 				$filetype = wp_check_filetype( basename( $file ), null );
 				$wp_upload_dir = wp_upload_dir();

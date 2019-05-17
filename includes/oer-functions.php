@@ -859,7 +859,6 @@ function oer_save_image_to_file($image_url, $orig_url = "") {
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 	curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
-	curl_setopt($ch, CURLOPT_VERBOSE, false);
 	curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 
 	$raw=curl_exec($ch);
@@ -902,7 +901,6 @@ function oer_save_local_image_to_file($local_url){
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 	curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
-	curl_setopt($ch, CURLOPT_VERBOSE,1);
 	curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 
 	$raw=curl_exec($ch);
