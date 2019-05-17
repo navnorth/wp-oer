@@ -859,6 +859,7 @@ function oer_save_image_to_file($image_url, $orig_url = "") {
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 	curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
+	curl_setopt($ch, CURLOPT_VERBOSE, false);
 	curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 
 	$raw=curl_exec($ch);
@@ -894,20 +895,40 @@ function oer_save_local_image_to_file($local_url){
 	$image_url        = $local_url; // Define the image URL here
 	$image_name       = basename($image_url);
 	$upload_dir       = wp_upload_dir(); // Set upload folder
-	$image_data       = file_get_contents($image_url); // Get image data
+	
+	$ch = curl_init ($image_url);
+
+	curl_setopt($ch, CURLOPT_HEADER, 0);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
+	curl_setopt($ch, CURLOPT_VERBOSE,1);
+	curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+
+	$raw=curl_exec($ch);
+	curl_close ($ch);
+
+	$path = $upload_dir['basedir'].'/resource-images/';
+
+	if(!file_exists($path))
+	{
+		mkdir($path, 0777, true);
+		debug_log("OER : create upload directory");
+	}
+	
 	$unique_file_name = wp_unique_filename( $upload_dir['path'], $image_name ); // Generate unique name
 	$filename         = basename( $unique_file_name ); // Create image file name
 	
-	// Check folder permission and define file location
-	if( wp_mkdir_p( $upload_dir['path'] ) ) {
-	    $file = $upload_dir['path'] . '/' . $filename;
-	} else {
-	    $file = $upload_dir['basedir'] . '/' . $filename;
+	if(!file_exists($file = $path.'Screenshot'.preg_replace('/https?|:|#|\?|\&|\//i', '-', $unique_file_name).'.jpg'))
+	{
+		debug_log("OER : start screenshot function");
+
+		$fp = fopen($file,'wb');
+		fwrite($fp, $raw);
+		fclose($fp);
+
+		debug_log("OER : end of screenshot function");
 	}
-	
-	// Create the image  file on the server
-	file_put_contents( $file, $image_data );
-	
 	return $file;
 }
 

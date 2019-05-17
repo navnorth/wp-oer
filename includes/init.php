@@ -598,26 +598,27 @@ function oer_save_customfields()
 			//Change $post_id as it is undefined to $post->ID
 			if(!has_post_thumbnail( $post->ID ))
 			{
-			    if ( $screenshot_enabled )
-				$file = oer_getScreenshotFile($url);
-			    
-			    // if external screenshot utility enabled
-			    if ( $external_screenshot )
-				$file = oer_getImageFromExternalURL($url);
-				
-			    if ( $youtube )
-				$file = oer_get_youtube_thumbnail($url);
-			    
-			    if ($url2png_screenshot){
-				$screenshot_url = oer_url2png($url);
-				$file = oer_save_image_to_file($screenshot_url, $url);
-			    }
 			    
 			    $local = is_local_resource($url);
 			    $image = is_image_resource($url);
 			    
 			    if ($local && $image){
-				$file = oer_save_local_image_to_file($url);
+				$file = oer_save_image_to_file($url);
+			    } else {
+				if ( $screenshot_enabled )
+				    $file = oer_getScreenshotFile($url);
+				
+				// if external screenshot utility enabled
+				if ( $external_screenshot )
+				    $file = oer_getImageFromExternalURL($url);
+				    
+				if ( $youtube )
+				    $file = oer_get_youtube_thumbnail($url);
+				
+				if ($url2png_screenshot){
+				    $screenshot_url = oer_url2png($url);
+				    $file = oer_save_image_to_file($screenshot_url, $url);
+				}
 			    }
 			}
 			
@@ -629,7 +630,7 @@ function oer_save_customfields()
 				$attachment = array(
 					'guid'           => $wp_upload_dir['url'] . '/' . basename( $file ),
 					'post_mime_type' => $filetype['type'],
-					'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $file ) ),
+					'post_title'     => sanitize_file_name( basename( $file ) ),
 					'post_content'   => '',
 					'post_status'    => 'inherit'
 				);
