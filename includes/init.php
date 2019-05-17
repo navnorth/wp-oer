@@ -612,6 +612,13 @@ function oer_save_customfields()
 				$screenshot_url = oer_url2png($url);
 				$file = oer_save_image_to_file($screenshot_url, $url);
 			    }
+			    
+			    $local = is_local_resource($url);
+			    $image = is_image_resource($url);
+			    
+			    if ($local && $image){
+				$file = oer_save_image_to_file($url);
+			    }
 			}
 			
 			if(file_exists($file))

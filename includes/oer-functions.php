@@ -890,6 +890,27 @@ function oer_save_image_to_file($image_url, $orig_url = "") {
 	return $file;
 }
 
+function oer_save_local_image_to_file($local_url){
+	$image_url        = $local_url; // Define the image URL here
+	$image_name       = basename($image_url);
+	$upload_dir       = wp_upload_dir(); // Set upload folder
+	$image_data       = file_get_contents($image_url); // Get image data
+	$unique_file_name = wp_unique_filename( $upload_dir['path'], $image_name ); // Generate unique name
+	$filename         = basename( $unique_file_name ); // Create image file name
+	
+	// Check folder permission and define file location
+	if( wp_mkdir_p( $upload_dir['path'] ) ) {
+	    $file = $upload_dir['path'] . '/' . $filename;
+	} else {
+	    $file = $upload_dir['basedir'] . '/' . $filename;
+	}
+	
+	// Create the image  file on the server
+	file_put_contents( $file, $image_data );
+	
+	return $file;
+}
+
 //Get External Thumbnail Image
 function oer_getExternalThumbnailImage($url, $local=false) {
 	global $_debug;
@@ -2502,6 +2523,16 @@ function is_image_resource($url) {
 		$is_image = true;
 		
 	return $is_image;
+}
+
+function is_local_resource($url){
+	$domain = get_site_url();
+	$is_local = false;
+	
+	if (strpos($url,$domain)!==false)
+		$is_local = true;
+	
+	return $is_local;
 }
 
 function is_external_url($url) {
