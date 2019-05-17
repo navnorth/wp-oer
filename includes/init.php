@@ -617,7 +617,7 @@ function oer_save_customfields()
 			    $image = is_image_resource($url);
 			    
 			    if ($local && $image){
-				$file = oer_save_image_to_file($url);
+				$file = oer_save_local_image_to_file($url);
 			    }
 			}
 			
