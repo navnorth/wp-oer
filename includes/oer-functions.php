@@ -1495,28 +1495,42 @@ function oer_importResources($default=false) {
 					$external_screenshot = get_option( 'oer_external_screenshots' );
 					//Check if URL2PNG screenshot is enabled
 					$url2png_screenshot = get_option('oer_url2png_screenshot');
-
+					$local_image = false;
 					if(!has_post_thumbnail( $post_id ))
 					{
-						if (!empty($oer_thumbnailurl)) {
-							if (substr(trim($oer_thumbnailurl),0,2)=="./") {
-								$oer_thumbnailurl = substr(trim($oer_thumbnailurl),2);
-								$file = oer_getExternalThumbnailImage($oer_thumbnailurl, true);	
-							} else {
-								$file = oer_getExternalThumbnailImage($oer_thumbnailurl);	
+						$local = is_local_resource($url);
+						$image = is_image_resource($url);
+						
+						if ($local && $image){
+						    $local_image = true;
+						} else {
+							if (!empty($oer_thumbnailurl)) {
+								if (substr(trim($oer_thumbnailurl),0,2)=="./") {
+									$oer_thumbnailurl = substr(trim($oer_thumbnailurl),2);
+									$file = oer_getExternalThumbnailImage($oer_thumbnailurl, true);	
+								} else {
+									$file = oer_getExternalThumbnailImage($oer_thumbnailurl);	
+								}
+							} elseif ($screenshot_enabled) {
+								$file = oer_getScreenshotFile($url);
+							} elseif ( $external_screenshot ) {
+								// if external screenshot utility enabled
+								$file = oer_getImageFromExternalURL($url);
+							} elseif ( $url2png_screenshot ) {
+								$screenshot_url = oer_url2png($url);
+								$file = oer_save_image_to_file($screenshot_url, $url);
 							}
-						} elseif ($screenshot_enabled) {
-							$file = oer_getScreenshotFile($url);
-						} elseif ( $external_screenshot ) {
-							// if external screenshot utility enabled
-							$file = oer_getImageFromExternalURL($url);
-						} elseif ( $url2png_screenshot ) {
-							$screenshot_url = oer_url2png($url);
-							$file = oer_save_image_to_file($screenshot_url, $url);
 						}
 					}
 					
-					if(file_exists($file))
+					if ($local_image){
+						$image_id = attachment_url_to_postid($url);
+						update_post_meta($post_id, "_thumbnail_id", $image_id);
+		    
+						// Generate the metadata for the attachment, and update the database record.
+						$attach_data = wp_generate_attachment_metadata( $image_id, $file );
+						wp_update_attachment_metadata( $image_id, $attach_data );
+					} elseif(file_exists($file))
 					{
 						$filetype = wp_check_filetype( basename( $file ), null );
 						$wp_upload_dir = wp_upload_dir();
