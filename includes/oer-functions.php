@@ -3703,7 +3703,7 @@ if (!function_exists('oer_save_metadata_options')){
 }
 
 if (!function_exists('oer_display_pdf_embeds')){
-	function oer_display_pdf_embeds($url){
+	function oer_display_pdf_embeds($url, $return = false){
 		$isExternal = is_external_url($url);
 		
 		if ($isExternal) {
@@ -3722,17 +3722,26 @@ if (!function_exists('oer_display_pdf_embeds')){
 					break;
 				case 1:
 					$pdf_url = "https://docs.google.com/gview?url=".$url."&embedded=true";
-					echo get_embed_code($pdf_url);
+					if ($return)
+						get_embed_code($pdf_url);
+					else
+						echo get_embed_code($pdf_url);
 					break;
 				case 2:
 					$pdf_url = OER_URL."pdfjs/web/viewer.html?file=".urlencode($url);
 					$embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.$pdf_url.'"></iframe>';
-					echo $embed_code;
+					if ($return)
+						return $embed_code;
+					else
+						echo $embed_code;
 					break;
 				case 3:
 					if(shortcode_exists('wonderplugin_pdf')) {
 						$embed_code = "[wonderplugin_pdf src='".$url."' width='100%']";
-						echo do_shortcode($embed_code);
+						if ($return)
+							return do_shortcode($embed_code);
+						else
+							echo do_shortcode($embed_code);
 					} else {
 						$embed_disabled = true;
 					}
@@ -3740,7 +3749,10 @@ if (!function_exists('oer_display_pdf_embeds')){
 				case 4:
 					if(shortcode_exists('pdf-embedder')){
 						$embed_code = "[pdf-embedder url='".$url."' width='100%']";
-						echo do_shortcode($embed_code);
+						if ($return)
+							return do_shortcode($embed_code);
+						else
+							echo do_shortcode($embed_code);
 					} else {
 						$embed_disabled = true;
 					}
@@ -3748,7 +3760,10 @@ if (!function_exists('oer_display_pdf_embeds')){
 				case 5:
 					if(shortcode_exists('pdfviewer')){
 						$embed_code = "[pdfviewer width='100%']".$url."[/pdfviewer]";
-						echo do_shortcode($embed_code);
+						if ($return)
+							return do_shortcode($embed_code);
+						else
+							echo do_shortcode($embed_code);
 					} else {
 						$embed_disabled = true;
 					}
