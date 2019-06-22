@@ -1502,7 +1502,17 @@ function oer_importResources($default=false) {
 						$image = is_image_resource($url);
 						
 						if ($local && $image){
-						    $local_image = true;
+							if (empty($oer_thumbnailurl))
+								$local_image = true;
+							else
+								if (!empty($oer_thumbnailurl)) {
+									if (substr(trim($oer_thumbnailurl),0,2)=="./") {
+										$oer_thumbnailurl = substr(trim($oer_thumbnailurl),2);
+										$file = oer_getExternalThumbnailImage($oer_thumbnailurl, true);	
+									} else {
+										$file = oer_getExternalThumbnailImage($oer_thumbnailurl);	
+									}
+								} 
 						} else {
 							if (!empty($oer_thumbnailurl)) {
 								if (substr(trim($oer_thumbnailurl),0,2)=="./") {
