@@ -228,13 +228,15 @@ function oer_getScreenshotFile($url)
 	return $file;
 }
 
-// Log Debugging
-function debug_log($message) {
-	global $_debug;
-
-	// if debugging is on
-	if ($_debug=="on")
-		error_log($message);
+if (!function_exists('debug_log')){
+	// Log Debugging
+	function debug_log($message) {
+		global $_debug;
+	
+		// if debugging is on
+		if ($_debug=="on")
+			error_log($message);
+	}
 }
 
 // Taxonomy rewrite
