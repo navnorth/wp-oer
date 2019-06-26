@@ -3,7 +3,7 @@
  Plugin Name:  WP OER
  Plugin URI:   https://www.wp-oer.com
  Description:  Open Educational Resource management and curation, metadata publishing, and alignment to Common Core State Standards.
- Version:      0.6.6
+ Version:      0.7.3
  Author:       Navigation North
  Author URI:   https://www.navigationnorth.com
  Text Domain:  wp-oer
@@ -36,7 +36,7 @@ define( 'OER_FILE',__FILE__);
 // Plugin Name and Version
 define( 'OER_PLUGIN_NAME', 'WP OER Plugin' );
 define( 'OER_ADMIN_PLUGIN_NAME', 'WP OER Plugin');
-define( 'OER_VERSION', '0.6.6' );
+define( 'OER_VERSION', '0.7.3' );
 
 include_once(OER_PATH.'includes/oer-functions.php');
 include_once(OER_PATH.'includes/template-functions.php');
@@ -263,7 +263,7 @@ function oer_add_settings_link( $links, $file ){
  * Get the Custom Template if set
  **/
 function oer_get_template_hierarchy( $template ) {
-	
+
 	//get template file
 	if ($template=="search"){
 		$template = $template . '.php';
@@ -271,7 +271,7 @@ function oer_get_template_hierarchy( $template ) {
 		$template_slug = rtrim( $template , '.php' );
 		$template = $template_slug . '.php';
 	}
-	
+
 	//Check if custom template exists in theme folder
 	if ($theme_file = locate_template( array( 'oer_template/' . $template ) )) {
 		$file = $theme_file;
@@ -280,7 +280,7 @@ function oer_get_template_hierarchy( $template ) {
 	} else {
 		$file = OER_PATH . 'oer_template/' . $template;
 	}
-	
+
 	return apply_filters( 'oer_repl_template' . $template , $file  );
 }
 
@@ -319,14 +319,14 @@ function oer_category_template( $template ) {
 	global $wp_query;
 
 	$object = $wp_query->get_queried_object();
-	
+
 	if (is_a($object,"WP_Term")) {
 		//Post ID
 		$_id = $wp_query->get_queried_object_id();
-	
+
 		// Get Current Object if it belongs to Resource Category taxonomy
 		$resource_term = get_term_by( 'id' , $_id , 'resource-subject-area' );
-		
+
 		//Check if the loaded resource is a category
 		if ($resource_term && !is_wp_error( $resource_term )) {
 			return oer_get_template_hierarchy('resource-subject-area');
@@ -353,7 +353,7 @@ function oer_tag_template( $template ) {
 	$_id = $wp_query->get_queried_object_id();
 
 	$resource_tag = is_tag($_id);
-	
+
 	//Check if the loaded resource is a category
 	if ($resource_tag && !is_wp_error( $resource_tag )) {
 		return oer_get_template_hierarchy('tag-resource');
@@ -363,7 +363,7 @@ function oer_tag_template( $template ) {
 		return $template;
 	}
  }
- 
+
  /**
  * Add filter to use plugin default archive template
  **/
@@ -374,11 +374,11 @@ add_filter( 'archive_template' , 'oer_custom_archive_template' );
  **/
 function oer_custom_archive_template( $template ) {
 	global $wp_query;
-	
+
 	if (is_post_type_archive('resource')) {
 		$template = realpath(oer_get_template_hierarchy('archive-resource'));
 	}
-	
+
 	return $template;
  }
 
@@ -715,7 +715,7 @@ function oer_settings_page() {
 			'description' => __('use $url for where the Resource URL parameter should be placed', OER_SLUG)
 		)
 	);
-	
+
 	//Add Settings field for Url2PNG Screenshots
 	add_settings_field(
 		'oer_url2png_screenshot',
@@ -731,7 +731,7 @@ function oer_settings_page() {
 			'value' => '3'
 		)
 	);
-	
+
 	//Set API Key for Url2PNG
 	add_settings_field(
 		'oer_url2png_api_key',
@@ -748,7 +748,7 @@ function oer_settings_page() {
 			'title' => __('API Key', OER_SLUG)
 		)
 	);
-	
+
 	//Set API Secret for Url2PNG
 	add_settings_field(
 		'oer_url2png_api_secret',
@@ -1195,7 +1195,7 @@ function oer_setup_settings_field( $arguments ) {
 	$data_masked = "";
 
 	$value = get_option($arguments['uid']);
-	
+
 	if (isset($arguments['masked'])){
 		$data_masked = "data-hidden='".$value."'";
 		$value = oer_mask_string($value, 4, 7);
@@ -1694,28 +1694,28 @@ add_action('wp_ajax_nopriv_load_highlight', 'oer_load_highlight');
 
 add_action('wp_ajax_load_searched_standards', 'oer_load_searched_standards');
 function oer_load_searched_standards(){
-	
+
 	$post_id = null;
 	$keyword = null;
 	$meta_key = "oer_standard";
-	
+
 	if (isset($_POST['post_id'])){
 		$post_id = $_POST['post_id'];
 	}
 	if (isset($_POST['keyword'])){
 		$keyword = $_POST['keyword'];
 	}
-	
+
 	if (!$post_id){
 		echo "Invalid Post ID";
 		die();
 	}
-	
+
 	if (!$keyword){
 		was_selectable_admin_standards($post_id);
 		die();
 	}
-	
+
 	if (function_exists('was_search_standards')){
 		was_search_standards($post_id,$keyword,$meta_key);
 	}
@@ -1725,16 +1725,16 @@ function oer_load_searched_standards(){
 add_action('wp_ajax_load_default_standards', 'oer_load_default_standards');
 function oer_load_default_standards(){
 	$post_id = null;
-	
+
 	if (isset($_POST['post_id'])){
 		$post_id = $_POST['post_id'];
 	}
-	
+
 	if (!$post_id){
 		echo "Invalid Post ID";
 		die();
 	}
-	
+
 	if (function_exists('was_selectable_admin_standards')){
 		was_selectable_admin_standards($post_id);
 	}
@@ -2250,12 +2250,12 @@ add_action( 'init', function () {
 /* Enqueue script and css for Gutenberg Resource block */
 function oer_enqueue_resource_block(){
 	wp_enqueue_script(
-		'resource-block-js', 
+		'resource-block-js',
 		OER_URL . "/js/oer_resource_block.build.js",
 		array('wp-blocks', 'wp-i18n', 'wp-element', 'wp-components', 'wp-editor', 'wp-api')
 	);
 	wp_enqueue_style(
-		'resource-block-css', 
+		'resource-block-css',
 		OER_URL . "/css/oer_resource_block.css",
 		array('wp-edit-blocks')
 	);
@@ -2273,7 +2273,7 @@ function oer_add_resources_rest_args() {
     $wp_post_types['resource']->show_in_rest = true;
     $wp_post_types['resource']->rest_base = 'resource';
     $wp_post_types['resource']->rest_controller_class = 'WP_REST_Posts_Controller';
-    
+
     $wp_taxonomies['resource-subject-area']->show_in_rest = true;
     $wp_taxonomies['resource-subject-area']->rest_base = 'resource-subject-area';
     $wp_taxonomies['resource-subject-area']->rest_controller_class = 'WP_REST_Terms_Controller';
@@ -2305,7 +2305,7 @@ function oer_add_meta_to_api() {
 			    'update_callback' => null,
 			    'schema'          => null,
 			) );
-	
+
 }
 add_action( 'rest_api_init', 'oer_add_meta_to_api');
 
@@ -2313,7 +2313,7 @@ function oer_rest_get_meta_field($resource, $field, $request){
 	if ($field=="oer_grade") {
 		$grades = trim(get_post_meta($resource['id'], $field, true),",");
 		$grades = explode(",",$grades);
-		
+
 		return oer_grade_levels($grades);
 	} else
 		return get_post_meta($resource['id'], $field, true);
