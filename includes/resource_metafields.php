@@ -10,7 +10,7 @@ global $chck;
 
         <div class="oer_snglfld">
         	<div class="oer_txt">
-			<?php _e("Resource URL:", OER_SLUG); ?>
+			<?php _e("Link to Item:", OER_SLUG); ?>
             </div>
 		<?php echo wp_nonce_field( 'oer_metabox_action' , 'oer_metabox_nonce_field' ); ?>
             <div class="oer_fld">
@@ -380,7 +380,7 @@ global $chck;
 	<?php } ?>
 	
         <div class="oer_snglfld oer_hdngsngl">
-		<?php _e("Author Information:", OER_SLUG); ?>
+		<?php _e("Creator Information:", OER_SLUG); ?>
         </div>
 	
 	<?php
@@ -611,7 +611,7 @@ global $chck;
 		?>
 
         <div class="oer_snglfld oer_hdngsngl">
-		<?php _e("Publisher Information:", OER_SLUG); ?>
+		<?php _e("Repository Information:", OER_SLUG); ?>
         </div>
 
 	<?php
