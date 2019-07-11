@@ -443,7 +443,7 @@ li.oer_sbstndard{
 .search-results .type-resource .entry-header h5.post-meta .post-meta-box { margin-right:15px; }
 .oer-standards #content, .standards-template #content,
 .substandards-template #content, .notation-template #content { width:100%; }
-.oer-pdf-viewer { /*min-height:1250px;*/min-height:500px; height:100%; }
+.oer-pdf-viewer { /*min-height:1250px;*/min-height:600px; height:100%; }
 .oer-standards #content ul.oer-standards li,
 .standards-template #content ul.oer-standards li,
 .substandards-template #content ul.oer-substandards li{ list-style-type:none;  }
