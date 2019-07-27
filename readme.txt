@@ -1,9 +1,9 @@
 === WP OER ===
-Contributors: navigationnorth, joehobson, johnpaulbalagolan, tomozaidem, arobotnamedchris
+Contributors: navigationnorth, joehobson, johnpaulbalagolan, arobotnamedchris
 Tags: OER, Open Educational Resources, Education, Learning
 Requires at least: 4.4
-Tested up to: 4.9.8
-Stable tag: 0.6.6
+Tested up to: 5.2.2
+Stable tag: 0.7.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -40,6 +40,17 @@ No frequently asked questions.
 3. Display educational resources on your WordPress website!
 
 == Changelog ==
+
+= 0.7.3 =
+* moved Academic Standards to separate plugin - https://github.com/navnorth/wp-academic-standards
+* added URL2PNG option for screenshots
+* WP Gutenberg block for displaying single resource
+* Spanish language translation
+* playable embed displays for audio and video resources
+* improved support for local resources
+* additional metadata fields: datecreated_estimate, transcription, citation, sensitive material warning
+* Admin configs for labeling of metadata fields
+
 
 = 0.6.5 =
 * options for PDF display on resource view
