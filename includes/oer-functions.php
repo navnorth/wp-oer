@@ -2351,14 +2351,78 @@ function oer_is_sll_collection($url) {
 }
 
 //Generate youtube embed code
-function oer_generate_youtube_embed_code($url) {
+function oer_generate_youtube_embed_code($url, $resource_title=null) {
+	global $post;
+	
 	$embed_code = "";
+	$tracking_script = "";
 	
 	$youtube_id = oer_get_youtube_id($url);
 	
+	if (!$resource_title)
+		$resource_title = $post->post_title;
+	
 	//Generate embed code
 	if ($youtube_id) {
-		$embed_code = '<div class="videoWrapper"><iframe width="640" height="360" src="https://www.youtube.com/embed/'.$youtube_id.'?rel=0" frameborder="0" allowfullscreen></iframe></div>';
+		$player_id = "ytplayer";
+		
+		$src = "//www.youtube.com/embed/".$youtube_id."?enablejsapi=1&rel=0";
+		
+		$tracking_script = "<script type='text/javascript'>\n";
+
+		$tracking_script .= " 	// This code loads the IFrame Player API code asynchronously \n".
+					"var tag = document.createElement('script'); \n".
+					"tag.src = \"//www.youtube.com/iframe_api\"; \n ".
+					"var firstScriptTag = document.getElementsByTagName('script')[0]; \n".
+					"firstScriptTag.parentNode.insertBefore(tag, firstScriptTag); \n".
+					"	// This code is called by the YouTube API to create the player object \n".
+					"function onYouTubeIframeAPIReady(event) { \n".
+					"	player = new YT.Player('".$player_id."', { \n".
+					"	videoId: '', \n".
+					"	playerVars: { \n".
+					"		'autoplay': 0, \n".
+					"		'controls': 1, \n".
+					"		'rel' : 0 \n".
+					"	}, \n".
+					"	events: { \n".
+					"		'onReady': onPlayerReady, \n".
+					"		'onStateChange': onPlayerStateChange \n".
+					"		} \n".
+					"	}); \n".
+					"}\n".
+					"	var pauseFlag = false; \n".
+					"function onPlayerReady(event) { \n".
+					"	// do nothing, no tracking needed \n".
+					"} \n".
+					"function onPlayerStateChange(event) { \n".
+					"	var url = event.target.getVideoUrl(); \n".
+					"	var match = url.match(/[?&]v=([^&]+)/); \n".
+					"	if( match != null) \n".
+					"	{ \n ".
+					"		var videoId = match[1]; \n".
+					"	} \n".
+					"	videoId = String(videoId); \n".
+					"	// track when user clicks to Play \n".
+					"	if (event.data == YT.PlayerState.PLAYING) { \n".
+					"		console.log('playing'); \n".
+					"		ga('send','event','Primary Source Video: ".$resource_title."','Play', videoId);\n".
+					"		pauseFlag = true; \n".
+					"	}\n".
+					"	// track when user clicks to Pause \n".
+					"	if (event.data == YT.PlayerState.PAUSED && pauseFlag) { \n".
+					"		ga('send','event','Primary Source Video: ".$resource_title."', 'Pause', videoId); \n".
+					"		pauseFlag = false; \n ".
+					"	} \n".
+					"	// track when video ends \n".
+					"	if (event.data == YT.PlayerState.ENDED) { \n".
+					"		ga('send', 'event','Primary Source Video: ".$resource_title."', 'Finished', videoId); \n".
+					"	}\n".
+					"} \n";
+	
+		$tracking_script .= "</script>";
+		
+		$embed_code = '<div class="videoWrapper"><iframe id="'.$player_id.'" width="640" height="360" src="'.$src.'" frameborder="0" allowfullscreen></iframe></div>';
+		$embed_code .= $tracking_script;
 	}
 	return $embed_code;
 }
