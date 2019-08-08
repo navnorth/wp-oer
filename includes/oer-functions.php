@@ -2616,6 +2616,20 @@ function is_audiovideo_resource($url) {
 	return $is_file;
 }
 
+function is_audio_resource($url) {
+	$supported_files = array(
+			 "mp3", "m4a", "aac", "oga", "wav" // Audios
+			);
+	
+	$is_file = false;
+	
+	$file_ext = pathinfo($url, PATHINFO_EXTENSION);
+	if (in_array($file_ext, $supported_files))
+		$is_file = true;
+		
+	return $is_file;
+}
+
 function is_image_resource($url) {
 	$supported_files = array(
 			 "jpg","png",
