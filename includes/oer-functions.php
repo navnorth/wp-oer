@@ -2618,7 +2618,7 @@ function is_audiovideo_resource($url) {
 
 function is_audio_resource($url) {
 	$supported_files = array(
-			 "mp3", "m4a", "aac", "oga", "wav" // Audios
+			 "mp3", "m4a", "aac", "oga", "wav", "mp4" // Audios
 			);
 	
 	$is_file = false;
@@ -3869,6 +3869,7 @@ if (!function_exists('oer_generate_audio_resource_embed')) {
 		<audio controls>
 			<source src="<?php echo $audio_url; ?>" type="audio/ogg">
 			<source src="<?php echo $audio_url; ?>" type="audio/mpeg">
+			<source src="<?php echo $audio_url; ?>" type="audio/wav">
 			Your browser does not support the audio element.
 		</audio>
 		<?php
