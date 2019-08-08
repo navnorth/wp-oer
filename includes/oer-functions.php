@@ -3862,4 +3862,16 @@ if (!function_exists('oer_display_pdf_embeds')){
 		}
 	}
 }
+
+if (!function_exists('oer_generate_audio_resource_embed')) {
+	function oer_generate_audio_resource_embed($audio_url){
+		?>
+		<audio controls>
+			<source src="<?php echo $audio_url; ?>" type="audio/ogg">
+			<source src="<?php echo $audio_url; ?>" type="audio/mpeg">
+			Your browser does not support the audio element.
+		</audio>
+		<?php
+	}
+}
 ?>
