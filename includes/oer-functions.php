@@ -1568,15 +1568,15 @@ function oer_importResources($default=false) {
 				}//Create Screeenshot
 				
 				if(!empty($oer_transcription)){
-					update_post_meta( $post_id , 'oer_transcription' , sanitize_textarea_field($oer_transcription));
+					update_post_meta( $post_id , 'oer_transcription' , $oer_transcription);
 				}
 				
 				if(!empty($oer_citation)){
-					update_post_meta( $post_id , 'oer_citation' , sanitize_textarea_field($oer_citation));
+					update_post_meta( $post_id , 'oer_citation' , $oer_citation);
 				}
 				
 				if(!empty($oer_sensitive_material)){
-					update_post_meta( $post_id , 'oer_sensitive_material' , sanitize_textarea_field($oer_sensitive_material));
+					update_post_meta( $post_id , 'oer_sensitive_material' , $oer_sensitive_material);
 				}
 				$cnt++;
 			}
