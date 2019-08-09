@@ -705,7 +705,7 @@ global $chck;
             </div>
             <div class="oer_fld">
             	<?php 	$oer_citation = get_post_meta($post->ID, 'oer_citation', true);
-			wp_editor( $oer_citation, 'oer_citation', array( "media_buttons"  => true, "tinymce" => true ) ); ?>
+			wp_editor( $oer_citation, 'oer_citation', array( "wpautop" => false, "media_buttons"  => true, "tinymce" => true ) ); ?>
             </div>
         </div><!-- Citation Section -->
 	<?php } ?>
@@ -729,7 +729,7 @@ global $chck;
             </div>
             <div class="oer_fld">
             	<?php 	$oer_sensitive_material = get_post_meta($post->ID, 'oer_sensitive_material', true);
-			wp_editor( $oer_sensitive_material, 'oer_sensitive_material', array( "media_buttons"  => true, "tinymce" => true ) ); ?>
+			wp_editor( $oer_sensitive_material, 'oer_sensitive_material', array( "wpautop" => false, "media_buttons"  => true, "tinymce" => true ) ); ?>
             </div>
         </div><!-- Sensitive Material Warning field -->
 	<?php } ?>
@@ -753,7 +753,7 @@ global $chck;
             </div>
             <div class="oer_fld">
             	<?php 	$oer_transcription = get_post_meta($post->ID, 'oer_transcription', true);
-			wp_editor( $oer_transcription, 'oer_transcription', array( "media_buttons"  => true, "tinymce" => true ) ); ?>
+			wp_editor( $oer_transcription, 'oer_transcription', array( "wpautop" => false, "media_buttons"  => true, "tinymce" => true ) ); ?>
             </div>
         </div><!-- Transcription field -->
 	<?php } ?>
