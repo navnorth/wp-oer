@@ -1568,15 +1568,15 @@ function oer_importResources($default=false) {
 				}//Create Screeenshot
 				
 				if(!empty($oer_transcription)){
-					update_post_meta( $post_id , 'oer_transcription' , sanitize_textarea_field($oer_transcription));
+					update_post_meta( $post_id , 'oer_transcription' , $oer_transcription);
 				}
 				
 				if(!empty($oer_citation)){
-					update_post_meta( $post_id , 'oer_citation' , sanitize_textarea_field($oer_citation));
+					update_post_meta( $post_id , 'oer_citation' , $oer_citation);
 				}
 				
 				if(!empty($oer_sensitive_material)){
-					update_post_meta( $post_id , 'oer_sensitive_material' , sanitize_textarea_field($oer_sensitive_material));
+					update_post_meta( $post_id , 'oer_sensitive_material' , $oer_sensitive_material);
 				}
 				$cnt++;
 			}
@@ -2605,6 +2605,20 @@ function is_audiovideo_resource($url) {
 	$supported_files = array(
 			 "avi", "wmv", "webm", "flv", "mov", "mkv", "mp4", "m4v", "3gp", "f4v", // Videos
 			 "mp3", "m4a", "aac", "oga", "wav" // Audios
+			);
+	
+	$is_file = false;
+	
+	$file_ext = pathinfo($url, PATHINFO_EXTENSION);
+	if (in_array($file_ext, $supported_files))
+		$is_file = true;
+		
+	return $is_file;
+}
+
+function is_audio_resource($url) {
+	$supported_files = array(
+			 "mp3", "m4a", "aac", "oga", "wav", "mp4" // Audios
 			);
 	
 	$is_file = false;
@@ -3846,6 +3860,19 @@ if (!function_exists('oer_display_pdf_embeds')){
 					break;
 			}
 		}
+	}
+}
+
+if (!function_exists('oer_generate_audio_resource_embed')) {
+	function oer_generate_audio_resource_embed($audio_url){
+		?>
+		<audio controls>
+			<source src="<?php echo $audio_url; ?>" type="audio/ogg">
+			<source src="<?php echo $audio_url; ?>" type="audio/mpeg">
+			<source src="<?php echo $audio_url; ?>" type="audio/wav">
+			Your browser does not support the audio element.
+		</audio>
+		<?php
 	}
 }
 ?>

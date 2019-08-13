@@ -425,7 +425,7 @@ function oer_save_customfields()
 		
 		if(isset($_POST['oer_transcription']))
 		{
-			update_post_meta( $post->ID , 'oer_transcription' , sanitize_textarea_field($_POST['oer_transcription']));
+			update_post_meta( $post->ID , 'oer_transcription' , $_POST['oer_transcription']);
 		}
 
 		if(isset($_POST['oer_mediatype']))
@@ -656,12 +656,12 @@ function oer_save_customfields()
 		
 		if(isset($_POST['oer_citation']))
 		{
-		    update_post_meta( $post->ID , 'oer_citation' , sanitize_textarea_field($_POST['oer_citation']));
+		    update_post_meta( $post->ID , 'oer_citation' , $_POST['oer_citation']);
 		}
 		
 		if(isset($_POST['oer_sensitive_material']))
 		{
-		    update_post_meta( $post->ID , 'oer_sensitive_material' , sanitize_textarea_field($_POST['oer_sensitive_material']));
+		    update_post_meta( $post->ID , 'oer_sensitive_material' , $_POST['oer_sensitive_material']);
 		}
 
 	}
