@@ -399,6 +399,7 @@ function oer_save_customfields()
 			update_post_meta( $post->ID , 'oer_grade' , '');
 		}
 		
+		// Save Format
 		if(isset($_POST['oer_format']))
 		{
 			update_post_meta( $post->ID , 'oer_format' , sanitize_text_field($_POST['oer_format']));
@@ -407,6 +408,12 @@ function oer_save_customfields()
 		if(isset($_POST['oer_datecreated']))
 		{
 			update_post_meta( $post->ID , 'oer_datecreated' , sanitize_text_field($_POST['oer_datecreated']));
+		}
+		
+		// Save Date Created Estimate
+		if(isset($_POST['oer_datecreated_estimate']))
+		{
+			update_post_meta( $post->ID , 'oer_datecreated_estimate' , sanitize_text_field($_POST['oer_datecreated_estimate']));
 		}
 
 		if(isset($_POST['oer_datemodified']))
@@ -641,7 +648,24 @@ function oer_save_customfields()
 			}
 
 		}//Create Screeenshot
-
+		
+		// Save Citation
+		if(isset($_POST['oer_citation']))
+		{
+		    update_post_meta( $post->ID , 'oer_citation' , $_POST['oer_citation']);
+		}
+		
+		// Save Sensitive Material
+		if(isset($_POST['oer_sensitive_material']))
+		{
+		    update_post_meta( $post->ID , 'oer_sensitive_material' , $_POST['oer_sensitive_material']);
+		}
+		
+		// Save Transcription
+		if(isset($_POST['oer_transcription']))
+		{
+			update_post_meta( $post->ID , 'oer_transcription' , $_POST['oer_transcription']);
+		}
 	}
     }
 }

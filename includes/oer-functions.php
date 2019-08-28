@@ -1084,6 +1084,7 @@ function oer_importResources($default=false) {
 				$oer_grade 		= "";
 				$oer_kywrd 		= "";
 				$oer_datecreated 	= "";
+				$oer_datecreated_estimate = "";
 				$oer_datemodified 	= "";
 				$oer_mediatype 		= "";
 				$oer_lrtype 		= "";
@@ -1104,6 +1105,9 @@ function oer_importResources($default=false) {
 				$oer_authoremail2   	= "";
 				$oer_thumbnailurl	= "";
 				$oer_format		= "";
+				$oer_transcription	= "";
+				$oer_citation		= "";
+				$oer_sensitive_material = "";
 
 				/** Check first if column is set **/
 				if (isset($fnldata['cells'][$k][1]))
@@ -1123,45 +1127,53 @@ function oer_importResources($default=false) {
 				if (isset($fnldata['cells'][$k][8]))
 					$oer_datecreated    = $fnldata['cells'][$k][8];
 				if (isset($fnldata['cells'][$k][9]))
-					$oer_datemodified   = $fnldata['cells'][$k][9];
+					$oer_datecreated_estimate    = $fnldata['cells'][$k][9];
 				if (isset($fnldata['cells'][$k][10]))
-					$oer_mediatype      = $fnldata['cells'][$k][10];
+					$oer_datemodified   	= $fnldata['cells'][$k][10];
 				if (isset($fnldata['cells'][$k][11]))
-					$oer_lrtype         = $fnldata['cells'][$k][11];
+					$oer_mediatype      	= $fnldata['cells'][$k][11];
 				if (isset($fnldata['cells'][$k][12]))
-					$oer_interactivity  = $fnldata['cells'][$k][12];
+					$oer_lrtype         	= $fnldata['cells'][$k][12];
 				if (isset($fnldata['cells'][$k][13]))
-					$oer_userightsurl   = $fnldata['cells'][$k][13];
+					$oer_interactivity  	= $fnldata['cells'][$k][13];
 				if (isset($fnldata['cells'][$k][14]))
-					$oer_isbasedonurl   = $fnldata['cells'][$k][14];
+					$oer_userightsurl   	= $fnldata['cells'][$k][14];
 				if (isset($fnldata['cells'][$k][15]))
-					$oer_standard       = $fnldata['cells'][$k][15];
+					$oer_isbasedonurl   	= $fnldata['cells'][$k][15];
 				if (isset($fnldata['cells'][$k][16]))
-					$oer_authortype     = $fnldata['cells'][$k][16];
+					$oer_standard       	= $fnldata['cells'][$k][16];
 				if (isset($fnldata['cells'][$k][17]))
-					$oer_authorname     = $fnldata['cells'][$k][17];
+					$oer_authortype     	= $fnldata['cells'][$k][17];
 				if (isset($fnldata['cells'][$k][18]))
-					$oer_authorurl      = $fnldata['cells'][$k][18];
+					$oer_authorname     	= $fnldata['cells'][$k][18];
 				if (isset($fnldata['cells'][$k][19]))
-					$oer_authoremail    = $fnldata['cells'][$k][19];
+					$oer_authorurl      	= $fnldata['cells'][$k][19];
 				if (isset($fnldata['cells'][$k][20]))
-					$oer_publishername  = $fnldata['cells'][$k][20];
+					$oer_authoremail    	= $fnldata['cells'][$k][20];
 				if (isset($fnldata['cells'][$k][21]))
-					$oer_publisherurl   = $fnldata['cells'][$k][21];
+					$oer_publishername  	= $fnldata['cells'][$k][21];
 				if (isset($fnldata['cells'][$k][22]))
-					$oer_publisheremail = $fnldata['cells'][$k][22];
+					$oer_publisherurl   	= $fnldata['cells'][$k][22];
 				if (isset($fnldata['cells'][$k][23]))
-					$oer_authortype2    = $fnldata['cells'][$k][23];
+					$oer_publisheremail 	= $fnldata['cells'][$k][23];
 				if (isset($fnldata['cells'][$k][24]))
-					$oer_authorname2    = $fnldata['cells'][$k][24];
+					$oer_authortype2   	 = $fnldata['cells'][$k][24];
 				if (isset($fnldata['cells'][$k][25]))
-					$oer_authorurl2     = $fnldata['cells'][$k][25];
+					$oer_authorname2    	= $fnldata['cells'][$k][25];
 				if (isset($fnldata['cells'][$k][26]))
-					$oer_authoremail2   = $fnldata['cells'][$k][26];
+					$oer_authorurl2    	 = $fnldata['cells'][$k][26];
 				if (isset($fnldata['cells'][$k][27]))
-					$oer_thumbnailurl   = $fnldata['cells'][$k][27];
+					$oer_authoremail2   	= $fnldata['cells'][$k][27];
 				if (isset($fnldata['cells'][$k][28]))
-					$oer_format   	= $fnldata['cells'][$k][28];
+					$oer_thumbnailurl   	= $fnldata['cells'][$k][28];
+				if (isset($fnldata['cells'][$k][29]))
+					$oer_format   		= $fnldata['cells'][$k][29];
+				if (isset($fnldata['cells'][$k][30]))
+					$oer_transcription   	= $fnldata['cells'][$k][30];
+				if (isset($fnldata['cells'][$k][31]))
+					$oer_citation   	= $fnldata['cells'][$k][31];
+				if (isset($fnldata['cells'][$k][32]))
+					$oer_sensitive_material  = $fnldata['cells'][$k][32];
 					
 				if(!empty($oer_standard) && (!is_array($oer_standard)))
 				{
@@ -1270,6 +1282,10 @@ function oer_importResources($default=false) {
 				if(!empty($oer_datecreated) && !($oer_datecreated==""))
 				{
 					update_post_meta( $post_id , 'oer_datecreated' , $oer_datecreated);
+				}
+				
+				if(!empty($oer_datecreated_estimate) && !($oer_datecreated_estimate=="")){
+					update_post_meta( $post_id , 'oer_datecreated_estimate' , $oer_datecreated_estimate);
 				}
 
 				if(!empty($oer_datemodified))
@@ -1418,6 +1434,21 @@ function oer_importResources($default=false) {
 				if(!empty($oer_format))
 				{
 					update_post_meta( $post_id , 'oer_format' , sanitize_text_field($oer_format));
+				}
+				
+				// Save Citation
+				if(!empty($oer_citation)){
+					update_post_meta( $post_id , 'oer_citation' , $oer_citation);
+				}
+				
+				// Save Sensitive Material Warning
+				if(!empty($oer_sensitive_material)){
+					update_post_meta( $post_id , 'oer_sensitive_material' , $oer_sensitive_material);
+				}
+				
+				// Save Transcription
+				if(!empty($oer_transcription)){
+					update_post_meta( $post_id , 'oer_transcription' , $oer_transcription);
 				}
 				//saving meta fields
 

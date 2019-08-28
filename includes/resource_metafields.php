@@ -19,9 +19,22 @@ global $chck;
             </div>
         </div>
 
+        <?php
+	// Highlight
+	$option_set = false;
+	if (get_option('oer_highlight_label')){
+		$option_set = true;
+	}
+	if (($option_set && get_option('oer_highlight_enabled')) || !$option_set) {
+	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
-			<?php _e("Highlight:", OER_SLUG); ?>
+			<?php
+			if (!$option_set)
+				_e("Highlight:", OER_SLUG);
+			else
+				echo get_option('oer_highlight_label').":";
+			?>
             </div>
             <div class="oer_fld">
             	<?php $oer_highlight = get_post_meta($post->ID, 'oer_highlight', true);?>
@@ -29,10 +42,24 @@ global $chck;
                 <label for="oer_rsurlfalse"><?php _e("False", OER_SLUG); ?></label><input id="oer_rsurlfalse" type="radio" value="0" name="oer_highlight" <?php if($oer_highlight == '0' || $oer_highlight == ''){echo 'checked="checked"';}?> />
             </div>
         </div>
+	<?php } ?>
 
-       <div class="oer_snglfld">
+	<?php
+	// Grade Level
+	$option_set = false;
+	if (get_option('oer_grade_label')){
+		$option_set = true;
+	}
+	if (($option_set && get_option('oer_grade_enabled')) || !$option_set) {
+	?>
+	<div class="oer_snglfld">
         	<div class="oer_txt">
-			<?php _e("Grade:", OER_SLUG); ?>
+			<?php
+			if (!$option_set)
+				_e("Grade:", OER_SLUG);
+			else
+				echo get_option('oer_grade_label').":";
+			?>
             </div>
             <div class="oer_fld">
             	<?php
@@ -70,45 +97,125 @@ global $chck;
 
             </div>
         </div>
+       <?php } ?>
        
+	<?php
+	// Format
+	$option_set = false;
+	if (get_option('oer_format_label')){
+		$option_set = true;
+	}
+	if (($option_set && get_option('oer_format_enabled')) || !$option_set) {
+	?>
 	<div class="oer_snglfld">
         	<div class="oer_txt">
-			<?php _e("Format:", OER_SLUG); ?>
-		</div>
-		<div class="oer_fld">
-			<?php $oer_format = get_post_meta($post->ID, 'oer_format', true);?>
-			<input type="text" name="oer_format" value="<?php echo $oer_format;?>"/>
-		</div>
+			<?php
+			if (!$option_set)
+				_e("Format:", OER_SLUG);
+			else
+				echo get_option('oer_format_label').":";
+			?>
+            </div>
+            <div class="oer_fld">
+            	<?php $oer_format = get_post_meta($post->ID, 'oer_format', true);?>
+                <input type="text" name="oer_format" value="<?php echo $oer_format;?>"/>
+            </div>
         </div>
+	<?php } ?>
 
+	<?php
+	// Date Created
+	$option_set = false;
+	if (get_option('oer_datecreated_label')){
+		$option_set = true;
+	}
+	if (($option_set && get_option('oer_datecreated_enabled')) || !$option_set) {
+	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
-			<?php _e("Date Created:", OER_SLUG); ?>
+			<?php
+			if (!$option_set)
+				_e("Date Created:", OER_SLUG);
+			else
+				echo get_option('oer_datecreated_label').":";
+			?>
             </div>
             <div class="oer_fld">
             	<?php $oer_datecreated= get_post_meta($post->ID, 'oer_datecreated', true);?>
                 <input type="text" name="oer_datecreated" value="<?php echo $oer_datecreated;?>" class="oer_datepicker"/>
             </div>
         </div>
+	<?php } ?>
+	
+	<?php
+	// Date Created Estimate
+	$option_set = false;
+	if (get_option('oer_datecreated_estimate_label')){
+		$option_set = true;
+	}
+	if (($option_set && get_option('oer_datecreated_estimate_enabled')) || !$option_set) {
+	?>
+	<div class="oer_snglfld">
+        	<div class="oer_txt">
+			<?php
+			if (!$option_set)
+				_e("Date Created Estimate:", OER_SLUG);
+			else
+				echo get_option('oer_datecreated_estimate_label').":";
+			?>
+            </div>
+            <div class="oer_fld">
+            	<?php $oer_datecreated_estimate = get_post_meta($post->ID, 'oer_datecreated_estimate', true);?>
+                <input type="text" name="oer_datecreated_estimate" value="<?php echo $oer_datecreated_estimate;?>" />
+            </div>
+        </div>
+	<?php } ?>
 
+	<?php
+	// Date Modified
+	$option_set = false;
+	if (get_option('oer_datemodified_label')){
+		$option_set = true;
+	}
+	if (($option_set && get_option('oer_datemodified_enabled')) || !$option_set) {
+	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
-			<?php _e("Date Modified:", OER_SLUG); ?>
+			<?php
+			if (!$option_set)
+				_e("Date Modified:", OER_SLUG);
+			else
+				echo get_option('oer_datemodified_label').":";
+			?>
             </div>
             <div class="oer_fld">
             	<?php $oer_datemodified= get_post_meta($post->ID, 'oer_datemodified', true);?>
                 <input type="text" name="oer_datemodified" value="<?php echo $oer_datemodified;?>" class="oer_datepicker"/>
             </div>
         </div>
+	<?php } ?>
 
+	<?php
+	// Media Type
+	$option_set = false;
+	if (get_option('oer_mediatype_label')){
+		$option_set = true;
+	}
+	if (($option_set && get_option('oer_mediatype_enabled')) || !$option_set) {
+	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
-			<?php _e("Media Type:", OER_SLUG); ?>
+			<?php
+			if (!$option_set)
+				_e("Media Type:", OER_SLUG);
+			else
+				echo get_option('oer_mediatype_label').":";
+			?>
             </div>
             <div class="oer_fld">
             	<?php $oer_mediatype = strtolower(get_post_meta($post->ID, 'oer_mediatype', true)); ?>
                 <select name="oer_mediatype">
-					   <option value="website" <?php if($oer_mediatype == 'website'){echo 'selected="selected"';}?>><?php _e("Website", OER_SLUG); ?></option>
+			<option value="website" <?php if($oer_mediatype == 'website'){echo 'selected="selected"';}?>><?php _e("Website", OER_SLUG); ?></option>
                        <option value="audio" <?php if($oer_mediatype == 'audio'){echo 'selected="selected"';}?>><?php _e("Audio", OER_SLUG); ?></option>
                        <option value="document" <?php if($oer_mediatype == 'document'){echo 'selected="selected"';}?>><?php _e("Document", OER_SLUG); ?></option>
                        <option value="image" <?php if($oer_mediatype == 'image'){echo 'selected="selected"';}?>><?php _e("Image", OER_SLUG); ?></option>
@@ -117,16 +224,30 @@ global $chck;
                 </select>
             </div>
         </div>
+	<?php } ?>
 
+	<?php
+	// Learning Resource Type
+	$option_set = false;
+	if (get_option('oer_lrtype_label')){
+		$option_set = true;
+	}
+	if (($option_set && get_option('oer_lrtype_enabled')) || !$option_set) {
+	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
-			<?php _e("Learning Resource Type:", OER_SLUG); ?>
+			<?php
+			if (!$option_set)
+				_e("Learning Resource Type:", OER_SLUG);
+			else
+				echo get_option('oer_lrtype_label').":";
+			?>
             </div>
             <div class="oer_fld">
             	<?php $oer_lrtype = strtolower(get_post_meta($post->ID, 'oer_lrtype', true)); ?>
                 <select name="oer_lrtype">
 			<option value=""></option>
-					   <option value="website" <?php if($oer_lrtype == 'website'){echo 'selected="selected"';}?>><?php _e("Assessment", OER_SLUG); ?></option>
+			<option value="website" <?php if($oer_lrtype == 'website'){echo 'selected="selected"';}?>><?php _e("Assessment", OER_SLUG); ?></option>
                        <option value="audio" <?php if($oer_lrtype == 'audio'){echo 'selected="selected"';}?>><?php _e("Audio", OER_SLUG); ?></option>
                        <option value="calculator" <?php if($oer_lrtype == 'calculator'){echo 'selected="selected"';}?>><?php _e("Calculator", OER_SLUG); ?></option>
                        <option value="demonstration" <?php if($oer_lrtype == 'demonstration'){echo 'selected="selected"';}?>><?php _e("Demonstration", OER_SLUG); ?></option>
@@ -140,16 +261,30 @@ global $chck;
                 </select>
             </div>
         </div>
+	<?php } ?>
 
+	<?php
+	// Interactivity
+	$option_set = false;
+	if (get_option('oer_interactivity_label')){
+		$option_set = true;
+	}
+	if (($option_set && get_option('oer_interactivity_enabled')) || !$option_set) {
+	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
-			<?php _e("Interactivity:", OER_SLUG); ?>
+			<?php
+			if (!$option_set)
+				_e("Interactivity:", OER_SLUG);
+			else
+				echo get_option('oer_interactivity_label').":";
+			?>
             </div>
             <div class="oer_fld">
             	<?php $oer_interactivity = strtolower(get_post_meta($post->ID, 'oer_interactivity', true)); ?>
                 <select name="oer_interactivity">
 			<option value=""></option>
-					   <option value="interactive" <?php if($oer_interactivity == 'interactive'){echo 'selected="selected"';}?>><?php _e("Interactive", OER_SLUG); ?></option>
+			<option value="interactive" <?php if($oer_interactivity == 'interactive'){echo 'selected="selected"';}?>><?php _e("Interactive", OER_SLUG); ?></option>
                        <option value="passive" <?php if($oer_interactivity == 'passive'){echo 'selected="selected"';}?>><?php _e("Passive", OER_SLUG); ?></option>
                        <option value="social" <?php if($oer_interactivity == 'social'){echo 'selected="selected"';}?>><?php _e("Social", OER_SLUG); ?></option>
                        <option value="prgorammatic" <?php if($oer_interactivity == 'prgorammatic'){echo 'selected="selected"';}?>><?php _e("Programmatic", OER_SLUG); ?></option>
@@ -160,31 +295,73 @@ global $chck;
                 </select>
             </div>
         </div>
+	<?php } ?>
 
+	<?php
+	// User Rights URL
+	$option_set = false;
+	if (get_option('oer_userightsurl_label')){
+		$option_set = true;
+	}
+	if (($option_set && get_option('oer_userightsurl_enabled')) || !$option_set) {
+	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
-			<?php _e("Use Rights URL:", OER_SLUG); ?>
+			<?php
+			if (!$option_set)
+				_e("Use Rights URL:", OER_SLUG);
+			else
+				echo get_option('oer_userightsurl_label').":";
+			?>
             </div>
             <div class="oer_fld">
             	<?php $oer_userightsurl = get_post_meta($post->ID, 'oer_userightsurl', true);?>
                 <input type="text" name="oer_userightsurl" value="<?php echo esc_attr($oer_userightsurl);?>" />
             </div>
         </div>
+	<?php } ?>
 
+	<?php
+	// Is Based on URL
+	$option_set = false;
+	if (get_option('oer_isbasedonurl_label')){
+		$option_set = true;
+	}
+	if (($option_set && get_option('oer_isbasedonurl_enabled')) || !$option_set) {
+	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
-			<?php _e("Is based on URL:", OER_SLUG); ?>
+			<?php
+			if (!$option_set)
+				_e("Is based on URL:", OER_SLUG);
+			else
+				echo get_option('oer_isbasedonurl_label').":";
+			?>
             </div>
             <div class="oer_fld">
             	<?php $oer_isbasedonurl = get_post_meta($post->ID, 'oer_isbasedonurl', true);?>
                 <input type="text" name="oer_isbasedonurl" value="<?php echo esc_attr($oer_isbasedonurl);?>" />
             </div>
         </div>
-
-		<div class="oer_snglfld">
+	<?php } ?>
+	
+	<?php
+	// Standard
+	$option_set = false;
+	if (get_option('oer_standard_label')){
+		$option_set = true;
+	}
+	if (($option_set && get_option('oer_standard_enabled')) || !$option_set) {
+	?>
+	<div class="oer_snglfld">
         	<div class="oer_txt">
-			<?php _e("Standards Alignment:", OER_SLUG); ?>
-            </div>
+			<?php
+			if (!$option_set)
+				_e("Standards:", OER_SLUG);
+			else
+				echo get_option('oer_standard_label').":";
+			?>
+		</div>
            	<?php
 				$oer_standard_alignment = get_post_meta($post->ID, 'oer_standard_alignment', true);
 			 	$oer_standard = get_post_meta($post->ID, 'oer_standard', true);
@@ -213,14 +390,28 @@ global $chck;
             </div>
 
         </div>
-
+	<?php } ?>
+	
         <div class="oer_snglfld oer_hdngsngl">
 		<?php _e("Author Information:", OER_SLUG); ?>
         </div>
 
+        <?php
+	// Author Type
+	$option_set = false;
+	if (get_option('oer_authortype_label')){
+		$option_set = true;
+	}
+	if (($option_set && get_option('oer_authortype_enabled')) || !$option_set) {
+	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
-			<?php _e("Type:", OER_SLUG); ?>
+			<?php
+			if (!$option_set)
+				_e("Type:", OER_SLUG);
+			else
+				echo get_option('oer_authortype_label').":";
+			?>
             </div>
             <div class="oer_fld">
             	<?php $oer_authortype = strtolower(get_post_meta($post->ID, 'oer_authortype', true));?>
@@ -230,36 +421,79 @@ global $chck;
                 </select>
             </div>
         </div>
+	<?php } ?>
 
+	<?php
+	// Author Name
+	$option_set = false;
+	if (get_option('oer_authorname_label')){
+		$option_set = true;
+	}
+	if (($option_set && get_option('oer_authorname_enabled')) || !$option_set) {
+	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
-			<?php _e("Name:", OER_SLUG); ?>
+			<?php
+			if (!$option_set)
+				_e("Name:", OER_SLUG);
+			else
+				echo get_option('oer_authorname_label').":";
+			?>
             </div>
             <div class="oer_fld">
             	<?php $oer_authorname = get_post_meta($post->ID, 'oer_authorname', true);?>
                 <input type="text" name="oer_authorname" value="<?php echo esc_attr($oer_authorname);?>" />
             </div>
         </div>
+	<?php } ?>
 
+	<?php
+	// Author URL
+	$option_set = false;
+	if (get_option('oer_authorurl_label')){
+		$option_set = true;
+	}
+	if (($option_set && get_option('oer_authorurl_enabled')) || !$option_set) {
+	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
-			<?php _e("URL:", OER_SLUG); ?>
+			<?php
+			if (!$option_set)
+				_e("URL:", OER_SLUG);
+			else
+				echo get_option('oer_authorurl_label').":";
+			?>
             </div>
             <div class="oer_fld">
             	<?php $oer_authorurl = get_post_meta($post->ID, 'oer_authorurl', true);?>
                 <input type="text" name="oer_authorurl" value="<?php echo esc_attr($oer_authorurl);?>" />
             </div>
         </div>
+	<?php } ?>
 
+	<?php
+	// Author Email Address
+	$option_set = false;
+	if (get_option('oer_authoremail_label')){
+		$option_set = true;
+	}
+	if (($option_set && get_option('oer_authoremail_enabled')) || !$option_set) {
+	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
-			<?php _e("Email Address:", OER_SLUG); ?>
+			<?php
+			if (!$option_set)
+				_e("Email Address:", OER_SLUG);
+			else
+				echo get_option('oer_authoremail_label').":";
+			?>
             </div>
             <div class="oer_fld">
             	<?php $oer_authoremail = get_post_meta($post->ID, 'oer_authoremail', true);?>
                 <input type="text" name="oer_authoremail" value="<?php echo esc_attr($oer_authoremail);?>" />
             </div>
         </div>
+	<?php } ?>
 
         <?php
 		$oer_authortype2 = get_post_meta($post->ID, 'oer_authortype2', true);
@@ -278,9 +512,22 @@ global $chck;
 			<?php _e("Author Information:", OER_SLUG); ?>
                 </div>
 
+                <?php
+		// Second Author Type
+		$option_set = false;
+		if (get_option('oer_authortype2_label')){
+			$option_set = true;
+		}
+		if (($option_set && get_option('oer_authortype2_enabled')) || !$option_set) {
+		?>
                 <div class="oer_snglfld">
                     <div class="oer_txt">
-			<?php _e("Type:", OER_SLUG); ?>
+			<?php
+			if (!$option_set)
+				_e("Type:", OER_SLUG);
+			else
+				echo get_option('oer_authortype2_label').":";
+			?>
                     </div>
                     <div class="oer_fld">
                         <?php $oer_authortype2 = get_post_meta($post->ID, 'oer_authortype2', true);?>
@@ -290,36 +537,79 @@ global $chck;
                         </select>
                     </div>
                 </div>
+		<?php } ?>
 
+		<?php
+		// Second Author Name
+		$option_set = false;
+		if (get_option('oer_authorname2_label')){
+			$option_set = true;
+		}
+		if (($option_set && get_option('oer_authorname2_enabled')) || !$option_set) {
+		?>
                 <div class="oer_snglfld">
                     <div class="oer_txt">
-			<?php _e("Name:", OER_SLUG); ?>
+			<?php
+			if (!$option_set)
+				_e("Name:", OER_SLUG);
+			else
+				echo get_option('oer_authorname2_label').":";
+			?>
                     </div>
                     <div class="oer_fld">
                         <?php $oer_authorname2 = get_post_meta($post->ID, 'oer_authorname2', true);?>
                         <input type="text" name="oer_authorname2" value="<?php echo esc_attr($oer_authorname2);?>" />
                     </div>
                 </div>
+		<?php } ?>
 
+		<?php
+		// Second Author URL
+		$option_set = false;
+		if (get_option('oer_authorurl2_label')){
+			$option_set = true;
+		}
+		if (($option_set && get_option('oer_authorurl2_enabled')) || !$option_set) {
+		?>
                 <div class="oer_snglfld">
                     <div class="oer_txt">
-			<?php _e("URL:", OER_SLUG); ?>
+			<?php
+			if (!$option_set)
+				_e("URL:", OER_SLUG);
+			else
+				echo get_option('oer_authorurl2_label').":";
+			?>
                     </div>
                     <div class="oer_fld">
                         <?php $oer_authorurl2 = get_post_meta($post->ID, 'oer_authorurl2', true);?>
                         <input type="text" name="oer_authorurl2" value="<?php echo esc_attr($oer_authorurl2);?>" />
                     </div>
                 </div>
+		<?php } ?>
 
+		<?php
+		// Second Author Email Address
+		$option_set = false;
+		if (get_option('oer_authoremail2_label')){
+			$option_set = true;
+		}
+		if (($option_set && get_option('oer_authoremail2_enabled')) || !$option_set) {
+		?>
                 <div class="oer_snglfld">
                     <div class="oer_txt">
-			<?php _e("Email Address:", OER_SLUG); ?>
+			<?php
+			if (!$option_set)
+				_e("Email Address:", OER_SLUG);
+			else
+				echo get_option('oer_authoremail2_label').":";
+			?>
                     </div>
                     <div class="oer_fld">
                         <?php $oer_authoremail2 = get_post_meta($post->ID, 'oer_authoremail2', true);?>
                         <input type="text" name="oer_authoremail2" value="<?php echo esc_attr($oer_authoremail2);?>" />
                     </div>
                 </div>
+		<?php } ?>
             </div>
         <?php
 		}
@@ -337,36 +627,149 @@ global $chck;
 		<?php _e("Publisher Information:", OER_SLUG); ?>
         </div>
 
+        <?php
+	// Publisher Name
+	$option_set = false;
+	if (get_option('oer_publishername_label')){
+		$option_set = true;
+	}
+	if (($option_set && get_option('oer_publishername_enabled')) || !$option_set) {
+	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
-			<?php _e("Name:", OER_SLUG); ?>
-            </div>
-            <div class="oer_fld">
-            	<?php $oer_publishername = get_post_meta($post->ID, 'oer_publishername', true);?>
-                <input type="text" name="oer_publishername" value="<?php echo esc_attr($oer_publishername);?>" />
-            </div>
+			<?php
+			if (!$option_set)
+				_e("Name:", OER_SLUG);
+			else
+				echo get_option('oer_publishername_label').":";
+			?>
+		</div>
+		<div class="oer_fld">
+		    <?php $oer_publishername = get_post_meta($post->ID, 'oer_publishername', true);?>
+		    <input type="text" name="oer_publishername" value="<?php echo esc_attr($oer_publishername);?>" />
+		</div>
         </div>
+	<?php } ?>
 
+	<?php
+	// Publisher URL
+	$option_set = false;
+	if (get_option('oer_publisherurl_label')){
+		$option_set = true;
+	}
+	if (($option_set && get_option('oer_publisherurl_enabled')) || !$option_set) {
+	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
-			<?php _e("URL:", OER_SLUG); ?>
-            </div>
-            <div class="oer_fld">
-            	<?php $oer_publisherurl = get_post_meta($post->ID, 'oer_publisherurl', true);?>
-                <input type="text" name="oer_publisherurl" value="<?php echo esc_attr($oer_publisherurl);?>" />
-            </div>
+			<?php
+			if (!$option_set)
+				_e("URL:", OER_SLUG);
+			else
+				echo get_option('oer_publisherurl_label').":";
+			?>
+		</div>
+		<div class="oer_fld">
+		    <?php $oer_publisherurl = get_post_meta($post->ID, 'oer_publisherurl', true);?>
+		    <input type="text" name="oer_publisherurl" value="<?php echo esc_attr($oer_publisherurl);?>" />
+		</div>
         </div>
+	<?php } ?>
 
+	<?php
+	// Publisher Email Address
+	$option_set = false;
+	if (get_option('oer_publisheremail_label')){
+		$option_set = true;
+	}
+	if (($option_set && get_option('oer_publisheremail_enabled')) || !$option_set) {
+	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
-			<?php _e("Email Address:", OER_SLUG); ?>
+			<?php
+			if (!$option_set)
+				_e("Email Address:", OER_SLUG);
+			else
+				echo get_option('oer_publisheremail_label').":";
+			?>
             </div>
             <div class="oer_fld">
             	<?php $oer_publisheremail = get_post_meta($post->ID, 'oer_publisheremail', true);?>
                 <input type="text" name="oer_publisheremail" value="<?php echo esc_attr($oer_publisheremail);?>" />
             </div>
         </div>
+	<?php } ?>
 
+	<?php
+	// Citation
+	$option_set = false;
+	if (get_option('oer_citation_label')){
+		$option_set = true;
+	}
+	if (($option_set && get_option('oer_citation_enabled')) || !$option_set) {
+	?>
+	<div class="oer_snglfld">
+        	<div class="oer_txt">
+			<?php
+			if (!$option_set)
+				_e("Citation:", OER_SLUG);
+			else
+				echo get_option('oer_citation_label').":";
+			?>
+            </div>
+            <div class="oer_fld">
+            	<?php 	$oer_citation = get_post_meta($post->ID, 'oer_citation', true);
+			wp_editor( $oer_citation, 'oer_citation', array( "wpautop" => false, "media_buttons"  => true, "tinymce" => true ) ); ?>
+            </div>
+        </div><!-- Citation Section -->
+	<?php } ?>
+	
+	<?php
+	// Sensitive Material Warning
+	$option_set = false;
+	if (get_option('oer_sensitive_material_label')){
+		$option_set = true;
+	}
+	if (($option_set && get_option('oer_sensitive_material_enabled')) || !$option_set) {
+	?>
+	<div class="oer_snglfld">
+        	<div class="oer_txt">
+			<?php
+			if (!$option_set)
+				_e("Sensitive Material Warning:", OER_SLUG);
+			else
+				echo get_option('oer_sensitive_material_label').":";
+			?>
+            </div>
+            <div class="oer_fld">
+            	<?php 	$oer_sensitive_material = get_post_meta($post->ID, 'oer_sensitive_material', true);
+			wp_editor( $oer_sensitive_material, 'oer_sensitive_material', array( "wpautop" => false, "media_buttons"  => true, "tinymce" => true ) ); ?>
+            </div>
+        </div><!-- Sensitive Material Warning field -->
+	<?php } ?>
+	
+	<?php
+	// Transcription
+	$option_set = false;
+	if (get_option('oer_transcription_label')){
+		$option_set = true;
+	}
+	if (($option_set && get_option('oer_transcription_enabled')) || !$option_set) {
+	?>
+	<div class="oer_snglfld">
+        	<div class="oer_txt">
+			<?php
+			if (!$option_set)
+				_e("Transcription:", OER_SLUG);
+			else
+				echo get_option('oer_transcription_label').":";
+			?>
+            </div>
+            <div class="oer_fld">
+            	<?php 	$oer_transcription = get_post_meta($post->ID, 'oer_transcription', true);
+			wp_editor( $oer_transcription, 'oer_transcription', array( "wpautop" => false, "media_buttons"  => true, "tinymce" => true ) ); ?>
+            </div>
+        </div><!-- Transcription field -->
+	<?php } ?>
     </div>
 </div>
 <div class="clear"></div>
