@@ -70,6 +70,16 @@ global $chck;
 
             </div>
         </div>
+       
+	<div class="oer_snglfld">
+        	<div class="oer_txt">
+			<?php _e("Format:", OER_SLUG); ?>
+		</div>
+		<div class="oer_fld">
+			<?php $oer_format = get_post_meta($post->ID, 'oer_format', true);?>
+			<input type="text" name="oer_format" value="<?php echo $oer_format;?>"/>
+		</div>
+        </div>
 
         <div class="oer_snglfld">
         	<div class="oer_txt">

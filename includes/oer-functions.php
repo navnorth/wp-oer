@@ -229,12 +229,14 @@ function oer_getScreenshotFile($url)
 }
 
 // Log Debugging
-function debug_log($message) {
-	global $_debug;
-
-	// if debugging is on
-	if ($_debug=="on")
-		error_log($message);
+if (!function_exists('debug_log')){
+	function debug_log($message) {
+		global $_debug;
+	
+		// if debugging is on
+		if ($_debug=="on")
+			error_log($message);
+	}
 }
 
 // Taxonomy rewrite
@@ -1101,6 +1103,7 @@ function oer_importResources($default=false) {
 				$oer_authorurl2     	= "";
 				$oer_authoremail2   	= "";
 				$oer_thumbnailurl	= "";
+				$oer_format		= "";
 
 				/** Check first if column is set **/
 				if (isset($fnldata['cells'][$k][1]))
@@ -1157,6 +1160,8 @@ function oer_importResources($default=false) {
 					$oer_authoremail2   = $fnldata['cells'][$k][26];
 				if (isset($fnldata['cells'][$k][27]))
 					$oer_thumbnailurl   = $fnldata['cells'][$k][27];
+				if (isset($fnldata['cells'][$k][28]))
+					$oer_format   	= $fnldata['cells'][$k][28];
 					
 				if(!empty($oer_standard) && (!is_array($oer_standard)))
 				{
@@ -1407,6 +1412,12 @@ function oer_importResources($default=false) {
 				if(!empty($oer_publisheremail))
 				{
 					update_post_meta( $post_id , 'oer_publisheremail' , sanitize_email($oer_publisheremail));
+				}
+				
+				// Save Format field
+				if(!empty($oer_format))
+				{
+					update_post_meta( $post_id , 'oer_format' , sanitize_text_field($oer_format));
 				}
 				//saving meta fields
 
