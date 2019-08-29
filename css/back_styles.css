@@ -291,3 +291,6 @@ p.submit { margin-top:0; padding: 15px; }
     border-top: 1px solid #ddd;
 }
 .table>tbody>tr>td input[type=text] { width:75%; }
+#oer_local_resource_button.ui-button {
+    padding: 6px 10px;
+}
