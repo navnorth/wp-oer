@@ -3097,4 +3097,125 @@ function oer_get_substandard_details($substandard_id){
 	}
 	return $substandards;
 }
+
+if (!function_exists('oer_get_resource_metadata')){
+	function oer_get_resource_metadata($resource_id){
+		return get_post_meta($resource_id);
+	}
+}
+
+if (!function_exists('oer_get_meta_label')){
+	function oer_get_meta_label($key){
+		$label = "";
+		switch ($key){
+			case "oer_highlight":
+				$label = __("Highlight", OER_SLUG);
+				break;
+			case "oer_grade":
+				$label = __("Grade", OER_SLUG);
+				break;
+			case "oer_format":
+				$label = __("Format", OER_SLUG);
+				break;
+			case "oer_datecreated":
+				$label = __("Date Created", OER_SLUG);
+				break;
+			case "oer_datecreated_estimate":
+				$label = __("Date Created Estimate", OER_SLUG);
+				break;
+			case "oer_datemodified":
+				$label = __("Date Modified", OER_SLUG);
+				break;
+			case "oer_mediatype":
+				$label = __("Media Type", OER_SLUG);
+				break;
+			case "oer_lrtype":
+				$label = __("Learning Resource Type", OER_SLUG);
+				break;
+			case "oer_interactivity":
+				$label = __("Interactivity", OER_SLUG);
+				break;
+			case "oer_userightsurl":
+				$label = __("Use Rights URL", OER_SLUG);
+				break;
+			case "oer_isbasedonurl":
+				$label = __("Is based on URL", OER_SLUG);
+				break;
+			case "oer_standard":
+				$label = __("Standards", OER_SLUG);
+				break;
+			case "oer_standard_alignment":
+				$label = __("Standard Alignment", OER_SLUG);
+				break;
+			case "oer_authortype":
+				$label = __("Type", OER_SLUG);
+				break;
+			case "oer_authorname":
+				$label = __("Name", OER_SLUG);
+				break;
+			case "oer_authorurl":
+				$label = __("URL", OER_SLUG);
+				break;
+			case "oer_authoremail":
+				$label = __("Email Address", OER_SLUG);
+				break;
+			case "oer_authortype2":
+				$label = __("Type", OER_SLUG);
+				break;
+			case "oer_authorname2":
+				$label = __("Name", OER_SLUG);
+				break;
+			case "oer_authorurl2":
+				$label = __("URL", OER_SLUG);
+				break;
+			case "oer_authoremail2":
+				$label = __("Email Address", OER_SLUG);
+				break;
+			case "oer_publishername":
+				$label = __("Name", OER_SLUG);
+				break;
+			case "oer_publisherurl":
+				$label = __("URL", OER_SLUG);
+				break;
+			case "oer_publisheremail":
+				$label = __("Email Address", OER_SLUG);
+				break;
+			case "oer_citation":
+				$label = __("Citation", OER_SLUG);
+				break;
+			case "oer_sensitive_material":
+				$label = __("Sensitive Material Warning", OER_SLUG);
+				break;
+			case "oer_transcription":
+				$label = __("Transcription", OER_SLUG);
+				break;
+		}
+		return $label;
+	}
+}
+
+if (!function_exists('oer_get_all_meta')){
+	function oer_get_all_meta($type){
+		global $wpdb;
+		$result = $wpdb->get_results($wpdb->prepare(
+		"SELECT post_id, meta_key, meta_value FROM ".$wpdb->prefix."posts,".$wpdb->prefix."postmeta WHERE post_type=%s
+			AND ".$wpdb->prefix."posts.ID=".$wpdb->prefix."postmeta.post_id", $type
+		), ARRAY_A);
+		return $result;
+	}
+}
+
+if (!function_exists('oer_save_metadata_options')){
+	function oer_save_metadata_options($post_data){
+		foreach($post_data as $key=>$value){
+			if (strpos($key,"oer_")!==false){
+				if (get_option($key))
+					update_option($key, $value);
+				else
+					add_option($key, $value);
+			}
+		}
+	}
+}
+
 ?>
