@@ -1623,6 +1623,55 @@ function oer_load_highlight() {
 add_action('wp_ajax_load_highlight', 'oer_load_highlight');
 add_action('wp_ajax_nopriv_load_highlight', 'oer_load_highlight');
 
+add_action('wp_ajax_load_searched_standards', 'oer_load_searched_standards');
+function oer_load_searched_standards(){
+
+	$post_id = null;
+	$keyword = null;
+	$meta_key = "oer_standard";
+
+	if (isset($_POST['post_id'])){
+		$post_id = $_POST['post_id'];
+	}
+	if (isset($_POST['keyword'])){
+		$keyword = $_POST['keyword'];
+	}
+
+	if (!$post_id){
+		echo "Invalid Post ID";
+		die();
+	}
+
+	if (!$keyword){
+		was_selectable_admin_standards($post_id);
+		die();
+	}
+
+	if (function_exists('was_search_standards')){
+		was_search_standards($post_id,$keyword,$meta_key);
+	}
+	die();
+}
+
+add_action('wp_ajax_load_default_standards', 'oer_load_default_standards');
+function oer_load_default_standards(){
+	$post_id = null;
+
+	if (isset($_POST['post_id'])){
+		$post_id = $_POST['post_id'];
+	}
+
+	if (!$post_id){
+		echo "Invalid Post ID";
+		die();
+	}
+
+	if (function_exists('was_selectable_admin_standards')){
+		was_selectable_admin_standards($post_id);
+	}
+	die();
+}
+
 /** Parse Request **/
 function oer_parse_request( $obj ) {
 	$taxes = get_taxonomies( array( 'show_ui' => true, '_builtin' => false ), 'objects' );

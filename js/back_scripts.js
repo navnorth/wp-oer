@@ -47,9 +47,45 @@ jQuery(document).ready(function(e) {
 		jQuery('.hover_icon_button_img').remove();
 		jQuery(this).addClass('hidden');
 	});
+	
+	jQuery('.remove-standard').on('focus', function(){
+		var std = jQuery(this);
+		var std_id = std.attr('data-id');
+		std.parent().remove();
+		jQuery(".stndrd_ttl input[value='"+std_id+"']").attr('checked',false);
+	});
+	jQuery('#standardModal').on('click', "#btnSaveStandards", function(e){
+		e.preventDefault();
+		var selected = [];
+                var selectedHtml = "";
+		jQuery('#add-new-standard').prevAll('.standard-label').remove();
+		jQuery.each(jQuery('#standardModal input[type=checkbox]:checked'), function(){
+			var sId = jQuery(this).val();
+			var title = jQuery(this).next('.oer_stndrd_desc').text();
+			console.log(sId);
+			console.log(title);
+			displaySelectedStandard(sId, title);
+			selected.push(sId);
+		});
+		var standards = selected.join();
+		jQuery(".oer_metainrwpr input[name='oer_standard']").val(standards);
+		jQuery(".search-standard-text").val("");
+		displaydefaultStandards();
+		jQuery("#standardModal").modal('hide');
+	});
+	jQuery('.search_close_btn').on("click", function(e){
+		displaydefaultStandards();
+	});
 });
 
+function displaySelectedStandard(sId, title) {
+	jQuery('#add-new-standard').before("<span class='standard-label'>" + title + "<a href='javascript:void(0)' class='remove-standard' data-id='" + sId + "'><span class='dashicons dashicons-no-alt'></span></a></span>");
+}
 
+function displaydefaultStandards() {
+	$('#standardModal #oer_standards_list').show();
+	$('#standardModal #oer_search_results_list').hide();
+}
 
 //adding author
 function oer_addauthor(ref)

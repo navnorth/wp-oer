@@ -3218,4 +3218,36 @@ if (!function_exists('oer_save_metadata_options')){
 	}
 }
 
+if (! function_exists('oer_installed_standards_plugin')){
+    function oer_installed_standards_plugin(){
+        $activeWAS = false;
+        $active_plugins_basenames = get_option( 'active_plugins' );
+        foreach ( $active_plugins_basenames as $plugin_basename ) {
+		if ( false !== strpos( $plugin_basename, '/wp-academic-standards.php' ) ) {
+                $activeWAS = true;
+            }
+        }
+        return $activeWAS;
+    }
+}
+
+// Get Title or Description of Standard or Notation
+function oer_get_standard_label($slug){
+	global $wpdb;
+	
+	$slugs = explode("-", $slug);
+	$table_name = "oer_".$slugs[0];
+	$id = $slugs[1];
+	$standard = null;
+	
+	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. $table_name . " where id = %s" , $id ) , ARRAY_A);
+	if (!empty($results)){
+		foreach($results as $result) {
+			$standard = $result['description'];
+		}
+	}
+	
+	return $standard;
+}
+
 ?>

@@ -105,22 +105,20 @@ add_action('admin_enqueue_scripts', 'oer_backside_scripts');
 function oer_backside_scripts($hook)
 {
     global $post;
-    
     if ((isset($_GET['post_type']) && $_GET['post_type']=='resource') || (isset($post->post_type) && $post->post_type=='resource')) {
 	wp_enqueue_style('jqueryui-styles', OER_URL.'css/jquery-ui.css');
 	wp_enqueue_style('back-styles', OER_URL.'css/back_styles.css');
 	wp_enqueue_style( 'thickbox' );
 
-	if (isset($post->post_type) && $post->post_type!=='resource') {
-	    wp_enqueue_script('jquery');
-	}
 	
-	wp_enqueue_script( 'jquery-ui-core' );
-	wp_enqueue_script( 'jquery-ui-widgets' );
-	wp_enqueue_script( 'jquery-ui-tabs' );
-	wp_enqueue_script( 'jquery-ui-datepicker' );
+	wp_enqueue_script('jquery');
+	wp_enqueue_script('jquery-ui-core' );
+	wp_enqueue_script('jquery-ui-widgets' );
+	wp_enqueue_script('jquery-ui-tabs' );
+	wp_enqueue_script('jquery-ui-datepicker' );
 	wp_enqueue_script( 'media-upload' );
 	wp_enqueue_script( 'thickbox' );
+	wp_enqueue_script( 'bootstrap-js', OER_URL.'js/bootstrap.min.js', array('jquery'));
 	wp_enqueue_script('back-scripts', OER_URL.'js/back_scripts.js',array( 'jquery','media-upload','thickbox','set-post-thumbnail' ));
 	wp_enqueue_script('admin-resource', OER_URL.'js/admin_resource.js');
     }
@@ -482,31 +480,7 @@ function oer_save_customfields()
 
 		if(isset($_POST['oer_standard']))
 		{
-			$gt_oer_standard = $_POST['oer_standard'];
-			$gt_oer_standard = array_map( 'sanitize_text_field', $_POST['oer_standard']) ;
-			
-			if(!empty($gt_oer_standard)) {
-			    for($l = 0; $l < count($gt_oer_standard); $l++)
-			    {
-				$results = $wpdb->get_row( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "oer_standard_notation where standard_notation =%s" , $gt_oer_standard[$l] ),ARRAY_A);
-				if(!empty($results))
-				{
-				    $gt_oer_standard_notation .= "standard_notation-".$results['id'].",";
-				    $table = explode("-", $results['parent_id']);
-				    
-				    if(!empty($table))
-				    {
-					$stndrd_algn = $wpdb->get_row( $wpdb->prepare( "SELECT * from  " . $wpdb->prefix. $_oer_prefix.$table[0] . " where id =%s" , $table[1] ),ARRAY_A);
-					if($stndrd_algn['parent_id'])
-					{
-						oer_fetch_stndrd($stndrd_algn['parent_id'], $post_id);
-					}
-				    }
-				}
-			    }
-			}
-			$oer_standard = implode(",", $gt_oer_standard);
-			update_post_meta( $post->ID , 'oer_standard' , $oer_standard);
+			update_post_meta( $post->ID , 'oer_standard' , sanitize_text_field($_POST['oer_standard']));
 		}
 		else
 		{
@@ -840,5 +814,13 @@ function process_import_standards(){
     
     wp_safe_redirect( admin_url("edit.php?post_type=resource&page=oer_import&message=$message&type=$type"));
     exit;
+}
+
+// Add Standard Modal
+add_action( "admin_footer" , "oer_add_modal" );
+function oer_add_modal(){
+    if (oer_installed_standards_plugin()) {
+	include_once(OER_PATH."oer_template/modals/standard_modal.php");
+    }
 }
 ?>

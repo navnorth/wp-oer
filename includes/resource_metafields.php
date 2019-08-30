@@ -347,50 +347,40 @@ global $chck;
 	
 	<?php
 	// Standard
-	$option_set = false;
-	if (get_option('oer_standard_label')){
-		$option_set = true;
-	}
-	if (($option_set && get_option('oer_standard_enabled')) || !$option_set) {
-	?>
-	<div class="oer_snglfld">
-        	<div class="oer_txt">
-			<?php
-			if (!$option_set)
-				_e("Standards:", OER_SLUG);
-			else
-				echo get_option('oer_standard_label').":";
-			?>
+	if (oer_installed_standards_plugin()){
+		$option_set = false;
+		if (get_option('oer_standard_label')){
+			$option_set = true;
+		}
+		if (($option_set && get_option('oer_standard_enabled')) || !$option_set) {
+		?>
+		<div class="oer_snglfld">
+			<div class="oer_txt">
+				<?php
+				if (!$option_set)
+					_e("Standards:", OER_SLUG);
+				else
+					echo get_option('oer_standard_label').":";
+				?>
+			</div>
+			<div class="oer_fld auto-width">
+				<?php
+				$oStandard = get_post_meta($post->ID, 'oer_standard', true);
+				$standards = explode(",", $oStandard);
+				foreach($standards as $standard){
+					if ($standard!=="") {
+						$std_name = oer_get_standard_label($standard);
+						echo "<span class='standard-label'>".$std_name."<a href='javascript:void(0)' class='remove-standard' data-id='".$standard."'><span class='dashicons dashicons-no-alt'></span></a></span>";
+					}
+				}
+				?>
+				<input type="hidden" name="oer_standard" value="<?php echo $oStandard; ?>" />
+				<button id="add-new-standard" data-toggle="modal" data-target="#standardModal" class="ui-button components-button is-button is-default">Add Standards</button>
+			</div>
+	
 		</div>
-           	<?php
-				$oer_standard_alignment = get_post_meta($post->ID, 'oer_standard_alignment', true);
-			 	$oer_standard = get_post_meta($post->ID, 'oer_standard', true);
-				$external_script_url = OER_URL."js/extrnl_script.js";
-			 ?>
-			 <div class="oer_fld">
-				<div class="oer_lstofstandrd ">
-				 	  <?php
-							$results = $wpdb->get_results("SELECT * from " . $wpdb->prefix. "oer_core_standards",ARRAY_A);
-							foreach($results as $result)
-							{
-								$value = 'core_standards-'.$result['id'];
-								echo "<li class='oer_sbstndard oer_main'>
-										<div class='stndrd_ttl'>
-											<img src='".OER_URL."images/closed_arrow.png' data-pluginpath='".OER_URL."' class='tglimg' />
-											<input type='checkbox' ".$chck." name='oer_standard[]' value='".esc_attr($value)."' onclick='oer_check_all(this)' >
-											".sanitize_text_field($result['standard_name'])."
-										</div><div class='oer_stndrd_desc'></div>";
-
-										oer_get_sub_standard($value, $oer_standard);
-								echo "</li>";
-							}
-						?>
-					<script src="<?php echo esc_url($external_script_url);?>" type="text/javascript"></script>
-				 </div>
-            </div>
-
-        </div>
-	<?php } ?>
+	<?php }
+	} ?>
 	
         <div class="oer_snglfld oer_hdngsngl">
 		<?php _e("Author Information:", OER_SLUG); ?>
