@@ -1,3 +1,4 @@
+var formfield, invoker;
 jQuery(document).ready(function(e) {
 	jQuery( ".oer_datepicker" ).datepicker( { dateFormat: 'MM d, yy' } );
 	jQuery( ".oer_datepicker" ).datepicker( "option", "showAnim", "slideDown" );
@@ -23,15 +24,17 @@ jQuery(document).ready(function(e) {
 	});
 
 	/* Callback after calling media upload */
-	window.send_to_editor = function(html) {
-		imgurl = jQuery('img',html).attr('src');
-		jQuery("#"+formfield).val(imgurl);
-		if (jQuery("."+invoker+"_img").length>0) {
-			jQuery("."+invoker+"_img").remove();
+	if (typeof formfield !== "undefined") {
+		window.send_to_editor = function(html) {
+			imgurl = jQuery('img',html).attr('src');
+			jQuery("#"+formfield).val(imgurl);
+			if (jQuery("."+invoker+"_img").length>0) {
+				jQuery("."+invoker+"_img").remove();
+			}
+			jQuery("#"+invoker).before('<div class="' + invoker + '_img">'+html+'</div>');
+			jQuery("#remove_"+invoker).removeClass("hidden");
+			tb_remove();	
 		}
-		jQuery("#"+invoker).before('<div class="' + invoker + '_img">'+html+'</div>');
-		jQuery("#remove_"+invoker).removeClass("hidden");
-		tb_remove();
 	}
 	
 	/** Remove Main Icon **/
