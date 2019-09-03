@@ -375,7 +375,7 @@ global $chck;
 				}
 				?>
 				<input type="hidden" name="oer_standard" value="<?php echo $oStandard; ?>" />
-				<button id="add-new-standard" data-toggle="modal" data-target="#standardModal" class="ui-button components-button is-button is-default">Add Standards</button>
+				<button id="add-new-standard" data-toggle="modal" class="ui-button components-button is-button is-default">Add Standards</button>
 			</div>
 	
 		</div>

@@ -57,6 +57,13 @@ jQuery(document).ready(function(e) {
 		std.parent().remove();
 		jQuery(".stndrd_ttl input[value='"+std_id+"']").attr('checked',false);
 	});
+	jQuery('#add-new-standard').on('click', function(e){
+		e.preventDefault();
+		jQuery('#standardModal').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                })
+	});
 	jQuery('#standardModal').on('click', "#btnSaveStandards", function(e){
 		e.preventDefault();
 		var selected = [];
