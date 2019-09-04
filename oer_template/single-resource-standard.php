@@ -355,7 +355,7 @@
                             if(!empty($stdrd_id) || !empty($oer_standards))
                             {
                                 $option_set = false;
-                                if (get_option('oer_standard_label')){
+                                if (get_option('oer_standard_label'))
                                         $option_set = true;
                     ?>
             <div class="alignedStandards">
@@ -363,7 +363,7 @@
             if (!$option_set)
 		_e("Standards Alignment", OER_SLUG);
 	    else
-	    echo get_option('oer_standard_label').":";
+                echo get_option('oer_standard_label').":";
             ?></h2>
             <div class="oer_meta_container">
                 <!--<div class="oer_stndrd_align">-->
