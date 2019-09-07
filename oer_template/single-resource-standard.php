@@ -409,10 +409,10 @@
                                         
                                         echo "<div class='oer_sngl_stndrd'>";
                                             if (strpos($table_name,"sub_standards")>0) {
-                                                    echo "<span class='oer_sngl_description'>".$res['standard_title']."</span>";
+                                                    echo "<span class='oer_sngl_description'>".stripslashes($res['standard_title'])."</span>";
                                             } else {
                                                     echo "<span class='oer_sngl_notation'>".$res['standard_notation']."</span>";
-                                                    echo "<span class='oer_sngl_description'>".$res['description']."</span>";
+                                                    echo "<span class='oer_sngl_description'>".stripslashes($res['description'])."</span>";
                                             }
                                         echo "</div>";
                                     }
