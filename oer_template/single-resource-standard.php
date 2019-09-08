@@ -112,7 +112,7 @@
 	    else
 		echo get_option('oer_authorname_label').":"; ?></strong>
             <span><a href="<?php echo esc_url($oer_authorurl); ?>" target="_blank"><?php echo $oer_authorname; ?></a></span>
-            <?php if ($oer_authorname2): ?>
+            <?php if ($oer_authorname2): echo ", "; ?>
             <span><a href="<?php echo esc_url($oer_authorurl2); ?>" target="_blank"><?php echo $oer_authorname2; ?></a></span>
             <?php endif; ?>
             </h4>

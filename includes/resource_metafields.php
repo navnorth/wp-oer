@@ -508,7 +508,7 @@ global $chck;
 		if (get_option('oer_authortype_label')){
 			$option_set = true;
 		}
-		if (($option_set && get_option('oer_authortype2_enabled')) || !$option_set) {
+		if (($option_set && get_option('oer_authortype_enabled')) || !$option_set) {
 		?>
                 <div class="oer_snglfld">
                     <div class="oer_txt">
@@ -535,7 +535,7 @@ global $chck;
 		if (get_option('oer_authorname_label')){
 			$option_set = true;
 		}
-		if (($option_set && get_option('oer_authorname2_enabled')) || !$option_set) {
+		if (($option_set && get_option('oer_authorname_enabled')) || !$option_set) {
 		?>
                 <div class="oer_snglfld">
                     <div class="oer_txt">
@@ -559,7 +559,7 @@ global $chck;
 		if (get_option('oer_authorurl_label')){
 			$option_set = true;
 		}
-		if (($option_set && get_option('oer_authorurl2_enabled')) || !$option_set) {
+		if (($option_set && get_option('oer_authorurl_enabled')) || !$option_set) {
 		?>
                 <div class="oer_snglfld">
                     <div class="oer_txt">
@@ -583,7 +583,7 @@ global $chck;
 		if (get_option('oer_authoremail_label')){
 			$option_set = true;
 		}
-		if (($option_set && get_option('oer_authoremail2_enabled')) || !$option_set) {
+		if (($option_set && get_option('oer_authoremail_enabled')) || !$option_set) {
 		?>
                 <div class="oer_snglfld">
                     <div class="oer_txt">
