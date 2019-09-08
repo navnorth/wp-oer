@@ -100,8 +100,29 @@ function displaydefaultStandards() {
 //adding author
 function oer_addauthor(ref)
 {
+	var author_label = 'URL:';
+	var author_name_label = 'Name:';
+	var author_type_label = 'Type:';
+	var author_email_label = 'Email Address:';
 	var img_url = jQuery(ref).attr('data-url');
-	jQuery(ref).parent('.oer_hdngsngl').after('<div class="oer_authrcntr"><div class="oer_cls" onClick="oer_removeauthor(this);"><img src="'+img_url+'" /></div><div class="oer_snglfld"><div class="oer_txt">Type:</div><div class="oer_fld"><select name="oer_authortype2"><option value="person">Person</option><option value="organization">Organization</option></select></div></div><div class="oer_snglfld"><div class="oer_txt">Name:</div><div class="oer_fld"><input type="text" name="oer_authorname2" value="" /></div></div><div class="oer_snglfld"><div class="oer_txt">URL:</div><div class="oer_fld"><input type="text" name="oer_authorurl2" value="" /></div></div><div class="oer_snglfld"><div class="oer_txt">Email Address:</div><div class="oer_fld"><input type="text" name="oer_authoremail2" value="" /></div></div></div>');
+	var author_url = jQuery(ref).attr('data-authorurl-label');
+	var author_name = jQuery(ref).attr('data-authorname-label');
+	var author_type = jQuery(ref).attr('data-authortype-label');
+	var author_email = jQuery(ref).attr('data-authoremail-label');
+	if (typeof author_url !== 'undefined') {
+		author_label = author_url + ':';
+	}
+	if (typeof author_name !== 'undefined') {
+		author_name_label = author_name + ':';
+	}
+	if (typeof author_type !== 'undefined') {
+		author_type_label = author_type + ':';
+	}
+	if (typeof author_email !== 'undefined') {
+		author_email_label = author_email + ':';
+	}
+	var show_author = '<div class="oer_authrcntr"><div class="oer_cls" onClick="oer_removeauthor(this);"><img src="'+img_url+'" /></div><div class="oer_snglfld"><div class="oer_txt">' + author_type_label + '</div><div class="oer_fld"><select name="oer_authortype2"><option value="person">Person</option><option value="organization">Organization</option></select></div></div><div class="oer_snglfld"><div class="oer_txt">' + author_name_label + '</div><div class="oer_fld"><input type="text" name="oer_authorname2" value="" /></div></div><div class="oer_snglfld"><div class="oer_txt">' + author_label + '</div><div class="oer_fld"><input type="text" name="oer_authorurl2" value="" /></div></div><div class="oer_snglfld"><div class="oer_txt">' + author_email_label + '</div><div class="oer_fld"><input type="text" name="oer_authoremail2" value="" /></div></div></div>';
+	jQuery(ref).parent('.oer_hdngsngl').after(show_author);
 	jQuery(ref).parent('.oer_hdngsngl').html('Author Information:');
 }
 

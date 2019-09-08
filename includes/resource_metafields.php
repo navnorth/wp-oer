@@ -505,7 +505,7 @@ global $chck;
                 <?php
 		// Second Author Type
 		$option_set = false;
-		if (get_option('oer_authortype2_label')){
+		if (get_option('oer_authortype_label')){
 			$option_set = true;
 		}
 		if (($option_set && get_option('oer_authortype2_enabled')) || !$option_set) {
@@ -516,7 +516,7 @@ global $chck;
 			if (!$option_set)
 				_e("Type:", OER_SLUG);
 			else
-				echo get_option('oer_authortype2_label').":";
+				echo get_option('oer_authortype_label').":";
 			?>
                     </div>
                     <div class="oer_fld">
@@ -532,7 +532,7 @@ global $chck;
 		<?php
 		// Second Author Name
 		$option_set = false;
-		if (get_option('oer_authorname2_label')){
+		if (get_option('oer_authorname_label')){
 			$option_set = true;
 		}
 		if (($option_set && get_option('oer_authorname2_enabled')) || !$option_set) {
@@ -543,7 +543,7 @@ global $chck;
 			if (!$option_set)
 				_e("Name:", OER_SLUG);
 			else
-				echo get_option('oer_authorname2_label').":";
+				echo get_option('oer_authorname_label').":";
 			?>
                     </div>
                     <div class="oer_fld">
@@ -556,7 +556,7 @@ global $chck;
 		<?php
 		// Second Author URL
 		$option_set = false;
-		if (get_option('oer_authorurl2_label')){
+		if (get_option('oer_authorurl_label')){
 			$option_set = true;
 		}
 		if (($option_set && get_option('oer_authorurl2_enabled')) || !$option_set) {
@@ -567,7 +567,7 @@ global $chck;
 			if (!$option_set)
 				_e("URL:", OER_SLUG);
 			else
-				echo get_option('oer_authorurl2_label').":";
+				echo get_option('oer_authorurl_label').":";
 			?>
                     </div>
                     <div class="oer_fld">
@@ -580,7 +580,7 @@ global $chck;
 		<?php
 		// Second Author Email Address
 		$option_set = false;
-		if (get_option('oer_authoremail2_label')){
+		if (get_option('oer_authoremail_label')){
 			$option_set = true;
 		}
 		if (($option_set && get_option('oer_authoremail2_enabled')) || !$option_set) {
@@ -591,7 +591,7 @@ global $chck;
 			if (!$option_set)
 				_e("Email Address:", OER_SLUG);
 			else
-				echo get_option('oer_authoremail2_label').":";
+				echo get_option('oer_authoremail_label').":";
 			?>
                     </div>
                     <div class="oer_fld">
@@ -605,9 +605,21 @@ global $chck;
 		}
 		else
 		{
+			$authorurl_label = "";
+			$authorname_label = "";
+			$authortype_label = "";
+			$authoremail_label = "";
+			if (get_option('oer_authortype_label'))
+				$authortype_label = 'data-authortype-label="'.get_option('oer_authortype_label').'"';;
+			if (get_option('oer_authorurl_label'))
+				$authorurl_label = 'data-authorurl-label="'.get_option('oer_authorurl_label').'"';
+			if (get_option('oer_authorname_label'))
+				$authorname_label = 'data-authorname-label="'.get_option('oer_authorname_label').'"';;
+			if (get_option('oer_authoremail_label'))
+				$authoremail_label = 'data-authoremail-label="'.get_option('oer_authoremail_label').'"';;
 		?>
         	<div class="oer_snglfld oer_hdngsngl">
-                <input type="button" class="button button-primary" value="<?php _e("Add Author", OER_SLUG); ?>" onClick="oer_addauthor(this);" data-url="<?php echo OER_URL.'/images/close.png'?>" />
+                <input type="button" class="button button-primary" value="<?php _e("Add Author", OER_SLUG); ?>" onClick="oer_addauthor(this);" <?php echo $authorurl_label; ?> <?php echo $authorname_label; ?> <?php echo $authortype_label; ?> <?php echo $authoremail_label; ?> data-url="<?php echo OER_URL.'/images/close.png'?>" />
             </div>
         <?php
 		}

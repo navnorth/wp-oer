@@ -51,6 +51,8 @@
         <?php
         $oer_authorname = get_post_meta($post->ID, "oer_authorname", true);
         $oer_authorurl = get_post_meta($post->ID, "oer_authorurl", true);
+        $oer_authorname2 = get_post_meta($post->ID, "oer_authorname2", true);
+        $oer_authorurl2 = get_post_meta($post->ID, "oer_authorurl2", true);
 
         if(!empty($oer_authorname) && !empty($oer_authorurl))
         {
@@ -65,7 +67,11 @@
 			echo get_option('oer_authorname_label').":";
                  ?>
                 </strong>
-            <span><a href="<?php echo esc_url($oer_authorurl); ?>" target="_blank"><?php echo $oer_authorname; ?></a></span></h4>
+            <span><a href="<?php echo esc_url($oer_authorurl); ?>" target="_blank"><?php echo $oer_authorname; ?></a></span>
+            <?php if ($oer_authorname2): ?>
+            <span><a href="<?php echo esc_url($oer_authorurl2); ?>" target="_blank"><?php echo $oer_authorname2; ?></a></span>
+            <?php endif; ?>
+            </h4>
         <?php } ?>
     </div>
     <?php
