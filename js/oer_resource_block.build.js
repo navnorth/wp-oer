@@ -386,21 +386,23 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
         if (props.attributes.withBorder === true) {
             border = "1px solid #cdcdcd";
         }
-        var listItems = props.attributes.subjectAreas.map(function (d) {
-            return wp.element.createElement(
-                'li',
-                { key: d.name },
-                wp.element.createElement(
-                    'span',
-                    null,
+        if (wSubjects) {
+            var listItems = props.attributes.subjectAreas.map(function (d) {
+                return wp.element.createElement(
+                    'li',
+                    { key: d.name },
                     wp.element.createElement(
-                        'a',
-                        { href: d.link },
-                        d.name
+                        'span',
+                        null,
+                        wp.element.createElement(
+                            'a',
+                            { href: d.link },
+                            d.name
+                        )
                     )
-                )
-            );
-        });
+                );
+            });
+        }
         return wp.element.createElement(
             'div',
             { className: props.className, style: { textAlign: aCenter == true ? 'center' : 'auto' } },
