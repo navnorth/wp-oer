@@ -29,8 +29,14 @@
             </div>
         <?php } ?>
         
-        
-        <div class="oer-rsrcurl oer-cbxl"><h4><strong>Original Resource:</strong> <a href="<?php echo esc_url(get_post_meta($post->ID, "oer_resourceurl", true)); ?>" target="_blank" ><?php echo esc_url(get_post_meta($post->ID, "oer_resourceurl", true)); ?></a></h4></div>
+        <?php
+        $oer_resourceurl = get_post_meta($post->ID, "oer_resourceurl", true);
+        if (!empty($oer_resourceurl)) {
+        ?>
+        <div class="oer-rsrcurl oer-cbxl">
+                <h4><strong>Original Resource:</strong> <a href="<?php echo esc_url(get_post_meta($post->ID, "oer_resourceurl", true)); ?>" target="_blank" ><?php echo esc_url(get_post_meta($post->ID, "oer_resourceurl", true)); ?></a></h4>
+        </div>
+        <?php } ?>
     </div>
     <div class="oer-rsrcrghtcntr col-md-6 col-sm-12 col-xs-12">
         <div class="oer-rsrcctgries tagcloud">
