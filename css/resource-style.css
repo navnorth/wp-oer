@@ -64,7 +64,7 @@
 	height: 100%;
 }
 .oer-sngl-rsrc-img .oer-rsrcurl.left { text-align:left; }
-.oer-cbxl h4 span { font-size: 0.9em; font-weight: normal; color: #000000; }
+.oer-cbxl h4 span { font-size: 0.85em; font-weight: normal; color: #000000; }
 /** For Mobile styles **/
 @media screen and (min-width: 960px) {
     .oer-sngl-rsrc-dscrptn { width: 100%; }
