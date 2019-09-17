@@ -29,6 +29,48 @@
             </div>
         <?php } ?>
         
+        <!-- Transcription -->
+        <?php
+        $oer_transcription = get_post_meta($post->ID, 'oer_transcription', true);
+        if (!empty($oer_transcription)){
+            $option_set = false;
+            if (get_option('oer_transcription_label'))
+                $option_set = true;
+            ?>
+            <div class="oer-sngl-rsrc-dscrptn">
+                    <h2><?php
+                    if (!$option_set)
+                        _e("Transcription", OER_SLUG);
+                    else
+                        echo get_option('oer_transcription_label');
+                    ?></h2>
+                    <?php echo $oer_transcription; ?>
+            </div>
+            <?php
+        }
+        ?>
+        
+        <!-- Sensitive Material Warning -->
+        <?php
+        $oer_sensitive_material = get_post_meta($post->ID, 'oer_sensitive_material', true);
+        if (!empty($oer_sensitive_material)){
+            $option_set = false;
+            if (get_option('oer_sensitive_material_label'))
+                $option_set = true;
+            ?>
+            <div class="oer-sngl-rsrc-dscrptn">
+                    <h2><?php
+                    if (!$option_set)
+                        _e("Sensitive Material Warning", OER_SLUG);
+                    else
+                        echo get_option('oer_sensitive_material_label');
+                    ?></h2>
+                    <?php echo $oer_sensitive_material; ?>
+            </div>
+            <?php
+        }
+        ?>
+        
         <?php
         $oer_resourceurl = get_post_meta($post->ID, "oer_resourceurl", true);
         if (!empty($oer_resourceurl)) {
@@ -100,6 +142,27 @@
         <span><a href="<?php echo esc_url($oer_publisherurl); ?>" target="_blank"><?php echo $oer_publishername; ?></a></span></h4>
     </div>
     <?php } ?>
+    
+        <!-- Date Created Estimate -->
+        <?php
+        $oer_datecreated_estimate = get_post_meta($post->ID, 'oer_datecreated_estimate', true);
+        if (!empty($oer_datecreated_estimate)){ ?>
+        <div id="oerDateCreatedEstimate" class="oer-dateCreatedEstimate oer-cbxl">
+            <?php
+            $option_set = false;
+            if (get_option('oer_datecreated_estimate_label'))
+                $option_set = true;
+            ?>
+            <h4><strong><?php
+            if (!$option_set)
+                _e("Date Created Estimate:", OER_SLUG);
+            else
+                echo get_option('oer_datecreated_estimate_label').":";
+            ?></strong>
+            <span><?php echo $oer_datecreated_estimate; ?></span></h4>
+        </div>
+         <?php } ?>
+    
     <div id="" class="oer-mediaType oer-cbxl">
         <?php
             $oer_mediatype = get_post_meta($post->ID, "oer_mediatype", true);
@@ -118,6 +181,47 @@
                 <span><?php echo ucwords($oer_mediatype); ?></span></h4>
         <?php } ?>
     </div>
+    
+        <!-- Format -->
+        <?php
+        $oer_format = get_post_meta($post->ID, 'oer_format', true);
+        if (!empty($oer_format)){ ?>
+        <div id="oerFormat" class="oer-Format oer-cbxl">
+        <?php
+            $option_set = false;
+            if (get_option('oer_format_label'))
+                $option_set = true;
+            ?>
+            <h4><strong><?php
+            if (!$option_set)
+                _e("Format:", OER_SLUG);
+            else
+                echo get_option('oer_format_label').":";
+            ?></strong>
+            <span><?php echo $oer_format; ?></span></h4>
+        </div>
+        <?php } ?>
+        
+        <!-- Citation -->
+        <?php
+        $oer_citation = get_post_meta($post->ID, 'oer_citation', true);
+        if (!empty($oer_citation)){ ?>
+        <div id="oerCitation" class="oer-Citation oer-cbxl">
+            <?php
+            $option_set = false;
+            if (get_option('oer_citation_label'))
+                $option_set = true;
+            ?>
+            <h4><strong><?php
+            if (!$option_set)
+                _e("Citation:", OER_SLUG);
+            else
+                echo get_option('oer_citation_label').":";
+            ?></strong>
+            <span><?php echo $oer_citation; ?></span></h4>
+        </div>
+        <?php } ?>
+    
     <?php
     $grades =  trim(get_post_meta($post->ID, "oer_grade", true),",");
     $grades = explode(",",$grades);
