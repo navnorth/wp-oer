@@ -2261,3 +2261,23 @@ add_action( 'init', function () {
 		ob_start();
 	}
 } );
+
+/* Enqueue script and css for Gutenberg Resource block */
+function oer_enqueue_resource_block(){
+	wp_enqueue_script(
+		'resource-block-js',
+		OER_URL . "/js/oer_resource_block.build.js",
+		array('wp-blocks', 'wp-i18n', 'wp-element', 'wp-components', 'wp-editor', 'wp-api')
+	);
+	wp_enqueue_style(
+		'resource-block-css',
+		OER_URL . "/css/oer_resource_block.css",
+		array('wp-edit-blocks')
+	);
+	/* Register Block */
+	register_block_type('wp-oer-plugin/oer-resource-block', array(
+		'editor_script' => 'resource-block-js',
+		'editor_style' => 'resource-block-css'
+	));
+}
+add_action('enqueue_block_editor_assets', 'oer_enqueue_resource_block');
