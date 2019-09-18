@@ -370,6 +370,7 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
         var aLign = "none";
         var width = "auto";
         var border = "none";
+        var wGrades = false;
         if (props.attributes.alignment == "center") {
             aCenter = true;
         } else {
@@ -403,6 +404,9 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
                 );
             });
         }
+        if (typeof props.attributes.gradeLevels !== 'undefined')
+            wGrades = true;
+            
         return wp.element.createElement(
             'div',
             { className: props.className, style: { textAlign: aCenter == true ? 'center' : 'auto' } },
@@ -437,7 +441,7 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
                         listItems
                     )
                 ),
-                props.attributes.showGradeLevels === true && wp.element.createElement('div', { dangerouslySetInnerHTML: { __html: '<strong>Grade Levels</strong> : ' + props.attributes.gradeLevels } })
+                (props.attributes.showGradeLevels === true && wGrades) && wp.element.createElement('div', { dangerouslySetInnerHTML: { __html: '<strong>Grade Levels</strong> : ' + props.attributes.gradeLevels } })
             )
         );
     }
