@@ -3231,6 +3231,57 @@ if (! function_exists('oer_installed_standards_plugin')){
     }
 }
 
+function oer_grade_levels($grade_levels){
+	$elmnt = 0;
+	
+	sort($grade_levels);
+
+	for($x=0; $x < count($grade_levels); $x++)
+	{
+		$grade_levels[$x];
+	}
+	
+	$fltrarr = array_filter($grade_levels, 'strlen');
+	$flag = array();
+	if (is_array($fltrarr) && count($fltrarr)>0)
+		$elmnt = $fltrarr[min(array_keys($fltrarr))];
+		
+	for($i =0; $i < count($fltrarr); $i++)
+	{
+		if($elmnt == $fltrarr[$i] || "k" == strtolower($fltrarr[$i]))
+		{
+			$flag[] = 1;
+		}
+		else
+		{
+			$flag[] = 0;
+		}
+		$elmnt++;
+	}
+
+	if(in_array('0',$flag))
+	{
+		return implode(",",array_unique($fltrarr));
+	}
+	else
+	{
+		$arr_flt = array_keys($fltrarr);
+		$end_filter = end($arr_flt);
+		if (count($fltrarr)>1) {
+			if (strtolower($fltrarr[$end_filter])=="k") {
+				$last_index = count($fltrarr)-2;
+				return $fltrarr[$end_filter]."-".$fltrarr[$last_index];
+			}
+			else
+				return $fltrarr[0]."-".$fltrarr[$end_filter];
+		}
+		else{
+			if (isset($fltrarr[0]))
+				return $fltrarr[0];
+		}
+	}
+}
+
 // Get Title or Description of Standard or Notation
 function oer_get_standard_label($slug){
 	global $wpdb;

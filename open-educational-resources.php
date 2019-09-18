@@ -2281,3 +2281,63 @@ function oer_enqueue_resource_block(){
 	));
 }
 add_action('enqueue_block_editor_assets', 'oer_enqueue_resource_block');
+
+function oer_add_resources_rest_args() {
+    global $wp_post_types, $wp_taxonomies;
+
+    $wp_post_types['resource']->show_in_rest = true;
+    $wp_post_types['resource']->rest_base = 'resource';
+    $wp_post_types['resource']->rest_controller_class = 'WP_REST_Posts_Controller';
+
+    $wp_taxonomies['resource-subject-area']->show_in_rest = true;
+    $wp_taxonomies['resource-subject-area']->rest_base = 'resource-subject-area';
+    $wp_taxonomies['resource-subject-area']->rest_controller_class = 'WP_REST_Terms_Controller';
+}
+add_action( 'init', 'oer_add_resources_rest_args', 30 );
+
+function oer_add_meta_to_api() {
+	// Register Grade Levels to REST API
+	register_rest_field( 'resource',
+			    'oer_grade',
+			    array(
+				'get_callback' => 'oer_rest_get_meta_field',
+				'update_callback' => null,
+				'schema' => null
+				  ) );
+	// Register Resource URL to REST API
+	register_rest_field( 'resource',
+			    'oer_resourceurl',
+			    array(
+				'get_callback' => 'oer_rest_get_meta_field',
+				'update_callback' => null,
+				'schema' => null
+				  ) );
+	// Register Featured Image to REST API
+	register_rest_field( 'resource',
+			'fimg_url',
+			array(
+			    'get_callback'    => 'oer_get_rest_featured_image',
+			    'update_callback' => null,
+			    'schema'          => null,
+			) );
+
+}
+add_action( 'rest_api_init', 'oer_add_meta_to_api');
+
+function oer_rest_get_meta_field($resource, $field, $request){
+	if ($field=="oer_grade") {
+		$grades = trim(get_post_meta($resource['id'], $field, true),",");
+		$grades = explode(",",$grades);
+
+		return oer_grade_levels($grades);
+	} else
+		return get_post_meta($resource['id'], $field, true);
+}
+
+function oer_get_rest_featured_image($resource, $field, $request) {
+	if( $resource['featured_media'] ){
+		$img = wp_get_attachment_image_src( $resource['featured_media'], 'app-thumb' );
+		return $img[0];
+	}
+	return false;
+}
