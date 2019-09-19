@@ -209,7 +209,7 @@ var mySelectResource = function (_Component) {
 
             var resources = new wp.api.collections.Resource();
 
-            return resources.fetch().then(function (posts) {
+            return resources.fetch( { data: { per_page: 100 }} ).then(function (posts) {
                 if (posts && 0 !== _this2.state.selectedResource) {
                     var post = posts.find(function (item) {
                         return item.id == _this2.state.selectedResource;
@@ -332,7 +332,8 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
             type: 'boolean'
         },
         showGradeLevels: {
-            type: 'boolean'
+            type: 'boolean',
+            default: ''
         },
         showThumbnail: {
             type: 'boolean'
@@ -404,9 +405,10 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
                 );
             });
         }
-        if (typeof props.attributes.gradeLevels !== 'undefined')
+        
+        if (props.attributes.showGradeLevels === true && props.attributes.hasOwnProperty("gradeLevels") && (props.attributes.gradeLevels !=="" && props.attributes.gradeLevels !== null) )
             wGrades = true;
-            
+        
         return wp.element.createElement(
             'div',
             { className: props.className, style: { textAlign: aCenter == true ? 'center' : 'auto' } },
@@ -441,7 +443,7 @@ registerBlockType('wp-oer-plugin/oer-resource-block', {
                         listItems
                     )
                 ),
-                (props.attributes.showGradeLevels === true && wGrades) && wp.element.createElement('div', { dangerouslySetInnerHTML: { __html: '<strong>Grade Levels</strong> : ' + props.attributes.gradeLevels } })
+                wGrades && wp.element.createElement('div', { dangerouslySetInnerHTML: { __html: '<strong>Grade Levels</strong> : ' + props.attributes.gradeLevels } })
             )
         );
     }
