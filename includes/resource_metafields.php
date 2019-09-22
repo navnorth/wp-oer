@@ -720,7 +720,7 @@ global $chck;
             </div>
             <div class="oer_fld">
             	<?php 	$oer_citation = get_post_meta($post->ID, 'oer_citation', true);
-			wp_editor( $oer_citation, 'oer_citation', array( "wpautop" => false, "media_buttons"  => true, "tinymce" => true, 'teeny' => true ) ); ?>
+			wp_editor( $oer_citation, 'oer_citation', array( "wpautop" => true, "media_buttons"  => true, 'textarea_name' => 'oer_citation', 'textarea_rows' => 10,  "tinymce" => true, 'teeny' => true ) ); ?>
             </div>
         </div><!-- Citation Section -->
 	<?php } ?>
