@@ -86,6 +86,10 @@ jQuery(document).ready(function(e) {
 	jQuery('.search_close_btn').on("click", function(e){
 		displaydefaultStandards();
 	});
+	
+	jQuery('form').bind('form-pre-serialize', function(e){
+		tinyMCE.triggerSave();
+	});
 });
 
 function displaySelectedStandard(sId, title) {
