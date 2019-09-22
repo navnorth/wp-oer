@@ -87,8 +87,13 @@ jQuery(document).ready(function(e) {
 		displaydefaultStandards();
 	});
 	
-	jQuery('form').bind('form-pre-serialize', function(e){
-		tinyMCE.triggerSave();
+	wp.data.subscribe(function(){
+		var isSavingPost = wp.data.select('core/editor').isSavingPost();
+		var isAutosavingPost = wp.data.select('core/editor').isAutosavingPost();
+		
+		if (isSavingPost && !isAutosavingPost) {
+			window.tinyMCE.triggerSave();
+		}
 	});
 });
 
