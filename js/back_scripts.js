@@ -97,10 +97,6 @@ jQuery(document).ready(function(e) {
 			}
 		});
 	}
-	jQuery('a[data-toggle="collapse"]').on("click", function(e){
-		var collapse = jQuery(this).attr("data-target");
-		jQuery(collapse).toggleClass("in");
-	});
 });
 
 function displaySelectedStandard(sId, title) {
