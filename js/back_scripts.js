@@ -87,14 +87,16 @@ jQuery(document).ready(function(e) {
 		displaydefaultStandards();
 	});
 	
-	wp.data.subscribe(function(){
-		var isSavingPost = wp.data.select('core/editor').isSavingPost();
-		var isAutosavingPost = wp.data.select('core/editor').isAutosavingPost();
-		
-		if (isSavingPost && !isAutosavingPost) {
-			window.tinyMCE.triggerSave();
-		}
-	});
+	if (typeof wp.data !== "undefined") {
+		wp.data.subscribe(function(){
+			var isSavingPost = wp.data.select('core/editor').isSavingPost();
+			var isAutosavingPost = wp.data.select('core/editor').isAutosavingPost();
+			
+			if (isSavingPost && !isAutosavingPost) {
+				window.tinyMCE.triggerSave();
+			}
+		});
+	}
 });
 
 function displaySelectedStandard(sId, title) {
