@@ -98,7 +98,8 @@ jQuery(document).ready(function(e) {
 		});
 	}
 	jQuery('a[data-toggle="collapse"]').on("click", function(e){
-		jQuery(this).toggle();
+		var collapse = jQuery(this).attr("data-target");
+		jQuery(collapse).toggle();
 	});
 });
 
