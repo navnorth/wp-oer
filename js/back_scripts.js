@@ -99,7 +99,7 @@ jQuery(document).ready(function(e) {
 	}
 	jQuery('a[data-toggle="collapse"]').on("click", function(e){
 		var collapse = jQuery(this).attr("data-target");
-		jQuery(collapse).toggle();
+		jQuery(collapse).toggleClass("in");
 	});
 });
 
