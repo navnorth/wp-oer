@@ -97,7 +97,9 @@ jQuery(document).ready(function(e) {
 			}
 		});
 	}
-	jQuery('a[data-toggle="collapse"]').collapse();
+	jQuery('a[data-toggle="collapse"]').on("click", function(e){
+		jQuery(this).toggle();
+	});
 });
 
 function displaySelectedStandard(sId, title) {
