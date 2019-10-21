@@ -320,12 +320,12 @@ function oer_category_template( $template ) {
 
 	//Post ID
 	$_id = $wp_query->get_queried_object_id();
-
+	
 	// Get Current Object if it belongs to Resource Category taxonomy
 	$resource_term = get_term_by( 'id' , $_id , 'resource-subject-area' );
-	//var_dump($resource_term);
+	
 	//Check if the loaded resource is a category
-	if ($resource_term && !is_wp_error( $resource_term )) {
+	if (is_tax() && $resource_term && !is_wp_error( $resource_term )) {
 		return oer_get_template_hierarchy('resource-subject-area');
 	} else {
 		if ($wp_query->is_search)
