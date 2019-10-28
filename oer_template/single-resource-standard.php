@@ -64,29 +64,49 @@
     </div>
 </div>
 <div class="oer-rsrcrghtcntr col-md-7 col-sm-12 col-xs-12">
-    <div class="oer-rsrcctgries tagcloud">
-    <?php
-    /** Resource Subject Areas **/
-    $subjects = array_unique($subject_areas, SORT_REGULAR);
-    
-    if(!empty($subjects))
-    {
-        foreach($subjects as $subject)
-        {
-            echo '<span><a href="'.esc_url(site_url().'/'.$subject->taxonomy.'/'.$subject->slug).'" class="button">'.ucwords ($subject->name).'</a></span>';
-        }
-    }
-    ?>
-    </div>
-
     <!--Resource Description-->
     <?php if(!empty($post->post_content)) {?>
         <div class="oer-sngl-rsrc-dscrptn">
-                <h2><?php _e("Description", OER_SLUG) ?></h2>
+<!--                <h2>--><?php //_e("Description", OER_SLUG) ?><!--</h2>-->
                 <?php echo $content = apply_filters ("the_content", $post->post_content); ?>
         </div>
     <?php } ?>
-    
+
+    <!-- Keywords -->
+    <?php
+    $keywords = wp_get_post_tags($post->ID);
+    if(!empty($keywords))
+    {
+        ?>
+        <div class="oer-rsrckeyword">
+            <div class="oer_meta_container tagcloud">
+                <?php
+                foreach($keywords as $keyword)
+                {
+                    echo "<span><a href='".esc_url(get_tag_link($keyword->term_id))."' class='button'>".ucwords($keyword->name)."</a></span>";
+                }
+                ?>
+            </div>
+        </div>
+    <?php } ?>
+
+
+    <!-- Subjects -->
+    <div class="oer-rsrcctgries tagcloud">
+        <?php
+        /** Resource Subject Areas **/
+        $subjects = array_unique($subject_areas, SORT_REGULAR);
+
+        if(!empty($subjects))
+        {
+            foreach($subjects as $subject)
+            {
+                echo '<span><a href="'.esc_url(site_url().'/'.$subject->taxonomy.'/'.$subject->slug).'" class="button">'.ucwords ($subject->name).'</a></span>';
+            }
+        }
+        ?>
+    </div>
+
     <!-- Transcription -->
     <?php
     $oer_transcription = get_post_meta($post->ID, 'oer_transcription', true);
