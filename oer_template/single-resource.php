@@ -81,6 +81,20 @@ $embed_disabled = false;
 	<?php if (!$hide_title): ?>
         <header class="entry-header">
             <h1 class="entry-title"><?php echo $post->post_title;?></h1>
+            <?php
+            $oer_sensitive_material = get_post_meta($post->ID, 'oer_sensitive_material', true);
+            if (!empty($oer_sensitive_material)){
+                ?>
+                <div>
+                    <span class="oer_sensitive_material_wrapper">
+                        <img src="<?php echo OER_URL.'images/exclamation-triangle-solid.svg'?>" height="20px" width="20px" alt="Sensitive Material Warning">
+                        <p>Potentially Sensitive Material</p>
+                    </span>
+                    <img src="<?php echo OER_URL.'images/share-alt-solid.svg'?>" height="20px" width="20px" alt="Share">
+                </div>
+                <?php
+            }
+            ?>
         </header>
 	<?php endif; ?>
     	
