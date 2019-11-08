@@ -90,7 +90,7 @@
         {
             foreach($subjects as $subject)
             {
-                echo '<span><a href="'.esc_url(site_url().'/'.$subject->taxonomy.'/'.$subject->slug).'" class="button">'.ucwords ($subject->name).'</a></span>';
+                echo '<span><a href="'.esc_url(get_term_link($subject)).'" class="button">'.ucwords ($subject->name).'</a></span>';
             }
         }
         ?>
