@@ -246,18 +246,19 @@ global $chck;
             <div class="oer_fld">
             	<?php $oer_lrtype = strtolower(get_post_meta($post->ID, 'oer_lrtype', true)); ?>
                 <select name="oer_lrtype">
-			<option value=""></option>
-			<option value="website" <?php if($oer_lrtype == 'website'){echo 'selected="selected"';}?>><?php _e("Assessment", OER_SLUG); ?></option>
-                       <option value="audio" <?php if($oer_lrtype == 'audio'){echo 'selected="selected"';}?>><?php _e("Audio", OER_SLUG); ?></option>
-                       <option value="calculator" <?php if($oer_lrtype == 'calculator'){echo 'selected="selected"';}?>><?php _e("Calculator", OER_SLUG); ?></option>
-                       <option value="demonstration" <?php if($oer_lrtype == 'demonstration'){echo 'selected="selected"';}?>><?php _e("Demonstration", OER_SLUG); ?></option>
-                       <option value="game" <?php if($oer_lrtype == 'game'){echo 'selected="selected"';}?>><?php _e("Game", OER_SLUG); ?></option>
-                       <option value="interview" <?php if($oer_lrtype == 'interview'){echo 'selected="selected"';}?>><?php _e("Interview", OER_SLUG); ?></option>
-                       <option value="lecture" <?php if($oer_lrtype == 'lecture'){echo 'selected="selected"';}?>><?php _e("Lecture", OER_SLUG); ?></option>
-                       <option value="lesson plan" <?php if($oer_lrtype == 'lesson plan'){echo 'selected="selected"';}?>><?php _e("Lesson Plan", OER_SLUG); ?></option>
-                       <option value="simulation" <?php if($oer_lrtype == 'simulation'){echo 'selected="selected"';}?>><?php _e("Simulation", OER_SLUG); ?></option>
-                       <option value="presentation" <?php if($oer_lrtype == 'presentation'){echo 'selected="selected"';}?>><?php _e("Presentation", OER_SLUG); ?></option>
-                       <option value="other" <?php if($oer_lrtype == 'other'){echo 'selected="selected"';}?>><?php _e("Learning Resource Type:", OER_SLUG); ?>Other</option>
+					<option value=""></option>
+					<option value="website" <?php if($oer_lrtype == 'article'){echo 'selected="selected"';}?>><?php _e("Article/Information", OER_SLUG); ?></option>
+					<option value="website" <?php if($oer_lrtype == 'website'){echo 'selected="selected"';}?>><?php _e("Assessment", OER_SLUG); ?></option>
+					<option value="audio" <?php if($oer_lrtype == 'audio'){echo 'selected="selected"';}?>><?php _e("Audio", OER_SLUG); ?></option>
+					<option value="calculator" <?php if($oer_lrtype == 'calculator'){echo 'selected="selected"';}?>><?php _e("Calculator", OER_SLUG); ?></option>
+					<option value="demonstration" <?php if($oer_lrtype == 'demonstration'){echo 'selected="selected"';}?>><?php _e("Demonstration", OER_SLUG); ?></option>
+					<option value="game" <?php if($oer_lrtype == 'game'){echo 'selected="selected"';}?>><?php _e("Game", OER_SLUG); ?></option>
+					<option value="interview" <?php if($oer_lrtype == 'interview'){echo 'selected="selected"';}?>><?php _e("Interview", OER_SLUG); ?></option>
+					<option value="lecture" <?php if($oer_lrtype == 'lecture'){echo 'selected="selected"';}?>><?php _e("Lecture", OER_SLUG); ?></option>
+					<option value="lesson plan" <?php if($oer_lrtype == 'lesson plan'){echo 'selected="selected"';}?>><?php _e("Lesson Plan", OER_SLUG); ?></option>
+					<option value="simulation" <?php if($oer_lrtype == 'simulation'){echo 'selected="selected"';}?>><?php _e("Simulation", OER_SLUG); ?></option>
+					<option value="presentation" <?php if($oer_lrtype == 'presentation'){echo 'selected="selected"';}?>><?php _e("Presentation", OER_SLUG); ?></option>
+					<option value="other" <?php if($oer_lrtype == 'other'){echo 'selected="selected"';}?>><?php _e("Learning Resource Type:", OER_SLUG); ?>Other</option>
                 </select>
             </div>
         </div>
