@@ -106,21 +106,21 @@ function oer_backside_scripts($hook)
 {
     global $post;
     if ((isset($_GET['post_type']) && $_GET['post_type']=='resource') || (isset($post->post_type) && $post->post_type=='resource')) {
-	wp_enqueue_style('jqueryui-styles', OER_URL.'css/jquery-ui.css');
-	wp_enqueue_style('back-styles', OER_URL.'css/back_styles.css');
-	wp_enqueue_style( 'thickbox' );
-
-	
-	wp_enqueue_script('jquery');
-	wp_enqueue_script('jquery-ui-core' );
-	wp_enqueue_script('jquery-ui-widgets' );
-	wp_enqueue_script('jquery-ui-tabs' );
-	wp_enqueue_script('jquery-ui-datepicker' );
-	wp_enqueue_script( 'media-upload' );
-	wp_enqueue_script( 'thickbox' );
-	wp_enqueue_script( 'bootstrap-js', OER_URL.'js/bootstrap.min.js', array('jquery'));
-	wp_enqueue_script('back-scripts', OER_URL.'js/back_scripts.js',array( 'jquery','media-upload','thickbox','set-post-thumbnail' ));
-	wp_enqueue_script('admin-resource', OER_URL.'js/admin_resource.js');
+      wp_enqueue_style('jqueryui-styles', OER_URL.'css/jquery-ui.css');
+      wp_enqueue_style('back-styles', OER_URL.'css/back_styles.css');
+      wp_enqueue_style( 'thickbox' );
+    
+      
+      wp_enqueue_script('jquery');
+      wp_enqueue_script('jquery-ui-core' );
+      wp_enqueue_script('jquery-ui-widgets' );
+      wp_enqueue_script('jquery-ui-tabs' );
+      wp_enqueue_script('jquery-ui-datepicker' );
+      wp_enqueue_script( 'media-upload' );
+      wp_enqueue_script( 'thickbox' );
+      wp_enqueue_script( 'bootstrap-js', OER_URL.'js/bootstrap.min.js', array('jquery'));
+      wp_enqueue_script('back-scripts', OER_URL.'js/back_scripts.js',array( 'jquery','media-upload','thickbox','set-post-thumbnail' ));
+      wp_enqueue_script('admin-resource', OER_URL.'js/admin_resource.js');
     }
     
     // Adds our JS file to the queue that WordPress will load
@@ -819,8 +819,11 @@ function process_import_standards(){
 // Add Standard Modal
 add_action( "admin_footer" , "oer_add_modal" );
 function oer_add_modal(){
-    if (oer_installed_standards_plugin()) {
-	include_once(OER_PATH."oer_template/modals/standard_modal.php");
+  if (oer_installed_standards_plugin()) {
+    $screen = get_current_screen();
+    if ( 'post' == $screen->base && 'resource' == $screen->id ){
+      include_once(OER_PATH."oer_template/modals/standard_modal.php");
     }
+  }
 }
 ?>
