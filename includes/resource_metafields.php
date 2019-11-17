@@ -98,7 +98,31 @@ global $chck;
             </div>
         </div>
        <?php } ?>
-       
+    
+	<?php
+	// Age Levels
+	$option_set = false;
+	if (get_option('oer_age_levels_label')){
+		$option_set = true;
+	}
+	if (($option_set && get_option('oer_age_levels_enabled')) || !$option_set) {
+	?>
+	<div class="oer_snglfld">
+        	<div class="oer_txt">
+			<?php
+			if (!$option_set)
+				_e("Age Levels:", OER_SLUG);
+			else
+				echo get_option('oer_age_levels_label').":";
+			?>
+            </div>
+            <div class="oer_fld">
+            	<?php $oer_age_levels = get_post_meta($post->ID, 'oer_age_levels', true);?>
+                <input type="text" name="oer_age_levels" value="<?php echo $oer_age_levels;?>"/>
+            </div>
+        </div>
+	<?php } ?>
+	
 	<?php
 	// Format
 	$option_set = false;

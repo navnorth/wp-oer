@@ -397,6 +397,12 @@ function oer_save_customfields()
 		{
 			update_post_meta( $post->ID , 'oer_grade' , '');
 		}
+    
+    // Save Age Levels
+		if(isset($_POST['oer_age_levels']))
+		{
+		    update_post_meta( $post->ID , 'oer_age_levels' , $_POST['oer_age_levels']);
+		}
 		
 		// Save Format
 		if(isset($_POST['oer_format']))
