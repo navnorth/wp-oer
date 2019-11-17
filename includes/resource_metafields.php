@@ -124,6 +124,30 @@ global $chck;
 	<?php } ?>
 	
 	<?php
+	// Instructional Time
+	$option_set = false;
+	if (get_option('oer_instructional_time_label')){
+		$option_set = true;
+	}
+	if (($option_set && get_option('oer_instructional_time_enabled')) || !$option_set) {
+	?>
+	<div class="oer_snglfld">
+        	<div class="oer_txt">
+			<?php
+			if (!$option_set)
+				_e("Instructional Time:", OER_SLUG);
+			else
+				echo get_option('oer_instructional_time_label').":";
+			?>
+            </div>
+            <div class="oer_fld">
+            	<?php $oer_instructional_time = get_post_meta($post->ID, 'oer_instructional_time', true);?>
+                <input type="text" name="oer_instructional_time" value="<?php echo $oer_instructional_time;?>"/>
+            </div>
+        </div>
+	<?php } ?>
+	
+	<?php
 	// Format
 	$option_set = false;
 	if (get_option('oer_format_label')){

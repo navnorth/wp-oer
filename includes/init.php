@@ -403,6 +403,12 @@ function oer_save_customfields()
 		{
 		    update_post_meta( $post->ID , 'oer_age_levels' , $_POST['oer_age_levels']);
 		}
+    
+    // Save Instructional Time
+		if(isset($_POST['oer_instructional_time']))
+		{
+		    update_post_meta( $post->ID , 'oer_instructional_time' , $_POST['oer_instructional_time']);
+		}
 		
 		// Save Format
 		if(isset($_POST['oer_format']))
