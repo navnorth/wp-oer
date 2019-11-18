@@ -409,6 +409,12 @@ function oer_save_customfields()
 		{
 		    update_post_meta( $post->ID , 'oer_instructional_time' , $_POST['oer_instructional_time']);
 		}
+    
+    // Save Creative Commons License
+		if(isset($_POST['oer_creativecommons_license']))
+		{
+		    update_post_meta( $post->ID , 'oer_creativecommons_license' , $_POST['oer_creativecommons_license']);
+		}
 		
 		// Save Format
 		if(isset($_POST['oer_format']))
