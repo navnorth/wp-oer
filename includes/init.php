@@ -589,6 +589,28 @@ function oer_save_customfields()
 		{
 			update_post_meta( $post->ID , 'oer_publisheremail' , sanitize_email($_POST['oer_publisheremail']));
 		}
+    
+    if(isset($_POST['oer_external_repository']))
+		{
+			update_post_meta( $post->ID , 'oer_external_repository' , sanitize_text_field($_POST['oer_external_repository']));
+		}
+
+		if(isset($_POST['oer_repository_recordurl']))
+		{
+			$oer_publisherurl = $_POST['oer_repository_recordurl'];
+			if( !empty($_POST['oer_repository_recordurl']) )
+			{
+				if ( preg_match('/http/',$oer_publisherurl) )
+				{
+					$oer_publisherurl = $_POST['oer_repository_recordurl'];
+				}
+				else
+				{
+					$oer_publisherurl = 'http://'.$_POST['oer_repository_recordurl'];
+				}
+			}
+			update_post_meta( $post->ID , 'oer_repository_recordurl' , esc_url_raw($oer_publisherurl));
+		}
 		
 		if(!empty($_POST['oer_resourceurl']))
 		{

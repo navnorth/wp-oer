@@ -749,6 +749,58 @@ global $chck;
             </div>
         </div>
 	<?php } ?>
+	
+	<div class="oer_snglfld oer_hdngsngl">
+		<?php _e("Repository Information:", OER_SLUG); ?>
+        </div>
+
+        <?php
+	// External Repository
+	$option_set = false;
+	if (get_option('oer_external_repository_label')){
+		$option_set = true;
+	}
+	if (($option_set && get_option('oer_external_repository_enabled')) || !$option_set) {
+	?>
+        <div class="oer_snglfld">
+        	<div class="oer_txt">
+			<?php
+			if (!$option_set)
+				_e("External Repository:", OER_SLUG);
+			else
+				echo get_option('oer_external_repository_label').":";
+			?>
+		</div>
+		<div class="oer_fld">
+		    <?php $oer_external_repository = get_post_meta($post->ID, 'oer_external_repository', true);?>
+		    <input type="text" name="oer_external_repository" value="<?php echo esc_attr($oer_external_repository);?>" />
+		</div>
+        </div>
+	<?php } ?>
+
+	<?php
+	// Repository Record URL
+	$option_set = false;
+	if (get_option('oer_repository_recordurl_label')){
+		$option_set = true;
+	}
+	if (($option_set && get_option('oer_repository_recordurl_enabled')) || !$option_set) {
+	?>
+        <div class="oer_snglfld">
+        	<div class="oer_txt">
+			<?php
+			if (!$option_set)
+				_e("Repository Record URL:", OER_SLUG);
+			else
+				echo get_option('oer_repository_recordurl_label').":";
+			?>
+		</div>
+		<div class="oer_fld">
+		    <?php $oer_repository_recordurl = get_post_meta($post->ID, 'oer_repository_recordurl', true);?>
+		    <input type="text" name="oer_repository_recordurl" value="<?php echo esc_attr($oer_repository_recordurl);?>" />
+		</div>
+        </div>
+	<?php } ?>
 
 	<?php
 	// Citation
