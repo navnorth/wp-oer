@@ -71,13 +71,12 @@
     margin-bottom: 20px;
 	overflow:hidden;
 }
-#sngl-resource header.entry-header .entry-title { margin-top:0; margin-bottom:0; width:80%; float:left; display:inline-block; }
+#sngl-resource header.entry-header .entry-title { margin-top:0; margin-bottom:0; }
 #sngl-resource header.entry-header span.sensitive-resource {
-	display: inline-block;
-    float: right;
     line-height: 3.5em;
 	font-size:13px;
 	color:#950000;
+	text-align:right;
 }
 #sngl-resource header.entry-header span.sensitive-resource i { margin-right:10px; }
 /** For Mobile styles **/

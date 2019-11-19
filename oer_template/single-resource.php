@@ -80,8 +80,8 @@ $embed_disabled = false;
         <div id="sngl-resource" class="entry-content oer-cntnr post-content oer_sngl_resource_wrapper row">
 	<?php //if (!$hide_title): ?>
         <header class="entry-header">
-            <h1 class="entry-title"><?php echo $post->post_title;?></h1>
-			<span class="sensitive-resource"><i class="fas fa-exclamation-triangle"></i> Potentially Sensitive Material</span>
+            <h1 class="entry-title col-md-8"><?php echo $post->post_title;?></h1>
+			<span class="sensitive-resource col-md-4"><i class="fas fa-exclamation-triangle"></i> Potentially Sensitive Material</span>
         </header>
 	<?php //endif; ?>
     	
