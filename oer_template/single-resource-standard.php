@@ -64,6 +64,13 @@
     </div>
 </div>
 <div class="oer-rsrcrghtcntr col-md-7 col-sm-12 col-xs-12">
+    <!--Resource Description-->
+    <?php if(!empty($post->post_content)) {?>
+        <div class="oer-sngl-rsrc-dscrptn">
+                <?php echo $content = apply_filters ("the_content", $post->post_content); ?>
+        </div>
+    <?php } ?>
+    
     <div class="oer-rsrcctgries tagcloud">
     <?php
     /** Resource Subject Areas **/
@@ -79,13 +86,6 @@
     ?>
     </div>
 
-    <!--Resource Description-->
-    <?php if(!empty($post->post_content)) {?>
-        <div class="oer-sngl-rsrc-dscrptn">
-                <h2><?php _e("Description", OER_SLUG) ?></h2>
-                <?php echo $content = apply_filters ("the_content", $post->post_content); ?>
-        </div>
-    <?php } ?>
     
     <!-- Transcription -->
     <?php

@@ -65,6 +65,21 @@
 }
 .oer-sngl-rsrc-img .oer-rsrcurl.left { text-align:left; }
 .oer-cbxl h4 span { font-size: 0.85em; font-weight: normal; color: #000000; }
+#sngl-resource header.entry-header {
+	background: #f2f2f2;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+	overflow:hidden;
+}
+#sngl-resource header.entry-header .entry-title { margin-top:0; margin-bottom:0; width:80%; float:left; display:inline-block; }
+#sngl-resource header.entry-header span.sensitive-resource {
+	display: inline-block;
+    float: right;
+    line-height: 3.5em;
+	font-size:13px;
+	color:#950000;
+}
+#sngl-resource header.entry-header span.sensitive-resource i { margin-right:10px; }
 /** For Mobile styles **/
 @media screen and (min-width: 960px) {
     .oer-sngl-rsrc-dscrptn { width: 100%; }
