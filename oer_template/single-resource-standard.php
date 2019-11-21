@@ -145,20 +145,22 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
         </div>
     <?php } ?>
     
-    <div class="oer-rsrcctgries tagcloud">
     <?php
-    /** Resource Subject Areas **/
-    $subjects = array_unique($subject_areas, SORT_REGULAR);
-    
-    if(!empty($subjects))
+    $keywords = wp_get_post_tags($post->ID);
+    if(!empty($keywords))
     {
-        foreach($subjects as $subject)
-        {
-            echo '<span><a href="'.esc_url(site_url().'/'.$subject->taxonomy.'/'.$subject->slug).'" class="button">'.ucwords ($subject->name).'</a></span>';
-        }
-    }
     ?>
-    </div>
+        <div class="oer-rsrckeyword">
+                <div class="oer_meta_container tagcloud">
+           <?php
+                        foreach($keywords as $keyword)
+                        {
+                                echo "<span><a href='".esc_url(get_tag_link($keyword->term_id))."' class='button'>".ucwords($keyword->name)."</a></span>";
+                        }
+                ?>
+                </div>
+        </div>
+    <?php } ?>
 
     <!-- Standards List -->
     <?php if ($oer_standard) {
@@ -206,24 +208,6 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
             </ul>
         </div>
     </div>
-    <?php } ?>
-
-    <?php
-            $keywords = wp_get_post_tags($post->ID);
-            if(!empty($keywords))
-            {
-    ?>
-                    <div class="oer-rsrckeyword">
-                            <h4><strong><?php _e("Keywords:", OER_SLUG) ?></strong></h4>
-                            <div class="oer_meta_container tagcloud">
-                       <?php
-                                    foreach($keywords as $keyword)
-                                    {
-                                            echo "<span><a href='".esc_url(get_tag_link($keyword->term_id))."' class='button'>".ucwords($keyword->name)."</a></span>";
-                                    }
-                            ?>
-                            </div>
-                    </div>
     <?php } ?>
     </div>
 </div> <!--Description & Resource Info at Right-->
