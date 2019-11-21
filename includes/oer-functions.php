@@ -3301,4 +3301,83 @@ function oer_get_standard_label($slug){
 	return $standard;
 }
 
+// Get Field Label
+if (! function_exists('oer_field_label')){
+    function oer_field_label($field){
+        $label = null;
+        
+        if (get_option($field.'_label'))
+            $label = get_option($field.'_label');
+        else
+            $label = oer_get_meta_label($field);
+         
+        return $label;
+    }
+}
+
+// List Selected Standards
+if (! function_exists('oer_standards_list_display')){
+	function oer_standards_list_display($resource_id){
+		$oer_standard = get_post_meta($resource_id, 'oer_standard', true);
+		?>
+		<ul class="tc-oer-standards-list">
+               <?php
+               $stds = array();
+               $standards = array();
+               $cstandard = null;
+               $oer_lp_standards = explode(",",$oer_standard);
+               if (is_array($oer_lp_standards)):
+                    $current_std_id = "";
+                    foreach($oer_lp_standards as $standard){
+                       if (function_exists('oer_std_get_standard_by_notation')){
+                           $core_standard = oer_std_get_standard_by_notation($standard);
+                           if ($current_std_id!==$core_standard->id){
+                               if (!empty($standards) && !empty($cstandard)) {
+                                   $stds[] = array_merge(array("notation"=>$standards), $cstandard);
+                               }
+                               $standards = array();
+                               $current_std_id = $core_standard->id;
+                               $cstandard = array("core_standard_id"=>$core_standard->id,"core_standard_name"=>$core_standard->standard_name);
+                           }
+                           $standards[] = $standard;
+                       }
+                   }
+                   if (!empty($standards) && !empty($cstandard)) {
+                       $stds[] = array_merge(array("notation"=>$standards), $cstandard);
+                   }
+                   $cstd_id = array_column($stds,"core_standard_id");
+                   array_multisort($cstd_id,SORT_ASC,$stds);
+                   $standard_details = "";
+                   foreach($stds as $std){
+                       if (isset($std['core_standard_id'])) {
+                           echo "<li>";
+                               echo '<a class="lp-standard-toggle" data-toggle="collapse" href="#core-standard-'.$std['core_standard_id'].'">'.$std['core_standard_name'].' <i class="fas fa-caret-right"></i></a>';
+                           ?>
+                           <div class="collapse tc-lp-details-standard" id="core-standard-<?php echo $std['core_standard_id']; ?>">
+                           <?php
+                           if (is_array($std['notation'])) {
+                               echo "<ul class='tc-lp-notation-list'>";
+                               foreach ($std['notation'] as $notation) {
+                                   if (function_exists('was_standard_details'))
+                                       $standard_details = was_standard_details($notation);
+                                   if (!empty($standard_details)){
+                                       if (isset($standard_details->description))
+                                           echo "<li>".$standard_details->description."</li>";
+                                       else
+                                           echo "<li>".$standard_details->standard_title."</li>";
+                                   }
+                               }
+                               echo "</ul>";
+                           }
+                               echo "</div>";
+                           echo "</li>";
+                       }
+                   }
+               endif;
+               ?>
+            </ul>
+		<?php
+	}
+}
+
 ?>

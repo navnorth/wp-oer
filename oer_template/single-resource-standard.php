@@ -1,3 +1,10 @@
+<?php
+$author_set = (get_option('oer_authorname_label'))?true:false;
+$author_enabled = (get_option('oer_authorname_enabled'))?true:false;
+$standards_set = (get_option('oer_standard_label'))?true:false;
+$standards_enabled = (get_option('oer_standard_enabled'))?true:false;
+$oer_standard = get_post_meta($post->ID, 'oer_standard', true);
+?>
 <div class="oer-rsrclftcntr-img col-md-5 col-sm-12 col-xs-12">
     <!--Resource Image-->
     <div class="oer-sngl-rsrc-img">
@@ -62,6 +69,50 @@
         }
         ?>
     </div>
+    <div id="" class="oer-authorName oer-cbxl">
+        <?php
+        $oer_authorname = get_post_meta($post->ID, "oer_authorname", true);
+        $oer_authorurl = get_post_meta($post->ID, "oer_authorurl", true);
+        $oer_authorname2 = get_post_meta($post->ID, "oer_authorname2", true);
+        $oer_authorurl2 = get_post_meta($post->ID, "oer_authorurl2", true);
+
+        if(!empty($oer_authorname) || !empty($oer_authorname2))
+        {
+            $option_set = false;
+            if (get_option('oer_authorname_label'))
+                $option_set = true;
+        ?>
+            <h4><strong><?php
+            if (!$option_set)
+                _e("Creator:", OER_SLUG);
+	    else
+		echo get_option('oer_authorname_label').":"; ?></strong>
+            <span><?php if (!empty($oer_authorurl)): ?><a href="<?php echo esc_url($oer_authorurl); ?>" target="_blank"><?php endif; ?><?php echo $oer_authorname; ?><?php if (!empty($oer_authorurl)): ?></a><?php endif; ?></span>
+            <?php if ($oer_authorname2): echo ", "; ?>
+            <span><?php if (!empty($oer_authorurl2)): ?><a href="<?php echo esc_url($oer_authorurl2); ?>" target="_blank"><?php endif; ?><?php echo $oer_authorname2; ?><?php if (!empty($oer_authorurl2)): ?></a><?php endif; ?></span>
+            <?php endif; ?>
+            </h4>
+        <?php } ?>
+    </div>
+    <?php
+    $oer_publishername = get_post_meta($post->ID, "oer_publishername", true);
+    $oer_publisherurl = get_post_meta($post->ID, "oer_publisherurl", true);
+
+    if(!empty($oer_publishername) && !empty($oer_publisherurl))
+    {
+        $option_set = false;
+	if (get_option('oer_publishername_label'))
+	    $option_set = true;
+    ?><div id="" class="oer-publisherName oer-cbxl">
+        <h4><strong><?php
+        if (!$option_set)
+            _e("Publisher:", OER_SLUG);
+        else
+            echo get_option('oer_publishername_label').":";
+        ?></strong>
+        <span><a href="<?php echo esc_url($oer_publisherurl); ?>" target="_blank"><?php echo $oer_publishername; ?></a></span></h4>
+    </div>
+    <?php } ?>
 </div>
 <div class="oer-rsrcrghtcntr col-md-7 col-sm-12 col-xs-12">
     <!--Resource Description-->
@@ -86,6 +137,20 @@
     ?>
     </div>
 
+    <?php if ($oer_standard) {
+        if (($standards_set && $standards_enabled) || !$standards_set) {
+   ?>
+   <div class="tc-oer-standards">
+       <h4 class="tc-field-heading clearfix">
+           <?php echo oer_field_label('oer_standard'); ?>
+       </h4>
+       <div class="tc-oer-standards-details clearfix">
+           <?php oer_standards_list_display($post->ID); ?>
+        </div>
+    </div>
+    <?php
+         }
+    } ?>
     
     <!-- Transcription -->
     <?php
@@ -138,51 +203,6 @@
         <?php } else { ?>
             <div class="oer-rsrcurl oer-cbxl"><h4><strong>Original Resource:</strong> <a href="<?php echo esc_url(get_post_meta($post->ID, "oer_resourceurl", true)); ?>" target="_blank" ><?php echo $url_domain; ?></a></h4></div>
         <?php } ?>
-    <?php } ?>
-
-    <div id="" class="oer-authorName oer-cbxl">
-        <?php
-        $oer_authorname = get_post_meta($post->ID, "oer_authorname", true);
-        $oer_authorurl = get_post_meta($post->ID, "oer_authorurl", true);
-        $oer_authorname2 = get_post_meta($post->ID, "oer_authorname2", true);
-        $oer_authorurl2 = get_post_meta($post->ID, "oer_authorurl2", true);
-
-        if(!empty($oer_authorname) || !empty($oer_authorname2))
-        {
-            $option_set = false;
-            if (get_option('oer_authorname_label'))
-                $option_set = true;
-        ?>
-            <h4><strong><?php
-            if (!$option_set)
-                _e("Creator:", OER_SLUG);
-	    else
-		echo get_option('oer_authorname_label').":"; ?></strong>
-            <span><?php if (!empty($oer_authorurl)): ?><a href="<?php echo esc_url($oer_authorurl); ?>" target="_blank"><?php endif; ?><?php echo $oer_authorname; ?><?php if (!empty($oer_authorurl)): ?></a><?php endif; ?></span>
-            <?php if ($oer_authorname2): echo ", "; ?>
-            <span><?php if (!empty($oer_authorurl2)): ?><a href="<?php echo esc_url($oer_authorurl2); ?>" target="_blank"><?php endif; ?><?php echo $oer_authorname2; ?><?php if (!empty($oer_authorurl2)): ?></a><?php endif; ?></span>
-            <?php endif; ?>
-            </h4>
-        <?php } ?>
-    </div>
-    <?php
-    $oer_publishername = get_post_meta($post->ID, "oer_publishername", true);
-    $oer_publisherurl = get_post_meta($post->ID, "oer_publisherurl", true);
-
-    if(!empty($oer_publishername) && !empty($oer_publisherurl))
-    {
-        $option_set = false;
-	if (get_option('oer_publishername_label'))
-	    $option_set = true;
-    ?><div id="" class="oer-publisherName oer-cbxl">
-        <h4><strong><?php
-        if (!$option_set)
-            _e("Publisher:", OER_SLUG);
-        else
-            echo get_option('oer_publishername_label').":";
-        ?></strong>
-        <span><a href="<?php echo esc_url($oer_publisherurl); ?>" target="_blank"><?php echo $oer_publishername; ?></a></span></h4>
-    </div>
     <?php } ?>
     
     <!-- Date Created Estimate -->
@@ -433,110 +453,4 @@
             </div>
        </div>-->
     </div>
-</div> <!--Description & Resource Info at Right-->
-
-<!-- Standards Alignment -->
-<div class="oer-rsrclftcntr col-md-12">
-
-                    <?php
-
-                            $stdrd_id = get_post_meta($post->ID, 'oer_standard_alignment', true);
-                            $oer_standard = get_post_meta($post->ID, 'oer_standard', true);
-                            
-                            $standards = explode(",", $oer_standard);
-                            $oer_standards = array();
-                            
-                            foreach ($standards as $standard) {
-                                    if ($standard!=""){
-                                            $stds = oer_get_parent_standard($standard);
-                                            foreach($stds as $std){
-                                                    $core_std = oer_get_core_standard($std['parent_id']);
-                                                    $oer_standards[] = array(
-                                                                            'id' => $standard,
-                                                                            'core_id' => $core_std[0]['id'],
-                                                                            'core_title' => $core_std[0]['standard_name']
-                                                                             );
-                                            }
-                                    }
-                            }
-                            
-                            foreach ($oer_standards as $key => $row) {
-                                    $core[$key]  = $row['core_id'];
-                            }
-                            
-                            if (!empty($oer_standards))
-                                    array_multisort($core, SORT_ASC, $oer_standards);
-                            
-                            if(!empty($stdrd_id) || !empty($oer_standards))
-                            {
-                                $option_set = false;
-                                if (get_option('oer_standard_label'))
-                                        $option_set = true;
-                    ?>
-            <div class="alignedStandards">
-            <h2><?php
-            if (!$option_set)
-		_e("Standards Alignment", OER_SLUG);
-	    else
-                echo get_option('oer_standard_label').":";
-            ?></h2>
-            <div class="oer_meta_container">
-                <!--<div class="oer_stndrd_align">-->
-                <?php
-                    if(!empty($stdrd_id))
-                    {
-                                ?>
-                                       <!--<h3><?php _e("Standard Alignment", OER_SLUG) ?></h3>-->
-                                       <?php
-                         //$res = $wpdb->get_row( $wpdb->prepare( "select standard_name from ".$wpdb->prefix."oer_core_standards where id=%d" , $stdrd_id ), ARRAY_A);
-                         //echo "<div class='stndrd_ttl'>".$res['standard_name']."</div>";
-                    }
-                ?>
-
-                <!--</div>-->
-
-                <div class="oer_stndrds_notn">
-                <?php
-                    if(!empty($oer_standards))
-                    {
-                    ?>
-                            <?php
-                            $displayed_core_standards = array();
-                            foreach($oer_standards as $o_standard) {
-                                    
-                                    if (!in_array($o_standard['core_id'],$displayed_core_standards)){
-                                            echo "<div class='oer-core-title'><h4><strong>".$o_standard['core_title']."</strong></h4></div>";
-                                            $displayed_core_standards[] = $o_standard['core_id'];
-                                    }
-                                    
-                                    $oer_standard =$o_standard['id'];
-                                    $stnd_arr = explode(",", $oer_standard);
-                                    
-                                    for($i=0; $i< count($stnd_arr); $i++)
-                                    {
-                                        $table = explode("-",$stnd_arr[$i]);
-                                        
-                                        $table_name = $wpdb->prefix.$_oer_prefix.$table[0];
-                                        
-                                        $id = $table[1];
-                                        
-                                        $res = $wpdb->get_row( $wpdb->prepare("select * from $table_name where id=%d" , $id ), ARRAY_A);
-                                        
-                                        echo "<div class='oer_sngl_stndrd'>";
-                                            if (strpos($table_name,"sub_standards")>0) {
-                                                    echo "<span class='oer_sngl_description'>".stripslashes($res['standard_title'])."</span>";
-                                            } else {
-                                                    echo "<span class='oer_sngl_notation'>".$res['standard_notation']."</span>";
-                                                    echo "<span class='oer_sngl_description'>".stripslashes($res['description'])."</span>";
-                                            }
-                                        echo "</div>";
-                                    }
-                            }
-                    }
-                ?>
-                </div>
-
-            </div>
-       </div>
-                    <?php } ?>
-</div> <!--Thumbnail & Standards Info at Left-->
+</div> <!--Description & Resource Info at Right-->  
