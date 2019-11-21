@@ -3395,4 +3395,11 @@ if (!function_exists('oer_get_content')){
     }
 }
 
+// Get Creative Commons License to Display
+if (!function_exists('oer_cc_license_image')){
+	function oer_cc_license_image($license){
+		$license_image = OER_URL."images/cc_license/".$license.".png";
+		return $license_image;
+	}
+}
 ?>

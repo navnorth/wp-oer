@@ -27,11 +27,21 @@ jQuery(document).ready(function(e) {
     });
 	
 	jQuery(document).on("show.bs.collapse", '#tcHiddenFields.collapse', function (){
-        jQuery('#see-more-link').text("SEE LESS -");
+        jQuery('#oer-see-more-link').text("SEE LESS -");
     });
     
     jQuery(document).on("hide.bs.collapse", '#tcHiddenFields.collapse', function (){
-        jQuery('#see-more-link').text("SEE MORE +");
+        jQuery('#oer-see-more-link').text("SEE MORE +");
+    });
+	
+	jQuery(document).on("click", '.lp-read-more', function (){
+        jQuery('.oer-lp-excerpt').hide();
+        jQuery('.oer-lp-full-content').show();
+    });
+    
+    jQuery(document).on("click", '.lp-read-less', function (){
+        jQuery('.oer-lp-excerpt').show();
+        jQuery('.oer-lp-full-content').hide();
     });
 });
 

@@ -168,12 +168,12 @@ global $chck;
             	<?php $oer_creativecommons_license = get_post_meta($post->ID, 'oer_creativecommons_license', true); ?>
                 <select name="oer_creativecommons_license">
 					<option value=""></option>
-					<option value="Attribution CC BY" <?php if($oer_creativecommons_license == 'Attribution CC BY'){echo 'selected="selected"';}?>><?php _e("Attribution CC BY", OER_SLUG); ?></option>
-					<option value="Attribution-ShareAlike CC BY-SA" <?php if($oer_creativecommons_license == 'Attribution-ShareAlike CC BY-SA'){echo 'selected="selected"';}?>><?php _e("Attribution-ShareAlike CC BY-SA", OER_SLUG); ?></option>
-					<option value="Attribution-NoDerivs CC BY-ND" <?php if($oer_creativecommons_license == 'Attribution-NoDerivs CC BY-ND'){echo 'selected="selected"';}?>><?php _e("Attribution-NoDerivs CC BY-ND", OER_SLUG); ?></option>
-					<option value="Attribution-NonCommercial CC BY-NC" <?php if($oer_creativecommons_license == 'Attribution-NonCommercial CC BY-NC'){echo 'selected="selected"';}?>><?php _e("Attribution-NonCommercial CC BY-NC", OER_SLUG); ?></option>
-					<option value="Attribution-NonCommercial-ShareAlike CC BY-NC-SA" <?php if($oer_creativecommons_license == 'Attribution-NonCommercial-ShareAlike CC BY-NC-SA'){echo 'selected="selected"';}?>><?php _e("Attribution-NonCommercial-ShareAlike CC BY-NC-SA", OER_SLUG); ?></option>
-					<option value="Attribution-NonCommercial-NoDerivs CC BY-NC-ND" <?php if($oer_creativecommons_license == 'Attribution-NonCommercial-NoDerivs CC BY-NC-ND'){echo 'selected="selected"';}?>><?php _e("Attribution-NonCommercial-NoDerivs CC BY-NC-ND", OER_SLUG); ?></option>
+					<option value="CC-BY" <?php if($oer_creativecommons_license == 'CC-BY'){echo 'selected="selected"';}?>><?php _e("Attribution CC BY", OER_SLUG); ?></option>
+					<option value="CC-BY-SA" <?php if($oer_creativecommons_license == 'CC-BY-SA'){echo 'selected="selected"';}?>><?php _e("Attribution-ShareAlike CC BY-SA", OER_SLUG); ?></option>
+					<option value="CC-BY-ND" <?php if($oer_creativecommons_license == 'CC-BY-ND'){echo 'selected="selected"';}?>><?php _e("Attribution-NoDerivs CC BY-ND", OER_SLUG); ?></option>
+					<option value="CC-BY-NC" <?php if($oer_creativecommons_license == 'CC-BY-NC'){echo 'selected="selected"';}?>><?php _e("Attribution-NonCommercial CC BY-NC", OER_SLUG); ?></option>
+					<option value="CC-BY-NC-SA" <?php if($oer_creativecommons_license == 'CC-BY-NC-SA'){echo 'selected="selected"';}?>><?php _e("Attribution-NonCommercial-ShareAlike CC BY-NC-SA", OER_SLUG); ?></option>
+					<option value="CC-BY-NC-ND" <?php if($oer_creativecommons_license == 'CC-BY-NC-ND'){echo 'selected="selected"';}?>><?php _e("Attribution-NonCommercial-NoDerivs CC BY-NC-ND", OER_SLUG); ?></option>
                 </select>
             </div>
         </div>

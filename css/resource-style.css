@@ -123,6 +123,9 @@ p.center { text-align:center; }
     width: 40%;
     float: left;
 }
+.license-field { text-align:left; }
+.tc-hidden-fields { overflow:hidden; }
+.tc-hidden-fields .form-field { overflow:hidden; }
 /** For Mobile styles **/
 @media screen and (min-width: 960px) {
     .oer-sngl-rsrc-dscrptn { width: 100%; }
