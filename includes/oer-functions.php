@@ -3380,4 +3380,19 @@ if (! function_exists('oer_standards_list_display')){
 	}
 }
 
+// Get Content with x number of characters
+if (!function_exists('oer_get_content')){
+	function oer_get_content($content, $limit) {
+        if (strlen($content)>=$limit) {
+          $content = substr($content, 0, $limit);
+        }
+        
+        $content = preg_replace('/[.+]/','', $content);
+        //$content = apply_filters('the_content', $content); 
+        $content = str_replace(']]>', ']]>', $content);
+        $content .= '... <a href="javascript:void(0);" class="lp-read-more">(read more)</a>';
+        return $content;
+    }
+}
+
 ?>

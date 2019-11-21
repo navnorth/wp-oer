@@ -1,9 +1,14 @@
 <?php
+$post_meta_data = get_post_meta($post->ID );
 $author_set = (get_option('oer_authorname_label'))?true:false;
 $author_enabled = (get_option('oer_authorname_enabled'))?true:false;
 $standards_set = (get_option('oer_standard_label'))?true:false;
 $standards_enabled = (get_option('oer_standard_enabled'))?true:false;
 $oer_standard = get_post_meta($post->ID, 'oer_standard', true);
+$age_levels_set = (get_option('oer_age_levels_label'))?true:false;
+$age_levels_enabled = (get_option('oer_age_levels_enabled'))?true:false;
+$suggested_time_set = (get_option('oer_instructional_time_label'))?true:false;
+$suggested_time_enabled = (get_option('oer_instructional_time_enabled'))?true:false;
 ?>
 <div class="oer-rsrclftcntr-img col-md-5 col-sm-12 col-xs-12">
     <!--Resource Image-->
@@ -118,7 +123,13 @@ $oer_standard = get_post_meta($post->ID, 'oer_standard', true);
     <!--Resource Description-->
     <?php if(!empty($post->post_content)) {?>
         <div class="oer-sngl-rsrc-dscrptn">
-                <?php echo $content = apply_filters ("the_content", $post->post_content); ?>
+            <?php if (strlen($post->post_content)>230) : ?>
+                <div class="oer-lp-excerpt"><?php echo oer_get_content($post->post_content, 230); ?></div>
+                <div class="oer-lp-full-content"><?php echo $post->post_content; ?> <a href="javascript:void(0);" class="lp-read-less">(read less)</a></div>
+            <?php else : ?>
+                <div class="oer-lp-content"><?php echo $post->post_content; ?></div>
+            <?php endif; ?>
+            <?php //echo $content = apply_filters ("the_content", $post->post_content); ?>
         </div>
     <?php } ?>
     
@@ -204,186 +215,130 @@ $oer_standard = get_post_meta($post->ID, 'oer_standard', true);
     <?php } ?>
     </div>
 </div> <!--Description & Resource Info at Right-->
-<div id="tcHiddenFields" class="tc-hidden-fields collapse">
-    <!-- Grade Level -->
-    <?php
-    $grades =  trim(get_post_meta($post->ID, "oer_grade", true),",");
-    $grades = explode(",",$grades);
-    
-    if(is_array($grades) && !empty($grades) && array_filter($grades))
-    {
-        $option_set = false;
-        if (get_option('oer_grade_label'))
-            $option_set = true;
-    ?>
-        <div class="oer-rsrcgrd oer-cbxl">
-            <h4><strong><?php
-            if (!$option_set){
-                if (count($grades)>1)
-                    _e("Grades:", OER_SLUG);
-                else
-                    _e("Grade:", OER_SLUG);
-            } else
-                    echo get_option('oer_grade_label').":";
-            ?></strong>
-            <span>
+<div id="tcHiddenFields" class="tc-hidden-fields collapse row">
+    <div class="col-md-6">
+        <!-- Age Levels -->
+        <?php
+        if (($age_levels_set && $age_levels_enabled) || !$age_levels_set) {
+            $age_label = oer_field_label('oer_age_levels');
+            $age_levels = (isset($post_meta_data['oer_age_levels'][0]) ? $post_meta_data['oer_age_levels'][0] : "");
+            if (!empty($age_levels)){
+            ?>
+            <div class="form-field">
+                <span class="oer-lp-label"><?php echo $age_label; ?>:</span> <span class="oer-lp-value"><?php echo $age_levels; ?></span>
+            </div>
             <?php
-            echo oer_grade_levels($grades);
-            ?>
-            </span></h4>
-        </div>
-    <?php }?>
-    
-    <!-- Transcription -->
-    <?php
-    $oer_transcription = get_post_meta($post->ID, 'oer_transcription', true);
-    if (!empty($oer_transcription)){
-        $option_set = false;
-        if (get_option('oer_transcription_label'))
-            $option_set = true;
+            }
+        }
         ?>
-        <div class="oer-sngl-rsrc-dscrptn">
-                <h2><?php
-                if (!$option_set)
-                    _e("Transcription", OER_SLUG);
-                else
-                    echo get_option('oer_transcription_label');
-                ?></h2>
-                <?php echo $oer_transcription; ?>
-        </div>
+        
+        <!-- Grade Level -->
         <?php
-    }
-    ?>
-    
-    <!-- Sensitive Material Warning -->
-    <?php
-    $oer_sensitive_material = get_post_meta($post->ID, 'oer_sensitive_material', true);
-    if (!empty($oer_sensitive_material)){
-        $option_set = false;
-	if (get_option('oer_sensitive_material_label'))
-	    $option_set = true;
+        $grades =  trim(get_post_meta($post->ID, "oer_grade", true),",");
+        $grades = explode(",",$grades);
+        
+        if(is_array($grades) && !empty($grades) && array_filter($grades))
+        {
+            $option_set = false;
+            if (get_option('oer_grade_label'))
+                $option_set = true;
         ?>
-        <div class="oer-sngl-rsrc-dscrptn">
-                <h2><?php
-                if (!$option_set)
-                    _e("Sensitive Material Warning", OER_SLUG);
-                else
-                    echo get_option('oer_sensitive_material_label');
-                ?></h2>
-                <?php echo $oer_sensitive_material; ?>
-        </div>
-        <?php
-    }
-    ?>
-    
-    <?php
-    $oer_resourceurl = get_post_meta($post->ID, "oer_resourceurl", true);
-    if (!empty($oer_resourceurl)) {
-    ?>
-        <?php if ($youtube) { ?>
-            <div class="oer-rsrcurl oer-cbxl"><h4><strong>Original Resource:</strong> <a href="<?php echo esc_url(get_post_meta($post->ID, "oer_resourceurl", true)); ?>" target="_blank" ><?php echo esc_url(get_post_meta($post->ID, "oer_resourceurl", true)); ?></a></h4></div>
-        <?php } else { ?>
-            <div class="oer-rsrcurl oer-cbxl"><h4><strong>Original Resource:</strong> <a href="<?php echo esc_url(get_post_meta($post->ID, "oer_resourceurl", true)); ?>" target="_blank" ><?php echo $url_domain; ?></a></h4></div>
-        <?php } ?>
-    <?php } ?>
-    
-    <!-- Date Created Estimate -->
-    <?php
-    $oer_datecreated_estimate = get_post_meta($post->ID, 'oer_datecreated_estimate', true);
-    if (!empty($oer_datecreated_estimate)){ ?>
-    <div id="oerDateCreatedEstimate" class="oer-dateCreatedEstimate oer-cbxl">
-        <?php
-        $option_set = false;
-        if (get_option('oer_datecreated_estimate_label'))
-            $option_set = true;
-        ?>
-        <h4><strong><?php
-        if (!$option_set)
-            _e("Date Created Estimate:", OER_SLUG);
-        else
-            echo get_option('oer_datecreated_estimate_label').":";
-        ?></strong>
-        <span><?php echo $oer_datecreated_estimate; ?></span></h4>
-    </div>
-    <?php } ?>
-    
-    <div id="" class="oer-mediaType oer-cbxl">
-        <?php
-            $oer_mediatype = get_post_meta($post->ID, "oer_mediatype", true);
-            if(!empty($oer_mediatype))
-            {
-                $option_set = false;
-                if (get_option('oer_mediatype_label'))
-                        $option_set = true;
+            <div class="oer-rsrcgrd oer-cbxl">
+                <span class="oer-lp-label"><?php
+                if (!$option_set){
+                    if (count($grades)>1)
+                        _e("Grade Levels:", OER_SLUG);
+                    else
+                        _e("Grade Level:", OER_SLUG);
+                } else
+                        echo get_option('oer_grade_label').":";
+                ?></span>
+                <span class="oer-lp-value">
+                <?php
+                echo oer_grade_levels($grades);
                 ?>
-                <h4><strong><?php
-                if (!$option_set)
-				_e("Type:", OER_SLUG);
-			else
-				echo get_option('oer_mediatype_label').":";
-                ?></strong>
-                <span><?php echo ucwords($oer_mediatype); ?></span></h4>
+                </span>
+            </div>
+        <?php }?>
+        
+        <!-- Instruction Time -->
+        <?php
+        if (($suggested_time_set && $suggested_time_enabled) || !$suggested_time_set) {
+             $suggested_label = oer_field_label('oer_instructional_time');
+             $suggested_time = (isset($post_meta_data['oer_instructional_time'][0]) ? $post_meta_data['oer_instructional_time'][0] : "");
+             if (!empty($suggested_time)){
+             ?>
+             <div class="form-field">
+                 <span class="oer-lp-label"><?php echo $suggested_label; ?>:</span> <span class="oer-lp-value"><?php echo $suggested_time; ?></span>
+             </div>
+             <?php
+             }
+         }
+        ?>
+    </div>
+    <div class="col-md-6">
+        <!-- Transcription -->
+        <?php
+        $oer_transcription = get_post_meta($post->ID, 'oer_transcription', true);
+        if (!empty($oer_transcription)){
+            $option_set = false;
+            if (get_option('oer_transcription_label'))
+                $option_set = true;
+            ?>
+            <div class="oer-sngl-rsrc-dscrptn">
+                    <h2><?php
+                    if (!$option_set)
+                        _e("Transcription", OER_SLUG);
+                    else
+                        echo get_option('oer_transcription_label');
+                    ?></h2>
+                    <?php echo $oer_transcription; ?>
+            </div>
+            <?php
+        }
+        ?>
+        
+        <!-- Sensitive Material Warning -->
+        <?php
+        $oer_sensitive_material = get_post_meta($post->ID, 'oer_sensitive_material', true);
+        if (!empty($oer_sensitive_material)){
+            $option_set = false;
+        if (get_option('oer_sensitive_material_label'))
+            $option_set = true;
+            ?>
+            <div class="oer-sngl-rsrc-dscrptn">
+                    <h2><?php
+                    if (!$option_set)
+                        _e("Sensitive Material Warning", OER_SLUG);
+                    else
+                        echo get_option('oer_sensitive_material_label');
+                    ?></h2>
+                    <?php echo $oer_sensitive_material; ?>
+            </div>
+            <?php
+        }
+        ?>
+        
+        <!-- Citation -->
+        <?php
+        $oer_citation = get_post_meta($post->ID, 'oer_citation', true);
+        if (!empty($oer_citation)){ ?>
+        <div id="oerCitation" class="oer-Citation oer-cbxl">
+            <?php
+            $option_set = false;
+            if (get_option('oer_citation_label'))
+                $option_set = true;
+            ?>
+            <h4><strong><?php
+            if (!$option_set)
+                _e("Citation:", OER_SLUG);
+            else
+                echo get_option('oer_citation_label').":";
+            ?></strong>
+            <span><?php echo $oer_citation; ?></span></h4>
+        </div>
         <?php } ?>
     </div>
-    
-    <!-- Format -->
-    <?php
-    $oer_format = get_post_meta($post->ID, 'oer_format', true);
-    if (!empty($oer_format)){ ?>
-    <div id="oerFormat" class="oer-Format oer-cbxl">
-        <?php
-        $option_set = false;
-        if (get_option('oer_format_label'))
-            $option_set = true;
-        ?>
-        <h4><strong><?php
-        if (!$option_set)
-            _e("Format:", OER_SLUG);
-        else
-            echo get_option('oer_format_label').":";
-        ?></strong>
-        <span><?php echo $oer_format; ?></span></h4>
-    </div>
-    <?php } ?>
-    
-    <!-- Citation -->
-    <?php
-    $oer_citation = get_post_meta($post->ID, 'oer_citation', true);
-    if (!empty($oer_citation)){ ?>
-    <div id="oerCitation" class="oer-Citation oer-cbxl">
-        <?php
-        $option_set = false;
-        if (get_option('oer_citation_label'))
-            $option_set = true;
-        ?>
-        <h4><strong><?php
-        if (!$option_set)
-            _e("Citation:", OER_SLUG);
-        else
-            echo get_option('oer_citation_label').":";
-        ?></strong>
-        <span><?php echo $oer_citation; ?></span></h4>
-    </div>
-    <?php } ?>
-
-    <?php
-            $oer_datecreated = get_post_meta($post->ID, "oer_datecreated", true);
-            if(!empty($oer_datecreated))
-            {
-                $option_set = false;
-                if (get_option('oer_datecreated_label'))
-                        $option_set = true;
-            ?>
-        <div class="oer-created oer-cbxl">
-        <h4><strong><?php
-        if (!$option_set)
-                _e("Created:", OER_SLUG);
-        else
-                echo get_option('oer_datecreated_label').":";
-        ?></strong>
-        <span><?php echo $oer_datecreated; ?></span></h4>
-    </div>
-    <?php } ?>
 </div>
 <div class="oer-see-more-row">
     <p class="center"><span><a id="oer-see-more-link" class="oer-see-more-link" role="button" data-toggle="collapse" href="#tcHiddenFields" aria-expanded="false" aria-controls="tcHiddenFields"><?php _e("SEE MORE +",OER_LESSON_PLAN_SLUG); ?></a></span></p>
