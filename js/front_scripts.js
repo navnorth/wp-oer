@@ -7,6 +7,32 @@ jQuery(document).ready(function(e) {
 	    });
 	jQuery( ".oer_datepicker" ).datepicker();
 	jQuery( ".oer_datepicker" ).datepicker( "option", "showAnim", "slideDown" );
+	
+	jQuery(document).on("show.bs.collapse", '.lp-subject-hidden.collapse', function (){
+        var more_count = jQuery('.see-more-subjects').attr('data-count');
+        jQuery('.see-more-subjects').text("SEE " + more_count + " LESS -");
+    });
+    
+    jQuery(document).on("hide.bs.collapse", '.lp-subject-hidden.collapse', function (){
+        var more_count = jQuery('.see-more-subjects').attr('data-count');
+        jQuery('.see-more-subjects').text("SEE " + more_count + " MORE +");
+    });
+    
+    jQuery(document).on("show.bs.collapse", '.tc-lp-details-standard.collapse', function (){
+        jQuery(this).parent().find('.lp-standard-toggle i').removeClass('fa-caret-right').addClass('fa-caret-down');
+    });
+    
+    jQuery(document).on("hide.bs.collapse", '.tc-lp-details-standard.collapse', function (){
+        jQuery(this).parent().find('.lp-standard-toggle i').removeClass('fa-caret-down').addClass('fa-caret-right');
+    });
+	
+	jQuery(document).on("show.bs.collapse", '#tcHiddenFields.collapse', function (){
+        jQuery('#see-more-link').text("SEE LESS -");
+    });
+    
+    jQuery(document).on("hide.bs.collapse", '#tcHiddenFields.collapse', function (){
+        jQuery('#see-more-link').text("SEE MORE +");
+    });
 });
 
 //adding author

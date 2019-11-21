@@ -137,10 +137,11 @@ $oer_standard = get_post_meta($post->ID, 'oer_standard', true);
     ?>
     </div>
 
+    <!-- Standards List -->
     <?php if ($oer_standard) {
         if (($standards_set && $standards_enabled) || !$standards_set) {
-   ?>
-   <div class="tc-oer-standards">
+    ?>
+    <div class="tc-oer-standards">
        <h4 class="tc-field-heading clearfix">
            <?php echo oer_field_label('oer_standard'); ?>
        </h4>
@@ -151,6 +152,87 @@ $oer_standard = get_post_meta($post->ID, 'oer_standard', true);
     <?php
          }
     } ?>
+    
+    <!-- Subject Areas -->
+    <?php
+    $post_terms = get_the_terms( $post->ID, 'resource-subject-area' );
+    if (!empty($post_terms)) {
+    ?>
+    <div class="tc-oer-subject-areas">
+       <h4 class="tc-field-heading clearfix">
+            <?php _e("Subjects",OER_LESSON_PLAN_SLUG); ?>
+        </h4>
+       <div class="tc-oer-subject-details clearfix">
+            <ul class="tc-oer-subject-areas-list">
+                <?php
+                $i = 1;
+                $cnt = count($post_terms);
+                $moreCnt = $cnt - 2;
+                foreach($post_terms as $term){
+                    $subject_parent = get_term_parents_list($term->term_id,'resource-subject-area', array('separator' => ' <i class="fas fa-angle-double-right"></i> ', 'inclusive' => false));
+                    $subject = $subject_parent . '<a href="'.get_term_link($term->term_id).'">'.$term->name.'</a>';
+                    if ($i>2)
+                        echo '<li class="collapse lp-subject-hidden">'.$subject.'</li>';
+                    else
+                        echo '<li>'.$subject.'</li>';
+                    if (($i==2) && ($cnt>2))
+                        echo '<li><a class="see-more-subjects" data-toggle="collapse" data-count="'.$moreCnt.'" href=".lp-subject-hidden">SEE '.$moreCnt.' MORE +</a></li>';
+                    $i++;
+                }
+                ?>
+            </ul>
+        </div>
+    </div>
+    <?php } ?>
+
+    <?php
+            $keywords = wp_get_post_tags($post->ID);
+            if(!empty($keywords))
+            {
+    ?>
+                    <div class="oer-rsrckeyword">
+                            <h4><strong><?php _e("Keywords:", OER_SLUG) ?></strong></h4>
+                            <div class="oer_meta_container tagcloud">
+                       <?php
+                                    foreach($keywords as $keyword)
+                                    {
+                                            echo "<span><a href='".esc_url(get_tag_link($keyword->term_id))."' class='button'>".ucwords($keyword->name)."</a></span>";
+                                    }
+                            ?>
+                            </div>
+                    </div>
+    <?php } ?>
+    </div>
+</div> <!--Description & Resource Info at Right-->
+<div id="tcHiddenFields" class="tc-hidden-fields collapse">
+    <!-- Grade Level -->
+    <?php
+    $grades =  trim(get_post_meta($post->ID, "oer_grade", true),",");
+    $grades = explode(",",$grades);
+    
+    if(is_array($grades) && !empty($grades) && array_filter($grades))
+    {
+        $option_set = false;
+        if (get_option('oer_grade_label'))
+            $option_set = true;
+    ?>
+        <div class="oer-rsrcgrd oer-cbxl">
+            <h4><strong><?php
+            if (!$option_set){
+                if (count($grades)>1)
+                    _e("Grades:", OER_SLUG);
+                else
+                    _e("Grade:", OER_SLUG);
+            } else
+                    echo get_option('oer_grade_label').":";
+            ?></strong>
+            <span>
+            <?php
+            echo oer_grade_levels($grades);
+            ?>
+            </span></h4>
+        </div>
+    <?php }?>
     
     <!-- Transcription -->
     <?php
@@ -283,74 +365,6 @@ $oer_standard = get_post_meta($post->ID, 'oer_standard', true);
         <span><?php echo $oer_citation; ?></span></h4>
     </div>
     <?php } ?>
-    
-    <?php
-    $grades =  trim(get_post_meta($post->ID, "oer_grade", true),",");
-    $grades = explode(",",$grades);
-    
-    if(is_array($grades) && !empty($grades) && array_filter($grades))
-    {
-        $option_set = false;
-	if (get_option('oer_grade_label'))
-	    $option_set = true;
-    ?>
-        <div class="oer-rsrcgrd oer-cbxl">
-            <h4><strong><?php
-            if (!$option_set){
-                if (count($grades)>1)
-                    _e("Grades:", OER_SLUG);
-                else
-                    _e("Grade:", OER_SLUG);
-            } else
-                    echo get_option('oer_grade_label').":";
-            ?></strong>
-            <span>
-        <?php
-            sort($grades);
-
-            for($x=0; $x < count($grades); $x++)
-            {
-              $grades[$x];
-            }
-            $fltrarr = array_filter($grades, 'strlen');
-            $flag = array();
-            $elmnt = $fltrarr[min(array_keys($fltrarr))];
-            for($i =0; $i < count($fltrarr); $i++)
-            {
-                    if($elmnt == $fltrarr[$i] || "k" == strtolower($fltrarr[$i]))
-                    {
-                            $flag[] = 1;
-                    }
-                    else
-                    {
-                            $flag[] = 0;
-                    }
-                    $elmnt++;
-            }
-
-            if(in_array('0',$flag))
-            {
-                    echo implode(",",array_unique($fltrarr));
-            }
-            else
-            {
-                    $arr_flt = array_keys($fltrarr);
-                    $end_filter = end($arr_flt);
-                    if (count($fltrarr)>1) {
-                            if (strtolower($fltrarr[$end_filter])=="k") {
-                                    $last_index = count($fltrarr)-2;
-                                    echo $fltrarr[$end_filter]."-".$fltrarr[$last_index];
-                            }
-                            else
-                                    echo $fltrarr[0]."-".$fltrarr[$end_filter];
-                    }
-                    else
-                            echo $fltrarr[0];
-            }
-            ?>
-            </span></h4>
-        </div>
-    <?php }?>
 
     <?php
             $oer_datecreated = get_post_meta($post->ID, "oer_datecreated", true);
@@ -370,87 +384,7 @@ $oer_standard = get_post_meta($post->ID, 'oer_standard', true);
         <span><?php echo $oer_datecreated; ?></span></h4>
     </div>
     <?php } ?>
-
-    <?php
-            $keywords = wp_get_post_tags($post->ID);
-            if(!empty($keywords))
-            {
-    ?>
-                    <div class="oer-rsrckeyword">
-                            <h4><strong><?php _e("Keywords:", OER_SLUG) ?></strong></h4>
-                            <div class="oer_meta_container tagcloud">
-                       <?php
-                                    foreach($keywords as $keyword)
-                                    {
-                                            echo "<span><a href='".esc_url(get_tag_link($keyword->term_id))."' class='button'>".ucwords($keyword->name)."</a></span>";
-                                    }
-                            ?>
-                            </div>
-                    </div>
-    <?php } ?>
-
-
-    <!--Resource Meta Data-->
-    <div class="oer-sngl-rsrc-meta">
-        <!-- Meta Data Navigation Tab-->
-        <!--<div class="tabNavigator">
-         <a href="javascript:" data-id="tags" title="Metadata Tags" onclick="rsrc_tabs(this);">1</a>
-         <a href="javascript:" data-id="alignedStandards" title="Aligned Standards" onclick="rsrc_tabs(this);"><?php //echo count($stnd_arr);?></a>
-         <a href="javascript:" data-id="keyword" title="Keywords" onclick="rsrc_tabs(this);"><?php //echo count($keywords); ?></a>
-         <a href="javascript:" data-id="moreLikeThis" title="More Like This" onclick="rsrc_tabs(this);"><?php //echo $count; ?></a>
-       </div>-->
-
-       <!-- Meta Data Navigation Tab Related Post-->
-       <!--<div class="moreLikeThis" style="display: none;" >
-            <h3>More Like This</h3>
-            <div class="oer_meta_container">
-            <?php
-
-                /*$tags = wp_get_post_tags($post->ID);
-                if ($tags)
-                {
-                      $tag_ids = array();
-                      foreach($tags as $individual_tag) $tag_ids[] = $individual_tag->term_id;
-
-                      $args=array(
-                        'tag__in' 		=> $tag_ids,
-                        'post__not_in' 	=> array($post->ID),
-                        'showposts'		=> -1,
-                        'post_type'		=> 'resource',
-                        'ignore_sticky_posts'	=> 1
-                       );
-
-                      $my_query = new WP_Query($args);
-
-                      if( $my_query->have_posts() )
-                      {
-                        while ($my_query->have_posts()) : $my_query->the_post(); */?>
-                            <div class="sngl-rltd-rsrc">
-                                <div class="sngl-rltd-rsrc-title">
-                                    <a href="<?php //the_permalink() ?>" rel="bookmark" title="<?php //the_title_attribute(); ?>"><?php //the_title(); ?></a>
-                                </div>
-                                <div class="sngl-rltd-rsrc-description">
-                                    <?php //echo the_content(); ?>
-                                </div>
-                                <div class="sngl-rltd-rsrc-img">
-                                    <?php //$img_url = wp_get_attachment_url(get_post_meta( //$post->ID, "_thumbnail_id" , true)); ?>
-                                    <img src="<?php //echo $img_url;?>" alt="<?php //the_title();?>"/>
-                                </div>
-                            </div>
-                          <?php
-                        /*endwhile;
-                      }
-                      else
-                      {
-                        echo "No Resource Found Like This!!";
-                      }
-                }
-                else
-                {
-                    echo "No Resource Found Like This!!";
-                }*/
-            ?>
-            </div>
-       </div>-->
-    </div>
-</div> <!--Description & Resource Info at Right-->  
+</div>
+<div class="oer-see-more-row">
+    <p class="center"><span><a id="oer-see-more-link" class="oer-see-more-link" role="button" data-toggle="collapse" href="#tcHiddenFields" aria-expanded="false" aria-controls="tcHiddenFields"><?php _e("SEE MORE +",OER_LESSON_PLAN_SLUG); ?></a></span></p>
+</div>
