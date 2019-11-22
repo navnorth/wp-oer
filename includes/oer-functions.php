@@ -3205,6 +3205,18 @@ if (!function_exists('oer_get_all_meta')){
 	}
 }
 
+if (!function_exists('oer_get_connected_curriculums')){
+	function oer_get_connected_curriculums($resource_title){
+		global $wpdb;
+		$result = $wpdb->get_results($wpdb->prepare(
+		"SELECT post_id, post_title, meta_key, meta_value FROM ".$wpdb->prefix."posts,".$wpdb->prefix."postmeta WHERE post_type=%s
+			AND ".$wpdb->prefix."posts.ID=".$wpdb->prefix."postmeta.post_id AND meta_key = 'oer_lp_primary_resources'
+			AND meta_value LIKE %s", 'lesson-plans' , '%' . $resource_title . '%'
+		), ARRAY_A);
+		return $result;
+	}
+}
+
 if (!function_exists('oer_save_metadata_options')){
 	function oer_save_metadata_options($post_data){
 		foreach($post_data as $key=>$value){

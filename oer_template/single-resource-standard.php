@@ -209,6 +209,37 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
         </div>
     </div>
     <?php } ?>
+    
+    <!-- Curriculum -->
+    <?php
+    $connected_curriculums = oer_get_connected_curriculums($post->post_title);
+    if (!empty($connected_curriculums)) {
+    ?>
+    <div class="tc-oer-connected-curriculum">
+       <h4 class="tc-field-heading clearfix">
+            <?php _e("Appears In",OER_LESSON_PLAN_SLUG); ?>
+        </h4>
+       <div class="tc-oer-curriculum-details clearfix">
+            <ul class="tc-oer-subject-areas-list">
+                <?php
+                $i = 1;
+                $cnt = count($connected_curriculums);
+                $moreCnt = $cnt - 2;
+                foreach($connected_curriculums as $curriculum){
+                    $curriculum_url = get_the_permalink($curriculum['post_id']);
+                    if ($i>2)
+                        echo '<li class="collapse lp-subject-hidden"><a href="'.$curriculum_url.'">'.$curriculum['post_title'].'</a></li>';
+                    else
+                        echo "<li><a href='".$curriculum_url."'>".$curriculum['post_title']."</a></li>";
+                    if (($i==2) && ($cnt>2))
+                        echo '<li><a class="see-more-subjects" data-toggle="collapse" data-count="'.$moreCnt.'" href=".lp-subject-hidden">SEE '.$moreCnt.' MORE +</a></li>';
+                    $i++;
+                }
+                ?>
+            </ul>
+       </div>
+    </div>
+    <?php } ?>
     </div>
 </div> <!--Description & Resource Info at Right-->
 <div id="tcHiddenFields" class="tc-hidden-fields collapse row">
@@ -357,7 +388,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
             if (!empty($sensitive_material)){
             ?>
             <div class="form-field">
-                <span class="oer-lp-label"><?php echo $sensitive_material_label; ?>:</span> <span class="oer-lp-value"><?php echo $sensitive_material; ?></span>
+                <span class="oer-lp-label oer-lp-red"><?php echo $sensitive_material_label; ?>:</span> <span class="oer-lp-value"><?php echo $sensitive_material; ?></span>
             </div>
             <?php
             }
