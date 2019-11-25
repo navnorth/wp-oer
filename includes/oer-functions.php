@@ -3423,11 +3423,11 @@ if (!function_exists('oer_display_pdf_embeds')){
 			$external_option = get_option("oer_external_pdf_viewer");
 			if ($external_option==1) {
 				$pdf_url = "https://docs.google.com/gview?url=".$url."&embedded=true";
-				echo get_embed_code($pdf_url);
+				echo oer_get_embed_code($pdf_url);
 			} elseif($external_option==0) {
 				$embed_disabled = true;
 			}
-		    } else {
+		} else {
 			$local_option = get_option("oer_local_pdf_viewer");
 			switch ($local_option){
 				case 0:
@@ -3436,9 +3436,9 @@ if (!function_exists('oer_display_pdf_embeds')){
 				case 1:
 					$pdf_url = "https://docs.google.com/gview?url=".$url."&embedded=true";
 					if ($return)
-						get_embed_code($pdf_url);
+						oer_get_embed_code($pdf_url);
 					else
-						echo get_embed_code($pdf_url);
+						echo oer_get_embed_code($pdf_url);
 					break;
 				case 2:
 					$pdf_url = OER_URL."pdfjs/web/viewer.html?file=".urlencode($url);
@@ -3496,6 +3496,13 @@ if (!function_exists('oer_generate_audio_resource_embed')) {
 			Your browser does not support the audio element.
 		</audio>
 		<?php
+	}
+}
+
+if (!function_exists('oer_get_embed_code')){
+	function oer_get_embed_code($url){
+		$embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.$url.'"></iframe>';
+		return $embed_code;
 	}
 }
 ?>
