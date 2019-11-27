@@ -3560,7 +3560,7 @@ if (!function_exists('oer_embed_video_file')){
 			default:
 				break;
 		}
-		$embed_code = '<video class="oer-video-viewer" width="100%" src="'.$source.'"></video>';
+		$embed_code = '<video class="oer-video-viewer" width="100%" src="'.$source.'" type="'.$type.'" controls="true" autoplay="false"></video>';
 		return $embed_code;
 	}
 }
