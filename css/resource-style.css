@@ -128,6 +128,7 @@ p.center { text-align:center; }
 .tc-hidden-fields .form-field { overflow:hidden; display:table; width:100%; }
 .tc-hidden-fields .form-field .oer-lp-label { display:table-cell; float:none; }
 .tc-hidden-fields .form-field .oer-lp-value { display:table-cell; }
+.tc-hidden-fields .form-field .oer-lp-value .oer-lp-value-full { display:none; }
 .oer-lp-red { color:#950000; }
 /** For Mobile styles **/
 @media screen and (min-width: 960px) {
