@@ -3400,7 +3400,6 @@ if (!function_exists('oer_get_content')){
         }
         
         $content = preg_replace('/[.+]/','', $content);
-        //$content = apply_filters('the_content', $content); 
         $content = str_replace(']]>', ']]>', $content);
         $content .= '... <a href="javascript:void(0);" class="lp-read-more">(read more)</a>';
         return $content;

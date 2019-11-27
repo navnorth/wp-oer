@@ -400,7 +400,7 @@ if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
             if (!empty($transcription)){
             ?>
             <div class="form-field">
-                <span class="oer-lp-label"><?php echo $transcription_label; ?>:</span> <span class="oer-lp-value"><?php if (strlen($transcription)>230): ?>
+                <span class="oer-lp-label"><?php echo $transcription_label; ?>:</span><span class="oer-lp-value"><?php if (strlen($transcription)>230): ?>
                 <span class="oer-lp-value-excerpt"><?php echo oer_get_content( $transcription, 230); ?></span>
                 <span class="oer-lp-value-full"><?php echo $transcription; ?> <a href="javascript:void(0);" class="lp-read-less">(read less)</a></span>
                 <?php
