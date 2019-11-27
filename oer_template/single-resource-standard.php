@@ -21,6 +21,7 @@ $transcription_set = (get_option('oer_transcription_label'))?true:false;
 $transcription_enabled = (get_option('oer_transcription_enabled'))?true:false;
 $sensitive_material_set = (get_option('oer_sensitive_material_label'))?true:false;
 $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?true:false;
+$display_see_more = false;
 ?>
 <div class="oer-rsrclftcntr-img col-md-5 col-sm-12 col-xs-12">
     <!--Resource Image-->
@@ -250,6 +251,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
             $age_label = oer_field_label('oer_age_levels');
             $age_levels = (isset($post_meta_data['oer_age_levels'][0]) ? $post_meta_data['oer_age_levels'][0] : "");
             if (!empty($age_levels)){
+                $display_see_more = true;
             ?>
             <div class="form-field">
                 <span class="oer-lp-label"><?php echo $age_label; ?>:</span> <span class="oer-lp-value"><?php echo $age_levels; ?></span>
@@ -267,6 +269,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
         if(is_array($grades) && !empty($grades) && array_filter($grades))
         {
             $option_set = false;
+            $display_see_more = true;
             if (get_option('oer_grade_label'))
                 $option_set = true;
         ?>
@@ -294,6 +297,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
              $suggested_label = oer_field_label('oer_instructional_time');
              $suggested_time = (isset($post_meta_data['oer_instructional_time'][0]) ? $post_meta_data['oer_instructional_time'][0] : "");
              if (!empty($suggested_time)){
+                $display_see_more = true;
              ?>
              <div class="form-field">
                  <span class="oer-lp-label"><?php echo $suggested_label; ?>:</span> <span class="oer-lp-value"><?php echo $suggested_time; ?></span>
@@ -309,6 +313,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
             $cc_label = oer_field_label('oer_creativecommons_license');
             $cc_license = (isset($post_meta_data['oer_creativecommons_license'][0]) ? $post_meta_data['oer_creativecommons_license'][0] : "");
             if (!empty($cc_license)){
+                $display_see_more = true;
             ?>
             <div class="form-field license-field">
                 <img src="<?php echo oer_cc_license_image($cc_license); ?>">
@@ -326,6 +331,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
              $external_repository_label = oer_field_label('oer_external_repository');
              $external_repository = (isset($post_meta_data['oer_external_repository'][0]) ? $post_meta_data['oer_external_repository'][0] : "");
              if (!empty($external_repository)){
+                $display_see_more = true;
              ?>
              <div class="form-field">
                  <span class="oer-lp-label"><?php echo $external_repository_label; ?>:</span> <span class="oer-lp-value"><?php echo $external_repository; ?></span>
@@ -341,6 +347,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
              $repository_record_label = oer_field_label('oer_repository_recordurl');
              $repository_record = (isset($post_meta_data['oer_repository_recordurl'][0]) ? $post_meta_data['oer_repository_recordurl'][0] : "");
              if (!empty($repository_record)){
+                $display_see_more = true;
              ?>
              <div class="form-field">
                  <span class="oer-lp-label"><?php echo $repository_record_label; ?>:</span> <span class="oer-lp-value"><a href="<?php echo $repository_record; ?>"><?php echo $repository_record; ?></a></a></span>
@@ -356,6 +363,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
             $citation_label = oer_field_label('oer_citation');
             $citation = (isset($post_meta_data['oer_citation'][0]) ? $post_meta_data['oer_citation'][0] : "");
             if (!empty($citation)){
+                $display_see_more = true;
             ?>
             <div class="form-field">
                 <span class="oer-lp-label"><?php echo $citation_label; ?>:</span> <span class="oer-lp-value"><?php echo $citation; ?></span>
@@ -371,6 +379,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
             $transcription_label = oer_field_label('oer_transcription');
             $transcription = (isset($post_meta_data['oer_transcription'][0]) ? $post_meta_data['oer_transcription'][0] : "");
             if (!empty($transcription)){
+                $display_see_more = true;
             ?>
             <div class="form-field">
                 <span class="oer-lp-label"><?php echo $transcription_label; ?>:</span> <span class="oer-lp-value"><?php echo $transcription; ?></span>
@@ -386,6 +395,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
             $sensitive_material_label = oer_field_label('oer_sensitive_material');
             $sensitive_material = (isset($post_meta_data['oer_sensitive_material'][0]) ? $post_meta_data['oer_sensitive_material'][0] : "");
             if (!empty($sensitive_material)){
+                $display_see_more = true;
             ?>
             <div class="form-field">
                 <span class="oer-lp-label oer-lp-red"><?php echo $sensitive_material_label; ?>:</span> <span class="oer-lp-value"><?php echo $sensitive_material; ?></span>
@@ -396,6 +406,8 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
         ?>
     </div>
 </div>
+<?php  if ($display_see_more): ?>
 <div class="oer-see-more-row">
     <p class="center"><span><a id="oer-see-more-link" class="oer-see-more-link" role="button" data-toggle="collapse" href="#tcHiddenFields" aria-expanded="false" aria-controls="tcHiddenFields"><?php _e("SEE MORE +",OER_LESSON_PLAN_SLUG); ?></a></span></p>
 </div>
+<?php endif; ?>
