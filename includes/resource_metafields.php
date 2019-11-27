@@ -98,7 +98,87 @@ global $chck;
             </div>
         </div>
        <?php } ?>
-       
+    
+	<?php
+	// Age Levels
+	$option_set = false;
+	if (get_option('oer_age_levels_label')){
+		$option_set = true;
+	}
+	if (($option_set && get_option('oer_age_levels_enabled')) || !$option_set) {
+	?>
+	<div class="oer_snglfld">
+        	<div class="oer_txt">
+			<?php
+			if (!$option_set)
+				_e("Age Levels:", OER_SLUG);
+			else
+				echo get_option('oer_age_levels_label').":";
+			?>
+            </div>
+            <div class="oer_fld">
+            	<?php $oer_age_levels = get_post_meta($post->ID, 'oer_age_levels', true);?>
+                <input type="text" name="oer_age_levels" value="<?php echo $oer_age_levels;?>"/>
+            </div>
+        </div>
+	<?php } ?>
+	
+	<?php
+	// Instructional Time
+	$option_set = false;
+	if (get_option('oer_instructional_time_label')){
+		$option_set = true;
+	}
+	if (($option_set && get_option('oer_instructional_time_enabled')) || !$option_set) {
+	?>
+	<div class="oer_snglfld">
+        	<div class="oer_txt">
+			<?php
+			if (!$option_set)
+				_e("Instructional Time:", OER_SLUG);
+			else
+				echo get_option('oer_instructional_time_label').":";
+			?>
+            </div>
+            <div class="oer_fld">
+            	<?php $oer_instructional_time = get_post_meta($post->ID, 'oer_instructional_time', true);?>
+                <input type="text" name="oer_instructional_time" value="<?php echo $oer_instructional_time;?>"/>
+            </div>
+        </div>
+	<?php } ?>
+	
+	<?php
+	// Creative Commons License
+	$option_set = false;
+	if (get_option('oer_creativecommons_license_label')){
+		$option_set = true;
+	}
+	if (($option_set && get_option('oer_creativecommons_license_enabled')) || !$option_set) {
+	?>
+        <div class="oer_snglfld">
+        	<div class="oer_txt">
+			<?php
+			if (!$option_set)
+				_e("Creative Commons License:", OER_SLUG);
+			else
+				echo get_option('oer_creativecommons_license_label').":";
+			?>
+            </div>
+            <div class="oer_fld">
+            	<?php $oer_creativecommons_license = get_post_meta($post->ID, 'oer_creativecommons_license', true); ?>
+                <select name="oer_creativecommons_license">
+					<option value=""></option>
+					<option value="CC-BY" <?php if($oer_creativecommons_license == 'CC-BY'){echo 'selected="selected"';}?>><?php _e("Attribution CC BY", OER_SLUG); ?></option>
+					<option value="CC-BY-SA" <?php if($oer_creativecommons_license == 'CC-BY-SA'){echo 'selected="selected"';}?>><?php _e("Attribution-ShareAlike CC BY-SA", OER_SLUG); ?></option>
+					<option value="CC-BY-ND" <?php if($oer_creativecommons_license == 'CC-BY-ND'){echo 'selected="selected"';}?>><?php _e("Attribution-NoDerivs CC BY-ND", OER_SLUG); ?></option>
+					<option value="CC-BY-NC" <?php if($oer_creativecommons_license == 'CC-BY-NC'){echo 'selected="selected"';}?>><?php _e("Attribution-NonCommercial CC BY-NC", OER_SLUG); ?></option>
+					<option value="CC-BY-NC-SA" <?php if($oer_creativecommons_license == 'CC-BY-NC-SA'){echo 'selected="selected"';}?>><?php _e("Attribution-NonCommercial-ShareAlike CC BY-NC-SA", OER_SLUG); ?></option>
+					<option value="CC-BY-NC-ND" <?php if($oer_creativecommons_license == 'CC-BY-NC-ND'){echo 'selected="selected"';}?>><?php _e("Attribution-NonCommercial-NoDerivs CC BY-NC-ND", OER_SLUG); ?></option>
+                </select>
+            </div>
+        </div>
+	<?php } ?>
+	
 	<?php
 	// Format
 	$option_set = false;
@@ -246,18 +326,19 @@ global $chck;
             <div class="oer_fld">
             	<?php $oer_lrtype = strtolower(get_post_meta($post->ID, 'oer_lrtype', true)); ?>
                 <select name="oer_lrtype">
-			<option value=""></option>
-			<option value="website" <?php if($oer_lrtype == 'website'){echo 'selected="selected"';}?>><?php _e("Assessment", OER_SLUG); ?></option>
-                       <option value="audio" <?php if($oer_lrtype == 'audio'){echo 'selected="selected"';}?>><?php _e("Audio", OER_SLUG); ?></option>
-                       <option value="calculator" <?php if($oer_lrtype == 'calculator'){echo 'selected="selected"';}?>><?php _e("Calculator", OER_SLUG); ?></option>
-                       <option value="demonstration" <?php if($oer_lrtype == 'demonstration'){echo 'selected="selected"';}?>><?php _e("Demonstration", OER_SLUG); ?></option>
-                       <option value="game" <?php if($oer_lrtype == 'game'){echo 'selected="selected"';}?>><?php _e("Game", OER_SLUG); ?></option>
-                       <option value="interview" <?php if($oer_lrtype == 'interview'){echo 'selected="selected"';}?>><?php _e("Interview", OER_SLUG); ?></option>
-                       <option value="lecture" <?php if($oer_lrtype == 'lecture'){echo 'selected="selected"';}?>><?php _e("Lecture", OER_SLUG); ?></option>
-                       <option value="lesson plan" <?php if($oer_lrtype == 'lesson plan'){echo 'selected="selected"';}?>><?php _e("Lesson Plan", OER_SLUG); ?></option>
-                       <option value="simulation" <?php if($oer_lrtype == 'simulation'){echo 'selected="selected"';}?>><?php _e("Simulation", OER_SLUG); ?></option>
-                       <option value="presentation" <?php if($oer_lrtype == 'presentation'){echo 'selected="selected"';}?>><?php _e("Presentation", OER_SLUG); ?></option>
-                       <option value="other" <?php if($oer_lrtype == 'other'){echo 'selected="selected"';}?>><?php _e("Learning Resource Type:", OER_SLUG); ?>Other</option>
+					<option value=""></option>
+					<option value="article" <?php if($oer_lrtype == 'article'){echo 'selected="selected"';}?>><?php _e("Article/Information", OER_SLUG); ?></option>
+					<option value="website" <?php if($oer_lrtype == 'website'){echo 'selected="selected"';}?>><?php _e("Assessment", OER_SLUG); ?></option>
+					<option value="audio" <?php if($oer_lrtype == 'audio'){echo 'selected="selected"';}?>><?php _e("Audio", OER_SLUG); ?></option>
+					<option value="calculator" <?php if($oer_lrtype == 'calculator'){echo 'selected="selected"';}?>><?php _e("Calculator", OER_SLUG); ?></option>
+					<option value="demonstration" <?php if($oer_lrtype == 'demonstration'){echo 'selected="selected"';}?>><?php _e("Demonstration", OER_SLUG); ?></option>
+					<option value="game" <?php if($oer_lrtype == 'game'){echo 'selected="selected"';}?>><?php _e("Game", OER_SLUG); ?></option>
+					<option value="interview" <?php if($oer_lrtype == 'interview'){echo 'selected="selected"';}?>><?php _e("Interview", OER_SLUG); ?></option>
+					<option value="lecture" <?php if($oer_lrtype == 'lecture'){echo 'selected="selected"';}?>><?php _e("Lecture", OER_SLUG); ?></option>
+					<option value="lesson plan" <?php if($oer_lrtype == 'lesson plan'){echo 'selected="selected"';}?>><?php _e("Lesson Plan", OER_SLUG); ?></option>
+					<option value="simulation" <?php if($oer_lrtype == 'simulation'){echo 'selected="selected"';}?>><?php _e("Simulation", OER_SLUG); ?></option>
+					<option value="presentation" <?php if($oer_lrtype == 'presentation'){echo 'selected="selected"';}?>><?php _e("Presentation", OER_SLUG); ?></option>
+					<option value="other" <?php if($oer_lrtype == 'other'){echo 'selected="selected"';}?>><?php _e("Learning Resource Type:", OER_SLUG); ?>Other</option>
                 </select>
             </div>
         </div>
@@ -698,6 +779,58 @@ global $chck;
             	<?php $oer_publisheremail = get_post_meta($post->ID, 'oer_publisheremail', true);?>
                 <input type="text" name="oer_publisheremail" value="<?php echo esc_attr($oer_publisheremail);?>" />
             </div>
+        </div>
+	<?php } ?>
+	
+	<div class="oer_snglfld oer_hdngsngl">
+		<?php _e("Repository Information:", OER_SLUG); ?>
+        </div>
+
+        <?php
+	// External Repository
+	$option_set = false;
+	if (get_option('oer_external_repository_label')){
+		$option_set = true;
+	}
+	if (($option_set && get_option('oer_external_repository_enabled')) || !$option_set) {
+	?>
+        <div class="oer_snglfld">
+        	<div class="oer_txt">
+			<?php
+			if (!$option_set)
+				_e("External Repository:", OER_SLUG);
+			else
+				echo get_option('oer_external_repository_label').":";
+			?>
+		</div>
+		<div class="oer_fld">
+		    <?php $oer_external_repository = get_post_meta($post->ID, 'oer_external_repository', true);?>
+		    <input type="text" name="oer_external_repository" value="<?php echo esc_attr($oer_external_repository);?>" />
+		</div>
+        </div>
+	<?php } ?>
+
+	<?php
+	// Repository Record URL
+	$option_set = false;
+	if (get_option('oer_repository_recordurl_label')){
+		$option_set = true;
+	}
+	if (($option_set && get_option('oer_repository_recordurl_enabled')) || !$option_set) {
+	?>
+        <div class="oer_snglfld">
+        	<div class="oer_txt">
+			<?php
+			if (!$option_set)
+				_e("Repository Record URL:", OER_SLUG);
+			else
+				echo get_option('oer_repository_recordurl_label').":";
+			?>
+		</div>
+		<div class="oer_fld">
+		    <?php $oer_repository_recordurl = get_post_meta($post->ID, 'oer_repository_recordurl', true);?>
+		    <input type="text" name="oer_repository_recordurl" value="<?php echo esc_attr($oer_repository_recordurl);?>" />
+		</div>
         </div>
 	<?php } ?>
 

@@ -72,17 +72,22 @@ if(!empty($post_terms))
 		$subject_areas = array_merge($subject_areas,$subjects);
 }
 $embed_disabled = false;
+
+$oer_sensitive_material = get_post_meta($post->ID, 'oer_sensitive_material', true);
 ?>
 <!--<div id="primary" class="content-area">-->
     <main id="oer_main" class="site-main" role="main">
 
     <article id="oer-resource-<?php the_ID(); ?>" class="oer_sngl_resource_wrapper post-content">
         <div id="sngl-resource" class="entry-content oer-cntnr post-content oer_sngl_resource_wrapper row">
-	<?php if (!$hide_title): ?>
+	<?php //if (!$hide_title): ?>
         <header class="entry-header">
-            <h1 class="entry-title"><?php echo $post->post_title;?></h1>
+            <h1 class="entry-title col-md-8"><?php echo $post->post_title;?></h1>
+			<?php if (!empty($oer_sensitive_material)): ?>
+			<span class="sensitive-resource col-md-4"><i class="fas fa-exclamation-triangle"></i> Potentially Sensitive Material</span>
+			<?php endif; ?>
         </header>
-	<?php endif; ?>
+	<?php //endif; ?>
     	
 	<?php
 	if ($youtube || $isSSLResource || $isSLLCollection)

@@ -1,7 +1,31 @@
+<?php
+$post_meta_data = get_post_meta($post->ID );
+$author_set = (get_option('oer_authorname_label'))?true:false;
+$author_enabled = (get_option('oer_authorname_enabled'))?true:false;
+$standards_set = (get_option('oer_standard_label'))?true:false;
+$standards_enabled = (get_option('oer_standard_enabled'))?true:false;
+$oer_standard = get_post_meta($post->ID, 'oer_standard', true);
+$age_levels_set = (get_option('oer_age_levels_label'))?true:false;
+$age_levels_enabled = (get_option('oer_age_levels_enabled'))?true:false;
+$suggested_time_set = (get_option('oer_instructional_time_label'))?true:false;
+$suggested_time_enabled = (get_option('oer_instructional_time_enabled'))?true:false;
+$cc_license_set = (get_option('oer_creativecommons_license_label'))?true:false;
+$cc_license_enabled = (get_option('oer_creativecommons_license_enabled'))?true:false;
+$external_repository_set = (get_option('oer_creativecommons_license_label'))?true:false;
+$external_repository_enabled = (get_option('oer_creativecommons_license_enabled'))?true:false;
+$repository_record_set = (get_option('oer_repository_recordurl_label'))?true:false;
+$repository_record_enabled = (get_option('oer_repository_recordurl_enabled'))?true:false;
+$citation_set = (get_option('oer_citation_label'))?true:false;
+$citation_enabled = (get_option('oer_citation_enabled'))?true:false;
+$transcription_set = (get_option('oer_transcription_label'))?true:false;
+$transcription_enabled = (get_option('oer_transcription_enabled'))?true:false;
+$sensitive_material_set = (get_option('oer_sensitive_material_label'))?true:false;
+$sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?true:false;
+?>
 <div class="oer-rsrclftcntr-img col-md-5 col-sm-12 col-xs-12">
     <!--Resource Image-->
     <div class="oer-sngl-rsrc-img">
-        <?php if ($youtube) { 
+        <?php if ($youtube) {
             $embed = oer_generate_youtube_embed_code($url);
             echo $embed;
         } elseif($isPDF) {
@@ -62,84 +86,6 @@
         }
         ?>
     </div>
-</div>
-<div class="oer-rsrcrghtcntr col-md-7 col-sm-12 col-xs-12">
-    <div class="oer-rsrcctgries tagcloud">
-    <?php
-    /** Resource Subject Areas **/
-    $subjects = array_unique($subject_areas, SORT_REGULAR);
-    
-    if(!empty($subjects))
-    {
-        foreach($subjects as $subject)
-        {
-            echo '<span><a href="'.esc_url(get_term_link($subject)).'" class="button">'.ucwords ($subject->name).'</a></span>';
-        }
-    }
-    ?>
-    </div>
-
-    <!--Resource Description-->
-    <?php if(!empty($post->post_content)) {?>
-        <div class="oer-sngl-rsrc-dscrptn">
-                <h2><?php _e("Description", OER_SLUG) ?></h2>
-                <?php echo $content = apply_filters ("the_content", $post->post_content); ?>
-        </div>
-    <?php } ?>
-    
-    <!-- Transcription -->
-    <?php
-    $oer_transcription = get_post_meta($post->ID, 'oer_transcription', true);
-    if (!empty($oer_transcription)){
-        $option_set = false;
-        if (get_option('oer_transcription_label'))
-            $option_set = true;
-        ?>
-        <div class="oer-sngl-rsrc-dscrptn">
-                <h2><?php
-                if (!$option_set)
-                    _e("Transcription", OER_SLUG);
-                else
-                    echo get_option('oer_transcription_label');
-                ?></h2>
-                <?php echo $oer_transcription; ?>
-        </div>
-        <?php
-    }
-    ?>
-    
-    <!-- Sensitive Material Warning -->
-    <?php
-    $oer_sensitive_material = get_post_meta($post->ID, 'oer_sensitive_material', true);
-    if (!empty($oer_sensitive_material)){
-        $option_set = false;
-	if (get_option('oer_sensitive_material_label'))
-	    $option_set = true;
-        ?>
-        <div class="oer-sngl-rsrc-dscrptn">
-                <h2><?php
-                if (!$option_set)
-                    _e("Sensitive Material Warning", OER_SLUG);
-                else
-                    echo get_option('oer_sensitive_material_label');
-                ?></h2>
-                <?php echo $oer_sensitive_material; ?>
-        </div>
-        <?php
-    }
-    ?>
-    
-    <?php
-    $oer_resourceurl = get_post_meta($post->ID, "oer_resourceurl", true);
-    if (!empty($oer_resourceurl)) {
-    ?>
-        <?php if ($youtube) { ?>
-            <div class="oer-rsrcurl oer-cbxl"><h4><strong>Original Resource:</strong> <a href="<?php echo esc_url(get_post_meta($post->ID, "oer_resourceurl", true)); ?>" target="_blank" ><?php echo esc_url(get_post_meta($post->ID, "oer_resourceurl", true)); ?></a></h4></div>
-        <?php } else { ?>
-            <div class="oer-rsrcurl oer-cbxl"><h4><strong>Original Resource:</strong> <a href="<?php echo esc_url(get_post_meta($post->ID, "oer_resourceurl", true)); ?>" target="_blank" ><?php echo $url_domain; ?></a></h4></div>
-        <?php } ?>
-    <?php } ?>
-
     <div id="" class="oer-authorName oer-cbxl">
         <?php
         $oer_authorname = get_post_meta($post->ID, "oer_authorname", true);
@@ -184,359 +130,272 @@
         <span><a href="<?php echo esc_url($oer_publisherurl); ?>" target="_blank"><?php echo $oer_publishername; ?></a></span></h4>
     </div>
     <?php } ?>
-    
-    <!-- Date Created Estimate -->
-    <?php
-    $oer_datecreated_estimate = get_post_meta($post->ID, 'oer_datecreated_estimate', true);
-    if (!empty($oer_datecreated_estimate)){ ?>
-    <div id="oerDateCreatedEstimate" class="oer-dateCreatedEstimate oer-cbxl">
-        <?php
-        $option_set = false;
-        if (get_option('oer_datecreated_estimate_label'))
-            $option_set = true;
-        ?>
-        <h4><strong><?php
-        if (!$option_set)
-            _e("Date Created Estimate:", OER_SLUG);
-        else
-            echo get_option('oer_datecreated_estimate_label').":";
-        ?></strong>
-        <span><?php echo $oer_datecreated_estimate; ?></span></h4>
-    </div>
-    <?php } ?>
-    
-    <div id="" class="oer-mediaType oer-cbxl">
-        <?php
-            $oer_mediatype = get_post_meta($post->ID, "oer_mediatype", true);
-            if(!empty($oer_mediatype))
-            {
-                $option_set = false;
-                if (get_option('oer_mediatype_label'))
-                        $option_set = true;
-                ?>
-                <h4><strong><?php
-                if (!$option_set)
-				_e("Type:", OER_SLUG);
-			else
-				echo get_option('oer_mediatype_label').":";
-                ?></strong>
-                <span><?php echo ucwords($oer_mediatype); ?></span></h4>
-        <?php } ?>
-    </div>
-    
-    <!-- Format -->
-    <?php
-    $oer_format = get_post_meta($post->ID, 'oer_format', true);
-    if (!empty($oer_format)){ ?>
-    <div id="oerFormat" class="oer-Format oer-cbxl">
-        <?php
-        $option_set = false;
-        if (get_option('oer_format_label'))
-            $option_set = true;
-        ?>
-        <h4><strong><?php
-        if (!$option_set)
-            _e("Format:", OER_SLUG);
-        else
-            echo get_option('oer_format_label').":";
-        ?></strong>
-        <span><?php echo $oer_format; ?></span></h4>
-    </div>
-    <?php } ?>
-    
-    <!-- Citation -->
-    <?php
-    $oer_citation = get_post_meta($post->ID, 'oer_citation', true);
-    if (!empty($oer_citation)){ ?>
-    <div id="oerCitation" class="oer-Citation oer-cbxl">
-        <?php
-        $option_set = false;
-        if (get_option('oer_citation_label'))
-            $option_set = true;
-        ?>
-        <h4><strong><?php
-        if (!$option_set)
-            _e("Citation:", OER_SLUG);
-        else
-            echo get_option('oer_citation_label').":";
-        ?></strong>
-        <span><?php echo $oer_citation; ?></span></h4>
-    </div>
-    <?php } ?>
-    
-    <?php
-    $grades =  trim(get_post_meta($post->ID, "oer_grade", true),",");
-    $grades = explode(",",$grades);
-    
-    if(is_array($grades) && !empty($grades) && array_filter($grades))
-    {
-        $option_set = false;
-	if (get_option('oer_grade_label'))
-	    $option_set = true;
-    ?>
-        <div class="oer-rsrcgrd oer-cbxl">
-            <h4><strong><?php
-            if (!$option_set){
-                if (count($grades)>1)
-                    _e("Grades:", OER_SLUG);
-                else
-                    _e("Grade:", OER_SLUG);
-            } else
-                    echo get_option('oer_grade_label').":";
-            ?></strong>
-            <span>
-        <?php
-            sort($grades);
-
-            for($x=0; $x < count($grades); $x++)
-            {
-              $grades[$x];
-            }
-            $fltrarr = array_filter($grades, 'strlen');
-            $flag = array();
-            $elmnt = $fltrarr[min(array_keys($fltrarr))];
-            for($i =0; $i < count($fltrarr); $i++)
-            {
-                    if($elmnt == $fltrarr[$i] || "k" == strtolower($fltrarr[$i]))
-                    {
-                            $flag[] = 1;
-                    }
-                    else
-                    {
-                            $flag[] = 0;
-                    }
-                    $elmnt++;
-            }
-
-            if(in_array('0',$flag))
-            {
-                    echo implode(",",array_unique($fltrarr));
-            }
-            else
-            {
-                    $arr_flt = array_keys($fltrarr);
-                    $end_filter = end($arr_flt);
-                    if (count($fltrarr)>1) {
-                            if (strtolower($fltrarr[$end_filter])=="k") {
-                                    $last_index = count($fltrarr)-2;
-                                    echo $fltrarr[$end_filter]."-".$fltrarr[$last_index];
-                            }
-                            else
-                                    echo $fltrarr[0]."-".$fltrarr[$end_filter];
-                    }
-                    else
-                            echo $fltrarr[0];
-            }
-            ?>
-            </span></h4>
+</div>
+<div class="oer-rsrcrghtcntr col-md-7 col-sm-12 col-xs-12">
+    <!--Resource Description-->
+    <?php if(!empty($post->post_content)) {?>
+        <div class="oer-sngl-rsrc-dscrptn">
+            <?php if (strlen($post->post_content)>230) : ?>
+                <div class="oer-lp-excerpt"><?php echo oer_get_content($post->post_content, 230); ?></div>
+                <div class="oer-lp-full-content"><?php echo $post->post_content; ?> <a href="javascript:void(0);" class="lp-read-less">(read less)</a></div>
+            <?php else : ?>
+                <div class="oer-lp-content"><?php echo $post->post_content; ?></div>
+            <?php endif; ?>
+            <?php //echo $content = apply_filters ("the_content", $post->post_content); ?>
         </div>
-    <?php }?>
-
-    <?php
-            $oer_datecreated = get_post_meta($post->ID, "oer_datecreated", true);
-            if(!empty($oer_datecreated))
-            {
-                $option_set = false;
-                if (get_option('oer_datecreated_label'))
-                        $option_set = true;
-            ?>
-        <div class="oer-created oer-cbxl">
-        <h4><strong><?php
-        if (!$option_set)
-                _e("Created:", OER_SLUG);
-        else
-                echo get_option('oer_datecreated_label').":";
-        ?></strong>
-        <span><?php echo $oer_datecreated; ?></span></h4>
-    </div>
     <?php } ?>
 
     <?php
-            $keywords = wp_get_post_tags($post->ID);
-            if(!empty($keywords))
-            {
+    $keywords = wp_get_post_tags($post->ID);
+    if(!empty($keywords))
+    {
     ?>
-                    <div class="oer-rsrckeyword">
-                            <h4><strong><?php _e("Keywords:", OER_SLUG) ?></strong></h4>
-                            <div class="oer_meta_container tagcloud">
-                       <?php
-                                    foreach($keywords as $keyword)
-                                    {
-                                            echo "<span><a href='".esc_url(get_tag_link($keyword->term_id))."' class='button'>".ucwords($keyword->name)."</a></span>";
-                                    }
-                            ?>
-                            </div>
-                    </div>
-    <?php } ?>
-
-
-    <!--Resource Meta Data-->
-    <div class="oer-sngl-rsrc-meta">
-        <!-- Meta Data Navigation Tab-->
-        <!--<div class="tabNavigator">
-         <a href="javascript:" data-id="tags" title="Metadata Tags" onclick="rsrc_tabs(this);">1</a>
-         <a href="javascript:" data-id="alignedStandards" title="Aligned Standards" onclick="rsrc_tabs(this);"><?php //echo count($stnd_arr);?></a>
-         <a href="javascript:" data-id="keyword" title="Keywords" onclick="rsrc_tabs(this);"><?php //echo count($keywords); ?></a>
-         <a href="javascript:" data-id="moreLikeThis" title="More Like This" onclick="rsrc_tabs(this);"><?php //echo $count; ?></a>
-       </div>-->
-
-       <!-- Meta Data Navigation Tab Related Post-->
-       <!--<div class="moreLikeThis" style="display: none;" >
-            <h3>More Like This</h3>
-            <div class="oer_meta_container">
-            <?php
-
-                /*$tags = wp_get_post_tags($post->ID);
-                if ($tags)
-                {
-                      $tag_ids = array();
-                      foreach($tags as $individual_tag) $tag_ids[] = $individual_tag->term_id;
-
-                      $args=array(
-                        'tag__in' 		=> $tag_ids,
-                        'post__not_in' 	=> array($post->ID),
-                        'showposts'		=> -1,
-                        'post_type'		=> 'resource',
-                        'ignore_sticky_posts'	=> 1
-                       );
-
-                      $my_query = new WP_Query($args);
-
-                      if( $my_query->have_posts() )
-                      {
-                        while ($my_query->have_posts()) : $my_query->the_post(); */?>
-                            <div class="sngl-rltd-rsrc">
-                                <div class="sngl-rltd-rsrc-title">
-                                    <a href="<?php //the_permalink() ?>" rel="bookmark" title="<?php //the_title_attribute(); ?>"><?php //the_title(); ?></a>
-                                </div>
-                                <div class="sngl-rltd-rsrc-description">
-                                    <?php //echo the_content(); ?>
-                                </div>
-                                <div class="sngl-rltd-rsrc-img">
-                                    <?php //$img_url = wp_get_attachment_url(get_post_meta( //$post->ID, "_thumbnail_id" , true)); ?>
-                                    <img src="<?php //echo $img_url;?>" alt="<?php //the_title();?>"/>
-                                </div>
-                            </div>
-                          <?php
-                        /*endwhile;
-                      }
-                      else
-                      {
-                        echo "No Resource Found Like This!!";
-                      }
-                }
-                else
-                {
-                    echo "No Resource Found Like This!!";
-                }*/
-            ?>
-            </div>
-       </div>-->
-    </div>
-</div> <!--Description & Resource Info at Right-->
-
-<!-- Standards Alignment -->
-<div class="oer-rsrclftcntr col-md-12">
-
-                    <?php
-
-                            $stdrd_id = get_post_meta($post->ID, 'oer_standard_alignment', true);
-                            $oer_standard = get_post_meta($post->ID, 'oer_standard', true);
-                            
-                            $standards = explode(",", $oer_standard);
-                            $oer_standards = array();
-                            
-                            foreach ($standards as $standard) {
-                                    if ($standard!=""){
-                                            $stds = oer_get_parent_standard($standard);
-                                            foreach($stds as $std){
-                                                    $core_std = oer_get_core_standard($std['parent_id']);
-                                                    $oer_standards[] = array(
-                                                                            'id' => $standard,
-                                                                            'core_id' => $core_std[0]['id'],
-                                                                            'core_title' => $core_std[0]['standard_name']
-                                                                             );
-                                            }
-                                    }
-                            }
-                            
-                            foreach ($oer_standards as $key => $row) {
-                                    $core[$key]  = $row['core_id'];
-                            }
-                            
-                            if (!empty($oer_standards))
-                                    array_multisort($core, SORT_ASC, $oer_standards);
-                            
-                            if(!empty($stdrd_id) || !empty($oer_standards))
-                            {
-                                $option_set = false;
-                                if (get_option('oer_standard_label'))
-                                        $option_set = true;
-                    ?>
-            <div class="alignedStandards">
-            <h2><?php
-            if (!$option_set)
-		_e("Standards Alignment", OER_SLUG);
-	    else
-                echo get_option('oer_standard_label').":";
-            ?></h2>
-            <div class="oer_meta_container">
-                <!--<div class="oer_stndrd_align">-->
-                <?php
-                    if(!empty($stdrd_id))
-                    {
-                                ?>
-                                       <!--<h3><?php _e("Standard Alignment", OER_SLUG) ?></h3>-->
-                                       <?php
-                         //$res = $wpdb->get_row( $wpdb->prepare( "select standard_name from ".$wpdb->prefix."oer_core_standards where id=%d" , $stdrd_id ), ARRAY_A);
-                         //echo "<div class='stndrd_ttl'>".$res['standard_name']."</div>";
-                    }
-                ?>
-
-                <!--</div>-->
-
-                <div class="oer_stndrds_notn">
-                <?php
-                    if(!empty($oer_standards))
-                    {
-                    ?>
-                            <?php
-                            $displayed_core_standards = array();
-                            foreach($oer_standards as $o_standard) {
-                                    
-                                    if (!in_array($o_standard['core_id'],$displayed_core_standards)){
-                                            echo "<div class='oer-core-title'><h4><strong>".$o_standard['core_title']."</strong></h4></div>";
-                                            $displayed_core_standards[] = $o_standard['core_id'];
-                                    }
-                                    
-                                    $oer_standard =$o_standard['id'];
-                                    $stnd_arr = explode(",", $oer_standard);
-                                    
-                                    for($i=0; $i< count($stnd_arr); $i++)
-                                    {
-                                        $table = explode("-",$stnd_arr[$i]);
-                                        
-                                        $table_name = $wpdb->prefix.$_oer_prefix.$table[0];
-                                        
-                                        $id = $table[1];
-                                        
-                                        $res = $wpdb->get_row( $wpdb->prepare("select * from $table_name where id=%d" , $id ), ARRAY_A);
-                                        
-                                        echo "<div class='oer_sngl_stndrd'>";
-                                            if (strpos($table_name,"sub_standards")>0) {
-                                                    echo "<span class='oer_sngl_description'>".stripslashes($res['standard_title'])."</span>";
-                                            } else {
-                                                    echo "<span class='oer_sngl_notation'>".$res['standard_notation']."</span>";
-                                                    echo "<span class='oer_sngl_description'>".stripslashes($res['description'])."</span>";
-                                            }
-                                        echo "</div>";
-                                    }
-                            }
-                    }
+        <div class="oer-rsrckeyword">
+                <div class="oer_meta_container tagcloud">
+           <?php
+                        foreach($keywords as $keyword)
+                        {
+                                echo "<span><a href='".esc_url(get_tag_link($keyword->term_id))."' class='button'>".ucwords($keyword->name)."</a></span>";
+                        }
                 ?>
                 </div>
+        </div>
+    <?php } ?>
 
-            </div>
+    <!-- Standards List -->
+    <?php if ($oer_standard) {
+        if (($standards_set && $standards_enabled) || !$standards_set) {
+    ?>
+    <div class="tc-oer-standards">
+       <h4 class="tc-field-heading clearfix">
+           <?php echo oer_field_label('oer_standard'); ?>
+       </h4>
+       <div class="tc-oer-standards-details clearfix">
+           <?php oer_standards_list_display($post->ID); ?>
+        </div>
+    </div>
+    <?php
+         }
+    } ?>
+
+    <!-- Subject Areas -->
+    <?php
+    $post_terms = get_the_terms( $post->ID, 'resource-subject-area' );
+    if (!empty($post_terms)) {
+    ?>
+    <div class="tc-oer-subject-areas">
+       <h4 class="tc-field-heading clearfix">
+            <?php _e("Subjects",OER_LESSON_PLAN_SLUG); ?>
+        </h4>
+       <div class="tc-oer-subject-details clearfix">
+            <ul class="tc-oer-subject-areas-list">
+                <?php
+                $i = 1;
+                $cnt = count($post_terms);
+                $moreCnt = $cnt - 2;
+                foreach($post_terms as $term){
+                    $subject_parent = get_term_parents_list($term->term_id,'resource-subject-area', array('separator' => ' <i class="fas fa-angle-double-right"></i> ', 'inclusive' => false));
+                    $subject = $subject_parent . '<a href="'.get_term_link($term->term_id).'">'.$term->name.'</a>';
+                    if ($i>2)
+                        echo '<li class="collapse lp-subject-hidden">'.$subject.'</li>';
+                    else
+                        echo '<li>'.$subject.'</li>';
+                    if (($i==2) && ($cnt>2))
+                        echo '<li><a class="see-more-subjects" data-toggle="collapse" data-count="'.$moreCnt.'" href=".lp-subject-hidden">SEE '.$moreCnt.' MORE +</a></li>';
+                    $i++;
+                }
+                ?>
+            </ul>
+        </div>
+    </div>
+    <?php } ?>
+
+    <!-- Curriculum -->
+    <?php
+    $connected_curriculums = oer_get_connected_curriculums($post->post_title);
+    if (!empty($connected_curriculums)) {
+    ?>
+    <div class="tc-oer-connected-curriculum">
+       <h4 class="tc-field-heading clearfix">
+            <?php _e("Appears In",OER_LESSON_PLAN_SLUG); ?>
+        </h4>
+       <div class="tc-oer-curriculum-details clearfix">
+            <ul class="tc-oer-subject-areas-list">
+                <?php
+                $i = 1;
+                $cnt = count($connected_curriculums);
+                $moreCnt = $cnt - 2;
+                foreach($connected_curriculums as $curriculum){
+                    $curriculum_url = get_the_permalink($curriculum['post_id']);
+                    if ($i>2)
+                        echo '<li class="collapse lp-subject-hidden"><a href="'.$curriculum_url.'">'.$curriculum['post_title'].'</a></li>';
+                    else
+                        echo "<li><a href='".$curriculum_url."'>".$curriculum['post_title']."</a></li>";
+                    if (($i==2) && ($cnt>2))
+                        echo '<li><a class="see-more-subjects" data-toggle="collapse" data-count="'.$moreCnt.'" href=".lp-subject-hidden">SEE '.$moreCnt.' MORE +</a></li>';
+                    $i++;
+                }
+                ?>
+            </ul>
        </div>
-                    <?php } ?>
-</div> <!--Thumbnail & Standards Info at Left-->
+    </div>
+    <?php } ?>
+    </div>
+</div> <!--Description & Resource Info at Right-->
+<div id="tcHiddenFields" class="tc-hidden-fields collapse row">
+    <div class="col-md-5">
+        <!-- Age Levels -->
+        <?php
+        if (($age_levels_set && $age_levels_enabled) || !$age_levels_set) {
+            $age_label = oer_field_label('oer_age_levels');
+            $age_levels = (isset($post_meta_data['oer_age_levels'][0]) ? $post_meta_data['oer_age_levels'][0] : "");
+            if (!empty($age_levels)){
+            ?>
+            <div class="form-field">
+                <span class="oer-lp-label"><?php echo $age_label; ?>:</span> <span class="oer-lp-value"><?php echo $age_levels; ?></span>
+            </div>
+            <?php
+            }
+        }
+        ?>
+
+        <!-- Grade Level -->
+        <?php
+        $grades =  trim(get_post_meta($post->ID, "oer_grade", true),",");
+        $grades = explode(",",$grades);
+
+        if(is_array($grades) && !empty($grades) && array_filter($grades))
+        {
+            $option_set = false;
+            if (get_option('oer_grade_label'))
+                $option_set = true;
+        ?>
+            <div class="form-field">
+                <span class="oer-lp-label"><?php
+                if (!$option_set){
+                    if (count($grades)>1)
+                        _e("Grade Levels:", OER_SLUG);
+                    else
+                        _e("Grade Level:", OER_SLUG);
+                } else
+                        echo get_option('oer_grade_label').":";
+                ?></span>
+                <span class="oer-lp-value">
+                <?php
+                echo oer_grade_levels($grades);
+                ?>
+                </span>
+            </div>
+        <?php }?>
+
+        <!-- Instruction Time -->
+        <?php
+        if (($suggested_time_set && $suggested_time_enabled) || !$suggested_time_set) {
+             $suggested_label = oer_field_label('oer_instructional_time');
+             $suggested_time = (isset($post_meta_data['oer_instructional_time'][0]) ? $post_meta_data['oer_instructional_time'][0] : "");
+             if (!empty($suggested_time)){
+             ?>
+             <div class="form-field">
+                 <span class="oer-lp-label"><?php echo $suggested_label; ?>:</span> <span class="oer-lp-value"><?php echo $suggested_time; ?></span>
+             </div>
+             <?php
+             }
+         }
+        ?>
+
+        <!-- Creative Commons License -->
+        <?php
+        if (($cc_license_set && $cc_license_enabled) || !$cc_license_set) {
+            $cc_label = oer_field_label('oer_creativecommons_license');
+            $cc_license = (isset($post_meta_data['oer_creativecommons_license'][0]) ? $post_meta_data['oer_creativecommons_license'][0] : "");
+            if (!empty($cc_license)){
+            ?>
+            <div class="form-field license-field">
+                <img src="<?php echo oer_cc_license_image($cc_license); ?>">
+            </div>
+            <?php
+            }
+        }
+
+        ?>
+    </div>
+    <div class="col-md-7">
+        <!-- External Repository -->
+        <?php
+        if (($external_repository_set && $external_repository_enabled) || !$external_repository_set) {
+             $external_repository_label = oer_field_label('oer_external_repository');
+             $external_repository = (isset($post_meta_data['oer_external_repository'][0]) ? $post_meta_data['oer_external_repository'][0] : "");
+             if (!empty($external_repository)){
+             ?>
+             <div class="form-field">
+                 <span class="oer-lp-label"><?php echo $external_repository_label; ?>:</span> <span class="oer-lp-value"><?php echo $external_repository; ?></span>
+             </div>
+             <?php
+             }
+         }
+        ?>
+
+        <!-- Repository URL -->
+        <?php
+        if (($repository_record_set && $repository_record_enabled) || !$repository_record_set) {
+             $repository_record_label = oer_field_label('oer_repository_recordurl');
+             $repository_record = (isset($post_meta_data['oer_repository_recordurl'][0]) ? $post_meta_data['oer_repository_recordurl'][0] : "");
+             if (!empty($repository_record)){
+             ?>
+             <div class="form-field">
+                 <span class="oer-lp-label"><?php echo $repository_record_label; ?>:</span> <span class="oer-lp-value"><a href="<?php echo $repository_record; ?>"><?php echo $repository_record; ?></a></a></span>
+             </div>
+             <?php
+             }
+         }
+        ?>
+
+        <!-- Citation -->
+        <?php
+        if (($citation_set && $citation_enabled) || !$citation_set) {
+            $citation_label = oer_field_label('oer_citation');
+            $citation = (isset($post_meta_data['oer_citation'][0]) ? $post_meta_data['oer_citation'][0] : "");
+            if (!empty($citation)){
+            ?>
+            <div class="form-field">
+                <span class="oer-lp-label"><?php echo $citation_label; ?>:</span> <span class="oer-lp-value"><?php echo $citation; ?></span>
+            </div>
+            <?php
+            }
+        }
+        ?>
+
+        <!-- Transcription -->
+        <?php
+        if (($transcription_set && $transcription_enabled) || !$transcription_set) {
+            $transcription_label = oer_field_label('oer_transcription');
+            $transcription = (isset($post_meta_data['oer_transcription'][0]) ? $post_meta_data['oer_transcription'][0] : "");
+            if (!empty($transcription)){
+            ?>
+            <div class="form-field">
+                <span class="oer-lp-label"><?php echo $transcription_label; ?>:</span> <span class="oer-lp-value"><?php echo $transcription; ?></span>
+            </div>
+            <?php
+            }
+        }
+        ?>
+
+        <!-- Sensitive Material Warning -->
+        <?php
+        if (($sensitive_material_set && $sensitive_material_enabled) || !$sensitive_material_set) {
+            $sensitive_material_label = oer_field_label('oer_sensitive_material');
+            $sensitive_material = (isset($post_meta_data['oer_sensitive_material'][0]) ? $post_meta_data['oer_sensitive_material'][0] : "");
+            if (!empty($sensitive_material)){
+            ?>
+            <div class="form-field">
+                <span class="oer-lp-label oer-lp-red"><?php echo $sensitive_material_label; ?>:</span> <span class="oer-lp-value"><?php echo $sensitive_material; ?></span>
+            </div>
+            <?php
+            }
+        }
+        ?>
+    </div>
+</div>
+<div class="oer-see-more-row">
+    <p class="center"><span><a id="oer-see-more-link" class="oer-see-more-link" role="button" data-toggle="collapse" href="#tcHiddenFields" aria-expanded="false" aria-controls="tcHiddenFields"><?php _e("SEE MORE +",OER_LESSON_PLAN_SLUG); ?></a></span></p>
+</div>

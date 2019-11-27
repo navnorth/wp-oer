@@ -3205,6 +3205,18 @@ if (!function_exists('oer_get_all_meta')){
 	}
 }
 
+if (!function_exists('oer_get_connected_curriculums')){
+	function oer_get_connected_curriculums($resource_title){
+		global $wpdb;
+		$result = $wpdb->get_results($wpdb->prepare(
+		"SELECT post_id, post_title, meta_key, meta_value FROM ".$wpdb->prefix."posts,".$wpdb->prefix."postmeta WHERE post_type=%s
+			AND ".$wpdb->prefix."posts.ID=".$wpdb->prefix."postmeta.post_id AND meta_key = 'oer_lp_primary_resources'
+			AND meta_value LIKE %s", 'lesson-plans' , '%' . $resource_title . '%'
+		), ARRAY_A);
+		return $result;
+	}
+}
+
 if (!function_exists('oer_save_metadata_options')){
 	function oer_save_metadata_options($post_data){
 		foreach($post_data as $key=>$value){
@@ -3301,4 +3313,196 @@ function oer_get_standard_label($slug){
 	return $standard;
 }
 
+// Get Field Label
+if (! function_exists('oer_field_label')){
+    function oer_field_label($field){
+        $label = null;
+        
+        if (get_option($field.'_label'))
+            $label = get_option($field.'_label');
+        else
+            $label = oer_get_meta_label($field);
+         
+        return $label;
+    }
+}
+
+// List Selected Standards
+if (! function_exists('oer_standards_list_display')){
+	function oer_standards_list_display($resource_id){
+		$oer_standard = get_post_meta($resource_id, 'oer_standard', true);
+		?>
+		<ul class="tc-oer-standards-list">
+               <?php
+               $stds = array();
+               $standards = array();
+               $cstandard = null;
+               $oer_lp_standards = explode(",",$oer_standard);
+               if (is_array($oer_lp_standards)):
+                    $current_std_id = "";
+                    foreach($oer_lp_standards as $standard){
+                       if (function_exists('oer_std_get_standard_by_notation')){
+                           $core_standard = oer_std_get_standard_by_notation($standard);
+                           if ($current_std_id!==$core_standard->id){
+                               if (!empty($standards) && !empty($cstandard)) {
+                                   $stds[] = array_merge(array("notation"=>$standards), $cstandard);
+                               }
+                               $standards = array();
+                               $current_std_id = $core_standard->id;
+                               $cstandard = array("core_standard_id"=>$core_standard->id,"core_standard_name"=>$core_standard->standard_name);
+                           }
+                           $standards[] = $standard;
+                       }
+                   }
+                   if (!empty($standards) && !empty($cstandard)) {
+                       $stds[] = array_merge(array("notation"=>$standards), $cstandard);
+                   }
+                   $cstd_id = array_column($stds,"core_standard_id");
+                   array_multisort($cstd_id,SORT_ASC,$stds);
+                   $standard_details = "";
+                   foreach($stds as $std){
+                       if (isset($std['core_standard_id'])) {
+                           echo "<li>";
+                               echo '<a class="lp-standard-toggle" data-toggle="collapse" href="#core-standard-'.$std['core_standard_id'].'">'.$std['core_standard_name'].' <i class="fas fa-caret-right"></i></a>';
+                           ?>
+                           <div class="collapse tc-lp-details-standard" id="core-standard-<?php echo $std['core_standard_id']; ?>">
+                           <?php
+                           if (is_array($std['notation'])) {
+                               echo "<ul class='tc-lp-notation-list'>";
+                               foreach ($std['notation'] as $notation) {
+                                   if (function_exists('was_standard_details'))
+                                       $standard_details = was_standard_details($notation);
+                                   if (!empty($standard_details)){
+                                       if (isset($standard_details->description))
+                                           echo "<li>".$standard_details->description."</li>";
+                                       else
+                                           echo "<li>".$standard_details->standard_title."</li>";
+                                   }
+                               }
+                               echo "</ul>";
+                           }
+                               echo "</div>";
+                           echo "</li>";
+                       }
+                   }
+               endif;
+               ?>
+            </ul>
+		<?php
+	}
+}
+
+// Get Content with x number of characters
+if (!function_exists('oer_get_content')){
+	function oer_get_content($content, $limit) {
+        if (strlen($content)>=$limit) {
+          $content = substr($content, 0, $limit);
+        }
+        
+        $content = preg_replace('/[.+]/','', $content);
+        //$content = apply_filters('the_content', $content); 
+        $content = str_replace(']]>', ']]>', $content);
+        $content .= '... <a href="javascript:void(0);" class="lp-read-more">(read more)</a>';
+        return $content;
+    }
+}
+
+// Get Creative Commons License to Display
+if (!function_exists('oer_cc_license_image')){
+	function oer_cc_license_image($license){
+		$license_image = OER_URL."images/cc_license/".$license.".png";
+		return $license_image;
+	}
+}
+
+if (!function_exists('oer_display_pdf_embeds')){
+	function oer_display_pdf_embeds($url, $return = false){
+		$isExternal = is_external_url($url);
+		
+		if ($isExternal) {
+			$external_option = get_option("oer_external_pdf_viewer");
+			if ($external_option==1) {
+				$pdf_url = "https://docs.google.com/gview?url=".$url."&embedded=true";
+				echo oer_get_embed_code($pdf_url);
+			} elseif($external_option==0) {
+				$embed_disabled = true;
+			}
+		} else {
+			$local_option = get_option("oer_local_pdf_viewer");
+			switch ($local_option){
+				case 0:
+					$embed_disabled = true;
+					break;
+				case 1:
+					$pdf_url = "https://docs.google.com/gview?url=".$url."&embedded=true";
+					if ($return)
+						oer_get_embed_code($pdf_url);
+					else
+						echo oer_get_embed_code($pdf_url);
+					break;
+				case 2:
+					$pdf_url = OER_URL."pdfjs/web/viewer.html?file=".urlencode($url);
+					$embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.$pdf_url.'"></iframe>';
+					if ($return)
+						return $embed_code;
+					else
+						echo $embed_code;
+					break;
+				case 3:
+					if(shortcode_exists('wonderplugin_pdf')) {
+						$embed_code = "[wonderplugin_pdf src='".$url."' width='100%']";
+						if ($return)
+							return do_shortcode($embed_code);
+						else
+							echo do_shortcode($embed_code);
+					} else {
+						$embed_disabled = true;
+					}
+					break;
+				case 4:
+					if(shortcode_exists('pdf-embedder')){
+						$embed_code = "[pdf-embedder url='".$url."' width='100%']";
+						if ($return)
+							return do_shortcode($embed_code);
+						else
+							echo do_shortcode($embed_code);
+					} else {
+						$embed_disabled = true;
+					}
+					break;
+				case 5:
+					if(shortcode_exists('pdfviewer')){
+						$embed_code = "[pdfviewer width='100%']".$url."[/pdfviewer]";
+						if ($return)
+							return do_shortcode($embed_code);
+						else
+							echo do_shortcode($embed_code);
+					} else {
+						$embed_disabled = true;
+					}
+					break;
+			}
+		}
+	}
+}
+
+if (!function_exists('oer_generate_audio_resource_embed')) {
+	function oer_generate_audio_resource_embed($audio_url){
+		?>
+		<audio controls>
+			<source src="<?php echo $audio_url; ?>" type="audio/ogg">
+			<source src="<?php echo $audio_url; ?>" type="audio/mpeg">
+			<source src="<?php echo $audio_url; ?>" type="audio/wav">
+			Your browser does not support the audio element.
+		</audio>
+		<?php
+	}
+}
+
+if (!function_exists('oer_get_embed_code')){
+	function oer_get_embed_code($url){
+		$embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.$url.'"></iframe>';
+		return $embed_code;
+	}
+}
 ?>
