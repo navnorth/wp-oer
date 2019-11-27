@@ -380,7 +380,15 @@ if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
             if (!empty($citation)){
             ?>
             <div class="form-field">
-                <span class="oer-lp-label"><?php echo $citation_label; ?>:</span> <span class="oer-lp-value"><?php echo $citation; ?></span>
+                <span class="oer-lp-label"><?php echo $citation_label; ?>:</span> <span class="oer-lp-value">
+                <?php if (strlen($citation)>230): ?>
+                <span class="oer-lp-value-excerpt"><?php echo oer_get_content( $citation, 230); ?></span>
+                <span class="oer-lp-value-full"><?php echo $citation; ?>  <a href="javascript:void(0);" class="lp-read-less">(read less)</a></span>
+                <?php
+                else: 
+                    echo $citation;
+                endif; ?>
+                </span>
             </div>
             <?php
             }
@@ -394,7 +402,15 @@ if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
             if (!empty($transcription)){
             ?>
             <div class="form-field">
-                <span class="oer-lp-label"><?php echo $transcription_label; ?>:</span> <span class="oer-lp-value"><?php echo $transcription; ?></span>
+                <span class="oer-lp-label"><?php echo $transcription_label; ?>:</span> <span class="oer-lp-value">
+                <?php if (strlen($transcription)>230): ?>
+                <span class="oer-lp-value-excerpt"><?php echo oer_get_content( $transcription, 230); ?></span>
+                <span class="oer-lp-value-full"><?php echo $transcription; ?>  <a href="javascript:void(0);" class="lp-read-less">(read less)</a></span>
+                <?php
+                else: 
+                    echo $transcription;
+                endif; ?>
+                </span>
             </div>
             <?php
             }
@@ -408,7 +424,15 @@ if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
             if (!empty($sensitive_material)){
             ?>
             <div class="form-field">
-                <span class="oer-lp-label oer-lp-red"><?php echo $sensitive_material_label; ?>:</span> <span class="oer-lp-value"><?php echo $sensitive_material; ?></span>
+                <span class="oer-lp-label oer-lp-red"><?php echo $sensitive_material_label; ?>:</span> <span class="oer-lp-value">
+                <?php if (strlen($sensitive_material)>230): ?>
+                <span class="oer-lp-value-excerpt"><?php echo oer_get_content( $sensitive_material, 230); ?></span>
+                <span class="oer-lp-value-full"><?php echo $sensitive_material; ?>  <a href="javascript:void(0);" class="lp-read-less">(read less)</a></span>
+                <?php
+                else: 
+                    echo $sensitive_material;
+                endif; ?>
+                </span>
             </div>
             <?php
             }

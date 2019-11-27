@@ -34,14 +34,24 @@ jQuery(document).ready(function(e) {
         jQuery('#oer-see-more-link').text("SEE MORE +");
     });
 	
-	jQuery(document).on("click", '.lp-read-more', function (){
+	jQuery(document).on("click", '.oer-lp-excerpt .lp-read-more', function (){
         jQuery('.oer-lp-excerpt').hide();
         jQuery('.oer-lp-full-content').show();
     });
     
-    jQuery(document).on("click", '.lp-read-less', function (){
+    jQuery(document).on("click", '.oer-lp-full-content .lp-read-less', function (){
         jQuery('.oer-lp-excerpt').show();
         jQuery('.oer-lp-full-content').hide();
+    });
+	
+	jQuery(document).on("click", '.oer-lp-value-excerpt .lp-read-more', function (){
+        jQuery('.oer-lp-value-excerpt').hide();
+        jQuery('.oer-lp-value-full').show();
+    });
+    
+    jQuery(document).on("click", '.oer-lp-value-full .lp-read-less', function (){
+        jQuery('.oer-lp-value-excerpt').show();
+        jQuery('.oer-lp-value-full').hide();
     });
 });
 
