@@ -14,7 +14,7 @@
 .oer-rsrcrghtcntr { float: left; width: 54%; padding: 0 0 0 15px; box-sizing: border-box; }
 .oer-sngl-rsrc-url { float: left; font-size: 26px; padding: 0 0 10px 0; line-height: 28px; text-align: left; width: 100%; }
 .oer-sngl-rsrc-url a { text-decoration: none; color: #333; }
-.oer-sngl-rsrc-img { position: relative; border: 2px solid #dddddd; float: left; width: 100%; }
+.oer-sngl-rsrc-img { position: relative; border: 2px solid #dddddd; float: left; width: 100%; line-height:0; }
 .oer-sngl-rsrc-img:hover { border: 2px solid #444; }
 .oer-sngl-rsrc-img .oer-featureimg { width: auto; }
 .oer-sngl-rsrc-img a { color: #444; text-decoration: none; }
