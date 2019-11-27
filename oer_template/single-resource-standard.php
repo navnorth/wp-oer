@@ -138,7 +138,8 @@ $display_see_more = false;
         <div class="oer-sngl-rsrc-dscrptn">
             <?php if (strlen($post->post_content)>230) : ?>
                 <div class="oer-lp-excerpt"><?php echo oer_get_content($post->post_content, 230); ?></div>
-                <div class="oer-lp-full-content"><?php echo $post->post_content; ?> <a href="javascript:void(0);" class="lp-read-less">(read less)</a></div>
+                <div class="oer-lp-full-content"><?php echo get_the_content(null, false, $post->ID); ?> <a href="javascript:void(0);" class="lp-read-less">(read less)</a>
+                </div>
             <?php else : ?>
                 <div class="oer-lp-content"><?php echo $post->post_content; ?></div>
             <?php endif; ?>
