@@ -97,7 +97,12 @@ if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
                 }
             }
         } else {
-            echo display_default_thumbnail($post);
+            $type=oer_get_resource_file_type($url);
+            if ($type['name']=="Video"){
+                echo oer_embed_video_file($url, $type['type']);
+            } else {
+                echo display_default_thumbnail($post);
+            }
         }
         if ($embed_disabled){
             echo display_default_thumbnail($post);

@@ -3505,4 +3505,63 @@ if (!function_exists('oer_get_embed_code')){
 		return $embed_code;
 	}
 }
+
+if (! function_exists('oer_get_resource_file_type')) {
+    /**
+     * Check the file type form the url
+     * @param $url
+     * @return array|bool
+     */
+    function oer_get_resource_file_type($url) {
+        if(empty($url)) {
+            return false;
+        }
+
+        $type = array();
+        $oer_urls = explode('.', $url);
+        $file_type = strtolower(end($oer_urls));
+		$type['type'] = $file_type;
+        if(in_array($file_type, ['jpg', 'jpeg', 'gif', 'png'])) {
+           $type['name'] = "Image";
+		} elseif(in_array($file_type, ['mp4', 'avi', 'ogg', 'mkv'])) {
+			$type['name'] = 'Video';
+		} elseif(in_array($file_type, ['mp3', 'wav'])) {
+			$type['name'] = 'Audio';
+        } elseif($file_type == 'pdf') {
+            $type['name'] = 'PDF';
+        } elseif(in_array($file_type, ['txt'])) {
+            $type['name'] = 'Plain Text';
+        } elseif(in_array($file_type, ['7z', 'zip', 'rar'])) {
+            $type['name'] = 'Archive';
+        } elseif(in_array($file_type, ['docx', 'doc'])) {
+            $type['name'] = 'Microsoft Document';
+        } elseif(in_array($file_type, ['xls', 'xlsx'])) {
+            $type['name'] = 'Microsoft Excel';
+        } elseif(in_array($file_type, ['ppt', 'pptx'])) {
+            $type['name'] = 'Microsoft Powerpoint';
+        }
+        return $type;
+    }
+}
+
+if (!function_exists('oer_embed_video_file')){
+	function oer_embed_video_file($source, $video_type){
+		$type = "";
+		switch ($video_type){
+			case "mp4":
+				$type = "video/mp4";
+				break;
+			case "ogg":
+				$type = "video/ogg";
+				break;
+			case "webm":
+				$type = "video/WebM";
+				break;
+			default:
+				break;
+		}
+		$embed_code = '<video class="oer-video-viewer" width="100%" src="'.$source.'"></video>';
+		return $embed_code;
+	}
+}
 ?>
