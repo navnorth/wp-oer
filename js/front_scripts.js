@@ -45,13 +45,13 @@ jQuery(document).ready(function(e) {
     });
 	
 	jQuery(document).on("click", '.oer-lp-value-excerpt .lp-read-more', function (){
-        jQuery(this).parent().hide();
-        jQuery(this).parent().closest('.oer-lp-value-full').show();
+        jQuery(this).closest('.oer-lp-value-excerpt').hide();
+        jQuery(this).closest('.oer-lp-value-excerpt').parent().find('.oer-lp-value-full').show();
     });
     
     jQuery(document).on("click", '.oer-lp-value-full .lp-read-less', function (){
-        jQuery(this).parent().closest('.oer-lp-value-excerpt').show();
-        jQuery(this).parent().hide();
+		jQuery(this).closest('.oer-lp-value-full').hide();
+        jQuery(this).closest('.oer-lp-value-full').parent().find('.oer-lp-value-excerpt').show();
     });
 });
 
