@@ -125,10 +125,12 @@ p.center { text-align:center; }
 }
 .license-field { text-align:left; margin-top:10px; }
 .tc-hidden-fields { overflow:hidden; }
-.tc-hidden-fields .form-field { overflow:hidden; display:table; width:100%; }
+.tc-hidden-fields .form-field { overflow:hidden; display:table; width:100%; margin-bottom:5px; }
 .tc-hidden-fields .form-field .oer-lp-label { display:table-cell; float:none; }
 .tc-hidden-fields .form-field .oer-lp-value { display:table-cell; }
 .tc-hidden-fields .form-field .oer-lp-value .oer-lp-value-full { display:none; }
+.tc-hidden-fields .form-field .oer-lp-value .oer-lp-value-full p,
+.tc-hidden-fields .form-field .oer-lp-value .oer-lp-value-excerpt p{ margin-bottom:0; }
 .oer-lp-red { color:#950000; }
 /** For Mobile styles **/
 @media screen and (min-width: 960px) {

@@ -53,6 +53,11 @@ jQuery(document).ready(function(e) {
 		jQuery(this).closest('.oer-lp-value-full').hide();
         jQuery(this).closest('.oer-lp-value-full').parent().find('.oer-lp-value-excerpt').show();
     });
+	
+	jQuery('.tc-hidden-fields .form-field .oer-lp-value .oer-lp-value-full p').each(function(){
+		var read_less = jQuery(this).parent().find('.lp-read-less');
+		jQuery(this).append(read_less);
+	});
 });
 
 //adding author
