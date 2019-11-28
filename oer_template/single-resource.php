@@ -13,8 +13,8 @@ get_header();
 $cur_theme = wp_get_theme();
 $theme = $cur_theme->get('Name');
 if ($theme == "Eleganto"){
-	get_template_part( 'template-part', 'topnav' );
-	get_template_part( 'template-part', 'head' );
+    get_template_part( 'template-part', 'topnav' );
+    get_template_part( 'template-part', 'head' );
 }
 
 global $post;
@@ -74,6 +74,7 @@ if(!empty($post_terms))
 $embed_disabled = false;
 
 $oer_sensitive_material = get_post_meta($post->ID, 'oer_sensitive_material', true);
+$oer_resource_type = get_post_meta($post->ID, 'oer_mediatype', true);
 ?>
 <!--<div id="primary" class="content-area">-->
     <main id="oer_main" class="site-main" role="main">
@@ -92,9 +93,37 @@ $oer_sensitive_material = get_post_meta($post->ID, 'oer_sensitive_material', tru
 	<?php
 	if ($youtube || $isSSLResource || $isSLLCollection)
 		include(OER_PATH.'oer_template/single-resource-youtube.php');
-	else
-		include(OER_PATH.'oer_template/single-resource-standard.php');
-	?>
+	else {
+        $resource_template = OER_PATH.'oer_template/single-resource-standard.php';
+        switch($oer_resource_type) {
+            case "website":
+                $resource_template = OER_PATH.'oer_template/single-resource-website.php';
+                break;
+            case "document":
+                $oer_type=oer_get_resource_file_type($url);
+                if ($oer_type['name']=="PDF")
+                    $resource_template = OER_PATH.'oer_template/single-resource-pdf.php';
+                else
+                    $resource_template = OER_PATH.'oer_template/single-resource-website.php';
+                break;
+            case "image":
+                $resource_template = OER_PATH.'oer_template/single-resource-website.php';
+                break;
+            case "audio":
+                $resource_template = OER_PATH.'oer_template/single-resource-audio.php';
+                break;
+            case "video":
+                $resource_template = OER_PATH.'oer_template/single-resource-video.php';
+                break;
+            case "other":
+                $resource_template = OER_PATH.'oer_template/single-resource-website.php';
+                break;
+            default:
+                break;
+        }
+        include($resource_template);
+    }
+    ?>
 
         </div><!-- .single resource wrapper -->
 

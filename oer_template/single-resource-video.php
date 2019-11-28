@@ -1,0 +1,2 @@
+<?php /** Video Resource Template **/
+?>

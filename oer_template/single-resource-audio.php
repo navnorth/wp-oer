@@ -1,0 +1,2 @@
+<?php /** Audio Resource Template **/
+?>

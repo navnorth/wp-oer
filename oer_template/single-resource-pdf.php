@@ -1,0 +1,2 @@
+<?php /** PDF Resource Template **/
+?>
