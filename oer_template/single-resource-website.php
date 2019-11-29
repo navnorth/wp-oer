@@ -136,7 +136,7 @@
     ?>
     <div class="tc-oer-connected-curriculum">
        <h4 class="tc-field-heading clearfix">
-            <?php _e("Appears In",OER_LESSON_PLAN_SLUG); ?>
+            <?php _e("Connected Compilations",OER_LESSON_PLAN_SLUG); ?>
         </h4>
        <div class="tc-oer-curriculum-details clearfix">
             <ul class="tc-oer-subject-areas-list">
