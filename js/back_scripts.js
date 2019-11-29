@@ -93,7 +93,8 @@ jQuery(document).ready(function(e) {
 			var isAutosavingPost = wp.data.select('core/editor').isAutosavingPost();
 			
 			if (isSavingPost && !isAutosavingPost) {
-				window.tinyMCE.triggerSave();
+				if (typeof window.tinyMCE !== "undefined")
+					window.tinyMCE.triggerSave();
 			}
 		});
 	}

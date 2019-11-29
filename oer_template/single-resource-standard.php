@@ -1,45 +1,4 @@
-<?php
-$post_meta_data = get_post_meta($post->ID );
-$author_set = (get_option('oer_authorname_label'))?true:false;
-$author_enabled = (get_option('oer_authorname_enabled'))?true:false;
-$standards_set = (get_option('oer_standard_label'))?true:false;
-$standards_enabled = (get_option('oer_standard_enabled'))?true:false;
-$oer_standard = get_post_meta($post->ID, 'oer_standard', true);
-$age_levels_set = (get_option('oer_age_levels_label'))?true:false;
-$age_levels_enabled = (get_option('oer_age_levels_enabled'))?true:false;
-$suggested_time_set = (get_option('oer_instructional_time_label'))?true:false;
-$suggested_time_enabled = (get_option('oer_instructional_time_enabled'))?true:false;
-$cc_license_set = (get_option('oer_creativecommons_license_label'))?true:false;
-$cc_license_enabled = (get_option('oer_creativecommons_license_enabled'))?true:false;
-$external_repository_set = (get_option('oer_creativecommons_license_label'))?true:false;
-$external_repository_enabled = (get_option('oer_creativecommons_license_enabled'))?true:false;
-$repository_record_set = (get_option('oer_repository_recordurl_label'))?true:false;
-$repository_record_enabled = (get_option('oer_repository_recordurl_enabled'))?true:false;
-$citation_set = (get_option('oer_citation_label'))?true:false;
-$citation_enabled = (get_option('oer_citation_enabled'))?true:false;
-$transcription_set = (get_option('oer_transcription_label'))?true:false;
-$transcription_enabled = (get_option('oer_transcription_enabled'))?true:false;
-$sensitive_material_set = (get_option('oer_sensitive_material_label'))?true:false;
-$sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?true:false;
-
-$display_see_more = false;
-
-// Get Post Meta
-$age_levels = (isset($post_meta_data['oer_age_levels'][0]) ? $post_meta_data['oer_age_levels'][0] : "");
-$grades =  trim(get_post_meta($post->ID, "oer_grade", true),",");
-$suggested_time = (isset($post_meta_data['oer_instructional_time'][0]) ? $post_meta_data['oer_instructional_time'][0] : "");
-$cc_license = (isset($post_meta_data['oer_creativecommons_license'][0]) ? $post_meta_data['oer_creativecommons_license'][0] : "");
-$external_repository = (isset($post_meta_data['oer_external_repository'][0]) ? $post_meta_data['oer_external_repository'][0] : "");
-$repository_record = (isset($post_meta_data['oer_repository_recordurl'][0]) ? $post_meta_data['oer_repository_recordurl'][0] : "");
-$citation = (isset($post_meta_data['oer_citation'][0]) ? $post_meta_data['oer_citation'][0] : "");
-$transcription = (isset($post_meta_data['oer_transcription'][0]) ? $post_meta_data['oer_transcription'][0] : "");
-$sensitive_material = (isset($post_meta_data['oer_sensitive_material'][0]) ? $post_meta_data['oer_sensitive_material'][0] : "");
-
-if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
-    || !empty($cc_license) || !empty($external_repository) || !empty($repository_record)
-    || !empty($citation) || !empty($transcription) || !empty($sensitive_material))
-    $display_see_more = true;
-?>
+<?php /** Single Resource Standard **/ ?>
 <div class="oer-rsrclftcntr-img col-md-5 col-sm-12 col-xs-12">
     <!--Resource Image-->
     <div class="oer-sngl-rsrc-img">

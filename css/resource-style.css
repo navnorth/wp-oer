@@ -22,7 +22,7 @@
 .oer-rsrcrghtcntr .oer-rsrcctgries { float: left; margin: 0px; width: 100%; padding-bottom: 5px; }
 .oer-rsrcctgries a { /* background: none repeat scroll 0 0 #085394; border: 1px solid #000000; color: #ffffff;float: left;*/ padding: 10px 10px; /*text-decoration: none;*/ width: auto; margin: 0 10px 7px 0; /*font-weight: bold;*/ }
 .oer-rsrcctgries a:hover { /*background: none repeat scroll 0 0 #06457C;*/ }
-.oer-sngl-rsrc-dscrptn { float: left; font-size: 15px; line-height: 20px; width: 100%; padding-bottom: 0; }
+.oer-sngl-rsrc-dscrptn { float: left; font-size: 15px; line-height: 20px; width: 100%; padding-bottom: 0; margin-bottom:15px; }
 .oer_sngl_resource_wrapper h1 { font-weight: bold; margin-bottom: 8px; font-size: 22px; color: #000; }
 .oer-cbxl { float: left; margin-bottom: 5px; width: 100%; }
 .oer-cbxl > h3 { margin-top:3px; margin-bottom: 5px; font-weight: bold; font-size: 14px; width: auto; float: left; margin-right: 15px; }
