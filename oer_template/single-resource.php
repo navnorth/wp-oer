@@ -102,6 +102,9 @@ $oer_sensitive_material = get_post_meta($post->ID, 'oer_sensitive_material', tru
 </main>
 <!--</div>-->
 
+<!-- RELATED RESOURCES -->
+<?php include_once OER_PATH.'includes/related-resources.php';?>
+
 <?php
 if ($theme == "Eleganto"){
 	get_template_part( 'template-part', 'footernav' );

@@ -681,6 +681,13 @@ function oer_save_customfields()
 		{
 			update_post_meta( $post->ID , 'oer_transcription' , $_POST['oer_transcription']);
 		}
+
+    // Save Related Resource
+		if(isset($_POST['oer_related_resource']))
+		{
+			update_post_meta( $post->ID , 'oer_related_resource' , addslashes($_POST['oer_related_resource']));
+		}
+
 	}
     }
 }
@@ -863,6 +870,17 @@ function oer_add_modal(){
     $screen = get_current_screen();
     if ( 'post' == $screen->base && 'resource' == $screen->id ){
       include_once(OER_PATH."oer_template/modals/standard_modal.php");
+    }
+  }
+}
+
+// Add Related Resource Modal
+add_action( "admin_footer" , "oer_add_related_resource_modal" );
+function oer_add_related_resource_modal(){
+  if (oer_installed_standards_plugin()) {
+    $screen = get_current_screen();
+    if ( 'post' == $screen->base && 'resource' == $screen->id ){
+      include_once(OER_PATH."oer_template/modals/related_resource_modal.php");
     }
   }
 }

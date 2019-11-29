@@ -399,3 +399,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
 <div class="oer-see-more-row">
     <p class="center"><span><a id="oer-see-more-link" class="oer-see-more-link" role="button" data-toggle="collapse" href="#tcHiddenFields" aria-expanded="false" aria-controls="tcHiddenFields"><?php _e("SEE MORE +",OER_LESSON_PLAN_SLUG); ?></a></span></p>
 </div>
+
+
+<!-- RELATED RESOURCES -->
+<?php include_once OER_PATH.'includes/related-resources.php';?>
