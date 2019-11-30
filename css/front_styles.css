@@ -468,3 +468,121 @@ li.oer_sbstndard{
 	.oer_blgpst .rght-sd-cntnr-blg { width:100%; float:none; }
 	.oer_sngl_stndrd { margin-left:5px; }
 }
+
+/* RELATED RESOURCES FRONT */
+.lp-primary-sources-row {
+    padding: 25px 0px 50px 0px;
+    background: #FBFBFB;
+    border-top: 1px solid #E0E0E0;
+		float: left;
+    width: 100%;
+		margin-top: 25px;
+}
+.lp-related-resources-header {
+    float: left;
+    width: 100%;
+    padding: 0px 15px 23px 15px;
+    font-size: 1.1em;
+    color: #356483;
+    font-weight: 600;
+}
+.lp-primary-sources-row .media-image {
+    background: rgba(255,255,255,0.8);
+    width: 240px;
+    height: auto;
+    min-height: 355px;
+    margin-bottom: 40px;
+    border: 1px solid #e2e2e2;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.lp-primary-sources-row .image-thumbnail {
+    height: 240px;
+    min-height: 150px;
+    width: 240px;
+    overflow: hidden;
+    border-top: none;
+    text-align: center;
+    display: block;
+    padding: 0;
+    position: relative;
+}
+span.resource-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(157, 157, 157, 0.3);
+    transition: all .4s ease-in;
+}
+span.resource-overlay:hover {
+    opacity: 0;
+}
+.lp-source-type {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 5px 15px;
+    background: #356483;
+    color: #ffffff;
+}
+.resource-thumbnail {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+}
+.lp-primary-sources-row .lp-resource-title {
+		background: #ffffff;
+		color: #4b4b4b;
+		padding: 10px 10px 0px 10px;
+		width: 100%;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		line-height: 1.5em;
+}
+.lp-resource-author {
+    background: #ffffff;
+    color: #4b4b4b;
+    padding: 0px 5px 5px 5px;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.lp-resource-author_block>a {
+    font-size: .9em;
+    line-height: 0.8em;
+}
+.lp-resource-author_block {
+		float: left;
+		padding: 3px 5px 3px 5px;
+		line-height: 1.2em;
+}
+.lp-resource-excerpt {
+    float: left;
+    width: 100%;
+    padding: 10px 8px 0px 8px;
+    line-height: 1.2em;
+    font-size: .9em;
+}
+.resource-avatar {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    text-align: center;
+}
+.resource-avatar .dashicons {
+    font-size: 157px;
+    color: #356483;
+    width: auto;
+    height: 148px;
+    margin-top: 45px;
+}
+div#oer_related_resources_list label input {
+    line-height: 1em;
+    margin: 0px;
+}

@@ -172,6 +172,9 @@ if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
 </main>
 <!--</div>-->
 
+<!-- RELATED RESOURCES -->
+<?php include_once OER_PATH.'includes/related-resources.php';?>
+
 <?php
 if ($theme == "Eleganto"){
 	get_template_part( 'template-part', 'footernav' );

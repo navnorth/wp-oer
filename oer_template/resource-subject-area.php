@@ -529,8 +529,8 @@ $hide_title = get_option('oer_hide_subject_area_title');
 										<div class="tagcloud">
 										<?php
 										foreach($oer_subjects as $subject)
-										{
-											echo '<span><a href="'.esc_url(site_url().'/'.$subject->taxonomy.'/'.$subject->slug).'" class="button">'.ucwords ($subject->name).'</a></span>';
+										{						
+											echo '<span><a href="'.esc_url(get_term_link($subject)).'" class="button">'.ucwords ($subject->name).'</a></span>';							
 										}
 										?>
 										</div>

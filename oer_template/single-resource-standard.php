@@ -1,8 +1,31 @@
-<?php /** Single Resource Standard **/ ?>
+<?php
+$post_meta_data = get_post_meta($post->ID );
+$author_set = (get_option('oer_authorname_label'))?true:false;
+$author_enabled = (get_option('oer_authorname_enabled'))?true:false;
+$standards_set = (get_option('oer_standard_label'))?true:false;
+$standards_enabled = (get_option('oer_standard_enabled'))?true:false;
+$oer_standard = get_post_meta($post->ID, 'oer_standard', true);
+$age_levels_set = (get_option('oer_age_levels_label'))?true:false;
+$age_levels_enabled = (get_option('oer_age_levels_enabled'))?true:false;
+$suggested_time_set = (get_option('oer_instructional_time_label'))?true:false;
+$suggested_time_enabled = (get_option('oer_instructional_time_enabled'))?true:false;
+$cc_license_set = (get_option('oer_creativecommons_license_label'))?true:false;
+$cc_license_enabled = (get_option('oer_creativecommons_license_enabled'))?true:false;
+$external_repository_set = (get_option('oer_creativecommons_license_label'))?true:false;
+$external_repository_enabled = (get_option('oer_creativecommons_license_enabled'))?true:false;
+$repository_record_set = (get_option('oer_repository_recordurl_label'))?true:false;
+$repository_record_enabled = (get_option('oer_repository_recordurl_enabled'))?true:false;
+$citation_set = (get_option('oer_citation_label'))?true:false;
+$citation_enabled = (get_option('oer_citation_enabled'))?true:false;
+$transcription_set = (get_option('oer_transcription_label'))?true:false;
+$transcription_enabled = (get_option('oer_transcription_enabled'))?true:false;
+$sensitive_material_set = (get_option('oer_sensitive_material_label'))?true:false;
+$sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?true:false;
+?>
 <div class="oer-rsrclftcntr-img col-md-5 col-sm-12 col-xs-12">
     <!--Resource Image-->
     <div class="oer-sngl-rsrc-img">
-        <?php if ($youtube) { 
+        <?php if ($youtube) {
             $embed = oer_generate_youtube_embed_code($url);
             echo $embed;
         } elseif($isPDF) {
@@ -127,7 +150,7 @@
             <?php //echo $content = apply_filters ("the_content", $post->post_content); ?>
         </div>
     <?php } ?>
-    
+
     <?php
     $keywords = wp_get_post_tags($post->ID);
     if(!empty($keywords))
@@ -160,7 +183,7 @@
     <?php
          }
     } ?>
-    
+
     <!-- Subject Areas -->
     <?php
     $post_terms = get_the_terms( $post->ID, 'resource-subject-area' );
@@ -192,7 +215,7 @@
         </div>
     </div>
     <?php } ?>
-    
+
     <!-- Curriculum -->
     <?php
     $connected_curriculums = oer_get_connected_curriculums($post->post_title);
@@ -245,11 +268,11 @@
             }
         }
         ?>
-        
+
         <!-- Grade Level -->
         <?php
         $grades = explode(",",$grades);
-        
+
         if(is_array($grades) && !empty($grades) && array_filter($grades))
         {
             $option_set = false;
@@ -273,7 +296,7 @@
                 </div>
             </div>
         <?php }?>
-        
+
         <!-- Instruction Time -->
         <?php
         if (($suggested_time_set && $suggested_time_enabled) || !$suggested_time_set) {
@@ -287,7 +310,7 @@
              }
          }
         ?>
-        
+
         <!-- Creative Commons License -->
         <?php
         if (($cc_license_set && $cc_license_enabled) || !$cc_license_set) {
@@ -300,7 +323,7 @@
             <?php
             }
         }
-        
+
         ?>
     </div>
     <div class="col-md-7">
@@ -317,7 +340,7 @@
              }
          }
         ?>
-        
+
         <!-- Repository URL -->
         <?php
         if (($repository_record_set && $repository_record_enabled) || !$repository_record_set) {
@@ -331,7 +354,7 @@
              }
          }
         ?>
-        
+
         <!-- Citation -->
         <?php
         if (($citation_set && $citation_enabled) || !$citation_set) {
@@ -351,7 +374,7 @@
             }
         }
         ?>
-        
+
         <!-- Transcription -->
         <?php
         if (($transcription_set && $transcription_enabled) || !$transcription_set) {
@@ -371,7 +394,7 @@
             }
         }
         ?>
-        
+
         <!-- Sensitive Material Warning -->
         <?php
         if (($sensitive_material_set && $sensitive_material_enabled) || !$sensitive_material_set) {
@@ -393,3 +416,7 @@
         ?>
     </div>
 </div>
+
+
+<!-- RELATED RESOURCES -->
+<?php include_once OER_PATH.'includes/related-resources.php';?>

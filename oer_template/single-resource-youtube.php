@@ -346,3 +346,6 @@
         ?>
     </div>
 </div>
+
+<!-- RELATED RESOURCES -->
+<?php include_once OER_PATH.'includes/related-resources.php';?>
