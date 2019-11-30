@@ -2,8 +2,60 @@
 <div class="oer-rsrclftcntr-img col-md-5 col-sm-12 col-xs-12">
     <!--Resource Image-->
     <div class="oer-sngl-rsrc-img">
-        <?php  echo display_default_thumbnail($post); ?>
+        <?php
+        if ($isExternal) {
+            $external_option = get_option("oer_external_pdf_viewer");
+            if ($external_option==1) {
+                $pdf_url = "https://docs.google.com/gview?url=".$url."&embedded=true";
+                echo get_embed_code($pdf_url);
+            } elseif($external_option==0) {
+                $embed_disabled = true;
+            }
+        } else {
+            $local_option = get_option("oer_local_pdf_viewer");
+            switch ($local_option){
+                case 0:
+                    $embed_disabled = true;
+                    break;
+                case 1:
+                    $pdf_url = "https://docs.google.com/gview?url=".$url."&embedded=true";
+                    echo get_embed_code($pdf_url);
+                    break;
+                case 2:
+                    $pdf_url = OER_URL."pdfjs/web/viewer.html?file=".urlencode($url);
+                    $embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.$pdf_url.'"></iframe>';
+                    echo $embed_code;
+                    break;
+                case 3:
+                    if(shortcode_exists('wonderplugin_pdf')) {
+                        $embed_code = "[wonderplugin_pdf src='".$url."' width='100%']";
+                        echo do_shortcode($embed_code);
+                    } else {
+                        $embed_disabled = true;
+                    }
+                    break;
+                case 4:
+                    if(shortcode_exists('pdf-embedder')){
+                        $embed_code = "[pdf-embedder url='".$url."' width='100%']";
+                        echo do_shortcode($embed_code);
+                    } else {
+                        $embed_disabled = true;
+                    }
+                    break;
+                case 5:
+                    if(shortcode_exists('pdfviewer')){
+                        $embed_code = "[pdfviewer width='100%']".$url."[/pdfviewer]";
+                        echo do_shortcode($embed_code);
+                    } else {
+                        $embed_disabled = true;
+                    }
+                    break;
+            }
+        }
+        ?>
     </div>
+</div>
+<div class="oer-rsrcrghtcntr pdf-resource-details col-md-7 col-sm-12 col-xs-12">
     <div id="" class="oer-authorName oer-cbxl">
         <?php
         $oer_authorname = get_post_meta($post->ID, "oer_authorname", true);
@@ -48,8 +100,6 @@
         <span><a href="<?php echo esc_url($oer_publisherurl); ?>" target="_blank"><?php echo $oer_publishername; ?></a></span></h4>
     </div>
     <?php } ?>
-</div>
-<div class="oer-rsrcrghtcntr col-md-7 col-sm-12 col-xs-12">
     <!--Resource Description-->
     <?php if(!empty($post->post_content)) {?>
         <div class="oer-sngl-rsrc-dscrptn">
@@ -159,16 +209,8 @@
        </div>
     </div>
     <?php } ?>
-    </div>
-</div> <!--Description & Resource Info at Right-->
-<?php  if ($display_see_more): ?>
-<div class="oer-see-more-row">
-    <p class="center"><span><a id="oer-see-more-link" class="oer-see-more-link" role="button" data-toggle="collapse" href="#tcHiddenFields" aria-expanded="false" aria-controls="tcHiddenFields"><?php _e("SEE MORE +",OER_LESSON_PLAN_SLUG); ?></a></span></p>
-</div>
-<?php endif; ?>
-<div id="tcHiddenFields" class="tc-hidden-fields collapse row">
-    <div class="col-md-5">
-        <!-- Age Levels -->
+    
+    <!-- Age Levels -->
         <?php
         if (($age_levels_set && $age_levels_enabled) || !$age_levels_set) {
             $age_label = oer_field_label('oer_age_levels');
@@ -239,7 +281,14 @@
         
         ?>
     </div>
-    <div class="col-md-7">
+</div> <!--Description & Resource Info at Right-->
+<?php  if ($display_see_more): ?>
+<div class="oer-see-more-row">
+    <p class="center"><span><a id="oer-see-more-link" class="oer-see-more-link" role="button" data-toggle="collapse" href="#tcHiddenFields" aria-expanded="false" aria-controls="tcHiddenFields"><?php _e("SEE MORE +",OER_LESSON_PLAN_SLUG); ?></a></span></p>
+</div>
+<?php endif; ?>
+<div id="tcHiddenFields" class="tc-hidden-fields collapse row">
+    <div class="col-md-12">
         <!-- External Repository -->
         <?php
         if (($external_repository_set && $external_repository_enabled) || !$external_repository_set) {

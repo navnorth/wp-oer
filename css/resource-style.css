@@ -127,11 +127,14 @@ p.center { text-align:center; }
 .oer-rsrclftcntr .form-field.license-field { margin:30px 0; }
 .tc-hidden-fields { overflow:hidden; }
 .tc-hidden-fields .form-field,
-.oer-rsrclftcntr .form-field { overflow:hidden; display:table; width:100%; margin-bottom:5px; }
+.oer-rsrclftcntr .form-field,
+.pdf-resource-details .form-field { overflow:hidden; display:table; width:100%; margin-bottom:5px; }
 .tc-hidden-fields .form-field .oer-lp-label,
-.oer-rsrclftcntr .form-field .oer-lp-label { display:table-cell; float:none; }
+.oer-rsrclftcntr .form-field .oer-lp-label,
+.pdf-resource-details .form-field .oer-lp-label { display:table-cell; float:none; }
 .tc-hidden-fields .form-field .oer-lp-value,
-.oer-rsrclftcntr .form-field .oer-lp-value { display:table-cell; }
+.oer-rsrclftcntr .form-field .oer-lp-value,
+.pdf-resource-details .form-field .oer-lp-value { display:table-cell; }
 .tc-hidden-fields .form-field .oer-lp-value .oer-lp-value-full { display:none; }
 .tc-hidden-fields .form-field .oer-lp-value .oer-lp-value-full p,
 .tc-hidden-fields .form-field .oer-lp-value .oer-lp-value-excerpt p{ margin-bottom:0; }
