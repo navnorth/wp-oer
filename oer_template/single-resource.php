@@ -99,11 +99,12 @@ $oer_sensitive_material = get_post_meta($post->ID, 'oer_sensitive_material', tru
         </div><!-- .single resource wrapper -->
 
     </article>
+		
+	<!-- RELATED RESOURCES -->
+	<?php include_once OER_PATH.'includes/related-resources.php';?>
 </main>
 <!--</div>-->
 
-<!-- RELATED RESOURCES -->
-<?php include_once OER_PATH.'includes/related-resources.php';?>
 
 <?php
 if ($theme == "Eleganto"){
