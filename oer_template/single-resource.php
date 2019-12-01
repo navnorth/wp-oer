@@ -169,11 +169,12 @@ if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
         </div><!-- .single resource wrapper -->
 
     </article>
+		
+	<!-- RELATED RESOURCES -->
+	<?php include_once OER_PATH.'includes/related-resources.php';?>
 </main>
 <!--</div>-->
 
-<!-- RELATED RESOURCES -->
-<?php include_once OER_PATH.'includes/related-resources.php';?>
 
 <?php
 if ($theme == "Eleganto"){
@@ -188,6 +189,7 @@ function display_default_thumbnail($post){
 		$new_image_url = OER_URL.'images/default-icon-528x455.png';
 		$img_width = oer_get_image_width('large');
 		$img_height = oer_get_image_height('large');
+		$media_type = get_post_meta($post->ID,"oer_mediatype")[0];
 		
 	if(!empty($img_url))
 	{
@@ -195,11 +197,14 @@ function display_default_thumbnail($post){
 			debug_log("Can't get Image editor to resize Resource screenshot.");
 		} else {
 			$new_image_url = oer_resize_image($img_url[0], $img_width, $img_height, true);
+			$html .= '<img src="'.esc_url($new_image_url).'" alt="'.esc_attr(get_the_title()).'"/>';
 		}
+	}else{
+		
+		$html .= '<span class="dashicons '.getResourceIcon($media_type).'"></span>';
 	}
 	
-	$html .= '<img src="'.esc_url($new_image_url).'" alt="'.esc_attr(get_the_title()).'"/>';
-
+		
 	$html .= '</a>';
 	return $html;
 }

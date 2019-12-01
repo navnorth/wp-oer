@@ -3598,7 +3598,7 @@ function get_resources_for_related() {
 function getResourceIcon($oer_media_type){
 	switch (strtolower($oer_media_type)) {
 			case "website":
-					$_avtr = 'dashicons-media-text';
+					$_avtr = 'dashicons-admin-site';
 					break;
 			case "audio":
 					$_avtr = 'dashicons-controls-volumeon';
