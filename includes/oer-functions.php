@@ -3406,6 +3406,20 @@ if (!function_exists('oer_get_content')){
     }
 }
 
+// Get Content with x number of characters for related resources
+if (!function_exists('oer_get_related_resource_content')){
+	function oer_get_related_resource_content($content, $limit) {
+        if (strlen($content)>=$limit) {
+          $content = substr($content, 0, $limit);
+        }
+        $content = preg_replace('/[.+]/','', $content);
+        //$content = apply_filters('the_content', $content);
+        $content = str_replace(']]>', ']]>', $content);
+        $content .= ' ...';
+        return $content;
+    }
+}
+
 // Get Creative Commons License to Display
 if (!function_exists('oer_cc_license_image')){
 	function oer_cc_license_image($license){
@@ -3514,7 +3528,7 @@ function get_resources_for_related() {
 		'post_type'  => 'resource', //or a post type of your choosing
 		'posts_per_page' => -1,
 		'order' => 'ASC',
-    'orderby' => 'title',
+        'orderby' => 'title',
 		'post_status' => 'publish'
 	);
 	$query = new WP_Query($args);
