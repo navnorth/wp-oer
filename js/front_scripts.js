@@ -5,8 +5,11 @@ jQuery(document).ready(function(e) {
 			jQuery(this).children(".oer-cat-div,.oer-cat-div-large,.oer-cat-div-medium,.oer-cat-div-small").children(".oer-child-category").hide();
 			//alert(hght);
 	    });
-	jQuery( ".oer_datepicker" ).datepicker();
-	jQuery( ".oer_datepicker" ).datepicker( "option", "showAnim", "slideDown" );
+	
+	if (jQuery( ".oer_datepicker" ).length) {
+		jQuery( ".oer_datepicker" ).datepicker();
+		jQuery( ".oer_datepicker" ).datepicker( "option", "showAnim", "slideDown" );
+	}
 	
 	jQuery(document).on("show.bs.collapse", '.lp-subject-hidden.collapse', function (){
         var more_count = jQuery('.see-more-subjects').attr('data-count');
