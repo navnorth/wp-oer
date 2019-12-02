@@ -3406,21 +3406,6 @@ if (!function_exists('oer_get_content')){
     }
 }
 
-// Get Content with x number of characters for related resources
-if (!function_exists('oer_get_related_resource_content')){
-	function oer_get_related_resource_content($content, $limit) {
-        if (strlen($content)>=$limit) {
-          $content = substr($content, 0, $limit);
-        }
-
-        $content = preg_replace('/[.+]/','', $content);
-        //$content = apply_filters('the_content', $content);
-        $content = str_replace(']]>', ']]>', $content);
-        $content .= ' ...';
-        return $content;
-    }
-}
-
 // Get Creative Commons License to Display
 if (!function_exists('oer_cc_license_image')){
 	function oer_cc_license_image($license){
@@ -3579,42 +3564,10 @@ if (!function_exists('oer_embed_video_file')){
 	}
 }
 
-/**
- * Get Resources
- **/
-function get_resources_for_related() {
-	//later in the request
-	$args = array(
-		'post_type'  => 'resource', //or a post type of your choosing
-		'posts_per_page' => -1,
-		'order' => 'ASC',
-    'orderby' => 'title',
-		'post_status' => 'publish'
-	);
-	$query = new WP_Query($args);
-	return $query->posts;
-}
-
-function getResourceIcon($oer_media_type){
-	switch (strtolower($oer_media_type)) {
-			case "website":
-					$_avtr = 'dashicons-admin-site';
-					break;
-			case "audio":
-					$_avtr = 'dashicons-controls-volumeon';
-					break;
-			case "document":
-					$_avtr = 'dashicons-media-text';
-					break;
-			case "image":
-					$_avtr = 'dashicons-format-image';
-					break;
-			case "video":
-					$_avtr = 'dashicons-video-alt2';
-					break;
-			default:
-					$_avtr = 'dashicons-media-text';
+if (!function_exists('oer_embed_audio_file')){
+	function oer_embed_audio_file($source){
+		$embed_code = '<audio class="oer-audio-controller" width="100%" src="'.$source.'" controls></audio>';
+		return $embed_code;
 	}
-	return $_avtr;
 }
 ?>

@@ -139,6 +139,14 @@ p.center { text-align:center; }
 .tc-hidden-fields .form-field .oer-lp-value .oer-lp-value-full p,
 .tc-hidden-fields .form-field .oer-lp-value .oer-lp-value-excerpt p{ margin-bottom:0; }
 .oer-lp-red { color:#950000; }
+.oer-sngl-rsrc-img.oer-sngl-audio-type {
+	display: flex;
+    height: 200px;
+    border: none;
+    justify-content: center;
+    align-items: center;
+}
+.oer-sngl-rsrc-img.oer-sngl-audio-type audio { width:100% !important; }
 /** For Mobile styles **/
 @media screen and (min-width: 960px) {
     .oer-sngl-rsrc-dscrptn { width: 100%; }

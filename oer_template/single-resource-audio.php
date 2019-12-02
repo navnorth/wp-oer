@@ -1,8 +1,14 @@
-<?php /** Audio Resource Template **/ ?>
+<?php /** Website/Image/Document(except PDF)/Other Resource Template **/ ?>
 <div class="oer-rsrclftcntr-img col-md-5 col-sm-12 col-xs-12">
     <!--Resource Image-->
-    <div class="oer-sngl-rsrc-img">
-        <?php  echo display_default_thumbnail($post); ?>
+    <div class="oer-sngl-rsrc-img oer-sngl-audio-type">
+        <?php
+        $type=oer_get_resource_file_type($url);
+        if ($type['name']=="Audio")
+            echo oer_embed_audio_file($url);
+        else
+            echo display_default_thumbnail($post);
+        ?>
     </div>
     <div id="" class="oer-authorName oer-cbxl">
         <?php
@@ -136,7 +142,7 @@
     ?>
     <div class="tc-oer-connected-curriculum">
        <h4 class="tc-field-heading clearfix">
-            <?php _e("Appears In",OER_LESSON_PLAN_SLUG); ?>
+            <?php _e("Connected Compilations",OER_LESSON_PLAN_SLUG); ?>
         </h4>
        <div class="tc-oer-curriculum-details clearfix">
             <ul class="tc-oer-subject-areas-list">
