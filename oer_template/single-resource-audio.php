@@ -5,7 +5,7 @@
         <?php
         $type=oer_get_resource_file_type($url);
         if ($type['name']=="Audio")
-            echo oer_embed_audio_file($url);
+            echo oer_generate_audio_resource_embed($url);
         else
             echo display_default_thumbnail($post);
         ?>
