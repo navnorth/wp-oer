@@ -151,10 +151,18 @@ if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
                 $resource_template = OER_PATH.'oer_template/single-resource-website.php';
                 break;
             case "audio":
-                $resource_template = OER_PATH.'oer_template/single-resource-audio.php';
+                $file_type=oer_get_resource_file_type($url);
+                if ($file_type['name']=="Audio")
+                    $resource_template = OER_PATH.'oer_template/single-resource-audio.php';
+                else
+                    $resource_template = OER_PATH.'oer_template/single-resource-website.php';
                 break;
             case "video":
-                $resource_template = OER_PATH.'oer_template/single-resource-video.php';
+                $file_type=oer_get_resource_file_type($url);
+                if ($file_type['name']=="Video")
+                    $resource_template = OER_PATH.'oer_template/single-resource-video.php';
+                else
+                    $resource_template = OER_PATH.'oer_template/single-resource-website.php';
                 break;
             case "other":
                 $resource_template = OER_PATH.'oer_template/single-resource-website.php';
@@ -200,8 +208,8 @@ function display_default_thumbnail($post){
 			$html .= '<img src="'.esc_url($new_image_url).'" alt="'.esc_attr(get_the_title()).'"/>';
 		}
 	}else{
-		
-		$html .= '<span class="dashicons '.getResourceIcon($media_type).'"></span>';
+    global $url; 
+		$html .= '<span class="dashicons '.getResourceIcon($media_type,$url).'"></span>';
 	}
 	
 		

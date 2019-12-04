@@ -3535,7 +3535,8 @@ function get_resources_for_related() {
 	return $query->posts;
 }
 
-function getResourceIcon($oer_media_type){
+function getResourceIcon($oer_media_type, $url = NULL){
+	$_avtr = '';
 	switch (strtolower($oer_media_type)) {
 			case "website":
 					$_avtr = 'dashicons-admin-site';
@@ -3544,7 +3545,26 @@ function getResourceIcon($oer_media_type){
 					$_avtr = 'dashicons-controls-volumeon';
 					break;
 			case "document":
-					$_avtr = 'dashicons-media-text';
+					$_type = oer_get_resource_file_type($url);
+					if($_type['name'] == 'PDF'){
+						$_avtr = 'dashicons-media-text';
+					}elseif ($_type['name'] == 'Microsoft Document') {
+						$_avtr = 'dashicons-media-document';
+					}elseif ($_type['name'] == 'Microsoft Excel') {
+						$_avtr = 'dashicons-media-spreadsheet';
+					}elseif ($_type['name'] == 'Microsoft Powerpoint') {
+						$_avtr = 'dashicons-media-interactive';
+					}elseif ($_type['name'] == 'Plain Text') {
+						$_avtr = 'dashicons-media-text';
+					}else{
+						$_avtr = 'dashicons-media-text';
+					}
+					break;
+			case "excel":
+					$_avtr = 'dashicons-media-spreadsheet';
+					break;
+			case "powerpoint":
+					$_avtr = 'dashicons-media-interactive';
 					break;
 			case "image":
 					$_avtr = 'dashicons-format-image';
@@ -3591,7 +3611,9 @@ if (! function_exists('oer_get_resource_file_type')) {
             $type['name'] = 'Microsoft Excel';
         } elseif(in_array($file_type, ['ppt', 'pptx'])) {
             $type['name'] = 'Microsoft Powerpoint';
-        }
+				}else{
+						$type['name'] = '';
+				}
         return $type;
     }
 }
