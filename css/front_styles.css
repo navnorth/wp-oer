@@ -499,7 +499,7 @@ a.oer-featureimg .dashicons {
     background: rgba(255,255,255,0.8);
     width: 240px;
     height: auto;
-    min-height: 382px;
+    min-height: 392px;
     margin-bottom: 40px;
     border: 1px solid #e2e2e2;
     box-sizing: border-box;
@@ -594,4 +594,17 @@ span.resource-overlay:hover {
 div#oer_related_resources_list label input {
     line-height: 1em;
     margin: 0px;
+}
+.wp_oer_breadcrumb {
+		display: block;
+		float: left;
+		width: 100%;
+		text-align: right;
+		padding: 12px 1px;
+		font-size: 1em !important;
+}
+.navigation-avatar .dashicons {
+    font-size: 82px;
+    width: 82px;
+    height: 82px;
 }

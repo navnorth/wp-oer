@@ -3638,4 +3638,26 @@ if (!function_exists('oer_embed_video_file')){
 		return $embed_code;
 	}
 }
+
+	function oer_breadcrumb_display($resource = NULL){
+		$ret = '<div class="wp_oer_breadcrumb">';
+		global $post;
+		if($resource != NULL){
+				$curriculum = get_post($post);
+		    if($curriculum ){
+		        $ret .= '<a href="'.get_site_url().'">Home</a>';
+						$ret .= ' / <a href="'.get_permalink( $curriculum->ID ).'">'.$curriculum->post_title.'</a>';
+						$ret .= ' / '.$resource->post_title;
+		    }
+		}else{
+				$resource = get_post($post);
+		    if($resource){
+					$ret .= '<a href="'.get_site_url().'">Home</a>';
+					$ret .= ' / '.$resource->post_title;
+		    }
+		}	
+		$ret .= '</div>';
+		return $ret;
+	}
+
 ?>

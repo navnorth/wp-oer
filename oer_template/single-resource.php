@@ -119,7 +119,7 @@ if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
 ?>
 <!--<div id="primary" class="content-area">-->
     <main id="oer_main" class="site-main" role="main">
-
+    <?php echo oer_breadcrumb_display(); ?>
     <article id="oer-resource-<?php the_ID(); ?>" class="oer_sngl_resource_wrapper post-content">
         <div id="sngl-resource" class="entry-content oer-cntnr post-content oer_sngl_resource_wrapper row">
 	<?php //if (!$hide_title): ?>
