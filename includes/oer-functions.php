@@ -3535,7 +3535,7 @@ function get_resources_for_related() {
 	return $query->posts;
 }
 
-function getResourceIcon($oer_media_type, $url = NULL){
+function getResourceIcon($oer_media_type, $url){
 	$_avtr = '';
 	switch (strtolower($oer_media_type)) {
 			case "website":
