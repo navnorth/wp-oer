@@ -22,7 +22,7 @@ if(!empty($_delimited[0])):
            <div class="media-image">
                <div class="image-thumbnail">
                    <a href="<?php echo get_post_permalink($_res_id); ?>" target="_new">
-                      <?php if(!$resource_img): $_avtr = getResourceIcon($oer_media_type); ?>
+                      <?php if(!$resource_img): $_avtr = getResourceIcon($oer_media_type, $oer_resourceurl); ?>
                           <div class="resource-avatar"><span class="dashicons <?php echo $_avtr; ?>"></span></div>
                        <?php endif; ?>
                        <span class="resource-overlay"></span>
