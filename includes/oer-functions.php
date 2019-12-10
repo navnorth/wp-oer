@@ -229,12 +229,14 @@ function oer_getScreenshotFile($url)
 }
 
 // Log Debugging
-function debug_log($message) {
-	global $_debug;
-
-	// if debugging is on
-	if ($_debug=="on")
-		error_log($message);
+if (!function_exists('debug_log')){
+	function debug_log($message) {
+		global $_debug;
+	
+		// if debugging is on
+		if ($_debug=="on")
+			error_log($message);
+	}
 }
 
 // Taxonomy rewrite
@@ -1082,6 +1084,7 @@ function oer_importResources($default=false) {
 				$oer_grade 		= "";
 				$oer_kywrd 		= "";
 				$oer_datecreated 	= "";
+				$oer_datecreated_estimate = "";
 				$oer_datemodified 	= "";
 				$oer_mediatype 		= "";
 				$oer_lrtype 		= "";
@@ -1101,6 +1104,10 @@ function oer_importResources($default=false) {
 				$oer_authorurl2     	= "";
 				$oer_authoremail2   	= "";
 				$oer_thumbnailurl	= "";
+				$oer_format		= "";
+				$oer_transcription	= "";
+				$oer_citation		= "";
+				$oer_sensitive_material = "";
 
 				/** Check first if column is set **/
 				if (isset($fnldata['cells'][$k][1]))
@@ -1120,43 +1127,53 @@ function oer_importResources($default=false) {
 				if (isset($fnldata['cells'][$k][8]))
 					$oer_datecreated    = $fnldata['cells'][$k][8];
 				if (isset($fnldata['cells'][$k][9]))
-					$oer_datemodified   = $fnldata['cells'][$k][9];
+					$oer_datecreated_estimate    = $fnldata['cells'][$k][9];
 				if (isset($fnldata['cells'][$k][10]))
-					$oer_mediatype      = $fnldata['cells'][$k][10];
+					$oer_datemodified   	= $fnldata['cells'][$k][10];
 				if (isset($fnldata['cells'][$k][11]))
-					$oer_lrtype         = $fnldata['cells'][$k][11];
+					$oer_mediatype      	= $fnldata['cells'][$k][11];
 				if (isset($fnldata['cells'][$k][12]))
-					$oer_interactivity  = $fnldata['cells'][$k][12];
+					$oer_lrtype         	= $fnldata['cells'][$k][12];
 				if (isset($fnldata['cells'][$k][13]))
-					$oer_userightsurl   = $fnldata['cells'][$k][13];
+					$oer_interactivity  	= $fnldata['cells'][$k][13];
 				if (isset($fnldata['cells'][$k][14]))
-					$oer_isbasedonurl   = $fnldata['cells'][$k][14];
+					$oer_userightsurl   	= $fnldata['cells'][$k][14];
 				if (isset($fnldata['cells'][$k][15]))
-					$oer_standard       = $fnldata['cells'][$k][15];
+					$oer_isbasedonurl   	= $fnldata['cells'][$k][15];
 				if (isset($fnldata['cells'][$k][16]))
-					$oer_authortype     = $fnldata['cells'][$k][16];
+					$oer_standard       	= $fnldata['cells'][$k][16];
 				if (isset($fnldata['cells'][$k][17]))
-					$oer_authorname     = $fnldata['cells'][$k][17];
+					$oer_authortype     	= $fnldata['cells'][$k][17];
 				if (isset($fnldata['cells'][$k][18]))
-					$oer_authorurl      = $fnldata['cells'][$k][18];
+					$oer_authorname     	= $fnldata['cells'][$k][18];
 				if (isset($fnldata['cells'][$k][19]))
-					$oer_authoremail    = $fnldata['cells'][$k][19];
+					$oer_authorurl      	= $fnldata['cells'][$k][19];
 				if (isset($fnldata['cells'][$k][20]))
-					$oer_publishername  = $fnldata['cells'][$k][20];
+					$oer_authoremail    	= $fnldata['cells'][$k][20];
 				if (isset($fnldata['cells'][$k][21]))
-					$oer_publisherurl   = $fnldata['cells'][$k][21];
+					$oer_publishername  	= $fnldata['cells'][$k][21];
 				if (isset($fnldata['cells'][$k][22]))
-					$oer_publisheremail = $fnldata['cells'][$k][22];
+					$oer_publisherurl   	= $fnldata['cells'][$k][22];
 				if (isset($fnldata['cells'][$k][23]))
-					$oer_authortype2    = $fnldata['cells'][$k][23];
+					$oer_publisheremail 	= $fnldata['cells'][$k][23];
 				if (isset($fnldata['cells'][$k][24]))
-					$oer_authorname2    = $fnldata['cells'][$k][24];
+					$oer_authortype2   	 = $fnldata['cells'][$k][24];
 				if (isset($fnldata['cells'][$k][25]))
-					$oer_authorurl2     = $fnldata['cells'][$k][25];
+					$oer_authorname2    	= $fnldata['cells'][$k][25];
 				if (isset($fnldata['cells'][$k][26]))
-					$oer_authoremail2   = $fnldata['cells'][$k][26];
+					$oer_authorurl2    	 = $fnldata['cells'][$k][26];
 				if (isset($fnldata['cells'][$k][27]))
-					$oer_thumbnailurl   = $fnldata['cells'][$k][27];
+					$oer_authoremail2   	= $fnldata['cells'][$k][27];
+				if (isset($fnldata['cells'][$k][28]))
+					$oer_thumbnailurl   	= $fnldata['cells'][$k][28];
+				if (isset($fnldata['cells'][$k][29]))
+					$oer_format   		= $fnldata['cells'][$k][29];
+				if (isset($fnldata['cells'][$k][30]))
+					$oer_transcription   	= $fnldata['cells'][$k][30];
+				if (isset($fnldata['cells'][$k][31]))
+					$oer_citation   	= $fnldata['cells'][$k][31];
+				if (isset($fnldata['cells'][$k][32]))
+					$oer_sensitive_material  = $fnldata['cells'][$k][32];
 					
 				if(!empty($oer_standard) && (!is_array($oer_standard)))
 				{
@@ -1265,6 +1282,10 @@ function oer_importResources($default=false) {
 				if(!empty($oer_datecreated) && !($oer_datecreated==""))
 				{
 					update_post_meta( $post_id , 'oer_datecreated' , $oer_datecreated);
+				}
+				
+				if(!empty($oer_datecreated_estimate) && !($oer_datecreated_estimate=="")){
+					update_post_meta( $post_id , 'oer_datecreated_estimate' , $oer_datecreated_estimate);
 				}
 
 				if(!empty($oer_datemodified))
@@ -1407,6 +1428,27 @@ function oer_importResources($default=false) {
 				if(!empty($oer_publisheremail))
 				{
 					update_post_meta( $post_id , 'oer_publisheremail' , sanitize_email($oer_publisheremail));
+				}
+				
+				// Save Format field
+				if(!empty($oer_format))
+				{
+					update_post_meta( $post_id , 'oer_format' , sanitize_text_field($oer_format));
+				}
+				
+				// Save Citation
+				if(!empty($oer_citation)){
+					update_post_meta( $post_id , 'oer_citation' , $oer_citation);
+				}
+				
+				// Save Sensitive Material Warning
+				if(!empty($oer_sensitive_material)){
+					update_post_meta( $post_id , 'oer_sensitive_material' , $oer_sensitive_material);
+				}
+				
+				// Save Transcription
+				if(!empty($oer_transcription)){
+					update_post_meta( $post_id , 'oer_transcription' , $oer_transcription);
 				}
 				//saving meta fields
 
@@ -3054,5 +3096,413 @@ function oer_get_substandard_details($substandard_id){
 		$substandards = $row;
 	}
 	return $substandards;
+}
+
+if (!function_exists('oer_get_resource_metadata')){
+	function oer_get_resource_metadata($resource_id){
+		return get_post_meta($resource_id);
+	}
+}
+
+if (!function_exists('oer_get_meta_label')){
+	function oer_get_meta_label($key){
+		$label = "";
+		switch ($key){
+			case "oer_highlight":
+				$label = __("Highlight", OER_SLUG);
+				break;
+			case "oer_grade":
+				$label = __("Grade", OER_SLUG);
+				break;
+			case "oer_format":
+				$label = __("Format", OER_SLUG);
+				break;
+			case "oer_datecreated":
+				$label = __("Date Created", OER_SLUG);
+				break;
+			case "oer_datecreated_estimate":
+				$label = __("Date Created Estimate", OER_SLUG);
+				break;
+			case "oer_datemodified":
+				$label = __("Date Modified", OER_SLUG);
+				break;
+			case "oer_mediatype":
+				$label = __("Media Type", OER_SLUG);
+				break;
+			case "oer_lrtype":
+				$label = __("Learning Resource Type", OER_SLUG);
+				break;
+			case "oer_interactivity":
+				$label = __("Interactivity", OER_SLUG);
+				break;
+			case "oer_userightsurl":
+				$label = __("Use Rights URL", OER_SLUG);
+				break;
+			case "oer_isbasedonurl":
+				$label = __("Is based on URL", OER_SLUG);
+				break;
+			case "oer_standard":
+				$label = __("Standards", OER_SLUG);
+				break;
+			case "oer_standard_alignment":
+				$label = __("Standard Alignment", OER_SLUG);
+				break;
+			case "oer_authortype":
+				$label = __("Type", OER_SLUG);
+				break;
+			case "oer_authorname":
+				$label = __("Name", OER_SLUG);
+				break;
+			case "oer_authorurl":
+				$label = __("URL", OER_SLUG);
+				break;
+			case "oer_authoremail":
+				$label = __("Email Address", OER_SLUG);
+				break;
+			case "oer_authortype2":
+				$label = __("Type", OER_SLUG);
+				break;
+			case "oer_authorname2":
+				$label = __("Name", OER_SLUG);
+				break;
+			case "oer_authorurl2":
+				$label = __("URL", OER_SLUG);
+				break;
+			case "oer_authoremail2":
+				$label = __("Email Address", OER_SLUG);
+				break;
+			case "oer_publishername":
+				$label = __("Name", OER_SLUG);
+				break;
+			case "oer_publisherurl":
+				$label = __("URL", OER_SLUG);
+				break;
+			case "oer_publisheremail":
+				$label = __("Email Address", OER_SLUG);
+				break;
+			case "oer_citation":
+				$label = __("Citation", OER_SLUG);
+				break;
+			case "oer_sensitive_material":
+				$label = __("Sensitive Material Warning", OER_SLUG);
+				break;
+			case "oer_transcription":
+				$label = __("Transcription", OER_SLUG);
+				break;
+		}
+		return $label;
+	}
+}
+
+if (!function_exists('oer_get_all_meta')){
+	function oer_get_all_meta($type){
+		global $wpdb;
+		$result = $wpdb->get_results($wpdb->prepare(
+		"SELECT post_id, meta_key, meta_value FROM ".$wpdb->prefix."posts,".$wpdb->prefix."postmeta WHERE post_type=%s
+			AND ".$wpdb->prefix."posts.ID=".$wpdb->prefix."postmeta.post_id", $type
+		), ARRAY_A);
+		return $result;
+	}
+}
+
+if (!function_exists('oer_get_connected_curriculums')){
+	function oer_get_connected_curriculums($resource_title){
+		global $wpdb;
+		$result = $wpdb->get_results($wpdb->prepare(
+		"SELECT post_id, post_title, meta_key, meta_value FROM ".$wpdb->prefix."posts,".$wpdb->prefix."postmeta WHERE post_type=%s
+			AND ".$wpdb->prefix."posts.ID=".$wpdb->prefix."postmeta.post_id AND meta_key = 'oer_lp_primary_resources'
+			AND meta_value LIKE %s", 'lesson-plans' , '%' . $resource_title . '%'
+		), ARRAY_A);
+		return $result;
+	}
+}
+
+if (!function_exists('oer_save_metadata_options')){
+	function oer_save_metadata_options($post_data){
+		foreach($post_data as $key=>$value){
+			if (strpos($key,"oer_")!==false){
+				if (get_option($key))
+					update_option($key, $value);
+				else
+					add_option($key, $value);
+			}
+		}
+	}
+}
+
+if (! function_exists('oer_installed_standards_plugin')){
+    function oer_installed_standards_plugin(){
+        $activeWAS = false;
+        $active_plugins_basenames = get_option( 'active_plugins' );
+        foreach ( $active_plugins_basenames as $plugin_basename ) {
+		if ( false !== strpos( $plugin_basename, '/wp-academic-standards.php' ) ) {
+                $activeWAS = true;
+            }
+        }
+        return $activeWAS;
+    }
+}
+
+function oer_grade_levels($grade_levels){
+	$elmnt = 0;
+	
+	sort($grade_levels);
+
+	for($x=0; $x < count($grade_levels); $x++)
+	{
+		$grade_levels[$x];
+	}
+	
+	$fltrarr = array_filter($grade_levels, 'strlen');
+	$flag = array();
+	if (is_array($fltrarr) && count($fltrarr)>0)
+		$elmnt = $fltrarr[min(array_keys($fltrarr))];
+		
+	for($i =0; $i < count($fltrarr); $i++)
+	{
+		if($elmnt == $fltrarr[$i] || "k" == strtolower($fltrarr[$i]))
+		{
+			$flag[] = 1;
+		}
+		else
+		{
+			$flag[] = 0;
+		}
+		$elmnt++;
+	}
+
+	if(in_array('0',$flag))
+	{
+		return implode(",",array_unique($fltrarr));
+	}
+	else
+	{
+		$arr_flt = array_keys($fltrarr);
+		$end_filter = end($arr_flt);
+		if (count($fltrarr)>1) {
+			if (strtolower($fltrarr[$end_filter])=="k") {
+				$last_index = count($fltrarr)-2;
+				return $fltrarr[$end_filter]."-".$fltrarr[$last_index];
+			}
+			else
+				return $fltrarr[0]."-".$fltrarr[$end_filter];
+		}
+		else{
+			if (isset($fltrarr[0]))
+				return $fltrarr[0];
+		}
+	}
+}
+
+// Get Title or Description of Standard or Notation
+function oer_get_standard_label($slug){
+	global $wpdb;
+	
+	$slugs = explode("-", $slug);
+	$table_name = "oer_".$slugs[0];
+	$id = $slugs[1];
+	$standard = null;
+	
+	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. $table_name . " where id = %s" , $id ) , ARRAY_A);
+	if (!empty($results)){
+		foreach($results as $result) {
+			$standard = $result['description'];
+		}
+	}
+	
+	return $standard;
+}
+
+// Get Field Label
+if (! function_exists('oer_field_label')){
+    function oer_field_label($field){
+        $label = null;
+        
+        if (get_option($field.'_label'))
+            $label = get_option($field.'_label');
+        else
+            $label = oer_get_meta_label($field);
+         
+        return $label;
+    }
+}
+
+// List Selected Standards
+if (! function_exists('oer_standards_list_display')){
+	function oer_standards_list_display($resource_id){
+		$oer_standard = get_post_meta($resource_id, 'oer_standard', true);
+		?>
+		<ul class="tc-oer-standards-list">
+               <?php
+               $stds = array();
+               $standards = array();
+               $cstandard = null;
+               $oer_lp_standards = explode(",",$oer_standard);
+               if (is_array($oer_lp_standards)):
+                    $current_std_id = "";
+                    foreach($oer_lp_standards as $standard){
+                       if (function_exists('oer_std_get_standard_by_notation')){
+                           $core_standard = oer_std_get_standard_by_notation($standard);
+                           if ($current_std_id!==$core_standard->id){
+                               if (!empty($standards) && !empty($cstandard)) {
+                                   $stds[] = array_merge(array("notation"=>$standards), $cstandard);
+                               }
+                               $standards = array();
+                               $current_std_id = $core_standard->id;
+                               $cstandard = array("core_standard_id"=>$core_standard->id,"core_standard_name"=>$core_standard->standard_name);
+                           }
+                           $standards[] = $standard;
+                       }
+                   }
+                   if (!empty($standards) && !empty($cstandard)) {
+                       $stds[] = array_merge(array("notation"=>$standards), $cstandard);
+                   }
+                   $cstd_id = array_column($stds,"core_standard_id");
+                   array_multisort($cstd_id,SORT_ASC,$stds);
+                   $standard_details = "";
+                   foreach($stds as $std){
+                       if (isset($std['core_standard_id'])) {
+                           echo "<li>";
+                               echo '<a class="lp-standard-toggle" data-toggle="collapse" href="#core-standard-'.$std['core_standard_id'].'">'.$std['core_standard_name'].' <i class="fas fa-caret-right"></i></a>';
+                           ?>
+                           <div class="collapse tc-lp-details-standard" id="core-standard-<?php echo $std['core_standard_id']; ?>">
+                           <?php
+                           if (is_array($std['notation'])) {
+                               echo "<ul class='tc-lp-notation-list'>";
+                               foreach ($std['notation'] as $notation) {
+                                   if (function_exists('was_standard_details'))
+                                       $standard_details = was_standard_details($notation);
+                                   if (!empty($standard_details)){
+                                       if (isset($standard_details->description))
+                                           echo "<li>".$standard_details->description."</li>";
+                                       else
+                                           echo "<li>".$standard_details->standard_title."</li>";
+                                   }
+                               }
+                               echo "</ul>";
+                           }
+                               echo "</div>";
+                           echo "</li>";
+                       }
+                   }
+               endif;
+               ?>
+            </ul>
+		<?php
+	}
+}
+
+// Get Content with x number of characters
+if (!function_exists('oer_get_content')){
+	function oer_get_content($content, $limit) {
+        if (strlen($content)>=$limit) {
+          $content = substr($content, 0, $limit);
+        }
+        
+        $content = preg_replace('/[.+]/','', $content);
+        //$content = apply_filters('the_content', $content); 
+        $content = str_replace(']]>', ']]>', $content);
+        $content .= '... <a href="javascript:void(0);" class="lp-read-more">(read more)</a>';
+        return $content;
+    }
+}
+
+// Get Creative Commons License to Display
+if (!function_exists('oer_cc_license_image')){
+	function oer_cc_license_image($license){
+		$license_image = OER_URL."images/cc_license/".$license.".png";
+		return $license_image;
+	}
+}
+
+if (!function_exists('oer_display_pdf_embeds')){
+	function oer_display_pdf_embeds($url, $return = false){
+		$isExternal = is_external_url($url);
+		
+		if ($isExternal) {
+			$external_option = get_option("oer_external_pdf_viewer");
+			if ($external_option==1) {
+				$pdf_url = "https://docs.google.com/gview?url=".$url."&embedded=true";
+				echo oer_get_embed_code($pdf_url);
+			} elseif($external_option==0) {
+				$embed_disabled = true;
+			}
+		} else {
+			$local_option = get_option("oer_local_pdf_viewer");
+			switch ($local_option){
+				case 0:
+					$embed_disabled = true;
+					break;
+				case 1:
+					$pdf_url = "https://docs.google.com/gview?url=".$url."&embedded=true";
+					if ($return)
+						oer_get_embed_code($pdf_url);
+					else
+						echo oer_get_embed_code($pdf_url);
+					break;
+				case 2:
+					$pdf_url = OER_URL."pdfjs/web/viewer.html?file=".urlencode($url);
+					$embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.$pdf_url.'"></iframe>';
+					if ($return)
+						return $embed_code;
+					else
+						echo $embed_code;
+					break;
+				case 3:
+					if(shortcode_exists('wonderplugin_pdf')) {
+						$embed_code = "[wonderplugin_pdf src='".$url."' width='100%']";
+						if ($return)
+							return do_shortcode($embed_code);
+						else
+							echo do_shortcode($embed_code);
+					} else {
+						$embed_disabled = true;
+					}
+					break;
+				case 4:
+					if(shortcode_exists('pdf-embedder')){
+						$embed_code = "[pdf-embedder url='".$url."' width='100%']";
+						if ($return)
+							return do_shortcode($embed_code);
+						else
+							echo do_shortcode($embed_code);
+					} else {
+						$embed_disabled = true;
+					}
+					break;
+				case 5:
+					if(shortcode_exists('pdfviewer')){
+						$embed_code = "[pdfviewer width='100%']".$url."[/pdfviewer]";
+						if ($return)
+							return do_shortcode($embed_code);
+						else
+							echo do_shortcode($embed_code);
+					} else {
+						$embed_disabled = true;
+					}
+					break;
+			}
+		}
+	}
+}
+
+if (!function_exists('oer_generate_audio_resource_embed')) {
+	function oer_generate_audio_resource_embed($audio_url){
+		?>
+		<audio controls>
+			<source src="<?php echo $audio_url; ?>" type="audio/ogg">
+			<source src="<?php echo $audio_url; ?>" type="audio/mpeg">
+			<source src="<?php echo $audio_url; ?>" type="audio/wav">
+			Your browser does not support the audio element.
+		</audio>
+		<?php
+	}
+}
+
+if (!function_exists('oer_get_embed_code')){
+	function oer_get_embed_code($url){
+		$embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.$url.'"></iframe>';
+		return $embed_code;
+	}
 }
 ?>

@@ -1,9 +1,9 @@
 === WP OER ===
-Contributors: navigationnorth, joehobson, johnpaulbalagolan, tomozaidem, arobotnamedchris
+Contributors: navigationnorth, joehobson, johnpaulbalagolan, arobotnamedchris
 Tags: OER, Open Educational Resources, Education, Learning
 Requires at least: 4.4
-Tested up to: 4.9.8
-Stable tag: 0.6.6
+Tested up to: 5.2.3
+Stable tag: 0.7.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -41,11 +41,20 @@ No frequently asked questions.
 
 == Changelog ==
 
+= 0.7.0 =
+* Gutenberg blocks - updated for improved displaying OER
+* Transcription field - transcripts can now be added on Resources, especially helpful for videos
+* Sensitive Materials Warning field - Resources that have potentially sensitive content can now have written notices using this field
+* Date Created Estimate field - Resources with no exact date of creation can use this field, which accepts plain text (e.g. "early 1900s")
+* Format field - added field for storing information about the original format (physical or otherwise) of resources
+* Local media files are now supported and can be selected as a Resource
+* Standards are now optional and can be activated/deactivated using the new WP Academic Standards plugin (https://github.com/navnorth/wp-academic-standards)
+* Labels of Metadata Fields can be customized using the Metadata Fields Options in the Settings
+
 = 0.6.5 =
 * options for PDF display on resource view
 * pages to browse by Standard
 * preliminary support for Gutenberg editor
-
 
 = 0.6.1 =
 * improved display of featured resources on subject pages

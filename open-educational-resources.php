@@ -3,7 +3,7 @@
  Plugin Name:  WP OER
  Plugin URI:   https://www.wp-oer.com
  Description:  Open Educational Resource management and curation, metadata publishing, and alignment to Common Core State Standards.
- Version:      0.6.7
+ Version:      0.7.0
  Author:       Navigation North
  Author URI:   https://www.navigationnorth.com
  Text Domain:  wp-oer
@@ -36,7 +36,7 @@ define( 'OER_FILE',__FILE__);
 // Plugin Name and Version
 define( 'OER_PLUGIN_NAME', 'WP OER Plugin' );
 define( 'OER_ADMIN_PLUGIN_NAME', 'WP OER Plugin');
-define( 'OER_VERSION', '0.6.7' );
+define( 'OER_VERSION', '0.7.0' );
 
 include_once(OER_PATH.'includes/oer-functions.php');
 include_once(OER_PATH.'includes/template-functions.php');
@@ -320,12 +320,12 @@ function oer_category_template( $template ) {
 
 	//Post ID
 	$_id = $wp_query->get_queried_object_id();
-
+	
 	// Get Current Object if it belongs to Resource Category taxonomy
 	$resource_term = get_term_by( 'id' , $_id , 'resource-subject-area' );
-	//var_dump($resource_term);
+	
 	//Check if the loaded resource is a category
-	if ($resource_term && !is_wp_error( $resource_term )) {
+	if (is_tax() && $resource_term && !is_wp_error( $resource_term )) {
 		return oer_get_template_hierarchy('resource-subject-area');
 	} else {
 		if ($wp_query->is_search)
@@ -1623,6 +1623,55 @@ function oer_load_highlight() {
 add_action('wp_ajax_load_highlight', 'oer_load_highlight');
 add_action('wp_ajax_nopriv_load_highlight', 'oer_load_highlight');
 
+add_action('wp_ajax_load_searched_standards', 'oer_load_searched_standards');
+function oer_load_searched_standards(){
+
+	$post_id = null;
+	$keyword = null;
+	$meta_key = "oer_standard";
+
+	if (isset($_POST['post_id'])){
+		$post_id = $_POST['post_id'];
+	}
+	if (isset($_POST['keyword'])){
+		$keyword = $_POST['keyword'];
+	}
+
+	if (!$post_id){
+		echo "Invalid Post ID";
+		die();
+	}
+
+	if (!$keyword){
+		was_selectable_admin_standards($post_id);
+		die();
+	}
+
+	if (function_exists('was_search_standards')){
+		was_search_standards($post_id,$keyword,$meta_key);
+	}
+	die();
+}
+
+add_action('wp_ajax_load_default_standards', 'oer_load_default_standards');
+function oer_load_default_standards(){
+	$post_id = null;
+
+	if (isset($_POST['post_id'])){
+		$post_id = $_POST['post_id'];
+	}
+
+	if (!$post_id){
+		echo "Invalid Post ID";
+		die();
+	}
+
+	if (function_exists('was_selectable_admin_standards')){
+		was_selectable_admin_standards($post_id);
+	}
+	die();
+}
+
 /** Parse Request **/
 function oer_parse_request( $obj ) {
 	$taxes = get_taxonomies( array( 'show_ui' => true, '_builtin' => false ), 'objects' );
@@ -2212,3 +2261,83 @@ add_action( 'init', function () {
 		ob_start();
 	}
 } );
+
+/* Enqueue script and css for Gutenberg Resource block */
+function oer_enqueue_resource_block(){
+	wp_enqueue_script(
+		'resource-block-js',
+		OER_URL . "/js/oer_resource_block.build.js",
+		array('wp-blocks', 'wp-i18n', 'wp-element', 'wp-components', 'wp-editor', 'wp-api')
+	);
+	wp_enqueue_style(
+		'resource-block-css',
+		OER_URL . "/css/oer_resource_block.css",
+		array('wp-edit-blocks')
+	);
+	/* Register Block */
+	register_block_type('wp-oer-plugin/oer-resource-block', array(
+		'editor_script' => 'resource-block-js',
+		'editor_style' => 'resource-block-css'
+	));
+}
+add_action('enqueue_block_editor_assets', 'oer_enqueue_resource_block');
+
+function oer_add_resources_rest_args() {
+    global $wp_post_types, $wp_taxonomies;
+
+    $wp_post_types['resource']->show_in_rest = true;
+    $wp_post_types['resource']->rest_base = 'resource';
+    $wp_post_types['resource']->rest_controller_class = 'WP_REST_Posts_Controller';
+
+    $wp_taxonomies['resource-subject-area']->show_in_rest = true;
+    $wp_taxonomies['resource-subject-area']->rest_base = 'resource-subject-area';
+    $wp_taxonomies['resource-subject-area']->rest_controller_class = 'WP_REST_Terms_Controller';
+}
+add_action( 'init', 'oer_add_resources_rest_args', 30 );
+
+function oer_add_meta_to_api() {
+	// Register Grade Levels to REST API
+	register_rest_field( 'resource',
+			    'oer_grade',
+			    array(
+				'get_callback' => 'oer_rest_get_meta_field',
+				'update_callback' => null,
+				'schema' => null
+				  ) );
+	// Register Resource URL to REST API
+	register_rest_field( 'resource',
+			    'oer_resourceurl',
+			    array(
+				'get_callback' => 'oer_rest_get_meta_field',
+				'update_callback' => null,
+				'schema' => null
+				  ) );
+	// Register Featured Image to REST API
+	register_rest_field( 'resource',
+			'fimg_url',
+			array(
+			    'get_callback'    => 'oer_get_rest_featured_image',
+			    'update_callback' => null,
+			    'schema'          => null,
+			) );
+
+}
+add_action( 'rest_api_init', 'oer_add_meta_to_api');
+
+function oer_rest_get_meta_field($resource, $field, $request){
+	if ($field=="oer_grade") {
+		$grades = trim(get_post_meta($resource['id'], $field, true),",");
+		$grades = explode(",",$grades);
+
+		return oer_grade_levels($grades);
+	} else
+		return get_post_meta($resource['id'], $field, true);
+}
+
+function oer_get_rest_featured_image($resource, $field, $request) {
+	if( $resource['featured_media'] ){
+		$img = wp_get_attachment_image_src( $resource['featured_media'], 'app-thumb' );
+		return $img[0];
+	}
+	return false;
+}
