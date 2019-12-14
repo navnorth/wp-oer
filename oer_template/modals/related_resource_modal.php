@@ -16,8 +16,9 @@
           <?php
           if (function_exists('get_resources_for_related')){
             $oer_related_resource = get_post_meta($post->ID, 'oer_related_resource', true);
+              echo($oer_related_resource.'<br>');
             $_res_array = explode(',',$oer_related_resource);
-
+              print_r($_res_array);
             $_resources = get_resources_for_related();
             ?><ul><?php
             foreach($_resources as $_res){
