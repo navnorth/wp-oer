@@ -1,6 +1,10 @@
 <!-- Modal -->
 <?php global $post; ?>
-<?php echo get_the_ID(); ?>
+<?php echo get_the_ID().'<br>'; ?>
+<?php echo get_queried_object_id().'<br>';
+<?php wp_reset_postdata() ?>
+<?php echo get_the_ID().'<br>'; ?>
+<?php echo get_queried_object_id().'<br>'; ?>
 <div class="modal fade" id="relatedResourcesModal" tabindex="-1" role="dialog" aria-labelledby="relatedResourcesModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
