@@ -884,4 +884,9 @@ function oer_add_related_resource_modal(){
     }
   }
 }
+
+add_action( "admin_head" , "oer_set_own_global_post_id");
+function oer_set_own_global_post_id(){
+  global $oer_postid; $oer_postid = get_the_ID();
+}
 ?>

@@ -1,7 +1,6 @@
 <!-- Modal -->
 <?php global $post; ?>
-<?php wp_reset_postdata() ; ?>
-<?php echo get_the_ID(); ?>
+<?php global $oer_postid; ?>
 <div class="modal fade" id="relatedResourcesModal" tabindex="-1" role="dialog" aria-labelledby="relatedResourcesModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -12,15 +11,15 @@
       <div id="standards-list" class="modal-body">
         <div class="search-bar">
           <input type="text" name="searchRelatedResources" class="search-related-resources-text form-control">
-          <button class="search_std_btn" data-postid="<?php echo $post->ID; ?>"><span class='dashicons dashicons-search'></span></button>
+          <button class="search_std_btn" data-postid="<?php echo $oer_postid; ?>"><span class='dashicons dashicons-search'></span></button>
         </div>
         <div id="oer_related_resources_list">
           <?php
           if (function_exists('get_resources_for_related')){
-            $oer_related_resource = get_post_meta($post->ID, 'oer_related_resource', true);
-              echo($oer_related_resource.'<br>');
+            $oer_related_resource = get_post_meta($oer_postid, 'oer_related_resource', true);
+            echo($oer_related_resource.'<br>');
             $_res_array = explode(',',$oer_related_resource);
-              print_r($_res_array);
+            print_r($_res_array);
             $_resources = get_resources_for_related();
             ?><ul><?php
             foreach($_resources as $_res){
@@ -49,7 +48,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" id="btnAddRelatedResources" class="btn btn-default btn-sm" data-postid="<?php echo $post->ID; ?>" data-dismiss="modal">Select</button>
+        <button type="button" id="btnAddRelatedResources" class="btn btn-default btn-sm" data-postid="<?php echo $oer_postid; ?>" data-dismiss="modal">Select</button>
       </div>
     </div>
   </div>
