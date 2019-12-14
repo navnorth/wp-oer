@@ -1,6 +1,7 @@
 <!-- Modal -->
 <?php global $post; ?>
 <?php global $oer_postid; ?>
+<?php echo 'id:'.$oer_postid; ?>
 <div class="modal fade" id="relatedResourcesModal" tabindex="-1" role="dialog" aria-labelledby="relatedResourcesModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
