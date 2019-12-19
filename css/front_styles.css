@@ -408,7 +408,7 @@ li.oer_sbstndard{
 .resource-tag #content { width:100%; }
 .oer_sngl_stndrd { margin-bottom:5px; margin-left:25px; }
 .oer_sngl_notation { font-size:1.1em; font-weight:bold; }
-.oer-rsrclftcntr-img { padding-left:0 !important; }
+/*.oer-rsrclftcntr-img { padding-left:0 !important; }*/
 .oer-rsrclftcntr { padding-left:0 !important; }
 .videoWrapper {
 	position: relative;
@@ -504,6 +504,7 @@ a.oer-featureimg .dashicons {
     border: 1px solid #e2e2e2;
     box-sizing: border-box;
     overflow: hidden;
+		position: relative;
 }
 .lp-primary-sources-row .image-thumbnail {
     height: 240px;
