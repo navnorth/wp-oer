@@ -149,6 +149,7 @@ p.center { text-align:center; }
 }
 */
 .oer-sngl-rsrc-img.oer-sngl-audio-type audio { width:100% !important; }
+.oer-sngl-rsrc-img.oer-sngl-audio-type { border:none; }
 /** For Mobile styles **/
 @media screen and (min-width: 960px) {
     .oer-sngl-rsrc-dscrptn { width: 100%; }
