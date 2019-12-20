@@ -30,16 +30,18 @@ if(!empty($_delimited[0])):
                        <div class="resource-thumbnail" style="background: url('<?php echo $resource_img; ?>') no-repeat center rgba(204,97,12,.1); background-size:cover;"></div>
                    </a>
                </div>
-               <div class="lp-resource-title"><b><?php echo $oer_resourcetitle; ?></b></div>
-               <div class="lp-resource-author">
-                 <?php if( $oer_authorname != ''):?>
-                   <div class="lp-resource-author_block"><a href="<?php echo $oer_authorurl; ?>" target="_new"><?php echo $oer_authorname; ?></a></div>
-                 <?php endif; ?>
-                 <?php /* if( $oer_authorname2 != ''):?>
-                   <div class="lp-resource-author_block"><a href=""><?php echo $oer_authorname2; ?></a></div>
-                 <?php endif;*/ ?>
-               </div>
-               <div class="lp-resource-excerpt"><?php echo oer_get_related_resource_content($_res_post->post_content, 60); ?></div>
+               <div class="lp-resource-info">
+                 <div class="lp-resource-title"><?php echo $oer_resourcetitle; ?></div>
+                 <div class="lp-resource-author">
+                   <?php if( $oer_authorname != ''):?>
+                     <div class="lp-resource-author_block"><a href="<?php echo $oer_authorurl; ?>" target="_new"><?php echo $oer_authorname; ?></a></div>
+                   <?php endif; ?>
+                   <?php /* if( $oer_authorname2 != ''):?>
+                     <div class="lp-resource-author_block"><a href=""><?php echo $oer_authorname2; ?></a></div>
+                   <?php endif;*/ ?>
+                 </div>
+                 <div class="lp-resource-excerpt"><?php echo oer_get_related_resource_content($_res_post->post_content, 60); ?></div>
+               </div>   
            </div>
        </div>
        <?php
