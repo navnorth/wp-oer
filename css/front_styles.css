@@ -502,7 +502,7 @@ a.oer-featureimg .dashicons {
     background: rgba(255,255,255,0.8);
     width: 240px;
     height: auto;
-    min-height: 340px;
+    min-height: 349px;
     border: 1px solid #e2e2e2;
     box-sizing: border-box;
     overflow: hidden;
@@ -582,7 +582,7 @@ span.resource-overlay:hover {
 		display:block;
 		width: 100%;
 		float: left;
-		padding: 0px 0px 5px 0px;
+		padding: 0px;
 		line-height: 1.2em;
 }
 .lp-resource-excerpt {
