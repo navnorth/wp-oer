@@ -3395,6 +3395,8 @@ if (! function_exists('oer_standards_list_display')){
 // Get Content with x number of characters
 if (!function_exists('oer_get_content')){
 	function oer_get_content($content, $limit) {
+        $content = preg_replace('/<!--(.|\s)*?-->/', '', $content);
+        
         if (strlen($content)>=$limit) {
           $content = substr($content, 0, $limit);
         }
