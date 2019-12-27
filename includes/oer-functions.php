@@ -3416,7 +3416,7 @@ if (!function_exists('oer_get_related_resource_content')){
         //$content = apply_filters('the_content', $content);
         $content = str_replace(']]>', ']]>', $content);
 				if(strlen(trim($content,'')) > '') $content .= ' ...';
-        return $content;
+        return strip_tags($content);
     }
 }
 
