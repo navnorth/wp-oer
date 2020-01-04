@@ -478,7 +478,11 @@ a.oer-featureimg .dashicons {
 		color:#356483;
 		opacity: 0.7;
 }
-
+a.oer-featureimg .dashicons.nofeat {
+    border: 1px solid #e0e0e0;
+    height: 300px;
+    line-height: 300px;
+}
 /* RELATED RESOURCES FRONT */
 .lp-primary-sources-row {
     padding: 25px 25px 50px 25px;
