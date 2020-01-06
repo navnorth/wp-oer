@@ -2210,7 +2210,9 @@ function oer_remove_plugin_settings(){
 
 	//if (get_option('oer_additional_css'))
 		delete_option('oer_additional_css');
-
+	
+	//if (get_option('oer_only_additional_css'))
+		delete_option('oer_only_additional_css');
 
 	//Setup Settings
 	if (get_option('oer_import_sample_resources'))

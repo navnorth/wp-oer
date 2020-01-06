@@ -45,7 +45,7 @@ include_once(OER_PATH.'includes/shortcode.php');
 include_once(OER_PATH.'widgets/class-subject-area-widget.php');
 
 //define global variable $debug_mode and get value from settings
-global $_debug, $_bootstrap, $_css, $_subjectarea, $_search_post_ids, $_w_bootstrap, $_oer_prefix, $oer_session, $_gutenberg, $_use_gutenberg;
+global $_debug, $_bootstrap, $_css, $_css_oer, $_subjectarea, $_search_post_ids, $_w_bootstrap, $_oer_prefix, $oer_session, $_gutenberg, $_use_gutenberg;
 
 if( ! defined( 'WP_SESSION_COOKIE' ) )
 	define( 'WP_SESSION_COOKIE', '_oer_session' );
@@ -64,6 +64,7 @@ $_debug = get_option('oer_debug_mode');
 $_bootstrap = get_option('oer_use_bootstrap');
 $_use_gutenberg = get_option('oer_use_gutenberg');
 $_css = get_option('oer_additional_css');
+$_css_oer = get_option('oer_only_additional_css');
 $_subjectarea = get_option('oer_display_subject_area');
 $_oer_prefix = "oer_";
 
@@ -815,7 +816,21 @@ function oer_styles_settings(){
 			'uid' => 'oer_additional_css',
 			'type' => 'textarea',
 			'name' =>  __('Additional CSS', OER_SLUG),
-			'inline_description' => __('easily customize the look and feel with your own CSS', OER_SLUG)
+			'inline_description' => __('easily customize the look and feel with your own CSS (sitewide)', OER_SLUG)
+		)
+	);
+	
+	add_settings_field(
+		'oer_only_additional_css',
+		'',
+		'oer_setup_settings_field',
+		'styles_settings_section',
+		'oer_styles_settings',
+		array(
+			'uid' => 'oer_only_additional_css',
+			'type' => 'textarea',
+			'name' =>  __('Additional CSS', OER_SLUG),
+			'inline_description' => __('Apply custom css to plugin pages only', OER_SLUG)
 		)
 	);
 
@@ -824,6 +839,7 @@ function oer_styles_settings(){
 	register_setting( 'oer_styles_settings' , 'oer_hide_subject_area_title' );
 	register_setting( 'oer_styles_settings' , 'oer_hide_resource_title' );
 	register_setting( 'oer_styles_settings' , 'oer_additional_css' );
+	register_setting( 'oer_styles_settings' , 'oer_only_additional_css' );
 }
 
 //Styles Setting Callback
