@@ -2210,6 +2210,9 @@ function oer_remove_plugin_settings(){
 
 	//if (get_option('oer_additional_css'))
 		delete_option('oer_additional_css');
+	
+	//if (get_option('oer_only_additional_css'))
+		delete_option('oer_only_additional_css');
 
 
 	//Setup Settings
@@ -3395,15 +3398,17 @@ if (! function_exists('oer_standards_list_display')){
 // Get Content with x number of characters
 if (!function_exists('oer_get_content')){
 	function oer_get_content($content, $limit) {
-        if (strlen($content)>=$limit) {
-          $content = substr($content, 0, $limit);
-        }
-        
-        $content = preg_replace('/[.+]/','', $content);
-        $content = str_replace(']]>', ']]>', $content);
-        $content .= '... <a href="javascript:void(0);" class="lp-read-more">(read more)</a>';
-        return $content;
-    }
+		$content = preg_replace('/<!--(.|\s)*?-->/', '', $content);
+		
+		if (strlen($content)>=$limit) {
+		  $content = substr($content, 0, $limit);
+		}
+		
+		$content = preg_replace('/[.+]/','', $content);
+		$content = str_replace(']]>', ']]>', $content);
+		$content .= '... <a href="javascript:void(0);" class="lp-read-more">(read more)</a>';
+		return $content;
+	}
 }
 
 // Get Content with x number of characters for related resources
@@ -3415,8 +3420,8 @@ if (!function_exists('oer_get_related_resource_content')){
         $content = preg_replace('/[.+]/','', $content);
         //$content = apply_filters('the_content', $content);
         $content = str_replace(']]>', ']]>', $content);
-        $content .= ' ...';
-        return $content;
+        	if(strlen(trim($content,'')) > '') $content .= ' ...';
+        return strip_tags($content);
     }
 }
 
@@ -3639,25 +3644,27 @@ if (!function_exists('oer_embed_video_file')){
 	}
 }
 
-	function oer_breadcrumb_display($resource = NULL){
-		$ret = '<div class="wp_oer_breadcrumb">';
-		global $post;
-		if($resource != NULL){
-				$curriculum = get_post($post);
-		    if($curriculum ){
-		        $ret .= '<a href="'.get_site_url().'">Home</a>';
-						$ret .= ' / <a href="'.get_permalink( $curriculum->ID ).'">'.$curriculum->post_title.'</a>';
-						$ret .= ' / '.$resource->post_title;
-		    }
-		}else{
-				$resource = get_post($post);
-		    if($resource){
-					$ret .= '<a href="'.get_site_url().'">Home</a>';
-					$ret .= ' / '.$resource->post_title;
-		    }
-		}	
-		$ret .= '</div>';
-		return $ret;
-	}
+function oer_breadcrumb_display($resource = NULL){
+	$ret = '<div class="wp_oer_breadcrumb">';
+	global $post;
+	if($resource != NULL){
+		$curriculum = get_post($post);
+		if($curriculum ){
+			$ret .= '<a href="'.get_site_url().'">Home</a>';
+			$cur = (strlen($curriculum->post_title) > 30)? ' / '.substr($curriculum->post_title, 0, 30).'...' : ' / '.$curriculum->post_title;
+			$ret .= ' / <a href="'.get_permalink( $curriculum->ID ).'">'.$cur.'</a>';
+			$res = (strlen($resource->post_title) > 30)? ' / '.substr($resource->post_title, 0, 30).'...' : ' / '.$resource->post_title;
+			$ret .= ' / '.$res;
+		}
+	}else{
+		$resource = get_post($post);
+		if($resource){
+			$ret .= '<a href="'.get_site_url().'">Home</a>';
+			$ret = (strlen($resource->post_title) > 30)? $ret .= ' / '.substr($resource->post_title, 0, 30).'...' : $ret .= ' / '.$resource->post_title;				
+		}
+	}	
+	$ret .= '</div>';
+	return $ret;
+}
 
 ?>

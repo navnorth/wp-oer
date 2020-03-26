@@ -408,7 +408,7 @@ li.oer_sbstndard{
 .resource-tag #content { width:100%; }
 .oer_sngl_stndrd { margin-bottom:5px; margin-left:25px; }
 .oer_sngl_notation { font-size:1.1em; font-weight:bold; }
-.oer-rsrclftcntr-img { padding-left:0 !important; }
+/*.oer-rsrclftcntr-img { padding-left:0 !important; }*/
 .oer-rsrclftcntr { padding-left:0 !important; }
 .videoWrapper {
 	position: relative;
@@ -441,6 +441,7 @@ li.oer_sbstndard{
 .search-results .type-resource .entry-header h2.entry-title { margin-bottom:0; }
 .search-results .type-resource .entry-header h5.post-meta { margin-bottom:1.05em; }
 .search-results .type-resource .entry-header h5.post-meta .post-meta-box { margin-right:15px; }
+article.oer_sngl_resource_wrapper div#sngl-resource header.entry-header h1.entry-title {font-size: 20px; line-height: 30px;}
 .oer-standards #content, .standards-template #content,
 .substandards-template #content, .notation-template #content { width:100%; }
 .oer-pdf-viewer { /*min-height:1250px;*/min-height:600px; height:100%; }
@@ -469,41 +470,48 @@ li.oer_sbstndard{
 	.oer_sngl_stndrd { margin-left:5px; }
 }
 a.oer-featureimg .dashicons {
-    font-size: 165px;
-    width: 100%;
-    height: 400px;
-    vertical-align: middle;
-    line-height: 400px;
-		color:#356483;
-		opacity: 0.7;
+	font-size: 165px;
+	width: 100%;
+	height: 400px;
+	vertical-align: middle;
+	line-height: 400px;
+	color:#356483;
+	opacity: 0.7;
 }
-
+a.oer-featureimg .dashicons.nofeat {
+    border: 1px solid #e0e0e0;
+    height: 300px;
+    line-height: 300px;
+}
 /* RELATED RESOURCES FRONT */
 .lp-primary-sources-row {
-    padding: 25px 25px 50px 25px;
-    background: #FBFBFB;
-    border-top: 1px solid #E0E0E0;
-		float: left;
-    width: 100%;
-		margin-top: 25px;
+	padding: 25px 25px 50px 25px;
+	background: #FBFBFB;
+	border-top: 1px solid #E0E0E0;
+	float: left;
+	width: 100%;
+	margin-top: 25px;
+	margin-left:0px !important;
+	margin-right:0px !important;
 }
 .lp-related-resources-header {
-    float: left;
-    width: 100%;
-    padding: 0px 15px 23px 15px;
-    font-size: 1.1em;
-    color: #356483;
-    font-weight: 600;
+	float: left;
+	width: 100%;
+	padding: 0px 15px 23px 15px;
+	font-size: 18px;
+	color: #356483;
+	font-weight: 600;
 }
 .lp-primary-sources-row .media-image {
-    background: rgba(255,255,255,0.8);
-    width: 240px;
-    height: auto;
-    min-height: 392px;
-    margin-bottom: 40px;
-    border: 1px solid #e2e2e2;
-    box-sizing: border-box;
-    overflow: hidden;
+	background: rgba(255,255,255,0.8);
+	width: 240px;
+	height: auto;
+	min-height: 349px;
+	border: 1px solid #e2e2e2;
+	box-sizing: border-box;
+	overflow: hidden;
+	position:relative;
+	margin: 0px auto 40px auto;
 }
 .lp-primary-sources-row .image-thumbnail {
     height: 240px;
@@ -541,38 +549,49 @@ span.resource-overlay:hover {
     height: 100%;
     background-size: cover;
 }
+.lp-resource-info {
+    display: block;
+    float: left;
+    width: 100%;
+    padding: 18px 11px;
+}
 .lp-primary-sources-row .lp-resource-title {
-		background: #ffffff;
-		color: #4b4b4b;
-		padding: 10px 10px 0px 10px;
-		width: 100%;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		line-height: 1.5em;
+	background: #ffffff;
+	color: #4b4b4b;
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	line-height: 1.5em;
+	font-weight: 600;
 }
 .lp-resource-author {
-    background: #ffffff;
-    color: #4b4b4b;
-    padding: 0px 5px 5px 5px;
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+	float:left;
+	background: #ffffff;
+	color: #4b4b4b;
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-weight: 600;
 }
 .lp-resource-author_block>a {
-    font-size: .9em;
-    line-height: 0.8em;
+	font-size: .9em;
+	line-height: 1.6em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: block;
 }
 .lp-resource-author_block {
-		float: left;
-		padding: 3px 5px 3px 5px;
-		line-height: 1.2em;
+	display:block;
+	width: 100%;
+	float: left;
+	padding: 0px;
+	line-height: 1.2em;
 }
 .lp-resource-excerpt {
     float: left;
     width: 100%;
-    padding: 10px 8px 15px 8px;
     line-height: 1.2em;
     font-size: .9em;
 }

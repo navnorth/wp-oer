@@ -19,6 +19,14 @@ if ($theme == "Eleganto"){
 
 global $post;
 global $wpdb, $_oer_prefix;
+global $_css_oer;
+
+if ($_css_oer) {
+$output = "<style>"."\n";
+$output .= $_css_oer."\n";
+$output .="</style>"."\n";
+echo $output;
+}
 
 $url = get_post_meta($post->ID, "oer_resourceurl", true);
 $url_domain = oer_getDomainFromUrl($url);
