@@ -3191,6 +3191,18 @@ if (!function_exists('oer_get_meta_label')){
 			case "oer_transcription":
 				$label = __("Transcription", OER_SLUG);
 				break;
+			case "oer_age_levels":
+				$label = __("Age Levels", OER_SLUG);
+				break;
+			case "oer_instructional_time":
+				$label = __("Instructional Time", OER_SLUG);
+				break;
+			case "oer_external_repository":
+				$label = __("External Repository", OER_SLUG);
+				break;
+			case "oer_repository_recordurl":
+				$label = __("Repository Record URL", OER_SLUG);
+				break;
 		}
 		return $label;
 	}

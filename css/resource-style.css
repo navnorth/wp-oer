@@ -64,7 +64,8 @@
 	height: 100%;
 }
 .oer-sngl-rsrc-img .oer-rsrcurl.left { text-align:left; }
-.oer-cbxl h4 span { font-size: 0.85em; font-weight: normal; color: #000000; }
+.oer-cbxl h4 span { font-size: 14px; font-weight: normal; color: #000000; font-family:'OpenSans-Regular' !important; }
+.oer-cbxl h4 span a { font-size:14px; font-family:'OpenSans-Regular' !important; }
 #sngl-resource header.entry-header {
 	background: #f2f2f2;
     padding: 10px 20px;
@@ -128,13 +129,15 @@ p.center { text-align:center; }
 .tc-hidden-fields { overflow:hidden; }
 .tc-hidden-fields .form-field,
 .oer-rsrclftcntr .form-field,
-.pdf-resource-details .form-field { overflow:hidden; display:table; width:100%; margin-bottom:5px; }
+.pdf-resource-details .form-field { overflow:hidden; width:100%; margin-bottom:5px; }
 .tc-hidden-fields .form-field .oer-lp-label,
 .oer-rsrclftcntr .form-field .oer-lp-label,
-.pdf-resource-details .form-field .oer-lp-label { display:table-cell; float:none; }
+.oer-rsrclftcntr-img .form-field .oer-lp-label,
+.pdf-resource-details .form-field .oer-lp-label { margin-right:10px; width:auto; display:inline; }
 .tc-hidden-fields .form-field .oer-lp-value,
 .oer-rsrclftcntr .form-field .oer-lp-value,
-.pdf-resource-details .form-field .oer-lp-value { display:table-cell; }
+.oer-rsrclftcntr-img .form-field .oer-lp-value,
+.pdf-resource-details .form-field .oer-lp-value { display:inline; }
 .tc-hidden-fields .form-field .oer-lp-value .oer-lp-value-full { display:none; }
 .tc-hidden-fields .form-field .oer-lp-value .oer-lp-value-full p,
 .tc-hidden-fields .form-field .oer-lp-value .oer-lp-value-excerpt p{ margin-bottom:0; }

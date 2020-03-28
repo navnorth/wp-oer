@@ -21,6 +21,9 @@ $transcription_set = (get_option('oer_transcription_label'))?true:false;
 $transcription_enabled = (get_option('oer_transcription_enabled'))?true:false;
 $sensitive_material_set = (get_option('oer_sensitive_material_label'))?true:false;
 $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?true:false;
+if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
+    || !empty($cc_license))
+    $display_see_more = true;
 ?>
 <div class="oer-rsrclftcntr-img col-md-5 col-sm-12 col-xs-12">
     <!--Resource Image-->
@@ -104,16 +107,16 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
             if (get_option('oer_authorname_label'))
                 $option_set = true;
         ?>
-            <h4><strong><?php
+            <div class="oer-lp-label"><?php
             if (!$option_set)
                 _e("Creator:", OER_SLUG);
 	    else
-		echo get_option('oer_authorname_label').":"; ?></strong>
-            <span><?php if (!empty($oer_authorurl)): ?><a href="<?php echo esc_url($oer_authorurl); ?>" target="_blank"><?php endif; ?><?php echo $oer_authorname; ?><?php if (!empty($oer_authorurl)): ?></a><?php endif; ?></span>
+		echo get_option('oer_authorname_label').":"; ?></div>
+            <div class="oer-lp-value"><span><?php if (!empty($oer_authorurl)): ?><a href="<?php echo esc_url($oer_authorurl); ?>" target="_blank"><?php endif; ?><?php echo $oer_authorname; ?><?php if (!empty($oer_authorurl)): ?></a><?php endif; ?></span>
             <?php if ($oer_authorname2): echo ", "; ?>
             <span><?php if (!empty($oer_authorurl2)): ?><a href="<?php echo esc_url($oer_authorurl2); ?>" target="_blank"><?php endif; ?><?php echo $oer_authorname2; ?><?php if (!empty($oer_authorurl2)): ?></a><?php endif; ?></span>
             <?php endif; ?>
-            </h4>
+            </div>
         <?php } ?>
     </div>
     <?php
@@ -125,14 +128,14 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
         $option_set = false;
 	if (get_option('oer_publishername_label'))
 	    $option_set = true;
-    ?><div id="" class="oer-publisherName oer-cbxl">
-        <h4><strong><?php
+    ?><div id="" class="oer-publisherName oer-cbxl form-field">
+        <div class="oer-lp-label"><?php
         if (!$option_set)
             _e("Publisher:", OER_SLUG);
         else
             echo get_option('oer_publishername_label').":";
-        ?></strong>
-        <span><a href="<?php echo esc_url($oer_publisherurl); ?>" target="_blank"><?php echo $oer_publishername; ?></a></span></h4>
+        ?></div>
+        <div class="oer-lp-value"><span><a href="<?php echo esc_url($oer_publisherurl); ?>" target="_blank"><?php echo $oer_publishername; ?></a></span></div>
     </div>
     <?php } ?>
 </div>

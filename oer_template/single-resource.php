@@ -120,8 +120,7 @@ $citation = (isset($post_meta_data['oer_citation'][0]) ? $post_meta_data['oer_ci
 $transcription = (isset($post_meta_data['oer_transcription'][0]) ? $post_meta_data['oer_transcription'][0] : "");
 $sensitive_material = (isset($post_meta_data['oer_sensitive_material'][0]) ? $post_meta_data['oer_sensitive_material'][0] : "");
 
-if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
-    || !empty($cc_license) || !empty($external_repository) || !empty($repository_record)
+if (!empty($external_repository) || !empty($repository_record)
     || !empty($citation) || !empty($transcription) || !empty($sensitive_material))
     $display_see_more = true;
 ?>
