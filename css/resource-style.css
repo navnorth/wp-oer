@@ -117,9 +117,6 @@ p.center { text-align:center; }
 .oer-lp-full-content {
     display: none;
 }
-.oer-lp-full-content pre {
-    white-space: normal !important;
-}
 .oer-lp-label {
 	font-size: 14px;
     font-weight: bold;
