@@ -1,4 +1,4 @@
-.oer_metawpr
+standardModaloer_metawpr
 {
 	width: 100%;
 	float: left;
@@ -402,4 +402,4 @@ label.selected span.relatedResourceSelectorImage {
     left: 0px;
     top: 3px;
 }
-
+div#standardModal { z-index: 9999 !important; }
