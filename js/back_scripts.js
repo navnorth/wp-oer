@@ -90,6 +90,14 @@ jQuery(document).ready(function(e) {
                     backdrop: 'static',
                     keyboard: false
                 })
+								
+		//Align standards inside modal
+		jQuery("ul.oer-standard-list input[name='oer_standard[]']").prop('checked',false);
+		jQuery('span.standard-label').each(function(){
+			$std = jQuery(this).children('a.remove-standard').attr('data-id');
+			jQuery("ul.oer-standard-list input[value='"+$std+"']").prop('checked',true);
+		});
+		
 	});
 	jQuery('#standardModal').on('click', "#btnSaveStandards", function(e){
 		e.preventDefault();
