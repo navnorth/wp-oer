@@ -51,11 +51,17 @@ jQuery(document).ready(function(e) {
 		jQuery(this).addClass('hidden');
 	});
 	
-	jQuery('.remove-standard').on('focus', function(){
+	jQuery(document).on('click','.remove-standard', function(){
 		var std = jQuery(this);
 		var std_id = std.attr('data-id');
 		std.parent().remove();
-		jQuery(".stndrd_ttl input[value='"+std_id+"']").attr('checked',false);
+		jQuery("ul.oer-standard-list input[value='"+std_id+"']").prop('checked',false);
+		var $stds=[];
+		jQuery('span.standard-label').each(function(){
+			$std = jQuery(this).children('a.remove-standard').attr('data-id');
+			$stds.push($std);
+		});
+		jQuery('input[name="oer_standard"]').val($stds.join());
 	});
 
 	jQuery(document).on('click','.remove-related_resource', function(){
@@ -180,8 +186,8 @@ function displaySelectedStandard(sId, title) {
 }
 
 function displaydefaultStandards() {
-	$('#standardModal #oer_standards_list').show();
-	$('#standardModal #oer_search_results_list').hide();
+	jQuery('#standardModal #oer_standards_list').show();
+	jQuery('#standardModal #oer_search_results_list').hide();
 }
 
 //adding author
