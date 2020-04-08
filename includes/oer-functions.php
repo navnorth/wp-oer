@@ -3257,24 +3257,70 @@ if (! function_exists('oer_installed_standards_plugin')){
     }
 }
 
+function oer_sort_grade_level($a, $b) {
+	if ( $a == $b )
+		return 0;
+
+	if (is_numeric($a) && is_numeric($b))
+		return ($a<$b) ? -1 : 1;
+	elseif (is_numeric($a) && !is_numeric($b))
+		return 1;
+	elseif (!is_numeric($a) && is_numeric($b))
+		return -1;
+	else {
+		if ($a=="pre-k" && $b=="k")
+			return -1;
+		else
+			return 1;
+	}
+
+
+}
+
 function oer_grade_levels($grade_levels){
+	$default_arr = [
+					"pre-k",
+					"k",
+					"1",
+					"2",
+					"3",
+					"4",
+					"5",
+					"6",
+					"7",
+					"8",
+					"9",
+					"10",
+					"11",
+					"12"
+					];
+
 	$elmnt = 0;
+	$def_index = 0;
 	
-	sort($grade_levels);
+	usort($grade_levels, "oer_sort_grade_level");
 
 	for($x=0; $x < count($grade_levels); $x++)
 	{
 		$grade_levels[$x];
 	}
-	
+
 	$fltrarr = array_filter($grade_levels, 'strlen');
+	
 	$flag = array();
 	if (is_array($fltrarr) && count($fltrarr)>0)
 		$elmnt = $fltrarr[min(array_keys($fltrarr))];
-		
+	
+	for($y=0; $y < count($default_arr); $y++){
+		if ($default_arr[$y]==$elmnt){
+			$def_index = $y;
+			break;
+		}
+	}
+
 	for($i =0; $i < count($fltrarr); $i++)
 	{
-		if($elmnt == $fltrarr[$i] || "k" == strtolower($fltrarr[$i]))
+		if($elmnt == $fltrarr[$i] || $default_arr[$def_index+$i] == strtolower($fltrarr[$i]))
 		{
 			$flag[] = 1;
 		}
@@ -3282,6 +3328,10 @@ function oer_grade_levels($grade_levels){
 		{
 			$flag[] = 0;
 		}
+		if (strtolower($fltrarr[$i])=="k")
+			$fltrarr[$i] = "K";
+		if (strtolower($fltrarr[$i])=="pre-k")
+			$fltrarr[$i] = "Pre-K";
 		$elmnt++;
 	}
 
@@ -3298,8 +3348,12 @@ function oer_grade_levels($grade_levels){
 				$last_index = count($fltrarr)-2;
 				return $fltrarr[$end_filter]."-".$fltrarr[$last_index];
 			}
-			else
-				return $fltrarr[0]."-".$fltrarr[$end_filter];
+			else{
+				if (strtolower($fltrarr[0])=="pre-k")
+					return $fltrarr[0]." &ndash; ".$fltrarr[$end_filter];
+				else
+					return $fltrarr[0]."-".$fltrarr[$end_filter];
+			}
 		}
 		else{
 			if (isset($fltrarr[0]))
