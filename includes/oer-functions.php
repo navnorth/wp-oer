@@ -3287,7 +3287,7 @@ function oer_grade_levels($grade_levels){
 
 	if(in_array('0',$flag))
 	{
-		return implode(",",array_unique($fltrarr));
+		return implode(", ",array_unique($fltrarr));
 	}
 	else
 	{
