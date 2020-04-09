@@ -293,9 +293,9 @@ function oer_show_metadata_settings() {
 							if (get_option($key."_label")){
 								$label = get_option($key."_label");
 								$option_set = true;
-							}
-							else
+							} /*else {
 								$label = oer_get_meta_label($key);
+							}*/
 							
 							if (get_option($key."_enabled"))
 								$enabled = (get_option($key."_enabled")=="1")?true:false;

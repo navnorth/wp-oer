@@ -3235,10 +3235,10 @@ if (!function_exists('oer_save_metadata_options')){
 	function oer_save_metadata_options($post_data){
 		foreach($post_data as $key=>$value){
 			if (strpos($key,"oer_")!==false){
-				if (get_option($key))
-					update_option($key, $value);
-				else
-					add_option($key, $value);
+				//if (get_option($key))
+				update_option($key, $value);
+				/*else
+					add_option($key, $value);*/
 			}
 		}
 	}
