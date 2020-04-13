@@ -3342,18 +3342,14 @@ function oer_grade_levels($grade_levels){
 	else
 	{
 		$arr_flt = array_keys($fltrarr);
+		
 		$end_filter = end($arr_flt);
+		
 		if (count($fltrarr)>1) {
-			if (strtolower($fltrarr[$end_filter])=="k") {
-				$last_index = count($fltrarr)-2;
-				return $fltrarr[$end_filter]."-".$fltrarr[$last_index];
-			}
-			else{
-				if (strtolower($fltrarr[0])=="pre-k")
-					return $fltrarr[0]." &ndash; ".$fltrarr[$end_filter];
-				else
-					return $fltrarr[0]."-".$fltrarr[$end_filter];
-			}
+			if (strtolower($fltrarr[0])=="pre-k" || strtolower($fltrarr[$end_filter])=="k")
+				return $fltrarr[0]." &ndash; ".$fltrarr[$end_filter];
+			else
+				return $fltrarr[0]."-".$fltrarr[$end_filter];
 		}
 		else{
 			if (isset($fltrarr[0]))
