@@ -1,22 +1,9 @@
+<?php /** Video Resource Template **/ ?>
 <div class="oer-rsrclftcntr-video col-md-12 col-sm-12 col-xs-12">    
         <?php
-        if ($youtube){
-                echo '<div class="videoWrapper">';
-                $embed = oer_generate_youtube_embed_code($url);
-                echo $embed;
-                echo '</div>';
-        } elseif($isSSLResource){
-                echo '<div class="SLLWrapper">';
-                $embed = oer_generate_sll_resource_embed_code($url);
-                echo $embed;
-                echo '</div>';
-        } elseif($isSLLCollection){
-                echo '<div class="SLLWrapper">';
-                $embed = oer_generate_sll_collection_embed_code($url);
-                echo $embed;
-                echo '</div>';
-        }
-            
+        $type=oer_get_resource_file_type($url);
+        if ($type['name']=="Video")
+            echo oer_embed_video_file($url, $type['type']);
         ?>
 </div>
 <div class="oer-rsrccntr-details col-md-12 col-sm-12 col-xs-12">
@@ -346,6 +333,3 @@
         ?>
     </div>
 </div>
-
-<!-- RELATED RESOURCES -->
-<?php include_once OER_PATH.'includes/related-resources.php';?>

@@ -1,100 +1,62 @@
-<?php
-$post_meta_data = get_post_meta($post->ID );
-$author_set = (get_option('oer_authorname_label'))?true:false;
-$author_enabled = (get_option('oer_authorname_enabled'))?true:false;
-$standards_set = (get_option('oer_standard_label'))?true:false;
-$standards_enabled = (get_option('oer_standard_enabled'))?true:false;
-$oer_standard = get_post_meta($post->ID, 'oer_standard', true);
-$age_levels_set = (get_option('oer_age_levels_label'))?true:false;
-$age_levels_enabled = (get_option('oer_age_levels_enabled'))?true:false;
-$suggested_time_set = (get_option('oer_instructional_time_label'))?true:false;
-$suggested_time_enabled = (get_option('oer_instructional_time_enabled'))?true:false;
-$cc_license_set = (get_option('oer_creativecommons_license_label'))?true:false;
-$cc_license_enabled = (get_option('oer_creativecommons_license_enabled'))?true:false;
-$external_repository_set = (get_option('oer_creativecommons_license_label'))?true:false;
-$external_repository_enabled = (get_option('oer_creativecommons_license_enabled'))?true:false;
-$repository_record_set = (get_option('oer_repository_recordurl_label'))?true:false;
-$repository_record_enabled = (get_option('oer_repository_recordurl_enabled'))?true:false;
-$citation_set = (get_option('oer_citation_label'))?true:false;
-$citation_enabled = (get_option('oer_citation_enabled'))?true:false;
-$transcription_set = (get_option('oer_transcription_label'))?true:false;
-$transcription_enabled = (get_option('oer_transcription_enabled'))?true:false;
-$sensitive_material_set = (get_option('oer_sensitive_material_label'))?true:false;
-$sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?true:false;
-if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
-    || !empty($cc_license))
-    $display_see_more = true;
-?>
+<?php /** PDF Resource Template **/ ?>
 <div class="oer-rsrclftcntr-img col-md-5 col-sm-12 col-xs-12">
     <!--Resource Image-->
     <div class="oer-sngl-rsrc-img">
-        <?php if ($youtube) {
-            $embed = oer_generate_youtube_embed_code($url);
-            echo $embed;
-        } elseif($isPDF) {
-            if ($isExternal) {
-                $external_option = get_option("oer_external_pdf_viewer");
-                if ($external_option==1) {
-                    $pdf_url = "https://docs.google.com/gview?url=".$url."&embedded=true";
-                    echo get_embed_code($pdf_url);
-                } elseif($external_option==0) {
-                    $embed_disabled = true;
-                }
-            } else {
-                $local_option = get_option("oer_local_pdf_viewer");
-                switch ($local_option){
-                    case 0:
-                        $embed_disabled = true;
-                        break;
-                    case 1:
-                        $pdf_url = "https://docs.google.com/gview?url=".$url."&embedded=true";
-                        echo get_embed_code($pdf_url);
-                        break;
-                    case 2:
-                        $pdf_url = OER_URL."pdfjs/web/viewer.html?file=".urlencode($url);
-                        $embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.$pdf_url.'"></iframe>';
-                        echo $embed_code;
-                        break;
-                    case 3:
-                        if(shortcode_exists('wonderplugin_pdf')) {
-                            $embed_code = "[wonderplugin_pdf src='".$url."' width='100%']";
-                            echo do_shortcode($embed_code);
-                        } else {
-                            $embed_disabled = true;
-                        }
-                        break;
-                    case 4:
-                        if(shortcode_exists('pdf-embedder')){
-                            $embed_code = "[pdf-embedder url='".$url."' width='100%']";
-                            echo do_shortcode($embed_code);
-                        } else {
-                            $embed_disabled = true;
-                        }
-                        break;
-                    case 5:
-                        if(shortcode_exists('pdfviewer')){
-                            $embed_code = "[pdfviewer width='100%']".$url."[/pdfviewer]";
-                            echo do_shortcode($embed_code);
-                        } else {
-                            $embed_disabled = true;
-                        }
-                        break;
-                }
+        <?php
+        if ($isExternal) {
+            $external_option = get_option("oer_external_pdf_viewer");
+            if ($external_option==1) {
+                $pdf_url = "https://docs.google.com/gview?url=".$url."&embedded=true";
+                echo get_embed_code($pdf_url);
+            } elseif($external_option==0) {
+                $embed_disabled = true;
             }
         } else {
-            $type=oer_get_resource_file_type($url);
-            if ($type['name']=="Video"){
-                echo oer_embed_video_file($url, $type['type']);
-            } else {
-                echo display_default_thumbnail($post);
+            $local_option = get_option("oer_local_pdf_viewer");
+            switch ($local_option){
+                case 0:
+                    $embed_disabled = true;
+                    break;
+                case 1:
+                    $pdf_url = "https://docs.google.com/gview?url=".$url."&embedded=true";
+                    echo get_embed_code($pdf_url);
+                    break;
+                case 2:
+                    $pdf_url = OER_URL."pdfjs/web/viewer.html?file=".urlencode($url);
+                    $embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.$pdf_url.'"></iframe>';
+                    echo $embed_code;
+                    break;
+                case 3:
+                    if(shortcode_exists('wonderplugin_pdf')) {
+                        $embed_code = "[wonderplugin_pdf src='".$url."' width='100%']";
+                        echo do_shortcode($embed_code);
+                    } else {
+                        $embed_disabled = true;
+                    }
+                    break;
+                case 4:
+                    if(shortcode_exists('pdf-embedder')){
+                        $embed_code = "[pdf-embedder url='".$url."' width='100%']";
+                        echo do_shortcode($embed_code);
+                    } else {
+                        $embed_disabled = true;
+                    }
+                    break;
+                case 5:
+                    if(shortcode_exists('pdfviewer')){
+                        $embed_code = "[pdfviewer width='100%']".$url."[/pdfviewer]";
+                        echo do_shortcode($embed_code);
+                    } else {
+                        $embed_disabled = true;
+                    }
+                    break;
             }
-        }
-        if ($embed_disabled){
-            echo display_default_thumbnail($post);
         }
         ?>
     </div>
-    <div id="" class="oer-authorName oer-cbxl">
+</div>
+<div class="oer-rsrcrghtcntr pdf-resource-details col-md-7 col-sm-12 col-xs-12">
+    <div id="" class="oer-authorName oer-cbxl form-field">
         <?php
         $oer_authorname = get_post_meta($post->ID, "oer_authorname", true);
         $oer_authorurl = get_post_meta($post->ID, "oer_authorurl", true);
@@ -135,11 +97,9 @@ if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
         else
             echo get_option('oer_publishername_label').":";
         ?></div>
-        <div class="oer-lp-value"><span><a href="<?php echo esc_url($oer_publisherurl); ?>" target="_blank"><?php echo $oer_publishername; ?></a></span></div>
+        <div class="oer-lp-value"><a href="<?php echo esc_url($oer_publisherurl); ?>" target="_blank"><?php echo $oer_publishername; ?></a></div>
     </div>
     <?php } ?>
-</div>
-<div class="oer-rsrcrghtcntr col-md-7 col-sm-12 col-xs-12">
     <!--Resource Description-->
     <?php if(!empty($post->post_content)) {?>
         <div class="oer-sngl-rsrc-dscrptn">
@@ -153,7 +113,7 @@ if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
             <?php //echo $content = apply_filters ("the_content", $post->post_content); ?>
         </div>
     <?php } ?>
-
+    
     <?php
     $keywords = wp_get_post_tags($post->ID);
     if(!empty($keywords))
@@ -186,7 +146,7 @@ if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
     <?php
          }
     } ?>
-
+    
     <!-- Subject Areas -->
     <?php
     $post_terms = get_the_terms( $post->ID, 'resource-subject-area' );
@@ -218,7 +178,7 @@ if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
         </div>
     </div>
     <?php } ?>
-
+    
     <!-- Curriculum -->
     <?php
     $connected_curriculums = oer_get_connected_curriculums($post->post_title);
@@ -249,16 +209,8 @@ if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
        </div>
     </div>
     <?php } ?>
-    </div>
-</div> <!--Description & Resource Info at Right-->
-<?php  if ($display_see_more): ?>
-<div class="oer-see-more-row">
-    <p class="center"><span><a id="oer-see-more-link" class="oer-see-more-link" role="button" data-toggle="collapse" href="#tcHiddenFields" aria-expanded="false" aria-controls="tcHiddenFields"><?php _e("SEE MORE +",OER_LESSON_PLAN_SLUG); ?></a></span></p>
-</div>
-<?php endif; ?>
-<div id="tcHiddenFields" class="tc-hidden-fields collapse row">
-    <div class="col-md-5">
-        <!-- Age Levels -->
+    
+    <!-- Age Levels -->
         <?php
         if (($age_levels_set && $age_levels_enabled) || !$age_levels_set) {
             $age_label = oer_field_label('oer_age_levels');
@@ -271,11 +223,11 @@ if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
             }
         }
         ?>
-
+        
         <!-- Grade Level -->
         <?php
         $grades = explode(",",$grades);
-
+        
         if(is_array($grades) && !empty($grades) && array_filter($grades))
         {
             $option_set = false;
@@ -299,7 +251,7 @@ if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
                 </div>
             </div>
         <?php }?>
-
+        
         <!-- Instruction Time -->
         <?php
         if (($suggested_time_set && $suggested_time_enabled) || !$suggested_time_set) {
@@ -313,7 +265,7 @@ if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
              }
          }
         ?>
-
+        
         <!-- Creative Commons License -->
         <?php
         if (($cc_license_set && $cc_license_enabled) || !$cc_license_set) {
@@ -326,10 +278,17 @@ if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
             <?php
             }
         }
-
+        
         ?>
     </div>
-    <div class="col-md-7">
+</div> <!--Description & Resource Info at Right-->
+<?php  if ($display_see_more): ?>
+<div class="oer-see-more-row">
+    <p class="center"><span><a id="oer-see-more-link" class="oer-see-more-link" role="button" data-toggle="collapse" href="#tcHiddenFields" aria-expanded="false" aria-controls="tcHiddenFields"><?php _e("SEE MORE +",OER_LESSON_PLAN_SLUG); ?></a></span></p>
+</div>
+<?php endif; ?>
+<div id="tcHiddenFields" class="tc-hidden-fields collapse row">
+    <div class="col-md-12">
         <!-- External Repository -->
         <?php
         if (($external_repository_set && $external_repository_enabled) || !$external_repository_set) {
@@ -343,7 +302,7 @@ if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
              }
          }
         ?>
-
+        
         <!-- Repository URL -->
         <?php
         if (($repository_record_set && $repository_record_enabled) || !$repository_record_set) {
@@ -357,7 +316,7 @@ if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
              }
          }
         ?>
-
+        
         <!-- Citation -->
         <?php
         if (($citation_set && $citation_enabled) || !$citation_set) {
@@ -377,7 +336,7 @@ if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
             }
         }
         ?>
-
+        
         <!-- Transcription -->
         <?php
         if (($transcription_set && $transcription_enabled) || !$transcription_set) {
@@ -397,7 +356,7 @@ if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
             }
         }
         ?>
-
+        
         <!-- Sensitive Material Warning -->
         <?php
         if (($sensitive_material_set && $sensitive_material_enabled) || !$sensitive_material_set) {
@@ -419,7 +378,3 @@ if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
         ?>
     </div>
 </div>
-
-
-<!-- RELATED RESOURCES -->
-<?php include_once OER_PATH.'includes/related-resources.php';?>
