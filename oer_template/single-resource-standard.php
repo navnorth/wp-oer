@@ -24,7 +24,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
 ?>
 <div class="oer-rsrclftcntr-img col-md-5 col-sm-12 col-xs-12">
     <!--Resource Image-->
-    <div class="oer-sngl-rsrc-img">
+    <div class="oer-sngl-rsrc-img oer-sngl-standard-type">
         <?php if ($youtube) {
             $embed = oer_generate_youtube_embed_code($url);
             echo $embed;
