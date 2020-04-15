@@ -504,7 +504,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 											echo "</span>";
 										}
 									}
-									if ($url_domain) {
+									if (oer_isExternalUrl($url)) {
 										?>
 										<span class="post-meta-box post-meta-domain"><strong>Domain: </strong><a href="<?php echo esc_url(get_post_meta($ID, "oer_resourceurl", true)); ?>" target="_blank" >
 										<?php echo $url_domain; ?>

@@ -812,6 +812,20 @@ function oer_getDomainFromUrl($url) {
 	return $url_details['host'];
 }
 
+//Check if resource url is external url
+function oer_isExternalUrl($url){
+	$current_url = parse_url(site_url());
+	$internal_domain = $current_url['host'];
+
+	$url_details = parse_url($url);
+	$resource_domain = $url_details['host'];
+
+	if ($internal_domain==$resource_domain)
+		return false;
+	else
+		return true;
+}
+
 //Get Image from External URL
 function oer_getImageFromExternalURL($url) {
 	global $_debug;
