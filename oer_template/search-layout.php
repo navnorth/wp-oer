@@ -324,7 +324,7 @@ if ( is_search() && Avada()->settings->get( 'search_results_per_page' ) ) {
 								echo "</span>";
 							}
 						}
-						if ($url_domain) {
+						if (oer_isExternalUrl($url)) {
 							?>
 							<span class="fusion-post-meta-box fusion-post-meta-domain"><strong>Domain: </strong><a href="<?php echo esc_url(get_post_meta($ID, "oer_resourceurl", true)); ?>" target="_blank" >
 							<?php echo $url_domain; ?>
