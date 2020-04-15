@@ -1,7 +1,7 @@
 <?php /** PDF Resource Template **/ ?>
 <div class="oer-rsrclftcntr-img col-md-5 col-sm-12 col-xs-12">
     <!--Resource Image-->
-    <div class="oer-sngl-rsrc-img">
+    <div class="oer-sngl-rsrc-img oer-sngl-pdf-type">
         <?php
         if ($isExternal) {
             $external_option = get_option("oer_external_pdf_viewer");
