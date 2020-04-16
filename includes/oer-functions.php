@@ -2210,6 +2210,9 @@ function oer_remove_plugin_settings(){
 
 	//if (get_option('oer_additional_css'))
 		delete_option('oer_additional_css');
+	
+	//if (get_option('oer_only_additional_css'))
+		delete_option('oer_only_additional_css');
 
 
 	//Setup Settings
@@ -3395,15 +3398,30 @@ if (! function_exists('oer_standards_list_display')){
 // Get Content with x number of characters
 if (!function_exists('oer_get_content')){
 	function oer_get_content($content, $limit) {
+		$content = preg_replace('/<!--(.|\s)*?-->/', '', $content);
+		
+		if (strlen($content)>=$limit) {
+		  $content = substr($content, 0, $limit);
+		}
+		
+		$content = preg_replace('/[.+]/','', $content);
+		$content = str_replace(']]>', ']]>', $content);
+		$content .= '... <a href="javascript:void(0);" class="lp-read-more">(read more)</a>';
+		return $content;
+	}
+}
+
+// Get Content with x number of characters for related resources
+if (!function_exists('oer_get_related_resource_content')){
+	function oer_get_related_resource_content($content, $limit) {
         if (strlen($content)>=$limit) {
           $content = substr($content, 0, $limit);
         }
-        
         $content = preg_replace('/[.+]/','', $content);
-        //$content = apply_filters('the_content', $content); 
+        //$content = apply_filters('the_content', $content);
         $content = str_replace(']]>', ']]>', $content);
-        $content .= '... <a href="javascript:void(0);" class="lp-read-more">(read more)</a>';
-        return $content;
+        	if(strlen(trim($content,'')) > '') $content .= ' ...';
+        return strip_tags($content);
     }
 }
 
@@ -3505,4 +3523,148 @@ if (!function_exists('oer_get_embed_code')){
 		return $embed_code;
 	}
 }
+
+/**
+ * Get Resources
+ **/
+function get_resources_for_related() {
+	//later in the request
+	$args = array(
+		'post_type'  => 'resource', //or a post type of your choosing
+		'posts_per_page' => -1,
+		'order' => 'ASC',
+        'orderby' => 'title',
+		'post_status' => 'publish'
+	);
+	$query = new WP_Query($args);
+	return $query->posts;
+}
+
+function getResourceIcon($oer_media_type, $url){
+	$_avtr = '';
+	switch (strtolower($oer_media_type)) {
+			case "website":
+					$_avtr = 'dashicons-admin-site';
+					break;
+			case "audio":
+					$_avtr = 'dashicons-controls-volumeon';
+					break;
+			case "document":
+					$_type = oer_get_resource_file_type($url);
+					if($_type['name'] == 'PDF'){
+						$_avtr = 'dashicons-media-text';
+					}elseif ($_type['name'] == 'Microsoft Document') {
+						$_avtr = 'dashicons-media-document';
+					}elseif ($_type['name'] == 'Microsoft Excel') {
+						$_avtr = 'dashicons-media-spreadsheet';
+					}elseif ($_type['name'] == 'Microsoft Powerpoint') {
+						$_avtr = 'dashicons-media-interactive';
+					}elseif ($_type['name'] == 'Plain Text') {
+						$_avtr = 'dashicons-media-text';
+					}else{
+						$_avtr = 'dashicons-media-text';
+					}
+					break;
+			case "excel":
+					$_avtr = 'dashicons-media-spreadsheet';
+					break;
+			case "powerpoint":
+					$_avtr = 'dashicons-media-interactive';
+					break;
+			case "image":
+					$_avtr = 'dashicons-format-image';
+					break;
+			case "video":
+					$_avtr = 'dashicons-video-alt2';
+					break;
+			default:
+					$_avtr = 'dashicons-media-text';
+	}
+	return $_avtr;
+}
+
+if (! function_exists('oer_get_resource_file_type')) {
+    /**
+     * Check the file type form the url
+     * @param $url
+     * @return array|bool
+     */
+    function oer_get_resource_file_type($url) {
+        if(empty($url)) {
+            return false;
+        }
+
+        $type = array();
+        $oer_urls = explode('.', $url);
+        $file_type = strtolower(end($oer_urls));
+		$type['type'] = $file_type;
+        if(in_array($file_type, ['jpg', 'jpeg', 'gif', 'png'])) {
+           $type['name'] = "Image";
+		} elseif(in_array($file_type, ['mp4', 'avi', 'ogg', 'mkv'])) {
+			$type['name'] = 'Video';
+		} elseif(in_array($file_type, ['mp3', 'wav'])) {
+			$type['name'] = 'Audio';
+        } elseif($file_type == 'pdf') {
+            $type['name'] = 'PDF';
+        } elseif(in_array($file_type, ['txt'])) {
+            $type['name'] = 'Plain Text';
+        } elseif(in_array($file_type, ['7z', 'zip', 'rar'])) {
+            $type['name'] = 'Archive';
+        } elseif(in_array($file_type, ['docx', 'doc'])) {
+            $type['name'] = 'Microsoft Document';
+        } elseif(in_array($file_type, ['xls', 'xlsx'])) {
+            $type['name'] = 'Microsoft Excel';
+        } elseif(in_array($file_type, ['ppt', 'pptx'])) {
+            $type['name'] = 'Microsoft Powerpoint';
+				}else{
+						$type['name'] = '';
+				}
+        return $type;
+    }
+}
+
+if (!function_exists('oer_embed_video_file')){
+	function oer_embed_video_file($source, $video_type){
+		$type = "";
+		switch ($video_type){
+			case "mp4":
+				$type = "video/mp4";
+				break;
+			case "ogg":
+				$type = "video/ogg";
+				break;
+			case "webm":
+				$type = "video/WebM";
+				break;
+			default:
+				break;
+		}
+		$embed_code = '<video class="oer-video-viewer" width="100%" src="'.$source.'" type="'.$type.'" controls="true" autoplay="false"></video>';
+		return $embed_code;
+	}
+}
+
+function oer_breadcrumb_display($resource = NULL){
+	$ret = '<div class="wp_oer_breadcrumb">';
+	global $post;
+	if($resource != NULL){
+		$curriculum = get_post($post);
+		if($curriculum ){
+			$ret .= '<a href="'.get_site_url().'">Home</a>';
+			$cur = (strlen($curriculum->post_title) > 30)? ' / '.substr($curriculum->post_title, 0, 30).'...' : ' / '.$curriculum->post_title;
+			$ret .= ' / <a href="'.get_permalink( $curriculum->ID ).'">'.$cur.'</a>';
+			$res = (strlen($resource->post_title) > 30)? ' / '.substr($resource->post_title, 0, 30).'...' : ' / '.$resource->post_title;
+			$ret .= ' / '.$res;
+		}
+	}else{
+		$resource = get_post($post);
+		if($resource){
+			$ret .= '<a href="'.get_site_url().'">Home</a>';
+			$ret = (strlen($resource->post_title) > 30)? $ret .= ' / '.substr($resource->post_title, 0, 30).'...' : $ret .= ' / '.$resource->post_title;				
+		}
+	}	
+	$ret .= '</div>';
+	return $ret;
+}
+
 ?>

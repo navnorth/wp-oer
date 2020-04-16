@@ -27,6 +27,7 @@
 	font-size: 22px;
 	width: 700px;
 	position: relative;
+	padding-top:20px;
 }
 .oer_metainrwpr .oer_authrcntr
 {
@@ -308,8 +309,11 @@ a.remove-standard span { line-height:1.25em; }
 .auto-width { width:auto !important; }
 #standardModal ul ul { margin-left:40px; }
 #standardModal #standards-list { max-height:400px; overflow-y:auto; }
+.auto-width { width:auto !important; }
+#standardModal ul ul, #relatedResourcesModal ul ul { margin-left:40px; }
+#standardModal #standards-list, #relatedResourcesModal #standards-list { max-height:400px; overflow-y:auto; }
 #add-new-standard { margin:3px; height:32px; }
-#standardModal .search-bar {
+#standardModal .search-bar, #relatedResourcesModal .search-bar {
 	margin-bottom: 15px;
 	margin-top: auto;
 	height: 40px;
@@ -327,6 +331,16 @@ a.remove-standard span { line-height:1.25em; }
 	padding: 0 10px;
 }
 .search-standard-text:focus { border-color:transparent !important; box-shadow:none !important;}
+.search-related-resources-text {
+	color: white;
+	border: 0 !important;
+	outline: none !important;
+	background: none !important;
+	line-height: 40px;
+	transition: width 0.4s linear;
+	padding: 0 10px;
+}
+.search-related-resources-text:focus { border-color:transparent !important; box-shadow:none !important;}
 .search-bar:hover > .search_std_btn{
     background: white;
     color: #e74c3c;
@@ -360,3 +374,32 @@ a.remove-standard span { line-height:1.25em; }
 .search_close_btn .dashicons { color:#000000; }
 #oer_search_results_list { display:none; }
 #oer_search_results_list{ position:relative; }
+button#add-new-related-resource {float: left;clear: left;}
+.oer_fld.auto-width.oer_related_resource_display {margin-bottom: 10px;}
+div#oer_related_resources_list ul li {margin: 0px;}
+div#oer_related_resources_list ul li input.relatedResourceNode {display:none;}
+div#oer_related_resources_list ul li label {
+	position: relative;
+  padding: 5px 5px 5px 0px;
+  margin: 0px;
+  line-height: 1.2em;
+}
+div#oer_related_resources_list ul li label.selected {
+	color: #fff;
+	width: 100%;
+	padding: 5px 5px 5px 20px;
+	text-shadow: 1px 1px 3px #000000;
+	background-color: #0085ba;
+	background: -moz-linear-gradient(left,  rgba(0,133,186,1) 0%, rgba(255,255,255,0) 100%);
+	background: -webkit-linear-gradient(left,  rgba(0,133,186,1) 0%,rgba(255,255,255,0) 100%);
+	background: linear-gradient(to right,  rgba(0,133,186,1) 0%,rgba(255,255,255,0) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0085ba', endColorstr='#00ffffff',GradientType=1 );
+}
+span.relatedResourceSelectorImage {display: none;}
+label.selected span.relatedResourceSelectorImage {
+    display: block;
+    position: absolute;
+    left: 0px;
+    top: 3px;
+}
+

@@ -1,94 +1,13 @@
-<?php
-$post_meta_data = get_post_meta($post->ID );
-$author_set = (get_option('oer_authorname_label'))?true:false;
-$author_enabled = (get_option('oer_authorname_enabled'))?true:false;
-$standards_set = (get_option('oer_standard_label'))?true:false;
-$standards_enabled = (get_option('oer_standard_enabled'))?true:false;
-$oer_standard = get_post_meta($post->ID, 'oer_standard', true);
-$age_levels_set = (get_option('oer_age_levels_label'))?true:false;
-$age_levels_enabled = (get_option('oer_age_levels_enabled'))?true:false;
-$suggested_time_set = (get_option('oer_instructional_time_label'))?true:false;
-$suggested_time_enabled = (get_option('oer_instructional_time_enabled'))?true:false;
-$cc_license_set = (get_option('oer_creativecommons_license_label'))?true:false;
-$cc_license_enabled = (get_option('oer_creativecommons_license_enabled'))?true:false;
-$external_repository_set = (get_option('oer_creativecommons_license_label'))?true:false;
-$external_repository_enabled = (get_option('oer_creativecommons_license_enabled'))?true:false;
-$repository_record_set = (get_option('oer_repository_recordurl_label'))?true:false;
-$repository_record_enabled = (get_option('oer_repository_recordurl_enabled'))?true:false;
-$citation_set = (get_option('oer_citation_label'))?true:false;
-$citation_enabled = (get_option('oer_citation_enabled'))?true:false;
-$transcription_set = (get_option('oer_transcription_label'))?true:false;
-$transcription_enabled = (get_option('oer_transcription_enabled'))?true:false;
-$sensitive_material_set = (get_option('oer_sensitive_material_label'))?true:false;
-$sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?true:false;
-?>
+<?php /** Website/Image/Document(except PDF)/Other Resource Template **/ ?>
 <div class="oer-rsrclftcntr-img col-md-5 col-sm-12 col-xs-12">
     <!--Resource Image-->
-    <div class="oer-sngl-rsrc-img">
-        <?php if ($youtube) {
-            $embed = oer_generate_youtube_embed_code($url);
-            echo $embed;
-        } elseif($isPDF) {
-            if ($isExternal) {
-                $external_option = get_option("oer_external_pdf_viewer");
-                if ($external_option==1) {
-                    $pdf_url = "https://docs.google.com/gview?url=".$url."&embedded=true";
-                    echo get_embed_code($pdf_url);
-                } elseif($external_option==0) {
-                    $embed_disabled = true;
-                }
-            } else {
-                $local_option = get_option("oer_local_pdf_viewer");
-                switch ($local_option){
-                    case 0:
-                        $embed_disabled = true;
-                        break;
-                    case 1:
-                        $pdf_url = "https://docs.google.com/gview?url=".$url."&embedded=true";
-                        echo get_embed_code($pdf_url);
-                        break;
-                    case 2:
-                        $pdf_url = OER_URL."pdfjs/web/viewer.html?file=".urlencode($url);
-                        $embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.$pdf_url.'"></iframe>';
-                        echo $embed_code;
-                        break;
-                    case 3:
-                        if(shortcode_exists('wonderplugin_pdf')) {
-                            $embed_code = "[wonderplugin_pdf src='".$url."' width='100%']";
-                            echo do_shortcode($embed_code);
-                        } else {
-                            $embed_disabled = true;
-                        }
-                        break;
-                    case 4:
-                        if(shortcode_exists('pdf-embedder')){
-                            $embed_code = "[pdf-embedder url='".$url."' width='100%']";
-                            echo do_shortcode($embed_code);
-                        } else {
-                            $embed_disabled = true;
-                        }
-                        break;
-                    case 5:
-                        if(shortcode_exists('pdfviewer')){
-                            $embed_code = "[pdfviewer width='100%']".$url."[/pdfviewer]";
-                            echo do_shortcode($embed_code);
-                        } else {
-                            $embed_disabled = true;
-                        }
-                        break;
-                }
-            }
-        } else {
-            $type=oer_get_resource_file_type($url);
-            if ($type['name']=="Video"){
-                echo oer_embed_video_file($url, $type['type']);
-            } else {
-                echo display_default_thumbnail($post);
-            }
-        }
-        if ($embed_disabled){
+    <div class="oer-sngl-rsrc-img oer-sngl-audio-type">
+        <?php
+        $type=oer_get_resource_file_type($url);
+        if ($type['name']=="Audio")
+            echo oer_generate_audio_resource_embed($url);
+        else
             echo display_default_thumbnail($post);
-        }
         ?>
     </div>
     <div id="" class="oer-authorName oer-cbxl">
@@ -150,7 +69,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
             <?php //echo $content = apply_filters ("the_content", $post->post_content); ?>
         </div>
     <?php } ?>
-
+    
     <?php
     $keywords = wp_get_post_tags($post->ID);
     if(!empty($keywords))
@@ -183,7 +102,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
     <?php
          }
     } ?>
-
+    
     <!-- Subject Areas -->
     <?php
     $post_terms = get_the_terms( $post->ID, 'resource-subject-area' );
@@ -215,7 +134,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
         </div>
     </div>
     <?php } ?>
-
+    
     <!-- Curriculum -->
     <?php
     $connected_curriculums = oer_get_connected_curriculums($post->post_title);
@@ -223,7 +142,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
     ?>
     <div class="tc-oer-connected-curriculum">
        <h4 class="tc-field-heading clearfix">
-            <?php _e("Appears In",OER_LESSON_PLAN_SLUG); ?>
+            <?php _e("Connected Compilations",OER_LESSON_PLAN_SLUG); ?>
         </h4>
        <div class="tc-oer-curriculum-details clearfix">
             <ul class="tc-oer-subject-areas-list">
@@ -268,11 +187,11 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
             }
         }
         ?>
-
+        
         <!-- Grade Level -->
         <?php
         $grades = explode(",",$grades);
-
+        
         if(is_array($grades) && !empty($grades) && array_filter($grades))
         {
             $option_set = false;
@@ -296,7 +215,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
                 </div>
             </div>
         <?php }?>
-
+        
         <!-- Instruction Time -->
         <?php
         if (($suggested_time_set && $suggested_time_enabled) || !$suggested_time_set) {
@@ -310,7 +229,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
              }
          }
         ?>
-
+        
         <!-- Creative Commons License -->
         <?php
         if (($cc_license_set && $cc_license_enabled) || !$cc_license_set) {
@@ -323,7 +242,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
             <?php
             }
         }
-
+        
         ?>
     </div>
     <div class="col-md-7">
@@ -340,7 +259,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
              }
          }
         ?>
-
+        
         <!-- Repository URL -->
         <?php
         if (($repository_record_set && $repository_record_enabled) || !$repository_record_set) {
@@ -354,7 +273,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
              }
          }
         ?>
-
+        
         <!-- Citation -->
         <?php
         if (($citation_set && $citation_enabled) || !$citation_set) {
@@ -374,7 +293,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
             }
         }
         ?>
-
+        
         <!-- Transcription -->
         <?php
         if (($transcription_set && $transcription_enabled) || !$transcription_set) {
@@ -394,7 +313,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
             }
         }
         ?>
-
+        
         <!-- Sensitive Material Warning -->
         <?php
         if (($sensitive_material_set && $sensitive_material_enabled) || !$sensitive_material_set) {
@@ -416,7 +335,3 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
         ?>
     </div>
 </div>
-
-
-<!-- RELATED RESOURCES -->
-<?php include_once OER_PATH.'includes/related-resources.php';?>

@@ -5,8 +5,11 @@ jQuery(document).ready(function(e) {
 			jQuery(this).children(".oer-cat-div,.oer-cat-div-large,.oer-cat-div-medium,.oer-cat-div-small").children(".oer-child-category").hide();
 			//alert(hght);
 	    });
-	jQuery( ".oer_datepicker" ).datepicker();
-	jQuery( ".oer_datepicker" ).datepicker( "option", "showAnim", "slideDown" );
+	
+	if (jQuery( ".oer_datepicker" ).length) {
+		jQuery( ".oer_datepicker" ).datepicker();
+		jQuery( ".oer_datepicker" ).datepicker( "option", "showAnim", "slideDown" );
+	}
 	
 	jQuery(document).on("show.bs.collapse", '.lp-subject-hidden.collapse', function (){
         var more_count = jQuery('.see-more-subjects').attr('data-count');
@@ -34,15 +37,30 @@ jQuery(document).ready(function(e) {
         jQuery('#oer-see-more-link').text("SEE MORE +");
     });
 	
-	jQuery(document).on("click", '.lp-read-more', function (){
+	jQuery(document).on("click", '.oer-lp-excerpt .lp-read-more', function (){
         jQuery('.oer-lp-excerpt').hide();
         jQuery('.oer-lp-full-content').show();
     });
     
-    jQuery(document).on("click", '.lp-read-less', function (){
+    jQuery(document).on("click", '.oer-lp-full-content .lp-read-less', function (){
         jQuery('.oer-lp-excerpt').show();
         jQuery('.oer-lp-full-content').hide();
     });
+	
+	jQuery(document).on("click", '.oer-lp-value-excerpt .lp-read-more', function (){
+        jQuery(this).closest('.oer-lp-value-excerpt').hide();
+        jQuery(this).closest('.oer-lp-value-excerpt').parent().find('.oer-lp-value-full').show();
+    });
+    
+    jQuery(document).on("click", '.oer-lp-value-full .lp-read-less', function (){
+		jQuery(this).closest('.oer-lp-value-full').hide();
+        jQuery(this).closest('.oer-lp-value-full').parent().find('.oer-lp-value-excerpt').show();
+    });
+	
+	jQuery('.tc-hidden-fields .form-field .oer-lp-value .oer-lp-value-full p').each(function(){
+		var read_less = jQuery(this).parent().find('.lp-read-less');
+		jQuery(this).append(read_less);
+	});
 });
 
 //adding author

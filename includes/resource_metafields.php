@@ -905,6 +905,48 @@ global $chck;
             </div>
         </div><!-- Transcription field -->
 	<?php } ?>
+
+	<?php
+	$option_set = false;
+	if (get_option('oer_related_resource_label')){
+		$option_set = true;
+	}
+	if (($option_set && get_option('oer_related_resource_enabled')) || !$option_set) {
+	?>
+			<div class="oer_snglfld oer_hdngsngl">Related Resources:</div>
+			<div class="oer_snglfld">
+				<div class="oer_txt">
+					<?php
+					if (!$option_set)
+						_e("Related Resources:", OER_SLUG);
+					else
+						echo get_option('oer_related_resource_label').":";
+					?>
+				</div>
+				<div class="oer_fld">
+						<div class="form-group">
+								<div class="oer_fld auto-width oer_related_resource_display">
+									<?php
+										$oer_related_resource = get_post_meta($post->ID, 'oer_related_resource', true);
+										if(!empty($oer_related_resource)){
+											$_tmps = explode(",",$oer_related_resource);
+											foreach ($_tmps as $_tmp){
+												$_res = get_post($_tmp);
+												?>
+												<span class="standard-label"><?php echo $_res->post_title; ?><a href="javascript:void(0)" class="remove-related_resource" data-id="<?php echo $_res->ID; ?>"><span class="dashicons dashicons-no-alt"></span></a></span>
+												<?php
+											}
+										}
+									?>
+								</div>
+								<input type="hidden" name="oer_related_resource" value="<?php echo $oer_related_resource ?>"/>
+								<button id="add-new-related-resource" data-toggle="modal" class="ui-button components-button is-button is-default">Add Related Resources</button>
+						</div>
+				</div>
+			</div>
+	  <?php } ?>
+		
     </div>
 </div>
+
 <div class="clear"></div>

@@ -129,4 +129,9 @@ class OER_Subject_Area_Widget extends WP_Widget{
         echo $after_widget;
     }
 }
-add_action('widgets_init', create_function('', 'return register_widget("OER_Subject_Area_Widget");'));
+//REMOVED DEPRECATED
+//add_action('widgets_init', create_function('', 'return register_widget("OER_Subject_Area_Widget");'));
+function oa_social_login_init_widget (){
+    return register_widget('OER_Subject_Area_Widget');
+}
+add_action ('widgets_init', 'oa_social_login_init_widget');

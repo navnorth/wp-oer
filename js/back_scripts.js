@@ -57,6 +57,27 @@ jQuery(document).ready(function(e) {
 		std.parent().remove();
 		jQuery(".stndrd_ttl input[value='"+std_id+"']").attr('checked',false);
 	});
+
+	jQuery(document).on('click','.remove-related_resource', function(){
+		var std = jQuery(this);
+		var std_id = std.attr('data-id');
+		std.parent().remove();
+		jQuery("#oer_related_resources_list input[value='"+std_id+"']").attr('checked',false);
+		jQuery("#oer_related_resources_list label[rid='"+std_id+"']").removeClass('selected');
+		updateRelatedResourceListToHidden();
+	});
+
+	jQuery(document).on('input','input[name="searchRelatedResources"]', function(e) {
+		var searchTerm = jQuery.trim(this.value).toLowerCase();
+		jQuery('#oer-related-resources-dynahide').remove();
+		if(searchTerm > ''){
+		  jQuery('#oer-related-resources-dynahide').remove();
+		  css = '#oer_related_resources_list ul li:not([data_name*="'+searchTerm+'"]){display:none;}'
+		  style = jQuery('<style type="text/css" id="oer-related-resources-dynahide">').text(css)
+		  jQuery('head').append(style);
+		}
+	});
+
 	jQuery('#add-new-standard').on('click', function(e){
 		e.preventDefault();
 		jQuery('#standardModal').modal({
@@ -93,11 +114,66 @@ jQuery(document).ready(function(e) {
 			var isAutosavingPost = wp.data.select('core/editor').isAutosavingPost();
 			
 			if (isSavingPost && !isAutosavingPost) {
-				window.tinyMCE.triggerSave();
+				if (typeof window.tinyMCE !== "undefined")
+					window.tinyMCE.triggerSave();
 			}
 		});
 	}
+
+	jQuery('#add-new-related-resource').on('click', function(e){
+		e.preventDefault();
+		
+		var delim = jQuery('input[name="oer_related_resource"]').val();
+		if(delim > ''){
+			jQuery('#oer_related_resources_list ul li label').removeClass('selected');
+			jQuery('.relatedResourceNode').prop('checked', false);
+			var array = delim.split(",");
+			jQuery.each(array,function(i){
+					$_node = array[i];
+					jQuery('#oer_related_resources_list ul li label[rid="'+$_node+'"]').addClass('selected').children('input[value="'+$_node+'"]').prop('checked', true);
+			});
+		}
+		
+		jQuery('#relatedResourcesModal').modal('show');
+	});
+
+	jQuery('input.relatedResourceNode').on('change', function(evt) {
+			var allchecked = jQuery('input.relatedResourceNode:checked');
+			var id = jQuery(this).val();
+	   	if(allchecked.length > 3) {
+			 	this.checked = false;
+	   	}else{
+			var chkbool = jQuery(this).is(':checked')
+				if(chkbool){
+					jQuery('label[rid="'+id+'"]').addClass('selected');
+				}else{
+					jQuery('label[rid="'+id+'"]').removeClass('selected');
+				}	
+			}
+	});
+
+	jQuery('#btnAddRelatedResources').on('click',function(e){
+		e.preventDefault();
+		jQuery('#relatedResourcesModal').modal('hide');
+		updateRelatedResourceListToHidden();
+	});
+
 });
+
+function updateRelatedResourceListToHidden(){
+	var elm = jQuery('input.relatedResourceNode:checked');
+	var ret = ''; var sep = ''; var lthm = '';
+	elm.each(function() {
+		 if(ret != '') sep = ',';
+		 ret += sep + jQuery(this).val();
+
+		 lthm += '<span class="standard-label">'+jQuery(this).attr('data_name')+'<a href="javascript:void(0)" class="remove-related_resource" data-id="'+jQuery(this).val()+'"><span class="dashicons dashicons-no-alt"></span></a></span>';
+
+	});
+	jQuery('input[name="oer_related_resource"]').val(ret);
+	jQuery('.oer_related_resource_display').html(lthm);
+
+}
 
 function displaySelectedStandard(sId, title) {
 	jQuery('#add-new-standard').before("<span class='standard-label'>" + title + "<a href='javascript:void(0)' class='remove-standard' data-id='" + sId + "'><span class='dashicons dashicons-no-alt'></span></a></span>");
