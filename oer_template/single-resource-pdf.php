@@ -1,5 +1,5 @@
 <?php /** PDF Resource Template **/ ?>
-<div class="oer-rsrclftcntr-img col-md-5 col-sm-12 col-xs-12">
+<div class="oer-rsrclftcntr-img col-md-7 col-sm-12 col-xs-12">
     <!--Resource Image-->
     <div class="oer-sngl-rsrc-img oer-sngl-pdf-type">
         <?php
@@ -55,7 +55,7 @@
         ?>
     </div>
 </div>
-<div class="oer-rsrcrghtcntr pdf-resource-details col-md-7 col-sm-12 col-xs-12">
+<div class="oer-rsrcrghtcntr pdf-resource-details col-md-5 col-sm-12 col-xs-12">
     <div id="" class="oer-authorName oer-cbxl">
         <?php
         $oer_authorname = get_post_meta($post->ID, "oer_authorname", true);
