@@ -279,48 +279,7 @@ if ( is_search() && Avada()->settings->get( 'search_results_per_page' ) ) {
 									$grade_label = "Grades: ";
 								
 								echo "<span class='fusion-post-meta-box fusion-post-meta-grades'><strong>".$grade_label."</strong>";
-								
-								sort($grades);
-
-								for($x=0; $x < count($grades); $x++)
-								{
-								  $grades[$x];
-								}
-								$fltrarr = array_filter($grades, 'strlen');
-								$flag = array();
-								$elmnt = $fltrarr[min(array_keys($fltrarr))];
-								for($i =0; $i < count($fltrarr); $i++)
-								{
-									if($elmnt == $fltrarr[$i] || "k" == strtolower($fltrarr[$i]))
-									{
-										$flag[] = 1;
-									}
-									else
-									{
-										$flag[] = 0;
-									}
-									$elmnt++;
-								}
-
-								if(in_array('0',$flag))
-								{
-									echo implode(",",array_unique($fltrarr));
-								}
-								else
-								{
-									$arr_flt = array_keys($fltrarr);
-									$end_filter = end($arr_flt);
-									if (count($fltrarr)>1) {
-										if (strtolower($fltrarr[$end_filter])=="k") {
-											$last_index = count($fltrarr)-2;
-											echo $fltrarr[$end_filter]."-".$fltrarr[$last_index];
-										}
-										else
-											echo $fltrarr[0]."-".$fltrarr[$end_filter];
-									}
-									else
-										echo $fltrarr[0];
-								}
+								echo oer_grade_levels($grades);
 								echo "</span>";
 							}
 						}
