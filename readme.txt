@@ -3,7 +3,7 @@ Contributors: navigationnorth, joehobson, johnpaulbalagolan, josepheneldas, arob
 Tags: OER, Open Educational Resources, Education, Learning
 Requires at least: 4.4
 Tested up to: 5.2.3
-Stable tag: 0.7.5
+Stable tag: 0.7.8
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -40,6 +40,11 @@ No frequently asked questions.
 3. Display educational resources on your WordPress website!
 
 == Changelog ==
+
+= 0.7.8 =
+* Fixes for resource display, better styling single resources by type
+* better display of age ranges
+* hide display of domain on internally hosted resources
 
 = 0.7.5 =
 * Additional Metadata options - article/information, age levels, instructional time, repository, licensing
