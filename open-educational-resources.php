@@ -2357,3 +2357,34 @@ function oer_get_rest_featured_image($resource, $field, $request) {
 	}
 	return false;
 }
+
+/** Subject Resources block **/
+function oer_register_subject_resources_block(){
+	wp_register_script(
+		'subject-resources-block-js',
+		OER_URL . "/js/oer_subject_resources_block.build.js",
+		array( 'wp-blocks' , 'wp-i18n' , 'wp-element' , 'wp-components' , 'wp-editor' , 'wp-api' )
+	);
+
+	wp_register_style(
+		'subject-resources-block-css',
+		OER_URL . "/css/oer_subject_resources_block.css",
+		array( 'wp-blocks' )
+	);
+
+	if (is_admin()) {
+		wp_register_style(
+			'subject-resources-edit-block-css',
+			OER_URL . "/css/oer_subject_resources_edit_block.css",
+			array( 'wp-edit-blocks' )
+		);
+	}
+
+	register_block_type('wp-oer-plugin/oer-subject-resources-block', array(
+		'editor_script' => 'subject-resources-block-js',
+		'editor_style' => 'subject-resources-edit-block-css',
+		'style' => 'subject-resources-block-css'
+	));
+}
+add_action( 'init' , 'oer_register_subject_resources_block' );
+/** End of Subject Resources block **/
