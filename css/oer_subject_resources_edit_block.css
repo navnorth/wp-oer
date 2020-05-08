@@ -1,2 +1,5 @@
 .subject-block .components-panel__row { display:block; }
 .subject-block .components-panel__row .form-group { width:100%; float:none; }
+.subject-block .editor-post-taxonomies__hierarchical-terms-list .oer-child-subject { margin-left:30px; }
+.edit-post-settings-sidebar__panel-block .components-panel__body .components-base-control { margin-bottom:0; }
+.components-checkbox-control__input-container { vertical-align: top; }
