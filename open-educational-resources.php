@@ -2337,6 +2337,23 @@ function oer_add_meta_to_api() {
 			    'schema'          => null,
 			) );
 
+	// Register Domain to REST API
+	register_rest_field( 'resource',
+			'domain',
+			array(
+			    'get_callback'    => 'oer_get_rest_domain',
+			    'update_callback' => null,
+			    'schema'          => null,
+			) );
+
+	// Register Subject Area Details to REST API
+	register_rest_field( 'resource',
+			'subject_details',
+			array(
+			    'get_callback'    => 'oer_get_subject_details',
+			    'update_callback' => null,
+			    'schema'          => null,
+			) );
 }
 add_action( 'rest_api_init', 'oer_add_meta_to_api');
 
@@ -2351,11 +2368,34 @@ function oer_rest_get_meta_field($resource, $field, $request){
 }
 
 function oer_get_rest_featured_image($resource, $field, $request) {
+	$new_image_url="";
 	if( $resource['featured_media'] ){
 		$img = wp_get_attachment_image_src( $resource['featured_media'], 'app-thumb' );
-		return $img[0];
+		$new_image_url = oer_resize_image( $img[0], 220, 180, true );
+	} else {
+		$img = OER_URL.'images/default-icon.png';
+		$new_image_url = oer_resize_image( $img, 220, 180, true );
 	}
-	return false;
+	return $new_image_url;
+}
+
+function oer_get_rest_domain($resource, $field, $request) {
+	$url = get_post_meta($resource['id'], "oer_resourceurl", true);
+	$url_domain = oer_getDomainFromUrl($url);
+	if (oer_isExternalUrl($url)) {
+		return  $url_domain;
+	}
+	return null;
+}
+
+function oer_get_subject_details($resource, $field, $request){
+	$subject_details = null;
+	$rsubjects = $resource['resource-subject-area'];
+	foreach($rsubjects as $rsubject) {
+		$subject_name = get_term($rsubject);
+		$subject_details[] = array("id" => $rsubject, "link" => get_term_link($rsubject), "name" => $subject_name->name);
+	}
+	return $subject_details;
 }
 
 /** Subject Resources block **/
