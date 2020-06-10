@@ -2354,6 +2354,14 @@ function oer_add_meta_to_api() {
 			    'update_callback' => null,
 			    'schema'          => null,
 			) );
+	// Register Excerpt to REST API
+	register_rest_field( 'resource',
+			'resource_excerpt',
+			array(
+			    'get_callback'    => 'oer_get_rest_resource_excerpt',
+			    'update_callback' => null,
+			    'schema'          => null,
+			) );
 }
 add_action( 'rest_api_init', 'oer_add_meta_to_api');
 
@@ -2398,6 +2406,10 @@ function oer_get_subject_details($resource, $field, $request){
 	return $subject_details;
 }
 
+function oer_get_rest_resource_excerpt($resource, $field, $request) {
+	return wp_kses_post( wp_trim_words($resource['content']['raw'], 45) );
+}
+
 /** Subject Resources block **/
 function oer_register_subject_resources_block(){
 	wp_register_script(
@@ -2408,14 +2420,14 @@ function oer_register_subject_resources_block(){
 
 	wp_register_style(
 		'subject-resources-block-css',
-		OER_URL . "/css/oer_subject_resources_block.css",
-		array( 'wp-blocks' )
+		OER_URL . "css/oer_subject_resources_block.css",
+		array( )
 	);
 
 	if (is_admin()) {
 		wp_register_style(
 			'subject-resources-edit-block-css',
-			OER_URL . "/css/oer_subject_resources_edit_block.css",
+			OER_URL . "css/oer_subject_resources_edit_block.css",
 			array( 'wp-edit-blocks' )
 		);
 	}
@@ -2427,4 +2439,5 @@ function oer_register_subject_resources_block(){
 	));
 }
 add_action( 'init' , 'oer_register_subject_resources_block' );
+//add_action('enqueue_block_editor_assets', 'oer_register_subject_resources_block');
 /** End of Subject Resources block **/
