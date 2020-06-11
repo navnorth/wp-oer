@@ -3,3 +3,129 @@
 .subject-block .editor-post-taxonomies__hierarchical-terms-list .oer-child-subject { margin-left:30px; }
 .edit-post-settings-sidebar__panel-block .components-panel__body .components-base-control { margin-bottom:0; }
 .components-checkbox-control__input-container { vertical-align: top; }
+.wp-block-wp-oer-plugin-oer-subject-resources-blockloading .oer-snglrsrchdng {
+    width: 100%;
+    float: left;
+    margin: 0px;
+    padding: 5px 0 10px;
+    font-size: 25px;
+    line-height: 25px;
+}
+.wp-block-wp-oer-plugin-oer-subject-resources-blockloading .oer-snglrsrchdng .sort-box {
+    text-align: right;
+    float: right;
+    margin-top: 0;
+    position: relative;
+    width: 100px;
+    display: inline-block;
+    line-height: 1.5em;
+    z-index: 2;
+}
+.wp-block-wp-oer-plugin-oer-subject-resources-blockloading .oer-snglrsrchdng .sort-box .sortoption {
+    margin-right: 10px;
+    font-size: 0.5em;
+    color: #8d8d8d;
+}
+.wp-block-wp-oer-plugin-oer-subject-resources-blockloading .oer-snglrsrchdng .sort-box .sort-resources {
+    cursor: pointer;
+}
+.wp-block-wp-oer-plugin-oer-subject-resources-blockloading .oer-snglrsrchdng .sort-box .sort-options {
+    color: #2980b9;
+    font-size: 0.5em;
+    -webkit-transition: opacity 0.2s, visibility 0s 0.2s;
+    transition: opacity 0.2s, visibility 0s 0.2s;
+    position: absolute;
+    right: 0;
+    overflow: hidden;
+    width: 100%;
+    background-color: #fff;
+    display: none;
+    border: 1px solid #cdcdcd;
+    padding: 0 10px;
+    outline: 0;
+}
+.wp-block-wp-oer-plugin-oer-subject-resources-blockloading .oer-snglrsrchdng .sort-box .components-base-control {
+    display: none;
+}
+.wp-block-wp-oer-plugin-oer-subject-resources-blockloading {
+    width: 100%;
+    float: left;
+    margin: 0px;
+    padding: 0 0 25px 0;
+}
+.wp-block-wp-oer-plugin-oer-subject-resources-blockloading .oer-allftrdrsrccntr {
+    float: left;
+    margin: 0px;
+    padding: 0 5px 0 0;
+    overflow: auto;
+    height: 540px;
+    border-top: 1px solid #c8c8c8;
+    border-bottom: 1px solid #c8c8c8;
+    width: 100%;
+}
+.wp-block-wp-oer-plugin-oer-subject-resources-blockloading .oer-allftrdrsrccntr .oer-snglrsrc:first-child {
+    border-top: none !important;
+    margin: 8px 0 2px !important;
+}
+.wp-block-wp-oer-plugin-oer-subject-resources-blockloading .oer-allftrdrsrccntr .oer-snglrsrc { 
+    overflow:hidden; 
+    float: left;
+    padding: 5px 0;
+    width: 100%;
+    border-top: 1px solid #ddd !important;
+}
+.wp-block-wp-oer-plugin-oer-subject-resources-blockloading .oer-allftrdrsrccntr .oer-snglrsrc .oer-resource-link {
+    width: 18%;
+    float: left;
+}
+.wp-block-wp-oer-plugin-oer-subject-resources-blockloading .oer-allftrdrsrccntr .oer-snglrsrc .oer-snglimglft {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    float: left;
+    margin: 0px;
+    padding: 0px;
+    border: 1px solid #c8c8c8;
+}
+.wp-block-wp-oer-plugin-oer-subject-resources-blockloading .oer-allftrdrsrccntr .oer-snglrsrc .oer-snglimglft img {
+    width: 100%;
+}
+.wp-block-wp-oer-plugin-oer-subject-resources-blockloading .oer-allftrdrsrccntr .oer-snglrsrc .oer-snglttldscrght {
+    width: 82%;
+    float: right;
+    margin: 0px;
+    padding: 0 0 0 10px;
+}
+.wp-block-wp-oer-plugin-oer-subject-resources-blockloading .oer-allftrdrsrccntr .oer-snglrsrc .oer-snglttldscrght .ttl {
+    width: 100%;
+    float: left;
+    margin: 0px;
+}
+.wp-block-wp-oer-plugin-oer-subject-resources-blockloading .oer-allftrdrsrccntr .oer-snglrsrc .oer-snglttldscrght .ttl a {
+    font-size: 17px;
+    text-decoration: none;
+    padding: 0 0 5px 0;
+}
+.wp-block-wp-oer-plugin-oer-subject-resources-blockloading .oer-allftrdrsrccntr .oer-snglrsrc .oer-snglttldscrght .post-meta .post-meta-box { margin-right:5px; }
+.wp-block-wp-oer-plugin-oer-subject-resources-blockloading .oer-allftrdrsrccntr .oer-snglrsrc .oer-snglttldscrght .desc {
+    width: 100%;
+    float: left;
+    margin: 10px 0;
+    padding: 0px;
+    line-height: 21px;
+    font-size: 14px;
+}
+.wp-block-wp-oer-plugin-oer-subject-resources-blockloading .oer-allftrdrsrccntr .oer-snglrsrc .oer-snglttldscrght .tagcloud {
+    margin: 0 0 10px !important;
+}
+.wp-block-wp-oer-plugin-oer-subject-resources-blockloading .oer-allftrdrsrccntr .oer-snglrsrc .oer-snglttldscrght .tagcloud span { margin-right:5px; }
+.wp-block-wp-oer-plugin-oer-subject-resources-blockloading .oer-allftrdrsrccntr .oer-snglrsrc .oer-snglttldscrght .tagcloud a {
+    font-size: 13px;
+    display: inline-block;
+    padding: 0 10px;
+    min-height: 28px;
+    line-height: 28px;
+    border: 1px solid;
+    margin: 2px 0;
+    transition: all .2s;
+}
