@@ -45,7 +45,7 @@ include_once(OER_PATH.'includes/shortcode.php');
 include_once(OER_PATH.'widgets/class-subject-area-widget.php');
 
 //define global variable $debug_mode and get value from settings
-global $_debug, $_bootstrap, $_css, $_css_oer, $_subjectarea, $_search_post_ids, $_w_bootstrap, $_oer_prefix, $oer_session, $_gutenberg, $_use_gutenberg;
+global $_debug, $_bootstrap, $_fontawesome, $_css, $_css_oer, $_subjectarea, $_search_post_ids, $_w_bootstrap, $_oer_prefix, $oer_session, $_gutenberg, $_use_gutenberg;
 
 if( ! defined( 'WP_SESSION_COOKIE' ) )
 	define( 'WP_SESSION_COOKIE', '_oer_session' );
@@ -62,6 +62,7 @@ if ( ! class_exists( 'OER_WP_Session' ) ) {
 
 $_debug = get_option('oer_debug_mode');
 $_bootstrap = get_option('oer_use_bootstrap');
+$_fontawesome = get_option('oer_use_fontawesome');
 $_use_gutenberg = get_option('oer_use_gutenberg');
 $_css = get_option('oer_additional_css');
 $_css_oer = get_option('oer_only_additional_css');
@@ -528,12 +529,18 @@ function oer_query_post_type($query) {
 add_action('wp_enqueue_scripts', 'oer_front_scripts');
 function oer_front_scripts()
 {
-	global $_bootstrap;
+	global $_bootstrap, $_fontawesome;
 
 	if ($_bootstrap) {
 		wp_enqueue_style('bootstrap-style', OER_URL.'css/bootstrap.min.css');
 		wp_enqueue_script('bootstrap-script', OER_URL.'js/bootstrap.min.js');
 	}
+	
+	if ($_fontawesome) {
+		echo 
+		wp_enqueue_style('fontawesome-style', OER_URL.'css/fontawesome.css');
+	}
+	
 }
 
 //Initialize settings page
@@ -773,6 +780,22 @@ function oer_styles_settings(){
 			'description' => __('Lists all subject areas in left column of Subject Area pages - may conflict with themes using left navigation.', OER_SLUG)
 		)
 	);
+	
+	//Add Settings field for Importing Fontawesome CSS
+	add_settings_field(
+		'oer_use_fontawesome',
+		'',
+		'oer_setup_settings_field',
+		'styles_settings_section',
+		'oer_styles_settings',
+		array(
+			'uid' => 'oer_use_fontawesome',
+			'type' => 'checkbox',
+			'value' => '1',
+			'name' =>  __('Import Fontawesome CSS', OER_SLUG),
+			'description' => __('uncheck if your WP theme already included Fontawesome', OER_SLUG)
+		)
+	);
 
 	//Add Settings field for hiding Page title on Subject Area pages
 	add_settings_field(
@@ -836,6 +859,7 @@ function oer_styles_settings(){
 
 	register_setting( 'oer_styles_settings' , 'oer_use_bootstrap' );
 	register_setting( 'oer_styles_settings' , 'oer_display_subject_area' );
+	register_setting( 'oer_styles_settings' , 'oer_use_fontawesome' );
 	register_setting( 'oer_styles_settings' , 'oer_hide_subject_area_title' );
 	register_setting( 'oer_styles_settings' , 'oer_hide_resource_title' );
 	register_setting( 'oer_styles_settings' , 'oer_additional_css' );

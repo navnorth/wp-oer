@@ -70,6 +70,8 @@
     padding: 10px 20px;
     margin-bottom: 20px;
 	overflow:hidden;
+	max-width: 100% !important;
+	display: block !important;
 }
 #sngl-resource header.entry-header .entry-title { margin-top:0; margin-bottom:0; }
 #sngl-resource header.entry-header span.sensitive-resource {
