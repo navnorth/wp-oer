@@ -42,6 +42,7 @@ include_once(OER_PATH.'includes/oer-functions.php');
 include_once(OER_PATH.'includes/template-functions.php');
 include_once(OER_PATH.'includes/init.php');
 include_once(OER_PATH.'includes/shortcode.php');
+require_once(OER_PATH.'blocks/subject-resources-block/init.php');
 include_once(OER_PATH.'widgets/class-subject-area-widget.php');
 
 //define global variable $debug_mode and get value from settings
@@ -151,7 +152,6 @@ function oer_create_csv_import_table()
 //Enqueue activation script
 function oer_enqueue_activation_script() {
 	if ( is_admin()) {
-
 		// Adds our JS file to the queue that WordPress will load
 		wp_enqueue_script( 'wp_ajax_oer_admin_script', OER_URL . 'js/oer-admin.js', array( 'jquery' ), null, true );
 
@@ -537,7 +537,6 @@ function oer_front_scripts()
 	}
 	
 	if ($_fontawesome) {
-		echo 
 		wp_enqueue_style('fontawesome-style', OER_URL.'css/fontawesome.css');
 	}
 	
@@ -2386,6 +2385,18 @@ function oer_add_meta_to_api() {
 			    'update_callback' => null,
 			    'schema'          => null,
 			) );
+	// Register End Point
+	register_rest_route( 'oer/v2',
+						'subjects',
+						array(
+							'methods' => 'GET',
+							'callback' => 'wp_oer_get_subject_areas',
+							'permission_callback' => function(){
+								return current_user_can('edit_posts');
+							}
+						)
+	);
+
 }
 add_action( 'rest_api_init', 'oer_add_meta_to_api');
 
@@ -2463,5 +2474,4 @@ function oer_register_subject_resources_block(){
 	));
 }
 add_action( 'init' , 'oer_register_subject_resources_block' );
-//add_action('enqueue_block_editor_assets', 'oer_register_subject_resources_block');
 /** End of Subject Resources block **/
