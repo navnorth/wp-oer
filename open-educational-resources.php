@@ -2313,7 +2313,7 @@ function oer_enqueue_resource_block(){
 		OER_URL . "/css/oer_resource_block.css",
 		array('wp-edit-blocks')
 	);
-	/* Register Block */
+	
 	register_block_type('wp-oer-plugin/oer-resource-block', array(
 		'editor_script' => 'resource-block-js',
 		'editor_style' => 'resource-block-css'
@@ -2446,7 +2446,7 @@ function oer_get_rest_resource_excerpt($resource, $field, $request) {
 }
 
 /** Subject Resources block **/
-function oer_register_subject_resources_block(){
+/*function oer_register_subject_resources_block(){
 	wp_register_script(
 		'subject-resources-block-js',
 		OER_URL . "/js/oer_subject_resources_block.build.js",
@@ -2473,5 +2473,5 @@ function oer_register_subject_resources_block(){
 		'style' => 'subject-resources-block-css'
 	));
 }
-add_action( 'init' , 'oer_register_subject_resources_block' );
+add_action( 'init' , 'oer_register_subject_resources_block' );*/
 /** End of Subject Resources block **/
