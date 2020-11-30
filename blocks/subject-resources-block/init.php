@@ -19,6 +19,8 @@ function wp_oer_register_resources_block(){
 		$script_asset['dependencies'],
 		$script_asset['version']
 	);
+	wp_localize_script('wp-oer-resources-block-editor', 'oerapi', array( 'domain' => site_url() ));
+	wp_enqueue_script('wp-oer-resources-block-editor');
 	wp_set_script_translations( 'wp-oer-resources-block', OER_SLUG );
 
 	// Backend styles
