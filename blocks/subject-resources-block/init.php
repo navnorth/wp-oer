@@ -61,13 +61,23 @@ function register_api_routes(){
 			}
 		)
 	);
+	register_rest_route(
+		'oer/v2',
+		'resources',
+		array(  'methods'=>'GET',
+			'callback'=>'wp_oer_get_resources',
+			'permission_callback' => function(){
+				return current_user_can('edit_posts');
+			}
+		)
+	);
 }
 add_action( 'rest_api_init' , 'register_api_routes' );
 
 function wp_oer_display_subject_resources( $attributes ){
 	if (!empty($attributes))
 		extract($attributes);
-
+	
 	$sort_display = "Date";
 	switch($sort){
 		case "modified":
@@ -77,7 +87,7 @@ function wp_oer_display_subject_resources( $attributes ){
 			$sort_display = 'Date Added';
 			break;
 		case "title":
-			$sort_display = 'Title a-z';
+			$sort_display = 'Title A-Z';
 			break;
 	}
 
@@ -90,7 +100,7 @@ function wp_oer_display_subject_resources( $attributes ){
 	$heading .= '			<ul class="sortList">';
 	$heading .= '				<li value="modified" '.($sort=='modified'?'class="selected"':'').'>Date Updated</li>';
 	$heading .= '				<li value="date" '.($sort=='date'?'class="selected"':'').'>Date Added</li>';
-	$heading .= '				<li value="title" '.($sort=='title'?'class="selected"':'').'>Title a-z</li>';
+	$heading .= '				<li value="title" '.($sort=='title'?'class="selected"':'').'>Title A-Z</li>';
 	$heading .= '			</ul>';
 	$heading .= '		</div>';
 	$heading .= '		<div class="components-base-control sort-selectbox">';
@@ -98,7 +108,7 @@ function wp_oer_display_subject_resources( $attributes ){
 	$heading .= '				<select id="inspector-select-control-1" class="components-select-control__input">';
 	$heading .= '					<option value="modified" '.selected($sort,'modified',false).'>Date Updated</option>';
 	$heading .= '					<option value="date" '.selected($sort,'date',false).'>Date Added</option>';
-	$heading .= '					<option value="title" '.selected($sort,'title',false).'>Title a-z</option>';
+	$heading .= '					<option value="title" '.selected($sort,'title',false).'>Title A-Z</option>';
 	$heading .= '				</select>';
 	$heading .= '			</div>';
 	$heading .= '		</div>';
@@ -118,7 +128,7 @@ function wp_oer_display_subject_resources( $attributes ){
 			$html .= '	</a>';
 			$html .= '	<div class="oer-snglttldscrght">';
 			$html .= '		<div class="ttl">';
-			$html .= '			<a href="'.$subject['link'].'">'.$subject['title']['rendered'].'</a>';
+			$html .= '			<a href="'.$subject['link'].'">'.$subject['post_title'].'</a>';
 			$html .= '		</div>';
 			$html .= '		<div class="post-meta">';
 			$html .= '			<span class="post-meta-box post-meta-grades">';
@@ -130,7 +140,7 @@ function wp_oer_display_subject_resources( $attributes ){
 			$html .= '		</div>';
 			$html .= '		<div class="desc">';
 			$html .= '			<div>';
-			$html .=  $subject['content']['rendered'];
+			$html .=  $subject['resource_excerpt'];
 			$html .= '			</div>';
 			$html .= '		</div>';
 			$html .= '		<div class="tagcloud">';
@@ -194,6 +204,80 @@ function wp_oer_get_subject_areas() {
 				}
 			}
 		}
+	} 
+	$response = new WP_REST_Response($subject_areas, 200);
+	$response->set_headers([ 'Cache-Control' => 'must-revalidate, no-cache, no-store, private' ]);
+	return $response;
+}
+
+function wp_oer_get_resources($request_data) {
+	$params = $request_data->get_params();
+	$subjects = $params['subjects'];
+	$sort = $params['sort'];
+	$count = $params['count'];
+
+	$args = array(
+			'post_type' 		=> 'resource',
+			'post_status'		=> 'publish',
+			'posts_per_page'	=> $count,
+			'orderby'			=> $sort,
+			'order'				=> 'asc'
+			);
+	if ($subjects!=="undefined"){
+		$subs = explode(",",$subjects);
+		$args['tax_query'] = array( array('taxonomy' => 'resource-subject-area', 'field'=>'id', 'terms' => $subs) );
+	} 
+	$resources = new WP_Query($args);
+	$resource_posts = array();
+	foreach($resources->posts as $resource){
+		$featured_image_id = get_post_thumbnail_id($resource->ID);
+		$resource->fimg_url = wp_oer_get_resource_featured_image($featured_image_id);
+		$resource->resource_excerpt = wp_oer_get_resource_excerpt($resource->post_content);
+		$resource->domain = wp_oer_get_resource_domain($resource->ID);
+		$resource->oer_grade = wp_oer_get_resource_grade($resource->ID);
+		$resource->subject_details = wp_oer_get_resource_subjects($resource->ID);
+		$resource_posts[] = $resource;
 	}
-	return $subject_areas;
+	return $resource_posts;
+}
+
+function wp_oer_get_resource_featured_image($resource_id){
+	$new_image_url="";
+	if( $resource_id ){
+		$img = wp_get_attachment_image_src( $resource_id, 'app-thumb' );
+		$new_image_url = oer_resize_image( $img[0], 220, 180, true );
+	} else {
+		$img = OER_URL.'images/default-icon.png';
+		$new_image_url = oer_resize_image( $img, 220, 180, true );
+	}
+	return $new_image_url;
+}
+
+function wp_oer_get_resource_excerpt($resource_content) {
+	return wp_kses_post( wp_trim_words($resource_content, 45) );
+}
+
+function wp_oer_get_resource_domain($resource_id) {
+	$url = get_post_meta($resource_id, "oer_resourceurl", true);
+	$url_domain = oer_getDomainFromUrl($url);
+	if (oer_isExternalUrl($url)) {
+		return  $url_domain;
+	}
+	return null;
+}
+
+function wp_oer_get_resource_grade($resource_id){
+	$grades = trim(get_post_meta($resource_id, "oer_grade", true),",");
+	$grades = explode(",",$grades);
+
+	return oer_grade_levels($grades);
+}
+
+function wp_oer_get_resource_subjects($resource_id){
+	$subject_details = null;
+	$rsubjects = get_the_terms($resource_id,"resource-subject-area");
+	foreach($rsubjects as $rsubject) {
+		$subject_details[] = array("id" => $rsubject->term_id, "link" => get_term_link($rsubject->term_id), "name" => $rsubject->name);
+	}
+	return $subject_details;
 }
