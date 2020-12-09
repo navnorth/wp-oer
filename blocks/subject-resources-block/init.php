@@ -1,4 +1,11 @@
 <?php
+function wp_oer_enqueue_subject_resources_frontend_script(){
+	wp_enqueue_script( 'wp_oer_block-front-js', plugins_url( '/subject-resources-block/build/front.js', dirname( __FILE__ ) ), array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor' ),'0.1' , true );
+ 	wp_localize_script( 'wp_oer_block-front-js', 'wp_oer_block', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+}
+add_action('wp_enqueue_scripts', 'wp_oer_enqueue_subject_resources_frontend_script');
+add_action('admin_enqueue_scripts', 'wp_oer_enqueue_subject_resources_frontend_script');
+
 /** Subject Resources block version 2.0 **/
 function wp_oer_register_resources_block(){
 	$dir = dirname( __FILE__ );
@@ -42,6 +49,7 @@ function wp_oer_register_resources_block(){
 	);
 
 	register_block_type( 'wp-oer-plugin/wp-oer-resources-block', array(
+		'script'		=> 'wp_oer_block-front-js',
 		'editor_script' => 'wp-oer-resources-block-editor',
 		'editor_style'  => 'wp-oer-resources-block-editor-style',
 		'style'         => 'wp-oer-resources-block-frontend-style',
@@ -78,6 +86,10 @@ function wp_oer_display_subject_resources( $attributes ){
 	if (!empty($attributes))
 		extract($attributes);
 	
+	if (!isset($displayCount)){
+		$displayCount = "5";
+	}
+
 	$sort_display = "Date";
 	switch($sort){
 		case "modified":
@@ -91,7 +103,7 @@ function wp_oer_display_subject_resources( $attributes ){
 			break;
 	}
 
-	$heading = '<div class="oer-snglrsrchdng">';
+	$heading = '<div class="oer-snglrsrchdng" data-sort="'.$sort.'" data-count="'.$displayCount.'" data-subjects="'.$selectedSubjects.'">';
 	$heading .= '	Browse '.$displayCount.' resources';
 	$heading .= '	<div class="sort-box">';
 	$heading .= '		<span class="sortoption">'.$sort_display.'</span>';
@@ -210,11 +222,22 @@ function wp_oer_get_subject_areas() {
 	return $response;
 }
 
-function wp_oer_get_resources($request_data) {
-	$params = $request_data->get_params();
-	$subjects = $params['subjects'];
-	$sort = $params['sort'];
-	$count = $params['count'];
+function wp_oer_get_resources($request_data, $ajax=false) {
+	$params = null;
+	$subjects = [];
+	$sort = "modified";
+	$count = "5";
+	if ($ajax){
+		$params = $request_data;
+		$subjects = $params['selectSubjects'];
+		$sort = $params['sort'];
+		$count = $params['displayCount'];
+	} else {
+		$params = $request_data->get_params();
+		$subjects = $params['subjects'];
+		$sort = $params['sort'];
+		$count = $params['count'];
+	}
 
 	$args = array(
 			'post_type' 		=> 'resource',
@@ -223,7 +246,7 @@ function wp_oer_get_resources($request_data) {
 			'orderby'			=> $sort,
 			'order'				=> 'asc'
 			);
-	if ($subjects!=="undefined"){
+	if ($subjects!=="undefined" && !empty($subjects)){
 		$subs = explode(",",$subjects);
 		$args['tax_query'] = array( array('taxonomy' => 'resource-subject-area', 'field'=>'id', 'terms' => $subs) );
 	} 
@@ -231,6 +254,8 @@ function wp_oer_get_resources($request_data) {
 	$resource_posts = array();
 	foreach($resources->posts as $resource){
 		$featured_image_id = get_post_thumbnail_id($resource->ID);
+		$resource->link = get_permalink($resource->ID);
+		$resource->oer_resourceurl = get_post_meta($resource->ID, "oer_resourceurl", true);
 		$resource->fimg_url = wp_oer_get_resource_featured_image($featured_image_id);
 		$resource->resource_excerpt = wp_oer_get_resource_excerpt($resource->post_content);
 		$resource->domain = wp_oer_get_resource_domain($resource->ID);
@@ -258,7 +283,7 @@ function wp_oer_get_resource_excerpt($resource_content) {
 }
 
 function wp_oer_get_resource_domain($resource_id) {
-	$url = get_post_meta($resource_id, "oer_resourceurl", true);
+	$url = get_post_meta($resource->ID, "oer_resourceurl", true);
 	$url_domain = oer_getDomainFromUrl($url);
 	if (oer_isExternalUrl($url)) {
 		return  $url_domain;
@@ -281,3 +306,97 @@ function wp_oer_get_resource_subjects($resource_id){
 	}
 	return $subject_details;
 }
+
+function wp_oer_get_subject_resources($args){
+	if (!empty($args))
+		extract($args);
+	
+	$sort_display = "Date";
+	switch($sort){
+		case "modified":
+			$sort_display = 'Date Updated';
+			break;
+		case "date":
+			$sort_display = 'Date Added';
+			break;
+		case "title":
+			$sort_display = 'Title A-Z';
+			break;
+	}
+
+	$heading = '<div class="oer-snglrsrchdng" data-sort="'.$sort.'" data-count="'.$displayCount.'" data-subjects="'.$selectedSubjects.'">';
+	$heading .= '	Browse '.$displayCount.' resources';
+	$heading .= '	<div class="sort-box">';
+	$heading .= '		<span class="sortoption">'.$sort_display.'</span>';
+	$heading .= '		<span class="sort-resources" title="Sort resources" tabindex="0" role="button"><i class="fa fa-sort" aria-hidden="true"></i></span>';
+	$heading .= '		<div class="sort-options">';
+	$heading .= '			<ul class="sortList">';
+	$heading .= '				<li value="modified" '.($sort=='modified'?'class="selected"':'').'>Date Updated</li>';
+	$heading .= '				<li value="date" '.($sort=='date'?'class="selected"':'').'>Date Added</li>';
+	$heading .= '				<li value="title" '.($sort=='title'?'class="selected"':'').'>Title A-Z</li>';
+	$heading .= '			</ul>';
+	$heading .= '		</div>';
+	$heading .= '		<div class="components-base-control sort-selectbox">';
+	$heading .= '			<div class="components-base-control__field">';
+	$heading .= '				<select id="inspector-select-control-1" class="components-select-control__input">';
+	$heading .= '					<option value="modified" '.selected($sort,'modified',false).'>Date Updated</option>';
+	$heading .= '					<option value="date" '.selected($sort,'date',false).'>Date Added</option>';
+	$heading .= '					<option value="title" '.selected($sort,'title',false).'>Title A-Z</option>';
+	$heading .= '				</select>';
+	$heading .= '			</div>';
+	$heading .= '		</div>';
+	$heading .= '	</div>';
+	$heading .= '</div>';
+
+	//$html = '<div class="oer-subject-resources-list">';
+	$html .= $heading;
+
+	$resources = wp_oer_get_resources($args,true);
+	
+	if (is_array($resources)){
+		foreach ($resources as $resource){
+			$html .= '<div class="post oer-snglrsrc">';
+			$html .= '	<a href="'.$resource->link.'" class="oer-resource-link">';
+			$html .= '		<div class="oer-snglimglft">';
+			$html .= '			<img src="'.$resource->fimg_url.'">';
+			$html .= '		</div>';
+			$html .= '	</a>';
+			$html .= '	<div class="oer-snglttldscrght">';
+			$html .= '		<div class="ttl">';
+			$html .= '			<a href="'.$resource->link.'">'.$resource->post_title.'</a>';
+			$html .= '		</div>';
+			$html .= '		<div class="post-meta">';
+			$html .= '			<span class="post-meta-box post-meta-grades">';
+			$html .= '				<strong>Grades: </strong>'.$resource->oer_grade;
+			$html .= '			</span>';
+			$html .= '			<span class="post-meta-box post-meta-domain">';
+			$html .= '				<strong>Domain: </strong><a href="'.$resource->oer_resourceurl.'">'.$resource->domain.'</a>';
+			$html .= '			</span>';
+			$html .= '		</div>';
+			$html .= '		<div class="desc">';
+			$html .= '			<div>';
+			$html .=  				$resource->resource_excerpt;
+			$html .= '			</div>';
+			$html .= '		</div>';
+			$html .= '		<div class="tagcloud">';
+			if (is_array($resource->subject_details)){
+				foreach($resource->subject_details as $subj){
+					$html .= '			<span><a href="'.$subj['link'].'">'.$subj['name'].'</a></span>';
+				}
+			}
+			$html .= '		</div>';
+			$html .= '	</div>';
+			$html .= '</div>';
+		}
+	}
+	//$html .= '</div>';
+
+	return $html;
+}
+function wp_oer_ajax_get_subject_resources(){
+	$resources = wp_oer_get_subject_resources($_POST);
+	echo $resources;
+	die();
+}
+add_action( 'wp_ajax_get_subject_resources', 'wp_oer_ajax_get_subject_resources' );
+add_action( 'wp_ajax_nopriv_get_subject_resources', 'wp_oer_ajax_get_subject_resources' );
