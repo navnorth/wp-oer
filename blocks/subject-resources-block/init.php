@@ -224,9 +224,10 @@ function wp_oer_get_subject_areas() {
 
 function wp_oer_get_resources($request_data, $ajax=false) {
 	$params = null;
-	$subjects = [];
+	$subjects = "";
 	$sort = "modified";
 	$count = "5";
+	$resource_posts = array();
 	if ($ajax){
 		$params = $request_data;
 		$subjects = $params['selectSubjects'];
@@ -248,21 +249,24 @@ function wp_oer_get_resources($request_data, $ajax=false) {
 			);
 	if ($subjects!=="undefined" && !empty($subjects)){
 		$subs = explode(",",$subjects);
-		$args['tax_query'] = array( array('taxonomy' => 'resource-subject-area', 'field'=>'id', 'terms' => $subs) );
+		$args['tax_query'] = array( 'relation'=> 'OR', array('taxonomy' => 'resource-subject-area', 'field'=>'term_id', 'terms' => $subs, 'operator' => 'IN') );
 	} 
 	$resources = new WP_Query($args);
-	$resource_posts = array();
-	foreach($resources->posts as $resource){
-		$featured_image_id = get_post_thumbnail_id($resource->ID);
-		$resource->link = get_permalink($resource->ID);
-		$resource->oer_resourceurl = get_post_meta($resource->ID, "oer_resourceurl", true);
-		$resource->fimg_url = wp_oer_get_resource_featured_image($featured_image_id);
-		$resource->resource_excerpt = wp_oer_get_resource_excerpt($resource->post_content);
-		$resource->domain = wp_oer_get_resource_domain($resource->ID);
-		$resource->oer_grade = wp_oer_get_resource_grade($resource->ID);
-		$resource->subject_details = wp_oer_get_resource_subjects($resource->ID);
-		$resource_posts[] = $resource;
-	}
+	if (count($resources->posts)>0){
+		$resource_posts = [];
+		foreach($resources->posts as $resource){
+			$featured_image_id = get_post_thumbnail_id($resource->ID);
+			$resource->link = get_permalink($resource->ID);
+			$resource->oer_resourceurl = get_post_meta($resource->ID, "oer_resourceurl", true);
+			$resource->fimg_url = wp_oer_get_resource_featured_image($featured_image_id);
+			$resource->resource_excerpt = wp_oer_get_resource_excerpt($resource->post_content);
+			$resource->domain = wp_oer_get_resource_domain($resource->ID);
+			$resource->oer_grade = wp_oer_get_resource_grade($resource->ID);
+			$resource->subject_details = wp_oer_get_resource_subjects($resource->ID);
+			$resource->subjects = $subjects;
+			$resource_posts[] = $resource;
+		}
+	} 
 	return $resource_posts;
 }
 
