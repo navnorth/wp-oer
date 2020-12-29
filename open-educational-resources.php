@@ -3,7 +3,7 @@
  Plugin Name:  WP OER
  Plugin URI:   https://www.wp-oer.com
  Description:  Open Educational Resource management and curation, metadata publishing, and alignment to Common Core State Standards.
- Version:      0.7.8
+ Version:      0.8.0
  Author:       Navigation North
  Author URI:   https://www.navigationnorth.com
  Text Domain:  wp-oer
@@ -36,7 +36,7 @@ define( 'OER_FILE',__FILE__);
 // Plugin Name and Version
 define( 'OER_PLUGIN_NAME', 'WP OER Plugin' );
 define( 'OER_ADMIN_PLUGIN_NAME', 'WP OER Plugin');
-define( 'OER_VERSION', '0.7.8' );
+define( 'OER_VERSION', '0.8.0' );
 
 include_once(OER_PATH.'includes/oer-functions.php');
 include_once(OER_PATH.'includes/template-functions.php');
@@ -535,11 +535,11 @@ function oer_front_scripts()
 		wp_enqueue_style('bootstrap-style', OER_URL.'css/bootstrap.min.css');
 		wp_enqueue_script('bootstrap-script', OER_URL.'js/bootstrap.min.js');
 	}
-	
+
 	if ($_fontawesome) {
 		wp_enqueue_style('fontawesome-style', OER_URL.'css/fontawesome.css');
 	}
-	
+
 }
 
 //Initialize settings page
@@ -779,7 +779,7 @@ function oer_styles_settings(){
 			'description' => __('Lists all subject areas in left column of Subject Area pages - may conflict with themes using left navigation.', OER_SLUG)
 		)
 	);
-	
+
 	//Add Settings field for Importing Fontawesome CSS
 	add_settings_field(
 		'oer_use_fontawesome',
@@ -2313,7 +2313,7 @@ function oer_enqueue_resource_block(){
 		OER_URL . "/css/oer_resource_block.css",
 		array('wp-edit-blocks')
 	);
-	
+
 	register_block_type('wp-oer-plugin/oer-resource-block', array(
 		'editor_script' => 'resource-block-js',
 		'editor_style' => 'resource-block-css'
