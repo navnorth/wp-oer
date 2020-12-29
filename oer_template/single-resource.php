@@ -145,38 +145,42 @@ if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
 	else {
         $resource_template = OER_PATH.'oer_template/single-resource-standard.php';
         switch($oer_resource_type) {
-            case "website":
-                $resource_template = OER_PATH.'oer_template/single-resource-website.php';
-                break;
-            case "document":
-                $oer_type=oer_get_resource_file_type($url);
-                if ($oer_type['name']=="PDF")
-                    $resource_template = OER_PATH.'oer_template/single-resource-pdf.php';
-                else
-                    $resource_template = OER_PATH.'oer_template/single-resource-website.php';
-                break;
-            case "image":
-                $resource_template = OER_PATH.'oer_template/single-resource-website.php';
-                break;
-            case "audio":
-                $file_type=oer_get_resource_file_type($url);
-                if ($file_type['name']=="Audio")
-                    $resource_template = OER_PATH.'oer_template/single-resource-audio.php';
-                else
-                    $resource_template = OER_PATH.'oer_template/single-resource-website.php';
-                break;
-            case "video":
-                $file_type=oer_get_resource_file_type($url);
-                if ($file_type['name']=="Video")
-                    $resource_template = OER_PATH.'oer_template/single-resource-video.php';
-                else
-                    $resource_template = OER_PATH.'oer_template/single-resource-website.php';
-                break;
-            case "other":
-                $resource_template = OER_PATH.'oer_template/single-resource-website.php';
-                break;
-            default:
-                break;
+		case "website":
+		case "document":
+		case "other":
+		case "image":
+			$oer_type=oer_get_resource_file_type($url);
+			if ($oer_type['name']=="PDF")
+			    $resource_template = OER_PATH.'oer_template/single-resource-pdf.php';
+			else
+			    $resource_template = OER_PATH.'oer_template/single-resource-website.php';
+			break;
+		case "audio":
+			$oer_type=oer_get_resource_file_type($url);
+			if ($oer_type['name']=="PDF")
+				$resource_template = OER_PATH.'oer_template/single-resource-pdf.php';
+			else {
+				$file_type=oer_get_resource_file_type($url);
+				if ($file_type['name']=="Audio")
+					$resource_template = OER_PATH.'oer_template/single-resource-audio.php';
+				else
+					$resource_template = OER_PATH.'oer_template/single-resource-website.php';
+			}
+			break;
+		case "video":
+			$oer_type=oer_get_resource_file_type($url);
+			if ($oer_type['name']=="PDF")
+				$resource_template = OER_PATH.'oer_template/single-resource-pdf.php';
+			else {
+				$file_type=oer_get_resource_file_type($url);
+				if ($file_type['name']=="Video")
+					$resource_template = OER_PATH.'oer_template/single-resource-video.php';
+				else
+					$resource_template = OER_PATH.'oer_template/single-resource-website.php';
+			}
+		    break;
+		default:
+		    break;
         }
         include($resource_template);
     }

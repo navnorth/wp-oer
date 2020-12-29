@@ -3,14 +3,14 @@
  Plugin Name:  WP OER
  Plugin URI:   https://www.wp-oer.com
  Description:  Open Educational Resource management and curation, metadata publishing, and alignment to Common Core State Standards.
- Version:      0.7.0
+ Version:      0.8.0
  Author:       Navigation North
  Author URI:   https://www.navigationnorth.com
  Text Domain:  wp-oer
  License:      GPL3
  License URI:  https://www.gnu.org/licenses/gpl-3.0.html
 
- Copyright (C) 2019 Navigation North
+ Copyright (C) 2020 Navigation North
 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -36,16 +36,17 @@ define( 'OER_FILE',__FILE__);
 // Plugin Name and Version
 define( 'OER_PLUGIN_NAME', 'WP OER Plugin' );
 define( 'OER_ADMIN_PLUGIN_NAME', 'WP OER Plugin');
-define( 'OER_VERSION', '0.7.0' );
+define( 'OER_VERSION', '0.8.0' );
 
 include_once(OER_PATH.'includes/oer-functions.php');
 include_once(OER_PATH.'includes/template-functions.php');
 include_once(OER_PATH.'includes/init.php');
 include_once(OER_PATH.'includes/shortcode.php');
+require_once(OER_PATH.'blocks/subject-resources-block/init.php');
 include_once(OER_PATH.'widgets/class-subject-area-widget.php');
 
 //define global variable $debug_mode and get value from settings
-global $_debug, $_bootstrap, $_css, $_css_oer, $_subjectarea, $_search_post_ids, $_w_bootstrap, $_oer_prefix, $oer_session, $_gutenberg, $_use_gutenberg;
+global $_debug, $_bootstrap, $_fontawesome, $_css, $_css_oer, $_subjectarea, $_search_post_ids, $_w_bootstrap, $_oer_prefix, $oer_session, $_gutenberg, $_use_gutenberg;
 
 if( ! defined( 'WP_SESSION_COOKIE' ) )
 	define( 'WP_SESSION_COOKIE', '_oer_session' );
@@ -62,6 +63,7 @@ if ( ! class_exists( 'OER_WP_Session' ) ) {
 
 $_debug = get_option('oer_debug_mode');
 $_bootstrap = get_option('oer_use_bootstrap');
+$_fontawesome = get_option('oer_use_fontawesome');
 $_use_gutenberg = get_option('oer_use_gutenberg');
 $_css = get_option('oer_additional_css');
 $_css_oer = get_option('oer_only_additional_css');
@@ -150,7 +152,6 @@ function oer_create_csv_import_table()
 //Enqueue activation script
 function oer_enqueue_activation_script() {
 	if ( is_admin()) {
-
 		// Adds our JS file to the queue that WordPress will load
 		wp_enqueue_script( 'wp_ajax_oer_admin_script', OER_URL . 'js/oer-admin.js', array( 'jquery' ), null, true );
 
@@ -321,10 +322,10 @@ function oer_category_template( $template ) {
 
 	//Post ID
 	$_id = $wp_query->get_queried_object_id();
-	
+
 	// Get Current Object if it belongs to Resource Category taxonomy
 	$resource_term = get_term_by( 'id' , $_id , 'resource-subject-area' );
-	
+
 	//Check if the loaded resource is a category
 	if (is_tax() && $resource_term && !is_wp_error( $resource_term )) {
 		return oer_get_template_hierarchy('resource-subject-area');
@@ -528,12 +529,17 @@ function oer_query_post_type($query) {
 add_action('wp_enqueue_scripts', 'oer_front_scripts');
 function oer_front_scripts()
 {
-	global $_bootstrap;
+	global $_bootstrap, $_fontawesome;
 
 	if ($_bootstrap) {
 		wp_enqueue_style('bootstrap-style', OER_URL.'css/bootstrap.min.css');
 		wp_enqueue_script('bootstrap-script', OER_URL.'js/bootstrap.min.js');
 	}
+
+	if ($_fontawesome) {
+		wp_enqueue_style('fontawesome-style', OER_URL.'css/fontawesome.css');
+	}
+
 }
 
 //Initialize settings page
@@ -774,6 +780,22 @@ function oer_styles_settings(){
 		)
 	);
 
+	//Add Settings field for Importing Fontawesome CSS
+	add_settings_field(
+		'oer_use_fontawesome',
+		'',
+		'oer_setup_settings_field',
+		'styles_settings_section',
+		'oer_styles_settings',
+		array(
+			'uid' => 'oer_use_fontawesome',
+			'type' => 'checkbox',
+			'value' => '1',
+			'name' =>  __('Import Fontawesome CSS', OER_SLUG),
+			'description' => __('uncheck if your WP theme already included Fontawesome', OER_SLUG)
+		)
+	);
+
 	//Add Settings field for hiding Page title on Subject Area pages
 	add_settings_field(
 		'oer_hide_subject_area_title',
@@ -819,8 +841,7 @@ function oer_styles_settings(){
 			'inline_description' => __('easily customize the look and feel with your own CSS (sitewide)', OER_SLUG)
 		)
 	);
-	
-	
+
 	add_settings_field(
 		'oer_only_additional_css',
 		'',
@@ -837,6 +858,7 @@ function oer_styles_settings(){
 
 	register_setting( 'oer_styles_settings' , 'oer_use_bootstrap' );
 	register_setting( 'oer_styles_settings' , 'oer_display_subject_area' );
+	register_setting( 'oer_styles_settings' , 'oer_use_fontawesome' );
 	register_setting( 'oer_styles_settings' , 'oer_hide_subject_area_title' );
 	register_setting( 'oer_styles_settings' , 'oer_hide_resource_title' );
 	register_setting( 'oer_styles_settings' , 'oer_additional_css' );
@@ -2291,7 +2313,7 @@ function oer_enqueue_resource_block(){
 		OER_URL . "/css/oer_resource_block.css",
 		array('wp-edit-blocks')
 	);
-	/* Register Block */
+
 	register_block_type('wp-oer-plugin/oer-resource-block', array(
 		'editor_script' => 'resource-block-js',
 		'editor_style' => 'resource-block-css'
@@ -2338,6 +2360,43 @@ function oer_add_meta_to_api() {
 			    'schema'          => null,
 			) );
 
+	// Register Domain to REST API
+	register_rest_field( 'resource',
+			'domain',
+			array(
+			    'get_callback'    => 'oer_get_rest_domain',
+			    'update_callback' => null,
+			    'schema'          => null,
+			) );
+
+	// Register Subject Area Details to REST API
+	register_rest_field( 'resource',
+			'subject_details',
+			array(
+			    'get_callback'    => 'oer_get_subject_details',
+			    'update_callback' => null,
+			    'schema'          => null,
+			) );
+	// Register Excerpt to REST API
+	register_rest_field( 'resource',
+			'resource_excerpt',
+			array(
+			    'get_callback'    => 'oer_get_rest_resource_excerpt',
+			    'update_callback' => null,
+			    'schema'          => null,
+			) );
+	// Register End Point
+	register_rest_route( 'oer/v2',
+						'subjects',
+						array(
+							'methods' => 'GET',
+							'callback' => 'wp_oer_get_subject_areas',
+							'permission_callback' => function(){
+								return current_user_can('edit_posts');
+							}
+						)
+	);
+
 }
 add_action( 'rest_api_init', 'oer_add_meta_to_api');
 
@@ -2352,9 +2411,36 @@ function oer_rest_get_meta_field($resource, $field, $request){
 }
 
 function oer_get_rest_featured_image($resource, $field, $request) {
+	$new_image_url="";
 	if( $resource['featured_media'] ){
 		$img = wp_get_attachment_image_src( $resource['featured_media'], 'app-thumb' );
-		return $img[0];
+		$new_image_url = oer_resize_image( $img[0], 220, 180, true );
+	} else {
+		$img = OER_URL.'images/default-icon.png';
+		$new_image_url = oer_resize_image( $img, 220, 180, true );
 	}
-	return false;
+	return $new_image_url;
+}
+
+function oer_get_rest_domain($resource, $field, $request) {
+	$url = get_post_meta($resource['id'], "oer_resourceurl", true);
+	$url_domain = oer_getDomainFromUrl($url);
+	if (oer_isExternalUrl($url)) {
+		return  $url_domain;
+	}
+	return null;
+}
+
+function oer_get_subject_details($resource, $field, $request){
+	$subject_details = null;
+	$rsubjects = $resource['resource-subject-area'];
+	foreach($rsubjects as $rsubject) {
+		$subject_name = get_term($rsubject);
+		$subject_details[] = array("id" => $rsubject, "link" => get_term_link($rsubject), "name" => $subject_name->name);
+	}
+	return $subject_details;
+}
+
+function oer_get_rest_resource_excerpt($resource, $field, $request) {
+	return wp_kses_post( wp_trim_words($resource['content']['raw'], 45) );
 }

@@ -812,6 +812,20 @@ function oer_getDomainFromUrl($url) {
 	return $url_details['host'];
 }
 
+//Check if resource url is external url
+function oer_isExternalUrl($url){
+	$current_url = parse_url(site_url());
+	$internal_domain = $current_url['host'];
+
+	$url_details = parse_url($url);
+	$resource_domain = $url_details['host'];
+
+	if ($internal_domain==$resource_domain)
+		return false;
+	else
+		return true;
+}
+
 //Get Image from External URL
 function oer_getImageFromExternalURL($url) {
 	global $_debug;
@@ -2214,7 +2228,6 @@ function oer_remove_plugin_settings(){
 	//if (get_option('oer_only_additional_css'))
 		delete_option('oer_only_additional_css');
 
-
 	//Setup Settings
 	if (get_option('oer_import_sample_resources'))
 		delete_option('oer_import_sample_resources');
@@ -3192,6 +3205,18 @@ if (!function_exists('oer_get_meta_label')){
 			case "oer_transcription":
 				$label = __("Transcription", OER_SLUG);
 				break;
+			case "oer_age_levels":
+				$label = __("Age Levels", OER_SLUG);
+				break;
+			case "oer_instructional_time":
+				$label = __("Instructional Time", OER_SLUG);
+				break;
+			case "oer_external_repository":
+				$label = __("External Repository", OER_SLUG);
+				break;
+			case "oer_repository_recordurl":
+				$label = __("Repository Record URL", OER_SLUG);
+				break;
 		}
 		return $label;
 	}
@@ -3224,10 +3249,10 @@ if (!function_exists('oer_save_metadata_options')){
 	function oer_save_metadata_options($post_data){
 		foreach($post_data as $key=>$value){
 			if (strpos($key,"oer_")!==false){
-				if (get_option($key))
-					update_option($key, $value);
-				else
-					add_option($key, $value);
+				//if (get_option($key))
+				update_option($key, $value);
+				/*else
+					add_option($key, $value);*/
 			}
 		}
 	}
@@ -3246,24 +3271,70 @@ if (! function_exists('oer_installed_standards_plugin')){
     }
 }
 
+function oer_sort_grade_level($a, $b) {
+	if ( $a == $b )
+		return 0;
+
+	if (is_numeric($a) && is_numeric($b))
+		return ($a<$b) ? -1 : 1;
+	elseif (is_numeric($a) && !is_numeric($b))
+		return 1;
+	elseif (!is_numeric($a) && is_numeric($b))
+		return -1;
+	else {
+		if ($a=="pre-k" && $b=="k")
+			return -1;
+		else
+			return 1;
+	}
+
+
+}
+
 function oer_grade_levels($grade_levels){
+	$default_arr = [
+					"pre-k",
+					"k",
+					"1",
+					"2",
+					"3",
+					"4",
+					"5",
+					"6",
+					"7",
+					"8",
+					"9",
+					"10",
+					"11",
+					"12"
+					];
+
 	$elmnt = 0;
+	$def_index = 0;
 	
-	sort($grade_levels);
+	usort($grade_levels, "oer_sort_grade_level");
 
 	for($x=0; $x < count($grade_levels); $x++)
 	{
 		$grade_levels[$x];
 	}
-	
+
 	$fltrarr = array_filter($grade_levels, 'strlen');
+	
 	$flag = array();
 	if (is_array($fltrarr) && count($fltrarr)>0)
 		$elmnt = $fltrarr[min(array_keys($fltrarr))];
-		
+	
+	for($y=0; $y < count($default_arr); $y++){
+		if ($default_arr[$y]==$elmnt){
+			$def_index = $y;
+			break;
+		}
+	}
+
 	for($i =0; $i < count($fltrarr); $i++)
 	{
-		if($elmnt == $fltrarr[$i] || "k" == strtolower($fltrarr[$i]))
+		if($elmnt == $fltrarr[$i] || $default_arr[$def_index+$i] == strtolower($fltrarr[$i]))
 		{
 			$flag[] = 1;
 		}
@@ -3271,22 +3342,26 @@ function oer_grade_levels($grade_levels){
 		{
 			$flag[] = 0;
 		}
+		if (strtolower($fltrarr[$i])=="k")
+			$fltrarr[$i] = "K";
+		if (strtolower($fltrarr[$i])=="pre-k")
+			$fltrarr[$i] = "Pre-K";
 		$elmnt++;
 	}
 
 	if(in_array('0',$flag))
 	{
-		return implode(",",array_unique($fltrarr));
+		return implode(", ",array_unique($fltrarr));
 	}
 	else
 	{
 		$arr_flt = array_keys($fltrarr);
+		
 		$end_filter = end($arr_flt);
+		
 		if (count($fltrarr)>1) {
-			if (strtolower($fltrarr[$end_filter])=="k") {
-				$last_index = count($fltrarr)-2;
-				return $fltrarr[$end_filter]."-".$fltrarr[$last_index];
-			}
+			if (strtolower($fltrarr[0])=="pre-k" || strtolower($fltrarr[$end_filter])=="k")
+				return $fltrarr[0]." &ndash; ".$fltrarr[$end_filter];
 			else
 				return $fltrarr[0]."-".$fltrarr[$end_filter];
 		}
@@ -3398,17 +3473,18 @@ if (! function_exists('oer_standards_list_display')){
 // Get Content with x number of characters
 if (!function_exists('oer_get_content')){
 	function oer_get_content($content, $limit) {
-		$content = preg_replace('/<!--(.|\s)*?-->/', '', $content);
-		
-		if (strlen($content)>=$limit) {
-		  $content = substr($content, 0, $limit);
-		}
-		
-		$content = preg_replace('/[.+]/','', $content);
-		$content = str_replace(']]>', ']]>', $content);
-		$content .= '... <a href="javascript:void(0);" class="lp-read-more">(read more)</a>';
-		return $content;
-	}
+				$content = wp_strip_all_tags($content);
+        $content = preg_replace('/<!--(.|\s)*?-->/', '', $content);
+        
+        if (strlen($content)>=$limit) {
+          $content = substr($content, 0, $limit);
+        }
+        
+        $content = preg_replace('/[.+]/','', $content);
+        $content = str_replace(']]>', ']]>', $content);
+        $content .= '... <a href="javascript:void(0);" class="lp-read-more">(read more)</a>';
+        return $content;
+    }
 }
 
 // Get Content with x number of characters for related resources
@@ -3420,7 +3496,7 @@ if (!function_exists('oer_get_related_resource_content')){
         $content = preg_replace('/[.+]/','', $content);
         //$content = apply_filters('the_content', $content);
         $content = str_replace(']]>', ']]>', $content);
-        	if(strlen(trim($content,'')) > '') $content .= ' ...';
+				if(strlen(trim($content,'')) > '') $content .= ' ...';
         return strip_tags($content);
     }
 }
@@ -3644,27 +3720,27 @@ if (!function_exists('oer_embed_video_file')){
 	}
 }
 
-function oer_breadcrumb_display($resource = NULL){
-	$ret = '<div class="wp_oer_breadcrumb">';
-	global $post;
-	if($resource != NULL){
-		$curriculum = get_post($post);
-		if($curriculum ){
-			$ret .= '<a href="'.get_site_url().'">Home</a>';
-			$cur = (strlen($curriculum->post_title) > 30)? ' / '.substr($curriculum->post_title, 0, 30).'...' : ' / '.$curriculum->post_title;
-			$ret .= ' / <a href="'.get_permalink( $curriculum->ID ).'">'.$cur.'</a>';
-			$res = (strlen($resource->post_title) > 30)? ' / '.substr($resource->post_title, 0, 30).'...' : ' / '.$resource->post_title;
-			$ret .= ' / '.$res;
-		}
-	}else{
-		$resource = get_post($post);
-		if($resource){
-			$ret .= '<a href="'.get_site_url().'">Home</a>';
-			$ret = (strlen($resource->post_title) > 30)? $ret .= ' / '.substr($resource->post_title, 0, 30).'...' : $ret .= ' / '.$resource->post_title;				
-		}
-	}	
-	$ret .= '</div>';
-	return $ret;
-}
+	function oer_breadcrumb_display($resource = NULL){
+		$ret = '<div class="wp_oer_breadcrumb">';
+		global $post;
+		if($resource != NULL){
+				$curriculum = get_post($post);
+		    if($curriculum ){
+		        $ret .= '<a href="'.get_site_url().'">Home</a>';
+						$cur = (strlen($curriculum->post_title) > 30)? ' / '.substr($curriculum->post_title, 0, 30).'...' : ' / '.$curriculum->post_title;
+						$ret .= ' / <a href="'.get_permalink( $curriculum->ID ).'">'.$cur.'</a>';
+						$res = (strlen($resource->post_title) > 30)? ' / '.substr($resource->post_title, 0, 30).'...' : ' / '.$resource->post_title;
+						$ret .= ' / '.$res;
+		    }
+		}else{
+				$resource = get_post($post);
+		    if($resource){
+					$ret .= '<a href="'.get_site_url().'">Home</a>';
+					$ret = (strlen($resource->post_title) > 30)? $ret .= ' / '.substr($resource->post_title, 0, 30).'...' : $ret .= ' / '.$resource->post_title;				
+		    }
+		}	
+		$ret .= '</div>';
+		return $ret;
+	}
 
 ?>

@@ -1,7 +1,7 @@
 <?php /** Website/Image/Document(except PDF)/Other Resource Template **/ ?>
 <div class="oer-rsrclftcntr-img col-md-5 col-sm-12 col-xs-12">
     <!--Resource Image-->
-    <div class="oer-sngl-rsrc-img">
+    <div class="oer-sngl-rsrc-img oer-sngl-website-type">
         <?php  echo display_default_thumbnail($post); ?>
     </div>
     <div id="" class="oer-authorName oer-cbxl">
@@ -172,7 +172,7 @@
         <?php
         if (($age_levels_set && $age_levels_enabled) || !$age_levels_set) {
             $age_label = oer_field_label('oer_age_levels');
-            if (!empty($age_levels)){
+            if (!empty($age_levels) && trim($age_levels)!==""){
             ?>
             <div class="form-field">
                 <div class="oer-lp-label"><?php echo $age_label; ?>:</div> <div class="oer-lp-value"><?php echo $age_levels; ?></div>
@@ -214,7 +214,7 @@
         <?php
         if (($suggested_time_set && $suggested_time_enabled) || !$suggested_time_set) {
              $suggested_label = oer_field_label('oer_instructional_time');
-             if (!empty($suggested_time)){
+             if (!empty($suggested_time) && trim($suggested_time)!==""){
              ?>
              <div class="form-field">
                  <div class="oer-lp-label"><?php echo $suggested_label; ?>:</div> <div class="oer-lp-value"><?php echo $suggested_time; ?></div>

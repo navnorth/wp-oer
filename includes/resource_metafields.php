@@ -912,6 +912,7 @@ global $chck;
 		$option_set = true;
 	}
 	if (($option_set && get_option('oer_related_resource_enabled')) || !$option_set) {
+		if (oer_installed_standards_plugin()) {
 	?>
 			<div class="oer_snglfld oer_hdngsngl">Related Resources:</div>
 			<div class="oer_snglfld">
@@ -944,7 +945,8 @@ global $chck;
 						</div>
 				</div>
 			</div>
-	  <?php } ?>
+	  <?php } 
+		} ?>
 		
     </div>
 </div>

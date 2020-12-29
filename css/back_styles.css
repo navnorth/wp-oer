@@ -1,4 +1,4 @@
-.oer_metawpr
+standardModaloer_metawpr
 {
 	width: 100%;
 	float: left;
@@ -29,6 +29,7 @@
 	position: relative;
 	padding-top:20px;
 }
+.oer_metainrwpr .oer_snglfld.oer_hdngsngl { width:100%; }
 .oer_metainrwpr .oer_authrcntr
 {
 	width: 850px;
@@ -76,6 +77,7 @@
 .oer_snglfld .oer_fld select
 {
 	width: 320px;
+	padding:7px;
 }
 .oer_imprtrwpr
 {
@@ -402,4 +404,4 @@ label.selected span.relatedResourceSelectorImage {
     left: 0px;
     top: 3px;
 }
-
+div#standardModal { z-index: 9999 !important; }

@@ -1,7 +1,7 @@
 <?php /** PDF Resource Template **/ ?>
-<div class="oer-rsrclftcntr-img col-md-5 col-sm-12 col-xs-12">
+<div class="oer-rsrclftcntr-img col-md-7 col-sm-12 col-xs-12">
     <!--Resource Image-->
-    <div class="oer-sngl-rsrc-img">
+    <div class="oer-sngl-rsrc-img oer-sngl-pdf-type">
         <?php
         if ($isExternal) {
             $external_option = get_option("oer_external_pdf_viewer");
@@ -55,7 +55,7 @@
         ?>
     </div>
 </div>
-<div class="oer-rsrcrghtcntr pdf-resource-details col-md-7 col-sm-12 col-xs-12">
+<div class="oer-rsrcrghtcntr pdf-resource-details col-md-5 col-sm-12 col-xs-12">
     <div id="" class="oer-authorName oer-cbxl">
         <?php
         $oer_authorname = get_post_meta($post->ID, "oer_authorname", true);
@@ -214,7 +214,7 @@
         <?php
         if (($age_levels_set && $age_levels_enabled) || !$age_levels_set) {
             $age_label = oer_field_label('oer_age_levels');
-            if (!empty($age_levels)){
+            if (!empty($age_levels) && trim($age_levels)!==""){
             ?>
             <div class="form-field">
                 <div class="oer-lp-label"><?php echo $age_label; ?>:</div> <div class="oer-lp-value"><?php echo $age_levels; ?></div>
@@ -256,7 +256,7 @@
         <?php
         if (($suggested_time_set && $suggested_time_enabled) || !$suggested_time_set) {
              $suggested_label = oer_field_label('oer_instructional_time');
-             if (!empty($suggested_time)){
+             if (!empty($suggested_time) && trim($suggested_time)!==""){
              ?>
              <div class="form-field">
                  <div class="oer-lp-label"><?php echo $suggested_label; ?>:</div> <div class="oer-lp-value"><?php echo $suggested_time; ?></div>
