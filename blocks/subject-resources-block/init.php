@@ -103,6 +103,8 @@ function wp_oer_display_subject_resources( $attributes ){
 			break;
 	}
 
+	if (is_array($selectedSubjects))
+		$selectedSubjects = implode(",", $selectedSubjects);
 	$heading = '<div class="oer-snglrsrchdng" data-sort="'.$sort.'" data-count="'.$displayCount.'" data-subjects="'.$selectedSubjects.'">';
 	$heading .= '	Browse '.$displayCount.' resources';
 	$heading .= '	<div class="sort-box">';
@@ -230,7 +232,7 @@ function wp_oer_get_resources($request_data, $ajax=false) {
 	$resource_posts = array();
 	if ($ajax){
 		$params = $request_data;
-		$subjects = $params['selectSubjects'];
+		$subjects = $params['selectedSubjects'];
 		$sort = $params['sort'];
 		$count = $params['displayCount'];
 	} else {
@@ -328,6 +330,8 @@ function wp_oer_get_subject_resources($args){
 			break;
 	}
 
+	if (is_array($selectedSubjects))
+		$selectedSubjects = implode(",", $selectedSubjects);
 	$heading = '<div class="oer-snglrsrchdng" data-sort="'.$sort.'" data-count="'.$displayCount.'" data-subjects="'.$selectedSubjects.'">';
 	$heading .= '	Browse '.$displayCount.' resources';
 	$heading .= '	<div class="sort-box">';
