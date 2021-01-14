@@ -90,7 +90,7 @@ function wp_oer_display_subject_resources( $attributes ){
 		$displayCount = "5";
 	}
 
-	$sort_display = "Date";
+	$sort_display = "Date Updated";
 	switch($sort){
 		case "modified":
 			$sort_display = 'Date Updated';
@@ -108,7 +108,7 @@ function wp_oer_display_subject_resources( $attributes ){
 	$heading = '<div class="oer-snglrsrchdng" data-sort="'.$sort.'" data-count="'.$displayCount.'" data-subjects="'.$selectedSubjects.'">';
 	$heading .= '	Browse '.$displayCount.' resources';
 	$heading .= '	<div class="sort-box">';
-	$heading .= '		<span class="sortoption">'.$sort_display.'</span>';
+	$heading .= '		<span class="sortoption-label">Sorted by</span>: <span class="sortoption">'.$sort_display.'</span>';
 	$heading .= '		<span class="sort-resources" title="Sort resources" tabindex="0" role="button"><i class="fa fa-sort" aria-hidden="true"></i></span>';
 	$heading .= '		<div class="sort-options">';
 	$heading .= '			<ul class="sortList">';
@@ -317,7 +317,7 @@ function wp_oer_get_subject_resources($args){
 	if (!empty($args))
 		extract($args);
 	
-	$sort_display = "Date";
+	$sort_display = "Date Updated";
 	switch($sort){
 		case "modified":
 			$sort_display = 'Date Updated';
@@ -335,7 +335,7 @@ function wp_oer_get_subject_resources($args){
 	$heading = '<div class="oer-snglrsrchdng" data-sort="'.$sort.'" data-count="'.$displayCount.'" data-subjects="'.$selectedSubjects.'">';
 	$heading .= '	Browse '.$displayCount.' resources';
 	$heading .= '	<div class="sort-box">';
-	$heading .= '		<span class="sortoption">'.$sort_display.'</span>';
+	$heading .= '		<span class="sortoption-label">Sorted by</span>: <span class="sortoption">'.$sort_display.'</span>';
 	$heading .= '		<span class="sort-resources" title="Sort resources" tabindex="0" role="button"><i class="fa fa-sort" aria-hidden="true"></i></span>';
 	$heading .= '		<div class="sort-options">';
 	$heading .= '			<ul class="sortList">';
