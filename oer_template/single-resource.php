@@ -204,11 +204,13 @@ if ($theme == "Eleganto"){
 function display_default_thumbnail($post){
 	$html = '<a class="oer-featureimg" href="'.esc_url(get_post_meta($post->ID, "oer_resourceurl", true)).'" target="_blank" >';
 		$img_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ) , "full" );
-		$img_path = $new_img_path = parse_url($img_url[0]);
-		$img_path = $_SERVER['DOCUMENT_ROOT'] . $img_path['path'];
-		$new_image_url = OER_URL.'images/default-icon-528x455.png';
-		$img_width = oer_get_image_width('large');
-		$img_height = oer_get_image_height('large');
+		if ($img_url){
+			$img_path = $new_img_path = parse_url($img_url[0]);
+			$img_path = $_SERVER['DOCUMENT_ROOT'] . $img_path['path'];
+			$new_image_url = OER_URL.'images/default-icon-528x455.png';
+			$img_width = oer_get_image_width('large');
+			$img_height = oer_get_image_height('large');
+		}
 		$media_type = get_post_meta($post->ID,"oer_mediatype")[0];
 		
 	if(!empty($img_url))
