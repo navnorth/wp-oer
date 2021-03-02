@@ -2,7 +2,7 @@ jQuery(document).ready(function($) {
 	/**
 	 * Dismiss our activation notice
 	 */
-	$('#oer-dismissible-notice .notice-dismiss').click(function() {
+	$('#oer-dismissible-notice .notice-dismiss').on("click", function(e) {
                 
 		//* Data to make available via the $_POST variable
 		data = {

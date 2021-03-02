@@ -200,6 +200,28 @@ function oer_deactivate_oer_plugin() {
 add_action('plugins_loaded', 'oer_load_textdomain');
 function oer_load_textdomain() {
 	load_plugin_textdomain( 'open-educational-resource', false, dirname( plugin_basename(__FILE__) ) . '/lang/' );
+	// Disable concatenate_scripts on admin side
+	if ( is_user_logged_in() ) {
+        if ( ! defined( 'CONCATENATE_SCRIPTS' ) ) {
+	        define( 'CONCATENATE_SCRIPTS', false );
+        }
+        $GLOBALS['concatenate_scripts'] = false;
+    }
+}
+
+add_action( 'wp_default_scripts', 'remove_default_jquery_migrate', -1 );
+function remove_default_jquery_migrate( $scripts ){
+   	if ( is_admin() && ! empty( $scripts->registered['jquery'] ) ) {
+		$jquery_dependencies = $scripts->registered['jquery']->deps;
+		$script = $scripts->query( 'jquery-migrate', 'registered' );
+		if ($script){
+			$script->src  = OER_URL.'js/oer-wp-jquery-migrate-3.3.2.js';
+			$script->deps = array();
+			$script->ver  = '3.3.2';
+
+			unset( $script->extra['group'] );
+		}
+	}
 }
 
 //Create Page Templates
