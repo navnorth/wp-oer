@@ -43,6 +43,7 @@ include_once(OER_PATH.'includes/template-functions.php');
 include_once(OER_PATH.'includes/init.php');
 include_once(OER_PATH.'includes/shortcode.php');
 require_once(OER_PATH.'blocks/subject-resources-block/init.php');
+require_once(OER_PATH.'blocks/subjects-index-block/init.php');
 include_once(OER_PATH.'widgets/class-subject-area-widget.php');
 
 //define global variable $debug_mode and get value from settings
