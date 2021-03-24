@@ -886,8 +886,8 @@ function oer_add_related_resource_modal(){
 }
 
 // tinymce fix for firefox
-add_action( "admin_footer" , "oer_check_tinymce", 999999 );
-function oer_check_tinymce(){
+add_action( "admin_footer" , "oer_reinitialize_tinymce_on_firefox", 999999 );
+function oer_reinitialize_tinymce_on_firefox(){
   ?>
   <script type="text/javascript">
   	if(navigator.userAgent.toLowerCase().indexOf('firefox') > -1){
