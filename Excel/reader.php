@@ -256,7 +256,7 @@ class Oer_Spreadsheet_Excel_Reader
      *
      * Some basic initialisation
      */
-    function Oer_Spreadsheet_Excel_Reader()
+    function __construct()
     {
         //$this->_ole =& new OLERead();
         //Above code is deprecated for later version of PHP
