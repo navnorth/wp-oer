@@ -160,6 +160,20 @@ jQuery(document).ready(function(e) {
 
 });
 
+jQuery(document).ajaxComplete(function(event, xhr, settings) {
+    var queryStringArr = settings.data.split('&');
+        if( jQuery.inArray('action=add-tag', queryStringArr) !== -1){
+            var xml = xhr.responseXML;
+            $response = jQuery(xml).find('term_id').text();
+            if($response!=""){
+            	if (jQuery('#remove_main_icon_button').length>0)
+            		jQuery('#remove_main_icon_button').trigger("click");
+            	if (jQuery('#remove_hover_icon_button').length>0)
+            		jQuery('#remove_hover_icon_button').trigger("click");
+            }
+        }
+});
+
 function showMediaUpload(invoker, formfield){
 	var button = jQuery(this),
 	custom_uploader = wp.media({
