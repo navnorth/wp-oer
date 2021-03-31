@@ -110,6 +110,9 @@ function oer_backside_scripts($hook)
       wp_enqueue_style('back-styles', OER_URL.'css/back_styles.css');
       wp_enqueue_style( 'thickbox' );
     
+	    if ( ! did_action( 'wp_enqueue_media' ) ) {
+	        wp_enqueue_media();
+	    }
       
       wp_enqueue_script('jquery');
       wp_enqueue_script('jquery-ui-core' );

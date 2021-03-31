@@ -11,31 +11,17 @@ jQuery(document).ready(function(e) {
 	jQuery('#main_icon_button').click(function() {
 		invoker = jQuery(this).attr('id');
 		formfield = jQuery('#mainIcon').attr('name');
-		tb_show( '', 'media-upload.php?type=image&amp;TB_iframe=true' );
-		return false;
+		
+		showMediaUpload(invoker, formfield);
 	});
 	
 	/* Set Subject Area Hover Icon */
 	jQuery('#hover_icon_button').click(function() {
 		invoker = jQuery(this).attr('id');
 		formfield = jQuery('#hoverIcon').attr('name');
-		tb_show( '', 'media-upload.php?type=image&amp;TB_iframe=true' );
-		return false;
-	});
 
-	/* Callback after calling media upload */
-	if (typeof formfield !== "undefined") {
-		window.send_to_editor = function(html) {
-			imgurl = jQuery('img',html).attr('src');
-			jQuery("#"+formfield).val(imgurl);
-			if (jQuery("."+invoker+"_img").length>0) {
-				jQuery("."+invoker+"_img").remove();
-			}
-			jQuery("#"+invoker).before('<div class="' + invoker + '_img">'+html+'</div>');
-			jQuery("#remove_"+invoker).removeClass("hidden");
-			tb_remove();	
-		}
-	}
+		showMediaUpload(invoker, formfield);
+	});
 	
 	/** Remove Main Icon **/
 	jQuery('#remove_main_icon_button').click(function() {
@@ -173,6 +159,32 @@ jQuery(document).ready(function(e) {
 	});
 
 });
+
+function showMediaUpload(invoker, formfield){
+	var button = jQuery(this),
+	custom_uploader = wp.media({
+	    title: 'Insert image',
+	    library : {
+	        type : 'image'
+	    },
+	    button: {
+	        text: 'Use this image' // button label text
+	    },
+	    multiple: false // multiple image selection set to false
+	}).on('select', function() { // it also has "open" and "close" events 
+	    var attachment = custom_uploader.state().get('selection').first().toJSON();
+	    let html = '<img class="true_pre_image" src="' + attachment.url + '" style="max-width:95%;display:block;" />';
+	    
+	    imgurl = attachment.url;
+		jQuery("#"+formfield).val(imgurl);
+		if (jQuery("."+invoker+"_img").length>0) {
+			jQuery("."+invoker+"_img").remove();
+		}
+		jQuery("#"+invoker).before('<div class="' + invoker + '_img">'+html+'</div>');
+		jQuery("#remove_"+invoker).removeClass("hidden");
+	})
+	.open();
+}
 
 function updateRelatedResourceListToHidden(){
 	var elm = jQuery('input.relatedResourceNode:checked');
