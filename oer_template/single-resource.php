@@ -171,9 +171,8 @@ if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
 			$oer_type=oer_get_resource_file_type($url);
 			if ($oer_type['name']=="PDF")
 				$resource_template = OER_PATH.'oer_template/single-resource-pdf.php';
-			else {
-				$file_type=oer_get_resource_file_type($url);
-				if ($file_type['name']=="Video")
+			elseif ($oer_type['name']=="Video") {
+				if (oer_html_video_supported_format($url))
 					$resource_template = OER_PATH.'oer_template/single-resource-video.php';
 				else
 					$resource_template = OER_PATH.'oer_template/single-resource-website.php';

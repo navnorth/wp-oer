@@ -3690,7 +3690,7 @@ if (! function_exists('oer_get_resource_file_type')) {
 		$type['type'] = $file_type;
         if(in_array($file_type, ['jpg', 'jpeg', 'gif', 'png'])) {
            $type['name'] = "Image";
-		} elseif(in_array($file_type, ['mp4', 'avi', 'ogg', 'mkv'])) {
+		} elseif(in_array($file_type, ['mp4', 'avi', 'ogg', 'mkv', 'webm'])) {
 			$type['name'] = 'Video';
 		} elseif(in_array($file_type, ['mp3', 'wav'])) {
 			$type['name'] = 'Audio';
@@ -3710,6 +3710,29 @@ if (! function_exists('oer_get_resource_file_type')) {
 						$type['name'] = '';
 				}
         return $type;
+    }
+}
+
+if (! function_exists('oer_html_video_supported_format')) {
+    /**
+     * Check the file type form the url
+     * @param $url
+     * @return array|bool
+     */
+    function oer_html_video_supported_format($url) {
+        if(empty($url)) {
+            return false;
+        }
+
+        $supported = false;
+        $oer_urls = explode('.', $url);
+        $file_type = strtolower(end($oer_urls));
+		$type['type'] = $file_type;
+        if(in_array($file_type, ['mp4', 'ogg', 'webm'])) {
+			$supported = true;
+		} 
+
+        return $supported;
     }
 }
 
