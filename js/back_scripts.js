@@ -54,7 +54,7 @@ jQuery(document).ready(function(e) {
 		var std = jQuery(this);
 		var std_id = std.attr('data-id');
 		std.parent().remove();
-		jQuery("#oer_related_resources_list input[value='"+std_id+"']").attr('checked',false);
+		jQuery("#oer_related_resources_list input[value='"+std_id+"']").prop('checked',false);
 		jQuery("#oer_related_resources_list label[rid='"+std_id+"']").removeClass('selected');
 		updateRelatedResourceListToHidden();
 	});
@@ -161,17 +161,19 @@ jQuery(document).ready(function(e) {
 });
 
 jQuery(document).ajaxComplete(function(event, xhr, settings) {
-    var queryStringArr = settings.data.split('&');
-        if( jQuery.inArray('action=add-tag', queryStringArr) !== -1){
-            var xml = xhr.responseXML;
-            $response = jQuery(xml).find('term_id').text();
-            if($response!=""){
-            	if (jQuery('#remove_main_icon_button').length>0)
-            		jQuery('#remove_main_icon_button').trigger("click");
-            	if (jQuery('#remove_hover_icon_button').length>0)
-            		jQuery('#remove_hover_icon_button').trigger("click");
-            }
+	var queryStringArr;
+	if (typeof queryStringArr !== 'undefined')
+		queryStringArr = settings.data.split('&');
+    if( jQuery.inArray('action=add-tag', queryStringArr) !== -1){
+        var xml = xhr.responseXML;
+        $response = jQuery(xml).find('term_id').text();
+        if($response!=""){
+        	if (jQuery('#remove_main_icon_button').length>0)
+        		jQuery('#remove_main_icon_button').trigger("click");
+        	if (jQuery('#remove_hover_icon_button').length>0)
+        		jQuery('#remove_hover_icon_button').trigger("click");
         }
+    }
 });
 
 function showMediaUpload(invoker, formfield){
