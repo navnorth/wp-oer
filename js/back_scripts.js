@@ -158,6 +158,12 @@ jQuery(document).ready(function(e) {
 		updateRelatedResourceListToHidden();
 	});
 
+
+	/** Move Loader Background **/
+    if (jQuery('.loader').length>0){
+        var loader = jQuery('.loader');
+        jQuery('#wpcontent').append(loader);
+    }
 });
 
 jQuery(document).ajaxComplete(function(event, xhr, settings) {
