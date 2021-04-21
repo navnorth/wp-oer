@@ -171,9 +171,8 @@ if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
 			$oer_type=oer_get_resource_file_type($url);
 			if ($oer_type['name']=="PDF")
 				$resource_template = OER_PATH.'oer_template/single-resource-pdf.php';
-			else {
-				$file_type=oer_get_resource_file_type($url);
-				if ($file_type['name']=="Video")
+			elseif ($oer_type['name']=="Video") {
+				if (oer_html_video_supported_format($url))
 					$resource_template = OER_PATH.'oer_template/single-resource-video.php';
 				else
 					$resource_template = OER_PATH.'oer_template/single-resource-website.php';
@@ -204,11 +203,13 @@ if ($theme == "Eleganto"){
 function display_default_thumbnail($post){
 	$html = '<a class="oer-featureimg" href="'.esc_url(get_post_meta($post->ID, "oer_resourceurl", true)).'" target="_blank" >';
 		$img_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ) , "full" );
-		$img_path = $new_img_path = parse_url($img_url[0]);
-		$img_path = $_SERVER['DOCUMENT_ROOT'] . $img_path['path'];
-		$new_image_url = OER_URL.'images/default-icon-528x455.png';
-		$img_width = oer_get_image_width('large');
-		$img_height = oer_get_image_height('large');
+		if ($img_url){
+			$img_path = $new_img_path = parse_url($img_url[0]);
+			$img_path = $_SERVER['DOCUMENT_ROOT'] . $img_path['path'];
+			$new_image_url = OER_URL.'images/default-icon-528x455.png';
+			$img_width = oer_get_image_width('large');
+			$img_height = oer_get_image_height('large');
+		}
 		$media_type = get_post_meta($post->ID,"oer_mediatype")[0];
 		
 	if(!empty($img_url))

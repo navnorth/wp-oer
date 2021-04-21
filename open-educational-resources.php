@@ -3,14 +3,14 @@
  Plugin Name:  WP OER
  Plugin URI:   https://www.wp-oer.com
  Description:  Open Educational Resource management and curation, metadata publishing, and alignment to Common Core State Standards.
- Version:      0.8.0
+ Version:      0.8.1
  Author:       Navigation North
  Author URI:   https://www.navigationnorth.com
  Text Domain:  wp-oer
  License:      GPL3
  License URI:  https://www.gnu.org/licenses/gpl-3.0.html
 
- Copyright (C) 2020 Navigation North
+ Copyright (C) 2021 Navigation North
 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -36,13 +36,14 @@ define( 'OER_FILE',__FILE__);
 // Plugin Name and Version
 define( 'OER_PLUGIN_NAME', 'WP OER Plugin' );
 define( 'OER_ADMIN_PLUGIN_NAME', 'WP OER Plugin');
-define( 'OER_VERSION', '0.8.0' );
+define( 'OER_VERSION', '0.8.1' );
 
 include_once(OER_PATH.'includes/oer-functions.php');
 include_once(OER_PATH.'includes/template-functions.php');
 include_once(OER_PATH.'includes/init.php');
 include_once(OER_PATH.'includes/shortcode.php');
 require_once(OER_PATH.'blocks/subject-resources-block/init.php');
+require_once(OER_PATH.'blocks/subjects-index-block/init.php');
 include_once(OER_PATH.'widgets/class-subject-area-widget.php');
 
 //define global variable $debug_mode and get value from settings
@@ -200,6 +201,28 @@ function oer_deactivate_oer_plugin() {
 add_action('plugins_loaded', 'oer_load_textdomain');
 function oer_load_textdomain() {
 	load_plugin_textdomain( 'open-educational-resource', false, dirname( plugin_basename(__FILE__) ) . '/lang/' );
+	// Disable concatenate_scripts on admin side
+	if ( is_user_logged_in() ) {
+        if ( ! defined( 'CONCATENATE_SCRIPTS' ) ) {
+	        define( 'CONCATENATE_SCRIPTS', false );
+        }
+        $GLOBALS['concatenate_scripts'] = false;
+    }
+}
+
+add_action( 'wp_default_scripts', 'remove_default_jquery_migrate', -1 );
+function remove_default_jquery_migrate( $scripts ){
+   	if ( is_admin() && ! empty( $scripts->registered['jquery'] ) ) {
+		$jquery_dependencies = $scripts->registered['jquery']->deps;
+		$script = $scripts->query( 'jquery-migrate', 'registered' );
+		if ($script){
+			$script->src  = OER_URL.'js/oer-wp-jquery-migrate-3.3.2.js';
+			$script->deps = array();
+			$script->ver  = '3.3.2';
+
+			unset( $script->extra['group'] );
+		}
+	}
 }
 
 //Create Page Templates

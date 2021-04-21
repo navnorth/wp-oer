@@ -40,9 +40,7 @@
                     _e("Creator:", OER_SLUG);
             else
             echo get_option('oer_authorname_label').":"; ?></strong>
-                <span><?php if (!empty($oer_authorurl)): ?><a href="<?php echo esc_url($oer_authorurl); ?>" target="_blank"><?php endif; ?><?php echo $oer_authorname; ?><?php if (!empty($oer_authorurl)): ?></a><?php endif; ?></span>
-                <?php if ($oer_authorname2): echo ", "; ?>
-                <span><?php if (!empty($oer_authorurl2)): ?><a href="<?php echo esc_url($oer_authorurl2); ?>" target="_blank"><?php endif; ?><?php echo $oer_authorname2; ?><?php if (!empty($oer_authorurl2)): ?></a><?php endif; ?></span>
+                <span><?php if (!empty($oer_authorurl)): ?><a href="<?php echo esc_url($oer_authorurl); ?>" target="_blank"><?php endif; ?><?php echo $oer_authorname; ?><?php if (!empty($oer_authorurl)): ?></a><?php endif; ?></span><?php if ($oer_authorname2): echo ", "; ?><span><?php if (!empty($oer_authorurl2)): ?><a href="<?php echo esc_url($oer_authorurl2); ?>" target="_blank"><?php endif; ?><?php echo $oer_authorname2; ?><?php if (!empty($oer_authorurl2)): ?></a><?php endif; ?></span>
                 <?php endif; ?>
                 </h4>
             <?php } ?>
@@ -193,7 +191,7 @@
         ?>
         <div class="tc-oer-subject-areas">
            <h4 class="tc-field-heading clearfix">
-                <?php _e("Subjects",OER_LESSON_PLAN_SLUG); ?>
+                <?php _e("Subjects",OER_SLUG); ?>
             </h4>
            <div class="tc-oer-subject-details clearfix">
                 <ul class="tc-oer-subject-areas-list">
@@ -225,7 +223,7 @@
         ?>
         <div class="tc-oer-connected-curriculum">
            <h4 class="tc-field-heading clearfix">
-                <?php _e("Connected Compilations",OER_LESSON_PLAN_SLUG); ?>
+                <?php _e("Connected Compilations",OER_SLUG); ?>
             </h4>
            <div class="tc-oer-curriculum-details clearfix">
                 <ul class="tc-oer-subject-areas-list">
@@ -252,7 +250,7 @@
 </div>
 <?php  if ($display_see_more): ?>
 <div class="oer-see-more-row">
-    <p class="center"><span><a id="oer-see-more-link" class="oer-see-more-link" role="button" data-toggle="collapse" href="#tcHiddenFields" aria-expanded="false" aria-controls="tcHiddenFields"><?php _e("SEE MORE +",OER_LESSON_PLAN_SLUG); ?></a></span></p>
+    <p class="center"><span><a id="oer-see-more-link" class="oer-see-more-link" role="button" data-toggle="collapse" href="#tcHiddenFields" aria-expanded="false" aria-controls="tcHiddenFields"><?php _e("SEE MORE +",OER_SLUG); ?></a></span></p>
 </div>
 <?php endif; ?>
 <div id="tcHiddenFields" class="tc-hidden-fields collapse row">

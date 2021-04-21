@@ -22,7 +22,7 @@ jQuery(document).ready(function($){
 			action : 'get_subject_resources',
 			sort: args['sort'],
 			displayCount: args['count'],
-			selectSubjects: args['subjects']
+			selectedSubjects: args['subjects']
 		};
 
 		$.ajax({ 

@@ -456,7 +456,7 @@ global $chck;
 				}
 				?>
 				<input type="hidden" name="oer_standard" value="<?php echo $oStandard; ?>" />
-				<button id="add-new-standard" data-toggle="modal" class="ui-button components-button is-button is-default">Add Standards</button>
+				<button id="add-new-standard" data-toggle="modal" class="ui-button components-button is-button is-default button button-primary">Add Standards</button>
 			</div>
 	
 		</div>
@@ -941,7 +941,7 @@ global $chck;
 									?>
 								</div>
 								<input type="hidden" name="oer_related_resource" value="<?php echo $oer_related_resource ?>"/>
-								<button id="add-new-related-resource" data-toggle="modal" class="ui-button components-button is-button is-default">Add Related Resources</button>
+								<button id="add-new-related-resource" data-toggle="modal" class="ui-button components-button is-button is-default button button-primary">Add Related Resources</button>
 						</div>
 				</div>
 			</div>

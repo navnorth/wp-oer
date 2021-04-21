@@ -297,7 +297,7 @@ var mySelectResource = function (_Component) {
     return mySelectResource;
 }(Component);
 
-registerBlockType('wp-oer-plugin/oer-resource-block', {
+registerBlockType('wp-oer/oer-resource-block', {
     title: __('OER Resource'),
     category: 'widgets',
     icon: {

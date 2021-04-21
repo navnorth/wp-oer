@@ -252,7 +252,6 @@ function oer_show_metadata_settings() {
 	}
 	
 	$meta = array_unique($metadata);
-	
 	// Save Option
 	if ($_POST){
 		if ($_REQUEST['tab'] && $_REQUEST['tab']=="metadata") {
@@ -300,15 +299,15 @@ function oer_show_metadata_settings() {
 							if (get_option($key."_enabled"))
 								$enabled = (get_option($key."_enabled")=="1")?true:false;
 							elseif ($option_set==false)
-								$enabled = "1";
+								$enabled = "0";
 							
-					?>
-					<tr>
-						<td><?php echo $key; ?></td>
-						<td><input type="text" name="<?php echo $key."_label"; ?>" value="<?php echo $label; ?>" /></td>
-						<td><input type="checkbox" name="<?php echo $key."_enabled"; ?>" value="1" <?php checked($enabled,"1",true); ?>/></td>
-					</tr>
-					<?php 	}
+						?>
+						<tr>
+							<td><?php echo $key; ?></td>
+							<td><input type="text" name="<?php echo $key."_label"; ?>" value="<?php echo $label; ?>" /></td>
+							<td><input type="checkbox" name="<?php echo $key."_enabled"; ?>" value="1" <?php checked($enabled,"1",true); ?>/></td>
+						</tr>
+						<?php 	}
 					} ?>
 				</tbody>
 			</table>

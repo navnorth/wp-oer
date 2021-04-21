@@ -110,6 +110,9 @@ function oer_backside_scripts($hook)
       wp_enqueue_style('back-styles', OER_URL.'css/back_styles.css');
       wp_enqueue_style( 'thickbox' );
     
+	    if ( ! did_action( 'wp_enqueue_media' ) ) {
+	        wp_enqueue_media();
+	    }
       
       wp_enqueue_script('jquery');
       wp_enqueue_script('jquery-ui-core' );
@@ -883,5 +886,55 @@ function oer_add_related_resource_modal(){
       include_once(OER_PATH."oer_template/modals/related_resource_modal.php");
     }
   }
+}
+
+// tinymce fix for firefox
+add_action( "admin_footer" , "oer_reinitialize_tinymce_on_firefox", 999999 );
+function oer_reinitialize_tinymce_on_firefox(){
+  ?>
+  <script type="text/javascript">
+  	if(navigator.userAgent.toLowerCase().indexOf('firefox') > -1){
+	  	jQuery(document).ready(function($){
+	  		var init, id, $wrap;
+
+			if ( typeof tinymce !== 'undefined' ) {
+				if ( tinymce.Env.ie && tinymce.Env.ie < 11 ) {
+					tinymce.$( '.wp-editor-wrap ' ).removeClass( 'tmce-active' ).addClass( 'html-active' );
+					return;
+				}
+
+				for ( id in tinyMCEPreInit.mceInit ) {
+					init = tinyMCEPreInit.mceInit[id];
+					$wrap = tinymce.$( '#wp-' + id + '-wrap' );
+
+					if ( ( $wrap.hasClass( 'tmce-active' ) || ! tinyMCEPreInit.qtInit.hasOwnProperty( id ) ) && ! init.wp_skip_init ) {
+						
+						tinymce.init( init );
+
+						tinymce.execCommand( 'mceRemoveEditor', false, id );
+	                	tinymce.execCommand( 'mceAddEditor', false, id );
+
+						if ( ! window.wpActiveEditor ) {
+							window.wpActiveEditor = id;
+						}
+					}
+				}
+			}
+
+			if ( typeof quicktags !== 'undefined' ) {
+				for ( id in tinyMCEPreInit.qtInit ) {
+					quicktags( tinyMCEPreInit.qtInit[id] );
+
+					quicktags({ id: id });
+
+					if ( ! window.wpActiveEditor ) {
+						window.wpActiveEditor = id;
+					}
+				}
+			}
+	  	});
+  	}
+  </script>
+  <?php
 }
 ?>

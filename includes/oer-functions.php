@@ -809,16 +809,24 @@ function oer_isStandardExisting($standard) {
 //Get Domain from Url
 function oer_getDomainFromUrl($url) {
 	$url_details = parse_url($url);
-	return $url_details['host'];
+	if (isset($url_details['host']))
+		return $url_details['host'];
+	else
+		return false;
 }
 
 //Check if resource url is external url
 function oer_isExternalUrl($url){
+	$internal_domain = "";
+	$resource_domain = "";
+
 	$current_url = parse_url(site_url());
-	$internal_domain = $current_url['host'];
+	if (isset($current_url['host']))
+		$internal_domain = $current_url['host'];
 
 	$url_details = parse_url($url);
-	$resource_domain = $url_details['host'];
+	if (isset($url_details['host']))
+		$resource_domain = $url_details['host'];
 
 	if ($internal_domain==$resource_domain)
 		return false;
@@ -1729,6 +1737,7 @@ function oer_importSubjectAreas($default=false) {
 
 	$excl_obj = new Oer_Spreadsheet_Excel_Reader();
 	$excl_obj->setOutputEncoding('CP1251');
+
 	$time = time();
 	$date = date($time);
 
@@ -1776,6 +1785,8 @@ function oer_importSubjectAreas($default=false) {
 			$ids_arr = array(0);
 			$cat_ids = array(0);
 			$page_ids = array(0);
+			$newvalue = "";
+			
 			$cnt = 0;
 			for($i = 0; $i < $length; $i++)
 			{
@@ -1828,9 +1839,11 @@ function oer_importSubjectAreas($default=false) {
 
 								$term = get_term( $ids_arr[$k] , "resource-subject-area" );
 								$slug = $term->slug;
-
+								
 								$page = oer_get_page_by_slug($slug, ARRAY_A, "page", $page_ids[$k-1] );
-								$page_ids[$k] = $page['ID'];
+								
+								$page_ids[$k] = $page?$page['ID']:0;
+								
 							}
 
 						}
@@ -1895,11 +1908,12 @@ function oer_fetch_stndrd($pId, $postid)
 function oer_get_page_by_slug($page_slug, $output = OBJECT, $post_type = 'page', $parent = 0 )
 {
 	global $wpdb;
+	
 	$page = $wpdb->get_var($wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_name = %s AND post_type= %s AND post_parent = %d AND post_status = 'publish'", $page_slug, $post_type, $parent ));
 
 	if ($page)
 		return get_post($page, $output);
-		return null;
+	return null;
 }
 
 //Limited Content
@@ -3676,7 +3690,7 @@ if (! function_exists('oer_get_resource_file_type')) {
 		$type['type'] = $file_type;
         if(in_array($file_type, ['jpg', 'jpeg', 'gif', 'png'])) {
            $type['name'] = "Image";
-		} elseif(in_array($file_type, ['mp4', 'avi', 'ogg', 'mkv'])) {
+		} elseif(in_array($file_type, ['mp4', 'avi', 'ogg', 'mkv', 'webm'])) {
 			$type['name'] = 'Video';
 		} elseif(in_array($file_type, ['mp3', 'wav'])) {
 			$type['name'] = 'Audio';
@@ -3696,6 +3710,29 @@ if (! function_exists('oer_get_resource_file_type')) {
 						$type['name'] = '';
 				}
         return $type;
+    }
+}
+
+if (! function_exists('oer_html_video_supported_format')) {
+    /**
+     * Check the file type form the url
+     * @param $url
+     * @return array|bool
+     */
+    function oer_html_video_supported_format($url) {
+        if(empty($url)) {
+            return false;
+        }
+
+        $supported = false;
+        $oer_urls = explode('.', $url);
+        $file_type = strtolower(end($oer_urls));
+		$type['type'] = $file_type;
+        if(in_array($file_type, ['mp4', 'ogg', 'webm'])) {
+			$supported = true;
+		} 
+
+        return $supported;
     }
 }
 
