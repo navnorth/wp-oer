@@ -1,9 +1,9 @@
 === WP OER ===
 Contributors: navigationnorth, joehobson, johnpaulbalagolan, josepheneldas, arobotnamedchris
-Tags: OER, Open Educational Resources, Education, Learning
+Tags: OER, Open Educational Resources, Education, Teaching, Learning
 Requires at least: 4.4
-Tested up to: 5.6.0
-Stable tag: 0.8.0
+Tested up to: 5.7.0
+Stable tag: 0.8.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -40,6 +40,11 @@ No frequently asked questions.
 3. Display educational resources on your WordPress website!
 
 == Changelog ==
+
+= 0.8.1 =
+* Improvements, bug fixes, and terminology refactoring for blocks
+* Fixes for visual editor on admin metaboxes in WP 5.5 or later
+
 
 = 0.8.0 =
 * New Gutenberg block for Subject Resources

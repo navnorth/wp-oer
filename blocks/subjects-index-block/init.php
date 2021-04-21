@@ -1,10 +1,10 @@
 <?php
 /**
- * Plugin Name:     Wp Oer Subjects Index
+ * Plugin Name:     WP OER Subjects Index
  * Description:     Example block written with ESNext standard and JSX support – build step required.
  * Version:         0.1.0
  * Author:          The WordPress Contributors
- * License:         GPL-2.0-or-later
+ * License:         GPL-3.0-or-later
  * License URI:     https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:     wp-oer-subjects-index
  *
@@ -70,11 +70,11 @@ add_action( 'init', 'create_wp_oer_subjects_index_block_init' );
 
 function oer_display_subjects_index( $attributes, $ajax = false ){
 	$html = "";
-	
+
 	$shortcode = "[oer_subjects_index";
 	if (!empty($attributes))
 		extract($attributes);
-	
+
 	if (isset($size))
 		$shortcode .= " size=".$size;
 	if (isset($columns))
@@ -95,7 +95,7 @@ function oer_display_subjects_index( $attributes, $ajax = false ){
 	if (!$ajax)
 		$html .= "<div class='wp-block-wp-oer-plugin-wp-oer-subjects-index'>";
 	$shortcode .= "]";
-	
+
 	$html .= do_shortcode($shortcode);
 
 	if (!$ajax)
