@@ -2,6 +2,8 @@ name: Deploy to WordPress.org
 on:
     push:
         branches: [ main ]
+        
+    workflow_dispatch:
 jobs:
     tag:
         name: WordPress.org Release
