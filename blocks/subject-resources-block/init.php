@@ -1,10 +1,16 @@
 <?php
+global $pagenow;
+
 function wp_oer_enqueue_subject_resources_frontend_script(){
 	wp_enqueue_script( 'wp_oer_block-front-js', plugins_url( '/subject-resources-block/build/front.js', dirname( __FILE__ ) ), array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor' ),'0.1' , true );
  	wp_localize_script( 'wp_oer_block-front-js', 'wp_oer_block', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 }
 add_action('wp_enqueue_scripts', 'wp_oer_enqueue_subject_resources_frontend_script');
-add_action('admin_enqueue_scripts', 'wp_oer_enqueue_subject_resources_frontend_script');
+
+// Add checking if current page is on add new/edit page,post or resource before loading bootstrap
+if ($pagenow=="post.php" || $pagenow=="edit.php" || $pagenow=="post-new.php"){
+	add_action('admin_enqueue_scripts', 'wp_oer_enqueue_subject_resources_frontend_script');
+}
 
 /** Subject Resources block version 2.0 **/
 function wp_oer_register_resources_block(){
