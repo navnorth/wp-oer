@@ -1,8 +1,7 @@
 name: Deploy to WordPress.org
 on:
     push:
-        tags:
-            - '*'
+        branches: [ main ]
 jobs:
     tag:
         name: WordPress.org Release
