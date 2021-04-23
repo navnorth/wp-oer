@@ -140,6 +140,7 @@ function oer_create_csv_import_table()
 
    update_option('setup_notify', true);
    update_option( "oer_rewrite_rules", false );
+   update_option('oer_metadata_firstload', true);
 
    //Trigger CPT and Taxonomy creation
    oer_postcreation();

@@ -3231,6 +3231,12 @@ if (!function_exists('oer_get_meta_label')){
 			case "oer_repository_recordurl":
 				$label = __("Repository Record URL", OER_SLUG);
 				break;
+			case "oer_creativecommons_license":
+				$label = __("Creative Commons License", OER_SLUG);
+				break;
+			case "oer_related_resource":
+				$label = __("Related Resources", OER_SLUG);
+				break;
 		}
 		return $label;
 	}
@@ -3261,6 +3267,7 @@ if (!function_exists('oer_get_connected_curriculums')){
 
 if (!function_exists('oer_save_metadata_options')){
 	function oer_save_metadata_options($post_data){
+		update_option('oer_metadata_firstload', false);
 		foreach($post_data as $key=>$value){
 			if (strpos($key,"oer_")!==false){
 				//if (get_option($key))

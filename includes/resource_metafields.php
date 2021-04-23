@@ -4,6 +4,10 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 global $post;
 global $wpdb;
 global $chck;
+
+$option_set = false;
+if (get_option('oer_metadata_firstload')=="")
+	$option_set = true;
 ?>
 <div class="oer_metawpr">
 	<div class="oer_metainrwpr">
@@ -21,16 +25,16 @@ global $chck;
 
         <?php
 	// Highlight
-	$option_set = false;
+	$label_set = false;
 	if (get_option('oer_highlight_label')){
-		$option_set = true;
+		$label_set = true;
 	}
-	if (($option_set && get_option('oer_highlight_enabled')) || !$option_set) {
+	if (!empty(get_option('oer_highlight_enabled')) || !$option_set) {
 	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
 			<?php
-			if (!$option_set)
+			if (!$label_set)
 				_e("Highlight:", OER_SLUG);
 			else
 				echo get_option('oer_highlight_label').":";
@@ -46,16 +50,17 @@ global $chck;
 
 	<?php
 	// Grade Level
-	$option_set = false;
+	$label_set = false;
 	if (get_option('oer_grade_label')){
-		$option_set = true;
+		$label_set = true;
 	}
-	if (($option_set && get_option('oer_grade_enabled')) || !$option_set) {
+	if (!empty(get_option('oer_grade_enabled')) || !$option_set) {
+	//if ((!empty(get_option('oer_grade_enabled')) && get_option('oer_grade_enabled')!=="") || !$option_set) {
 	?>
 	<div class="oer_snglfld">
         	<div class="oer_txt">
 			<?php
-			if (!$option_set)
+			if (!$label_set)
 				_e("Grade:", OER_SLUG);
 			else
 				echo get_option('oer_grade_label').":";
@@ -101,16 +106,16 @@ global $chck;
     
 	<?php
 	// Age Levels
-	$option_set = false;
+	$label_set = false;
 	if (get_option('oer_age_levels_label')){
-		$option_set = true;
+		$label_set = true;
 	}
-	if (($option_set && get_option('oer_age_levels_enabled')) || !$option_set) {
+	if (!empty(get_option('oer_age_levels_enabled')) || !$option_set) {
 	?>
 	<div class="oer_snglfld">
         	<div class="oer_txt">
 			<?php
-			if (!$option_set)
+			if (!$label_set)
 				_e("Age Levels:", OER_SLUG);
 			else
 				echo get_option('oer_age_levels_label').":";
@@ -124,17 +129,18 @@ global $chck;
 	<?php } ?>
 	
 	<?php
+
 	// Instructional Time
-	$option_set = false;
+	$label_set = false;
 	if (get_option('oer_instructional_time_label')){
-		$option_set = true;
+		$label_set = true;
 	}
-	if (($option_set && get_option('oer_instructional_time_enabled')) || !$option_set) {
+	if (!empty(get_option('oer_instructional_time_enabled')) || !$option_set) {
 	?>
 	<div class="oer_snglfld">
         	<div class="oer_txt">
 			<?php
-			if (!$option_set)
+			if (!$label_set)
 				_e("Instructional Time:", OER_SLUG);
 			else
 				echo get_option('oer_instructional_time_label').":";
@@ -149,16 +155,16 @@ global $chck;
 	
 	<?php
 	// Creative Commons License
-	$option_set = false;
+	$label_set = false;
 	if (get_option('oer_creativecommons_license_label')){
-		$option_set = true;
+		$label_set = true;
 	}
-	if (($option_set && get_option('oer_creativecommons_license_enabled')) || !$option_set) {
+	if (!empty(get_option('oer_creativecommons_license_enabled')) || !$option_set) {
 	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
 			<?php
-			if (!$option_set)
+			if (!$label_set)
 				_e("Creative Commons License:", OER_SLUG);
 			else
 				echo get_option('oer_creativecommons_license_label').":";
@@ -181,16 +187,16 @@ global $chck;
 	
 	<?php
 	// Format
-	$option_set = false;
+	$label_set = false;
 	if (get_option('oer_format_label')){
-		$option_set = true;
+		$label_set = true;
 	}
-	if (($option_set && get_option('oer_format_enabled')) || !$option_set) {
+	if (!empty(get_option('oer_format_enabled')) || !$option_set) {
 	?>
 	<div class="oer_snglfld">
         	<div class="oer_txt">
 			<?php
-			if (!$option_set)
+			if (!$label_set)
 				_e("Format:", OER_SLUG);
 			else
 				echo get_option('oer_format_label').":";
@@ -205,16 +211,16 @@ global $chck;
 
 	<?php
 	// Date Created
-	$option_set = false;
+	$label_set = false;
 	if (get_option('oer_datecreated_label')){
-		$option_set = true;
+		$label_set = true;
 	}
-	if (($option_set && get_option('oer_datecreated_enabled')) || !$option_set) {
+	if (!empty(get_option('oer_datecreated_enabled')) || !$option_set) {
 	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
 			<?php
-			if (!$option_set)
+			if (!$label_set)
 				_e("Date Created:", OER_SLUG);
 			else
 				echo get_option('oer_datecreated_label').":";
@@ -229,16 +235,16 @@ global $chck;
 	
 	<?php
 	// Date Created Estimate
-	$option_set = false;
+	$label_set = false;
 	if (get_option('oer_datecreated_estimate_label')){
-		$option_set = true;
+		$label_set = true;
 	}
-	if (($option_set && get_option('oer_datecreated_estimate_enabled')) || !$option_set) {
+	if (!empty(get_option('oer_datecreated_estimate_enabled')) || !$option_set) {
 	?>
 	<div class="oer_snglfld">
         	<div class="oer_txt">
 			<?php
-			if (!$option_set)
+			if (!$label_set)
 				_e("Date Created Estimate:", OER_SLUG);
 			else
 				echo get_option('oer_datecreated_estimate_label').":";
@@ -253,16 +259,16 @@ global $chck;
 
 	<?php
 	// Date Modified
-	$option_set = false;
+	$label_set = false;
 	if (get_option('oer_datemodified_label')){
-		$option_set = true;
+		$label_set = true;
 	}
-	if (($option_set && get_option('oer_datemodified_enabled')) || !$option_set) {
+	if (!empty(get_option('oer_datemodified_enabled')) || !$option_set) {
 	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
 			<?php
-			if (!$option_set)
+			if (!$label_set)
 				_e("Date Modified:", OER_SLUG);
 			else
 				echo get_option('oer_datemodified_label').":";
@@ -277,16 +283,16 @@ global $chck;
 
 	<?php
 	// Media Type
-	$option_set = false;
+	$label_set = false;
 	if (get_option('oer_mediatype_label')){
-		$option_set = true;
+		$label_set = true;
 	}
-	if (($option_set && get_option('oer_mediatype_enabled')) || !$option_set) {
+	if (!empty(get_option('oer_mediatype_enabled')) || !$option_set) {
 	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
 			<?php
-			if (!$option_set)
+			if (!$label_set)
 				_e("Media Type:", OER_SLUG);
 			else
 				echo get_option('oer_mediatype_label').":";
@@ -308,16 +314,16 @@ global $chck;
 
 	<?php
 	// Learning Resource Type
-	$option_set = false;
+	$label_set = false;
 	if (get_option('oer_lrtype_label')){
-		$option_set = true;
+		$label_set = true;
 	}
-	if (($option_set && get_option('oer_lrtype_enabled')) || !$option_set) {
+	if (!empty(get_option('oer_lrtype_enabled')) || !$option_set) {
 	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
 			<?php
-			if (!$option_set)
+			if (!$label_set)
 				_e("Learning Resource Type:", OER_SLUG);
 			else
 				echo get_option('oer_lrtype_label').":";
@@ -346,16 +352,16 @@ global $chck;
 
 	<?php
 	// Interactivity
-	$option_set = false;
+	$label_set = false;
 	if (get_option('oer_interactivity_label')){
-		$option_set = true;
+		$label_set = true;
 	}
-	if (($option_set && get_option('oer_interactivity_enabled')) || !$option_set) {
+	if (!empty(get_option('oer_interactivity_enabled')) || !$option_set) {
 	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
 			<?php
-			if (!$option_set)
+			if (!$label_set)
 				_e("Interactivity:", OER_SLUG);
 			else
 				echo get_option('oer_interactivity_label').":";
@@ -380,16 +386,16 @@ global $chck;
 
 	<?php
 	// User Rights URL
-	$option_set = false;
+	$label_set = false;
 	if (get_option('oer_userightsurl_label')){
-		$option_set = true;
+		$label_set = true;
 	}
-	if (($option_set && get_option('oer_userightsurl_enabled')) || !$option_set) {
+	if (!empty(get_option('oer_userightsurl_enabled')) || !$option_set) {
 	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
 			<?php
-			if (!$option_set)
+			if (!$label_set)
 				_e("Use Rights URL:", OER_SLUG);
 			else
 				echo get_option('oer_userightsurl_label').":";
@@ -404,16 +410,16 @@ global $chck;
 
 	<?php
 	// Is Based on URL
-	$option_set = false;
+	$label_set = false;
 	if (get_option('oer_isbasedonurl_label')){
-		$option_set = true;
+		$label_set = true;
 	}
-	if (($option_set && get_option('oer_isbasedonurl_enabled')) || !$option_set) {
+	if (!empty(get_option('oer_isbasedonurl_enabled')) || !$option_set) {
 	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
 			<?php
-			if (!$option_set)
+			if (!$label_set)
 				_e("Is based on URL:", OER_SLUG);
 			else
 				echo get_option('oer_isbasedonurl_label').":";
@@ -429,16 +435,16 @@ global $chck;
 	<?php
 	// Standard
 	if (oer_installed_standards_plugin()){
-		$option_set = false;
+		$label_set = false;
 		if (get_option('oer_standard_label')){
-			$option_set = true;
+			$label_set = true;
 		}
-		if (($option_set && get_option('oer_standard_enabled')) || !$option_set) {
+		if (!empty(get_option('oer_standard_enabled')) || !$option_set) {
 		?>
 		<div class="oer_snglfld">
 			<div class="oer_txt">
 				<?php
-				if (!$option_set)
+				if (!$label_set)
 					_e("Standards:", OER_SLUG);
 				else
 					echo get_option('oer_standard_label').":";
@@ -469,16 +475,16 @@ global $chck;
 
         <?php
 	// Author Type
-	$option_set = false;
+	$label_set = false;
 	if (get_option('oer_authortype_label')){
-		$option_set = true;
+		$label_set = true;
 	}
-	if (($option_set && get_option('oer_authortype_enabled')) || !$option_set) {
+	if (!empty(get_option('oer_authortype_enabled')) || !$option_set) {
 	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
 			<?php
-			if (!$option_set)
+			if (!$label_set)
 				_e("Type:", OER_SLUG);
 			else
 				echo get_option('oer_authortype_label').":";
@@ -496,16 +502,16 @@ global $chck;
 
 	<?php
 	// Author Name
-	$option_set = false;
+	$label_set = false;
 	if (get_option('oer_authorname_label')){
-		$option_set = true;
+		$label_set = true;
 	}
-	if (($option_set && get_option('oer_authorname_enabled')) || !$option_set) {
+	if (!empty(get_option('oer_authorname_enabled')) || !$option_set) {
 	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
 			<?php
-			if (!$option_set)
+			if (!$label_set)
 				_e("Name:", OER_SLUG);
 			else
 				echo get_option('oer_authorname_label').":";
@@ -520,16 +526,16 @@ global $chck;
 
 	<?php
 	// Author URL
-	$option_set = false;
+	$label_set = false;
 	if (get_option('oer_authorurl_label')){
-		$option_set = true;
+		$label_set = true;
 	}
-	if (($option_set && get_option('oer_authorurl_enabled')) || !$option_set) {
+	if (!empty(get_option('oer_authorurl_enabled')) || !$option_set) {
 	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
 			<?php
-			if (!$option_set)
+			if (!$label_set)
 				_e("URL:", OER_SLUG);
 			else
 				echo get_option('oer_authorurl_label').":";
@@ -544,16 +550,16 @@ global $chck;
 
 	<?php
 	// Author Email Address
-	$option_set = false;
+	$label_set = false;
 	if (get_option('oer_authoremail_label')){
-		$option_set = true;
+		$label_set = true;
 	}
-	if (($option_set && get_option('oer_authoremail_enabled')) || !$option_set) {
+	if (!empty(get_option('oer_authoremail_enabled')) || !$option_set) {
 	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
 			<?php
-			if (!$option_set)
+			if (!$label_set)
 				_e("Email Address:", OER_SLUG);
 			else
 				echo get_option('oer_authoremail_label').":";
@@ -585,16 +591,16 @@ global $chck;
 
                 <?php
 		// Second Author Type
-		$option_set = false;
+		$label_set = false;
 		if (get_option('oer_authortype_label')){
-			$option_set = true;
+			$label_set = true;
 		}
-		if (($option_set && get_option('oer_authortype_enabled')) || !$option_set) {
+		if (!empty(get_option('oer_authortype_enabled')) || !$option_set) {
 		?>
                 <div class="oer_snglfld">
                     <div class="oer_txt">
 			<?php
-			if (!$option_set)
+			if (!$label_set)
 				_e("Type:", OER_SLUG);
 			else
 				echo get_option('oer_authortype_label').":";
@@ -612,16 +618,16 @@ global $chck;
 
 		<?php
 		// Second Author Name
-		$option_set = false;
+		$label_set = false;
 		if (get_option('oer_authorname_label')){
-			$option_set = true;
+			$label_set = true;
 		}
-		if (($option_set && get_option('oer_authorname_enabled')) || !$option_set) {
+		if (!empty(get_option('oer_authorname_enabled')) || !$option_set) {
 		?>
                 <div class="oer_snglfld">
                     <div class="oer_txt">
 			<?php
-			if (!$option_set)
+			if (!$label_set)
 				_e("Name:", OER_SLUG);
 			else
 				echo get_option('oer_authorname_label').":";
@@ -636,16 +642,16 @@ global $chck;
 
 		<?php
 		// Second Author URL
-		$option_set = false;
+		$label_set = false;
 		if (get_option('oer_authorurl_label')){
-			$option_set = true;
+			$label_set = true;
 		}
-		if (($option_set && get_option('oer_authorurl_enabled')) || !$option_set) {
+		if (!empty(get_option('oer_authorurl_enabled')) || !$option_set) {
 		?>
                 <div class="oer_snglfld">
                     <div class="oer_txt">
 			<?php
-			if (!$option_set)
+			if (!$label_set)
 				_e("URL:", OER_SLUG);
 			else
 				echo get_option('oer_authorurl_label').":";
@@ -660,16 +666,16 @@ global $chck;
 
 		<?php
 		// Second Author Email Address
-		$option_set = false;
+		$label_set = false;
 		if (get_option('oer_authoremail_label')){
-			$option_set = true;
+			$label_set = true;
 		}
-		if (($option_set && get_option('oer_authoremail_enabled')) || !$option_set) {
+		if (!empty(get_option('oer_authoremail_enabled')) || !$option_set) {
 		?>
                 <div class="oer_snglfld">
                     <div class="oer_txt">
 			<?php
-			if (!$option_set)
+			if (!$label_set)
 				_e("Email Address:", OER_SLUG);
 			else
 				echo get_option('oer_authoremail_label').":";
@@ -712,16 +718,16 @@ global $chck;
 
         <?php
 	// Publisher Name
-	$option_set = false;
+	$label_set = false;
 	if (get_option('oer_publishername_label')){
-		$option_set = true;
+		$label_set = true;
 	}
-	if (($option_set && get_option('oer_publishername_enabled')) || !$option_set) {
+	if (!empty(get_option('oer_publishername_enabled')) || !$option_set) {
 	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
 			<?php
-			if (!$option_set)
+			if (!$label_set)
 				_e("Name:", OER_SLUG);
 			else
 				echo get_option('oer_publishername_label').":";
@@ -736,16 +742,16 @@ global $chck;
 
 	<?php
 	// Publisher URL
-	$option_set = false;
+	$label_set = false;
 	if (get_option('oer_publisherurl_label')){
-		$option_set = true;
+		$label_set = true;
 	}
-	if (($option_set && get_option('oer_publisherurl_enabled')) || !$option_set) {
+	if (!empty(get_option('oer_publisherurl_enabled')) || !$option_set) {
 	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
 			<?php
-			if (!$option_set)
+			if (!$label_set)
 				_e("URL:", OER_SLUG);
 			else
 				echo get_option('oer_publisherurl_label').":";
@@ -760,16 +766,16 @@ global $chck;
 
 	<?php
 	// Publisher Email Address
-	$option_set = false;
+	$label_set = false;
 	if (get_option('oer_publisheremail_label')){
-		$option_set = true;
+		$label_set = true;
 	}
-	if (($option_set && get_option('oer_publisheremail_enabled')) || !$option_set) {
+	if (!empty(get_option('oer_publisheremail_enabled')) || !$option_set) {
 	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
 			<?php
-			if (!$option_set)
+			if (!$label_set)
 				_e("Email Address:", OER_SLUG);
 			else
 				echo get_option('oer_publisheremail_label').":";
@@ -788,16 +794,16 @@ global $chck;
 
         <?php
 	// External Repository
-	$option_set = false;
+	$label_set = false;
 	if (get_option('oer_external_repository_label')){
-		$option_set = true;
+		$label_set = true;
 	}
-	if (($option_set && get_option('oer_external_repository_enabled')) || !$option_set) {
+	if (!empty(get_option('oer_external_repository_enabled')) || !$option_set) {
 	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
 			<?php
-			if (!$option_set)
+			if (!$label_set)
 				_e("External Repository:", OER_SLUG);
 			else
 				echo get_option('oer_external_repository_label').":";
@@ -812,16 +818,16 @@ global $chck;
 
 	<?php
 	// Repository Record URL
-	$option_set = false;
+	$label_set = false;
 	if (get_option('oer_repository_recordurl_label')){
-		$option_set = true;
+		$label_set = true;
 	}
-	if (($option_set && get_option('oer_repository_recordurl_enabled')) || !$option_set) {
+	if (!empty(get_option('oer_repository_recordurl_enabled')) || !$option_set) {
 	?>
         <div class="oer_snglfld">
         	<div class="oer_txt">
 			<?php
-			if (!$option_set)
+			if (!$label_set)
 				_e("Repository Record URL:", OER_SLUG);
 			else
 				echo get_option('oer_repository_recordurl_label').":";
@@ -836,16 +842,16 @@ global $chck;
 
 	<?php
 	// Citation
-	$option_set = false;
+	$label_set = false;
 	if (get_option('oer_citation_label')){
-		$option_set = true;
+		$label_set = true;
 	}
-	if (($option_set && get_option('oer_citation_enabled')) || !$option_set) {
+	if (!empty(get_option('oer_citation_enabled')) || !$option_set) {
 	?>
 	<div class="oer_snglfld">
         	<div class="oer_txt">
 			<?php
-			if (!$option_set)
+			if (!$label_set)
 				_e("Citation:", OER_SLUG);
 			else
 				echo get_option('oer_citation_label').":";
@@ -860,16 +866,16 @@ global $chck;
 	
 	<?php
 	// Sensitive Material Warning
-	$option_set = false;
+	$label_set = false;
 	if (get_option('oer_sensitive_material_label')){
-		$option_set = true;
+		$label_set = true;
 	}
-	if (($option_set && get_option('oer_sensitive_material_enabled')) || !$option_set) {
+	if (!empty(get_option('oer_sensitive_material_enabled')) || !$option_set) {
 	?>
 	<div class="oer_snglfld">
         	<div class="oer_txt">
 			<?php
-			if (!$option_set)
+			if (!$label_set)
 				_e("Sensitive Material Warning:", OER_SLUG);
 			else
 				echo get_option('oer_sensitive_material_label').":";
@@ -884,16 +890,16 @@ global $chck;
 	
 	<?php
 	// Transcription
-	$option_set = false;
+	$label_set = false;
 	if (get_option('oer_transcription_label')){
-		$option_set = true;
+		$label_set = true;
 	}
-	if (($option_set && get_option('oer_transcription_enabled')) || !$option_set) {
+	if (!empty(get_option('oer_transcription_enabled')) || !$option_set) {
 	?>
 	<div class="oer_snglfld">
         	<div class="oer_txt">
 			<?php
-			if (!$option_set)
+			if (!$label_set)
 				_e("Transcription:", OER_SLUG);
 			else
 				echo get_option('oer_transcription_label').":";
@@ -907,18 +913,18 @@ global $chck;
 	<?php } ?>
 
 	<?php
-	$option_set = false;
+	$label_set = false;
 	if (get_option('oer_related_resource_label')){
-		$option_set = true;
+		$label_set = true;
 	}
-	if (($option_set && get_option('oer_related_resource_enabled')) || !$option_set) {
+	if (!empty(get_option('oer_related_resource_enabled')) || !$option_set) {
 		if (oer_installed_standards_plugin()) {
 	?>
 			<div class="oer_snglfld oer_hdngsngl">Related Resources:</div>
 			<div class="oer_snglfld">
 				<div class="oer_txt">
 					<?php
-					if (!$option_set)
+					if (!$label_set)
 						_e("Related Resources:", OER_SLUG);
 					else
 						echo get_option('oer_related_resource_label').":";

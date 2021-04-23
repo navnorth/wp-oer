@@ -405,3 +405,5 @@ label.selected span.relatedResourceSelectorImage {
     top: 3px;
 }
 div#standardModal { z-index: 9999 !important; }
+.oer_settings_form input::placeholder { color:#707d86; }
+.oer_text_red { color:#ce1212; }
