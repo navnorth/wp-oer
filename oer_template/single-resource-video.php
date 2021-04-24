@@ -52,75 +52,9 @@
         </div>
         <?php } ?>
         
-        <!-- Age Levels -->
-        <?php
-        if (($age_levels_set && $age_levels_enabled) || !$age_levels_set) {
-            $age_label = oer_field_label('oer_age_levels');
-            if (!empty($age_levels) && trim($age_levels)!==""){
-            ?>
-            <div class="form-field">
-                <div class="oer-lp-label"><?php echo $age_label; ?>:</div> <div class="oer-lp-value"><?php echo $age_levels; ?></div>
-            </div>
-            <?php
-            }
-        }
-        ?>
-        
-        <!-- Grade Level -->
-        <?php
-        $grades = explode(",",$grades);
-        
-        if(is_array($grades) && !empty($grades) && array_filter($grades))
-        {
-            $option_set = false;
-            if (get_option('oer_grade_label'))
-                $option_set = true;
-        ?>
-            <div class="form-field">
-                <div class="oer-lp-label"><?php
-                if (!$option_set){
-                    if (count($grades)>1)
-                        _e("Grade Levels:", OER_SLUG);
-                    else
-                        _e("Grade Level:", OER_SLUG);
-                } else
-                        echo get_option('oer_grade_label').":";
-                ?></div>
-                <div class="oer-lp-value">
-                <?php
-                echo oer_grade_levels($grades);
-                ?>
-                </div>
-            </div>
-        <?php }?>
-        
-        <!-- Instruction Time -->
-        <?php
-        if (($suggested_time_set && $suggested_time_enabled) || !$suggested_time_set) {
-             $suggested_label = oer_field_label('oer_instructional_time');
-             if (!empty($suggested_time) && trim($suggested_time)!==""){
-             ?>
-             <div class="form-field">
-                 <div class="oer-lp-label"><?php echo $suggested_label; ?>:</div> <div class="oer-lp-value"><?php echo $suggested_time; ?></div>
-             </div>
-             <?php
-             }
-         }
-        ?>
-        
-        <!-- Creative Commons License -->
-        <?php
-        if (($cc_license_set && $cc_license_enabled) || !$cc_license_set) {
-            $cc_label = oer_field_label('oer_creativecommons_license');
-            if (!empty($cc_license)){
-            ?>
-            <div class="form-field license-field">
-                <img src="<?php echo oer_cc_license_image($cc_license); ?>">
-            </div>
-            <?php
-            }
-        }
-        
+        <?php  
+            // Load content-details partial template
+            oer_get_template_part('partial/content','details', $meta_args);  
         ?>
         
         <!-- Keywords -->
@@ -242,92 +176,9 @@
 <?php endif; ?>
 <div id="tcHiddenFields" class="tc-hidden-fields collapse row">
     <div class="col-md-12">
-        <!-- External Repository -->
-        <?php
-        if (($external_repository_set && $external_repository_enabled) || !$external_repository_set) {
-             $external_repository_label = oer_field_label('oer_external_repository');
-             if (!empty($external_repository)){
-             ?>
-             <div class="form-field">
-                 <div class="oer-lp-label"><?php echo $external_repository_label; ?>:</div> <div class="oer-lp-value"><?php echo $external_repository; ?></div>
-             </div>
-             <?php
-             }
-         }
-        ?>
-        
-        <!-- Repository URL -->
-        <?php
-        if (($repository_record_set && $repository_record_enabled) || !$repository_record_set) {
-             $repository_record_label = oer_field_label('oer_repository_recordurl');
-             if (!empty($repository_record)){
-             ?>
-             <div class="form-field">
-                 <div class="oer-lp-label"><?php echo $repository_record_label; ?>:</div> <div class="oer-lp-value"><a href="<?php echo $repository_record; ?>"><?php echo $repository_record; ?></a></a></div>
-             </div>
-             <?php
-             }
-         }
-        ?>
-        
-        <!-- Citation -->
-        <?php
-        if (($citation_set && $citation_enabled) || !$citation_set) {
-            $citation_label = oer_field_label('oer_citation');
-            if (!empty($citation)){
-            ?>
-            <div class="form-field">
-                <div class="oer-lp-label"><?php echo $citation_label; ?>:</div><div class="oer-lp-value"><?php if (strlen($citation)>230): ?>
-                <div class="oer-lp-value-excerpt"><?php echo oer_get_content( $citation, 230); ?></div>
-                <div class="oer-lp-value-full"><?php echo $citation; ?>  <a href="javascript:void(0);" class="lp-read-less">(read less)</a></div>
-                <?php
-                else: 
-                    echo $citation;
-                endif; ?></div>
-            </div>
-            <?php
-            }
-        }
-        ?>
-        
-        <!-- Transcription -->
-        <?php
-        if (($transcription_set && $transcription_enabled) || !$transcription_set) {
-            $transcription_label = oer_field_label('oer_transcription');
-            if (!empty($transcription)){
-            ?>
-            <div class="form-field">
-                <div class="oer-lp-label"><?php echo $transcription_label; ?>:</div><div class="oer-lp-value"><?php if (strlen($transcription)>230): ?>
-                <div class="oer-lp-value-excerpt"><?php echo oer_get_content( $transcription, 230); ?></div>
-                <div class="oer-lp-value-full"><?php echo $transcription; ?> <a href="javascript:void(0);" class="lp-read-less">(read less)</a></div>
-                <?php
-                else: 
-                    echo $transcription;
-                endif; ?></div>
-            </div>
-            <?php
-            }
-        }
-        ?>
-        
-        <!-- Sensitive Material Warning -->
-        <?php
-        if (($sensitive_material_set && $sensitive_material_enabled) || !$sensitive_material_set) {
-            $sensitive_material_label = oer_field_label('oer_sensitive_material');
-            if (!empty($sensitive_material)){
-            ?>
-            <div class="form-field">
-                <div class="oer-lp-label oer-lp-red"><?php echo $sensitive_material_label; ?>:</div> <div class="oer-lp-value"><?php if (strlen($sensitive_material)>230): ?>
-                <div class="oer-lp-value-excerpt"><?php echo oer_get_content( $sensitive_material, 230); ?></div>
-                <div class="oer-lp-value-full"><?php echo $sensitive_material; ?>  <a href="javascript:void(0);" class="lp-read-less">(read less)</a></div>
-                <?php
-                else: 
-                    echo $sensitive_material;
-                endif; ?></div>
-            </div>
-            <?php
-            }
-        }
+        <?php  
+            // Load content-meta partial template
+            oer_get_template_part('partial/content','meta', $template_args);  
         ?>
     </div>
 </div>

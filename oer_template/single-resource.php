@@ -81,6 +81,7 @@ if(!empty($post_terms))
 }
 $embed_disabled = false;
 
+// Resource Meta Data
 $oer_sensitive_material = get_post_meta($post->ID, 'oer_sensitive_material', true);
 $oer_resource_type = get_post_meta($post->ID, 'oer_mediatype', true);
 
@@ -120,6 +121,42 @@ $citation = (isset($post_meta_data['oer_citation'][0]) ? $post_meta_data['oer_ci
 $transcription = (isset($post_meta_data['oer_transcription'][0]) ? $post_meta_data['oer_transcription'][0] : "");
 $sensitive_material = (isset($post_meta_data['oer_sensitive_material'][0]) ? $post_meta_data['oer_sensitive_material'][0] : "");
 
+
+/** Template Arguments for content-details partial template **/
+$meta_args = array(
+	'type' => $oer_resource_type,
+	'age_levels' => $age_levels,
+	'age_levels_set' => $age_levels_set,
+	'age_levels_enabled' => $age_levels_enabled,
+	'grades' => $grades,
+	'suggested_time' => $suggested_time,
+	'suggested_time_set' => $suggested_time_set,
+	'suggested_time_enabled' => $suggested_time_enabled,
+	'cc_license' => $cc_license,
+	'cc_license_set' => $cc_license_set,
+	'cc_license_enabled' => $cc_license_enabled
+);
+
+/** Template Arguments for content-meta partial template **/
+$template_args = array(
+    'type' => $oer_resource_type,
+    'external_repository' => $external_repository,
+    'external_repository_set' => $external_repository_set,
+    'external_repository_enabled' => $external_repository_enabled,
+    'repository_record' => $repository_record,
+    'repository_record_set' => $repository_record_set,
+    'repository_record_enabled' => $repository_record_enabled,
+    'citation' => $citation,
+    'citation_set' => $citation_set,
+    'citation_enabled' => $citation_enabled,
+    'transcription' => $transcription,
+    'transcription_set' => $transcription_set,
+    'transcription_enabled' => $transcription_enabled, 
+    'sensitive_material' => $sensitive_material,
+    'sensitive_material_set' => $sensitive_material_set,
+    'sensitive_material_enabled' => $sensitive_material_enabled
+);
+
 if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
     || !empty($cc_license) || !empty($external_repository) || !empty($repository_record)
     || !empty($citation) || !empty($transcription) || !empty($sensitive_material))
@@ -145,42 +182,42 @@ if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
 	else {
         $resource_template = OER_PATH.'oer_template/single-resource-standard.php';
         switch($oer_resource_type) {
-		case "website":
-		case "document":
-		case "other":
-		case "image":
-			$oer_type=oer_get_resource_file_type($url);
-			if ($oer_type['name']=="PDF")
-			    $resource_template = OER_PATH.'oer_template/single-resource-pdf.php';
-			else
-			    $resource_template = OER_PATH.'oer_template/single-resource-website.php';
-			break;
-		case "audio":
-			$oer_type=oer_get_resource_file_type($url);
-			if ($oer_type['name']=="PDF")
-				$resource_template = OER_PATH.'oer_template/single-resource-pdf.php';
-			else {
-				$file_type=oer_get_resource_file_type($url);
-				if ($file_type['name']=="Audio")
-					$resource_template = OER_PATH.'oer_template/single-resource-audio.php';
+			case "website":
+			case "document":
+			case "other":
+			case "image":
+				$oer_type=oer_get_resource_file_type($url);
+				if ($oer_type['name']=="PDF")
+				    $resource_template = OER_PATH.'oer_template/single-resource-pdf.php';
 				else
-					$resource_template = OER_PATH.'oer_template/single-resource-website.php';
-			}
-			break;
-		case "video":
-			$oer_type=oer_get_resource_file_type($url);
-			if ($oer_type['name']=="PDF")
-				$resource_template = OER_PATH.'oer_template/single-resource-pdf.php';
-			elseif ($oer_type['name']=="Video") {
-				if (oer_html_video_supported_format($url))
-					$resource_template = OER_PATH.'oer_template/single-resource-video.php';
-				else
-					$resource_template = OER_PATH.'oer_template/single-resource-website.php';
-			}
-		    break;
-		default:
-		    break;
-        }
+				    $resource_template = OER_PATH.'oer_template/single-resource-website.php';
+				break;
+			case "audio":
+				$oer_type=oer_get_resource_file_type($url);
+				if ($oer_type['name']=="PDF")
+					$resource_template = OER_PATH.'oer_template/single-resource-pdf.php';
+				else {
+					$file_type=oer_get_resource_file_type($url);
+					if ($file_type['name']=="Audio")
+						$resource_template = OER_PATH.'oer_template/single-resource-audio.php';
+					else
+						$resource_template = OER_PATH.'oer_template/single-resource-website.php';
+				}
+				break;
+			case "video":
+				$oer_type=oer_get_resource_file_type($url);
+				if ($oer_type['name']=="PDF")
+					$resource_template = OER_PATH.'oer_template/single-resource-pdf.php';
+				elseif ($oer_type['name']=="Video") {
+					if (oer_html_video_supported_format($url))
+						$resource_template = OER_PATH.'oer_template/single-resource-video.php';
+					else
+						$resource_template = OER_PATH.'oer_template/single-resource-website.php';
+				}
+			    break;
+			default:
+			    break;
+        };
         include($resource_template);
     }
     ?>
@@ -188,7 +225,7 @@ if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
         </div><!-- .single resource wrapper -->
 
     </article>
-		
+	
 	<!-- RELATED RESOURCES -->
 	<?php include_once OER_PATH.'includes/related-resources.php';?>
 </main>

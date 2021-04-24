@@ -3764,27 +3764,61 @@ if (!function_exists('oer_embed_video_file')){
 	}
 }
 
-	function oer_breadcrumb_display($resource = NULL){
-		$ret = '<div class="wp_oer_breadcrumb">';
-		global $post;
-		if($resource != NULL){
-				$curriculum = get_post($post);
-		    if($curriculum ){
-		        $ret .= '<a href="'.get_site_url().'">Home</a>';
-						$cur = (strlen($curriculum->post_title) > 30)? ' / '.substr($curriculum->post_title, 0, 30).'...' : ' / '.$curriculum->post_title;
-						$ret .= ' / <a href="'.get_permalink( $curriculum->ID ).'">'.$cur.'</a>';
-						$res = (strlen($resource->post_title) > 30)? ' / '.substr($resource->post_title, 0, 30).'...' : ' / '.$resource->post_title;
-						$ret .= ' / '.$res;
-		    }
-		}else{
-				$resource = get_post($post);
-		    if($resource){
-					$ret .= '<a href="'.get_site_url().'">Home</a>';
-					$ret = (strlen($resource->post_title) > 30)? $ret .= ' / '.substr($resource->post_title, 0, 30).'...' : $ret .= ' / '.$resource->post_title;				
-		    }
-		}	
-		$ret .= '</div>';
-		return $ret;
-	}
+function oer_breadcrumb_display($resource = NULL){
+	$ret = '<div class="wp_oer_breadcrumb">';
+	global $post;
+	if($resource != NULL){
+			$curriculum = get_post($post);
+	    if($curriculum ){
+	        $ret .= '<a href="'.get_site_url().'">Home</a>';
+					$cur = (strlen($curriculum->post_title) > 30)? ' / '.substr($curriculum->post_title, 0, 30).'...' : ' / '.$curriculum->post_title;
+					$ret .= ' / <a href="'.get_permalink( $curriculum->ID ).'">'.$cur.'</a>';
+					$res = (strlen($resource->post_title) > 30)? ' / '.substr($resource->post_title, 0, 30).'...' : ' / '.$resource->post_title;
+					$ret .= ' / '.$res;
+	    }
+	}else{
+			$resource = get_post($post);
+	    if($resource){
+				$ret .= '<a href="'.get_site_url().'">Home</a>';
+				$ret = (strlen($resource->post_title) > 30)? $ret .= ' / '.substr($resource->post_title, 0, 30).'...' : $ret .= ' / '.$resource->post_title;				
+	    }
+	}	
+	$ret .= '</div>';
+	return $ret;
+}
 
+function oer_get_template_part($slug, $name = null, $args = array()) {
+
+  	do_action("oer_get_template_part_{$slug}", $slug, $name);
+  	
+  	$templates = array();
+
+  	if (isset($name))
+      	$templates[] = "{$slug}-{$name}.php";
+
+  	$templates[] = "{$slug}.php";
+
+  	oer_get_template_path($templates, true, false, $args);
+}
+
+function oer_get_template_path($template_names, $load = false, $require_once = true, $args = array() ) {
+    $template = ''; 
+    $plugin_template_path = OER_PATH . "oer_template/";
+    
+    foreach ( (array) $template_names as $template_name ) { 
+      	if ( !$template_name ) 
+	        continue; 
+
+	    /* search file within the PLUGIN_DIR_PATH only */ 
+	    if ( file_exists($plugin_template_path . $template_name)) { 
+        	$template = $plugin_template_path . $template_name; 
+        	break; 
+      	} 
+    }
+
+    if ( $load && '' != $template )
+        	load_template( $template, $require_once, $args );
+
+    return $template;
+}
 ?>
