@@ -24,7 +24,7 @@ function oer_template_display_standards($core_standard, $standards, &$end_html){
     }
     echo $html;
 }
-function display_custom_styles(){
+function oer_display_custom_styles(){
     ?>
     <style type="text/css">
         .substandards-template #content ul.oer-substandards > li:not(:active),

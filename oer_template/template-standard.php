@@ -2,8 +2,8 @@
 /*
  * Template Name: Standard Page Template
  */
-add_filter( 'body_class','standards_body_classes' );
-function standards_body_classes( $classes ) {
+add_filter( 'body_class','oer_standard_body_classes' );
+function oer_standard_body_classes( $classes ) {
  
     $classes[] = 'standards-template';
      
@@ -15,10 +15,10 @@ get_header();
 
 global $wp_query;
 $standard_name_slug = $wp_query->query_vars['standard'];
-$standard = get_standard_by_slug($standard_name_slug);
-$sub_standards = get_substandards($standard->id);
+$standard = oer_get_standard_by_slug($standard_name_slug);
+$sub_standards = oer_get_substandards($standard->id);
 
-display_custom_styles();
+oer_display_custom_styles();
 ?>
 <div class="oer-backlink">
     <a href="<?php echo home_url('resource/standards'); ?>"><?php _e("< Back to Standards",OER_SLUG); ?></a>
@@ -32,7 +32,7 @@ display_custom_styles();
 			    <?php if ($sub_standards) {  ?>
 			    <ul class="oer-standards">
 				<?php foreach($sub_standards as $sub_standard) {
-				    $cnt = get_resource_count_by_substandard($sub_standard->id);
+				    $cnt = oer_get_resource_count_by_substandard($sub_standard->id);
 				    $slug = "resource/standards/".$standard_name_slug."/".sanitize_title($sub_standard->standard_title);
 				?>
 				<li><a href="<?php echo home_url($slug); ?>"><?php echo $sub_standard->standard_title; ?></a> <span class="res-count"><?php echo $cnt; ?></span></li>

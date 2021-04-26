@@ -7,7 +7,7 @@
             $external_option = get_option("oer_external_pdf_viewer");
             if ($external_option==1) {
                 $pdf_url = "https://docs.google.com/gview?url=".$url."&embedded=true";
-                echo get_embed_code($pdf_url);
+                echo oer_get_embed_code_frame($pdf_url);
             } elseif($external_option==0) {
                 $embed_disabled = true;
             }
@@ -19,7 +19,7 @@
                     break;
                 case 1:
                     $pdf_url = "https://docs.google.com/gview?url=".$url."&embedded=true";
-                    echo get_embed_code($pdf_url);
+                    echo oer_get_embed_code_frame($pdf_url);
                     break;
                 case 2:
                     $pdf_url = OER_URL."pdfjs/web/viewer.html?file=".urlencode($url);

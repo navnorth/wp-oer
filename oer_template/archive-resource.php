@@ -3,8 +3,8 @@
  * Template Name: Default Archive Resource Template
  */
 
-add_filter( 'body_class','archive_body_classes' );
-function archive_body_classes( $classes ) {
+add_filter( 'body_class','oer_archive_body_classes' );
+function oer_archive_body_classes( $classes ) {
  
     $classes[] = 'resource-archive';
     return $classes;

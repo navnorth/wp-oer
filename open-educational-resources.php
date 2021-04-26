@@ -211,8 +211,8 @@ function oer_load_textdomain() {
     }
 }
 
-add_action( 'wp_default_scripts', 'remove_default_jquery_migrate', -1 );
-function remove_default_jquery_migrate( $scripts ){
+add_action( 'wp_default_scripts', 'oer_remove_default_jquery_migrate', -1 );
+function oer_remove_default_jquery_migrate( $scripts ){
    	if ( is_admin() && ! empty( $scripts->registered['jquery'] ) ) {
 		$jquery_dependencies = $scripts->registered['jquery']->deps;
 		$script = $scripts->query( 'jquery-migrate', 'registered' );
@@ -2234,7 +2234,7 @@ function oer_custom_search_template($template){
 }
 add_filter('template_include','oer_custom_search_template');
 
-function assign_standard_template($template) {
+function oer_assign_standard_template($template) {
 	global $wp_query;
 
 	$url_path = trim(parse_url(add_query_arg(array()), PHP_URL_PATH), '/');
@@ -2270,7 +2270,7 @@ function assign_standard_template($template) {
 	}
 	return $template;
 }
-add_action( 'template_include' , 'assign_standard_template' );
+add_action( 'template_include' , 'oer_assign_standard_template' );
 
 // Assign template
 function oer_template_redirect(){

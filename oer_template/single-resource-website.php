@@ -3,7 +3,7 @@
 <div class="oer-rsrclftcntr-img col-md-5 col-sm-12 col-xs-12">
     <!--Resource Image-->
     <div class="oer-sngl-rsrc-img oer-sngl-website-type">
-        <?php  echo display_default_thumbnail($post); ?>
+        <?php  echo oer_display_default_thumbnail($post); ?>
     </div>
     <div id="" class="oer-authorName oer-cbxl">
         <?php

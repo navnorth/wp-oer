@@ -2,8 +2,8 @@
 /*
  * Template Name: Notation Page Template
  */
-add_filter( 'body_class','standards_body_classes' );
-function standards_body_classes( $classes ) {
+add_filter( 'body_class','oer_standard_notation_body_classes' );
+function oer_standard_notation_body_classes( $classes ) {
  
     $classes[] = 'notation-template';
      
@@ -20,10 +20,10 @@ $end_upnote = "";
 $end_html = "";
 
 $notation_slug = $wp_query->query_vars['notation'];
-$notation = get_substandard_by_notation($notation_slug);
+$notation = oer_get_substandard_by_notation($notation_slug);
 
 if (strpos($notation->parent_id,"standard_notation")!==false){
-    $upnotations = get_hierarchical_notations($notation->parent_id);
+    $upnotations = oer_get_hierarchical_notations($notation->parent_id);
 }
 
 if ($upnotations){
@@ -40,12 +40,12 @@ if ($upnotations){
     }
 }
 
-$subnotations = get_child_notations($notation->id);
+$subnotations = oer_get_child_notations($notation->id);
 $substandards = get_substandards_by_notation($notation_slug);
-$standard = get_standard_by_notation($notation_slug);
-$resources = get_resources_by_notation($notation->id);
+$standard = oer_get_standard_by_notation($notation_slug);
+$resources = oer_get_resources_by_notation($notation->id);
 
-display_custom_styles();
+oer_display_custom_styles();
 ?>
 <div class="oer-backlink">
     <a href="<?php echo home_url('resource/standards'); ?>"><?php _e("< Back to Standards",OER_SLUG); ?></a>
@@ -93,7 +93,7 @@ display_custom_styles();
 					    <ul class="oer-subnotations">
 						<?php
 						foreach($subnotations as $subnotation) {
-						    $cnt = get_resource_count_by_notation($subnotation->id);
+						    $cnt = oer_get_resource_count_by_notation($subnotation->id);
 						    $subnote_slug = $subnotation->standard_notation;
 						?>
 						<li>

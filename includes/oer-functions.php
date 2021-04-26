@@ -179,12 +179,12 @@ function oer_getScreenshotFile($url)
 	if(!file_exists($path))
 	{
 		mkdir($path, 0777, true);
-		debug_log("OER : create upload directory");
+		oer_debug_log("OER : create upload directory");
 	}
 
 	if(!file_exists($file = $path.'Screenshot'.preg_replace('/https?|:|#|\?|\&|\//i', '-', $url).'.jpg'))
 	{
-		debug_log("OER : start screenshot function");
+		oer_debug_log("OER : start screenshot function");
 
 		$oer_python_script_path 	= get_option("oer_python_path");
 		$oer_python_install 		= get_option("oer_python_install");
@@ -223,14 +223,14 @@ function oer_getScreenshotFile($url)
 				error_log($e->getMessage());
 
 		}
-		debug_log("OER : end of screenshot function");
+		oer_debug_log("OER : end of screenshot function");
 	}
 	return $file;
 }
 
 // Log Debugging
-if (!function_exists('debug_log')){
-	function debug_log($message) {
+if (!function_exists('oer_debug_log')){
+	function oer_debug_log($message) {
 		global $_debug;
 	
 		// if debugging is on
@@ -641,7 +641,7 @@ function oer_importStandards($file){
 	set_time_limit(0);
 
 	// Log start of import process
-	debug_log("OER Standards Importer: Start Bulk Import of Standards");
+	oer_debug_log("OER Standards Importer: Start Bulk Import of Standards");
 
 	if( isset($file) )
 	{
@@ -780,11 +780,11 @@ function oer_importStandards($file){
 					  'type' => 'error'
 					  );
 			// Log any error during import process
-			debug_log($e->getMessage());
+			oer_debug_log($e->getMessage());
 			return $response;
 		}
 		// Log Finished Import
-		debug_log("OER Standards Importer: Finished Bulk Import of Standards");
+		oer_debug_log("OER Standards Importer: Finished Bulk Import of Standards");
 		// Get Standard Notation
 		$response = array(
 			'message' => 'successful',
@@ -857,18 +857,18 @@ function oer_getImageFromExternalURL($url) {
 	if(!file_exists($path))
 	{
 		mkdir($path, 0777, true);
-		debug_log("OER : create upload directory");
+		oer_debug_log("OER : create upload directory");
 	}
 
 	if(!file_exists($file = $path.'Screenshot'.preg_replace('/https?|:|#|\?|\&|\//i', '-', $url).'.jpg'))
 	{
-		debug_log("OER : start screenshot function");
+		oer_debug_log("OER : start screenshot function");
 
 		$fp = fopen($file,'wb');
 		fwrite($fp, $raw);
 		fclose($fp);
 
-		debug_log("OER : end of screenshot function");
+		oer_debug_log("OER : end of screenshot function");
 	}
 	return $file;
 }
@@ -890,18 +890,18 @@ function oer_save_image_to_file($image_url) {
 	if(!file_exists($path))
 	{
 		mkdir($path, 0777, true);
-		debug_log("OER : create upload directory");
+		oer_debug_log("OER : create upload directory");
 	}
 
 	if(!file_exists($file = $path.'Screenshot'.preg_replace('/https?|:|#|\?|\&|\//i', '-', $image_url).'.jpg'))
 	{
-		debug_log("OER : start screenshot function");
+		oer_debug_log("OER : start screenshot function");
 
 		$fp = fopen($file,'wb');
 		fwrite($fp, $raw);
 		fclose($fp);
 
-		debug_log("OER : end of screenshot function");
+		oer_debug_log("OER : end of screenshot function");
 	}
 	return $file;
 }
@@ -940,12 +940,12 @@ function oer_getExternalThumbnailImage($url, $local=false) {
 	if(!file_exists($path))
 	{
 		mkdir($path, 0777, true);
-		debug_log("OER : create upload directory");
+		oer_debug_log("OER : create upload directory");
 	}
 
 	if(!file_exists($file = $path.'Screenshot'.preg_replace('/https?|:|#|\?|\&|\//i', '-', $url).'.jpg'))
 	{
-		debug_log("OER : start download image function");
+		oer_debug_log("OER : start download image function");
 
 		if ($local){
 			$file = $path.'Screenshot'.preg_replace('/https?|:|#|\?|\&|\//i', '-', $url).'.jpg';
@@ -956,7 +956,7 @@ function oer_getExternalThumbnailImage($url, $local=false) {
 			fclose($fp);
 		}
 
-		debug_log("OER : end of download image function");
+		oer_debug_log("OER : end of download image function");
 	}
 	return $file;
 }
@@ -1047,7 +1047,7 @@ function oer_importResources($default=false) {
 	global $wpdb, $_oer_prefix;
 	require_once OER_PATH.'Excel/reader.php';
 
-	debug_log("OER Resources Importer: Initializing Excel Reader");
+	oer_debug_log("OER Resources Importer: Initializing Excel Reader");
 
 	$excl_obj = new Oer_Spreadsheet_Excel_Reader();
 	$excl_obj->setOutputEncoding('CP1251');
@@ -1061,7 +1061,7 @@ function oer_importResources($default=false) {
 	set_time_limit(0);
 
 	// Log start of import process
-	debug_log("OER Resources Importer: Starting Bulk Import of Resources");
+	oer_debug_log("OER Resources Importer: Starting Bulk Import of Resources");
 
 	$cnt = 0;
 		try{
@@ -1536,7 +1536,7 @@ function oer_importResources($default=false) {
 			error_log($e->getMessage());
 	}
 	// Log finish of import process
-	debug_log("OER Resources Importer: Finished Bulk Import of Resources");
+	oer_debug_log("OER Resources Importer: Finished Bulk Import of Resources");
 	$message = sprintf(__("Successfully imported %s resources.", OER_SLUG), $cnt);
 	$type = "success";
 	$response = array('message' => $message, 'type' => $type);
@@ -1560,7 +1560,7 @@ function oer_importLRResources(){
 		if( ini_get('allow_url_fopen') ) {
 			$resources = file_get_contents($lr_url);
 		} else {
-			$resources = curlResources($lr_url);
+			$resources = oer_curlResources($lr_url);
 		}
 		$resources = json_decode($resources);
 	}
@@ -1574,7 +1574,7 @@ function oer_importLRResources(){
 			
 			foreach ($document as $doc) {
 				if ($doc[0]->doc_type=="resource_data"){
-					$exists = custom_array_intersect($schema, $doc[0]->payload_schema);
+					$exists = oer_custom_array_intersect($schema, $doc[0]->payload_schema);
 					
 					if (!empty($exists)){
 						if ($doc[0]->resource_data->items){
@@ -1639,13 +1639,13 @@ function oer_importLRResources(){
 			$index++;
 		}
 	} else {
-		$lr_resources = get_sliceLRResources($lr_url);
+		$lr_resources = oer_get_sliceLRResources($lr_url);
 	}
 	return $lr_resources;
 }
 
 // Import LR Resources with slice and resumption token
-function get_sliceLRResources($lr_url){
+function oer_get_sliceLRResources($lr_url){
 	$lr_resources = array();
 	
 	$lrUrl = $lr_url;
@@ -1655,7 +1655,7 @@ function get_sliceLRResources($lr_url){
 		if( ini_get('allow_url_fopen') ) {
 			$resources = file_get_contents($lrUrl);
 		} else {
-			$resources = curlResources($lrUrl);
+			$resources = oer_curlResources($lrUrl);
 		}
 		$resources = json_decode($resources);
 		
@@ -1701,7 +1701,7 @@ function get_sliceLRResources($lr_url){
 	return $lr_resources;
 }
 
-function curlResources($url){
+function oer_curlResources($url){
 	if (!function_exists('curl_init')){ 
 		die('CURL is not installed!');
 	}
@@ -1713,7 +1713,7 @@ function curlResources($url){
 	return $response;
 }
 
-function custom_array_intersect($firstArray, $secondArray){
+function oer_custom_array_intersect($firstArray, $secondArray){
   $intersection = [];
   foreach ($firstArray as $a){
       $A = strtolower($a);
@@ -1733,7 +1733,7 @@ function oer_importSubjectAreas($default=false) {
 	global $wpdb;
 	require_once OER_PATH.'Excel/reader.php';
 
-	debug_log("OER Subject Areas Importer: Initializing Excel Reader");
+	oer_debug_log("OER Subject Areas Importer: Initializing Excel Reader");
 
 	$excl_obj = new Oer_Spreadsheet_Excel_Reader();
 	$excl_obj->setOutputEncoding('CP1251');
@@ -1746,7 +1746,7 @@ function oer_importSubjectAreas($default=false) {
 	set_time_limit(0);
 
 	// Log start of import process
-	debug_log("OER Subject Areas Importer: Starting Bulk Import ");
+	oer_debug_log("OER Subject Areas Importer: Starting Bulk Import ");
 
 	global $wpdb;
 
@@ -1852,10 +1852,10 @@ function oer_importSubjectAreas($default=false) {
 			}// For Multiple Sheeet
 	} catch (Exception $e) {
 		// Log any error encountered during the import process
-		debug_log($e->getMessage());
+		oer_debug_log($e->getMessage());
 	}
 	// Log finish of import process
-	debug_log("OER Subject Areas Importer: Finished Bulk Import ");
+	oer_debug_log("OER Subject Areas Importer: Finished Bulk Import ");
 
 	$message = sprintf(__("Successfully imported %s subject areas.", OER_SLUG), $cnt);
 	$type = "success";
@@ -2437,8 +2437,8 @@ function oer_get_subject_areas($resource_id){
 }
 
 //Replace PDF Url to embedded PDF
-//add_filter( 'the_content' , 'replace_pdf_to_embed' );
-function replace_pdf_to_embed($content){
+//add_filter( 'the_content' , 'oer_replace_pdf_to_embed' );
+function oer_replace_pdf_to_embed($content){
     $pattern = '/(http|https):\/\/.*?\.pdf\b/i';
 
     $matches = array();
@@ -2463,7 +2463,7 @@ function replace_pdf_to_embed($content){
     return $content;
 }
 
-function is_pdf_resource($url) {
+function oer_is_pdf_resource($url) {
 	$is_pdf = false;
 	
 	if (preg_match('/(http|https):\/\/.*?\.pdf\b/i', $url, $id)) 
@@ -2472,7 +2472,7 @@ function is_pdf_resource($url) {
 	return $is_pdf;
 }
 
-function is_external_url($url) {
+function oer_is_external_url($url) {
 	$is_external = false;
 	
 	$base_host = parse_url(home_url(), PHP_URL_HOST);
@@ -2487,7 +2487,7 @@ function is_external_url($url) {
 /**
  * Get Standards Count
  **/
-function get_standards_count(){
+function oer_get_standards_count(){
 	global $wpdb;
 	$cnt = 0;
 	
@@ -2501,7 +2501,7 @@ function get_standards_count(){
 /**
  * Get Standards
  **/
-function get_standards(){
+function oer_get_standards(){
 	global $wpdb;
 	
 	$query = "SELECT * FROM {$wpdb->prefix}oer_core_standards";
@@ -2514,7 +2514,7 @@ function get_standards(){
 /**
  * Get Standard By Slug
  **/
-function get_standard_by_slug($slug){
+function oer_get_standard_by_slug($slug){
 	global $wpdb;
 	
 	$std = null;
@@ -2534,7 +2534,7 @@ function get_standard_by_slug($slug){
 /**
  * Get Standard By Id
  **/
-function get_standard_by_id($id){
+function oer_get_standard_by_id($id){
 	global $wpdb;
 	
 	$std = null;
@@ -2553,7 +2553,7 @@ function get_standard_by_id($id){
 /**
  * Get SubStandard By Slug
  **/
-function get_substandard_by_slug($slug){
+function oer_get_substandard_by_slug($slug){
 	global $wpdb;
 	
 	$std = null;
@@ -2573,7 +2573,7 @@ function get_substandard_by_slug($slug){
 /**
  * Get child standards of a core standard
  **/
-function get_substandards($standard_id, $core=true){
+function oer_get_substandards($standard_id, $core=true){
 	global $wpdb;
 	
 	if ($core)
@@ -2593,7 +2593,7 @@ function get_substandards($standard_id, $core=true){
 /**
  * Get Standard Notations under a Sub Standard
  **/
-function get_standard_notations($standard_id){
+function oer_get_standard_notations($standard_id){
 	global $wpdb;
 	
 	$std_id = "sub_standards-".$standard_id;
@@ -2614,7 +2614,7 @@ function get_standard_notations($standard_id){
 /**
  * Get Parent Sub Standard by Notation
  **/
-function get_substandard_by_notation($notation) {
+function oer_get_substandard_by_notation($notation) {
 	global $wpdb;
 	
 	$std = null;
@@ -2633,7 +2633,7 @@ function get_substandard_by_notation($notation) {
 /**
  * Get Core Standard by Notation
  **/
-function get_standard_by_notation($notation){
+function oer_get_standard_by_notation($notation){
 	global $wpdb;
 	
 	$std = null;
@@ -2651,7 +2651,7 @@ function get_standard_by_notation($notation){
 			
 			if (count($pIds)>1){
 			    $parent_id=(int)$pIds[1];
-			    $std = get_standard_by_id($parent_id);
+			    $std = oer_get_standard_by_id($parent_id);
 			}
 		}
 	}
@@ -2673,7 +2673,7 @@ function get_substandards_by_notation($notation){
 	
 	if ($standard_notation){
 		$substandard_id = $standard_notation[0]->parent_id;
-		$std = get_hierarchical_substandards($substandard_id);
+		$std = oer_get_hierarchical_substandards_by_substandard($substandard_id);
 	}
 	
 	return $std;
@@ -2682,7 +2682,7 @@ function get_substandards_by_notation($notation){
 /**
  * Get hierarchical substandards by substandard id
  **/
-function get_hierarchical_substandards($substandard_id) {
+function oer_get_hierarchical_substandards_by_substandard($substandard_id) {
 	
 	$stds = null;
 	
@@ -2693,7 +2693,7 @@ function get_hierarchical_substandards($substandard_id) {
 	}
 	
 	if (strpos($substandard[0]['parent_id'],"sub_standards")!==false){
-		$stds[] = get_hierarchical_substandards($substandard[0]['parent_id']);
+		$stds[] = oer_get_hierarchical_substandards_by_substandard($substandard[0]['parent_id']);
 	}
 	
 	return $stds;
@@ -2702,7 +2702,7 @@ function get_hierarchical_substandards($substandard_id) {
 /**
  * Get Resources by notation
  **/
-function get_resources_by_notation($notation_id) {
+function oer_get_resources_by_notation($notation_id) {
 	
 	$notation = "standard_notation-".$notation_id;
 	
@@ -2724,7 +2724,7 @@ function get_resources_by_notation($notation_id) {
 	return $query->posts;
 }
 
-function get_child_notations($notation_id){
+function oer_get_child_notations($notation_id){
 	global $wpdb;
 	
 	$notation = "standard_notation-".$notation_id;
@@ -2739,7 +2739,7 @@ function get_child_notations($notation_id){
 /**
  * Get Resource Count By Notation
  **/
-function get_resource_count_by_notation($notation_id){
+function oer_get_resource_count_by_notation($notation_id){
 	$cnt = 0;
 	
 	$notation = "standard_notation-".$notation_id;
@@ -2761,11 +2761,11 @@ function get_resource_count_by_notation($notation_id){
 	
 	$cnt += count($query->posts);
 	
-	$child_notations = get_child_notations($notation_id);
+	$child_notations = oer_get_child_notations($notation_id);
 	
 	if ($child_notations){
 		foreach ($child_notations as $child_notation){
-			$cnt += get_resource_count_by_notation($child_notation->id);
+			$cnt += oer_get_resource_count_by_notation($child_notation->id);
 		}
 	}
 	
@@ -2775,21 +2775,21 @@ function get_resource_count_by_notation($notation_id){
 /**
  * Get Resource Count By Sub-Standard
  **/
-function get_resource_count_by_substandard($substandard_id){
+function oer_get_resource_count_by_substandard($substandard_id){
 	$cnt = 0;
 	
-	$child_substandards = get_substandards($substandard_id, false);
+	$child_substandards = oer_get_substandards($substandard_id, false);
 	
 	if(count($child_substandards)>0){
 		foreach($child_substandards as $child_substandard){
-			$cnt += get_resource_count_by_substandard($child_substandard->id, false);
+			$cnt += oer_get_resource_count_by_substandard($child_substandard->id, false);
 		}
 	}
-	$notations = get_standard_notations($substandard_id);
+	$notations = oer_get_standard_notations($substandard_id);
 	
 	if ($notations){
 		foreach($notations as $notation){
-			$cnt += get_resource_count_by_notation($notation->id);
+			$cnt += oer_get_resource_count_by_notation($notation->id);
 		}
 	}
 	return $cnt;
@@ -2798,22 +2798,22 @@ function get_resource_count_by_substandard($substandard_id){
 /**
  * Get Resource Count By Standard
  **/
-function get_resource_count_by_standard($standard_id){
+function oer_get_resource_count_by_standard($standard_id){
 	
 	$cnt = 0;
 	
-	$substandards = get_substandards($standard_id);
+	$substandards = oer_get_substandards($standard_id);
 	
 	if(count($substandards)>0){
 		foreach($substandards as $substandard){
-			$cnt += get_resource_count_by_substandard($substandard->id);
+			$cnt += oer_get_resource_count_by_substandard($substandard->id);
 		}
 	}
-	$notations = get_standard_notations($standard_id);
+	$notations = oer_get_standard_notations($standard_id);
 	
 	if ($notations){
 		foreach($notations as $notation){
-			$cnt += get_resource_count_by_notation($notation->id);
+			$cnt += oer_get_resource_count_by_notation($notation->id);
 		}
 	}
 	return $cnt;
@@ -2822,7 +2822,7 @@ function get_resource_count_by_standard($standard_id){
 /**
  * Get Core Standard by standard or substandard ID
  **/
-function get_corestandard_by_standard($parent_id){
+function oer_get_corestandard_by_standard($parent_id){
 	global $wpdb;
 	
 	$standard = null;
@@ -2832,7 +2832,7 @@ function get_corestandard_by_standard($parent_id){
 		$substandards = $wpdb->get_results($wpdb->prepare($query, $parent[1]));
 		
 		foreach($substandards as $substandard){
-			$standard = get_corestandard_by_standard($substandard->parent_id);
+			$standard = oer_get_corestandard_by_standard($substandard->parent_id);
 		}
 	} else {
 		$query = "SELECT * FROM {$wpdb->prefix}oer_core_standards WHERE id = '%s'";
@@ -3049,7 +3049,7 @@ function oer_add_resource($resource) {
 }
 
 // Checks if resource exists
-function resource_exists($resource){
+function oer_resource_exists($resource){
 	$exists = false;
 	
 	$args = array(
@@ -3072,14 +3072,14 @@ function resource_exists($resource){
 }
 
 // Get Hierarchical Notations
-function get_hierarchical_notations($notation_id){
+function oer_get_hierarchical_notations($notation_id){
 	$notation=null;
 	$notations = array();
 	$hierarchy = "";
 	$ids = explode("-",$notation_id);
 	if (strpos($notation_id,"standard_notation")!==false) {
 		do {
-			$notation = get_notation_details($ids[1]);
+			$notation = oer_get_notation_details($ids[1]);
 			$ids = explode("-", $notation[0]['parent_id']);
 			$notations[] = $notation;
 		} while(strpos($notation[0]['parent_id'],"standard_notation")!==false);
@@ -3088,7 +3088,7 @@ function get_hierarchical_notations($notation_id){
 }
 
 // Get Notation Details
-function get_notation_details($notation_id){
+function oer_get_notation_details($notation_id){
 	global $wpdb;
 	$notations = null;
 	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "oer_standard_notation where id = %s" , $notation_id  ) , ARRAY_A);
@@ -3532,7 +3532,7 @@ if (!function_exists('oer_cc_license_image')){
 
 if (!function_exists('oer_display_pdf_embeds')){
 	function oer_display_pdf_embeds($url, $return = false){
-		$isExternal = is_external_url($url);
+		$isExternal = oer_is_external_url($url);
 		
 		if ($isExternal) {
 			$external_option = get_option("oer_external_pdf_viewer");
@@ -3624,7 +3624,7 @@ if (!function_exists('oer_get_embed_code')){
 /**
  * Get Resources
  **/
-function get_resources_for_related() {
+function oer_get_resources_for_related() {
 	//later in the request
 	$args = array(
 		'post_type'  => 'resource', //or a post type of your choosing
@@ -3637,7 +3637,7 @@ function get_resources_for_related() {
 	return $query->posts;
 }
 
-function getResourceIcon($oer_media_type, $url){
+function oer_getResourceIcon($oer_media_type, $url){
 	$_avtr = '';
 	switch (strtolower($oer_media_type)) {
 			case "website":

@@ -730,8 +730,8 @@ function oer_setngpgfn()
 /**
  * Process Import Resources form
  **/
-add_action("admin_action_import_resources","process_import_resources");
-function process_import_resources(){
+add_action("admin_action_import_resources","oer_process_import_resources");
+function oer_process_import_resources(){
     $message = null;
     $type = null;
 
@@ -755,8 +755,8 @@ function process_import_resources(){
     exit;
 }
 
-add_action("admin_action_import_lr_resources","process_import_lr_resources");
-function process_import_lr_resources(){
+add_action("admin_action_import_lr_resources","oer_process_import_lr_resources");
+function oer_process_import_lr_resources(){
     $message = null;
     $type = null;
 
@@ -773,7 +773,7 @@ function process_import_lr_resources(){
 	if ($resources){
 	    $cnt = 0;
 	    foreach($resources as $resource) {
-		if (!resource_exists($resource)){
+		if (!oer_resource_exists($resource)){
 		    oer_add_resource($resource);
 		    $cnt++;
 		}
@@ -790,8 +790,8 @@ function process_import_lr_resources(){
 /**
  * Process Import Subject Areas
  **/
-add_action("admin_action_import_subjects","process_import_subjects");
-function process_import_subjects(){
+add_action("admin_action_import_subjects","oer_process_import_subjects");
+function oer_process_import_subjects(){
     $message = null;
     $type = null;
 
@@ -818,8 +818,8 @@ function process_import_subjects(){
 /**
  * Process Import Standards
  **/
-add_action("admin_action_import_standards","process_import_standards");
-function process_import_standards(){
+add_action("admin_action_import_standards","oer_process_import_standards");
+function oer_process_import_standards(){
     $message = null;
     $type = null;
 

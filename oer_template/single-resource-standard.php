@@ -33,7 +33,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
                 $external_option = get_option("oer_external_pdf_viewer");
                 if ($external_option==1) {
                     $pdf_url = "https://docs.google.com/gview?url=".$url."&embedded=true";
-                    echo get_embed_code($pdf_url);
+                    echo oer_get_embed_code_frame($pdf_url);
                 } elseif($external_option==0) {
                     $embed_disabled = true;
                 }
@@ -45,7 +45,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
                         break;
                     case 1:
                         $pdf_url = "https://docs.google.com/gview?url=".$url."&embedded=true";
-                        echo get_embed_code($pdf_url);
+                        echo oer_get_embed_code_frame($pdf_url);
                         break;
                     case 2:
                         $pdf_url = OER_URL."pdfjs/web/viewer.html?file=".urlencode($url);
@@ -83,11 +83,11 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
             if ($type['name']=="Video"){
                 echo oer_embed_video_file($url, $type['type']);
             } else {
-                echo display_default_thumbnail($post);
+                echo oer_display_default_thumbnail($post);
             }
         }
         if ($embed_disabled){
-            echo display_default_thumbnail($post);
+            echo oer_display_default_thumbnail($post);
         }
         ?>
     </div>

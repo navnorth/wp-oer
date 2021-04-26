@@ -34,8 +34,8 @@ $url_domain = oer_getDomainFromUrl($url);
 $youtube = oer_is_youtube_url($url);
 $isSSLResource = oer_is_sll_resource($url);
 $isSLLCollection = oer_is_sll_collection($url);
-$isPDF = is_pdf_resource($url);
-$isExternal = is_external_url($url);
+$isPDF = oer_is_pdf_resource($url);
+$isExternal = oer_is_external_url($url);
 
 $hide_title = get_option('oer_hide_resource_title');
 
@@ -237,7 +237,7 @@ if ($theme == "Eleganto"){
 	get_template_part( 'template-part', 'footernav' );
 }
 
-function display_default_thumbnail($post){
+function oer_display_default_thumbnail($post){
 	$html = '<a class="oer-featureimg" href="'.esc_url(get_post_meta($post->ID, "oer_resourceurl", true)).'" target="_blank" >';
 		$img_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ) , "full" );
 		if ($img_url){
@@ -252,21 +252,21 @@ function display_default_thumbnail($post){
 	if(!empty($img_url))
 	{
 		if ( is_wp_error($img_url) ) {
-			debug_log("Can't get Image editor to resize Resource screenshot.");
+			oer_debug_log("Can't get Image editor to resize Resource screenshot.");
 		} else {
 			$new_image_url = oer_resize_image($img_url[0], $img_width, $img_height, true);
 			$html .= '<img src="'.esc_url($new_image_url).'" alt="'.esc_attr(get_the_title()).'"/>';
 		}
 	}else{
     global $url; 
-		$html .= '<span class="dashicons '.getResourceIcon($media_type,$url).'"></span>';
+		$html .= '<span class="dashicons '.oer_getResourceIcon($media_type,$url).'"></span>';
 	}
 	
 		
 	$html .= '</a>';
 	return $html;
 }
-function get_embed_code($url){
+function oer_get_embed_code_frame($url){
 	$embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.$url.'"></iframe>';
 	return $embed_code;
 }

@@ -7,7 +7,7 @@
         if ($type['name']=="Audio")
             echo oer_generate_audio_resource_embed($url);
         else
-            echo display_default_thumbnail($post);
+            echo oer_display_default_thumbnail($post);
         ?>
     </div>
     <div id="" class="oer-authorName oer-cbxl">

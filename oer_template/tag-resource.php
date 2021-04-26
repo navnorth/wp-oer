@@ -3,8 +3,8 @@
  * Template Name: Default Tag Page Template
  */
 
-add_filter( 'body_class','tag_body_classes' );
-function tag_body_classes( $classes ) {
+add_filter( 'body_class','oer_tag_body_classes' );
+function oer_tag_body_classes( $classes ) {
  
     $classes[] = 'resource-tag';
      
