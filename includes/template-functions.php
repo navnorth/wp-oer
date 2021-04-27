@@ -1,5 +1,5 @@
 <?php
-
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 function oer_template_display_standards($core_standard, $standards, &$end_html){
     $html = "";
     if ($standards){

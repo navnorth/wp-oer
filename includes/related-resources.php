@@ -1,4 +1,6 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 $_delimited = get_post_meta($post->ID,"oer_related_resource");
 if(!empty($_delimited[0])):
 ?>
