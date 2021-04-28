@@ -1694,10 +1694,10 @@ function oer_load_searched_standards(){
 	$meta_key = "oer_standard";
 
 	if (isset($_POST['post_id'])){
-		$post_id = $_POST['post_id'];
+		$post_id = sanitize_text_field($_POST['post_id']);
 	}
 	if (isset($_POST['keyword'])){
-		$keyword = $_POST['keyword'];
+		$keyword = sanitize_text_field($_POST['keyword']);
 	}
 
 	if (!$post_id){
@@ -1721,7 +1721,7 @@ function oer_load_default_standards(){
 	$post_id = null;
 
 	if (isset($_POST['post_id'])){
-		$post_id = $_POST['post_id'];
+		$post_id = sanitize_text_field($_POST['post_id']);
 	}
 
 	if (!$post_id){

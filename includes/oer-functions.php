@@ -1072,7 +1072,7 @@ function oer_importResources($default=false) {
 			} else {
 				if( isset($_FILES['resource_import']) && $_FILES['resource_import']['size'] != 0 )
 				{
-					$filename = $_FILES['resource_import']['name']."-".$date;
+					$filename = sanitize_file_name($_FILES['resource_import']['name']."-".$date);
 
 					if ($_FILES["resource_import"]["error"] > 0)
 					{
@@ -1545,7 +1545,7 @@ function oer_importResources($default=false) {
 
 // Import LR Resources
 function oer_importLRResources(){
-	$lr_url = $_POST['lr_import'];
+	$lr_url = esc_url_raw($_POST['lr_import']);
 	
 	$resources = null;
 	$lr_resources = array();
@@ -1758,7 +1758,7 @@ function oer_importSubjectAreas($default=false) {
 		} else {
 			if( isset($_FILES['bulk_import']) && $_FILES['bulk_import']['size'] != 0 )
 			{
-				$filename = $_FILES['bulk_import']['name']."-".$date;
+				$filename = sanitize_file_name($_FILES['bulk_import']['name']."-".$date);
 
 				if ($_FILES["bulk_import"]["error"] > 0)
 				{

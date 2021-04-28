@@ -258,13 +258,14 @@ function oer_show_metadata_settings() {
 			$meta = array_unique($metadata);
 			// Save Option
 			if ($_POST){
-				if ($_REQUEST['tab'] && $_REQUEST['tab']=="metadata") {
+				if (isset($_REQUEST['tab']) && $_REQUEST['tab']=="metadata") {
 					// Remove meta key enabled option
 					foreach($metas as $met){
 						if (strpos($met['meta_key'],"oer_")!==false){
 							delete_option($met['meta_key']."_enabled");
 						}
 					}
+					$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 					oer_save_metadata_options($_POST);
 				}
 			}

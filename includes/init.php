@@ -404,19 +404,19 @@ function oer_save_customfields()
     // Save Age Levels
 		if(isset($_POST['oer_age_levels']))
 		{
-		    update_post_meta( $post->ID , 'oer_age_levels' , $_POST['oer_age_levels']);
+		    update_post_meta( $post->ID , 'oer_age_levels' , sanitize_text_field($_POST['oer_age_levels']));
 		}
     
     // Save Instructional Time
 		if(isset($_POST['oer_instructional_time']))
 		{
-		    update_post_meta( $post->ID , 'oer_instructional_time' , $_POST['oer_instructional_time']);
+		    update_post_meta( $post->ID , 'oer_instructional_time' , sanitize_text_field($_POST['oer_instructional_time']));
 		}
     
     // Save Creative Commons License
 		if(isset($_POST['oer_creativecommons_license']))
 		{
-		    update_post_meta( $post->ID , 'oer_creativecommons_license' , $_POST['oer_creativecommons_license']);
+		    update_post_meta( $post->ID , 'oer_creativecommons_license' , sanitize_text_field($_POST['oer_creativecommons_license']));
 		}
 		
 		// Save Format
@@ -670,22 +670,28 @@ function oer_save_customfields()
 		// Save Citation
 		if(isset($_POST['oer_citation']))
 		{
-		    update_post_meta( $post->ID , 'oer_citation' , $_POST['oer_citation']);
+			// Sanitize wp_editor content
+			$oer_citation = sanitize_post_field('post_content', $_POST['oer_citation'], $post->ID, 'db');
+		    update_post_meta( $post->ID , 'oer_citation' , $oer_citation);
 		}
 		
 		// Save Sensitive Material
 		if(isset($_POST['oer_sensitive_material']))
 		{
-		    update_post_meta( $post->ID , 'oer_sensitive_material' , $_POST['oer_sensitive_material']);
+			// Sanitize wp_editor content
+			$oer_sensitive_material = sanitize_post_field('post_content', $_POST['oer_sensitive_material'], $post->ID, 'db');
+		    update_post_meta( $post->ID , 'oer_sensitive_material' , $oer_sensitive_material);
 		}
 		
 		// Save Transcription
 		if(isset($_POST['oer_transcription']))
 		{
-			update_post_meta( $post->ID , 'oer_transcription' , $_POST['oer_transcription']);
+			// Sanitize wp_editor content
+			$oer_transcription = sanitize_post_field('post_content', $_POST['oer_transcription'], $post->ID, 'db');
+			update_post_meta( $post->ID , 'oer_transcription' , $oer_transcription);
 		}
 
-    // Save Related Resource
+    	// Save Related Resource
 		if(isset($_POST['oer_related_resource']))
 		{
 			update_post_meta( $post->ID , 'oer_related_resource' , addslashes($_POST['oer_related_resource']));
