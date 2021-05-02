@@ -72,6 +72,7 @@
 	overflow:hidden;
 	max-width: 100% !important;
 	display: block !important;
+    width:100%;
 }
 #sngl-resource header.entry-header .entry-title { margin-top:0; margin-bottom:0; }
 #sngl-resource header.entry-header span.sensitive-resource {
