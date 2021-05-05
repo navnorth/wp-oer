@@ -3440,8 +3440,8 @@ if (! function_exists('oer_standards_list_display')){
                if (is_array($oer_lp_standards)):
                     $current_std_id = "";
                     foreach($oer_lp_standards as $standard){
-                       if (function_exists('oer_std_get_standard_by_notation')){
-                           $core_standard = oer_std_get_standard_by_notation($standard);
+                       if (function_exists('was_oer_std_get_standard_by_notation')){
+                           $core_standard = was_oer_std_get_standard_by_notation($standard);
                            if ($current_std_id!==$core_standard->id){
                                if (!empty($standards) && !empty($cstandard)) {
                                    $stds[] = array_merge(array("notation"=>$standards), $cstandard);
