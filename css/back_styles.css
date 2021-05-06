@@ -273,8 +273,6 @@ tr.hide-title-setting td { padding:0 10px 15px !important; }
 	text-align: center;
 	background: rgba(60,60,60,0.5);
 	display:none;
-	margin-left: -20px;
-	padding-right: 20px;
 }
 .loader .loader-img { display: table; overflow: hidden; height:100%; width:100%; }
 .loader .loader-img div { display:table-cell; top:30%; position:relative; }
