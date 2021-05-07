@@ -97,19 +97,21 @@ function wp_oer_display_subject_resources( $attributes ){
 	}
 
 	$sort_display = "Date Updated";
-	switch($sort){
-		case "modified":
-			$sort_display = 'Date Updated';
-			break;
-		case "date":
-			$sort_display = 'Date Added';
-			break;
-		case "title":
-			$sort_display = 'Title A-Z';
-			break;
+	if (isset($sort)){
+		switch($sort){
+			case "modified":
+				$sort_display = 'Date Updated';
+				break;
+			case "date":
+				$sort_display = 'Date Added';
+				break;
+			case "title":
+				$sort_display = 'Title A-Z';
+				break;
+		}
 	}
 
-	if (is_array($selectedSubjects))
+	if (isset($selectedSubjects) && is_array($selectedSubjects))
 		$selectedSubjects = implode(",", $selectedSubjects);
 	$heading = '<div class="oer-snglrsrchdng" data-sort="'.$sort.'" data-count="'.$displayCount.'" data-subjects="'.$selectedSubjects.'">';
 	$heading .= '	Browse '.$displayCount.' resources';
@@ -414,3 +416,20 @@ function wp_oer_ajax_get_subject_resources(){
 }
 add_action( 'wp_ajax_get_subject_resources', 'wp_oer_ajax_get_subject_resources' );
 add_action( 'wp_ajax_nopriv_get_subject_resources', 'wp_oer_ajax_get_subject_resources' );
+
+/*
+* Add OER Block Category
+*/
+function wp_oer_block_category( $categories ) {
+	$category_slugs = wp_list_pluck( $categories, 'slug' );
+	return in_array( 'oer-block-category', $category_slugs, true ) ? $categories : array_merge(
+        array(
+            array(
+				'slug' => 'oer-block-category',
+				'title' => __( 'OER Blocks', 'oer-block-category' ),
+			),
+        ),
+        $categories
+    );
+}
+add_filter( 'block_categories', 'wp_oer_block_category', 10, 2);
