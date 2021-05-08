@@ -143,21 +143,21 @@ function wp_oer_display_subject_resources( $attributes ){
 	if (is_array($selectedSubjectResources)){
 		foreach ($selectedSubjectResources as $subject){
 			$html .= '<div class="post oer-snglrsrc">';
-			$html .= '	<a href="'.$subject['link'].'" class="oer-resource-link">';
+			$html .= '	<a href="'.esc_url($subject['link']).'" class="oer-resource-link">';
 			$html .= '		<div class="oer-snglimglft">';
-			$html .= '			<img src="'.$subject['fimg_url'].'">';
+			$html .= '			<img src="'.esc_url($subject['fimg_url']).'">';
 			$html .= '		</div>';
 			$html .= '	</a>';
 			$html .= '	<div class="oer-snglttldscrght">';
 			$html .= '		<div class="ttl">';
-			$html .= '			<a href="'.$subject['link'].'">'.$subject['post_title'].'</a>';
+			$html .= '			<a href="'.esc_url($subject['link']).'">'.$subject['post_title'].'</a>';
 			$html .= '		</div>';
 			$html .= '		<div class="post-meta">';
 			$html .= '			<span class="post-meta-box post-meta-grades">';
 			$html .= '				<strong>Grades: </strong>'.$subject['oer_grade'];
 			$html .= '			</span>';
 			$html .= '			<span class="post-meta-box post-meta-domain">';
-			$html .= '				<strong>Domain: </strong><a href="'.$subject['oer_resourceurl'].'">'.$subject['domain'].'</a>';
+			$html .= '				<strong>Domain: </strong><a href="'.esc_url($subject['oer_resourceurl']).'">'.$subject['domain'].'</a>';
 			$html .= '			</span>';
 			$html .= '		</div>';
 			$html .= '		<div class="desc">';
@@ -168,7 +168,7 @@ function wp_oer_display_subject_resources( $attributes ){
 			$html .= '		<div class="tagcloud">';
 			if (is_array($subject['subject_details'])){
 				foreach($subject['subject_details'] as $subj){
-					$html .= '			<span><a href="'.$subj['link'].'">'.$subj['name'].'</a></span>';
+					$html .= '			<span><a href="'.esc_url($subj['link']).'">'.$subj['name'].'</a></span>';
 				}
 			}
 			$html .= '		</div>';
@@ -372,21 +372,21 @@ function wp_oer_get_subject_resources($args){
 	if (is_array($resources)){
 		foreach ($resources as $resource){
 			$html .= '<div class="post oer-snglrsrc">';
-			$html .= '	<a href="'.$resource->link.'" class="oer-resource-link">';
+			$html .= '	<a href="'.esc_url($resource->link).'" class="oer-resource-link">';
 			$html .= '		<div class="oer-snglimglft">';
-			$html .= '			<img src="'.$resource->fimg_url.'">';
+			$html .= '			<img src="'.esc_url($resource->fimg_url).'">';
 			$html .= '		</div>';
 			$html .= '	</a>';
 			$html .= '	<div class="oer-snglttldscrght">';
 			$html .= '		<div class="ttl">';
-			$html .= '			<a href="'.$resource->link.'">'.$resource->post_title.'</a>';
+			$html .= '			<a href="'.esc_url($resource->link).'">'.$resource->post_title.'</a>';
 			$html .= '		</div>';
 			$html .= '		<div class="post-meta">';
 			$html .= '			<span class="post-meta-box post-meta-grades">';
 			$html .= '				<strong>Grades: </strong>'.$resource->oer_grade;
 			$html .= '			</span>';
 			$html .= '			<span class="post-meta-box post-meta-domain">';
-			$html .= '				<strong>Domain: </strong><a href="'.$resource->oer_resourceurl.'">'.$resource->domain.'</a>';
+			$html .= '				<strong>Domain: </strong><a href="'.esc_url($resource->oer_resourceurl).'">'.$resource->domain.'</a>';
 			$html .= '			</span>';
 			$html .= '		</div>';
 			$html .= '		<div class="desc">';
@@ -397,7 +397,7 @@ function wp_oer_get_subject_resources($args){
 			$html .= '		<div class="tagcloud">';
 			if (is_array($resource->subject_details)){
 				foreach($resource->subject_details as $subj){
-					$html .= '			<span><a href="'.$subj['link'].'">'.$subj['name'].'</a></span>';
+					$html .= '			<span><a href="'.esc_url($subj['link']).'">'.$subj['name'].'</a></span>';
 				}
 			}
 			$html .= '		</div>';

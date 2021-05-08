@@ -1420,10 +1420,10 @@ function oer_load_more_resources() {
 			?>
 			<div class="oer-snglrsrc">
 				<?php
-				echo '<a href="'.get_permalink($post->ID).'" class="oer-resource-link"><div class="oer-snglimglft"><img src="'.$new_image_url.'"></div></a>';
+				echo '<a href="'.esc_url(get_permalink($post->ID)).'" class="oer-resource-link"><div class="oer-snglimglft"><img src="'.esc_url($new_image_url).'"></div></a>';
 				?>
 				<div class="oer-snglttldscrght <?php if(empty($img_url)){ echo 'snglttldscrghtfull';}?>">
-					<div class="ttl"><a href="<?php echo get_permalink($post->ID);?>"><?php echo $title;?></a></div>
+					<div class="ttl"><a href="<?php echo esc_url(get_permalink($post->ID)); ?>"><?php echo $title;?></a></div>
 					<div class="desc"><?php echo $content; ?></div>
 				</div>
 			</div>
@@ -1547,10 +1547,10 @@ function oer_sort_resources(){
 			?>
 			<div class="oer-snglrsrc">
 				<?php
-				echo '<a href="'.get_permalink($post->ID).'" class="oer-resource-link"><div class="oer-snglimglft"><img src="'.$new_image_url.'"></div></a>';
+				echo '<a href="'.esc_url(get_permalink($post->ID)).'" class="oer-resource-link"><div class="oer-snglimglft"><img src="'.esc_url($new_image_url).'"></div></a>';
 				?>
 				<div class="oer-snglttldscrght <?php if(empty($img_url)){ echo 'snglttldscrghtfull';}?>">
-					<div class="ttl"><a href="<?php echo get_permalink($post->ID);?>"><?php echo $title;?></a></div>
+					<div class="ttl"><a href="<?php echo esc_url(get_permalink($post->ID));?>"><?php echo $title;?></a></div>
 					<div class="desc"><?php echo $content; ?></div>
 				</div>
 			</div>
@@ -1613,8 +1613,8 @@ function oer_load_more_highlights() {
 						}
 						$new_image_url = oer_resize_image( $image, 220, 180, true );
 						?>
-						<a href="<?php echo get_permalink($post->ID);?>"><div class="img"><img src="<?php echo $new_image_url;?>" alt="<?php echo $title;?>"></div></a>
-						<div class="ttl"><a href="<?php echo get_permalink($post->ID);?>"><?php echo $title;?></a></div>
+						<a href="<?php echo esc_url(get_permalink($post->ID)); ?>"><div class="img"><img src="<?php echo esc_url($new_image_url);?>" alt="<?php echo $title;?>"></div></a>
+						<div class="ttl"><a href="<?php echo esc_url(get_permalink($post->ID)); ?>"><?php echo $title;?></a></div>
 						<div class="desc"><?php echo apply_filters('the_content',$content); ?></div>
 					</div>
 				</li>
@@ -1674,8 +1674,8 @@ function oer_load_highlight() {
 					}
 					$new_image_url = oer_resize_image( $image, 220, 180, true );
 					?>
-					<a href="<?php echo get_permalink($post->ID);?>"><div class="img"><img src="<?php echo $new_image_url;?>" alt="<?php echo $title;?>"></div></a>
-					<div class="ttl"><a href="<?php echo get_permalink($post->ID);?>"><?php echo $title;?></a></div>
+					<a href="<?php echo esc_url(get_permalink($post->ID)); ?>"><div class="img"><img src="<?php echo esc_url($new_image_url); ?>" alt="<?php echo $title;?>"></div></a>
+					<div class="ttl"><a href="<?php echo esc_url(get_permalink($post->ID)); ?>"><?php echo $title;?></a></div>
 					<div class="desc"><?php echo apply_filters('the_content',$content); ?></div>
 				</div><?php
 			}

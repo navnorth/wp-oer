@@ -219,7 +219,7 @@ $rsltdata = get_term_by( "name", $term, "resource-subject-area", ARRAY_A );
 							if(!empty($image)){
 								$new_image = oer_resize_image( $image , 220 , 180 , true );
 								?>
-							<div class="pstimg"><img src="<?php echo $new_image;?>" alt="<?php echo $title;?>"></div>
+							<div class="pstimg"><img src="<?php echo esc_url($new_image);?>" alt="<?php echo $title;?>"></div>
 							<?php }?>
 							<div class="rght-sd-cntnr-cntnt">
 							<div class="psttl"><?php echo $title;?></div>

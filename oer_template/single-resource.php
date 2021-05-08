@@ -267,7 +267,7 @@ function oer_display_default_thumbnail($post){
 	return $html;
 }
 function oer_get_embed_code_frame($url){
-	$embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.$url.'"></iframe>';
+	$embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.esc_url_raw($url).'"></iframe>';
 	return $embed_code;
 }
 

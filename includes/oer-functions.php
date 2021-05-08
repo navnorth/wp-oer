@@ -41,7 +41,7 @@ function oer_get_sub_standard($id, $oer_standard)
 
 				if(!empty($subchildren) || !empty($child))
 					{
-						echo "<img src='".OER_URL."images/closed_arrow.png' data-pluginpath='".OER_URL."' />";
+						echo "<img src='".esc_url(OER_URL)."images/closed_arrow.png' data-pluginpath='".OER_URL."' />";
 					}
 
 				echo			"<input type='checkbox' ".$chck." name='oer_standard[]' value='".$value."' onclick='oer_check_all(this)' >
@@ -95,7 +95,7 @@ function oer_get_standard_notation($id, $oer_standard)
 				   <div class='stndrd_ttl'>";
 					if(!empty($child))
 					{
-						echo "<img src='".OER_URL."images/closed_arrow.png' data-pluginpath='".OER_URL."' />";
+						echo "<img src='".esc_url(OER_URL)."images/closed_arrow.png' data-pluginpath='".OER_URL."' />";
 					}
 
 			  echo "<input type='checkbox' ".$chck." name='oer_standard[]' value='".$value."' onclick='oer_check_myChild(this)'>
@@ -456,14 +456,14 @@ if (!function_exists('oer_get_category_child')) {
 				{
 					echo '<li class="oer-sub-category has-child'.$class.'" title="'. $catchild->name .'" >
 							<span onclick="toggleparent(this);">
-								<a href="'. site_url() .'/resource-subject-area/'. $catchild->slug .'">' . $catchild->name .'</a>
+								<a href="'. esc_url(site_url() .'/resource-subject-area/'. $catchild->slug) .'">' . $catchild->name .'</a>
 							</span>';
 				}
 				else
 				{
 					echo '<li class="oer-sub-category'.$class.'" title="'. $catchild->name .'" >
 							<span onclick="toggleparent(this);">
-								<a href="'. site_url() .'/resource-subject-area/'. $catchild->slug .'">' . $catchild->name .'</a>
+								<a href="'. esc_url(site_url() .'/resource-subject-area/'. $catchild->slug) .'">' . $catchild->name .'</a>
 							</span>';
 				}
 				oer_get_category_child( $catchild->term_id);
@@ -2077,7 +2077,7 @@ function oer_get_image_height( $size ) {
 /** Display loader image **/
 function oer_display_loader(){
 ?>
-<div class="loader"><div class="loader-img"><div><img src="<?php echo OER_URL; ?>images/loading.gif" align="center" valign="middle" /></div></div></div>
+<div class="loader"><div class="loader-img"><div><img src="<?php echo esc_url(OER_URL); ?>images/loading.gif" align="center" valign="middle" /></div></div></div>
 <?php
 }
 
@@ -2448,14 +2448,14 @@ function oer_replace_pdf_to_embed($content){
     foreach ($matches[0] as $match) {
 	$match_url = strip_tags($match);
 	if(shortcode_exists('wonderplugin_pdf')) {
-		$embed_code = "[wonderplugin_pdf src='".$match_url."' width='100%']";
+		$embed_code = "[wonderplugin_pdf src='".esc_url_raw($match_url)."' width='100%']";
 	} elseif(shortcode_exists('pdf-embedder')){
-		$embed_code = "[pdf-embedder url='".$match_url."' width='100%']";
+		$embed_code = "[pdf-embedder url='".esc_url_raw($match_url)."' width='100%']";
 	} elseif(shortcode_exists('pdfviewer')){
-		$embed_code = "[pdfviewer width='100%']".$match_url."[/pdfviewer]";
+		$embed_code = "[pdfviewer width='100%']".esc_url_raw($match_url)."[/pdfviewer]";
 	} else {
 		$pdf_url = OER_URL."pdfjs/web/viewer.html?file=".urlencode($match_url);
-		$embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.$pdf_url.'"></iframe>';
+		$embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.esc_url_raw($pdf_url).'"></iframe>';
 	}
 	if ($embed_code) 
 	    $content = str_replace($match, $embed_code, $content);
@@ -3557,7 +3557,7 @@ if (!function_exists('oer_display_pdf_embeds')){
 					break;
 				case 2:
 					$pdf_url = OER_URL."pdfjs/web/viewer.html?file=".urlencode($url);
-					$embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.$pdf_url.'"></iframe>';
+					$embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.esc_url_raw($pdf_url).'"></iframe>';
 					if ($return)
 						return $embed_code;
 					else
@@ -3565,7 +3565,7 @@ if (!function_exists('oer_display_pdf_embeds')){
 					break;
 				case 3:
 					if(shortcode_exists('wonderplugin_pdf')) {
-						$embed_code = "[wonderplugin_pdf src='".$url."' width='100%']";
+						$embed_code = "[wonderplugin_pdf src='".esc_url_raw($url)."' width='100%']";
 						if ($return)
 							return do_shortcode($embed_code);
 						else
@@ -3576,7 +3576,7 @@ if (!function_exists('oer_display_pdf_embeds')){
 					break;
 				case 4:
 					if(shortcode_exists('pdf-embedder')){
-						$embed_code = "[pdf-embedder url='".$url."' width='100%']";
+						$embed_code = "[pdf-embedder url='".esc_url_raw($url)."' width='100%']";
 						if ($return)
 							return do_shortcode($embed_code);
 						else
@@ -3605,9 +3605,9 @@ if (!function_exists('oer_generate_audio_resource_embed')) {
 	function oer_generate_audio_resource_embed($audio_url){
 		?>
 		<audio controls>
-			<source src="<?php echo $audio_url; ?>" type="audio/ogg">
-			<source src="<?php echo $audio_url; ?>" type="audio/mpeg">
-			<source src="<?php echo $audio_url; ?>" type="audio/wav">
+			<source src="<?php echo esc_url($audio_url); ?>" type="audio/ogg">
+			<source src="<?php echo esc_url($audio_url); ?>" type="audio/mpeg">
+			<source src="<?php echo esc_url($audio_url); ?>" type="audio/wav">
 			Your browser does not support the audio element.
 		</audio>
 		<?php
@@ -3616,7 +3616,7 @@ if (!function_exists('oer_generate_audio_resource_embed')) {
 
 if (!function_exists('oer_get_embed_code')){
 	function oer_get_embed_code($url){
-		$embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.$url.'"></iframe>';
+		$embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.esc_url_raw($url).'"></iframe>';
 		return $embed_code;
 	}
 }
@@ -3759,7 +3759,7 @@ if (!function_exists('oer_embed_video_file')){
 			default:
 				break;
 		}
-		$embed_code = '<video class="oer-video-viewer" width="100%" src="'.$source.'" type="'.$type.'" controls="true" autoplay="false"></video>';
+		$embed_code = '<video class="oer-video-viewer" width="100%" src="'.esc_url_raw($source).'" type="'.$type.'" controls="true" autoplay="false"></video>';
 		return $embed_code;
 	}
 }
@@ -3772,7 +3772,7 @@ function oer_breadcrumb_display($resource = NULL){
 	    if($curriculum ){
 	        $ret .= '<a href="'.get_site_url().'">Home</a>';
 					$cur = (strlen($curriculum->post_title) > 30)? ' / '.substr($curriculum->post_title, 0, 30).'...' : ' / '.$curriculum->post_title;
-					$ret .= ' / <a href="'.get_permalink( $curriculum->ID ).'">'.$cur.'</a>';
+					$ret .= ' / <a href="'.esc_url(get_permalink( $curriculum->ID )).'">'.$cur.'</a>';
 					$res = (strlen($resource->post_title) > 30)? ' / '.substr($resource->post_title, 0, 30).'...' : ' / '.$resource->post_title;
 					$ret .= ' / '.$res;
 	    }

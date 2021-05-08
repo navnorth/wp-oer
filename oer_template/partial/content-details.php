@@ -65,7 +65,7 @@ if (!empty($args)){
         if (!empty($cc_license)){
         ?>
         <div class="form-field license-field">
-            <img src="<?php echo oer_cc_license_image($cc_license); ?>">
+            <img src="<?php echo esc_url(oer_cc_license_image($cc_license)); ?>">
         </div>
         <?php
         }

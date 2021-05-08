@@ -22,7 +22,7 @@ if (!empty($args)){
          if (!empty($repository_record)){
          ?>
          <div class="form-field">
-             <div class="oer-lp-label"><?php echo $repository_record_label; ?>:</div> <div class="oer-lp-value"><a href="<?php echo $repository_record; ?>"><?php echo $repository_record; ?></a></a></div>
+             <div class="oer-lp-label"><?php echo $repository_record_label; ?>:</div> <div class="oer-lp-value"><a href="<?php echo esc_url($repository_record); ?>"><?php echo $repository_record; ?></a></a></div>
          </div>
          <?php
          }

@@ -118,7 +118,7 @@ oer_display_custom_styles();
 				<h4><?php _e("Resources:", OER_SLUG); ?></h4>
 				<ul class="oer-resources">
 				    <?php foreach($resources as $resource) { ?>
-				    <li><a href="<?php echo get_the_permalink($resource->ID); ?>"><?php echo $resource->post_title; ?></a></li>
+				    <li><a href="<?php echo esc_url(get_the_permalink($resource->ID)); ?>"><?php echo $resource->post_title; ?></a></li>
 				    <?php } ?>
 				</ul>
 			    <?php } ?>
