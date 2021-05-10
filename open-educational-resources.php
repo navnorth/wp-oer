@@ -783,7 +783,7 @@ function oer_styles_settings(){
 			'type' => 'checkbox',
 			'value' => '1',
 			'name' =>  __('Import Bootstrap CSS & JS libraries', OER_SLUG),
-			'description' => __('uncheck if your WP theme already included Bootstrap', OER_SLUG)
+			'description' => __('Uncheck if your WP theme already included Bootstrap.', OER_SLUG)
 		)
 	);
 
@@ -816,7 +816,7 @@ function oer_styles_settings(){
 			'type' => 'checkbox',
 			'value' => '1',
 			'name' =>  __('Import Fontawesome CSS', OER_SLUG),
-			'description' => __('uncheck if your WP theme already included Fontawesome', OER_SLUG)
+			'description' => __('Uncheck if your WP theme already included Font Awesome.', OER_SLUG)
 		)
 	);
 
@@ -862,7 +862,7 @@ function oer_styles_settings(){
 			'uid' => 'oer_additional_css',
 			'type' => 'textarea',
 			'name' =>  __('Additional CSS', OER_SLUG),
-			'inline_description' => __('easily customize the look and feel with your own CSS (sitewide)', OER_SLUG)
+			'inline_description' => __('Easily customize the look and feel with your own CSS (sitewide).', OER_SLUG)
 		)
 	);
 
@@ -875,8 +875,8 @@ function oer_styles_settings(){
 		array(
 			'uid' => 'oer_only_additional_css',
 			'type' => 'textarea',
-			'name' =>  __('Additional CSS', OER_SLUG),
-			'inline_description' => __('Apply custom css to plugin pages only', OER_SLUG)
+			'name' =>  __('Additional CSS for Plugin Pages', OER_SLUG),
+			'inline_description' => __('Apply custom CSS to plugin pages only.', OER_SLUG)
 		)
 	);
 
