@@ -76,7 +76,7 @@ if (!empty($args)){
         if (!empty($sensitive_material)){
         ?>
         <div class="form-field">
-            <div class="oer-lp-label oer-lp-red"><?php echo $sensitive_material_label; ?>:</div> <div class="oer-lp-value"><?php if (strlen($sensitive_material)>230): ?>
+            <div class="oer-lp-label oer-lp-red"><?php echo $sensitive_material_label; ?>:</div> <div class="oer-lp-value oer-lp-red"><?php if (strlen($sensitive_material)>230): ?>
             <div class="oer-lp-value-excerpt"><?php echo oer_get_content( $sensitive_material, 230); ?></div>
             <div class="oer-lp-value-full"><?php echo $sensitive_material; ?>  <a href="javascript:void(0);" class="lp-read-less">(read less)</a></div>
             <?php
