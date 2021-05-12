@@ -141,6 +141,7 @@ function oer_create_csv_import_table()
    update_option('setup_notify', true);
    update_option( "oer_rewrite_rules", false );
    update_option('oer_metadata_firstload', true);
+   update_option('oer_setup', true);
 
    //Trigger CPT and Taxonomy creation
    oer_postcreation();
@@ -196,6 +197,7 @@ function oer_plugin_activation_notice() {
 register_deactivation_hook( __FILE__, "oer_deactivate_oer_plugin" );
 function oer_deactivate_oer_plugin() {
 	delete_option('setup_notify');
+	delete_option('oer_setup');
 }
 
 //Load localization directory
