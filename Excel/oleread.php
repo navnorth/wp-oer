@@ -108,8 +108,6 @@ class OER_OLERead {
             }
         }
 
-       // var_dump($bigBlockDepotBlocks);
-
         // readBigBlockDepot
         $pos = 0;
         $index = 0;
@@ -125,7 +123,6 @@ class OER_OLERead {
             }
         }
 
-	//var_dump($this->bigBlockChain);
         //echo '=====2';
         // readSmallBlockDepot();
         $pos = 0;
@@ -180,7 +177,7 @@ class OER_OLERead {
 
     function __readPropertySets(){
         $offset = 0;
-        //var_dump($this->entry);
+        
         while ($offset < strlen($this->entry)) {
               $d = substr($this->entry, $offset, OER_PROPERTY_STORAGE_BLOCK_SIZE);
 
