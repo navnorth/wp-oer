@@ -2,7 +2,7 @@
 Contributors: navigationnorth, joehobson, johnpaulbalagolan, josepheneldas, arobotnamedchris
 Tags: OER, Open Educational Resources, Education, Teaching, Learning
 Requires at least: 4.4
-Tested up to: 5.7.2
+Tested up to: 5.7.1
 Stable tag: 0.8.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -51,7 +51,7 @@ No frequently asked questions.
 * Metadata Fields are now enabled by default
 * Setup tab is now visible until used
 * Added a Gutenberg block for displaying Resources and Curriculums
-* Tested up to WP 5.7.2
+* Tested up to WP 5.7.1
 
 = 0.8.1 =
 * Improvements, bug fixes, and terminology refactoring for blocks

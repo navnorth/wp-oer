@@ -1,9 +1,4 @@
 jQuery(document).ready(function($) {
-	/**--jQuery(".wp-block-wp-oer-plugin-wp-oer-subjects-index .oer_snglctwpr").each(function(index, element) {
-		var hght = jQuery(this).children(".oer-cat-div,.oer-cat-div-large,.oer-cat-div-medium,.oer-cat-div-small").children(".oer-child-category").height();
-		jQuery(this).children(".oer-cat-div,.oer-cat-div-large,.oer-cat-div-medium,.oer-cat-div-small").children(".oer-child-category").attr("data-height", hght);
-		jQuery(this).children(".oer-cat-div,.oer-cat-div-large,.oer-cat-div-medium,.oer-cat-div-small").children(".oer-child-category").hide();
-    });--**/
 	/**
 	 * Dismiss our activation notice
 	 */
@@ -64,15 +59,14 @@ jQuery(document).ready(function($) {
 
 	/** Hide Subjects Index Block Child Category Div on load **/
 	setTimeout(function() {
-		if ($(".wp-block-wp-oer-plugin-wp-oer-subjects-index .oer_snglctwpr").length>0){
-		    $(".wp-block-wp-oer-plugin-wp-oer-subjects-index .oer_snglctwpr").each(function(index, element) {
-				let childCat = $(this).children(".oer-cat-div,.oer-cat-div-large,.oer-cat-div-medium,.oer-cat-div-small").find(".oer-child-category");
-				let hght = childCat.height();
-				childCat.attr("data-height", hght);
-				childCat.hide();
+		if ($(".oer_snglctwpr").length>0){
+		    $(".oer_snglctwpr").each(function(index, element) {
+				var hght = $(this).children(".oer-cat-div,.oer-cat-div-large,.oer-cat-div-medium,.oer-cat-div-small").children(".oer-child-category").height();
+				$(this).children(".oer-cat-div,.oer-cat-div-large,.oer-cat-div-medium,.oer-cat-div-small").children(".oer-child-category").attr("data-height", hght);
+				$(this).children(".oer-cat-div,.oer-cat-div-large,.oer-cat-div-medium,.oer-cat-div-small").children(".oer-child-category").hide();
 		    });
 	    }
-	}, 10000);
+	}, 5000);
 
 });
 
@@ -144,11 +138,8 @@ function admin_togglenavigation(ref)
 				jQuery(this).slideDown("slow");
 
 				var hght_upr = jQuery(ref).height();
-				console.log(hght_upr);
 				var hght_lwr = jQuery(ref).children(".oer-child-category").attr("data-height");
-				console.log(hght_lwr);
 				var ttl_hght = parseInt(hght_upr) + parseInt(hght_lwr) + parseInt(80);
-				console.log(ttl_hght);
 				jQuery(ref).parent(".oer_snglctwpr").height(ttl_hght);
 			}
 
