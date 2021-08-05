@@ -2,8 +2,8 @@
 Contributors: navigationnorth, joehobson, johnpaulbalagolan, josepheneldas, arobotnamedchris
 Tags: OER, Open Educational Resources, Education, Teaching, Learning
 Requires at least: 4.4
-Tested up to: 5.7.0
-Stable tag: 0.8.1
+Tested up to: 5.7.2
+Stable tag: 0.8.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -41,21 +41,32 @@ No frequently asked questions.
 
 == Changelog ==
 
+= 0.8.2 =
+* Fixed the issue where WYSIWYG visual tab is freezing
+* Fixed the issue in Subjects Block where the resources disappear after changing the block's parameters
+* Fixed the sorting issue in Subjects Block where unrelated resources appear
+* Updated the Bootstrap Library to 4.6.0, Font Awesome to 5.15.3
+* Displayed the default value of each metadata field as a placeholder
+* Cleaned up code duplication on display templates
+* Metadata Fields are now enabled by default
+* Setup tab is now visible until used
+* Added a Gutenberg block for displaying Resources and Curriculums
+* Tested up to WP 5.7.2
+
 = 0.8.1 =
 * Improvements, bug fixes, and terminology refactoring for blocks
 * Fixes for visual editor on admin metaboxes in WP 5.5 or later
 
-
 = 0.8.0 =
 * New Gutenberg block for Subject Resources
-* fixes to live preview of blocks
+* Fixes to live preview of blocks
 * Display styling updates
 * Compatibility for latest WordPress versions
 
 = 0.7.8 =
 * Fixes for resource display, better styling single resources by type
-* better display of age ranges
-* hide display of domain on internally hosted resources
+* Better display of age ranges
+* Hide display of domain on internally hosted resources
 
 = 0.7.5 =
 * Additional Metadata options - article/information, age levels, instructional time, repository, licensing
@@ -76,19 +87,19 @@ No frequently asked questions.
 * Labels of Metadata Fields can be customized using the Metadata Fields Options in the Settings
 
 = 0.6.5 =
-* options for PDF display on resource view
-* pages to browse by Standard
-* preliminary support for Gutenberg editor
+* Options for PDF display on resource view
+* Pages to browse by Standard
+* Preliminary support for Gutenberg editor
 
 = 0.6.1 =
-* improved display of featured resources on subject pages
-* display default image on Recommended Content slider if none available
-* fix saving and display of created and modified dates
-* fix taxonomy query on subject area resource lists
+* Improved display of featured resources on subject pages
+* Display default image on Recommended Content slider if none available
+* Fix saving and display of created and modified dates
+* Fix taxonomy query on subject area resource lists
 
 = 0.6.0 =
-* additional keyboard accessibility fixes
-* allow null values for Learning Resource Type and Interactivity
+* Additional keyboard accessibility fixes
+* Allow null values for Learning Resource Type and Interactivity
 
 = 0.5.9 =
 * Make Youtube video display responsive

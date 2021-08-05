@@ -475,7 +475,6 @@ a.oer-featureimg .dashicons {
 	height: 400px;
 	vertical-align: middle;
 	line-height: 400px;
-	color:#356483;
 	opacity: 0.7;
 }
 a.oer-featureimg .dashicons.nofeat {
@@ -499,7 +498,6 @@ a.oer-featureimg .dashicons.nofeat {
 	width: 100%;
 	padding: 0px 15px 23px 15px;
 	font-size: 18px;
-	color: #356483;
 	font-weight: 600;
 }
 .lp-primary-sources-row .media-image {
@@ -541,7 +539,6 @@ span.resource-overlay:hover {
     right: 0;
     top: 0;
     padding: 5px 15px;
-    background: #356483;
     color: #ffffff;
 }
 .resource-thumbnail {
@@ -605,7 +602,6 @@ span.resource-overlay:hover {
 }
 .resource-avatar .dashicons {
     font-size: 157px;
-    color: #356483;
     width: auto;
     height: 148px;
     margin-top: 45px;

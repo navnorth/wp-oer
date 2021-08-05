@@ -1,10 +1,16 @@
 <?php
+global $pagenow;
+
 function wp_oer_enqueue_subject_resources_frontend_script(){
 	wp_enqueue_script( 'wp_oer_block-front-js', plugins_url( '/subject-resources-block/build/front.js', dirname( __FILE__ ) ), array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor' ),'0.1' , true );
  	wp_localize_script( 'wp_oer_block-front-js', 'wp_oer_block', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 }
 add_action('wp_enqueue_scripts', 'wp_oer_enqueue_subject_resources_frontend_script');
-add_action('admin_enqueue_scripts', 'wp_oer_enqueue_subject_resources_frontend_script');
+
+// Add checking if current page is on add new/edit page,post or resource before loading bootstrap
+if ($pagenow=="post.php" || $pagenow=="edit.php" || $pagenow=="post-new.php"){
+	add_action('admin_enqueue_scripts', 'wp_oer_enqueue_subject_resources_frontend_script');
+}
 
 /** Subject Resources block version 2.0 **/
 function wp_oer_register_resources_block(){
@@ -91,19 +97,21 @@ function wp_oer_display_subject_resources( $attributes ){
 	}
 
 	$sort_display = "Date Updated";
-	switch($sort){
-		case "modified":
-			$sort_display = 'Date Updated';
-			break;
-		case "date":
-			$sort_display = 'Date Added';
-			break;
-		case "title":
-			$sort_display = 'Title A-Z';
-			break;
+	if (isset($sort)){
+		switch($sort){
+			case "modified":
+				$sort_display = 'Date Updated';
+				break;
+			case "date":
+				$sort_display = 'Date Added';
+				break;
+			case "title":
+				$sort_display = 'Title A-Z';
+				break;
+		}
 	}
 
-	if (is_array($selectedSubjects))
+	if (isset($selectedSubjects) && is_array($selectedSubjects))
 		$selectedSubjects = implode(",", $selectedSubjects);
 	$heading = '<div class="oer-snglrsrchdng" data-sort="'.$sort.'" data-count="'.$displayCount.'" data-subjects="'.$selectedSubjects.'">';
 	$heading .= '	Browse '.$displayCount.' resources';
@@ -135,21 +143,21 @@ function wp_oer_display_subject_resources( $attributes ){
 	if (is_array($selectedSubjectResources)){
 		foreach ($selectedSubjectResources as $subject){
 			$html .= '<div class="post oer-snglrsrc">';
-			$html .= '	<a href="'.$subject['link'].'" class="oer-resource-link">';
+			$html .= '	<a href="'.esc_url($subject['link']).'" class="oer-resource-link">';
 			$html .= '		<div class="oer-snglimglft">';
-			$html .= '			<img src="'.$subject['fimg_url'].'">';
+			$html .= '			<img src="'.esc_url($subject['fimg_url']).'">';
 			$html .= '		</div>';
 			$html .= '	</a>';
 			$html .= '	<div class="oer-snglttldscrght">';
 			$html .= '		<div class="ttl">';
-			$html .= '			<a href="'.$subject['link'].'">'.$subject['post_title'].'</a>';
+			$html .= '			<a href="'.esc_url($subject['link']).'">'.$subject['post_title'].'</a>';
 			$html .= '		</div>';
 			$html .= '		<div class="post-meta">';
 			$html .= '			<span class="post-meta-box post-meta-grades">';
 			$html .= '				<strong>Grades: </strong>'.$subject['oer_grade'];
 			$html .= '			</span>';
 			$html .= '			<span class="post-meta-box post-meta-domain">';
-			$html .= '				<strong>Domain: </strong><a href="'.$subject['oer_resourceurl'].'">'.$subject['domain'].'</a>';
+			$html .= '				<strong>Domain: </strong><a href="'.esc_url($subject['oer_resourceurl']).'">'.$subject['domain'].'</a>';
 			$html .= '			</span>';
 			$html .= '		</div>';
 			$html .= '		<div class="desc">';
@@ -160,7 +168,7 @@ function wp_oer_display_subject_resources( $attributes ){
 			$html .= '		<div class="tagcloud">';
 			if (is_array($subject['subject_details'])){
 				foreach($subject['subject_details'] as $subj){
-					$html .= '			<span><a href="'.$subj['link'].'">'.$subj['name'].'</a></span>';
+					$html .= '			<span><a href="'.esc_url($subj['link']).'">'.$subj['name'].'</a></span>';
 				}
 			}
 			$html .= '		</div>';
@@ -364,21 +372,21 @@ function wp_oer_get_subject_resources($args){
 	if (is_array($resources)){
 		foreach ($resources as $resource){
 			$html .= '<div class="post oer-snglrsrc">';
-			$html .= '	<a href="'.$resource->link.'" class="oer-resource-link">';
+			$html .= '	<a href="'.esc_url($resource->link).'" class="oer-resource-link">';
 			$html .= '		<div class="oer-snglimglft">';
-			$html .= '			<img src="'.$resource->fimg_url.'">';
+			$html .= '			<img src="'.esc_url($resource->fimg_url).'">';
 			$html .= '		</div>';
 			$html .= '	</a>';
 			$html .= '	<div class="oer-snglttldscrght">';
 			$html .= '		<div class="ttl">';
-			$html .= '			<a href="'.$resource->link.'">'.$resource->post_title.'</a>';
+			$html .= '			<a href="'.esc_url($resource->link).'">'.$resource->post_title.'</a>';
 			$html .= '		</div>';
 			$html .= '		<div class="post-meta">';
 			$html .= '			<span class="post-meta-box post-meta-grades">';
 			$html .= '				<strong>Grades: </strong>'.$resource->oer_grade;
 			$html .= '			</span>';
 			$html .= '			<span class="post-meta-box post-meta-domain">';
-			$html .= '				<strong>Domain: </strong><a href="'.$resource->oer_resourceurl.'">'.$resource->domain.'</a>';
+			$html .= '				<strong>Domain: </strong><a href="'.esc_url($resource->oer_resourceurl).'">'.$resource->domain.'</a>';
 			$html .= '			</span>';
 			$html .= '		</div>';
 			$html .= '		<div class="desc">';
@@ -389,7 +397,7 @@ function wp_oer_get_subject_resources($args){
 			$html .= '		<div class="tagcloud">';
 			if (is_array($resource->subject_details)){
 				foreach($resource->subject_details as $subj){
-					$html .= '			<span><a href="'.$subj['link'].'">'.$subj['name'].'</a></span>';
+					$html .= '			<span><a href="'.esc_url($subj['link']).'">'.$subj['name'].'</a></span>';
 				}
 			}
 			$html .= '		</div>';
@@ -408,3 +416,20 @@ function wp_oer_ajax_get_subject_resources(){
 }
 add_action( 'wp_ajax_get_subject_resources', 'wp_oer_ajax_get_subject_resources' );
 add_action( 'wp_ajax_nopriv_get_subject_resources', 'wp_oer_ajax_get_subject_resources' );
+
+/*
+* Add OER Block Category
+*/
+function wp_oer_block_category( $categories ) {
+	$category_slugs = wp_list_pluck( $categories, 'slug' );
+	return in_array( 'oer-block-category', $category_slugs, true ) ? $categories : array_merge(
+        array(
+            array(
+				'slug' => 'oer-block-category',
+				'title' => __( 'OER Blocks', 'oer-block-category' ),
+			),
+        ),
+        $categories
+    );
+}
+add_filter( 'block_categories', 'wp_oer_block_category', 10, 2);

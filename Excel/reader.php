@@ -372,9 +372,7 @@ class Oer_Spreadsheet_Excel_Reader
             } elseif ($pps->Name == 'Root Entry') {
                 $this->data = $ole->getData($i, 0, $ole->getDataLength($i));
             }
-            //var_dump(strlen($ole->getData($i, 0, $ole->getDataLength($i))), $pps->Name, md5($this->data), $ole->getDataLength($i));
         }
-//exit;
         $this->_parse();
 
         return sizeof($this->sheets) > 0;
@@ -399,7 +397,6 @@ class Oer_Spreadsheet_Excel_Reader
         $res = $this->_ole->read($sFileName);
 
         if ($this->isError($res)) {
-//        var_dump($res);
             return $this->raiseError($res);
         }
 
@@ -728,7 +725,7 @@ class Oer_Spreadsheet_Excel_Reader
         }
         //echo "Start parse code=".base_convert($code,10,16)." version=".base_convert($version,10,16)." substreamType=".base_convert($substreamType,10,16).""."\n";
         $spos += $length + 4;
-        //var_dump($this->formatRecords);
+        
     //echo "code $code $length";
         while($cont) {
             //echo "mem= ".memory_get_usage()."\n";
@@ -800,7 +797,6 @@ class Oer_Spreadsheet_Excel_Reader
                         $column     = ord($this->data[$spos+2]) | ord($this->data[$spos+3])<<8;
                         $xfindex    = ord($this->data[$spos+4]) | ord($this->data[$spos+5])<<8;
                         $index  = $this->_GetInt4d($this->data, $spos + 6);
-            //var_dump($this->sst);
                         $this->addcell($row, $column, $this->sst[$index]);
                         //echo "LabelSST $row $column $string\n";
                     break;
@@ -932,7 +928,6 @@ class Oer_Spreadsheet_Excel_Reader
         //$xfindex = GetInt2d(, 4);
         $xfindex = ord($this->data[$spos+4]) | ord($this->data[$spos+5]) << 8;
         //echo 'check is date '.$xfindex.' '.$this->formatRecords['xfrecords'][$xfindex]['type']."\n";
-        //var_dump($this->formatRecords['xfrecords'][$xfindex]);
         if ($this->formatRecords['xfrecords'][$xfindex]['type'] == 'date') {
             $this->curformat = $this->formatRecords['xfrecords'][$xfindex]['format'];
             $this->rectype = 'date';

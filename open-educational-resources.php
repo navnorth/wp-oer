@@ -3,7 +3,7 @@
  Plugin Name:  WP OER
  Plugin URI:   https://www.wp-oer.com
  Description:  Open Educational Resource management and curation, metadata publishing, and alignment to Common Core State Standards.
- Version:      0.8.1
+ Version:      0.8.2
  Author:       Navigation North
  Author URI:   https://www.navigationnorth.com
  Text Domain:  wp-oer
@@ -140,6 +140,8 @@ function oer_create_csv_import_table()
 
    update_option('setup_notify', true);
    update_option( "oer_rewrite_rules", false );
+   update_option('oer_metadata_firstload', true);
+   update_option('oer_setup', true);
 
    //Trigger CPT and Taxonomy creation
    oer_postcreation();
@@ -195,6 +197,7 @@ function oer_plugin_activation_notice() {
 register_deactivation_hook( __FILE__, "oer_deactivate_oer_plugin" );
 function oer_deactivate_oer_plugin() {
 	delete_option('setup_notify');
+	delete_option('oer_setup');
 }
 
 //Load localization directory
@@ -210,8 +213,8 @@ function oer_load_textdomain() {
     }
 }
 
-add_action( 'wp_default_scripts', 'remove_default_jquery_migrate', -1 );
-function remove_default_jquery_migrate( $scripts ){
+add_action( 'wp_default_scripts', 'oer_remove_default_jquery_migrate', -1 );
+function oer_remove_default_jquery_migrate( $scripts ){
    	if ( is_admin() && ! empty( $scripts->registered['jquery'] ) ) {
 		$jquery_dependencies = $scripts->registered['jquery']->deps;
 		$script = $scripts->query( 'jquery-migrate', 'registered' );
@@ -782,7 +785,7 @@ function oer_styles_settings(){
 			'type' => 'checkbox',
 			'value' => '1',
 			'name' =>  __('Import Bootstrap CSS & JS libraries', OER_SLUG),
-			'description' => __('uncheck if your WP theme already included Bootstrap', OER_SLUG)
+			'description' => __('Uncheck if your WP theme already included Bootstrap.', OER_SLUG)
 		)
 	);
 
@@ -815,7 +818,7 @@ function oer_styles_settings(){
 			'type' => 'checkbox',
 			'value' => '1',
 			'name' =>  __('Import Fontawesome CSS', OER_SLUG),
-			'description' => __('uncheck if your WP theme already included Fontawesome', OER_SLUG)
+			'description' => __('Uncheck if your WP theme already included Font Awesome.', OER_SLUG)
 		)
 	);
 
@@ -861,7 +864,7 @@ function oer_styles_settings(){
 			'uid' => 'oer_additional_css',
 			'type' => 'textarea',
 			'name' =>  __('Additional CSS', OER_SLUG),
-			'inline_description' => __('easily customize the look and feel with your own CSS (sitewide)', OER_SLUG)
+			'inline_description' => __('Easily customize the look and feel with your own CSS (sitewide).', OER_SLUG)
 		)
 	);
 
@@ -874,8 +877,8 @@ function oer_styles_settings(){
 		array(
 			'uid' => 'oer_only_additional_css',
 			'type' => 'textarea',
-			'name' =>  __('Additional CSS', OER_SLUG),
-			'inline_description' => __('Apply custom css to plugin pages only', OER_SLUG)
+			'name' =>  __('Additional CSS for Plugin Pages', OER_SLUG),
+			'inline_description' => __('Apply custom CSS to plugin pages only.', OER_SLUG)
 		)
 	);
 
@@ -1419,10 +1422,10 @@ function oer_load_more_resources() {
 			?>
 			<div class="oer-snglrsrc">
 				<?php
-				echo '<a href="'.get_permalink($post->ID).'" class="oer-resource-link"><div class="oer-snglimglft"><img src="'.$new_image_url.'"></div></a>';
+				echo '<a href="'.esc_url(get_permalink($post->ID)).'" class="oer-resource-link"><div class="oer-snglimglft"><img src="'.esc_url($new_image_url).'"></div></a>';
 				?>
 				<div class="oer-snglttldscrght <?php if(empty($img_url)){ echo 'snglttldscrghtfull';}?>">
-					<div class="ttl"><a href="<?php echo get_permalink($post->ID);?>"><?php echo $title;?></a></div>
+					<div class="ttl"><a href="<?php echo esc_url(get_permalink($post->ID)); ?>"><?php echo $title;?></a></div>
 					<div class="desc"><?php echo $content; ?></div>
 				</div>
 			</div>
@@ -1546,10 +1549,10 @@ function oer_sort_resources(){
 			?>
 			<div class="oer-snglrsrc">
 				<?php
-				echo '<a href="'.get_permalink($post->ID).'" class="oer-resource-link"><div class="oer-snglimglft"><img src="'.$new_image_url.'"></div></a>';
+				echo '<a href="'.esc_url(get_permalink($post->ID)).'" class="oer-resource-link"><div class="oer-snglimglft"><img src="'.esc_url($new_image_url).'"></div></a>';
 				?>
 				<div class="oer-snglttldscrght <?php if(empty($img_url)){ echo 'snglttldscrghtfull';}?>">
-					<div class="ttl"><a href="<?php echo get_permalink($post->ID);?>"><?php echo $title;?></a></div>
+					<div class="ttl"><a href="<?php echo esc_url(get_permalink($post->ID));?>"><?php echo $title;?></a></div>
 					<div class="desc"><?php echo $content; ?></div>
 				</div>
 			</div>
@@ -1612,8 +1615,8 @@ function oer_load_more_highlights() {
 						}
 						$new_image_url = oer_resize_image( $image, 220, 180, true );
 						?>
-						<a href="<?php echo get_permalink($post->ID);?>"><div class="img"><img src="<?php echo $new_image_url;?>" alt="<?php echo $title;?>"></div></a>
-						<div class="ttl"><a href="<?php echo get_permalink($post->ID);?>"><?php echo $title;?></a></div>
+						<a href="<?php echo esc_url(get_permalink($post->ID)); ?>"><div class="img"><img src="<?php echo esc_url($new_image_url);?>" alt="<?php echo $title;?>"></div></a>
+						<div class="ttl"><a href="<?php echo esc_url(get_permalink($post->ID)); ?>"><?php echo $title;?></a></div>
 						<div class="desc"><?php echo apply_filters('the_content',$content); ?></div>
 					</div>
 				</li>
@@ -1673,8 +1676,8 @@ function oer_load_highlight() {
 					}
 					$new_image_url = oer_resize_image( $image, 220, 180, true );
 					?>
-					<a href="<?php echo get_permalink($post->ID);?>"><div class="img"><img src="<?php echo $new_image_url;?>" alt="<?php echo $title;?>"></div></a>
-					<div class="ttl"><a href="<?php echo get_permalink($post->ID);?>"><?php echo $title;?></a></div>
+					<a href="<?php echo esc_url(get_permalink($post->ID)); ?>"><div class="img"><img src="<?php echo esc_url($new_image_url); ?>" alt="<?php echo $title;?>"></div></a>
+					<div class="ttl"><a href="<?php echo esc_url(get_permalink($post->ID)); ?>"><?php echo $title;?></a></div>
 					<div class="desc"><?php echo apply_filters('the_content',$content); ?></div>
 				</div><?php
 			}
@@ -1693,10 +1696,10 @@ function oer_load_searched_standards(){
 	$meta_key = "oer_standard";
 
 	if (isset($_POST['post_id'])){
-		$post_id = $_POST['post_id'];
+		$post_id = sanitize_text_field($_POST['post_id']);
 	}
 	if (isset($_POST['keyword'])){
-		$keyword = $_POST['keyword'];
+		$keyword = sanitize_text_field($_POST['keyword']);
 	}
 
 	if (!$post_id){
@@ -1720,7 +1723,7 @@ function oer_load_default_standards(){
 	$post_id = null;
 
 	if (isset($_POST['post_id'])){
-		$post_id = $_POST['post_id'];
+		$post_id = sanitize_text_field($_POST['post_id']);
 	}
 
 	if (!$post_id){
@@ -2233,7 +2236,7 @@ function oer_custom_search_template($template){
 }
 add_filter('template_include','oer_custom_search_template');
 
-function assign_standard_template($template) {
+function oer_assign_standard_template($template) {
 	global $wp_query;
 
 	$url_path = trim(parse_url(add_query_arg(array()), PHP_URL_PATH), '/');
@@ -2269,7 +2272,7 @@ function assign_standard_template($template) {
 	}
 	return $template;
 }
-add_action( 'template_include' , 'assign_standard_template' );
+add_action( 'template_include' , 'oer_assign_standard_template' );
 
 // Assign template
 function oer_template_redirect(){

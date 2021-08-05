@@ -1,4 +1,6 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 $_delimited = get_post_meta($post->ID,"oer_related_resource");
 if(!empty($_delimited[0])):
 ?>
@@ -21,8 +23,8 @@ if(!empty($_delimited[0])):
        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 padding-0">
            <div class="media-image">
                <div class="image-thumbnail">
-                   <a href="<?php echo get_post_permalink($_res_id); ?>" target="_new">
-                      <?php if(!$resource_img): $_avtr = getResourceIcon($oer_media_type, $oer_resourceurl); ?>
+                   <a href="<?php echo esc_url(get_post_permalink($_res_id)); ?>" target="_new">
+                      <?php if(!$resource_img): $_avtr = oer_getResourceIcon($oer_media_type, $oer_resourceurl); ?>
                           <div class="resource-avatar"><span class="dashicons <?php echo $_avtr; ?>"></span></div>
                        <?php endif; ?>
                        <span class="resource-overlay"></span>
@@ -34,7 +36,7 @@ if(!empty($_delimited[0])):
                  <div class="lp-resource-title"><?php echo $oer_resourcetitle; ?></div>
                  <div class="lp-resource-author">
                    <?php if( $oer_authorname != ''):?>
-                     <div class="lp-resource-author_block"><a href="<?php echo $oer_authorurl; ?>" target="_new"><?php echo $oer_authorname; ?></a></div>
+                     <div class="lp-resource-author_block"><a href="<?php echo esc_url($oer_authorurl); ?>" target="_new"><?php echo $oer_authorname; ?></a></div>
                    <?php endif; ?>
                    <?php /* if( $oer_authorname2 != ''):?>
                      <div class="lp-resource-author_block"><a href=""><?php echo $oer_authorname2; ?></a></div>

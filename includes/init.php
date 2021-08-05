@@ -288,7 +288,7 @@ function oer_edit_upload_image_fields( $term, $taxonomy ) {
      <tr class="form-field term-group-wrap">
         <th scope="row"><label for="feature-group"><?php _e('Subject Area Main Icon', OER_SLUG); ?></label></th>
         <td>
-	    <div class="main_icon_button_img"><img src="<?php echo $mainIcon; ?>" /></div>
+	    <div class="main_icon_button_img"><img src="<?php echo esc_url($mainIcon); ?>" /></div>
 	    <a id="main_icon_button" href="javascript:void(0);" class="button">Set Main Icon</a>
 	    <a id="remove_main_icon_button" href="javascript:void(0);" class="button<?php if (!$mainIcon):?> hidden<?php endif; ?>">Remove Main Icon</a>
 	    <input id="mainIcon" type="hidden" size="36" name="mainIcon" value="<?php echo $mainIcon; ?>" />
@@ -299,7 +299,7 @@ function oer_edit_upload_image_fields( $term, $taxonomy ) {
     ?><tr class="form-field term-group-wrap">
         <th scope="row"><label for="feature-group"><?php _e('Subject Area Hover Icon', OER_SLUG); ?></label></th>
         <td>
-	    <div class="hover_icon_button_img"><img src="<?php echo $hoverIcon; ?>" /></div>
+	    <div class="hover_icon_button_img"><img src="<?php echo esc_url($hoverIcon); ?>" /></div>
 	    <a id="hover_icon_button" href="javascript:void(0);" class="button">Set Hover Icon</a>
 	    <a id="remove_hover_icon_button" href="javascript:void(0);" class="button<?php if (!$hoverIcon):?> hidden<?php endif; ?>">Remove Hover Icon</a>
 	    <input id="hoverIcon" type="hidden" size="36" name="hoverIcon" value="<?php echo $hoverIcon; ?>" />
@@ -404,19 +404,19 @@ function oer_save_customfields()
     // Save Age Levels
 		if(isset($_POST['oer_age_levels']))
 		{
-		    update_post_meta( $post->ID , 'oer_age_levels' , $_POST['oer_age_levels']);
+		    update_post_meta( $post->ID , 'oer_age_levels' , sanitize_text_field($_POST['oer_age_levels']));
 		}
     
     // Save Instructional Time
 		if(isset($_POST['oer_instructional_time']))
 		{
-		    update_post_meta( $post->ID , 'oer_instructional_time' , $_POST['oer_instructional_time']);
+		    update_post_meta( $post->ID , 'oer_instructional_time' , sanitize_text_field($_POST['oer_instructional_time']));
 		}
     
     // Save Creative Commons License
 		if(isset($_POST['oer_creativecommons_license']))
 		{
-		    update_post_meta( $post->ID , 'oer_creativecommons_license' , $_POST['oer_creativecommons_license']);
+		    update_post_meta( $post->ID , 'oer_creativecommons_license' , sanitize_text_field($_POST['oer_creativecommons_license']));
 		}
 		
 		// Save Format
@@ -670,22 +670,28 @@ function oer_save_customfields()
 		// Save Citation
 		if(isset($_POST['oer_citation']))
 		{
-		    update_post_meta( $post->ID , 'oer_citation' , $_POST['oer_citation']);
+			// Sanitize wp_editor content
+			$oer_citation = sanitize_post_field('post_content', $_POST['oer_citation'], $post->ID, 'db');
+		    update_post_meta( $post->ID , 'oer_citation' , $oer_citation);
 		}
 		
 		// Save Sensitive Material
 		if(isset($_POST['oer_sensitive_material']))
 		{
-		    update_post_meta( $post->ID , 'oer_sensitive_material' , $_POST['oer_sensitive_material']);
+			// Sanitize wp_editor content
+			$oer_sensitive_material = sanitize_post_field('post_content', $_POST['oer_sensitive_material'], $post->ID, 'db');
+		    update_post_meta( $post->ID , 'oer_sensitive_material' , $oer_sensitive_material);
 		}
 		
 		// Save Transcription
 		if(isset($_POST['oer_transcription']))
 		{
-			update_post_meta( $post->ID , 'oer_transcription' , $_POST['oer_transcription']);
+			// Sanitize wp_editor content
+			$oer_transcription = sanitize_post_field('post_content', $_POST['oer_transcription'], $post->ID, 'db');
+			update_post_meta( $post->ID , 'oer_transcription' , $oer_transcription);
 		}
 
-    // Save Related Resource
+    	// Save Related Resource
 		if(isset($_POST['oer_related_resource']))
 		{
 			update_post_meta( $post->ID , 'oer_related_resource' , addslashes($_POST['oer_related_resource']));
@@ -730,8 +736,8 @@ function oer_setngpgfn()
 /**
  * Process Import Resources form
  **/
-add_action("admin_action_import_resources","process_import_resources");
-function process_import_resources(){
+add_action("admin_action_import_resources","oer_process_import_resources");
+function oer_process_import_resources(){
     $message = null;
     $type = null;
 
@@ -755,8 +761,8 @@ function process_import_resources(){
     exit;
 }
 
-add_action("admin_action_import_lr_resources","process_import_lr_resources");
-function process_import_lr_resources(){
+add_action("admin_action_import_lr_resources","oer_process_import_lr_resources");
+function oer_process_import_lr_resources(){
     $message = null;
     $type = null;
 
@@ -773,7 +779,7 @@ function process_import_lr_resources(){
 	if ($resources){
 	    $cnt = 0;
 	    foreach($resources as $resource) {
-		if (!resource_exists($resource)){
+		if (!oer_resource_exists($resource)){
 		    oer_add_resource($resource);
 		    $cnt++;
 		}
@@ -790,8 +796,8 @@ function process_import_lr_resources(){
 /**
  * Process Import Subject Areas
  **/
-add_action("admin_action_import_subjects","process_import_subjects");
-function process_import_subjects(){
+add_action("admin_action_import_subjects","oer_process_import_subjects");
+function oer_process_import_subjects(){
     $message = null;
     $type = null;
 
@@ -818,8 +824,8 @@ function process_import_subjects(){
 /**
  * Process Import Standards
  **/
-add_action("admin_action_import_standards","process_import_standards");
-function process_import_standards(){
+add_action("admin_action_import_standards","oer_process_import_standards");
+function oer_process_import_standards(){
     $message = null;
     $type = null;
 

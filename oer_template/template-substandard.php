@@ -2,8 +2,8 @@
 /*
  * Template Name: Substandard Page Template
  */
-add_filter( 'body_class','standards_body_classes' );
-function standards_body_classes( $classes ) {
+add_filter( 'body_class','oer_substandard_body_classes' );
+function oer_substandard_body_classes( $classes ) {
  
     $classes[] = 'substandards-template';
      
@@ -18,7 +18,7 @@ $end_html = "";
 $output_html = "";
 
 $standard_name_slug = $wp_query->query_vars['substandard'];
-$standard = get_substandard_by_slug($standard_name_slug);
+$standard = oer_get_substandard_by_slug($standard_name_slug);
 
 $parent_id = 0;
 if (strpos($standard->parent_id,"core_standards")!==false){
@@ -26,16 +26,16 @@ if (strpos($standard->parent_id,"core_standards")!==false){
     if (count($pIds)>1)
 	$parent_id=(int)$pIds[1];
     
-    $core_standard = get_standard_by_id($parent_id);
+    $core_standard = oer_get_standard_by_id($parent_id);
 } else {
-    $core_standard = get_corestandard_by_standard($standard->parent_id);
+    $core_standard = oer_get_corestandard_by_standard($standard->parent_id);
 }
 
 $parent_substandards = oer_get_hierarchical_substandards($standard->parent_id);
-$sub_standards = get_substandards($standard->id, false);
-$notations = get_standard_notations($standard->id);
+$sub_standards = oer_get_substandards($standard->id, false);
+$notations = oer_get_standard_notations($standard->id);
 
-display_custom_styles();
+oer_display_custom_styles();
 ?>
 <div class="oer-backlink">
     <a href="<?php echo home_url('resource/standards'); ?>"><?php _e("< Back to Standards",OER_SLUG); ?></a>
@@ -88,7 +88,7 @@ display_custom_styles();
 				    if ($sub_standards) {  ?>
 					<ul class="oer-substandards">
 					    <?php foreach($sub_standards as $sub_standard) {
-						 $cnt = get_resource_count_by_substandard($sub_standard->id);
+						 $cnt = oer_get_resource_count_by_substandard($sub_standard->id);
 						$slug = "resource/standards/".sanitize_title($core_standard->standard_name)."/".sanitize_title($sub_standard->standard_title);
 					    ?>
 					    <li><a href="<?php echo home_url($slug); ?>"><?php echo $sub_standard->standard_title; ?></a> <span class="res-count"><?php echo $cnt; ?></span></li>
@@ -98,7 +98,7 @@ display_custom_styles();
 				    if ($notations) {  ?>
 					<ul class="oer-notations">
 					    <?php foreach($notations as $notation) {
-						$cnt = get_resource_count_by_notation($notation->id);
+						$cnt = oer_get_resource_count_by_notation($notation->id);
 						$slug = "resource/standards/".sanitize_title($core_standard->standard_name)."/".$standard_name_slug."/".$notation->standard_notation;
 					    ?>
 					    <li><a href="<?php echo home_url($slug); ?>"><strong><?php echo $notation->standard_notation; ?></strong> <?php echo $notation->description; ?></a> <span class="res-count"><?php echo $cnt; ?></span></li>

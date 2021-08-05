@@ -2,7 +2,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 global $message, $type;
-
+	
 	if (isset($_REQUEST['settings-updated'])) {
 		if (!current_user_can('manage_options')) {
 			wp_die( "You don't have permission to access this page!" );
@@ -43,7 +43,7 @@ global $message, $type;
 			
 			//Set Default screenshots to disabled
 			update_option('oer_disable_screenshots', 1);
-			
+			delete_option('oer_setup');
 			//Redirect to main settings page
 			wp_safe_redirect( admin_url( 'edit.php?post_type=resource&page=oer_settings&setup=true' ) );
 			exit();
@@ -123,7 +123,7 @@ global $message, $type;
 ?>
 <div class="wrap">
     
-    <div id="icon-themes" class="oer-logo"><img src="<?php echo OER_URL ?>images/wp-oer-admin-logo.png" /></div>
+    <div id="icon-themes" class="oer-logo"><img src="<?php echo esc_url(OER_URL); ?>images/wp-oer-admin-logo.png" /></div>
     <h2>Settings - WP OER</h2>
     <?php settings_errors(); ?>
      
@@ -135,7 +135,7 @@ global $message, $type;
         <a href="?post_type=resource&page=oer_settings&tab=general" class="nav-tab <?php echo $active_tab == 'general' ? 'nav-tab-active' : ''; ?>">General</a>
         <a href="?post_type=resource&page=oer_settings&tab=styles" class="nav-tab <?php echo $active_tab == 'styles' ? 'nav-tab-active' : ''; ?>">Styles</a>
 	<a href="?post_type=resource&page=oer_settings&tab=metadata" class="nav-tab <?php echo $active_tab == 'metadata' ? 'nav-tab-active' : ''; ?>">Metadata Fields</a>
-	<?php if ($active_tab=="setup") { ?>
+	<?php if ($active_tab=="setup" || get_option('oer_setup')=="1") { ?>
         <a href="?post_type=resource&page=oer_settings&tab=setup" class="nav-tab <?php echo $active_tab == 'setup' ? 'nav-tab-active' : ''; ?>">Setup</a>
 	<?php } ?>
 	<?php if ($active_tab=="reset") { ?>
@@ -242,30 +242,42 @@ function oer_show_styles_settings() {
 }
 
 function oer_show_metadata_settings() {
+	$error = null;
+
 	$metas = oer_get_all_meta("resource");
 	$metadata = null;
 	
-	foreach($metas as $met){
-		if (strpos($met['meta_key'],"oer_")!==false){
-			$metadata[] = $met['meta_key'];
+	if (!empty($metas)){
+		foreach($metas as $met){
+			if (strpos($met['meta_key'],"oer_")!==false){
+				$metadata[] = $met['meta_key'];
+			}
 		}
-	}
-	
-	$meta = array_unique($metadata);
-	// Save Option
-	if ($_POST){
-		if ($_REQUEST['tab'] && $_REQUEST['tab']=="metadata") {
-			// Remove meta key enabled option
-			foreach($metas as $met){
-				if (strpos($met['meta_key'],"oer_")!==false){
-					delete_option($met['meta_key']."_enabled");
+		
+		if (!empty($metadata)){
+			$meta = array_unique($metadata);
+			// Save Option
+			if ($_POST){
+				if (isset($_REQUEST['tab']) && $_REQUEST['tab']=="metadata") {
+					// Remove meta key enabled option
+					foreach($metas as $met){
+						if (strpos($met['meta_key'],"oer_")!==false){
+							delete_option($met['meta_key']."_enabled");
+						}
+					}
+					$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+					oer_save_metadata_options($_POST);
 				}
 			}
-			oer_save_metadata_options($_POST);
+		} else {
+			$error =  __("Please complete <a href='?post_type=resource&page=oer_settings&tab=setup'>OER setup</a> first to load the metadata fields.", OER_SLUG);
 		}
+	} else {
+		$error =  __("Please complete <a href='?post_type=resource&page=oer_settings&tab=setup'>OER setup</a> first to load the metadata fields.", OER_SLUG);
 	}
 ?>
 <div class="oer-plugin-body">
+	<?php if (!$error) { ?>
 	<div class="oer-plugin-row">
 		<div class="oer-row-left">
 			<?php _e("Use the options below to update metadata field options.", OER_SLUG); ?>
@@ -288,24 +300,26 @@ function oer_show_metadata_settings() {
 						$label = "";
 						$enabled = "0";
 						$option_set = false;
+
+						if (get_option('oer_metadata_firstload')=="")
+							$option_set = true;
 						if ($key!=="oer_resourceurl"){
 							if (get_option($key."_label")){
 								$label = get_option($key."_label");
-								$option_set = true;
 							} /*else {
 								$label = oer_get_meta_label($key);
 							}*/
 							
 							if (get_option($key."_enabled"))
-								$enabled = (get_option($key."_enabled")=="1")?true:false;
-							elseif ($option_set==false)
-								$enabled = "0";
+								$enabled = get_option($key."_enabled");
+							elseif (!$option_set)
+								$enabled = "1";
 							
 						?>
 						<tr>
 							<td><?php echo $key; ?></td>
-							<td><input type="text" name="<?php echo $key."_label"; ?>" value="<?php echo $label; ?>" /></td>
-							<td><input type="checkbox" name="<?php echo $key."_enabled"; ?>" value="1" <?php checked($enabled,"1",true); ?>/></td>
+							<td><input type="text" name="<?php echo $key."_label"; ?>" placeholder="<?php echo oer_get_meta_label($key); ?>" value="<?php echo $label; ?>" /></td>
+							<td><input type="checkbox" name="<?php echo $key."_enabled"; ?>" value="1" <?php checked($enabled,"1"); ?>/></td>
 						</tr>
 						<?php 	}
 					} ?>
@@ -314,6 +328,11 @@ function oer_show_metadata_settings() {
 			<?php submit_button("Save Metadata Options"); ?>
 		</form>
 	</div>
+	<?php } else { ?>
+	<div class="oer-plugin-row">
+		<?php echo '<span class="oer_text_red">'.$error.'</span>'; ?>
+	</div>
+<?php } ?>
 </div>
 <?php
 }

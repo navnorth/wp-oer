@@ -33,7 +33,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
                 $external_option = get_option("oer_external_pdf_viewer");
                 if ($external_option==1) {
                     $pdf_url = "https://docs.google.com/gview?url=".$url."&embedded=true";
-                    echo get_embed_code($pdf_url);
+                    echo oer_get_embed_code_frame($pdf_url);
                 } elseif($external_option==0) {
                     $embed_disabled = true;
                 }
@@ -45,16 +45,16 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
                         break;
                     case 1:
                         $pdf_url = "https://docs.google.com/gview?url=".$url."&embedded=true";
-                        echo get_embed_code($pdf_url);
+                        echo oer_get_embed_code_frame($pdf_url);
                         break;
                     case 2:
                         $pdf_url = OER_URL."pdfjs/web/viewer.html?file=".urlencode($url);
-                        $embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.$pdf_url.'"></iframe>';
+                        $embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.esc_url_raw($pdf_url).'"></iframe>';
                         echo $embed_code;
                         break;
                     case 3:
                         if(shortcode_exists('wonderplugin_pdf')) {
-                            $embed_code = "[wonderplugin_pdf src='".$url."' width='100%']";
+                            $embed_code = "[wonderplugin_pdf src='".esc_url_raw($url)."' width='100%']";
                             echo do_shortcode($embed_code);
                         } else {
                             $embed_disabled = true;
@@ -62,7 +62,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
                         break;
                     case 4:
                         if(shortcode_exists('pdf-embedder')){
-                            $embed_code = "[pdf-embedder url='".$url."' width='100%']";
+                            $embed_code = "[pdf-embedder url='".esc_url_raw($url)."' width='100%']";
                             echo do_shortcode($embed_code);
                         } else {
                             $embed_disabled = true;
@@ -83,11 +83,11 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
             if ($type['name']=="Video"){
                 echo oer_embed_video_file($url, $type['type']);
             } else {
-                echo display_default_thumbnail($post);
+                echo oer_display_default_thumbnail($post);
             }
         }
         if ($embed_disabled){
-            echo display_default_thumbnail($post);
+            echo oer_display_default_thumbnail($post);
         }
         ?>
     </div>
@@ -199,7 +199,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
                 $moreCnt = $cnt - 2;
                 foreach($post_terms as $term){
                     $subject_parent = get_term_parents_list($term->term_id,'resource-subject-area', array('separator' => ' <i class="fas fa-angle-double-right"></i> ', 'inclusive' => false));
-                    $subject = $subject_parent . '<a href="'.get_term_link($term->term_id).'">'.$term->name.'</a>';
+                    $subject = $subject_parent . '<a href="'.esc_url(get_term_link($term->term_id)).'">'.$term->name.'</a>';
                     if ($i>2)
                         echo '<li class="collapse lp-subject-hidden">'.$subject.'</li>';
                     else
@@ -232,9 +232,9 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
                 foreach($connected_curriculums as $curriculum){
                     $curriculum_url = get_the_permalink($curriculum['post_id']);
                     if ($i>2)
-                        echo '<li class="collapse lp-subject-hidden"><a href="'.$curriculum_url.'">'.$curriculum['post_title'].'</a></li>';
+                        echo '<li class="collapse lp-subject-hidden"><a href="'.esc_url($curriculum_url).'">'.$curriculum['post_title'].'</a></li>';
                     else
-                        echo "<li><a href='".$curriculum_url."'>".$curriculum['post_title']."</a></li>";
+                        echo "<li><a href='".esc_url($curriculum_url)."'>".$curriculum['post_title']."</a></li>";
                     if (($i==2) && ($cnt>2))
                         echo '<li><a class="see-more-subjects" data-toggle="collapse" data-count="'.$moreCnt.'" href=".lp-subject-hidden">SEE '.$moreCnt.' MORE +</a></li>';
                     $i++;
@@ -247,174 +247,24 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
     </div>
 </div> <!--Description & Resource Info at Right-->
 <?php  if ($display_see_more): ?>
-<div class="oer-see-more-row">
+<div class="oer-see-more-row col-md-12 col-sm-12 col-xs-12">
     <p class="center"><span><a id="oer-see-more-link" class="oer-see-more-link" role="button" data-toggle="collapse" href="#tcHiddenFields" aria-expanded="false" aria-controls="tcHiddenFields"><?php _e("SEE MORE +",OER_SLUG); ?></a></span></p>
 </div>
 <?php endif; ?>
-<div id="tcHiddenFields" class="tc-hidden-fields collapse row">
+<div id="tcHiddenFields" class="tc-hidden-fields collapse row col-md-12 col-sm-12 col-xs-12">
     <div class="col-md-5">
-        <!-- Age Levels -->
-        <?php
-        if (($age_levels_set && $age_levels_enabled) || !$age_levels_set) {
-            $age_label = oer_field_label('oer_age_levels');
-            if (!empty($age_levels) && trim($age_levels)!==""){
-            ?>
-            <div class="form-field">
-                <div class="oer-lp-label"><?php echo $age_label; ?>:</div> <div class="oer-lp-value"><?php echo $age_levels; ?></div>
-            </div>
-            <?php
-            }
-        }
-        ?>
-
-        <!-- Grade Level -->
-        <?php
-        $grades = explode(",",$grades);
-
-        if(is_array($grades) && !empty($grades) && array_filter($grades))
-        {
-            $option_set = false;
-            if (get_option('oer_grade_label'))
-                $option_set = true;
-        ?>
-            <div class="form-field">
-                <div class="oer-lp-label"><?php
-                if (!$option_set){
-                    if (count($grades)>1)
-                        _e("Grade Levels:", OER_SLUG);
-                    else
-                        _e("Grade Level:", OER_SLUG);
-                } else
-                        echo get_option('oer_grade_label').":";
-                ?></div>
-                <div class="oer-lp-value">
-                <?php
-                echo oer_grade_levels($grades);
-                ?>
-                </div>
-            </div>
-        <?php }?>
-
-        <!-- Instruction Time -->
-        <?php
-        if (($suggested_time_set && $suggested_time_enabled) || !$suggested_time_set) {
-             $suggested_label = oer_field_label('oer_instructional_time');
-             if (!empty($suggested_time) && trim($suggested_time)!==""){
-             ?>
-             <div class="form-field">
-                 <div class="oer-lp-label"><?php echo $suggested_label; ?>:</div> <div class="oer-lp-value"><?php echo $suggested_time; ?></div>
-             </div>
-             <?php
-             }
-         }
-        ?>
-
-        <!-- Creative Commons License -->
-        <?php
-        if (($cc_license_set && $cc_license_enabled) || !$cc_license_set) {
-            $cc_label = oer_field_label('oer_creativecommons_license');
-            if (!empty($cc_license)){
-            ?>
-            <div class="form-field license-field">
-                <img src="<?php echo oer_cc_license_image($cc_license); ?>">
-            </div>
-            <?php
-            }
-        }
-
+        <?php  
+            // Load content-details partial template
+            oer_get_template_part('partial/content','details', $meta_args);  
         ?>
     </div>
     <div class="col-md-7">
-        <!-- External Repository -->
-        <?php
-        if (($external_repository_set && $external_repository_enabled) || !$external_repository_set) {
-             $external_repository_label = oer_field_label('oer_external_repository');
-             if (!empty($external_repository)){
-             ?>
-             <div class="form-field">
-                 <div class="oer-lp-label"><?php echo $external_repository_label; ?>:</div> <div class="oer-lp-value"><?php echo $external_repository; ?></div>
-             </div>
-             <?php
-             }
-         }
-        ?>
-
-        <!-- Repository URL -->
-        <?php
-        if (($repository_record_set && $repository_record_enabled) || !$repository_record_set) {
-             $repository_record_label = oer_field_label('oer_repository_recordurl');
-             if (!empty($repository_record)){
-             ?>
-             <div class="form-field">
-                 <div class="oer-lp-label"><?php echo $repository_record_label; ?>:</div> <div class="oer-lp-value"><a href="<?php echo $repository_record; ?>"><?php echo $repository_record; ?></a></a></div>
-             </div>
-             <?php
-             }
-         }
-        ?>
-
-        <!-- Citation -->
-        <?php
-        if (($citation_set && $citation_enabled) || !$citation_set) {
-            $citation_label = oer_field_label('oer_citation');
-            if (!empty($citation)){
-            ?>
-            <div class="form-field">
-                <div class="oer-lp-label"><?php echo $citation_label; ?>:</div><div class="oer-lp-value"><?php if (strlen($citation)>230): ?>
-                <div class="oer-lp-value-excerpt"><?php echo oer_get_content( $citation, 230); ?></div>
-                <div class="oer-lp-value-full"><?php echo $citation; ?>  <a href="javascript:void(0);" class="lp-read-less">(read less)</a></div>
-                <?php
-                else: 
-                    echo $citation;
-                endif; ?></div>
-            </div>
-            <?php
-            }
-        }
-        ?>
-
-        <!-- Transcription -->
-        <?php
-        if (($transcription_set && $transcription_enabled) || !$transcription_set) {
-            $transcription_label = oer_field_label('oer_transcription');
-            if (!empty($transcription)){
-            ?>
-            <div class="form-field">
-                <div class="oer-lp-label"><?php echo $transcription_label; ?>:</div><div class="oer-lp-value"><?php if (strlen($transcription)>230): ?>
-                <div class="oer-lp-value-excerpt"><?php echo oer_get_content( $transcription, 230); ?></div>
-                <div class="oer-lp-value-full"><?php echo $transcription; ?> <a href="javascript:void(0);" class="lp-read-less">(read less)</a></div>
-                <?php
-                else: 
-                    echo $transcription;
-                endif; ?></div>
-            </div>
-            <?php
-            }
-        }
-        ?>
-
-        <!-- Sensitive Material Warning -->
-        <?php
-        if (($sensitive_material_set && $sensitive_material_enabled) || !$sensitive_material_set) {
-            $sensitive_material_label = oer_field_label('oer_sensitive_material');
-            if (!empty($sensitive_material)){
-            ?>
-            <div class="form-field">
-                <div class="oer-lp-label oer-lp-red"><?php echo $sensitive_material_label; ?>:</div> <div class="oer-lp-value"><?php if (strlen($sensitive_material)>230): ?>
-                <div class="oer-lp-value-excerpt"><?php echo oer_get_content( $sensitive_material, 230); ?></div>
-                <div class="oer-lp-value-full"><?php echo $sensitive_material; ?>  <a href="javascript:void(0);" class="lp-read-less">(read less)</a></div>
-                <?php
-                else: 
-                    echo $sensitive_material;
-                endif; ?></div>
-            </div>
-            <?php
-            }
-        }
+        <?php  
+            // Load content-meta partial template
+            oer_get_template_part('partial/content','meta', $template_args);  
         ?>
     </div>
 </div>
-
 
 <!-- RELATED RESOURCES -->
 <?php include_once OER_PATH.'includes/related-resources.php';?>

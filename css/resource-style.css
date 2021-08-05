@@ -72,12 +72,13 @@
 	overflow:hidden;
 	max-width: 100% !important;
 	display: block !important;
+    width:100%;
 }
 #sngl-resource header.entry-header .entry-title { margin-top:0; margin-bottom:0; }
 #sngl-resource header.entry-header span.sensitive-resource {
     line-height: 3.5em;
 	font-size:13px;
-	color:#950000;
+	color:#ED4141;
 	text-align:right;
 }
 #sngl-resource header.entry-header span.sensitive-resource i { margin-right:10px; }
@@ -89,7 +90,6 @@
     text-transform: uppercase;
     font-weight: bold;
     text-decoration: underline;
-    color: #356483;
     line-height: 19px;
     margin: 0;
 	float:none; 
@@ -104,14 +104,12 @@
     font-size: 14px;
 }
 .tc-oer-standards-list li a, .tc-oer-subject-areas-list li a {
-    color: #77B143;
     text-decoration: none;
 }
 p.center { text-align:center; }
 .oer-see-more-row .oer-see-more-link, .oer-see-more-row .oer-see-more-link:active {
     font-size: 14px;
     font-weight: bold;
-    color: #77B143;
     line-height: 19px;
     cursor: pointer;
     text-decoration: none;
@@ -144,7 +142,7 @@ p.center { text-align:center; }
 .tc-hidden-fields .form-field .oer-lp-value .oer-lp-value-full { display:none; }
 .tc-hidden-fields .form-field .oer-lp-value .oer-lp-value-full p,
 .tc-hidden-fields .form-field .oer-lp-value .oer-lp-value-excerpt p{ margin-bottom:0; }
-.oer-lp-red { color:#950000; }
+.oer-lp-red { color:#ED4141; }
 /*
 .oer-sngl-rsrc-img.oer-sngl-audio-type {
 	display: flex;
@@ -156,6 +154,8 @@ p.center { text-align:center; }
 */
 .oer-sngl-rsrc-img.oer-sngl-audio-type audio { width:100% !important; }
 .oer-sngl-rsrc-img.oer-sngl-audio-type { border:none; }
+#sngl-resource .oer-see-more-row { max-width:100%; }
+#sngl-resource #tcHiddenFields { max-width:100%; }
 /** For Mobile styles **/
 @media screen and (min-width: 960px) {
     .oer-sngl-rsrc-dscrptn { width: 100%; }

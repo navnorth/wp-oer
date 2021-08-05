@@ -10,12 +10,17 @@
  *
  * @package         create-block
  */
+global $pagenow;
 
 function wp_oer_subjects_index_block_enqueue_bootstrap(){
 	wp_enqueue_style('bootstrap-style', OER_URL.'css/bootstrap.min.css');
 	wp_enqueue_script( 'bootstrap-js', OER_URL.'js/bootstrap.min.js', array('jquery'));wp_enqueue_script( 'bootstrap-js', OER_URL.'js/bootstrap.min.js', array('jquery'));
 }
-add_action('admin_enqueue_scripts', 'wp_oer_subjects_index_block_enqueue_bootstrap');
+
+// Add checking if current page is on add new/edit page,post or resource before loading bootstrap
+if ($pagenow=="post.php" || $pagenow=="edit.php" || $pagenow=="post-new.php"){
+	add_action('admin_enqueue_scripts', 'wp_oer_subjects_index_block_enqueue_bootstrap');
+}
 /**
  * Registers all block assets so that they can be enqueued through the block editor
  * in the corresponding context.
