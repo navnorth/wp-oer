@@ -432,4 +432,4 @@ function wp_oer_block_category( $categories ) {
         $categories
     );
 }
-add_filter( 'block_categories', 'wp_oer_block_category', 10, 2);
+add_filter( 'block_categories_all', 'wp_oer_block_category', 10, 2);
