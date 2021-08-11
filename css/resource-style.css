@@ -142,6 +142,7 @@ p.center { text-align:center; }
 .tc-hidden-fields .form-field .oer-lp-value .oer-lp-value-full { display:none; }
 .tc-hidden-fields .form-field .oer-lp-value .oer-lp-value-full p,
 .tc-hidden-fields .form-field .oer-lp-value .oer-lp-value-excerpt p{ margin-bottom:0; }
+.collapse.show { display:block; }
 .oer-lp-red { color:#ED4141; }
 /*
 .oer-sngl-rsrc-img.oer-sngl-audio-type {
