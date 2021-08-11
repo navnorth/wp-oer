@@ -61,6 +61,10 @@ jQuery(document).ready(function(e) {
 		var read_less = jQuery(this).parent().find('.lp-read-less');
 		jQuery(this).append(read_less);
 	});
+
+	setTimeout(function(){ 
+        jQuery('[data-toggle="collapse"]').removeAttr('data-parent');
+    }, 1000);
 });
 
 //adding author
