@@ -15,7 +15,7 @@ jobs:
       run: |
         npm init -y
         npm install
-        npm run build
+        npm run build --if-present
     - name: WordPress Plugin Deploy
       uses: 10up/action-wordpress-plugin-deploy@stable
       env:
