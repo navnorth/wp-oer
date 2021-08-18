@@ -121,7 +121,7 @@ function oer_display_subjects_index( $attributes, $ajax = false ){
 					}
 				</script>';
 	}
-
+	$html = str_replace("togglenavigation(this)","admin_togglenavigation(this)",$html);
 	return $html;
 }
 
