@@ -3,7 +3,7 @@ Contributors: navigationnorth, joehobson, johnpaulbalagolan, josepheneldas, arob
 Tags: OER, Open Educational Resources, Education, Teaching, Learning
 Requires at least: 4.4
 Tested up to: 5.7.2
-Stable tag: 0.8.2
+Stable tag: 0.8.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -40,6 +40,13 @@ No frequently asked questions.
 3. Display educational resources on your WordPress website!
 
 == Changelog ==
+
+= 0.8.3 =
+* block_categories deprecated as of WP5.8, used block_categories_all instead
+* Added translations to subject area taxonomy page.
+* fixed expand/collapse issue with resource links
+* fixed sublevels display issue due to attribute escaping
+* added support for older version of Wordpress(WP 5.7 or earlier) when adding custom block category
 
 = 0.8.2 =
 * Fixed the issue where WYSIWYG visual tab is freezing
