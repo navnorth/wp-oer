@@ -118,6 +118,14 @@ function oer_display_subjects_index( $attributes, $ajax = false ){
 						jQuery(ref).removeClass("change_mouseover");
 						jQuery(ref).children(".oer-cat-icn").css("background", "url("+img+") no-repeat scroll center center transparent");
 					}
+
+					/** Hide Subjects Index Block Child Category Div on load **/
+					jQuery(".wp-block-wp-oer-plugin-wp-oer-subjects-index .oer_snglctwpr").each(function(index, element) {
+						var childCat = jQuery(this).find(".oer-cat-div,.oer-cat-div-large,.oer-cat-div-medium,.oer-cat-div-small").children(".oer-child-category");
+						var hght = childCat.height();
+						childCat.attr("data-height", hght);
+						childCat.hide();
+				    });
 				</script>';
 	}
 	if ($ajax)
