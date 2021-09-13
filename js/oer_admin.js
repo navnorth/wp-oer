@@ -1,9 +1,4 @@
 jQuery(document).ready(function($) {
-	jQuery(".wp-block-wp-oer-plugin-wp-oer-subjects-index .oer_snglctwpr").each(function(index, element) {
-		var hght = jQuery(this).children(".oer-cat-div,.oer-cat-div-large,.oer-cat-div-medium,.oer-cat-div-small").children(".oer-child-category").height();
-		jQuery(this).children(".oer-cat-div,.oer-cat-div-large,.oer-cat-div-medium,.oer-cat-div-small").children(".oer-child-category").attr("data-height", hght);
-		jQuery(this).children(".oer-cat-div,.oer-cat-div-large,.oer-cat-div-medium,.oer-cat-div-small").children(".oer-child-category").hide();
-    });
 	/**
 	 * Dismiss our activation notice
 	 */
@@ -61,101 +56,49 @@ jQuery(document).ready(function($) {
 
 		return false;
 	});
-
-	/** Hide Subjects Index Block Child Category Div on load **/
-	setTimeout(function() {
-		if ($(".wp-block-wp-oer-plugin-wp-oer-subjects-index .oer_snglctwpr").length>0){
-		    $(".wp-block-wp-oer-plugin-wp-oer-subjects-index .oer_snglctwpr").each(function(index, element) {
-				let childCat = $(this).children(".oer-cat-div,.oer-cat-div-large,.oer-cat-div-medium,.oer-cat-div-small").find(".oer-child-category");
-				let hght = childCat.height();
-				childCat.attr("data-height", hght);
-				childCat.hide();
-		    });
-	    }
-	}, 10000);
-
 });
 
-function admin_togglenavigation(ref)
-{
-	jQuery(".wp-block-wp-oer-plugin-wp-oer-subjects-index .oer-cat-div,.wp-block-wp-oer-plugin-wp-oer-subjects-index .oer-cat-div-large, .wp-block-wp-oer-plugin-wp-oer-subjects-index .oer-cat-div-medium, .wp-block-wp-oer-plugin-wp-oer-subjects-index .oer-cat-div-small").each(function(index, value)
-	{
-		if(value == ref)
-		{
-			if(jQuery(value).hasClass("active-cat"))
-			{
-				jQuery(value).removeClass("active-cat");
-			}
-			else
-			{
-				jQuery(value).addClass("active-cat");
-			}
-
-
-			if ( jQuery(value).children(".active-arrow").length )
-			{
-				jQuery(value).children( ".active-arrow" ).remove();
-			}
-			else
-			{
-				jQuery(value).append( "<div class='active-arrow'></div>" );
-			}
-		}
-		else
-		{
-			jQuery(value).removeClass("active-cat");
-			jQuery(value).children( ".active-arrow" ).remove();
-		}
-	});
+function admin_togglenavigation(ref){
+	// add active-cat class to currently selected subject area
+	jQuery(".wp-block-wp-oer-plugin-wp-oer-subjects-index .oer-cat-div,.wp-block-wp-oer-plugin-wp-oer-subjects-index .oer-cat-div-large, .wp-block-wp-oer-plugin-wp-oer-subjects-index .oer-cat-div-medium, .wp-block-wp-oer-plugin-wp-oer-subjects-index .oer-cat-div-small").removeClass('active-cat');
+	jQuery(".wp-block-wp-oer-plugin-wp-oer-subjects-index .oer-cat-div,.wp-block-wp-oer-plugin-wp-oer-subjects-index .oer-cat-div-large, .wp-block-wp-oer-plugin-wp-oer-subjects-index .oer-cat-div-medium, .wp-block-wp-oer-plugin-wp-oer-subjects-index .oer-cat-div-small").children( ".active-arrow" ).remove();
+	jQuery(ref).toggleClass('active-cat');
+	jQuery(ref).append( "<div class='active-arrow'></div>" );
 	
 	var htmldata = jQuery(ref).children(".oer-child-category").html();
 	var datcls = jQuery(ref).attr("data-class");
 	var datid = jQuery(ref).attr("data-id");
-	
+
+	// adjust height of child category
 	jQuery(".wp-block-wp-oer-plugin-wp-oer-subjects-index .oer_child_content_wpr").each(function(index, element) {
-		if(jQuery(this).attr("data-id") == datcls)
-		{
-			console.log(jQuery(this).css("display"));
+		if(jQuery(this).attr("data-id") == datcls) {
 			var dspl = jQuery(this).css("display");
-			if(dspl == "block")
-			{
-				if(jQuery(this).attr("data-class") == datid)
-				{
+			if(dspl == "block") {
+				if(jQuery(this).attr("data-class") == datid) {
 					jQuery(this).slideUp("slow");
 					jQuery(this).parent(".oer_snglctwpr").height("auto");
-				}
-				else
-				{
+				} else {
+					var hght_upr = jQuery(ref).height();
+					var hght_lwr = jQuery(ref).children(".oer-child-category").attr("data-height");
+					var ttl_hght = parseInt(hght_upr) + parseInt(hght_lwr) + parseInt(80);
+					jQuery(ref).parent(".oer_snglctwpr").height(ttl_hght);
+
 					jQuery(this).html("");
 					jQuery(this).slideUp("slow");
 					jQuery(this).html(htmldata);
 					jQuery(this).attr("data-class", datid);
 					jQuery(this).slideDown("slow");
-
-					var hght_upr = jQuery(ref).height();
-					var hght_lwr = jQuery(ref).children(".oer-child-category").attr("data-height");
-					var ttl_hght = parseInt(hght_upr) + parseInt(hght_lwr) + parseInt(80);
-					jQuery(ref).parent(".oer_snglctwpr").height(ttl_hght);
 				}
-			}
-			else
-			{
+			} else {
+				var hght_upr = jQuery(ref).height();
+				var hght_lwr = jQuery(ref).children(".oer-child-category").attr("data-height");
+				var ttl_hght = parseInt(hght_upr) + parseInt(hght_lwr) + parseInt(80);
+				jQuery(ref).parent(".oer_snglctwpr").height(ttl_hght);
 				jQuery(this).html(htmldata);
 				jQuery(this).attr("data-class", datid);
 				jQuery(this).slideDown("slow");
-
-				var hght_upr = jQuery(ref).height();
-				console.log(hght_upr);
-				var hght_lwr = jQuery(ref).children(".oer-child-category").attr("data-height");
-				console.log(hght_lwr);
-				var ttl_hght = parseInt(hght_upr) + parseInt(hght_lwr) + parseInt(80);
-				console.log(ttl_hght);
-				jQuery(ref).parent(".oer_snglctwpr").height(ttl_hght);
 			}
-
-		}
-		else
-		{
+		} else {
 			jQuery(this).slideUp("slow");
 			jQuery(this).parent(".oer_snglctwpr").height("auto");
 		}
