@@ -102,7 +102,6 @@ function oer_display_subjects_index( $attributes, $ajax = false ){
 	$shortcode .= "]";
 
 	$html .= do_shortcode($shortcode);
-
 	if (!$ajax)
 		$html .= "</div>";
 
@@ -121,7 +120,8 @@ function oer_display_subjects_index( $attributes, $ajax = false ){
 					}
 				</script>';
 	}
-	$html = str_replace("togglenavigation(this)","admin_togglenavigation(this)",$html);
+	if ($ajax)
+		$html = str_replace("togglenavigation(this)","admin_togglenavigation(this)",$html);
 	return $html;
 }
 
