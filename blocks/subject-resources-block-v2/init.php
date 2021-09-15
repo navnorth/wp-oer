@@ -97,7 +97,10 @@ function oer_display_subject_resources_block( $attributes , $ajax = false){
         $displayCount = "5";
     }
 
+    // default attribute value
     $sort_display = "Date Updated";
+    $sort = "modified";
+    $selectedSubjects = [];
     if (isset($sort)){
         switch($sort){
             case "modified":
@@ -151,7 +154,7 @@ function oer_display_subject_resources_block( $attributes , $ajax = false){
             $html .= '  </a>';
             $html .= '  <div class="oer-snglttldscrght">';
             $html .= '      <div class="ttl">';
-            $html .= '          <a href="'.esc_url($subject['link']).'">'.$subject['post_title'].'</a>';
+            $html .= '          <a href="'.esc_url($subject['link']).'">'.$subject['title']['rendered'].'</a>';
             $html .= '      </div>';
             $html .= '      <div class="post-meta">';
             $html .= '          <span class="post-meta-box post-meta-grades">';
