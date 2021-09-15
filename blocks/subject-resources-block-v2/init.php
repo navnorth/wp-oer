@@ -70,7 +70,7 @@ function oer_register_subject_resources_api_routes(){
         'oer/v2',
         'subjects',
         array(  'methods'=>'GET',
-            'callback'=>'wp_oer_get_subject_areas',
+            'callback'=>'oer_srb_get_subject_areas',
             'permission_callback' => function(){
                 return current_user_can('edit_posts');
             }
@@ -80,14 +80,14 @@ function oer_register_subject_resources_api_routes(){
         'oer/v2',
         'resources',
         array(  'methods'=>'GET',
-            'callback'=>'wp_oer_get_resources',
+            'callback'=>'oer_srb_get_resources',
             'permission_callback' => function(){
                 return current_user_can('edit_posts');
             }
         )
     );
 }
-add_action( 'rest_api_init' , 'register_api_routes' );
+add_action( 'rest_api_init' , 'oer_register_subject_resources_api_routes' );
 
 function oer_display_subject_resources_block( $attributes , $ajax = false){
     if (!empty($attributes))
@@ -97,10 +97,7 @@ function oer_display_subject_resources_block( $attributes , $ajax = false){
         $displayCount = "5";
     }
 
-    // default attribute value
     $sort_display = "Date Updated";
-    $sort = "modified";
-    $selectedSubjects = [];
     if (isset($sort)){
         switch($sort){
             case "modified":
@@ -154,7 +151,7 @@ function oer_display_subject_resources_block( $attributes , $ajax = false){
             $html .= '  </a>';
             $html .= '  <div class="oer-snglttldscrght">';
             $html .= '      <div class="ttl">';
-            $html .= '          <a href="'.esc_url($subject['link']).'">'.$subject['title']['rendered'].'</a>';
+            $html .= '          <a href="'.esc_url($subject['link']).'">'.$subject['post_title'].'</a>';
             $html .= '      </div>';
             $html .= '      <div class="post-meta">';
             $html .= '          <span class="post-meta-box post-meta-grades">';
@@ -236,7 +233,7 @@ function oer_srb_get_subject_areas() {
     return $response;
 }
 
-function oer_get_resources($request_data, $ajax=false) {
+function oer_srb_get_resources($request_data, $ajax=false) {
     $params = null;
     $subjects = "";
     $sort = "modified";
