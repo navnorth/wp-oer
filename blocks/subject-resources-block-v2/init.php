@@ -98,6 +98,8 @@ function oer_display_subject_resources_block( $attributes , $ajax = false){
     }
 
     $sort_display = "Date Updated";
+    $sort = "modified";
+    $selectedSubjects  = [];
     if (isset($sort)){
         switch($sort){
             case "modified":
@@ -151,7 +153,7 @@ function oer_display_subject_resources_block( $attributes , $ajax = false){
             $html .= '  </a>';
             $html .= '  <div class="oer-snglttldscrght">';
             $html .= '      <div class="ttl">';
-            $html .= '          <a href="'.esc_url($subject['link']).'">'.$subject['post_title'].'</a>';
+            $html .= '          <a href="'.esc_url($subject['link']).'">'.$subject['title']['rendered'].'</a>';
             $html .= '      </div>';
             $html .= '      <div class="post-meta">';
             $html .= '          <span class="post-meta-box post-meta-grades">';
@@ -327,6 +329,8 @@ function oer_get_subject_resources($args){
         extract($args);
     
     $sort_display = "Date Updated";
+    $sort = "modified";
+    $selectedSubjects  = [];
     switch($sort){
         case "modified":
             $sort_display = 'Date Updated';
@@ -412,7 +416,7 @@ function oer_get_subject_resources($args){
 }
 
 function oer_ajax_get_subject_resources(){
-    $resources = wp_oer_get_subject_resources($_POST);
+    $resources = oer_get_subject_resources($_POST);
     echo $resources;
     die();
 }
