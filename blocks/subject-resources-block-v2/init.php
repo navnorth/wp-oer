@@ -38,7 +38,7 @@ function wp_oer_subject_resources_block_init() {
         $script_asset['version']
     );
     wp_set_script_translations( 'oer-subject-resources-block-editor', 'oer-subject-resources-block' );
-    wp_localize_script( 'oer-subject-resources-block-editor', 'oer_subject_resources', array( 'home_url' => home_url() ) );
+    wp_localize_script( 'oer-subject-resources-block-editor', 'oer_subject_resources', array( 'home_url' => home_url(), 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 
     $editor_css = 'build/index.css';
     wp_register_style(
@@ -180,7 +180,7 @@ function oer_display_subject_resources_block( $attributes , $ajax = false){
         }
     }
     $html .= '</div>';
-
+    
     return $html;
 }
 
@@ -243,7 +243,8 @@ function oer_srb_get_resources($request_data, $ajax=false) {
     $resource_posts = array();
     if ($ajax){
         $params = $request_data;
-        $subjects = $params['selectedSubjects'];
+        if (isset($params['selectedSubjects']))
+            $subjects = $params['selectedSubjects'];
         $sort = $params['sort'];
         $count = $params['displayCount'];
     } else {
@@ -265,17 +266,18 @@ function oer_srb_get_resources($request_data, $ajax=false) {
         $args['tax_query'] = array( 'relation'=> 'OR', array('taxonomy' => 'resource-subject-area', 'field'=>'term_id', 'terms' => $subs, 'operator' => 'IN') );
     } 
     $resources = new WP_Query($args);
+    
     if (count($resources->posts)>0){
         $resource_posts = [];
         foreach($resources->posts as $resource){
             $featured_image_id = get_post_thumbnail_id($resource->ID);
             $resource->link = get_permalink($resource->ID);
             $resource->oer_resourceurl = get_post_meta($resource->ID, "oer_resourceurl", true);
-            $resource->fimg_url = wp_oer_get_resource_featured_image($featured_image_id);
-            $resource->resource_excerpt = wp_oer_get_resource_excerpt($resource->post_content);
-            $resource->domain = wp_oer_get_resource_domain($resource->ID);
-            $resource->oer_grade = wp_oer_get_resource_grade($resource->ID);
-            $resource->subject_details = wp_oer_get_resource_subjects($resource->ID);
+            $resource->fimg_url = oer_get_resource_featured_image($featured_image_id);
+            $resource->resource_excerpt = oer_get_resource_excerpt($resource->post_content);
+            $resource->domain = oer_get_resource_domain($resource->ID);
+            $resource->oer_grade = oer_get_resource_grade($resource->ID);
+            $resource->subject_details = oer_get_resource_subjects($resource->ID);
             $resource->subjects = $subjects;
             $resource_posts[] = $resource;
         }
@@ -324,13 +326,22 @@ function oer_get_resource_subjects($resource_id){
     return $subject_details;
 }
 
-function oer_get_subject_resources($args){
-    if (!empty($args))
-        extract($args);
-    
+function oer_get_subject_resources($args, $ajax=false){
     $sort_display = "Date Updated";
     $sort = "modified";
     $selectedSubjects  = [];
+    $displayCount = 5;
+
+    if (!empty($args)){
+        if (!$ajax)
+            extract($args);
+        else{
+            $displayCount = $args['attributes']['displayCount'];
+            $sort = $args['attributes']['sort'];
+            $selectedSubjects = $args['attribtes']['selectedSubject'];
+        }
+    }
+    
     switch($sort){
         case "modified":
             $sort_display = 'Date Updated';
@@ -372,7 +383,9 @@ function oer_get_subject_resources($args){
     //$html = '<div class="oer-subject-resources-list">';
     $html .= $heading;
 
-    $resources = wp_oer_get_resources($args,true);
+    if ($ajax)
+        $args = $args['attributes'];
+    $resources = oer_srb_get_resources($args,true);
     
     if (is_array($resources)){
         foreach ($resources as $resource){
@@ -416,7 +429,7 @@ function oer_get_subject_resources($args){
 }
 
 function oer_ajax_get_subject_resources(){
-    $resources = oer_get_subject_resources($_POST);
+    $resources = oer_get_subject_resources($_POST, true);
     echo $resources;
     die();
 }
