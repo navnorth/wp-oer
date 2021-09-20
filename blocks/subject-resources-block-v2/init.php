@@ -100,6 +100,8 @@ function oer_display_subject_resources_block( $attributes , $ajax = false){
     $sort_display = "Date Updated";
     $sort = "modified";
     $selectedSubjects  = [];
+    $displayOptions = [ 5,10,15,20,25,30 ];
+    $displaySelection = "";
     if (isset($sort)){
         switch($sort){
             case "modified":
@@ -114,10 +116,21 @@ function oer_display_subject_resources_block( $attributes , $ajax = false){
         }
     }
 
+    // Browse # of resources
+    $displaySelection .='<div class="count-option">';
+    $displaySelection .= '<span class="countoption">'.$displayCount.'</span>';
+    $displaySelection .= '<span class="resource-count" title="Display resource count" tabindex="0" role="button"><i class="fa fa-caret-down" aria-hidden="true"></i></span>';
+    $displaySelection .= '<div class="count-options"><ul class="countList">';
+    foreach($displayOptions as $option){
+        $displaySelection .= '<li value="'.$option.'" '.($option==$displayCount?'class="selected"':'').'>'.$option.'</li>';
+    }
+    $displaySelection .= '</ul></div>';
+    $displaySelection .= '</div>';
+
     if (isset($selectedSubjects) && is_array($selectedSubjects))
         $selectedSubjects = implode(",", $selectedSubjects);
     $heading = '<div class="oer-snglrsrchdng" data-sort="'.$sort.'" data-count="'.$displayCount.'" data-subjects="'.$selectedSubjects.'">';
-    $heading .= '   Browse '.$displayCount.' resources';
+    $heading .= '   Browse '.$displaySelection.' resources';
     $heading .= '   <div class="sort-box">';
     $heading .= '       <span class="sortoption-label">Sorted by</span>: <span class="sortoption">'.$sort_display.'</span>';
     $heading .= '       <span class="sort-resources" title="Sort resources" tabindex="0" role="button"><i class="fa fa-sort" aria-hidden="true"></i></span>';
