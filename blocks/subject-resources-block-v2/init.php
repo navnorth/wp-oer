@@ -193,6 +193,55 @@ function oer_display_subject_resources_block( $attributes , $ajax = false){
         }
     }
     $html .= '</div>';
+
+    $script = '<script type="text/javascript">';
+    $script .= 'jQuery(function($){';
+    $script .= '    $(".oer-subject-resources-list").on("click", ".sort-box .sort-resources", function(e){';
+    $script .= '       console.log("test");';
+    $script .= '        $(this).next(".sort-options").toggle();';
+    $script .= '    });';
+    $script .= '   $(document).on("click", ".sort-box .sort-options .sortList li", function(e){';
+    $script .= '        let val = $(this).attr("value");';
+    $script .= '       let text = $(this).text();';
+    $script .= '        let count = $(".oer-subject-resources-list .oer-snglrsrchdng").attr("data-count");';
+    $script .= '        let subjects = $(".oer-subject-resources-list .oer-snglrsrchdng").attr("data-subjects");';
+    $script .= '        let args = { "sort": val, "count": count, "subjects": subjects };';
+    $script .= '        $(this).next(".sort-selectbox select").val(val);';
+    $script .= '        $(".sort-box .sortoption").text(text);';
+    $script .= '        $(this).closest(".sort-options").hide();';
+    $script .= '        updateResourcesDisplay(args);';
+    $script .= '    });';
+    $script .= '    function updateResourcesDisplay(args){';
+    $script .= '        var data = {';
+    $script .= '            action : "get_subject_resources",';
+    $script .= '            sort: args["sort"],';
+    $script .= '            displayCount: args["count"],';
+    $script .= '            selectedSubjects: args["subjects"]';
+    $script .= '        };';
+    $script .= '        $.ajax({ ';
+    $script .= '            url:wp_oer_block.ajaxurl, ';
+    $script .= '            type:"POST",';
+    $script .= '            data: data,';
+    $script .= '            success:function(response){';
+    $script .= '                $(".oer-subject-resources-list").html("");';
+    $script .= '                $(".oer-subject-resources-list").html(response);';
+    $script .= '           },';
+    $script .= '            error: function(XMLHttpRequest, textStatus, errorThrown){';
+    $script .= '                console.log(errorThrown);';
+    $script .= '            }';
+    $script .= '        })';
+    $script .= '    }';
+    $script .= '    $(document).on("change", ".sort-selectbox select", function(e){';
+    $script .= '        let sort = $(this).val();';
+    $script .= '        let count = $(".oer-subject-resources-list .oer-snglrsrchdng").attr("data-count");';
+    $script .= '        let subjects = $(".oer-subject-resources-list .oer-snglrsrchdng").attr("data-subjects");';
+    $script .= '        let args = { "sort": sort, "count": count, "subjects": subjects };';
+    $script .= '        updateResourcesDisplay(args);';
+    $script .= '    });';
+    $script .= '});';
+    $script .= '</script>';
+
+    $html .= $script;
     
     return $html;
 }
