@@ -432,4 +432,10 @@ function wp_oer_block_category( $categories ) {
         $categories
     );
 }
-add_filter( 'block_categories', 'wp_oer_block_category', 10, 2);
+
+// Supporting older version of Wordpress - WP_Block_Editor_Context is only introduced in WP 5.8
+if ( class_exists( 'WP_Block_Editor_Context' ) ) {
+	add_filter( 'block_categories_all', 'wp_oer_block_category', 10, 2);
+} else {
+	add_filter( 'block_categories', 'wp_oer_block_category', 10, 2);
+}

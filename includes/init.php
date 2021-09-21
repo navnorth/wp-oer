@@ -224,17 +224,18 @@ function oer_create_resource_taxonomies() {
     global $_use_gutenberg;
     
     $labels = array(
-	    'name'              => _x( 'Subject Area', 'taxonomy general name' ),
-	    'singular_name'     => _x( 'Subject Area', 'taxonomy singular name' ),
-	    'search_items'      => __( 'Search Subject Areas' ),
-	    'all_items'         => __( 'All Subject Areas' ),
-	    'parent_item'       => __( 'Parent Subject Area' ),
-	    'parent_item_colon' => __( 'Parent Subject Area:' ),
-	    'edit_item'         => __( 'Edit Subject Area' ),
-	    'update_item'       => __( 'Update Subject Area' ),
-	    'add_new_item'      => __( 'Add New Subject Area' ),
-	    'new_item_name'     => __( 'New Genre Subject Area' ),
-	    'menu_name'         => __( 'Subject Areas' ),
+	    //'name'              => _x( 'Subject Area', 'taxonomy general name here' ),
+      'name'              => esc_html__( 'Subject Area',OER_SLUG ),
+	    'singular_name'     => esc_html_x( 'Subject Area', 'taxonomy singular name' ),
+	    'search_items'      => esc_html__( 'Search Subject Areas',OER_SLUG ),
+	    'all_items'         => esc_html__( 'All Subject Areas' ),
+	    'parent_item'       => esc_html__( 'Parent Subject Area',OER_SLUG ),
+	    'parent_item_colon' => esc_html__( 'Parent Subject Area:',OER_SLUG ),
+	    'edit_item'         => esc_html__( 'Edit Subject Area' ),
+	    'update_item'       => esc_html__( 'Update Subject Area' ),
+	    'add_new_item'      => esc_html__( 'Add New Subject Area',OER_SLUG),
+	    'new_item_name'     => esc_html__( 'New Genre Subject Area' ),
+	    'menu_name'         => esc_html__( 'Subject Areas' ),
     );
     
     $args = array(
@@ -263,14 +264,14 @@ function oer_add_upload_image_fields($taxonomy) {
     <?php wp_nonce_field( 'oer_add_upload_image_action', 'oer_add_upload_image_action_nonce_field' ); ?>
     <div class="form-field term-group">
         <label for="main-icon-group"><?php _e('Subject Area Main Icon', OER_SLUG); ?></label>
-	<a id="main_icon_button" href="javascript:void(0);" class="button">Set Main Icon</a>
-	<a id="remove_main_icon_button" href="javascript:void(0);" class="button hidden">Remove Main Icon</a>
+	<a id="main_icon_button" href="javascript:void(0);" class="button"><?php _e('Set Main Icon', OER_SLUG); ?></a>
+	<a id="remove_main_icon_button" href="javascript:void(0);" class="button hidden"><?php _e('Remove Main Icon', OER_SLUG); ?></a>
 	<input id="mainIcon" type="hidden" size="36" name="mainIcon" value="" />
     </div>
     <div class="form-field term-group">
         <label for="hover-icon-group"><?php _e('Subject Area Hover Icon', OER_SLUG); ?></label>
-	<a id="hover_icon_button" href="javascript:void(0);" class="button">Set Hover Icon</a>
-	<a id="remove_hover_icon_button" href="javascript:void(0);" class="button hidden">Remove Hover Icon</a>
+	<a id="hover_icon_button" href="javascript:void(0);" class="button"><?php _e('Set Hover Icon', OER_SLUG); ?></a>
+	<a id="remove_hover_icon_button" href="javascript:void(0);" class="button hidden"><?php _e('Remove Hover Icon', OER_SLUG); ?></a>
 	<input id="hoverIcon" type="hidden" size="36" name="hoverIcon" value="" />
     </div>
     <?php
