@@ -56,7 +56,7 @@ function wp_oer_subject_resources_block_init() {
         $front_asset['version']
     );
     wp_set_script_translations( 'oer-subject-resources-block-frontend', 'oer-subject-resources-block' );
-    wp_localize_script( 'oer-subject-resources-block-frontend', 'oer_subject_resources', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+    wp_localize_script( 'oer-subject-resources-block-frontend', 'wp_oer_block', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 
     $editor_css = 'build/index.css';
     wp_register_style(
@@ -144,6 +144,15 @@ function oer_display_subject_resources_block( $attributes , $ajax = false){
         $displaySelection .= '<li value="'.$option.'" '.($option==$displayCount?'class="selected"':'').'>'.$option.'</li>';
     }
     $displaySelection .= '</ul></div>';
+    $displaySelection .= '       <div class="components-base-control count-selectbox">';
+    $displaySelection .= '           <div class="components-base-control__field">';
+    $displaySelection .= '               <select id="inspector-select-control-count" class="components-select-control__input">';
+    foreach($displayOptions as $option){
+        $displaySelection .= '                   <option value="'.$option.'" '.selected($displayCount,$option,false).'>'.$option.'</option>';
+    }
+    $displaySelection .= '               </select>';
+    $displaySelection .= '           </div>';
+    $displaySelection .= '       </div>';
     $displaySelection .= '</div>';
 
     if (isset($selectedSubjects) && is_array($selectedSubjects))
@@ -334,7 +343,7 @@ function oer_get_resource_excerpt($resource_content) {
 }
 
 function oer_get_resource_domain($resource_id) {
-    $url = get_post_meta($resource->ID, "oer_resourceurl", true);
+    $url = get_post_meta($resource_id, "oer_resourceurl", true);
     $url_domain = oer_getDomainFromUrl($url);
     if (oer_isExternalUrl($url)) {
         return  $url_domain;
@@ -363,14 +372,21 @@ function oer_get_subject_resources($args, $ajax=false){
     $sort = "modified";
     $selectedSubjects  = [];
     $displayCount = 5;
-
+    $displayOptions = [ 5,10,15,20,25,30 ];
+    $displaySelection = "";
     if (!empty($args)){
         if (!$ajax)
             extract($args);
         else{
-            $displayCount = $args['attributes']['displayCount'];
-            $sort = $args['attributes']['sort'];
-            $selectedSubjects = $args['attribtes']['selectedSubject'];
+            if (isset($args['attributes'])){
+                $displayCount = $args['attributes']['displayCount'];
+                $sort = $args['attributes']['sort'];
+                $selectedSubjects = $args['attributes']['selectedSubject'];
+            } else {
+                $displayCount = $args['displayCount'];
+                $sort = $args['sort'];
+                $selectedSubjects = $args['selectedSubject'];
+            }
         }
     }
     
@@ -385,11 +401,31 @@ function oer_get_subject_resources($args, $ajax=false){
             $sort_display = 'Title A-Z';
             break;
     }
+    
+    // Browse # of resources
+    $displaySelection .='<div class="count-option">';
+    $displaySelection .= '<span class="countoption">'.$displayCount.'</span>';
+    $displaySelection .= '<span class="resource-count" title="Display resource count" tabindex="0" role="button"><i class="fa fa-caret-down" aria-hidden="true"></i></span>';
+    $displaySelection .= '<div class="count-options"><ul class="countList">';
+    foreach($displayOptions as $option){
+        $displaySelection .= '<li value="'.$option.'" '.($option==$displayCount?'class="selected"':'').'>'.$option.'</li>';
+    }
+    $displaySelection .= '</ul></div>';
+    $displaySelection .= '       <div class="components-base-control count-selectbox">';
+    $displaySelection .= '           <div class="components-base-control__field">';
+    $displaySelection .= '               <select id="inspector-select-control-count" class="components-select-control__input">';
+    foreach($displayOptions as $option){
+        $displaySelection .= '                   <option value="'.$option.'" '.selected($displayCount,$option,false).'>'.$option.'</option>';
+    }
+    $displaySelection .= '               </select>';
+    $displaySelection .= '           </div>';
+    $displaySelection .= '       </div>';
+    $displaySelection .= '</div>';
 
     if (is_array($selectedSubjects))
         $selectedSubjects = implode(",", $selectedSubjects);
     $heading = '<div class="oer-snglrsrchdng" data-sort="'.$sort.'" data-count="'.$displayCount.'" data-subjects="'.$selectedSubjects.'">';
-    $heading .= '   Browse '.$displayCount.' resources';
+    $heading .= '   Browse '.$displaySelection.' resources';
     $heading .= '   <div class="sort-box">';
     $heading .= '       <span class="sortoption-label">Sorted by</span>: <span class="sortoption">'.$sort_display.'</span>';
     $heading .= '       <span class="sort-resources" title="Sort resources" tabindex="0" role="button"><i class="fa fa-sort" aria-hidden="true"></i></span>';
@@ -415,7 +451,7 @@ function oer_get_subject_resources($args, $ajax=false){
     //$html = '<div class="oer-subject-resources-list">';
     $html .= $heading;
 
-    if ($ajax)
+    if ($ajax && isset($args['attributes']))
         $args = $args['attributes'];
     $resources = oer_srb_get_resources($args,true);
     
