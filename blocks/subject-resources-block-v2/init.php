@@ -109,6 +109,13 @@ function oer_register_subject_resources_api_routes(){
 add_action( 'rest_api_init' , 'oer_register_subject_resources_api_routes' );
 
 function oer_display_subject_resources_block( $attributes , $ajax = false){
+    $selectedSubjects  = [];
+    $html = "";
+    $sort_display = "Date Updated";
+    $sort = "modified";
+    $displayOptions = [ 5,10,15,20,25,30 ];
+    $displaySelection = "";
+
     if (!empty($attributes))
         extract($attributes);
     
@@ -116,11 +123,6 @@ function oer_display_subject_resources_block( $attributes , $ajax = false){
         $displayCount = "5";
     }
 
-    $sort_display = "Date Updated";
-    $sort = "modified";
-    $selectedSubjects  = [];
-    $displayOptions = [ 5,10,15,20,25,30 ];
-    $displaySelection = "";
     if (isset($sort)){
         switch($sort){
             case "modified":
@@ -154,9 +156,10 @@ function oer_display_subject_resources_block( $attributes , $ajax = false){
     $displaySelection .= '           </div>';
     $displaySelection .= '       </div>';
     $displaySelection .= '</div>';
-
+    
     if (isset($selectedSubjects) && is_array($selectedSubjects))
         $selectedSubjects = implode(",", $selectedSubjects);
+    
     $heading = '<div class="oer-snglrsrchdng" data-sort="'.$sort.'" data-count="'.$displayCount.'" data-subjects="'.$selectedSubjects.'">';
     $heading .= '   Browse '.$displaySelection.' resources';
     $heading .= '   <div class="sort-box">';
@@ -278,6 +281,7 @@ function oer_srb_get_subject_areas() {
 
 function oer_srb_get_resources($request_data, $ajax=false) {
     $params = null;
+    $subs = null;
     $subjects = "";
     $sort = "modified";
     $count = "5";
@@ -303,7 +307,10 @@ function oer_srb_get_resources($request_data, $ajax=false) {
             'order'             => 'asc'
             );
     if ($subjects!=="undefined" && !empty($subjects)){
-        $subs = explode(",",$subjects);
+        if (!is_array($subjects))
+            $subs = explode(",",$subjects);
+        else 
+            $subs = $subjects;
         $args['tax_query'] = array( 'relation'=> 'OR', array('taxonomy' => 'resource-subject-area', 'field'=>'term_id', 'terms' => $subs, 'operator' => 'IN') );
     } 
     $resources = new WP_Query($args);
@@ -361,19 +368,24 @@ function oer_get_resource_grade($resource_id){
 function oer_get_resource_subjects($resource_id){
     $subject_details = null;
     $rsubjects = get_the_terms($resource_id,"resource-subject-area");
-    foreach($rsubjects as $rsubject) {
-        $subject_details[] = array("id" => $rsubject->term_id, "link" => get_term_link($rsubject->term_id), "name" => $rsubject->name);
+    if (is_array($rsubjects)){    
+        foreach($rsubjects as $rsubject) {
+            $subject_details[] = array("id" => $rsubject->term_id, "link" => get_term_link($rsubject->term_id), "name" => $rsubject->name);
+        }
     }
+
     return $subject_details;
 }
 
 function oer_get_subject_resources($args, $ajax=false){
+    $html = "";
     $sort_display = "Date Updated";
     $sort = "modified";
     $selectedSubjects  = [];
     $displayCount = 5;
     $displayOptions = [ 5,10,15,20,25,30 ];
     $displaySelection = "";
+
     if (!empty($args)){
         if (!$ajax)
             extract($args);
@@ -381,11 +393,12 @@ function oer_get_subject_resources($args, $ajax=false){
             if (isset($args['attributes'])){
                 $displayCount = $args['attributes']['displayCount'];
                 $sort = $args['attributes']['sort'];
-                $selectedSubjects = $args['attributes']['selectedSubject'];
+                if (isset($args['attributes']['selectedSubjects']))
+                    $selectedSubjects = $args['attributes']['selectedSubjects'];
             } else {
                 $displayCount = $args['displayCount'];
                 $sort = $args['sort'];
-                $selectedSubjects = $args['selectedSubject'];
+                $selectedSubjects = $args['selectedSubjects'];
             }
         }
     }
