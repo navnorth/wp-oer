@@ -195,41 +195,45 @@ function oer_display_subject_resources_block( $attributes , $ajax = false){
         $selectedSubjectResources = oer_srb_get_resources($attributes,true);
     if (is_array($selectedSubjectResources)){
         $selectedSubjectResources = (object)$selectedSubjectResources;
-        foreach ($selectedSubjectResources as $subject){
-            $html .= '<div class="post oer-snglrsrc">';
-            $html .= '  <a href="'.esc_url($subject->link).'" class="oer-resource-link">';
-            $html .= '      <div class="oer-snglimglft">';
-            $html .= '          <img src="'.esc_url($subject->fimg_url).'" alt="'.$subject->post_title.'">';
-            $html .= '      </div>';
-            $html .= '  </a>';
-            $html .= '  <div class="oer-snglttldscrght">';
-            $html .= '      <div class="ttl">';
-            $html .= '          <a href="'.esc_url($subject->link).'">'.$subject->post_title.'</a>';
-            $html .= '      </div>';
-            $html .= '      <div class="post-meta">';
-            $html .= '          <span class="post-meta-box post-meta-grades">';
-            $html .= '              <strong>Grades: </strong>'.$subject->oer_grade;
-            $html .= '          </span>';
-            if ($subject->domain){
-                $html .= '          <span class="post-meta-box post-meta-domain">';
-                $html .= '              <strong>Domain: </strong><a href="'.esc_url($subject->oer_resourceurl).'">'.$subject->domain.'</a>';
+        if (!empty((array)$selectedSubjectResources)){
+            foreach ($selectedSubjectResources as $subject){
+                $html .= '<div class="post oer-snglrsrc">';
+                $html .= '  <a href="'.esc_url($subject->link).'" class="oer-resource-link">';
+                $html .= '      <div class="oer-snglimglft">';
+                $html .= '          <img src="'.esc_url($subject->fimg_url).'" alt="'.$subject->post_title.'">';
+                $html .= '      </div>';
+                $html .= '  </a>';
+                $html .= '  <div class="oer-snglttldscrght">';
+                $html .= '      <div class="ttl">';
+                $html .= '          <a href="'.esc_url($subject->link).'">'.$subject->post_title.'</a>';
+                $html .= '      </div>';
+                $html .= '      <div class="post-meta">';
+                $html .= '          <span class="post-meta-box post-meta-grades">';
+                $html .= '              <strong>Grades: </strong>'.$subject->oer_grade;
                 $html .= '          </span>';
-            }
-            $html .= '      </div>';
-            $html .= '      <div class="desc">';
-            $html .= '          <div>';
-            $html .=  $subject->resource_excerpt;
-            $html .= '          </div>';
-            $html .= '      </div>';
-            $html .= '      <div class="tagcloud">';
-            if (is_array($subject->subject_details)){
-                foreach($subject->subject_details as $subj){
-                    $html .= '          <span><a href="'.esc_url($subj['link']).'">'.$subj['name'].'</a></span>';
+                if ($subject->domain){
+                    $html .= '          <span class="post-meta-box post-meta-domain">';
+                    $html .= '              <strong>Domain: </strong><a href="'.esc_url($subject->oer_resourceurl).'">'.$subject->domain.'</a>';
+                    $html .= '          </span>';
                 }
+                $html .= '      </div>';
+                $html .= '      <div class="desc">';
+                $html .= '          <div>';
+                $html .=  $subject->resource_excerpt;
+                $html .= '          </div>';
+                $html .= '      </div>';
+                $html .= '      <div class="tagcloud">';
+                if (is_array($subject->subject_details)){
+                    foreach($subject->subject_details as $subj){
+                        $html .= '          <span><a href="'.esc_url($subj['link']).'">'.$subj['name'].'</a></span>';
+                    }
+                }
+                $html .= '      </div>';
+                $html .= '  </div>';
+                $html .= '</div>';
             }
-            $html .= '      </div>';
-            $html .= '  </div>';
-            $html .= '</div>';
+        } else {
+            $html .= '<div class="empyt-resources">No resources found.</div>';
         }
     }
     $html .= '</div>';
