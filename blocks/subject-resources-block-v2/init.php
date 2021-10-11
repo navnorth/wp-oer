@@ -161,9 +161,9 @@ function oer_display_subject_resources_block( $attributes , $ajax = false){
         $selectedSubjects = implode(",", $selectedSubjects);
     
     $heading = '<div class="oer-snglrsrchdng" data-sort="'.$sort.'" data-count="'.$displayCount.'" data-subjects="'.$selectedSubjects.'">';
-    $heading .= '   Browse '.$displaySelection.' resources';
+    $heading .= '   <div class="browse-box">Browse '.$displaySelection.' resources</div>';
     $heading .= '   <div class="sort-box">';
-    $heading .= '       <span class="sortoption-label">Sorted by</span>: <span class="sortoption">'.$sort_display.'</span>';
+    $heading .= '       <span class="sortoption-label">Sorted by:</span> <span class="sortoption">'.$sort_display.'</span>';
     $heading .= '       <span class="sort-resources" title="Sort resources" tabindex="0" role="button"><i class="fa fa-sort" aria-hidden="true"></i></span>';
     $heading .= '       <div class="sort-options">';
     $heading .= '           <ul class="sortList">';
@@ -453,9 +453,9 @@ function oer_get_subject_resources($args, $ajax=false){
     if (is_array($selectedSubjects))
         $selectedSubjects = implode(",", $selectedSubjects);
     $heading = '<div class="oer-snglrsrchdng" data-sort="'.$sort.'" data-count="'.$displayCount.'" data-subjects="'.$selectedSubjects.'">';
-    $heading .= '   Browse '.$displaySelection.' resources';
+    $heading .= '   <div class="browse-box">Browse '.$displaySelection.' resources</div>';
     $heading .= '   <div class="sort-box">';
-    $heading .= '       <span class="sortoption-label">Sorted by</span>: <span class="sortoption">'.$sort_display.'</span>';
+    $heading .= '       <span class="sortoption-label">Sorted by:</span> <span class="sortoption">'.$sort_display.'</span>';
     $heading .= '       <span class="sort-resources" title="Sort resources" tabindex="0" role="button"><i class="fa fa-sort" aria-hidden="true"></i></span>';
     $heading .= '       <div class="sort-options">';
     $heading .= '           <ul class="sortList">';
