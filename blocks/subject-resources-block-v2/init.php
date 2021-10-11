@@ -198,33 +198,35 @@ function oer_display_subject_resources_block( $attributes , $ajax = false){
         if (!empty((array)$selectedSubjectResources)){
             foreach ($selectedSubjectResources as $subject){
                 $html .= '<div class="post oer-snglrsrc">';
-                $html .= '  <a href="'.esc_url($subject->link).'" class="oer-resource-link">';
+                $html .= '  <a href="'.esc_url((is_object($subject))?$subject->link:$subject['link']).'" class="oer-resource-link">';
                 $html .= '      <div class="oer-snglimglft">';
-                $html .= '          <img src="'.esc_url($subject->fimg_url).'" alt="'.$subject->post_title.'">';
+                $html .= '          <img src="'.esc_url((is_object($subject))?$subject->fimg_url:$subject['fimg_url']).'" alt="'.((is_object($subject))?$subject->post_title:$subject['title']['rendered']).'">';
                 $html .= '      </div>';
                 $html .= '  </a>';
                 $html .= '  <div class="oer-snglttldscrght">';
                 $html .= '      <div class="ttl">';
-                $html .= '          <a href="'.esc_url($subject->link).'">'.$subject->post_title.'</a>';
+                $html .= '          <a href="'.esc_url((is_object($subject))?$subject->link:$subject['link']).'">'.((is_object($subject))?$subject->post_title:$subject['title']['rendered']).'</a>';
                 $html .= '      </div>';
                 $html .= '      <div class="post-meta">';
                 $html .= '          <span class="post-meta-box post-meta-grades">';
-                $html .= '              <strong>Grades: </strong>'.$subject->oer_grade;
+                $html .= '              <strong>Grades: </strong>'.((is_object($subject))?$subject->oer_grade:$subject['oer_grade']);
                 $html .= '          </span>';
-                if ($subject->domain){
+                $subject_domain = (is_object($subject)?$subject->domain:$subject['domain']);
+                if ($subject_domain){
                     $html .= '          <span class="post-meta-box post-meta-domain">';
-                    $html .= '              <strong>Domain: </strong><a href="'.esc_url($subject->oer_resourceurl).'">'.$subject->domain.'</a>';
+                    $html .= '              <strong>Domain: </strong><a href="'.esc_url((is_object($subject))?$subject->oer_resourceurl:$subject['oer_resourceurl']).'">'.$subject_domain.'</a>';
                     $html .= '          </span>';
                 }
                 $html .= '      </div>';
                 $html .= '      <div class="desc">';
                 $html .= '          <div>';
-                $html .=  $subject->resource_excerpt;
+                $html .=  (is_object($subject))?$subject->resource_excerpt:$subject['resource_excerpt'];
                 $html .= '          </div>';
                 $html .= '      </div>';
                 $html .= '      <div class="tagcloud">';
-                if (is_array($subject->subject_details)){
-                    foreach($subject->subject_details as $subj){
+                $subject_details = (is_object($subject)?$subject->subject_details:$subject['subject_details']);
+                if (is_array($subject_details)){
+                    foreach($subject_details as $subj){
                         $html .= '          <span><a href="'.esc_url($subj['link']).'">'.$subj['name'].'</a></span>';
                     }
                 }
