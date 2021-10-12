@@ -48,7 +48,7 @@ if (get_option('oer_metadata_firstload')=="")
         </div>
 	<?php } ?>
 
-	<?php
+	<!-- <?php
 	// Grade Level
 	$label_set = false;
 	if (get_option('oer_grade_label')){
@@ -102,7 +102,7 @@ if (get_option('oer_metadata_firstload')=="")
 
             </div>
         </div>
-       <?php } ?>
+       <?php } ?> -->
     
 	<?php
 	// Age Levels
