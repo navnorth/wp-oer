@@ -222,37 +222,71 @@ function oermeta_callback()
 add_action( 'init', 'oer_create_resource_taxonomies', 0 );
 function oer_create_resource_taxonomies() {
     global $_use_gutenberg;
-    
-    $labels = array(
-	    //'name'              => _x( 'Subject Area', 'taxonomy general name here' ),
-      'name'              => esc_html__( 'Subject Area',OER_SLUG ),
-	    'singular_name'     => esc_html_x( 'Subject Area', 'taxonomy singular name' ),
-	    'search_items'      => esc_html__( 'Search Subject Areas',OER_SLUG ),
-	    'all_items'         => esc_html__( 'All Subject Areas' ),
-	    'parent_item'       => esc_html__( 'Parent Subject Area',OER_SLUG ),
-	    'parent_item_colon' => esc_html__( 'Parent Subject Area:',OER_SLUG ),
-	    'edit_item'         => esc_html__( 'Edit Subject Area' ),
-	    'update_item'       => esc_html__( 'Update Subject Area' ),
-	    'add_new_item'      => esc_html__( 'Add New Subject Area',OER_SLUG),
-	    'new_item_name'     => esc_html__( 'New Genre Subject Area' ),
-	    'menu_name'         => esc_html__( 'Subject Areas' ),
+
+    $arr_tax = array(
+    	array("slug"=>"resource-subject-area","singular_name"=>"Subject Area", "plural_name"=>"Subject Areas"),
+    	array("slug"=>"resource-grade-level","singular_name"=>"Grade Level", "plural_name"=>"Grade Levels")
     );
     
-    $args = array(
-	    'hierarchical'      => true,
-	    'labels'            => $labels,
-	    'show_ui'           => true,
-	    'show_admin_column' => true,
-	    'query_var'         => true,
-	    'rewrite'           => array( 'slug' => 'resource-subject-area' ),
-    );
-    
-    if ($_use_gutenberg=="on" or $_use_gutenberg=="1")
-	$args['show_in_rest'] = true;
-    
-    register_taxonomy( 'resource-subject-area', array( 'resource' ), $args );
+    foreach($arr_tax as $tax){
+    	$labels = array(
+	      	'name'              => esc_html__( $tax['singular_name'],OER_SLUG ),
+		    'singular_name'     => esc_html_x( $tax['singular_name'], 'taxonomy singular name', OER_SLUG ),
+		    'search_items'      => esc_html__( 'Search '.$tax['plural_name'],OER_SLUG ),
+		    'all_items'         => esc_html__( 'All '.$tax['plural_name'], OER_SLUG ),
+		    'parent_item'       => esc_html__( 'Parent '.$tax['singular_name'],OER_SLUG ),
+		    'parent_item_colon' => esc_html__( 'Parent '.$tax['singular_name'].':',OER_SLUG ),
+		    'edit_item'         => esc_html__( 'Edit '.$tax['singular_name'], OER_SLUG ),
+		    'update_item'       => esc_html__( 'Update '.$tax['singular_name'], OER_SLUG ),
+		    'add_new_item'      => esc_html__( 'Add New '.$tax['singular_name'],OER_SLUG),
+		    'new_item_name'     => esc_html__( 'New Genre '.$tax['singular_name'],OER_SLUG),
+		    'menu_name'         => esc_html__( $tax['plural_name'],OER_SLUG ),
+	    );
+	    
+	    $args = array(
+		    'hierarchical'      => true,
+		    'labels'            => $labels,
+		    'show_ui'           => true,
+		    'show_admin_column' => true,
+		    'query_var'         => true,
+		    'rewrite'           => array( 'slug' => $tax['slug'] ),
+	    );
+	    
+	    if ($_use_gutenberg=="on" or $_use_gutenberg=="1")
+			$args['show_in_rest'] = true;
+
+	    register_taxonomy( $tax['slug'], array( 'resource' ), $args );
+    }
 }
 //register cutsom category
+
+// Display grade levels according to term_order in Gutenberg editor
+add_filter('get_terms', 'oer_grade_level_filter', 10, 4);
+function oer_grade_level_filter($terms, $taxonomies, $args, $term_query){
+	global $pagenow;
+	if (is_admin() && ($pagenow == 'post-new.php' || $pagenow == 'post.php') && in_array('resource-grade-level',$taxonomies) ){
+		usort($terms, function($a, $b){
+			if ($a->term_order == $b->term_order) {
+        		return 0;
+    		}
+    		return ($a->term_order < $b->term_order) ? -1 : 1;
+		});
+	}
+	return $terms;
+}
+
+// Change order of grade level display on both edit tags page and in classic editor
+add_filter( 'get_terms_args', 'oer_sort_grade_level_terms', 10, 2 );
+function oer_sort_grade_level_terms( $args, $taxonomies ) 
+{
+	global $pagenow;
+	if (is_admin() && ($pagenow=='edit-tags.php' || $pagenow == 'post-new.php' || $pagenow == 'post.php') && in_array('resource-grade-level',$taxonomies) ){
+		$args['orderby'] = 'term_order';
+    	$args['order'] = 'ASC';
+	}
+
+    return $args;
+}
 
 /**
  * Add Image meta data
