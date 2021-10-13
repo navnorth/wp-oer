@@ -952,6 +952,23 @@ function oer_setup_settings(){
 		)
 	);
 
+	//Add Settings field for Import Default Grade Levels
+	add_settings_field(
+		'oer_import_default_grade_levels',
+		'',
+		'oer_setup_settings_field',
+		'setup_settings_section',
+		'oer_setup_settings',
+		array(
+			'uid' => 'oer_import_default_grade_levels',
+			'type' => 'checkbox',
+			'value' => '1',
+			'default' => true,
+			'name' =>  __('Import Default Grade Levels', OER_SLUG),
+			'description' => __('A general listing of K-12 grade levels.', OER_SLUG)
+		)
+	);
+
 	//Add Settings field for Importing Common Core State Standards
 	add_settings_field(
 		'oer_import_ccss',
@@ -1010,6 +1027,7 @@ function oer_setup_settings(){
 
 	register_setting( 'oer_setup_settings' , 'oer_import_sample_resources' );
 	register_setting( 'oer_setup_settings' , 'oer_import_default_subject_areas' );
+	register_setting( 'oer_setup_settings' , 'oer_import_default_grade_levels' );
 	register_setting( 'oer_setup_settings' , 'oer_import_ccss' );
 	register_setting( 'oer_setup_settings' , 'oer_setup_bootstrap' );
 	if ($_gutenberg)

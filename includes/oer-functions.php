@@ -1863,6 +1863,42 @@ function oer_importSubjectAreas($default=false) {
 	return $response;
 }
 
+//Import Default Grade Levels
+function oer_importDefaultGradeLevels(){
+	$_arr = array(
+			"pre-k" => "Pre-K",
+			"k" => "K (Kindergarten)",
+			"1" => "1",
+			"2" => "2",
+			"3" => "3",
+			"4" => "4",
+			"5" => "5",
+			"6" => "6",
+			"7" => "7",
+			"8" => "8",
+			"9" => "9",
+			"10" => "10",
+			"11" => "11",
+			"12" => "12"
+			);
+	foreach($_arr as $_key => $_val){
+		if ( !term_exists($_val,"resource-grade-level") ) {
+			wp_insert_term(
+			    $_val,   // the term 
+			    'resource-grade-level', // the taxonomy
+			    array(
+			    	'description' => '',
+			        'slug' => $_key
+			    )
+			);
+		}
+	}
+	$message = __("Successfully imported default grade_levels.", OER_SLUG);
+	$type = "success";
+	$response = array('message' => $message, 'type' => $type);
+	return $response;
+}
+
 //Import Default CCSS
 function oer_importDefaultStandards() {
 	$files = array(
