@@ -20,6 +20,16 @@ global $message, $type;
 					$type .= $response["type"];
 				}
 			}
+
+			//Import Default Grade Levels
+			$import_grade_levels = get_option('oer_import_default_grade_levels');
+			if ($import_grade_levels){
+				$response = oer_importDefaultGradeLevels();
+				if ($response) {
+					$message .= $response["message"];
+					$type .= $response["type"];
+				}
+			}
 			
 			//Import CCSS Standards
 			$import_ccss = get_option('oer_import_ccss');
