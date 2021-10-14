@@ -278,7 +278,7 @@ add_filter( 'plugin_action_links' , 'oer_add_settings_link' , 10 , 2 );
 function oer_add_settings_link( $links, $file ){
 	if ( $file == plugin_basename(dirname(__FILE__).'/open-educational-resources.php') ) {
 		/** Insert settings link **/
-		$link = "<a href='edit.php?post_type=resource&page=oer_settings'>".__('Settings','oer')."</a>";
+		$link = "<a href='edit.php?post_type=resource&page=oer_settings'>".__('Settings',OER_SLUG)."</a>";
 		array_unshift($links, $link);
 		/** End of Insert settings link **/
 	}
