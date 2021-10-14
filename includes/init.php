@@ -171,34 +171,34 @@ add_action( 'init' , 'oer_postcreation' );
 function oer_postcreation(){
     global $_use_gutenberg;
 	$labels = array(
-        'name'               => _x( 'Resource', 'post type general name' ),
-        'singular_name'      => _x( 'Resource', 'post type singular name' ),
-        'add_new'            => _x( 'Add Resource', 'book' ),
-        'add_new_item'       => __( 'Add Resource' ),
-        'edit_item'          => __( 'Edit Resource' ),
-        'new_item'           => __( 'New Resource' ),
-        'all_items'          => __( 'All Resources' ),
-        'view_item'          => __( 'View Resource' ),
-        'search_items'       => __( 'Search' ),
+        'name'               => __( 'Resource', OER_SLUG ),
+        'singular_name'      => __( 'Resource', OER_SLUG ),
+        'add_new'            => __( 'Add Resource', OER_SLUG ),
+        'add_new_item'       => __( 'Add Resource', OER_SLUG ),
+        'edit_item'          => __( 'Edit Resource', OER_SLUG ),
+        'new_item'           => __( 'New Resource', OER_SLUG ),
+        'all_items'          => __( 'All Resources', OER_SLUG ),
+        'view_item'          => __( 'View Resource', OER_SLUG ),
+        'search_items'       => __( 'Search', OER_SLUG ),
         'menu_name'          => 'OER'
     );
     
     $args = array(
         'labels'        => $labels,
-	'show_ui' => true,
-	'show_in_menu' => true,
-	'menu_position' => 5,
-        'description'   => 'Create Resources',
+		'show_ui' => true,
+		'show_in_menu' => true,
+		'menu_position' => 5,
+        'description'   => __('Create Resources',OER_SLUG),
         'public'        => true,
-	'publicly_queryable'        => true,
-	'exclude_from_search' => false,
-	'query_var' => true,
+		'publicly_queryable'        => true,
+		'exclude_from_search' => false,
+		'query_var' => true,
         'menu_position' => '',
-	'menu_icon' => 'dashicons-welcome-learn-more',
+		'menu_icon' => 'dashicons-welcome-learn-more',
         'supports'      => array(  'title', 'editor', 'thumbnail', 'revisions',  ),
-	'taxonomies' => array('post_tag'),
+		'taxonomies' => array('post_tag'),
         'has_archive'   => true,
-	'register_meta_box_cb' => 'oer_resources_custom_metaboxes'
+		'register_meta_box_cb' => 'oer_resources_custom_metaboxes'
     );
     
     if ($_use_gutenberg=="on" or $_use_gutenberg=="1")
@@ -208,7 +208,7 @@ function oer_postcreation(){
 }
 
 function oer_resources_custom_metaboxes(){
-	add_meta_box('oer_metaboxid','Open Resource Meta Fields','oermeta_callback','resource','advanced');
+	add_meta_box('oer_metaboxid',__('Open Resource Meta Fields',OER_SLUG),'oermeta_callback','resource','advanced');
 }
 
 //metafield callback
@@ -224,8 +224,8 @@ function oer_create_resource_taxonomies() {
     global $_use_gutenberg;
 
     $arr_tax = array(
-    	array("slug"=>"resource-subject-area","singular_name"=>"Subject Area", "plural_name"=>"Subject Areas"),
-    	array("slug"=>"resource-grade-level","singular_name"=>"Grade Level", "plural_name"=>"Grade Levels")
+    	array("slug"=>"resource-subject-area","singular_name"=>__("Subject Area",OER_SLUG), "plural_name"=>__("Subject Areas",OER_SLUG)),
+    	array("slug"=>"resource-grade-level","singular_name"=>__("Grade Level",OER_SLUG), "plural_name"=>__("Grade Levels",OER_SLUG))
     );
     
     foreach($arr_tax as $tax){
@@ -738,8 +738,8 @@ function oer_save_customfields()
 
 add_action('admin_menu','oer_rsrcimprtr');
 function oer_rsrcimprtr(){
-	add_submenu_page('edit.php?post_type=resource','Import','Import','add_users','oer_import','oer_import');
-	add_submenu_page('edit.php?post_type=resource','Settings','Settings','add_users','oer_settings','oer_setngpgfn');
+	add_submenu_page('edit.php?post_type=resource',__('Import',OER_SLUG),__('Import',OER_SLUG),'add_users','oer_import','oer_import');
+	add_submenu_page('edit.php?post_type=resource',__('Settings',OER_SLUG),__('Settings',OER_SLUG),'add_users','oer_settings','oer_setngpgfn');
 }
 
 function oer_rsrcimprtrfn()

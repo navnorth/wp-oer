@@ -16,64 +16,64 @@ msgstr ""
 
 #: oer_template/resource-category.php:152
 msgid "Browse %s Resources"
-msgstr ""
+msgstr "Explorar recursos de %s"
 
 #: oer_template/resource-category.php:215
 msgid "There are no resources available for %s"
-msgstr ""
+msgstr "No hay recursos disponibles para %s"
 
 #: oer_template/single-resource.php:104
 msgid "Description"
-msgstr ""
+msgstr "Descripción"
 
 #: oer_template/single-resource.php:117
 msgid "Creator:"
-msgstr ""
+msgstr "Creador:"
 
 #: oer_template/single-resource.php:129
 msgid "Publisher:"
-msgstr ""
+msgstr "Editor:"
 
 #: oer_template/single-resource.php:138 includes/resource_metafields.php:206
 #: includes/resource_metafields.php:266
 msgid "Type:"
-msgstr ""
+msgstr "Tipo:"
 
 #: oer_template/single-resource.php:150
 msgid "Grades:"
-msgstr ""
+msgstr "Los grados:"
 
 #: oer_template/single-resource.php:313
 msgid "Standards"
-msgstr ""
+msgstr "Estándares"
 
 #: oer_template/single-resource.php:320
 msgid "Standard Alignment"
-msgstr ""
+msgstr "Alineación Estándar"
 
 #: oer_template/single-resource.php:332
 msgid "Standard Notations"
-msgstr ""
+msgstr "Notaciones Estándar"
 
 #: oer_template/tag-resource.php:13
 msgid "Tag Archives: %s"
-msgstr ""
+msgstr "Archivos de Etiquetas: %s"
 
 #: oer_template/tag-resource.php:48
 msgid "Nothing Found"
-msgstr ""
+msgstr "Nada Encontrado"
 
 #: oer_template/tag-resource.php:52
 msgid "Sorry, but nothing matched your search criteria. Please try again with some different keywords."
-msgstr ""
+msgstr "Lo sentimos, pero nada coincide con sus criterios de búsqueda. Vuelva a intentarlo con algunas palabras clave diferentes."
 
 #: includes/assign-categories.php:82
 msgid "Select All"
-msgstr ""
+msgstr "Seleccionar todo"
 
 #: includes/assign-categories.php:83
 msgid "UnSelect All"
-msgstr ""
+msgstr "Deselecciona todo"
 
 #: includes/assign-categories.php:88
 msgid "Assign Category"
@@ -85,23 +85,23 @@ msgstr "Asignar Área Temáticas"
 
 #: includes/assign-categories.php:143
 msgid "Select User"
-msgstr ""
+msgstr "Seleccionar usuario"
 
 #: includes/assign-categories.php:182
 msgid "Select User Type"
-msgstr ""
+msgstr "Seleccione el tipo de usuario"
 
 #: includes/assign-categories.php:185
 msgid "Editor"
-msgstr ""
+msgstr "Editor"
 
 #: includes/assign-categories.php:186
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 #: includes/assign-categories.php:195
 msgid "Submit"
-msgstr ""
+msgstr "Enviar"
 
 #: includes/categories-importer.php:116
 msgid "Categories Import Successfully."
@@ -114,258 +114,258 @@ msgstr "Área Temáticas Importación a Granel"
 #: includes/categories-importer.php:138 includes/resources-importer.php:138
 #: includes/standards-importer.php:188
 msgid "Import"
-msgstr ""
+msgstr "Importar"
 
 #: includes/resource_front.php:25
 msgid "Resource Title and Resource URL is required"
-msgstr ""
+msgstr "El título del recurso y la URL del recurso son obligatorios"
 
 #: includes/resource_front.php:175 includes/resources-importer.php:425
 msgid "Resource Created successfully!"
-msgstr ""
+msgstr "Recurso creado correctamente!"
 
 #: includes/resource_metafields.php:10
 msgid "Resource URL:"
-msgstr ""
+msgstr "URL de recurso:"
 
 #: includes/resource_metafields.php:20
 msgid "Highlight:"
-msgstr ""
+msgstr "Destacar:"
 
 #: includes/resource_metafields.php:24
 msgid "True"
-msgstr ""
+msgstr "Cierto"
 
 #: includes/resource_metafields.php:25
 msgid "False"
-msgstr ""
+msgstr "Falso"
 
 #: includes/resource_metafields.php:31
 msgid "Grade:"
-msgstr ""
+msgstr "Grado:"
 
 #: includes/resource_metafields.php:51
 msgid "Pre-K"
-msgstr ""
+msgstr "Pre-K"
 
 #: includes/resource_metafields.php:52
 msgid "K (Kindergarten)"
-msgstr ""
+msgstr "K (Jardín de infancia)"
 
 #: includes/resource_metafields.php:53
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: includes/resource_metafields.php:54
 msgid "2"
-msgstr ""
+msgstr "2"
 
 #: includes/resource_metafields.php:55
 msgid "3"
-msgstr ""
+msgstr "3"
 
 #: includes/resource_metafields.php:56
 msgid "4"
-msgstr ""
+msgstr "4"
 
 #: includes/resource_metafields.php:57
 msgid "5"
-msgstr ""
+msgstr "5"
 
 #: includes/resource_metafields.php:58
 msgid "6"
-msgstr ""
+msgstr "6"
 
 #: includes/resource_metafields.php:59
 msgid "7"
-msgstr ""
+msgstr "7"
 
 #: includes/resource_metafields.php:60
 msgid "8"
-msgstr ""
+msgstr "8"
 
 #: includes/resource_metafields.php:61
 msgid "9"
-msgstr ""
+msgstr "9"
 
 #: includes/resource_metafields.php:62
 msgid "10"
-msgstr ""
+msgstr "10"
 
 #: includes/resource_metafields.php:63
 msgid "11"
-msgstr ""
+msgstr "11"
 
 #: includes/resource_metafields.php:64
 msgid "12"
-msgstr ""
+msgstr "12"
 
 #: includes/resource_metafields.php:72
 msgid "Date Created:"
-msgstr ""
+msgstr "Fecha de Creacion:"
 
 #: includes/resource_metafields.php:82
 msgid "Date Modified:"
-msgstr ""
+msgstr "Fecha Modificada:"
 
 #: includes/resource_metafields.php:92
 msgid "Media Type:"
-msgstr ""
+msgstr "Tipo de medio:"
 
 #: includes/resource_metafields.php:97
 msgid "Website"
-msgstr ""
+msgstr "Sitio web"
 
 #: includes/resource_metafields.php:98 includes/resource_metafields.php:115
 msgid "Audio"
-msgstr ""
+msgstr "Audio"
 
 #: includes/resource_metafields.php:99
 msgid "Document"
-msgstr ""
+msgstr "Documento"
 
 #: includes/resource_metafields.php:100
 msgid "Image"
-msgstr ""
+msgstr "Imagen"
 
 #: includes/resource_metafields.php:101
 msgid "Video"
-msgstr ""
+msgstr "Video"
 
 #: includes/resource_metafields.php:102 includes/resource_metafields.php:124
 msgid "Other"
-msgstr ""
+msgstr "Otro"
 
 #: includes/resource_metafields.php:109
-msgid "Learning Resource Type:"
-msgstr ""
+msgid "Learning Resource Type"
+msgstr "Tipo de Recurso de Aprendizaje"
 
 #: includes/resource_metafields.php:114
 msgid "Assessment"
-msgstr ""
+msgstr "Evaluación"
 
 #: includes/resource_metafields.php:116
 msgid "Calculator"
-msgstr ""
+msgstr "Calculadora"
 
 #: includes/resource_metafields.php:117
 msgid "Demonstration"
-msgstr ""
+msgstr "Demostración"
 
 #: includes/resource_metafields.php:118
 msgid "Game"
-msgstr ""
+msgstr "Juego"
 
 #: includes/resource_metafields.php:119
 msgid "Interview"
-msgstr ""
+msgstr "Entrevista"
 
 #: includes/resource_metafields.php:120
 msgid "Lecture"
-msgstr ""
+msgstr "Conferencia"
 
 #: includes/resource_metafields.php:121
 msgid "Lesson Plan"
-msgstr ""
+msgstr "Plan de estudios"
 
 #: includes/resource_metafields.php:122
 msgid "Simulation"
-msgstr ""
+msgstr "Simulación"
 
 #: includes/resource_metafields.php:123
 msgid "Presentation"
-msgstr ""
+msgstr "Presentación"
 
 #: includes/resource_metafields.php:131
 msgid "Interactivity:"
-msgstr ""
+msgstr "Interactividad:"
 
 #: includes/resource_metafields.php:136
 msgid "Interactive"
-msgstr ""
+msgstr "Interactivo"
 
 #: includes/resource_metafields.php:137
 msgid "Passive"
-msgstr ""
+msgstr "Pasivo"
 
 #: includes/resource_metafields.php:138
 msgid "Social"
-msgstr ""
+msgstr "Social"
 
 #: includes/resource_metafields.php:139
 msgid "Programmatic"
-msgstr ""
+msgstr "Programático"
 
 #: includes/resource_metafields.php:140
 msgid "One-on-One"
-msgstr ""
+msgstr "Uno-a-Uno"
 
 #: includes/resource_metafields.php:141
 msgid "Async"
-msgstr ""
+msgstr "Asincrónico"
 
 #: includes/resource_metafields.php:142
 msgid "Sync"
-msgstr ""
+msgstr "Sincronizar"
 
 #: includes/resource_metafields.php:141
 msgid "Group"
-msgstr ""
+msgstr "Grupo"
 
 #: includes/resource_metafields.php:150
 msgid "Use Rights URL:"
-msgstr ""
+msgstr "URL de derechos de uso:"
 
 #: includes/resource_metafields.php:160
 msgid "Is based on URL:"
-msgstr ""
+msgstr "Está basado en URL:"
 
 #: includes/resource_metafields.php:170
 msgid "Standards Alignment:"
-msgstr ""
+msgstr "Alineación de estándares:"
 
 #: includes/resource_metafields.php:201 includes/resource_metafields.php:261
 msgid "Author Information:"
-msgstr ""
+msgstr "Información del autor:"
 
 #: includes/resource_metafields.php:211 includes/resource_metafields.php:271
 msgid "Person"
-msgstr ""
+msgstr "Persona"
 
 #: includes/resource_metafields.php:212 includes/resource_metafields.php:272
 msgid "Organization"
-msgstr ""
+msgstr "Organización"
 
 #: includes/resource_metafields.php:219 includes/resource_metafields.php:279
 #: includes/resource_metafields.php:325
 msgid "Name:"
-msgstr ""
+msgstr "Nombre:"
 
 #: includes/resource_metafields.php:229 includes/resource_metafields.php:289
 #: includes/resource_metafields.php:335
 msgid "URL:"
-msgstr ""
+msgstr "URL:"
 
 #: includes/resource_metafields.php:239 includes/resource_metafields.php:299
 #: includes/resource_metafields.php:345
 msgid "Email Address:"
-msgstr ""
+msgstr "Correo Electrónico:"
 
 #: includes/resource_metafields.php:313
 msgid "Add Author"
-msgstr ""
+msgstr "Agregar autor"
 
 #: includes/resource_metafields.php:320
 msgid "Publisher Information:"
-msgstr ""
+msgstr "Información del editor:"
 
 #: includes/resources-importer.php:483
 msgid "Import Resources"
-msgstr ""
+msgstr "Importar recursos"
 
 #: includes/set-category-images.php:23
 msgid "S.No"
-msgstr ""
+msgstr "S.No"
 
 #: includes/set-category-images.php:24
 msgid "Category Name"
@@ -373,23 +373,23 @@ msgstr "Nombre del Área Temática"
 
 #: includes/set-category-images.php:25
 msgid "Upload/Remove"
-msgstr ""
+msgstr "Subir / Eliminar"
 
 #: includes/set-category-images.php:26
 msgid "Upload/Remove on Hover"
-msgstr ""
+msgstr "Cargar / Eliminar al pasar el mouse"
 
 #: includes/set-category-images.php:49 includes/set-category-images.php:64
 msgid "Update"
-msgstr ""
+msgstr "Actualizar"
 
 #: includes/set-category-images.php:49 includes/set-category-images.php:64
 msgid "Upload"
-msgstr ""
+msgstr "Subir"
 
 #: includes/set-category-images.php:51 includes/set-category-images.php:66
 msgid "Remove"
-msgstr ""
+msgstr "Eliminar"
 
 #: includes/settings.php:52
 msgid "Assign Page Template to Category Pages"
@@ -398,63 +398,63 @@ msgstr "Asignar Plantilla de Página a las Páginas del Área Temática"
 #: includes/settings.php:59 includes/settings.php:71 includes/settings.php:83
 #: includes/settings.php:107
 msgid "Save"
-msgstr ""
+msgstr "Ahorrar"
 
 #: includes/settings.php:66
 msgid "Set Path For Python Excutable Script"
-msgstr ""
+msgstr "Establecer ruta para el script ejecutable de Python"
 
 #: includes/settings.php:78
 msgid "Set Path For Python Installation"
-msgstr ""
+msgstr "Establecer ruta para la instalación de Python"
 
 #: includes/settings.php:90
 msgid "Screenshot and Display Settings"
-msgstr ""
+msgstr "Configuración de pantalla y captura de pantalla"
 
 #: includes/settings.php:93
 msgid "Enable Screenshots?"
-msgstr ""
+msgstr "Habilitar capturas de pantalla?"
 
 #: includes/settings.php:96
 msgid "Use xvfb?"
-msgstr ""
+msgstr "Usar xvfb?"
 
 #: includes/settings.php:99
 msgid "Enable Debug Mode?"
-msgstr ""
+msgstr "Habilitar el modo de depuración?"
 
 #: includes/settings.php:102
 msgid "Use Bootstrap?"
-msgstr ""
+msgstr "Usar Bootstrap?"
 
 #: includes/settings.php:115
 msgid "More info"
-msgstr ""
+msgstr "Más información"
 
 #: includes/standards-importer.php:170
 msgid "Standards Are Successfully Imported."
-msgstr ""
+msgstr "Los estándares se importan con éxito."
 
 #: includes/standards-importer.php:179
 msgid "Standards Import"
-msgstr ""
+msgstr "Importación de estándares"
 
 #: includes/standards-importer.php:182
 msgid "Import requires an XML file in the format used by ASN for Common Core State Standards. You can download the CCSS in XML format here:"
-msgstr ""
+msgstr "La importación requiere un archivo XML en el formato utilizado por ASN para los Estándares Estatales Básicos Comunes. Puede descargar el CCSS en formato XML aquí:"
 
 #: includes/standards-importer.php:197
 msgid "Id"
-msgstr ""
+msgstr "Id"
 
 #: includes/standards-importer.php:198
 msgid "Standard Title"
-msgstr ""
+msgstr "Título estándar"
 
 #: includes/standards-importer.php:199
 msgid "Url"
-msgstr ""
+msgstr "Url"
 
 #: includes/init.php Subject Area Page
 msgid "Subject Area"
@@ -489,3 +489,93 @@ msgstr "Eliminar icono de desplazamiento"
 
 msgid "Add New Subject Area"
 msgstr "Agregar nueva área temática"
+
+msgid "Subject Areas"
+msgstr "Áreas temáticas"
+
+msgid "Add Resource"
+msgstr "Agregar Recurso"
+
+msgid "Edit Resource"
+msgstr "Editar Recurso"
+
+msgid "New Resource"
+msgstr "Nuevo Recurso"
+
+msgid "All Resources"
+msgstr "Todos los Recursos"
+
+msgid "View Resource"
+msgstr "Ver Recurso"
+
+msgid "Search"
+msgstr "Buscar"
+
+msgid "Create Resources"
+msgstr "Crear Recursos"
+
+msgid "Resource"
+msgstr "Recurso"
+
+msgid "Grade Level"
+msgstr "Nivel de Grado"
+
+msgid "Grade Levels"
+msgstr "Niveles de Grado"
+
+msgid "Search Grade Levels"
+msgstr "Niveles de Grado"
+
+msgid "Settings"
+msgstr "Ajustes"
+
+msgid "Open Resource Meta Fields"
+msgstr "Campos de Metadatos de Recursos Abiertos"
+
+msgid "Age Levels"
+msgstr "Niveles de Edad"
+
+msgid "Instructional Time"
+msgstr "Tiempo de Instrucción"
+
+msgid "Creative Commons License"
+msgstr "Licencia Creative Commons"
+
+msgid "Format"
+msgstr "Formato"
+
+msgid "Created Date"
+msgstr "Fecha de Creación"
+
+msgid "Date Created Estimate"
+msgstr "Fecha de Creación Estimada"
+
+msgid "Date Updated"
+msgstr "Fecha Actualizada"
+
+msgid "Add Standards"
+msgstr "Agregar Estándares"
+
+msgid "Repository Information"
+msgstr "Información del Repositorio"
+
+msgid "External Repository"
+msgstr "Repositorio Externo"
+
+msgid "Repository Record"
+msgstr "Registro de Repositorio"
+
+msgid "Citation"
+msgstr "Citación"
+
+msgid "Sensitive Material Warning"
+msgstr "Advertencia de Material Sensible"
+
+msgid "Transcription"
+msgstr "Transcripción"
+
+msgid "Related Resources:"
+msgstr "Recursos Relacionados:"
+
+msgid "Add Related Resources"
+msgstr "Agregar Recursos Relacionados"
