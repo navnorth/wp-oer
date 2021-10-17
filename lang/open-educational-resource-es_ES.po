@@ -618,3 +618,177 @@ msgstr "Más información"
 
 msgid "Import - OER"
 msgstr "Importar - OER"
+
+msgid "Settings - WP OER"
+msgstr "Configuración - WP OER"
+
+msgid "Adjust settings below as necessary for your installation. For additional information on these options check the support forums or <a href='https://www.wp-oer.com/' target='_blank'>wp-oer.com</a>"
+msgstr "Ajuste la configuración a continuación según sea necesario para su instalación. Para obtener información adicional sobre estas opciones, consulte los foros de soporte o <a href='https://www.wp-oer.com/' target='_blank'> wp-oer.com </a>"
+
+msgid "PDF Embeds"
+msgstr "Incrustaciones de PDF"
+
+msgid "Screenshot Utility"
+msgstr "Utilidad de Captura de Pantalla"
+
+msgid "Use the options below to make adjustments to the look and feel of the OER pages. For more fine-tune customizations, additional CSS can be provided to include on all OER pages."
+msgstr "Utilice las siguientes opciones para realizar ajustes en la apariencia de las páginas OER. Para personalizaciones más precisas, se puede proporcionar CSS adicional para incluir en todas las páginas OER."
+
+msgid "Please complete <a href='?post_type=resource&page=oer_settings&tab=setup'>OER setup</a> first to load the metadata fields."
+msgstr "Primero complete la <a href='?post_type=resource&page=oer_settings&tab=setup'>configuración de OER</a> para cargar los campos de metadatos."
+
+msgid "Use the options below to update metadata field options."
+msgstr "Utilice las siguientes opciones para actualizar las opciones del campo de metadatos."
+
+msgid "Save Metadata Options"
+msgstr "Guardar Opciones de Metadatos"
+
+msgid "When first setting up the plugin, the following options will give you the base set of data to see how everything works. All of these options will be available to you in other settings and features at a later time if you want to skip any or all of these options."
+msgstr "Cuando configure el complemento por primera vez, las siguientes opciones le brindarán el conjunto básico de datos para ver cómo funciona todo. Todas estas opciones estarán disponibles para usted en otras configuraciones y funciones en un momento posterior si desea omitir alguna o todas estas opciones."
+
+msgid "Reset OER Plugin Setup"
+msgstr "Restablecer la Configuración del Complemento OER"
+
+msgid "This function is provided just to assist with testing. Be careful with the options below as each of them will remove data from your Wordpress site."
+msgstr "Esta función se proporciona solo para ayudar con las pruebas. Tenga cuidado con las siguientes opciones, ya que cada una de ellas eliminará datos de su sitio de Wordpress."
+
+msgid "Continue"
+msgstr "Continuar"
+
+msgid "The plugin has successfully loaded the default data."
+msgstr "El complemento ha cargado correctamente los datos predeterminados."
+
+msgid "General"
+msgstr "General"
+
+msgid "Styles"
+msgstr "Estilos"
+
+msgid "Metadata Fields"
+msgstr "Campos de Metadatos"
+
+msgid "Setup"
+msgstr "Configuración"
+
+msgid "Reset"
+msgstr "Reiniciar"
+
+msgid "Local PDF Resources"
+msgstr "Recursos PDF Locales"
+
+msgid "External PDF Resources"
+msgstr "Recursos PDF Externos"
+
+msgid "Disable Screenshots"
+msgstr "Desactivar Capturas de Pantalla"
+
+msgid "Enable Server-side screenshots"
+msgstr "Habilitar capturas de pantalla del lado del servidor"
+
+msgid "Use xvfb -- typically necessary on Linux installations"
+msgstr "Utilice xvfb -- normalmente necesario en instalaciones de Linux"
+
+msgid "Python executable"
+msgstr "Ejecutable de Python"
+
+msgid "Python Screenshot script"
+msgstr "Secuencia de comandos de captura de pantalla de Python"
+
+msgid "Use external screenshot service"
+msgstr "Usar servicio de captura de pantalla externo"
+
+msgid "Service URL"
+msgstr "URL de servicio"
+
+msgid "use $url for where the Resource URL parameter should be placed"
+msgstr "usar $url para saber dónde se debe colocar el parámetro de URL del recurso"
+
+msgid "Import Bootstrap CSS & JS libraries"
+msgstr "Importar bibliotecas Bootstrap CSS y JS"
+
+msgid "Uncheck if your WP theme already included Bootstrap."
+msgstr "Desmarque si su tema de WP ya incluía Bootstrap."
+
+msgid "Display Subjects menu on Subject Area pages"
+msgstr "Mostrar el menú Temas en las páginas del Área temática"
+
+msgid "Lists all subject areas in left column of Subject Area pages - may conflict with themes using left navigation."
+msgstr "Enumera todas las áreas temáticas en la columna izquierda de las páginas de áreas temáticas; puede entrar en conflicto con los temas al utilizar la navegación izquierda."
+
+msgid "Import Fontawesome CSS"
+msgstr "Importar CSS de Fontawesome"
+
+msgid "Uncheck if your WP theme already included Font Awesome."
+msgstr "Desmarque si su tema de WP ya incluía Font Awesome."
+
+msgid "Subject Area pages"
+msgstr "Páginas del Area Temática"
+
+msgid "<h3>Hide Page Titles</h3><p class="description hide-description">Some themes have built-in display of page titles.</p>"
+msgstr "<h3>Ocultar Títulos de Página</h3><p class="description hide-description"> Algunos temas tienen visualización incorporada de títulos de página.</p>"
+
+msgid "Resource pages"
+msgstr "Páginas de recursos"
+
+msgid "Additional CSS"
+msgstr "CSS adicional"
+
+msgid "Easily customize the look and feel with your own CSS (sitewide)."
+msgstr "Personalice fácilmente la apariencia con su propio CSS (en todo el sitio)."
+
+msgid "Additional CSS for Plugin Pages"
+msgstr "CSS adicional para páginas de complementos"
+
+msgid "Apply custom CSS to plugin pages only."
+msgstr "Aplique CSS personalizado solo a las páginas de complementos."
+
+msgid "Import Example Set of Resources"
+msgstr "Importar conjunto de recursos de ejemplo"
+
+msgid "A collection of over 50 Open Educational Resources has been provided as a base - you can easily remove these later."
+msgstr "Se ha proporcionado una colección de más de 50 recursos educativos abiertos como base; puede eliminarlos fácilmente más adelante."
+
+msgid "Import Default Subject Areas"
+msgstr "Importar Areas Temáticas Predeterminadas"
+
+msgid "A general listing of the most common subject areas."
+msgstr "Una lista general de las áreas temáticas más comunes."
+
+msgid "Import Default Grade Levels"
+msgstr "Importar Niveles de Grado Predeterminados"
+
+msgid "A general listing of K-12 grade levels."
+msgstr "Una lista general de los niveles de grado K-12."
+
+msgid "Import Common Core State Standards"
+msgstr "Importar Estándares Estatales Básicos Comunes"
+
+msgid "Enable use of CCSS as an optional alignment option for resources."
+msgstr "Habilite el uso de CCSS como una opción de alineación opcional para los recursos."
+
+msgid "Your theme does not appear to have bootstrap. Uncheck if your WP theme already included Bootstrap"
+msgstr "Su tema no parece tener bootstrap. Desmarque si su tema de WP ya incluía Bootstrap"
+
+msgid "Use Gutenberg Editor"
+msgstr "Usar la Editora de Gutenberg"
+
+msgid "Delete standards data"
+msgstr "Eliminar Datos de Estándares"
+
+msgid "Delete all resource subject area taxonomies"
+msgstr "Eliminar todas las taxonomías del área temática del recurso"
+
+msgid "Delete all resources"
+msgstr "Eliminar todos los recursos"
+
+msgid "Delete media associated with resources(screenshots)"
+msgstr "Eliminar medios asociados con recursos (capturas de pantalla)"
+
+msgid "Remove all OER plugin settings"
+msgstr "Eliminar todas las configuraciones del complemento OER"
+
+msgid "Deactivate OER plugin"
+msgstr "Desactivar el complemento OER"
+
+msgid "Delete the OER plugin files"
+msgstr "Eliminar los archivos del complemento OER"

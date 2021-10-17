@@ -835,7 +835,7 @@ function oer_styles_settings(){
 			'type' => 'checkbox',
 			'value' => '1',
 			'name' =>  __('Subject Area pages', OER_SLUG),
-			'pre_html' => '<h3>Hide Page Titles</h3><p class="description hide-description">Some themes have built-in display of page titles.</p>'		)
+			'pre_html' => __('<h3>Hide Page Titles</h3><p class="description hide-description">Some themes have built-in display of page titles.</p>', OER_SLUG))
 	);
 
 	//Add Settings field for hiding Page title on Resource pages

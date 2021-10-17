@@ -127,14 +127,14 @@ global $message, $type;
 	}
 	
 	if (isset($_REQUEST['setup']) && $_REQUEST['setup']=='true'){
-		$message = "The plugin has successfully loaded the default data.";
+		$message = __("The plugin has successfully loaded the default data.",OER_SLUG);
 		$type = "success";
 	}
 ?>
 <div class="wrap">
     
     <div id="icon-themes" class="oer-logo"><img src="<?php echo esc_url(OER_URL); ?>images/wp-oer-admin-logo.png" /></div>
-    <h2>Settings - WP OER</h2>
+    <h2><?php _e('Settings - WP OER',OER_SLUG); ?></h2>
     <?php settings_errors(); ?>
      
 	<?php
@@ -142,14 +142,14 @@ global $message, $type;
 	?>
      
     <h2 class="nav-tab-wrapper">
-        <a href="?post_type=resource&page=oer_settings&tab=general" class="nav-tab <?php echo $active_tab == 'general' ? 'nav-tab-active' : ''; ?>">General</a>
-        <a href="?post_type=resource&page=oer_settings&tab=styles" class="nav-tab <?php echo $active_tab == 'styles' ? 'nav-tab-active' : ''; ?>">Styles</a>
-	<a href="?post_type=resource&page=oer_settings&tab=metadata" class="nav-tab <?php echo $active_tab == 'metadata' ? 'nav-tab-active' : ''; ?>">Metadata Fields</a>
+        <a href="?post_type=resource&page=oer_settings&tab=general" class="nav-tab <?php echo $active_tab == 'general' ? 'nav-tab-active' : ''; ?>"><?php _e('General',OER_SLUG); ?></a>
+        <a href="?post_type=resource&page=oer_settings&tab=styles" class="nav-tab <?php echo $active_tab == 'styles' ? 'nav-tab-active' : ''; ?>"><?php _e('Styles',OER_SLUG); ?></a>
+	<a href="?post_type=resource&page=oer_settings&tab=metadata" class="nav-tab <?php echo $active_tab == 'metadata' ? 'nav-tab-active' : ''; ?>"><?php _e('Metadata Fields',OER_SLUG); ?></a>
 	<?php if ($active_tab=="setup" || get_option('oer_setup')=="1") { ?>
-        <a href="?post_type=resource&page=oer_settings&tab=setup" class="nav-tab <?php echo $active_tab == 'setup' ? 'nav-tab-active' : ''; ?>">Setup</a>
+        <a href="?post_type=resource&page=oer_settings&tab=setup" class="nav-tab <?php echo $active_tab == 'setup' ? 'nav-tab-active' : ''; ?>"><?php _e('Setup',OER_SLUG); ?></a>
 	<?php } ?>
 	<?php if ($active_tab=="reset") { ?>
-        <a href="?post_type=resource&page=oer_settings&tab=reset" class="nav-tab <?php echo $active_tab == 'reset' ? 'nav-tab-active' : ''; ?>">Reset</a>
+        <a href="?post_type=resource&page=oer_settings&tab=reset" class="nav-tab <?php echo $active_tab == 'reset' ? 'nav-tab-active' : ''; ?>"><?php _e('Reset',OER_SLUG); ?></a>
 	<?php } ?>
     </h2>
     
@@ -335,7 +335,7 @@ function oer_show_metadata_settings() {
 					} ?>
 				</tbody>
 			</table>
-			<?php submit_button("Save Metadata Options"); ?>
+			<?php submit_button(__("Save Metadata Options",OER_SLUG)); ?>
 		</form>
 	</div>
 	<?php } else { ?>
@@ -374,7 +374,7 @@ function oer_show_setup_settings() {
 		<form method="post" class="oer_settings_form" action="options.php"  onsubmit="return processInitialSettings(this)">
 			<?php settings_fields("oer_setup_settings"); ?>
 			<?php do_settings_sections("setup_settings_section"); ?>
-			<?php submit_button('Continue', 'primary setup-continue'); ?>
+			<?php submit_button(__('Continue',OER_SLUG), 'primary setup-continue'); ?>
 		</form>
 	</div>
 </div>
@@ -409,7 +409,7 @@ function oer_show_reset_settings() {
 		<form method="post" class="oer_settings_form reset-form" action="options.php"  onsubmit="return confirm_deletion(this)">
 			<?php settings_fields("oer_reset_settings"); ?>
 			<?php do_settings_sections("reset_settings_section"); ?>
-			<?php submit_button('Submit', 'primary setup-continue'); ?>
+			<?php submit_button(__('Submit',OER_SLUG), 'primary setup-continue'); ?>
 		</form>
 	</div>
 </div>
