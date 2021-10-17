@@ -25,7 +25,7 @@ if (!current_user_can('manage_options')) {
 ?>
 <div class="wrap">
     <div id="icon-themes" class="oer-logo"><img src="<?php echo esc_url(OER_URL . 'images/wp-oer-admin-logo.png'); ?>" /></div>
-    <p class="oer_heading">Import - OER</p>
+    <p class="oer_heading"><?php _e('Import - OER', OER_SLUG); ?></p>
     <?php settings_errors(); ?>
     <div class="oer-import-body">
 	<div class="oer-import-row">

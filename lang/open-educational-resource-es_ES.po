@@ -579,3 +579,42 @@ msgstr "Recursos Relacionados:"
 
 msgid "Add Related Resources"
 msgstr "Agregar Recursos Relacionados"
+
+msgid "Use the options below to import data sets to the OER tool. Additional information can be found on the support forums or wp-oer.com."
+msgstr "Utilice las siguientes opciones para importar conjuntos de datos a la herramienta OER. Puede encontrar información adicional en los foros de soporte o en wp-oer.com."
+
+msgid "For bulk upload of resources. Import file must match the spreadsheet template. If screenshot processing is enabled, a maximum of 50 records per transaction is suggested."
+msgstr "Para carga masiva de recursos. El archivo de importación debe coincidir con la plantilla de la hoja de cálculo. Si el procesamiento de capturas de pantalla está habilitado, se sugiere un máximo de 50 registros por transacción."
+
+msgid "Download Spreadsheet Template"
+msgstr "Descargar Plantilla de Hoja de Cálculo"
+
+msgid "Import Subject Areas"
+msgstr "Importar Areas Temáticas"
+
+msgid "Easily setup resource subject areas. See the spreadsheet template for data format specifications."
+msgstr "Configure fácilmente áreas temáticas de recursos. Consulte la plantilla de la hoja de cálculo para conocer las especificaciones del formato de datos."
+
+msgid "Import Academic Standards"
+msgstr "Importar Estándares Académicos"
+
+msgid "Resources can be easily tagged to standards to provide additional alignment information to viewers. Datasets for the standards listed below are included with the plugin."
+msgstr "Los recursos se pueden etiquetar fácilmente a los estándares para proporcionar información de alineación adicional a los espectadores. Los conjuntos de datos para los estándares que se enumeran a continuación se incluyen con el complemento."
+
+msgid "ASN Standards Info"
+msgstr "Información Sobre Estándares ASN"
+
+msgid "previously imported"
+msgstr "previamente importado"
+
+msgid "Support Options"
+msgstr "Opciones de Soporte"
+
+msgid "WP OER Plugin Support"
+msgstr "Compatibilidad con el Complemento WP OER"
+
+msgid "More Information"
+msgstr "Más información"
+
+msgid "Import - OER"
+msgstr "Importar - OER"
