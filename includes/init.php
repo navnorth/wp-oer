@@ -202,7 +202,7 @@ function oer_postcreation(){
     );
     
     if ($_use_gutenberg=="on" or $_use_gutenberg=="1")
-	$args['show_in_rest'] = true;
+		$args['show_in_rest'] = true;
 	
     register_post_type( 'resource', $args);
 }
@@ -248,12 +248,10 @@ function oer_create_resource_taxonomies() {
 		    'labels'            => $labels,
 		    'show_ui'           => true,
 		    'show_admin_column' => true,
+		    'show_in_rest'		=> true,
 		    'query_var'         => true,
 		    'rewrite'           => array( 'slug' => $tax['slug'] ),
 	    );
-	    
-	    if ($_use_gutenberg=="on" or $_use_gutenberg=="1")
-			$args['show_in_rest'] = true;
 
 	    register_taxonomy( $tax['slug'], array( 'resource' ), $args );
     }
