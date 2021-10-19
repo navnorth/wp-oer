@@ -253,24 +253,20 @@ function oer_create_resource_taxonomies() {
 		    'rewrite'           => array( 'slug' => $tax['slug'] ),
 	    );
 
+	    if ($tax['slug']=='resource-grade-level'){
+	    	$args['sort'] 		= true;
+	    	$args['args']		= array('orderby'=> 'term_order');
+	    }
 	    register_taxonomy( $tax['slug'], array( 'resource' ), $args );
     }
 }
-//register cutsom category
+//register custom category
 
-// Display grade levels according to term_order in Gutenberg editor
-add_filter('get_terms', 'oer_grade_level_filter', 10, 4);
-function oer_grade_level_filter($terms, $taxonomies, $args, $term_query){
-	global $pagenow;
-	if (is_admin() && ($pagenow == 'post-new.php' || $pagenow == 'post.php') && in_array('resource-grade-level',$taxonomies) ){
-		usort($terms, function($a, $b){
-			if ($a->term_order == $b->term_order) {
-        		return 0;
-    		}
-    		return ($a->term_order < $b->term_order) ? -1 : 1;
-		});
-	}
-	return $terms;
+// Display grade levels according to term_order in block editor sidebar
+add_filter('rest_resource-grade-level_query','oer_sort_grade_levels', 10, 2);
+function oer_sort_grade_levels($args, $request){
+	$args['orderby'] = "term_order";
+	return $args;
 }
 
 // Change order of grade level display on both edit tags page and in classic editor
