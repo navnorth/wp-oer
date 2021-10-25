@@ -11,6 +11,7 @@ function oer_show_subjects($atts) {
     $column = " col-md-3";
     $show_children = false;
     $display_size = "oer-cat-div";
+    $expand_element = "";
     
     if ($atts)
 	extract($atts);
@@ -113,6 +114,7 @@ function oer_show_subjects($atts) {
 				if ($sublevels=="yes" || $sublevels=="true"){
 				    $show_children=true;
 				    $toggle_navigation = ' onclick="togglenavigation(this);"';
+				    $expand_element = '<span title="expand sublevels" class="oer-expand-subject"><i class="fas fa-expand"></i></span>';
 				}
 			    }
 			    
@@ -120,7 +122,7 @@ function oer_show_subjects($atts) {
 				    <div class="oer-cat-icn" style="background: url('.esc_url($icn_guid).') no-repeat scroll center center; "></div>
 				    <div class="oer-cat-txt-btm-cntnr">
 					    <ul>
-						    <li><label class="oer-mne-sbjct-ttl" ><a href="'. esc_url(site_url() .'/resource-subject-area/'. $category->slug) .'">'. $category->name .'</a></label>'.$count_span.'</li>
+						    <li>'.$expand_element.'<label class="oer-mne-sbjct-ttl" ><a href="'. esc_url(site_url() .'/resource-subject-area/'. $category->slug) .'">'. $category->name .'</a></label>'.$count_span.'</li>
 					    </ul>
 				    </div>';
 			    
