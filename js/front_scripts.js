@@ -190,7 +190,7 @@ function togglenavigation(ref)
 				if(jQuery(this).attr("data-class") == datid)
 				{
 					jQuery(this).slideUp("slow");
-					jQuery(this).parent(".oer_snglctwpr").height("auto");
+					jQuery(this).parent(".oer_snglctwpr").height("auto");					
 				}
 				else
 				{
@@ -225,6 +225,11 @@ function togglenavigation(ref)
 			jQuery(this).parent(".oer_snglctwpr").height("auto");
 		}
 	});
+
+	if (jQuery(ref).find('.oer-cat-txt-btm-cntnr li .oer-expand-subject i').hasClass('fa-expand'))
+		jQuery(ref).find('.oer-cat-txt-btm-cntnr li .oer-expand-subject i').removeClass('fa-expand').addClass('fa-compress');
+	else
+		jQuery(ref).find('.oer-cat-txt-btm-cntnr li .oer-expand-subject i').removeClass('fa-compress').addClass('fa-expand');
 
 }
 
