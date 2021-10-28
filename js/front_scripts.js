@@ -189,8 +189,12 @@ function togglenavigation(ref)
 			{
 				if(jQuery(this).attr("data-class") == datid)
 				{
-					jQuery(this).slideUp("slow");
-					jQuery(this).parent(".oer_snglctwpr").height("auto");					
+					jQuery(this).slideUp({
+						duration:"slow",
+						complete: function(){
+							jQuery(this).parent(".oer_snglctwpr").height("auto");
+						}
+					});
 				}
 				else
 				{
@@ -221,8 +225,12 @@ function togglenavigation(ref)
 		}
 		else
 		{
-			jQuery(this).slideUp("slow");
-			jQuery(this).parent(".oer_snglctwpr").height("auto");
+			jQuery(this).slideUp({
+				duration:"slow",
+				complete: function(){
+					jQuery(this).parent(".oer_snglctwpr").height("auto");
+				}
+			});
 		}
 	});
 
