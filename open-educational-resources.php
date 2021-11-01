@@ -646,7 +646,7 @@ function oer_settings_page() {
 			'uid' => 'oer_disable_screenshots',
 			'type' => 'radio',
 			'class' => 'screenshot_option',
-			'name' =>  __('Disable Screenshots', OER_SLUG),
+			'name' =>  __('Disable screenshots', OER_SLUG),
 			'value' => '0'
 		)
 	);
@@ -662,7 +662,7 @@ function oer_settings_page() {
 			'uid' => 'oer_enable_screenshot',
 			'type' => 'radio',
 			'class' => 'screenshot_option',
-			'name' =>  __('Enable Server-side screenshots', OER_SLUG),
+			'name' =>  __('Enable server-side screenshots', OER_SLUG),
 			'value' => '1'
 		)
 	);
@@ -678,7 +678,7 @@ function oer_settings_page() {
 			'uid' => 'oer_use_xvfb',
 			'type' => 'checkbox',
 			'indent' => true,
-			'name' =>  __('Use xvfb -- typically necessary on Linux installations', OER_SLUG)
+			'name' =>  __('Use xvfb&mdash;typically necessary on Linux installations', OER_SLUG)
 		)
 	);
 
@@ -708,7 +708,7 @@ function oer_settings_page() {
 			'uid' => 'oer_python_path',
 			'type' => 'textbox',
 			'indent' => true,
-			'title' => __('Python Screenshot script', OER_SLUG)
+			'title' => __('Python screenshot script', OER_SLUG)
 		)
 	);
 
@@ -723,7 +723,7 @@ function oer_settings_page() {
 			'uid' => 'oer_external_screenshots',
 			'type' => 'radio',
 			'class' => 'screenshot_option',
-			'name' =>  __('Use external screenshot service', OER_SLUG),
+			'name' =>  __('Use an external screenshot service', OER_SLUG),
 			'value' => '2'
 		)
 	);
@@ -740,7 +740,7 @@ function oer_settings_page() {
 			'type' => 'textbox',
 			'indent' => true,
 			'title' => __("Service URL", OER_SLUG),
-			'description' => __('use $url for where the Resource URL parameter should be placed', OER_SLUG)
+			'description' => __('Use $url for where the Resource URL parameter should be placed.', OER_SLUG)
 		)
 	);
 
@@ -786,7 +786,7 @@ function oer_styles_settings(){
 			'type' => 'checkbox',
 			'value' => '1',
 			'name' =>  __('Import Bootstrap CSS & JS libraries', OER_SLUG),
-			'description' => __('Uncheck if your WP theme already included Bootstrap.', OER_SLUG)
+			'description' => __('Uncheck if your WP theme already includes Bootstrap.', OER_SLUG)
 		)
 	);
 
@@ -803,7 +803,7 @@ function oer_styles_settings(){
 			'value' => '1',
 			'default' => true,
 			'name' =>  __('Display Subjects menu on Subject Area pages', OER_SLUG),
-			'description' => __('Lists all subject areas in left column of Subject Area pages - may conflict with themes using left navigation.', OER_SLUG)
+			'description' => __('Lists all subject areas in the left column of Subject Area pages—may conflict with themes using left navigation.', OER_SLUG)
 		)
 	);
 
@@ -819,7 +819,7 @@ function oer_styles_settings(){
 			'type' => 'checkbox',
 			'value' => '1',
 			'name' =>  __('Import Fontawesome CSS', OER_SLUG),
-			'description' => __('Uncheck if your WP theme already included Font Awesome.', OER_SLUG)
+			'description' => __('Uncheck if your WP theme already includes Font Awesome.', OER_SLUG)
 		)
 	);
 
@@ -835,7 +835,7 @@ function oer_styles_settings(){
 			'type' => 'checkbox',
 			'value' => '1',
 			'name' =>  __('Subject Area pages', OER_SLUG),
-			'pre_html' => __('<h3>Hide Page Titles</h3><p class="description hide-description">Some themes have built-in display of page titles.</p>', OER_SLUG))
+			'pre_html' => __('<h3>Hide Page Titles</h3><p class="description hide-description">Some themes have a built-in display of page titles.</p>', OER_SLUG))
 	);
 
 	//Add Settings field for hiding Page title on Resource pages
