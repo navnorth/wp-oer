@@ -188,7 +188,7 @@ function oer_show_general_settings() {
 <div class="oer-plugin-body">
 	<div class="oer-plugin-row">
 		<div class="oer-row-left">
-			<?php _e("Adjust settings below as necessary for your installation. For additional information on these options check the support forums or <a href='https://www.wp-oer.com/' target='_blank'>wp-oer.com</a>", OER_SLUG); ?>
+			<?php _e("Adjust the settings below as necessary for your installation. For additional information on these options, check the support forums or <a href='https://www.wp-oer.com/' target='_blank'>wp-oer.com</a>", OER_SLUG); ?>
 			<div class="oer-import-row">
 			<h2 class="hidden"></h2>
 			<?php if ($message) { ?>
@@ -231,7 +231,7 @@ function oer_show_styles_settings() {
 <div class="oer-plugin-body">
 	<div class="oer-plugin-row">
 		<div class="oer-row-left">
-			<?php _e("Use the options below to make adjustments to the look and feel of the OER pages. For more fine-tune customizations, additional CSS can be provided to include on all OER pages.", OER_SLUG); ?>
+			<?php _e("Use the options below to make adjustments to the look and feel of the OER pages. For more fine-tuned customizations, additional CSS can be provided to be included on all OER pages.", OER_SLUG); ?>
 		</div>
 		<div class="oer-row-right">
 			<strong><?php _e("Support Options", OER_SLUG); ?></strong>
