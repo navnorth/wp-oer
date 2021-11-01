@@ -1,3 +1,4 @@
+const oer__ = wp.i18n.__;
 jQuery(document).ready(function($) {
     var frame,
         metabox = jQuery("#oer_metaboxid.postbox"),
@@ -13,9 +14,9 @@ jQuery(document).ready(function($) {
         }
         
         frame = wp.media({
-            title: 'Select or upload local resource',
+            title: oer__('Select or upload local resource', 'open-educational-resource'),
             button: {
-                text: "Use this resource"
+                text: oer__("Use this resource","open-educational-resource")
             },
             multiple:false
         });

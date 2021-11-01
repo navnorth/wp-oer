@@ -457,9 +457,6 @@ msgid "Url"
 msgstr "Url"
 
 #: includes/init.php Subject Area Page
-msgid "Subject Area"
-msgstr "Área temática"
-
 msgid "Parent Subject Area"
 msgstr "Área temática principal"
 
@@ -468,6 +465,9 @@ msgstr "Área temática principal:"
 
 msgid "Search Subject Areas"
 msgstr "Buscar áreas temáticas"
+
+msgid "All Subject Areas"
+msgstr "Todas las áreas temáticas"
 
 msgid "Subject Area Main Icon"
 msgstr "Icono principal del área temática"
@@ -488,10 +488,22 @@ msgid "Remove Hover Icon"
 msgstr "Eliminar icono de desplazamiento"
 
 msgid "Add New Subject Area"
-msgstr "Agregar nueva área temática"
+msgstr "Agregar Nueva Área Temática"
+
+msgid "New Genre Subject Area"
+msgstr "Área temática de Nuevo Género"
+
+msgid "Subject Area"
+msgstr "Área temática"
+
+msgid "Edit Subject Area"
+msgstr "Editar Área Temática"
+
+msgid "Update Subject Area"
+msgstr "Actualizar Área Temática"
 
 msgid "Subject Areas"
-msgstr "Áreas temáticas"
+msgstr "Área temáticas"
 
 msgid "Add Resource"
 msgstr "Agregar Recurso"
@@ -524,7 +536,28 @@ msgid "Grade Levels"
 msgstr "Niveles de Grado"
 
 msgid "Search Grade Levels"
-msgstr "Niveles de Grado"
+msgstr "Buscar Niveles de Grado"
+
+msgid "All Grade Levels"
+msgstr "Todos los Niveles de Grado"
+
+msgid "Parent Grade Level"
+msgstr "Nivel de Grado de los Padres"
+
+msgid "Parent Grade Level:"
+msgstr "Nivel de Grado de los Padres:"
+
+msgid "Edit Grade Level"
+msgstr "Editar Nivel de Grado"
+
+msgid "Update Grade Level"
+msgstr "Actualizar el Nivel de Grado"
+
+msgid "Add New Grade Level"
+msgstr "Agregar Nuevo Nivel de Grado"
+
+msgid "New Genre Grade Level"
+msgstr "Nuevo Nivel de Grado de Género"
 
 msgid "Settings"
 msgstr "Ajustes"
@@ -792,3 +825,24 @@ msgstr "Desactivar el complemento OER"
 
 msgid "Delete the OER plugin files"
 msgstr "Eliminar los archivos del complemento OER"
+
+msgid "Select"
+msgstr "Seleccionar"
+
+msgid "Add Related Resource"
+msgstr "Agregar recurso relacionado"
+
+msgid "Close"
+msgstr "Cerrar"
+
+msgid "Add Standard"
+msgstr "Agregar Estándar"
+
+msgid "Field Name"
+msgstr "Nombre del Campo"
+
+msgid "Label"
+msgstr "Etiqueta"
+
+msgid "Enabled"
+msgstr "Activado"

@@ -123,7 +123,8 @@ function oer_backside_scripts($hook)
       wp_enqueue_script( 'thickbox' );
       wp_enqueue_script( 'bootstrap-js', OER_URL.'js/bootstrap.min.js', array('jquery'));
       wp_enqueue_script('back-scripts', OER_URL.'js/back_scripts.js',array( 'jquery','media-upload','thickbox','set-post-thumbnail' ));
-      wp_enqueue_script('admin-resource', OER_URL.'js/admin_resource.js');
+      wp_enqueue_script('admin-resource', OER_URL.'js/admin_resource.js', array('wp-i18n'));
+      wp_set_script_translations('admin-resource', OER_SLUG, OER_PATH . '/lang/js');
     }
     
     // Adds our JS file to the queue that WordPress will load
@@ -224,15 +225,15 @@ function oer_create_resource_taxonomies() {
     global $_use_gutenberg;
 
     $arr_tax = array(
-    	array("slug"=>"resource-subject-area","singular_name"=>__("Subject Area",OER_SLUG), "plural_name"=>__("Subject Areas",OER_SLUG)),
-    	array("slug"=>"resource-grade-level","singular_name"=>__("Grade Level",OER_SLUG), "plural_name"=>__("Grade Levels",OER_SLUG))
+    	array("slug"=>"resource-subject-area","singular_name"=>"Subject Area", "plural_name"=>"Subject Areas"),
+    	array("slug"=>"resource-grade-level","singular_name"=>"Grade Level", "plural_name"=>"Grade Levels")
     );
     
     foreach($arr_tax as $tax){
     	$labels = array(
 	      	'name'              => esc_html__( $tax['singular_name'],OER_SLUG ),
 		    'singular_name'     => esc_html_x( $tax['singular_name'], 'taxonomy singular name', OER_SLUG ),
-		    'search_items'      => esc_html__( 'Search '.$tax['plural_name'],OER_SLUG ),
+		    'search_items'      => esc_html__( "Search ".$tax['plural_name'],OER_SLUG ),
 		    'all_items'         => esc_html__( 'All '.$tax['plural_name'], OER_SLUG ),
 		    'parent_item'       => esc_html__( 'Parent '.$tax['singular_name'],OER_SLUG ),
 		    'parent_item_colon' => esc_html__( 'Parent '.$tax['singular_name'].':',OER_SLUG ),
@@ -318,8 +319,8 @@ function oer_edit_upload_image_fields( $term, $taxonomy ) {
         <th scope="row"><label for="feature-group"><?php _e('Subject Area Main Icon', OER_SLUG); ?></label></th>
         <td>
 	    <div class="main_icon_button_img"><img src="<?php echo esc_url($mainIcon); ?>" /></div>
-	    <a id="main_icon_button" href="javascript:void(0);" class="button">Set Main Icon</a>
-	    <a id="remove_main_icon_button" href="javascript:void(0);" class="button<?php if (!$mainIcon):?> hidden<?php endif; ?>">Remove Main Icon</a>
+	    <a id="main_icon_button" href="javascript:void(0);" class="button"><?php _e('Set Main Icon', OER_SLUG); ?></a>
+	    <a id="remove_main_icon_button" href="javascript:void(0);" class="button<?php if (!$mainIcon):?> hidden<?php endif; ?>"><?php _e('Remove Main Icon', OER_SLUG); ?></a>
 	    <input id="mainIcon" type="hidden" size="36" name="mainIcon" value="<?php echo $mainIcon; ?>" />
 	</td>
     </tr><?php
@@ -329,8 +330,8 @@ function oer_edit_upload_image_fields( $term, $taxonomy ) {
         <th scope="row"><label for="feature-group"><?php _e('Subject Area Hover Icon', OER_SLUG); ?></label></th>
         <td>
 	    <div class="hover_icon_button_img"><img src="<?php echo esc_url($hoverIcon); ?>" /></div>
-	    <a id="hover_icon_button" href="javascript:void(0);" class="button">Set Hover Icon</a>
-	    <a id="remove_hover_icon_button" href="javascript:void(0);" class="button<?php if (!$hoverIcon):?> hidden<?php endif; ?>">Remove Hover Icon</a>
+	    <a id="hover_icon_button" href="javascript:void(0);" class="button"><?php _e('Set Hover Icon', OER_SLUG); ?></a>
+	    <a id="remove_hover_icon_button" href="javascript:void(0);" class="button<?php if (!$hoverIcon):?> hidden<?php endif; ?>"><?php _e('Remove Hover Icon', OER_SLUG); ?></a>
 	    <input id="hoverIcon" type="hidden" size="36" name="hoverIcon" value="<?php echo $hoverIcon; ?>" />
 	</td>
     </tr><?php
