@@ -300,9 +300,9 @@ function oer_show_metadata_settings() {
 			<table class="table">
 				<thead>
 					<tr>
-						<th>Field Name</th>
-						<th>Label</th>
-						<th>Enabled</th>
+						<th><?php _e('Field Name', OER_SLUG); ?></th>
+						<th><?php _e('Label', OER_SLUG); ?></th>
+						<th><?php _e('Enabled', OER_SLUG); ?></th>
 					</tr>
 				</thead>
 				<tbody>

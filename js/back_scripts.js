@@ -1,3 +1,5 @@
+const __oer = wp.i18n.__;
+
 var formfield, invoker;
 jQuery(document).ready(function(e) {
 	jQuery( ".oer_datepicker" ).datepicker( { dateFormat: 'MM d, yy' } );
@@ -185,12 +187,12 @@ jQuery(document).ajaxComplete(function(event, xhr, settings) {
 function showMediaUpload(invoker, formfield){
 	var button = jQuery(this),
 	custom_uploader = wp.media({
-	    title: 'Insert image',
+	    title: __oer('Insert image','open-educational-resource'),
 	    library : {
 	        type : 'image'
 	    },
 	    button: {
-	        text: 'Use this image' // button label text
+	        text: __oer('Use this image','open-educational-resource') // button label text
 	    },
 	    multiple: false // multiple image selection set to false
 	}).on('select', function() { // it also has "open" and "close" events 
