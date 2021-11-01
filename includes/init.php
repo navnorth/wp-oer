@@ -123,7 +123,8 @@ function oer_backside_scripts($hook)
       wp_enqueue_script( 'thickbox' );
       wp_enqueue_script( 'bootstrap-js', OER_URL.'js/bootstrap.min.js', array('jquery'));
       wp_enqueue_script('back-scripts', OER_URL.'js/back_scripts.js',array( 'jquery','media-upload','thickbox','set-post-thumbnail' ));
-      wp_enqueue_script('admin-resource', OER_URL.'js/admin_resource.js');
+      wp_enqueue_script('admin-resource', OER_URL.'js/admin_resource.js', array('wp-i18n'));
+      wp_set_script_translations('admin-resource', OER_SLUG, OER_PATH . '/lang/js');
     }
     
     // Adds our JS file to the queue that WordPress will load
