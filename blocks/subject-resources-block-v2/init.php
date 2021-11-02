@@ -37,8 +37,8 @@ function wp_oer_subject_resources_block_init() {
         $script_asset['dependencies'],
         $script_asset['version']
     );
-    wp_set_script_translations( 'oer-subject-resources-block-editor', 'oer-subject-resources-block' );
     wp_localize_script( 'oer-subject-resources-block-editor', 'oer_subject_resources', array( 'home_url' => home_url(), 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+    wp_set_script_translations('oer-subject-resources-block-editor', 'oer-subject-resources-block', OER_PATH . '/lang/js');
 
     $front_asset_path = "$dir/build/front.asset.php";
     if ( ! file_exists( $front_asset_path ) ) {
@@ -55,8 +55,8 @@ function wp_oer_subject_resources_block_init() {
         $front_asset['dependencies'],
         $front_asset['version']
     );
-    wp_set_script_translations( 'oer-subject-resources-block-frontend', 'oer-subject-resources-block' );
     wp_localize_script( 'oer-subject-resources-block-frontend', 'wp_oer_block', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+    wp_set_script_translations('oer-subject-resources-block-frontend', 'oer-subject-resources-block', OER_PATH . '/lang/js');
 
     $editor_css = 'build/index.css';
     wp_register_style(
@@ -376,6 +376,16 @@ function oer_get_resource_domain($resource_id) {
 function oer_get_resource_grade($resource_id){
     $grades = trim(get_post_meta($resource_id, "oer_grade", true),",");
     $grades = explode(",",$grades);
+
+    if (empty($grades)){
+        $grade_terms = get_the_terms( $resource_id, 'resource-grade-level' );
+        
+        if (is_array($grade_terms)){
+            foreach($grade_terms as $grade){
+                $grades[] = $grade->slug;
+            }
+        }
+    }
 
     return oer_grade_levels($grades);
 }

@@ -655,7 +655,7 @@ msgstr "Importar - OER"
 msgid "Settings - WP OER"
 msgstr "Configuración - WP OER"
 
-msgid "Adjust settings below as necessary for your installation. For additional information on these options check the support forums or <a href='https://www.wp-oer.com/' target='_blank'>wp-oer.com</a>"
+msgid "Adjust the settings below as necessary for your installation. For additional information on these options, check the support forums or <a href='https://www.wp-oer.com/' target='_blank'>wp-oer.com</a>"
 msgstr "Ajuste la configuración a continuación según sea necesario para su instalación. Para obtener información adicional sobre estas opciones, consulte los foros de soporte o <a href='https://www.wp-oer.com/' target='_blank'> wp-oer.com </a>"
 
 msgid "PDF Embeds"
@@ -664,8 +664,8 @@ msgstr "Incrustaciones de PDF"
 msgid "Screenshot Utility"
 msgstr "Utilidad de Captura de Pantalla"
 
-msgid "Use the options below to make adjustments to the look and feel of the OER pages. For more fine-tune customizations, additional CSS can be provided to include on all OER pages."
-msgstr "Utilice las siguientes opciones para realizar ajustes en la apariencia de las páginas OER. Para personalizaciones más precisas, se puede proporcionar CSS adicional para incluir en todas las páginas OER."
+msgid "Use the options below to make adjustments to the look and feel of the OER pages. For more fine-tuned customizations, additional CSS can be provided to be included on all OER pages."
+msgstr "Utilice las siguientes opciones para realizar ajustes en la apariencia de las páginas OER. Para personalizaciones más precisas, se puede proporcionar CSS adicional para incluirlo en todas las páginas OER."
 
 msgid "Please complete <a href='?post_type=resource&page=oer_settings&tab=setup'>OER setup</a> first to load the metadata fields."
 msgstr "Primero complete la <a href='?post_type=resource&page=oer_settings&tab=setup'>configuración de OER</a> para cargar los campos de metadatos."
@@ -712,53 +712,53 @@ msgstr "Recursos PDF Locales"
 msgid "External PDF Resources"
 msgstr "Recursos PDF Externos"
 
-msgid "Disable Screenshots"
-msgstr "Desactivar Capturas de Pantalla"
+msgid "Disable screenshots"
+msgstr "Desactivar capturas de pantalla"
 
-msgid "Enable Server-side screenshots"
+msgid "Enable server-side screenshots"
 msgstr "Habilitar capturas de pantalla del lado del servidor"
 
-msgid "Use xvfb -- typically necessary on Linux installations"
-msgstr "Utilice xvfb -- normalmente necesario en instalaciones de Linux"
+msgid "Use xvfb&mdash;typically necessary on Linux installations"
+msgstr "Utilice xvfb&mdash;normalmente necesario en instalaciones de Linux"
 
 msgid "Python executable"
 msgstr "Ejecutable de Python"
 
-msgid "Python Screenshot script"
+msgid "Python screenshot script"
 msgstr "Secuencia de comandos de captura de pantalla de Python"
 
-msgid "Use external screenshot service"
-msgstr "Usar servicio de captura de pantalla externo"
+msgid "Use an external screenshot service"
+msgstr "Utilice un servicio de captura de pantalla externo"
 
 msgid "Service URL"
 msgstr "URL de servicio"
 
-msgid "use $url for where the Resource URL parameter should be placed"
-msgstr "usar $url para saber dónde se debe colocar el parámetro de URL del recurso"
+msgid "Use $url for where the Resource URL parameter should be placed."
+msgstr "Utilice $url para indicar dónde se debe colocar el parámetro de URL de recurso."
 
 msgid "Import Bootstrap CSS & JS libraries"
 msgstr "Importar bibliotecas Bootstrap CSS y JS"
 
-msgid "Uncheck if your WP theme already included Bootstrap."
-msgstr "Desmarque si su tema de WP ya incluía Bootstrap."
+msgid "Uncheck if your WP theme already includes Bootstrap."
+msgstr "Desmarque si su tema WP ya incluye Bootstrap."
 
 msgid "Display Subjects menu on Subject Area pages"
 msgstr "Mostrar el menú Temas en las páginas del Área temática"
 
-msgid "Lists all subject areas in left column of Subject Area pages - may conflict with themes using left navigation."
-msgstr "Enumera todas las áreas temáticas en la columna izquierda de las páginas de áreas temáticas; puede entrar en conflicto con los temas al utilizar la navegación izquierda."
+msgid "Lists all subject areas in the left column of Subject Area pages—may conflict with themes using left navigation."
+msgstr "Enumera todas las áreas temáticas en la columna izquierda de las páginas de áreas temáticas-puede entrar en conflicto con los temas al utilizar la navegación izquierda."
 
 msgid "Import Fontawesome CSS"
 msgstr "Importar CSS de Fontawesome"
 
-msgid "Uncheck if your WP theme already included Font Awesome."
-msgstr "Desmarque si su tema de WP ya incluía Font Awesome."
+msgid "Uncheck if your WP theme already includes Font Awesome."
+msgstr "Desmarque si su tema WP ya incluye Font Awesome."
 
 msgid "Subject Area pages"
 msgstr "Páginas del Area Temática"
 
-msgid "<h3>Hide Page Titles</h3><p class="description hide-description">Some themes have built-in display of page titles.</p>"
-msgstr "<h3>Ocultar Títulos de Página</h3><p class="description hide-description"> Algunos temas tienen visualización incorporada de títulos de página.</p>"
+msgid "<h3>Hide Page Titles</h3><p class="description hide-description">Some themes have a built-in display of page titles.</p>"
+msgstr "<h3>Ocultar Títulos de Página</h3><p class="description hide-description">Algunos temas tienen una visualización integrada de títulos de página.</p>"
 
 msgid "Resource pages"
 msgstr "Páginas de recursos"
