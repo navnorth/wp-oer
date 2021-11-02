@@ -161,23 +161,23 @@ function oer_display_subject_resources_block( $attributes , $ajax = false){
         $selectedSubjects = implode(",", $selectedSubjects);
     
     $heading = '<div class="oer-snglrsrchdng" data-sort="'.$sort.'" data-count="'.$displayCount.'" data-subjects="'.$selectedSubjects.'">';
-    $heading .= '   <div class="browse-box">Browse '.$displaySelection.' resources</div>';
+    $heading .= '   <div class="browse-box">'.sprintf(__('Browse %s resources', OER_SLUG), $displaySelection).'</div>';
     $heading .= '   <div class="sort-box">';
-    $heading .= '       <span class="sortoption-label">Sorted by:</span> <span class="sortoption">'.$sort_display.'</span>';
+    $heading .= '       <span class="sortoption-label">Sorted by:</span> <span class="sortoption">'.__($sort_display,'oer-subject-resources-block').'</span>';
     $heading .= '       <span class="sort-resources" title="Sort resources" tabindex="0" role="button"><i class="fa fa-sort" aria-hidden="true"></i></span>';
     $heading .= '       <div class="sort-options">';
     $heading .= '           <ul class="sortList">';
-    $heading .= '               <li value="modified" '.($sort=='modified'?'class="selected"':'').'>Date Updated</li>';
-    $heading .= '               <li value="date" '.($sort=='date'?'class="selected"':'').'>Date Added</li>';
-    $heading .= '               <li value="title" '.($sort=='title'?'class="selected"':'').'>Title A-Z</li>';
+    $heading .= '               <li value="modified" '.($sort=='modified'?'class="selected"':'').'>'.__('Date Updated','oer-subject-resources-block').'</li>';
+    $heading .= '               <li value="date" '.($sort=='date'?'class="selected"':'').'>'.__('Date Added','oer-subject-resources-block').'</li>';
+    $heading .= '               <li value="title" '.($sort=='title'?'class="selected"':'').'>'.__('Title A-Z','oer-subject-resources-block').'</li>';
     $heading .= '           </ul>';
     $heading .= '       </div>';
     $heading .= '       <div class="components-base-control sort-selectbox">';
     $heading .= '           <div class="components-base-control__field">';
     $heading .= '               <select id="inspector-select-control-1" class="components-select-control__input">';
-    $heading .= '                   <option value="modified" '.selected($sort,'modified',false).'>Date Updated</option>';
-    $heading .= '                   <option value="date" '.selected($sort,'date',false).'>Date Added</option>';
-    $heading .= '                   <option value="title" '.selected($sort,'title',false).'>Title A-Z</option>';
+    $heading .= '                   <option value="modified" '.selected($sort,'modified',false).'>'.__('Date Updated','oer-subject-resources-block').'</option>';
+    $heading .= '                   <option value="date" '.selected($sort,'date',false).'>'.__('Date Added','oer-subject-resources-block').'</option>';
+    $heading .= '                   <option value="title" '.selected($sort,'title',false).'>'.__('Title A-Z','oer-subject-resources-block').'</option>';
     $heading .= '               </select>';
     $heading .= '           </div>';
     $heading .= '       </div>';
@@ -235,7 +235,7 @@ function oer_display_subject_resources_block( $attributes , $ajax = false){
                 $html .= '</div>';
             }
         } else {
-            $html .= '<div class="empyt-resources">No resources found.</div>';
+            $html .= '<div class="empyt-resources">'.__('No resources found','oer-subject-resources-block').'</div>';
         }
     }
     $html .= '</div>';
@@ -463,7 +463,7 @@ function oer_get_subject_resources($args, $ajax=false){
     if (is_array($selectedSubjects))
         $selectedSubjects = implode(",", $selectedSubjects);
     $heading = '<div class="oer-snglrsrchdng" data-sort="'.$sort.'" data-count="'.$displayCount.'" data-subjects="'.$selectedSubjects.'">';
-    $heading .= '   <div class="browse-box">Browse '.$displaySelection.' resources</div>';
+    $heading .= '   <div class="browse-box">'.sprintf(__('Browse %s resources', OER_SLUG), $displaySelection).'</div>';
     $heading .= '   <div class="sort-box">';
     $heading .= '       <span class="sortoption-label">Sorted by:</span> <span class="sortoption">'.$sort_display.'</span>';
     $heading .= '       <span class="sort-resources" title="Sort resources" tabindex="0" role="button"><i class="fa fa-sort" aria-hidden="true"></i></span>';
