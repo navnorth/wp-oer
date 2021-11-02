@@ -846,3 +846,6 @@ msgstr "Etiqueta"
 
 msgid "Enabled"
 msgstr "Activado"
+
+msgid "Browse %s resources"
+msgstr "Explorar %s recursos"
