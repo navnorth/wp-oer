@@ -118,7 +118,7 @@ function oer_show_subjects($atts) {
 				}
 			    }
 			    
-			    $content .= '<div class="oer_snglctwpr'.esc_attr($column).'"><div class="'.esc_attr($display_size).'" data-ownback="'.get_template_directory_uri().'/img/top-arrow.png" onMouseOver="changeonhover(this)" onMouseOut="changeonout(this);" '.$toggle_navigation.' data-id="'.esc_attr($cnt).'" data-class="'.esc_attr($lepcnt).'" data-normalimg="'.esc_url($icn_guid).'" data-hoverimg="'.esc_attr($icn_hover_guid).'">
+			    $content .= '<div class="oer_snglctwpr'.esc_attr($column).'"><div class="'.esc_attr($display_size).'" data-ownback="'.get_template_directory_uri().'/img/top-arrow.png" onMouseOver="changeonhover(this)" onMouseOut="changeonout(this);" '.$toggle_navigation.' data-id="'.esc_attr($cnt).'" data-class="'.esc_attr($lepcnt).'" data-normalimg="'.esc_url($icn_guid).'" data-hoverimg="'.esc_attr($icn_hover_guid).'" tabindex="0">
 				    <div class="oer-cat-icn" style="background: url('.esc_url($icn_guid).') no-repeat scroll center center; "></div>
 				    <div class="oer-cat-txt-btm-cntnr">
 					    <ul>
