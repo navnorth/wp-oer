@@ -849,3 +849,12 @@ msgstr "Activado"
 
 msgid "Browse %s resources"
 msgstr "Explorar %s recursos"
+
+msgid "Sorted by:"
+msgstr "Ordenado por:"
+
+msgid "Date Added"
+msgstr "Fecha Agregada"
+
+msgid "Title A-Z"
+msgstr "Título A-Z"
