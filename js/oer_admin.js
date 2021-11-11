@@ -75,8 +75,12 @@ function admin_togglenavigation(ref){
 			var dspl = jQuery(this).css("display");
 			if(dspl == "block") {
 				if(jQuery(this).attr("data-class") == datid) {
-					jQuery(this).slideUp("slow");
-					jQuery(this).parent(".oer_snglctwpr").height("auto");
+					jQuery(this).slideUp({
+						duration:"slow",
+						complete: function(){
+							jQuery(this).parent(".oer_snglctwpr").height("auto");
+						}
+					});
 				} else {
 					var hght_upr = jQuery(ref).height();
 					var hght_lwr = jQuery(ref).children(".oer-child-category").attr("data-height");
@@ -99,8 +103,12 @@ function admin_togglenavigation(ref){
 				jQuery(this).slideDown("slow");
 			}
 		} else {
-			jQuery(this).slideUp("slow");
-			jQuery(this).parent(".oer_snglctwpr").height("auto");
+			jQuery(this).slideUp({
+				duration:"slow",
+				complete: function(){
+					jQuery(this).parent(".oer_snglctwpr").height("auto");
+				}
+			});
 		}
 	});
 

@@ -62,6 +62,11 @@ jQuery(document).ready(function(e) {
 		jQuery(this).append(read_less);
 	});
 
+	jQuery(document).on('keydown','.wp-block-wp-oer-plugin-wp-oer-subjects-index .oer_snglctwpr .oer-cat-div',function(e){
+		if (e.which==13 || e.which==32)
+			jQuery(this).trigger('click');
+	});
+
 	setTimeout(function(){ 
         jQuery('[data-toggle="collapse"]').removeAttr('data-parent');
     }, 1000);
