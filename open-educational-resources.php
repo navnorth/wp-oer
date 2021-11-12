@@ -3,7 +3,7 @@
  Plugin Name:  WP OER
  Plugin URI:   https://www.wp-oer.com
  Description:  Open Educational Resource management and curation, metadata publishing, and alignment to Common Core State Standards.
- Version:      0.8.3
+ Version:      0.8.4
  Author:       Navigation North
  Author URI:   https://www.navigationnorth.com
  Text Domain:  wp-oer
@@ -1795,8 +1795,9 @@ function oer_register_post_type_rules( $post_type, $args ) {
 
 		$permalink = '%' . $post_type . '_slug%' . $permalink;
 		$permalink = str_replace( '%postname%', '%' . $post_type . '%', $permalink );
-
-		add_rewrite_tag( '%' . $post_type . '_slug%', '(' . $args->rewrite['slug'] . ')', 'post_type=' . $post_type . '&slug=' );
+		
+		if(!empty($args->rewrite['slug']))
+			add_rewrite_tag( '%' . $post_type . '_slug%', '(' . $args->rewrite['slug'] . ')', 'post_type=' . $post_type . '&slug=' );
 
 		$taxonomies = get_taxonomies( array( 'show_ui' => true, '_builtin' => false ), 'objects' );
 		foreach ( $taxonomies as $taxonomy => $objects ) :
@@ -1807,15 +1808,18 @@ function oer_register_post_type_rules( $post_type, $args ) {
 		if ( ! is_array( $rewrite_args ) ) {
 			$rewrite_args = array( 'with_front' => $args->rewrite );
 		}
-
-		$slug = $args->rewrite['slug'];
+		
+		$slug = '';
+		
+		if(!empty($args->rewrite['slug']))
+			$slug = $args->rewrite['slug'];
 
 		if ( $args->has_archive ) {
 			if ( is_string( $args->has_archive ) ) {
 				$slug = $args->has_archive;
 			};
-
-			if ( $args->rewrite['with_front'] ) {
+			
+			if ( !empty($args->rewrite['with_front']) ) {
 				$slug = substr( $wp_rewrite->front, 1 ) . $slug;
 			}
 

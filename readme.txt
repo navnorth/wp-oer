@@ -2,8 +2,8 @@
 Contributors: navigationnorth, joehobson, johnpaulbalagolan, josepheneldas, arobotnamedchris
 Tags: OER, Open Educational Resources, Education, Teaching, Learning
 Requires at least: 4.4
-Tested up to: 5.7.2
-Stable tag: 0.8.3
+Tested up to: 5.8.1
+Stable tag: 0.8.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -41,12 +41,22 @@ No frequently asked questions.
 
 == Changelog ==
 
+= 0.8.4 =
+* Added Grade Levels settings and customization
+* Converted the OER Subjects Index shortcode to a Gutenberg block
+* OER Subject Resources Block UI improvements
+* Fixed the issue with plain permalinks displaying warnings and preventing the users from logging in
+* Updated the Readme Block Names
+* Updated the text internationalization
+* Updated the texts in the plugin settings
+* Tested up to WP 5.8.1
+
 = 0.8.3 =
-* block_categories deprecated as of WP5.8, used block_categories_all instead
-* Added translations to subject area taxonomy page.
-* fixed expand/collapse issue with resource links
-* fixed sublevels display issue due to attribute escaping
-* added support for older version of Wordpress(WP 5.7 or earlier) when adding custom block category
+* Added translations to subject area taxonomy page
+* Added support for older versions of Wordpress (WP 5.7 or earlier) when adding a custom block category
+* Replaced block_categories with block_categories_all due to deprecation
+* Fixed the expand/collapse issue with resource links
+* Fixed the sublevels display issue due to attribute escaping
 
 = 0.8.2 =
 * Fixed the issue where WYSIWYG visual tab is freezing
