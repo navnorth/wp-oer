@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       WP OER Resource Block
+ * Plugin Name:       OER Resource Block
  * Description:       Display single resource block anywhere on the page.
  * Requires at least: 5.8
  * Requires PHP:      7.0
