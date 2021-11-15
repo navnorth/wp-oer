@@ -37,7 +37,7 @@ if (get_option('oer_metadata_firstload')=="")
 			if (!$label_set)
 				_e("Highlight:", OER_SLUG);
 			else
-				echo get_option('oer_highlight_label').":";
+				echo __(get_option('oer_highlight_label'),OER_SLUG).":";
 			?>
             </div>
             <div class="oer_fld">
@@ -48,7 +48,7 @@ if (get_option('oer_metadata_firstload')=="")
         </div>
 	<?php } ?>
 
-	<?php
+	<!-- <?php
 	// Grade Level
 	$label_set = false;
 	if (get_option('oer_grade_label')){
@@ -61,9 +61,9 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Grade:", OER_SLUG);
+				_e("Grade", OER_SLUG).":";
 			else
-				echo get_option('oer_grade_label').":";
+				echo __(get_option('oer_grade_label'),OER_SLUG).":";
 			?>
             </div>
             <div class="oer_fld">
@@ -102,7 +102,7 @@ if (get_option('oer_metadata_firstload')=="")
 
             </div>
         </div>
-       <?php } ?>
+       <?php } ?> -->
     
 	<?php
 	// Age Levels
@@ -116,9 +116,9 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Age Levels:", OER_SLUG);
+				_e("Age Levels", OER_SLUG).":";
 			else
-				echo get_option('oer_age_levels_label').":";
+				echo __(get_option('oer_age_levels_label'),OER_SLUG).":";
 			?>
             </div>
             <div class="oer_fld">
@@ -141,9 +141,9 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Instructional Time:", OER_SLUG);
+				_e("Instructional Time", OER_SLUG).":";
 			else
-				echo get_option('oer_instructional_time_label').":";
+				echo __(get_option('oer_instructional_time_label'),OER_SLUG).":";
 			?>
             </div>
             <div class="oer_fld">
@@ -165,9 +165,9 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Creative Commons License:", OER_SLUG);
+				_e("Creative Commons License", OER_SLUG).":";
 			else
-				echo get_option('oer_creativecommons_license_label').":";
+				echo __(get_option('oer_creativecommons_license_label'),OER_SLUG).":";
 			?>
             </div>
             <div class="oer_fld">
@@ -197,9 +197,9 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Format:", OER_SLUG);
+				_e("Format", OER_SLUG).":";
 			else
-				echo get_option('oer_format_label').":";
+				echo __(get_option('oer_format_label'),OER_SLUG).":";
 			?>
             </div>
             <div class="oer_fld">
@@ -223,7 +223,7 @@ if (get_option('oer_metadata_firstload')=="")
 			if (!$label_set)
 				_e("Date Created:", OER_SLUG);
 			else
-				echo get_option('oer_datecreated_label').":";
+				echo __(get_option('oer_datecreated_label'),OER_SLUG).":";
 			?>
             </div>
             <div class="oer_fld">
@@ -245,9 +245,9 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Date Created Estimate:", OER_SLUG);
+				_e("Date Created Estimate", OER_SLUG).":";
 			else
-				echo get_option('oer_datecreated_estimate_label').":";
+				echo __(get_option('oer_datecreated_estimate_label'),OER_SLUG).":";
 			?>
             </div>
             <div class="oer_fld">
@@ -271,7 +271,7 @@ if (get_option('oer_metadata_firstload')=="")
 			if (!$label_set)
 				_e("Date Modified:", OER_SLUG);
 			else
-				echo get_option('oer_datemodified_label').":";
+				echo __(get_option('oer_datemodified_label'),OER_SLUG).":";
 			?>
             </div>
             <div class="oer_fld">
@@ -295,7 +295,7 @@ if (get_option('oer_metadata_firstload')=="")
 			if (!$label_set)
 				_e("Media Type:", OER_SLUG);
 			else
-				echo get_option('oer_mediatype_label').":";
+				echo __(get_option('oer_mediatype_label'),OER_SLUG).":";
 			?>
             </div>
             <div class="oer_fld">
@@ -324,9 +324,9 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Learning Resource Type:", OER_SLUG);
+				_e("Learning Resource Type", OER_SLUG).":";
 			else
-				echo get_option('oer_lrtype_label').":";
+				echo __(get_option('oer_lrtype_label'), OER_SLUG).":";
 			?>
             </div>
             <div class="oer_fld">
@@ -362,9 +362,9 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Interactivity:", OER_SLUG);
+				_e("Interactivity", OER_SLUG).":";
 			else
-				echo get_option('oer_interactivity_label').":";
+				echo __(get_option('oer_interactivity_label'),OER_SLUG).":";
 			?>
             </div>
             <div class="oer_fld">
@@ -398,7 +398,7 @@ if (get_option('oer_metadata_firstload')=="")
 			if (!$label_set)
 				_e("Use Rights URL:", OER_SLUG);
 			else
-				echo get_option('oer_userightsurl_label').":";
+				echo __(get_option('oer_userightsurl_label'),OER_SLUG).":";
 			?>
             </div>
             <div class="oer_fld">
@@ -422,7 +422,7 @@ if (get_option('oer_metadata_firstload')=="")
 			if (!$label_set)
 				_e("Is based on URL:", OER_SLUG);
 			else
-				echo get_option('oer_isbasedonurl_label').":";
+				echo __(get_option('oer_isbasedonurl_label'),OER_SLUG).":";
 			?>
             </div>
             <div class="oer_fld">
@@ -445,9 +445,9 @@ if (get_option('oer_metadata_firstload')=="")
 			<div class="oer_txt">
 				<?php
 				if (!$label_set)
-					_e("Standards:", OER_SLUG);
+					_e("Standards", OER_SLUG).":";
 				else
-					echo get_option('oer_standard_label').":";
+					echo __(get_option('oer_standard_label'),OER_SLUG).":";
 				?>
 			</div>
 			<div class="oer_fld auto-width">
@@ -462,7 +462,7 @@ if (get_option('oer_metadata_firstload')=="")
 				}
 				?>
 				<input type="hidden" name="oer_standard" value="<?php echo $oStandard; ?>" />
-				<button id="add-new-standard" data-toggle="modal" class="ui-button components-button is-button is-default button button-primary">Add Standards</button>
+				<button id="add-new-standard" data-toggle="modal" class="ui-button components-button is-button is-default button button-primary"><?php _e('Add Standards',OER_SLUG); ?></button>
 			</div>
 	
 		</div>
@@ -470,7 +470,7 @@ if (get_option('oer_metadata_firstload')=="")
 	} ?>
 	
         <div class="oer_snglfld oer_hdngsngl">
-		<?php _e("Author Information:", OER_SLUG); ?>
+		<?php _e("Author Information", OER_SLUG).":"; ?>
         </div>
 
         <?php
@@ -485,9 +485,9 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Type:", OER_SLUG);
+				_e("Type", OER_SLUG).":";
 			else
-				echo get_option('oer_authortype_label').":";
+				echo __(get_option('oer_authortype_label'),OER_SLUG).":";
 			?>
             </div>
             <div class="oer_fld">
@@ -512,9 +512,9 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Name:", OER_SLUG);
+				_e("Name", OER_SLUG).":";
 			else
-				echo get_option('oer_authorname_label').":";
+				echo __(get_option('oer_authorname_label'),OER_SLUG).":";
 			?>
             </div>
             <div class="oer_fld">
@@ -536,9 +536,9 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("URL:", OER_SLUG);
+				_e("URL", OER_SLUG).":";
 			else
-				echo get_option('oer_authorurl_label').":";
+				echo __(get_option('oer_authorurl_label'),OER_SLUG).":";
 			?>
             </div>
             <div class="oer_fld">
@@ -560,9 +560,9 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Email Address:", OER_SLUG);
+				_e("Email Address", OER_SLUG).":";
 			else
-				echo get_option('oer_authoremail_label').":";
+				echo __(get_option('oer_authoremail_label'),OER_SLUG).":";
 			?>
             </div>
             <div class="oer_fld">
@@ -586,7 +586,7 @@ if (get_option('oer_metadata_firstload')=="")
                 </div>
 
                 <div class="oer_snglfld oer_hdngsngl">
-			<?php _e("Author Information:", OER_SLUG); ?>
+			<?php _e("Author Information", OER_SLUG).":"; ?>
                 </div>
 
                 <?php
@@ -601,9 +601,9 @@ if (get_option('oer_metadata_firstload')=="")
                     <div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Type:", OER_SLUG);
+				_e("Type", OER_SLUG).":";
 			else
-				echo get_option('oer_authortype_label').":";
+				echo __(get_option('oer_authortype_label'),OER_SLUG).":";
 			?>
                     </div>
                     <div class="oer_fld">
@@ -628,9 +628,9 @@ if (get_option('oer_metadata_firstload')=="")
                     <div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Name:", OER_SLUG);
+				_e("Name", OER_SLUG).":";
 			else
-				echo get_option('oer_authorname_label').":";
+				echo __(get_option('oer_authorname_label'), OER_SLUG).":";
 			?>
                     </div>
                     <div class="oer_fld">
@@ -652,9 +652,9 @@ if (get_option('oer_metadata_firstload')=="")
                     <div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("URL:", OER_SLUG);
+				_e("URL", OER_SLUG).":";
 			else
-				echo get_option('oer_authorurl_label').":";
+				echo __(get_option('oer_authorurl_label'),OER_SLUG).":";
 			?>
                     </div>
                     <div class="oer_fld">
@@ -676,9 +676,9 @@ if (get_option('oer_metadata_firstload')=="")
                     <div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Email Address:", OER_SLUG);
+				_e("Email Address", OER_SLUG).":";
 			else
-				echo get_option('oer_authoremail_label').":";
+				echo __(get_option('oer_authoremail_label'),OER_SLUG).":";
 			?>
                     </div>
                     <div class="oer_fld">
@@ -713,7 +713,7 @@ if (get_option('oer_metadata_firstload')=="")
 		?>
 
         <div class="oer_snglfld oer_hdngsngl">
-		<?php _e("Publisher Information:", OER_SLUG); ?>
+		<?php _e("Publisher Information", OER_SLUG).":"; ?>
         </div>
 
         <?php
@@ -728,9 +728,9 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Name:", OER_SLUG);
+				_e("Name", OER_SLUG).":";
 			else
-				echo get_option('oer_publishername_label').":";
+				echo __(get_option('oer_publishername_label'),OER_SLUG).":";
 			?>
 		</div>
 		<div class="oer_fld">
@@ -752,9 +752,9 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("URL:", OER_SLUG);
+				_e("URL", OER_SLUG).":";
 			else
-				echo get_option('oer_publisherurl_label').":";
+				echo __(get_option('oer_publisherurl_label'),OER_SLUG).":";
 			?>
 		</div>
 		<div class="oer_fld">
@@ -776,9 +776,9 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Email Address:", OER_SLUG);
+				_e("Email Address", OER_SLUG).":";
 			else
-				echo get_option('oer_publisheremail_label').":";
+				echo __(get_option('oer_publisheremail_label'),OER_SLUG).":";
 			?>
             </div>
             <div class="oer_fld">
@@ -789,7 +789,7 @@ if (get_option('oer_metadata_firstload')=="")
 	<?php } ?>
 	
 	<div class="oer_snglfld oer_hdngsngl">
-		<?php _e("Repository Information:", OER_SLUG); ?>
+		<?php _e("Repository Information", OER_SLUG).":"; ?>
         </div>
 
         <?php
@@ -804,9 +804,9 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("External Repository:", OER_SLUG);
+				_e("External Repository", OER_SLUG).":";
 			else
-				echo get_option('oer_external_repository_label').":";
+				echo __(get_option('oer_external_repository_label'),OER_SLUG).":";
 			?>
 		</div>
 		<div class="oer_fld">
@@ -828,9 +828,9 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Repository Record URL:", OER_SLUG);
+				_e("Repository Record URL", OER_SLUG).":";
 			else
-				echo get_option('oer_repository_recordurl_label').":";
+				echo __(get_option('oer_repository_recordurl_label'),OER_SLUG).":";
 			?>
 		</div>
 		<div class="oer_fld">
@@ -852,9 +852,9 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Citation:", OER_SLUG);
+				_e("Citation", OER_SLUG).":";
 			else
-				echo get_option('oer_citation_label').":";
+				echo __(get_option('oer_citation_label'),OER_SLUG).":";
 			?>
             </div>
             <div class="oer_fld">
@@ -876,9 +876,9 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Sensitive Material Warning:", OER_SLUG);
+				_e("Sensitive Material Warning", OER_SLUG).":";
 			else
-				echo get_option('oer_sensitive_material_label').":";
+				echo __(get_option('oer_sensitive_material_label'),OER_SLUG).":";
 			?>
             </div>
             <div class="oer_fld">
@@ -900,9 +900,9 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Transcription:", OER_SLUG);
+				_e("Transcription", OER_SLUG).":";
 			else
-				echo get_option('oer_transcription_label').":";
+				echo __(get_option('oer_transcription_label'),OER_SLUG).":";
 			?>
             </div>
             <div class="oer_fld">
@@ -920,14 +920,14 @@ if (get_option('oer_metadata_firstload')=="")
 	if (!empty(get_option('oer_related_resource_enabled')) || !$option_set) {
 		if (oer_installed_standards_plugin()) {
 	?>
-			<div class="oer_snglfld oer_hdngsngl">Related Resources:</div>
+			<div class="oer_snglfld oer_hdngsngl"><?php _e('Related Resources:',OER_SLUG); ?></div>
 			<div class="oer_snglfld">
 				<div class="oer_txt">
 					<?php
 					if (!$label_set)
 						_e("Related Resources:", OER_SLUG);
 					else
-						echo get_option('oer_related_resource_label').":";
+						echo __(get_option('oer_related_resource_label'),OER_SLUG).":";
 					?>
 				</div>
 				<div class="oer_fld">
@@ -947,7 +947,7 @@ if (get_option('oer_metadata_firstload')=="")
 									?>
 								</div>
 								<input type="hidden" name="oer_related_resource" value="<?php echo $oer_related_resource ?>"/>
-								<button id="add-new-related-resource" data-toggle="modal" class="ui-button components-button is-button is-default button button-primary">Add Related Resources</button>
+								<button id="add-new-related-resource" data-toggle="modal" class="ui-button components-button is-button is-default button button-primary"><?php _e('Add Related Resources',OER_SLUG); ?></button>
 						</div>
 				</div>
 			</div>

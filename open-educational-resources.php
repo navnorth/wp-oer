@@ -3,7 +3,7 @@
  Plugin Name:  WP OER
  Plugin URI:   https://www.wp-oer.com
  Description:  Open Educational Resource management and curation, metadata publishing, and alignment to Common Core State Standards.
- Version:      0.8.3
+ Version:      0.8.4
  Author:       Navigation North
  Author URI:   https://www.navigationnorth.com
  Text Domain:  wp-oer
@@ -42,7 +42,8 @@ include_once(OER_PATH.'includes/oer-functions.php');
 include_once(OER_PATH.'includes/template-functions.php');
 include_once(OER_PATH.'includes/init.php');
 include_once(OER_PATH.'includes/shortcode.php');
-require_once(OER_PATH.'blocks/subject-resources-block/init.php');
+//require_once(OER_PATH.'blocks/subject-resources-block/init.php');
+require_once(OER_PATH.'blocks/subject-resources-block-v2/init.php');
 require_once(OER_PATH.'blocks/subjects-index-block/init.php');
 include_once(OER_PATH.'widgets/class-subject-area-widget.php');
 
@@ -277,7 +278,7 @@ add_filter( 'plugin_action_links' , 'oer_add_settings_link' , 10 , 2 );
 function oer_add_settings_link( $links, $file ){
 	if ( $file == plugin_basename(dirname(__FILE__).'/open-educational-resources.php') ) {
 		/** Insert settings link **/
-		$link = "<a href='edit.php?post_type=resource&page=oer_settings'>".__('Settings','oer')."</a>";
+		$link = "<a href='edit.php?post_type=resource&page=oer_settings'>".__('Settings',OER_SLUG)."</a>";
 		array_unshift($links, $link);
 		/** End of Insert settings link **/
 	}
@@ -645,7 +646,7 @@ function oer_settings_page() {
 			'uid' => 'oer_disable_screenshots',
 			'type' => 'radio',
 			'class' => 'screenshot_option',
-			'name' =>  __('Disable Screenshots', OER_SLUG),
+			'name' =>  __('Disable screenshots', OER_SLUG),
 			'value' => '0'
 		)
 	);
@@ -661,7 +662,7 @@ function oer_settings_page() {
 			'uid' => 'oer_enable_screenshot',
 			'type' => 'radio',
 			'class' => 'screenshot_option',
-			'name' =>  __('Enable Server-side screenshots', OER_SLUG),
+			'name' =>  __('Enable server-side screenshots', OER_SLUG),
 			'value' => '1'
 		)
 	);
@@ -677,7 +678,7 @@ function oer_settings_page() {
 			'uid' => 'oer_use_xvfb',
 			'type' => 'checkbox',
 			'indent' => true,
-			'name' =>  __('Use xvfb -- typically necessary on Linux installations', OER_SLUG)
+			'name' =>  __('Use xvfb&mdash;typically necessary on Linux installations', OER_SLUG)
 		)
 	);
 
@@ -707,7 +708,7 @@ function oer_settings_page() {
 			'uid' => 'oer_python_path',
 			'type' => 'textbox',
 			'indent' => true,
-			'title' => __('Python Screenshot script', OER_SLUG)
+			'title' => __('Python screenshot script', OER_SLUG)
 		)
 	);
 
@@ -722,7 +723,7 @@ function oer_settings_page() {
 			'uid' => 'oer_external_screenshots',
 			'type' => 'radio',
 			'class' => 'screenshot_option',
-			'name' =>  __('Use external screenshot service', OER_SLUG),
+			'name' =>  __('Use an external screenshot service', OER_SLUG),
 			'value' => '2'
 		)
 	);
@@ -739,7 +740,7 @@ function oer_settings_page() {
 			'type' => 'textbox',
 			'indent' => true,
 			'title' => __("Service URL", OER_SLUG),
-			'description' => __('use $url for where the Resource URL parameter should be placed', OER_SLUG)
+			'description' => __('Use $url for where the Resource URL parameter should be placed.', OER_SLUG)
 		)
 	);
 
@@ -785,7 +786,7 @@ function oer_styles_settings(){
 			'type' => 'checkbox',
 			'value' => '1',
 			'name' =>  __('Import Bootstrap CSS & JS libraries', OER_SLUG),
-			'description' => __('Uncheck if your WP theme already included Bootstrap.', OER_SLUG)
+			'description' => __('Uncheck if your WP theme already includes Bootstrap.', OER_SLUG)
 		)
 	);
 
@@ -802,7 +803,7 @@ function oer_styles_settings(){
 			'value' => '1',
 			'default' => true,
 			'name' =>  __('Display Subjects menu on Subject Area pages', OER_SLUG),
-			'description' => __('Lists all subject areas in left column of Subject Area pages - may conflict with themes using left navigation.', OER_SLUG)
+			'description' => __('Lists all subject areas in the left column of Subject Area pages—may conflict with themes using left navigation.', OER_SLUG)
 		)
 	);
 
@@ -818,7 +819,7 @@ function oer_styles_settings(){
 			'type' => 'checkbox',
 			'value' => '1',
 			'name' =>  __('Import Fontawesome CSS', OER_SLUG),
-			'description' => __('Uncheck if your WP theme already included Font Awesome.', OER_SLUG)
+			'description' => __('Uncheck if your WP theme already includes Font Awesome.', OER_SLUG)
 		)
 	);
 
@@ -834,7 +835,7 @@ function oer_styles_settings(){
 			'type' => 'checkbox',
 			'value' => '1',
 			'name' =>  __('Subject Area pages', OER_SLUG),
-			'pre_html' => '<h3>Hide Page Titles</h3><p class="description hide-description">Some themes have built-in display of page titles.</p>'		)
+			'pre_html' => __('<h3>Hide Page Titles</h3><p class="description hide-description">Some themes have a built-in display of page titles.</p>', OER_SLUG))
 	);
 
 	//Add Settings field for hiding Page title on Resource pages
@@ -951,6 +952,23 @@ function oer_setup_settings(){
 		)
 	);
 
+	//Add Settings field for Import Default Grade Levels
+	add_settings_field(
+		'oer_import_default_grade_levels',
+		'',
+		'oer_setup_settings_field',
+		'setup_settings_section',
+		'oer_setup_settings',
+		array(
+			'uid' => 'oer_import_default_grade_levels',
+			'type' => 'checkbox',
+			'value' => '1',
+			'default' => true,
+			'name' =>  __('Import Default Grade Levels', OER_SLUG),
+			'description' => __('A general listing of K-12 grade levels.', OER_SLUG)
+		)
+	);
+
 	//Add Settings field for Importing Common Core State Standards
 	add_settings_field(
 		'oer_import_ccss',
@@ -1009,6 +1027,7 @@ function oer_setup_settings(){
 
 	register_setting( 'oer_setup_settings' , 'oer_import_sample_resources' );
 	register_setting( 'oer_setup_settings' , 'oer_import_default_subject_areas' );
+	register_setting( 'oer_setup_settings' , 'oer_import_default_grade_levels' );
 	register_setting( 'oer_setup_settings' , 'oer_import_ccss' );
 	register_setting( 'oer_setup_settings' , 'oer_setup_bootstrap' );
 	if ($_gutenberg)
@@ -1776,8 +1795,9 @@ function oer_register_post_type_rules( $post_type, $args ) {
 
 		$permalink = '%' . $post_type . '_slug%' . $permalink;
 		$permalink = str_replace( '%postname%', '%' . $post_type . '%', $permalink );
-
-		add_rewrite_tag( '%' . $post_type . '_slug%', '(' . $args->rewrite['slug'] . ')', 'post_type=' . $post_type . '&slug=' );
+		
+		if(!empty($args->rewrite['slug']))
+			add_rewrite_tag( '%' . $post_type . '_slug%', '(' . $args->rewrite['slug'] . ')', 'post_type=' . $post_type . '&slug=' );
 
 		$taxonomies = get_taxonomies( array( 'show_ui' => true, '_builtin' => false ), 'objects' );
 		foreach ( $taxonomies as $taxonomy => $objects ) :
@@ -1788,15 +1808,18 @@ function oer_register_post_type_rules( $post_type, $args ) {
 		if ( ! is_array( $rewrite_args ) ) {
 			$rewrite_args = array( 'with_front' => $args->rewrite );
 		}
-
-		$slug = $args->rewrite['slug'];
+		
+		$slug = '';
+		
+		if(!empty($args->rewrite['slug']))
+			$slug = $args->rewrite['slug'];
 
 		if ( $args->has_archive ) {
 			if ( is_string( $args->has_archive ) ) {
 				$slug = $args->has_archive;
 			};
-
-			if ( $args->rewrite['with_front'] ) {
+			
+			if ( !empty($args->rewrite['with_front']) ) {
 				$slug = substr( $wp_rewrite->front, 1 ) . $slug;
 			}
 

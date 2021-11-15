@@ -1,0 +1,28 @@
+{
+	"domain":"wp-oer-subjects-index",
+	"locale_data":{
+		"wp-oer-subjects-index":{
+			"":{
+				"domain":"wp-oer-subjects-index"
+			},
+			"OER Subjects Index":["Índice de materias OER"],
+			"This is the block version of the OER Subjects Index Shortcode":["Esta es la versión de bloque del código corto del índice de materias OER"],
+			"OER Subjects Index Options":["Opciones del índice de materias OER"],
+			"Size:":["Talla:"],
+			"Columns:":["Columnas:"],
+			"Show count":["Mostrar recuento"],
+			"Do you want resource count to be shown in every category?":["¿Quiere que se muestre el recuento de recursos en todas las categorías?"],
+			"Show sublevels":["Mostrar subniveles"],
+			"Do you want to show sublevels?":["¿Quieres mostrar subniveles?"],
+			"Select block size":["Seleccionar tamaño de bloque"],
+			"Small":["Pequeño"],
+			"Medium":["Medio"],
+			"Large":["Grande"],
+			"Select # of Columns":["Seleccione el número de Columnas"],
+			"1 Column":["1 Columna"],
+			"2 Columns":["2 Columnas"],
+			"3 Columns":["3 Columnas"],
+			"4 Columns":["4 Columnas"]
+		}
+	}
+}

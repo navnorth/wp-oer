@@ -123,7 +123,8 @@ function oer_backside_scripts($hook)
       wp_enqueue_script( 'thickbox' );
       wp_enqueue_script( 'bootstrap-js', OER_URL.'js/bootstrap.min.js', array('jquery'));
       wp_enqueue_script('back-scripts', OER_URL.'js/back_scripts.js',array( 'jquery','media-upload','thickbox','set-post-thumbnail' ));
-      wp_enqueue_script('admin-resource', OER_URL.'js/admin_resource.js');
+      wp_enqueue_script('admin-resource', OER_URL.'js/admin_resource.js', array('wp-i18n'));
+      wp_set_script_translations('admin-resource', OER_SLUG, OER_PATH . '/lang/js');
     }
     
     // Adds our JS file to the queue that WordPress will load
@@ -171,44 +172,44 @@ add_action( 'init' , 'oer_postcreation' );
 function oer_postcreation(){
     global $_use_gutenberg;
 	$labels = array(
-        'name'               => _x( 'Resource', 'post type general name' ),
-        'singular_name'      => _x( 'Resource', 'post type singular name' ),
-        'add_new'            => _x( 'Add Resource', 'book' ),
-        'add_new_item'       => __( 'Add Resource' ),
-        'edit_item'          => __( 'Edit Resource' ),
-        'new_item'           => __( 'New Resource' ),
-        'all_items'          => __( 'All Resources' ),
-        'view_item'          => __( 'View Resource' ),
-        'search_items'       => __( 'Search' ),
+        'name'               => __( 'Resource', OER_SLUG ),
+        'singular_name'      => __( 'Resource', OER_SLUG ),
+        'add_new'            => __( 'Add Resource', OER_SLUG ),
+        'add_new_item'       => __( 'Add Resource', OER_SLUG ),
+        'edit_item'          => __( 'Edit Resource', OER_SLUG ),
+        'new_item'           => __( 'New Resource', OER_SLUG ),
+        'all_items'          => __( 'All Resources', OER_SLUG ),
+        'view_item'          => __( 'View Resource', OER_SLUG ),
+        'search_items'       => __( 'Search', OER_SLUG ),
         'menu_name'          => 'OER'
     );
     
     $args = array(
         'labels'        => $labels,
-	'show_ui' => true,
-	'show_in_menu' => true,
-	'menu_position' => 5,
-        'description'   => 'Create Resources',
+		'show_ui' => true,
+		'show_in_menu' => true,
+		'menu_position' => 5,
+        'description'   => __('Create Resources',OER_SLUG),
         'public'        => true,
-	'publicly_queryable'        => true,
-	'exclude_from_search' => false,
-	'query_var' => true,
+		'publicly_queryable'        => true,
+		'exclude_from_search' => false,
+		'query_var' => true,
         'menu_position' => '',
-	'menu_icon' => 'dashicons-welcome-learn-more',
+		'menu_icon' => 'dashicons-welcome-learn-more',
         'supports'      => array(  'title', 'editor', 'thumbnail', 'revisions',  ),
-	'taxonomies' => array('post_tag'),
+		'taxonomies' => array('post_tag'),
         'has_archive'   => true,
-	'register_meta_box_cb' => 'oer_resources_custom_metaboxes'
+		'register_meta_box_cb' => 'oer_resources_custom_metaboxes'
     );
     
     if ($_use_gutenberg=="on" or $_use_gutenberg=="1")
-	$args['show_in_rest'] = true;
+		$args['show_in_rest'] = true;
 	
     register_post_type( 'resource', $args);
 }
 
 function oer_resources_custom_metaboxes(){
-	add_meta_box('oer_metaboxid','Open Resource Meta Fields','oermeta_callback','resource','advanced');
+	add_meta_box('oer_metaboxid',__('Open Resource Meta Fields',OER_SLUG),'oermeta_callback','resource','advanced');
 }
 
 //metafield callback
@@ -222,37 +223,65 @@ function oermeta_callback()
 add_action( 'init', 'oer_create_resource_taxonomies', 0 );
 function oer_create_resource_taxonomies() {
     global $_use_gutenberg;
-    
-    $labels = array(
-	    //'name'              => _x( 'Subject Area', 'taxonomy general name here' ),
-      'name'              => esc_html__( 'Subject Area',OER_SLUG ),
-	    'singular_name'     => esc_html_x( 'Subject Area', 'taxonomy singular name' ),
-	    'search_items'      => esc_html__( 'Search Subject Areas',OER_SLUG ),
-	    'all_items'         => esc_html__( 'All Subject Areas' ),
-	    'parent_item'       => esc_html__( 'Parent Subject Area',OER_SLUG ),
-	    'parent_item_colon' => esc_html__( 'Parent Subject Area:',OER_SLUG ),
-	    'edit_item'         => esc_html__( 'Edit Subject Area' ),
-	    'update_item'       => esc_html__( 'Update Subject Area' ),
-	    'add_new_item'      => esc_html__( 'Add New Subject Area',OER_SLUG),
-	    'new_item_name'     => esc_html__( 'New Genre Subject Area' ),
-	    'menu_name'         => esc_html__( 'Subject Areas' ),
+
+    $arr_tax = array(
+    	array("slug"=>"resource-subject-area","singular_name"=>"Subject Area", "plural_name"=>"Subject Areas"),
+    	array("slug"=>"resource-grade-level","singular_name"=>"Grade Level", "plural_name"=>"Grade Levels")
     );
     
-    $args = array(
-	    'hierarchical'      => true,
-	    'labels'            => $labels,
-	    'show_ui'           => true,
-	    'show_admin_column' => true,
-	    'query_var'         => true,
-	    'rewrite'           => array( 'slug' => 'resource-subject-area' ),
-    );
-    
-    if ($_use_gutenberg=="on" or $_use_gutenberg=="1")
-	$args['show_in_rest'] = true;
-    
-    register_taxonomy( 'resource-subject-area', array( 'resource' ), $args );
+    foreach($arr_tax as $tax){
+    	$labels = array(
+	      	'name'              => esc_html__( $tax['singular_name'],OER_SLUG ),
+		    'singular_name'     => esc_html_x( $tax['singular_name'], 'taxonomy singular name', OER_SLUG ),
+		    'search_items'      => esc_html__( "Search ".$tax['plural_name'],OER_SLUG ),
+		    'all_items'         => esc_html__( 'All '.$tax['plural_name'], OER_SLUG ),
+		    'parent_item'       => esc_html__( 'Parent '.$tax['singular_name'],OER_SLUG ),
+		    'parent_item_colon' => esc_html__( 'Parent '.$tax['singular_name'].':',OER_SLUG ),
+		    'edit_item'         => esc_html__( 'Edit '.$tax['singular_name'], OER_SLUG ),
+		    'update_item'       => esc_html__( 'Update '.$tax['singular_name'], OER_SLUG ),
+		    'add_new_item'      => esc_html__( 'Add New '.$tax['singular_name'],OER_SLUG),
+		    'new_item_name'     => esc_html__( 'New Genre '.$tax['singular_name'],OER_SLUG),
+		    'menu_name'         => esc_html__( $tax['plural_name'],OER_SLUG ),
+	    );
+	    
+	    $args = array(
+		    'hierarchical'      => true,
+		    'labels'            => $labels,
+		    'show_ui'           => true,
+		    'show_admin_column' => true,
+		    'show_in_rest'		=> true,
+		    'query_var'         => true,
+		    'rewrite'           => array( 'slug' => $tax['slug'] ),
+	    );
+
+	    if ($tax['slug']=='resource-grade-level'){
+	    	$args['sort'] 		= true;
+	    	$args['args']		= array('orderby'=> 'term_order');
+	    }
+	    register_taxonomy( $tax['slug'], array( 'resource' ), $args );
+    }
 }
-//register cutsom category
+//register custom category
+
+// Display grade levels according to term_order in block editor sidebar
+add_filter('rest_resource-grade-level_query','oer_sort_grade_levels', 10, 2);
+function oer_sort_grade_levels($args, $request){
+	$args['orderby'] = "term_order";
+	return $args;
+}
+
+// Change order of grade level display on both edit tags page and in classic editor
+add_filter( 'get_terms_args', 'oer_sort_grade_level_terms', 10, 2 );
+function oer_sort_grade_level_terms( $args, $taxonomies ) 
+{
+	global $pagenow;
+	if (is_admin() && ($pagenow=='edit-tags.php' || $pagenow == 'post-new.php' || $pagenow == 'post.php') && in_array('resource-grade-level',$taxonomies) ){
+		$args['orderby'] = 'term_order';
+    	$args['order'] = 'ASC';
+	}
+
+    return $args;
+}
 
 /**
  * Add Image meta data
@@ -290,8 +319,8 @@ function oer_edit_upload_image_fields( $term, $taxonomy ) {
         <th scope="row"><label for="feature-group"><?php _e('Subject Area Main Icon', OER_SLUG); ?></label></th>
         <td>
 	    <div class="main_icon_button_img"><img src="<?php echo esc_url($mainIcon); ?>" /></div>
-	    <a id="main_icon_button" href="javascript:void(0);" class="button">Set Main Icon</a>
-	    <a id="remove_main_icon_button" href="javascript:void(0);" class="button<?php if (!$mainIcon):?> hidden<?php endif; ?>">Remove Main Icon</a>
+	    <a id="main_icon_button" href="javascript:void(0);" class="button"><?php _e('Set Main Icon', OER_SLUG); ?></a>
+	    <a id="remove_main_icon_button" href="javascript:void(0);" class="button<?php if (!$mainIcon):?> hidden<?php endif; ?>"><?php _e('Remove Main Icon', OER_SLUG); ?></a>
 	    <input id="mainIcon" type="hidden" size="36" name="mainIcon" value="<?php echo $mainIcon; ?>" />
 	</td>
     </tr><?php
@@ -301,8 +330,8 @@ function oer_edit_upload_image_fields( $term, $taxonomy ) {
         <th scope="row"><label for="feature-group"><?php _e('Subject Area Hover Icon', OER_SLUG); ?></label></th>
         <td>
 	    <div class="hover_icon_button_img"><img src="<?php echo esc_url($hoverIcon); ?>" /></div>
-	    <a id="hover_icon_button" href="javascript:void(0);" class="button">Set Hover Icon</a>
-	    <a id="remove_hover_icon_button" href="javascript:void(0);" class="button<?php if (!$hoverIcon):?> hidden<?php endif; ?>">Remove Hover Icon</a>
+	    <a id="hover_icon_button" href="javascript:void(0);" class="button"><?php _e('Set Hover Icon', OER_SLUG); ?></a>
+	    <a id="remove_hover_icon_button" href="javascript:void(0);" class="button<?php if (!$hoverIcon):?> hidden<?php endif; ?>"><?php _e('Remove Hover Icon', OER_SLUG); ?></a>
 	    <input id="hoverIcon" type="hidden" size="36" name="hoverIcon" value="<?php echo $hoverIcon; ?>" />
 	</td>
     </tr><?php
@@ -704,8 +733,8 @@ function oer_save_customfields()
 
 add_action('admin_menu','oer_rsrcimprtr');
 function oer_rsrcimprtr(){
-	add_submenu_page('edit.php?post_type=resource','Import','Import','add_users','oer_import','oer_import');
-	add_submenu_page('edit.php?post_type=resource','Settings','Settings','add_users','oer_settings','oer_setngpgfn');
+	add_submenu_page('edit.php?post_type=resource',__('Import',OER_SLUG),__('Import',OER_SLUG),'add_users','oer_import','oer_import');
+	add_submenu_page('edit.php?post_type=resource',__('Settings',OER_SLUG),__('Settings',OER_SLUG),'add_users','oer_settings','oer_setngpgfn');
 }
 
 function oer_rsrcimprtrfn()

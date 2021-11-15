@@ -18,8 +18,15 @@ if (!empty($args)){
 
     <!-- Grade Level -->
     <?php
-    $grades = explode(",",$grades);
-
+    $grades = array();
+    $grade_terms = get_the_terms( $post->ID, 'resource-grade-level' );
+    
+    if (is_array($grade_terms)){
+        foreach($grade_terms as $grade){
+            $grades[] = $grade->slug;
+        }
+    }
+    
     if(is_array($grades) && !empty($grades) && array_filter($grades))
     {
         $option_set = false;

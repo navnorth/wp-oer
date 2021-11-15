@@ -11,6 +11,8 @@ function oer_show_subjects($atts) {
     $column = " col-md-3";
     $show_children = false;
     $display_size = "oer-cat-div";
+    $expand_element = "";
+    $children = null;
     
     if ($atts)
 	extract($atts);
@@ -113,24 +115,29 @@ function oer_show_subjects($atts) {
 				if ($sublevels=="yes" || $sublevels=="true"){
 				    $show_children=true;
 				    $toggle_navigation = ' onclick="togglenavigation(this);"';
+				    $expand_element = '<span title="expand sublevels" class="oer-expand-subject"><i class="fas fa-expand"></i></span>';
 				}
 			    }
+
+			    if ($show_children) {
+				    $children = get_term_children($category->term_id, 'resource-subject-area');
+				    if (empty($children))
+				    	$toggle_navigation = '';
+				}
 			    
-			    $content .= '<div class="oer_snglctwpr'.esc_attr($column).'"><div class="'.esc_attr($display_size).'" data-ownback="'.get_template_directory_uri().'/img/top-arrow.png" onMouseOver="changeonhover(this)" onMouseOut="changeonout(this);" '.$toggle_navigation.' data-id="'.esc_attr($cnt).'" data-class="'.esc_attr($lepcnt).'" data-normalimg="'.esc_url($icn_guid).'" data-hoverimg="'.esc_attr($icn_hover_guid).'">
+			    $content .= '<div class="oer_snglctwpr'.esc_attr($column).'"><div class="'.esc_attr($display_size).'" data-ownback="'.get_template_directory_uri().'/img/top-arrow.png" onMouseOver="changeonhover(this)" onMouseOut="changeonout(this);" '.$toggle_navigation.' data-id="'.esc_attr($cnt).'" data-class="'.esc_attr($lepcnt).'" data-normalimg="'.esc_url($icn_guid).'" data-hoverimg="'.esc_attr($icn_hover_guid).'" tabindex="0">
 				    <div class="oer-cat-icn" style="background: url('.esc_url($icn_guid).') no-repeat scroll center center; "></div>
 				    <div class="oer-cat-txt-btm-cntnr">
 					    <ul>
-						    <li><label class="oer-mne-sbjct-ttl" ><a href="'. esc_url(site_url() .'/resource-subject-area/'. $category->slug) .'">'. $category->name .'</a></label>'.$count_span.'</li>
+						    <li>'.$expand_element.'<label class="oer-mne-sbjct-ttl" ><a href="'. esc_url(site_url() .'/resource-subject-area/'. $category->slug) .'">'. $category->name .'</a></label>'.$count_span.'</li>
 					    </ul>
 				    </div>';
 			    
-				if ($show_children) {
-				    $children = get_term_children($category->term_id, 'resource-subject-area');
-				    if( !empty( $children ) )
-				    {
-					    $content .= '<div class="oer-child-category">'. oer_front_child_category($category->term_id) .'</div>';
-				    }
-				}
+			    if( !empty( $children ) )
+			    {
+				    $content .= '<div class="oer-child-category">'. oer_front_child_category($category->term_id) .'</div>';
+			    }
+				
 				
 			    $content .= '</div>';
 			    //if(($cnt % 4) == 0){

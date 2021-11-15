@@ -1,0 +1,24 @@
+{
+	"domain":"oer-subject-resources-block",
+	"locale_data":{
+		"oer-subject-resources-block":{
+			"":{
+				"domain":"oer-subject-resources-block"
+			},
+			"Displays list of resources according to subject areas.":["Muestra una lista de recursos según las áreas temáticas."],
+			"WP OER Subject Resources Block":["Bloque de recursos temáticos de WP OER"],
+			"OER":["OER"],
+			"Resource":["Recurso"],
+			"Subject Areas":["Áreas Temáticas"],
+			"OER Subject Resources Option":["Opción de recursos temáticos de OER"],
+			"Subject(s):":["Asignatura(s):"],
+			"# of Resources to display:":["# de Recursos para mostrar:"],
+			"Sort:":["Clasificar:"],
+			"Date Updated":["Fecha actualizada"],
+			"Date Added":["Fecha Agregada"],
+			"Title a-z":["Título a-z"],
+			"Browse %s resources":["Explorar %s recursos"],
+			"No resources found":["No se encontraron recursos"]
+		}
+	}
+}

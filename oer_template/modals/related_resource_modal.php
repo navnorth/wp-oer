@@ -4,8 +4,8 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="standardModalLabel">Add Related Resource</h4>
+        <h5 class="modal-title" id="standardModalLabel"><?php _e('Add Related Resource', OER_SLUG); ?></h5>
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"><?php _e('Close',OER_SLUG); ?></span></button>
       </div>
       <div id="standards-list" class="modal-body">
         <div class="search-bar">
@@ -46,7 +46,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" id="btnAddRelatedResources" class="btn btn-default btn-sm" data-postid="<?php echo $post->ID; ?>" data-dismiss="modal">Select</button>
+        <button type="button" id="btnAddRelatedResources" class="btn btn-default btn-sm btn-primary" data-postid="<?php echo $post->ID; ?>" data-dismiss="modal"><?php _e('Select', OER_SLUG); ?></button>
       </div>
     </div>
   </div>

@@ -20,6 +20,16 @@ global $message, $type;
 					$type .= $response["type"];
 				}
 			}
+
+			//Import Default Grade Levels
+			$import_grade_levels = get_option('oer_import_default_grade_levels');
+			if ($import_grade_levels){
+				$response = oer_importDefaultGradeLevels();
+				if ($response) {
+					$message .= $response["message"];
+					$type .= $response["type"];
+				}
+			}
 			
 			//Import CCSS Standards
 			$import_ccss = get_option('oer_import_ccss');
@@ -117,14 +127,14 @@ global $message, $type;
 	}
 	
 	if (isset($_REQUEST['setup']) && $_REQUEST['setup']=='true'){
-		$message = "The plugin has successfully loaded the default data.";
+		$message = __("The plugin has successfully loaded the default data.",OER_SLUG);
 		$type = "success";
 	}
 ?>
 <div class="wrap">
     
     <div id="icon-themes" class="oer-logo"><img src="<?php echo esc_url(OER_URL); ?>images/wp-oer-admin-logo.png" /></div>
-    <h2>Settings - WP OER</h2>
+    <h2><?php _e('Settings - WP OER',OER_SLUG); ?></h2>
     <?php settings_errors(); ?>
      
 	<?php
@@ -132,14 +142,14 @@ global $message, $type;
 	?>
      
     <h2 class="nav-tab-wrapper">
-        <a href="?post_type=resource&page=oer_settings&tab=general" class="nav-tab <?php echo $active_tab == 'general' ? 'nav-tab-active' : ''; ?>">General</a>
-        <a href="?post_type=resource&page=oer_settings&tab=styles" class="nav-tab <?php echo $active_tab == 'styles' ? 'nav-tab-active' : ''; ?>">Styles</a>
-	<a href="?post_type=resource&page=oer_settings&tab=metadata" class="nav-tab <?php echo $active_tab == 'metadata' ? 'nav-tab-active' : ''; ?>">Metadata Fields</a>
+        <a href="?post_type=resource&page=oer_settings&tab=general" class="nav-tab <?php echo $active_tab == 'general' ? 'nav-tab-active' : ''; ?>"><?php _e('General',OER_SLUG); ?></a>
+        <a href="?post_type=resource&page=oer_settings&tab=styles" class="nav-tab <?php echo $active_tab == 'styles' ? 'nav-tab-active' : ''; ?>"><?php _e('Styles',OER_SLUG); ?></a>
+	<a href="?post_type=resource&page=oer_settings&tab=metadata" class="nav-tab <?php echo $active_tab == 'metadata' ? 'nav-tab-active' : ''; ?>"><?php _e('Metadata Fields',OER_SLUG); ?></a>
 	<?php if ($active_tab=="setup" || get_option('oer_setup')=="1") { ?>
-        <a href="?post_type=resource&page=oer_settings&tab=setup" class="nav-tab <?php echo $active_tab == 'setup' ? 'nav-tab-active' : ''; ?>">Setup</a>
+        <a href="?post_type=resource&page=oer_settings&tab=setup" class="nav-tab <?php echo $active_tab == 'setup' ? 'nav-tab-active' : ''; ?>"><?php _e('Setup',OER_SLUG); ?></a>
 	<?php } ?>
 	<?php if ($active_tab=="reset") { ?>
-        <a href="?post_type=resource&page=oer_settings&tab=reset" class="nav-tab <?php echo $active_tab == 'reset' ? 'nav-tab-active' : ''; ?>">Reset</a>
+        <a href="?post_type=resource&page=oer_settings&tab=reset" class="nav-tab <?php echo $active_tab == 'reset' ? 'nav-tab-active' : ''; ?>"><?php _e('Reset',OER_SLUG); ?></a>
 	<?php } ?>
     </h2>
     
@@ -178,7 +188,7 @@ function oer_show_general_settings() {
 <div class="oer-plugin-body">
 	<div class="oer-plugin-row">
 		<div class="oer-row-left">
-			<?php _e("Adjust settings below as necessary for your installation. For additional information on these options check the support forums or <a href='https://www.wp-oer.com/' target='_blank'>wp-oer.com</a>", OER_SLUG); ?>
+			<?php _e("Adjust the settings below as necessary for your installation. For additional information on these options, check the support forums or <a href='https://www.wp-oer.com/' target='_blank'>wp-oer.com</a>", OER_SLUG); ?>
 			<div class="oer-import-row">
 			<h2 class="hidden"></h2>
 			<?php if ($message) { ?>
@@ -221,7 +231,7 @@ function oer_show_styles_settings() {
 <div class="oer-plugin-body">
 	<div class="oer-plugin-row">
 		<div class="oer-row-left">
-			<?php _e("Use the options below to make adjustments to the look and feel of the OER pages. For more fine-tune customizations, additional CSS can be provided to include on all OER pages.", OER_SLUG); ?>
+			<?php _e("Use the options below to make adjustments to the look and feel of the OER pages. For more fine-tuned customizations, additional CSS can be provided to be included on all OER pages.", OER_SLUG); ?>
 		</div>
 		<div class="oer-row-right">
 			<strong><?php _e("Support Options", OER_SLUG); ?></strong>
@@ -290,9 +300,9 @@ function oer_show_metadata_settings() {
 			<table class="table">
 				<thead>
 					<tr>
-						<th>Field Name</th>
-						<th>Label</th>
-						<th>Enabled</th>
+						<th><?php _e('Field Name', OER_SLUG); ?></th>
+						<th><?php _e('Label', OER_SLUG); ?></th>
+						<th><?php _e('Enabled', OER_SLUG); ?></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -325,7 +335,7 @@ function oer_show_metadata_settings() {
 					} ?>
 				</tbody>
 			</table>
-			<?php submit_button("Save Metadata Options"); ?>
+			<?php submit_button(__("Save Metadata Options",OER_SLUG)); ?>
 		</form>
 	</div>
 	<?php } else { ?>
@@ -364,7 +374,7 @@ function oer_show_setup_settings() {
 		<form method="post" class="oer_settings_form" action="options.php"  onsubmit="return processInitialSettings(this)">
 			<?php settings_fields("oer_setup_settings"); ?>
 			<?php do_settings_sections("setup_settings_section"); ?>
-			<?php submit_button('Continue', 'primary setup-continue'); ?>
+			<?php submit_button(__('Continue',OER_SLUG), 'primary setup-continue'); ?>
 		</form>
 	</div>
 </div>
@@ -399,7 +409,7 @@ function oer_show_reset_settings() {
 		<form method="post" class="oer_settings_form reset-form" action="options.php"  onsubmit="return confirm_deletion(this)">
 			<?php settings_fields("oer_reset_settings"); ?>
 			<?php do_settings_sections("reset_settings_section"); ?>
-			<?php submit_button('Submit', 'primary setup-continue'); ?>
+			<?php submit_button(__('Submit',OER_SLUG), 'primary setup-continue'); ?>
 		</form>
 	</div>
 </div>

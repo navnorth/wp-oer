@@ -45,7 +45,7 @@ function create_wp_oer_subjects_index_block_init() {
 		$script_asset['version']
 	);
 	wp_localize_script( 'wp-oer-subjects-index-block-editor', 'wp_oer', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-	wp_set_script_translations( 'wp-oer-subjects-index-block-editor', 'wp-oer-subjects-index' );
+	wp_set_script_translations( 'wp-oer-subjects-index-block-editor', 'wp-oer-subjects-index', OER_PATH . '/lang/js');
 
 	$editor_css = 'build/index.css';
 	wp_register_style(
