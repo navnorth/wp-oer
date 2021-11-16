@@ -21,7 +21,7 @@
  * @see https://developer.wordpress.org/block-editor/tutorials/block-tutorial/writing-your-first-block-type/
  */
 function oer_create_block_wp_oer_resource_block_init() {
-	$dir = dirname( __FILE__ );
+    $dir = dirname( __FILE__ );
 
     $script_asset_path = "$dir/build/index.asset.php";
     if ( ! file_exists( $script_asset_path ) ) {
@@ -37,7 +37,7 @@ function oer_create_block_wp_oer_resource_block_init() {
         $script_asset['dependencies'],
         $script_asset['version']
     );
-    wp_localize_script( 'wp-oer-resource-block-editor', 'oer_resource', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+    wp_localize_script( 'wp-oer-resource-block-editor', 'oer_resource', array( 'home_url' => home_url(), 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
     wp_set_script_translations( 'wp-oer-resource-block-editor', 'wp-oer-resource-block' );
 
     $editor_css = 'build/index.css';
@@ -65,6 +65,36 @@ function oer_create_block_wp_oer_resource_block_init() {
 }
 add_action( 'init', 'oer_create_block_wp_oer_resource_block_init' );
 
+function oer_get_resources_api(){
+    register_rest_route( 'oer-resource-block/v1', 'resources', array(
+        'methods' => 'GET',
+        'callback' => 'oer_get_resources_for_options',
+        'permission_callback' => function(){
+            return current_user_can('edit_posts');
+        }
+    ));
+}
+add_action( 'rest_api_init' , 'oer_get_resources_api' );
+
+// Get Only ID, and Title of Resource
+function oer_get_resources_for_options(){
+    $resources = [];
+    $args = array(
+        'post_type' => 'resource',
+        'posts_per_page' => -1
+    );
+    $query = new WP_Query( $args );
+
+    foreach($query->posts as $resource){
+        $rs = array();
+        $rs['title'] = $resource->post_title;
+        $rs['id'] = $resource->ID;
+        $resources[] = $rs;
+    }
+    $response = new WP_REST_Response($resources, 200);
+    $response->set_headers([ 'Cache-Control' => 'must-revalidate, no-cache, no-store, private' ]);
+    return $response;
+}
 
 function oer_display_resource_block( $attributes ){
     print_r($attributes);
