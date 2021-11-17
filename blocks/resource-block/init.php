@@ -97,5 +97,5 @@ function oer_get_resources_for_options(){
 }
 
 function oer_display_resource_block( $attributes ){
-    print_r($attributes);
+    return json_encode($attributes);
 }
