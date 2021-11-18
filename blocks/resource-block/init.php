@@ -10,7 +10,7 @@
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       wp-oer-resource-block
  *
- * @package           create-block
+ * @package           wp-oer
  */
 
 /**
@@ -65,6 +65,7 @@ function oer_create_block_wp_oer_resource_block_init() {
 }
 add_action( 'init', 'oer_create_block_wp_oer_resource_block_init' );
 
+// Get Resource API to retrieve resources to add options to Resource Select Box
 function oer_get_resources_api(){
     register_rest_route( 'oer-resource-block/v1', 'resources', array(
         'methods' => 'GET',
@@ -96,6 +97,119 @@ function oer_get_resources_for_options(){
     return $response;
 }
 
-function oer_display_resource_block( $attributes ){
-    return json_encode($attributes);
+// Display OER Resource Block both preview and frontend display
+function oer_display_resource_block( $attributes, $ajax = false ){
+    $html = "";
+    $selectedResource = "";
+    $alignment = "";
+    $width = "";
+    $showThumbnail = false;
+    $showTitle = false;
+    $showDescription = false;
+    $showSubjects = false;
+    $showGrades = false;
+    $withBorder = false;
+    $className = "";
+    $style = "";
+
+    if (!empty($attributes))
+        extract($attributes);
+
+    if (!empty($blockWidth))
+        $style.="width:".$blockWidth."px;";
+
+    if (!empty($alignment))
+        $style.="text-align:".$alignment.";";
+
+    if ($withBorder)
+        $style.="border:1px solid #cdcdcd;";
+    
+    if (!empty($style))
+        $style ="style='".$style."'";
+
+    if (!empty($selectedResource)){
+        $resource = get_post($selectedResource);
+        ob_start();
+        ?>
+
+        <div class="wp-block-wp-oer-resource-block" <?php echo $style; ?>>
+            <?php if ($showTitle): ?>
+            <h4><a href="<?php echo $resource->guid; ?>"><?php echo $resource->post_title; ?></a></h4>
+            <?php endif; ?>
+
+            <?php if ($showThumbnail):
+            if (has_post_thumbnail($resource->ID)): 
+                $featured_image = wp_get_attachment_image_src(get_post_thumbnail_id($resource->ID));
+            ?>
+            <div class="oer-resource-block-featured-image">
+                <a href="<?php echo $resource->guid; ?>"><img src="<?php echo $featured_image[0]; ?>" alt="<?php echo $resource->post_title; ?>"></a>
+            </div>
+            <?php endif;
+            endif; ?>
+
+            <?php if ($showDescription): ?>
+            <div class="oer-resource-block-description">
+                <p><?php echo $resource->post_content; ?></p>
+            </div>
+            <?php endif; ?>
+
+            <?php if ($showSubjects): 
+                $subjects = oer_resource_block_subjects($resource->ID);
+            ?>
+            <div class="oer-resource-block-subjects oer-rsrcctgries tagcloud">
+                <?php if (count($subjects)>0): ?>
+                    <ul>
+                        <?php foreach($subjects as $subject): ?>
+                            <li><a href="<?php echo $subject['term_link']; ?>"><?php echo $subject['name']; ?></a></li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
+            </div>
+            <?php endif; ?>
+
+            <?php if ($showGrades): 
+                $grade_levels = oer_resource_block_grade_levels($resource->ID);
+                ?>
+            <div class="oer-resource-block-grade-levels">
+                <strong>Grade Levels: </strong> <?php echo $grade_levels; ?>
+            </div>
+            <?php endif; ?>
+        </div>
+
+        <?php
+        $html = ob_get_contents();
+        ob_end_clean();
+    }
+    return $html;
 }
+
+// Get Grade Levels
+function oer_resource_block_grade_levels($resource_id){
+    $grades = trim(get_post_meta($resource_id, "oer_grade", true),",");
+    $grades = explode(",",$grades);
+
+    return oer_grade_levels($grades);
+}
+
+// Get Resource Subjects
+function oer_resource_block_subjects($resource_id){
+    $subjects = array();
+    $subj_arr = get_the_terms($resource_id, 'resource-subject-area');
+    
+    foreach ($subj_arr as $subj){
+        $subjects[] = array(
+                        "term_id" => $subj->term_id,
+                        "name" => $subj->name,
+                        "term_link" => get_term_link($subj->term_id,'resource-subject-area')
+                        );
+    }
+    return $subjects;
+}
+
+function oer_ajax_display_resource_block(){
+    $resource = oer_display_resource_block($_POST, true);
+    echo $resource;
+    die();
+}
+add_action( 'wp_ajax_oer_display_resource_block', 'oer_ajax_display_resource_block' );
+add_action( 'wp_ajax_nopriv_oer_display_resource_block', 'oer_ajax_display_resource_block' );
