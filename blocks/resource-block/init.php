@@ -111,6 +111,7 @@ function oer_display_resource_block( $attributes, $ajax = false ){
     $withBorder = false;
     $className = "";
     $style = "";
+    $empty = false;
 
     if (!empty($attributes))
         extract($attributes);
@@ -121,11 +122,14 @@ function oer_display_resource_block( $attributes, $ajax = false ){
     if (!empty($alignment))
         $style.="text-align:".$alignment.";";
 
-    if ($withBorder)
+    if ($withBorder==true)
         $style.="border:1px solid #cdcdcd;";
     
     if (!empty($style))
         $style ="style='".$style."'";
+
+    if ($showThumbnail=="false" && $showTitle=="false" && $showDescription=="false" && $showSubjects=="false" && $showGrades=="false" && $withBorder=="false")
+        $empty = true; 
 
     if (!empty($selectedResource)){
         $resource = get_post($selectedResource);
@@ -133,11 +137,14 @@ function oer_display_resource_block( $attributes, $ajax = false ){
         ?>
 
         <div class="wp-block-wp-oer-resource-block" <?php echo $style; ?>>
-            <?php if ($showTitle): ?>
+            <?php if ($empty): ?>
+                <div class="oer-empty-block"><?php _e( 'Empty display. Please enable some options.' , 'wp-oer' ); ?></div> 
+            <?php endif; ?>
+            <?php if ($showTitle=="true"): ?>
             <h4><a href="<?php echo $resource->guid; ?>"><?php echo $resource->post_title; ?></a></h4>
             <?php endif; ?>
 
-            <?php if ($showThumbnail):
+            <?php if ($showThumbnail=="true"):
             if (has_post_thumbnail($resource->ID)): 
                 $featured_image = wp_get_attachment_image_src(get_post_thumbnail_id($resource->ID));
             ?>
@@ -147,13 +154,13 @@ function oer_display_resource_block( $attributes, $ajax = false ){
             <?php endif;
             endif; ?>
 
-            <?php if ($showDescription): ?>
+            <?php if ($showDescription=="true"): ?>
             <div class="oer-resource-block-description">
-                <p><?php echo $resource->post_content; ?></p>
+                <p><?php echo oer_resource_content_excerpt($resource->post_content); ?></p>
             </div>
             <?php endif; ?>
 
-            <?php if ($showSubjects): 
+            <?php if ($showSubjects=="true"): 
                 $subjects = oer_resource_block_subjects($resource->ID);
             ?>
             <div class="oer-resource-block-subjects oer-rsrcctgries tagcloud">
@@ -167,7 +174,7 @@ function oer_display_resource_block( $attributes, $ajax = false ){
             </div>
             <?php endif; ?>
 
-            <?php if ($showGrades): 
+            <?php if ($showGrades=="true"): 
                 $grade_levels = oer_resource_block_grade_levels($resource->ID);
                 ?>
             <div class="oer-resource-block-grade-levels">
@@ -207,9 +214,13 @@ function oer_resource_block_subjects($resource_id){
 }
 
 function oer_ajax_display_resource_block(){
-    $resource = oer_display_resource_block($_POST, true);
+    $resource = oer_display_resource_block($_POST['params'], true);
     echo $resource;
     die();
 }
 add_action( 'wp_ajax_oer_display_resource_block', 'oer_ajax_display_resource_block' );
 add_action( 'wp_ajax_nopriv_oer_display_resource_block', 'oer_ajax_display_resource_block' );
+
+function oer_resource_content_excerpt($content) {
+    return wp_kses_post( wp_trim_words($content, 45) );
+}
