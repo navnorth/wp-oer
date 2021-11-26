@@ -38,7 +38,7 @@ function oer_create_block_wp_oer_resource_block_init() {
         $script_asset['version']
     );
     wp_localize_script( 'wp-oer-resource-block-editor', 'oer_resource', array( 'home_url' => home_url(), 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-    wp_set_script_translations( 'wp-oer-resource-block-editor', 'wp-oer-resource-block' );
+    wp_set_script_translations( 'wp-oer-resource-block-editor', 'wp-oer-resource-block', OER_PATH.'/lang/js' );
 
     $editor_css = 'build/index.css';
     wp_register_style(
@@ -178,7 +178,7 @@ function oer_display_resource_block( $attributes, $ajax = false ){
                 $grade_levels = oer_resource_block_grade_levels($resource->ID);
                 ?>
             <div class="oer-resource-block-grade-levels">
-                <strong>Grade Levels: </strong> <?php echo $grade_levels; ?>
+                <strong><?php _e('Grade Levels', OER_SLUG); ?>: </strong> <?php echo $grade_levels; ?>
             </div>
             <?php endif; ?>
         </div>
