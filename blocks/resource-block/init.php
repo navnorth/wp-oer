@@ -128,7 +128,7 @@ function oer_display_resource_block( $attributes, $ajax = false ){
     if (!empty($style))
         $style ="style='".$style."'";
 
-    if ($showThumbnail=="false" && $showTitle=="false" && $showDescription=="false" && $showSubjects=="false" && $showGrades=="false" && $withBorder=="false")
+    if ($showThumbnail==false && $showTitle==false && $showDescription==false && $showSubjects==false && $showGrades==false && $withBorder==false)
         $empty = true; 
 
     if (!empty($selectedResource)){
