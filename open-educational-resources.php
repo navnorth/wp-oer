@@ -2351,7 +2351,7 @@ add_action( 'init', function () {
 } );
 
 /* Enqueue script and css for Gutenberg Resource block */
-function oer_enqueue_resource_block(){
+/**--function oer_enqueue_resource_block(){
 	wp_enqueue_script(
 		'resource-block-js',
 		OER_URL . "/js/oer_resource_block.build.js",
@@ -2367,8 +2367,8 @@ function oer_enqueue_resource_block(){
 		'editor_script' => 'resource-block-js',
 		'editor_style' => 'resource-block-css'
 	));
-}
-add_action('enqueue_block_editor_assets', 'oer_enqueue_resource_block');
+}--**/
+//add_action('enqueue_block_editor_assets', 'oer_enqueue_resource_block');
 
 function oer_add_resources_rest_args() {
     global $wp_post_types, $wp_taxonomies;
