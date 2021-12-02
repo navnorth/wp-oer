@@ -3,7 +3,7 @@
 	"apiVersion": 2,
 	"name": "wp-oer-plugin/wp-oer-resource-block",
 	"version": "0.1.0",
-	"title": "OER Resource Block",
+	"title": "OER Resource",
 	"category": "oer-block-category",
 	"keywords": [ "OER", "resource" ],
 	"icon": {
