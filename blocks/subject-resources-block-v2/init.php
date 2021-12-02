@@ -516,22 +516,24 @@ add_action( 'wp_ajax_nopriv_oer_get_subject_resources', 'oer_ajax_get_subject_re
 /*
 * Add OER Block Category
 */
-function wp_oer_block_category( $categories ) {
-    $category_slugs = wp_list_pluck( $categories, 'slug' );
-    return in_array( 'oer-block-category', $category_slugs, true ) ? $categories : array_merge(
-        array(
-            array(
-                'slug' => 'oer-block-category',
-                'title' => __( 'OER Blocks', 'oer-block-category' ),
-            ),
-        ),
-        $categories
-    );
-}
+if (!function_exists('wp_oer_block_category')) {
+  function wp_oer_block_category( $categories ) {
+      $category_slugs = wp_list_pluck( $categories, 'slug' );
+      return in_array( 'oer-block-category', $category_slugs, true ) ? $categories : array_merge(
+          array(
+              array(
+                  'slug' => 'oer-block-category',
+                  'title' => __( 'OER Blocks', 'oer-block-category' ),
+              ),
+          ),
+          $categories
+      );
+  }
 
-// Supporting older version of Wordpress - WP_Block_Editor_Context is only introduced in WP 5.8
-if ( class_exists( 'WP_Block_Editor_Context' ) ) {
-    add_filter( 'block_categories_all', 'wp_oer_block_category', 10, 2);
-} else {
-    add_filter( 'block_categories', 'wp_oer_block_category', 10, 2);
+  // Supporting older version of Wordpress - WP_Block_Editor_Context is only introduced in WP 5.8
+  if ( class_exists( 'WP_Block_Editor_Context' ) ) {
+      add_filter( 'block_categories_all', 'wp_oer_block_category', 10, 2);
+  } else {
+      add_filter( 'block_categories', 'wp_oer_block_category', 10, 2);
+  }
 }
