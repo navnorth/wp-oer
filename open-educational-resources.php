@@ -1,14 +1,16 @@
 <?php
 /*
- Plugin Name:  WP OER
- Plugin URI:   https://www.wp-oer.com
- Description:  Open Educational Resource management and curation, metadata publishing, and alignment to Common Core State Standards.
- Version:      0.8.4
- Author:       Navigation North
- Author URI:   https://www.navigationnorth.com
- Text Domain:  wp-oer
- License:      GPL3
- License URI:  https://www.gnu.org/licenses/gpl-3.0.html
+ Plugin Name:        WP OER
+ Plugin URI:         https://www.wp-oer.com
+ Description:        Open Educational Resource management and curation, metadata publishing, and alignment to Common Core State Standards.
+ Version:            0.8.5
+ Requires at least:  4.4
+ Requires PHP:       7.0
+ Author:             Navigation North
+ Author URI:         https://www.navigationnorth.com
+ Text Domain:        wp-oer
+ License:            GPL3
+ License URI:        https://www.gnu.org/licenses/gpl-3.0.html
 
  Copyright (C) 2021 Navigation North
 
@@ -36,7 +38,7 @@ define( 'OER_FILE',__FILE__);
 // Plugin Name and Version
 define( 'OER_PLUGIN_NAME', 'WP OER Plugin' );
 define( 'OER_ADMIN_PLUGIN_NAME', 'WP OER Plugin');
-define( 'OER_VERSION', '0.8.4' );
+define( 'OER_VERSION', '0.8.5' );
 
 include_once(OER_PATH.'includes/oer-functions.php');
 include_once(OER_PATH.'includes/template-functions.php');
