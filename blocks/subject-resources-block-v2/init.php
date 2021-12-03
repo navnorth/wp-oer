@@ -1,19 +1,5 @@
 <?php
 /**
- * Plugin Name:       OER Subject Resources Block v2.0
- * Description:       Subject resources block.
- * Requires at least: 5.5
- * Requires PHP:      7.0
- * Version:           0.1.0
- * Author:            The WordPress Contributors
- * License:           GPL-2.0-or-later
- * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       oer-subject-resources-block
- *
- * @package           create-block
- */
-
-/**
  * Registers the block using the metadata loaded from the `block.json` file.
  * Behind the scenes, it registers also all assets so they can be enqueued
  * through the block editor in the corresponding context.
@@ -58,29 +44,14 @@ function wp_oer_subject_resources_block_init() {
     wp_localize_script( 'oer-subject-resources-block-frontend', 'wp_oer_block', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
     wp_set_script_translations('oer-subject-resources-block-frontend', 'oer-subject-resources-block', OER_PATH . '/lang/js');
 
-    $editor_css = 'build/index.css';
-    wp_register_style(
-        'oer-subject-resources-block-editor',
-        plugins_url( $editor_css, __FILE__ ),
-        array(),
-        filemtime( "$dir/$editor_css" )
+    register_block_type(
+        __DIR__,
+        array(
+            'editor_script' => 'oer-subject-resources-block-editor',
+            'script'        => 'oer-subject-resources-block-frontend',
+            'render_callback' => 'oer_display_subject_resources_block',
+        )
     );
-
-    $style_css = 'build/style-index.css';
-    wp_register_style(
-        'oer-subject-resources-block-css',
-        plugins_url( $style_css, __FILE__ ),
-        array(),
-        filemtime( "$dir/$style_css" )
-    );
-
-    register_block_type( 'oer-block/subject-resources-block', array(
-        'editor_script' => 'oer-subject-resources-block-editor',
-        'editor_style'  => 'oer-subject-resources-block-editor',
-        'script'        => 'oer-subject-resources-block-frontend',
-        'style'         => 'oer-subject-resources-block-css',
-        'render_callback' => 'oer_display_subject_resources_block'
-    ) );
 }
 add_action( 'init', 'wp_oer_subject_resources_block_init' );
 
@@ -541,3 +512,28 @@ function oer_ajax_get_subject_resources(){
 }
 add_action( 'wp_ajax_oer_get_subject_resources', 'oer_ajax_get_subject_resources' );
 add_action( 'wp_ajax_nopriv_oer_get_subject_resources', 'oer_ajax_get_subject_resources' );
+
+/*
+* Add OER Block Category
+*/
+if (!function_exists('wp_oer_block_category')) {
+  function wp_oer_block_category( $categories ) {
+      $category_slugs = wp_list_pluck( $categories, 'slug' );
+      return in_array( 'oer-block-category', $category_slugs, true ) ? $categories : array_merge(
+          array(
+              array(
+                  'slug' => 'oer-block-category',
+                  'title' => __( 'OER Blocks', 'oer-block-category' ),
+              ),
+          ),
+          $categories
+      );
+  }
+
+  // Supporting older version of Wordpress - WP_Block_Editor_Context is only introduced in WP 5.8
+  if ( class_exists( 'WP_Block_Editor_Context' ) ) {
+      add_filter( 'block_categories_all', 'wp_oer_block_category', 10, 2);
+  } else {
+      add_filter( 'block_categories', 'wp_oer_block_category', 10, 2);
+  }
+}

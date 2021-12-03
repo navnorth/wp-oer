@@ -44,9 +44,9 @@ include_once(OER_PATH.'includes/oer-functions.php');
 include_once(OER_PATH.'includes/template-functions.php');
 include_once(OER_PATH.'includes/init.php');
 include_once(OER_PATH.'includes/shortcode.php');
-//require_once(OER_PATH.'blocks/subject-resources-block/init.php');
 require_once(OER_PATH.'blocks/subject-resources-block-v2/init.php');
 require_once(OER_PATH.'blocks/subjects-index-block/init.php');
+require_once(OER_PATH.'blocks/resource-block/init.php');
 include_once(OER_PATH.'widgets/class-subject-area-widget.php');
 
 //define global variable $debug_mode and get value from settings
@@ -2353,7 +2353,7 @@ add_action( 'init', function () {
 } );
 
 /* Enqueue script and css for Gutenberg Resource block */
-function oer_enqueue_resource_block(){
+/**--function oer_enqueue_resource_block(){
 	wp_enqueue_script(
 		'resource-block-js',
 		OER_URL . "/js/oer_resource_block.build.js",
@@ -2369,8 +2369,8 @@ function oer_enqueue_resource_block(){
 		'editor_script' => 'resource-block-js',
 		'editor_style' => 'resource-block-css'
 	));
-}
-add_action('enqueue_block_editor_assets', 'oer_enqueue_resource_block');
+}--**/
+//add_action('enqueue_block_editor_assets', 'oer_enqueue_resource_block');
 
 function oer_add_resources_rest_args() {
     global $wp_post_types, $wp_taxonomies;
