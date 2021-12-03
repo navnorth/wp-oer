@@ -1,15 +1,7 @@
 <?php
 /**
- * Plugin Name:     WP OER Subjects Index
- * Description:     Example block written with ESNext standard and JSX support – build step required.
- * Version:         0.1.0
- * Author:          The WordPress Contributors
- * License:         GPL-3.0-or-later
- * License URI:     https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:     wp-oer-subjects-index
- *
- * @package         create-block
- */
+ * OER Subjects Index Block
+ **/
 global $pagenow;
 
 function wp_oer_subjects_index_block_enqueue_bootstrap(){
@@ -47,28 +39,13 @@ function create_wp_oer_subjects_index_block_init() {
 	wp_localize_script( 'wp-oer-subjects-index-block-editor', 'wp_oer', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 	wp_set_script_translations( 'wp-oer-subjects-index-block-editor', 'wp-oer-subjects-index', OER_PATH . '/lang/js');
 
-	$editor_css = 'build/index.css';
-	wp_register_style(
-		'wp-oer-subjects-index-block-editor',
-		plugins_url( $editor_css, __FILE__ ),
-		array(),
-		filemtime( "$dir/$editor_css" )
-	);
-
-	$style_css = 'build/style-index.css';
-	wp_register_style(
-		'wp-oer-subjects-index-block',
-		plugins_url( $style_css, __FILE__ ),
-		array(),
-		filemtime( "$dir/$style_css" )
-	);
-
-	register_block_type( 'wp-oer-plugin/wp-oer-subjects-index', array(
-		'editor_script' => 'wp-oer-subjects-index-block-editor',
-		'editor_style'  => 'wp-oer-subjects-index-block-editor',
-		'style'         => 'wp-oer-subjects-index-block',
-		'render_callback' => 'oer_display_subjects_index'
-	) );
+	register_block_type(
+        __DIR__,
+        array(
+            'editor_script' => 'wp-oer-subjects-index-block-editor',
+            'render_callback' => 'oer_display_subjects_index',
+        )
+    );
 }
 add_action( 'init', 'create_wp_oer_subjects_index_block_init' );
 

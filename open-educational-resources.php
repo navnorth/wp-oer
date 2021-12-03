@@ -36,7 +36,7 @@ define( 'OER_FILE',__FILE__);
 // Plugin Name and Version
 define( 'OER_PLUGIN_NAME', 'WP OER Plugin' );
 define( 'OER_ADMIN_PLUGIN_NAME', 'WP OER Plugin');
-define( 'OER_VERSION', '0.8.1' );
+define( 'OER_VERSION', '0.8.4' );
 
 include_once(OER_PATH.'includes/oer-functions.php');
 include_once(OER_PATH.'includes/template-functions.php');
