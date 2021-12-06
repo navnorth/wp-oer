@@ -41,6 +41,9 @@ No frequently asked questions.
 3. Display educational resources on your WordPress website!
 
 == Changelog ==
+= 0.8.6 =
+* Fix block information display being cut-off on WP.org Plugins page
+
 = 0.8.5 =
 * Updated the block information on WP.org Plugins page
 * Tested up to WP 5.8.2
