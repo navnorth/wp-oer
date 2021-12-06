@@ -1,14 +1,16 @@
 <?php
 /*
- Plugin Name:  WP OER
- Plugin URI:   https://www.wp-oer.com
- Description:  Open Educational Resource management and curation, metadata publishing, and alignment to Common Core State Standards.
- Version:      0.8.4
- Author:       Navigation North
- Author URI:   https://www.navigationnorth.com
- Text Domain:  wp-oer
- License:      GPL3
- License URI:  https://www.gnu.org/licenses/gpl-3.0.html
+ Plugin Name:        WP OER
+ Plugin URI:         https://www.wp-oer.com
+ Description:        Open Educational Resource management and curation, metadata publishing, and alignment to Common Core State Standards.
+ Version:            0.8.6
+ Requires at least:  4.4
+ Requires PHP:       7.0
+ Author:             Navigation North
+ Author URI:         https://www.navigationnorth.com
+ Text Domain:        wp-oer
+ License:            GPL3
+ License URI:        https://www.gnu.org/licenses/gpl-3.0.html
 
  Copyright (C) 2021 Navigation North
 
@@ -36,15 +38,15 @@ define( 'OER_FILE',__FILE__);
 // Plugin Name and Version
 define( 'OER_PLUGIN_NAME', 'WP OER Plugin' );
 define( 'OER_ADMIN_PLUGIN_NAME', 'WP OER Plugin');
-define( 'OER_VERSION', '0.8.1' );
+define( 'OER_VERSION', '0.8.6' );
 
 include_once(OER_PATH.'includes/oer-functions.php');
 include_once(OER_PATH.'includes/template-functions.php');
 include_once(OER_PATH.'includes/init.php');
 include_once(OER_PATH.'includes/shortcode.php');
-//require_once(OER_PATH.'blocks/subject-resources-block/init.php');
 require_once(OER_PATH.'blocks/subject-resources-block-v2/init.php');
 require_once(OER_PATH.'blocks/subjects-index-block/init.php');
+require_once(OER_PATH.'blocks/resource-block/init.php');
 include_once(OER_PATH.'widgets/class-subject-area-widget.php');
 
 //define global variable $debug_mode and get value from settings
@@ -2351,7 +2353,7 @@ add_action( 'init', function () {
 } );
 
 /* Enqueue script and css for Gutenberg Resource block */
-function oer_enqueue_resource_block(){
+/**--function oer_enqueue_resource_block(){
 	wp_enqueue_script(
 		'resource-block-js',
 		OER_URL . "/js/oer_resource_block.build.js",
@@ -2367,8 +2369,8 @@ function oer_enqueue_resource_block(){
 		'editor_script' => 'resource-block-js',
 		'editor_style' => 'resource-block-css'
 	));
-}
-add_action('enqueue_block_editor_assets', 'oer_enqueue_resource_block');
+}--**/
+//add_action('enqueue_block_editor_assets', 'oer_enqueue_resource_block');
 
 function oer_add_resources_rest_args() {
     global $wp_post_types, $wp_taxonomies;

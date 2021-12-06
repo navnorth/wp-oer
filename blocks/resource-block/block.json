@@ -1,0 +1,67 @@
+{
+	"$schema": "https://json.schemastore.org/block.json",
+	"apiVersion": 2,
+	"name": "wp-oer-plugin/wp-oer-resource-block",
+	"version": "0.1.0",
+	"title": "OER Resource",
+	"category": "oer-block-category",
+	"keywords": [ "OER", "resource" ],
+	"icon": "media-document",
+	"description": "This block displays a single resource on a page.",
+	"attributes" : {
+        "resources": {
+            "type": "object"
+        },
+        "selectedResource": {
+            "type": "number"
+        },
+        "alignment": {
+            "type": "string"
+        },
+        "blockWidth": {
+            "type": "string"
+        },
+        "showThumbnail": {
+            "type":"boolean",
+            "default": false
+        }, 
+        "showTitle": {
+            "type":"boolean",
+            "default":false
+        },
+        "showDescription": {
+            "type":"boolean",
+            "default": false
+        }, 
+        "showSubjects": {
+            "type": "boolean",
+            "default": false
+        },
+        "showGrades": {
+            "type": "boolean",
+            "default": false
+        },
+        "withBorder": {
+            "type": "boolean",
+            "default": false
+        },
+        "blockId": {
+            "type": "string"
+        },
+        "firstLoad": {
+            "type": "boolean",
+            "default": true
+        },
+        "isChanged": {
+            "type": "boolean",
+            "default": false
+        }
+    },
+	"supports": {
+		"html": false
+	},
+	"textdomain": "wp-oer-resource-block",
+	"editorScript": "file:./build/index.js",
+	"editorStyle": "file:./build/index.css",
+	"style": "file:./build/style-index.css"
+}

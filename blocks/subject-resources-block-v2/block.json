@@ -1,0 +1,69 @@
+{
+	"$schema": "https://json.schemastore.org/block.json",
+	"apiVersion": 2,
+	"name": "wp-oer-plugin/subject-resources-block",
+	"version": "0.1.0",
+	"title": "OER Subject Resources",
+	"category": "oer-block-category",
+	"keywords": [ "OER", "resource", "subject areas" ],
+	"icon": "welcome-widgets-menus",
+	"description": "Displays list of resources according to subject areas.",
+	"attributes": {
+        "content": {
+            "type": "string",
+            "selector": "p"
+        },
+        "title": {
+            "type": "string",
+            "selector": "h2"
+        },
+        "link": {
+            "type": "string",
+            "selector": "a"
+        },
+        "displayCount": {
+            "type": "string",
+            "selector": "display-count",
+            "default": 5
+        },
+        "selectedSubject": {
+            "type": "number",
+            "default": 0
+        },
+        "sort": {
+            "type": "string",
+            "selector": "sort-option",
+            "default": "modified"
+        },
+        "selectedSubjectResources": {
+            "type": "array"
+        },
+        "subjects": {
+            "type":"array"
+        }, 
+        "selectedSubjects": {
+            "type":"array"
+        },
+        "childSubjects": {
+            "type":"array"
+        }, 
+        "isChanged": {
+            "type": "boolean",
+            "default": false
+        },
+        "blockId": {
+            "type": "string"
+        },
+        "firstLoad": {
+            "type": "boolean",
+            "default": true
+        }
+    },
+	"supports": {
+		"html": false
+	},
+	"textdomain": "oer-subject-resources-block",
+	"editorScript": "file:./build/index.js",
+	"editorStyle": "file:./build/index.css",
+	"style": "file:./build/style-index.css"
+}

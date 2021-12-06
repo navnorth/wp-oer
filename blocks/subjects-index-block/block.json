@@ -1,0 +1,47 @@
+{
+	"$schema": "https://json.schemastore.org/block.json",
+	"apiVersion": 2,
+	"name": "wp-oer-plugin/wp-oer-subjects-index",
+	"version": "0.1.0",
+	"title": "OER Subjects Index",
+	"category": "oer-block-category",
+	"keywords": [ "OER", "resource" ],
+	"icon": "index-card",
+	"description": "This is the block version of the OER Subjects Index Shortcode",
+	"attributes": {
+		"size": {
+			"type": "string",
+			"default": "large"
+		},
+		"columns": {
+			"type": "integer",
+			"default": 3
+		},
+		"showCount": {
+			"type": "boolean",
+			"default": true
+		},
+		"showSublevels": {
+			"type": "boolean",
+			"default": false
+		},
+		"blockId": {
+			"type": "string"
+		},
+		"isChanged": {
+			"type": "boolean",
+			"default": false
+		},
+		"firstLoad": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"supports": {
+		"html": false
+	},
+	"textdomain": "wp-oer-resource-block",
+	"editorScript": "file:./build/index.js",
+	"editorStyle": "file:./build/index.css",
+	"style": "file:./build/style-index.css"
+}

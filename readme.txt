@@ -2,8 +2,9 @@
 Contributors: navigationnorth, joehobson, johnpaulbalagolan, josepheneldas, arobotnamedchris
 Tags: OER, Open Educational Resources, Education, Teaching, Learning
 Requires at least: 4.4
-Tested up to: 5.8.1
-Stable tag: 0.8.4
+Tested up to: 5.8.2
+Requires PHP: 7.0
+Stable tag: 0.8.5
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -40,6 +41,12 @@ No frequently asked questions.
 3. Display educational resources on your WordPress website!
 
 == Changelog ==
+= 0.8.6 =
+* Fix block information display being cut-off on WP.org Plugins page
+
+= 0.8.5 =
+* Updated the block information on WP.org Plugins page
+* Tested up to WP 5.8.2
 
 = 0.8.4 =
 * Added Grade Levels settings and customization

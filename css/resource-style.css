@@ -82,6 +82,13 @@
 	text-align:right;
 }
 #sngl-resource header.entry-header span.sensitive-resource i { margin-right:10px; }
+.twenty-sixteen #sngl-resource header.entry-header { margin-right:0; margin-left:0; }
+.twenty-sixteen #sngl-resource header.entry-header .entry-title { max-width:100%; }
+.twenty-sixteen #sngl-resource .oer-featureimg img,
+.twenty-fifteen #sngl-resource .oer-featureimg img,
+.twenty-twelve #sngl-resource .oer-featureimg img,
+.twenty-eleven #sngl-resource .oer-featureimg img { height:auto; }
+.twenty-fourteen .oer_sngl_resource_wrapper { padding-left: 9%; }
 .oer-sngl-rsrc-img { max-width:400px; width:100%; }
 .oer-sngl-rsrc-pdf, .oer-sngl-pdf-type { max-width:100%; }
 .oer-featureimg img { width:100%; height:400px; }
