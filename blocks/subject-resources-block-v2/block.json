@@ -6,10 +6,7 @@
 	"title": "OER Subject Resources",
 	"category": "oer-block-category",
 	"keywords": [ "OER", "resource", "subject areas" ],
-	"icon": {
-        "foreground": "#121212",
-        "src": "welcome-widgets-menus"
-    },
+	"icon": "welcome-widgets-menus",
 	"description": "Displays list of resources according to subject areas.",
 	"attributes": {
         "content": {
