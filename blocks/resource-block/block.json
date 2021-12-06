@@ -6,10 +6,7 @@
 	"title": "OER Resource",
 	"category": "oer-block-category",
 	"keywords": [ "OER", "resource" ],
-	"icon": {
-        "foreground": "#121212",
-        "src": "media-document"
-    },
+	"icon": "media-document",
 	"description": "This block displays a single resource on a page.",
 	"attributes" : {
         "resources": {
