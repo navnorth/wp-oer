@@ -14,11 +14,11 @@
         </div>
         <div id="oer_related_resources_list">
           <?php
-          if (function_exists('get_resources_for_related')){
+          if (function_exists('oer_get_resources_for_related')){
             $oer_related_resource = get_post_meta($post->ID, 'oer_related_resource', true);
             $_res_array = explode(',',$oer_related_resource);
 
-            $_resources = get_resources_for_related();
+            $_resources = oer_get_resources_for_related();
             ?><ul><?php
             foreach($_resources as $_res){
               $_chk = ''; $_icon = ''; $_sel = '';
