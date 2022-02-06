@@ -264,6 +264,8 @@ function oer_show_metadata_settings() {
 			}
 		}
 		
+		if (!in_array("oer_related_resource", $metadata))
+			$metadata[] = "oer_related_resource";
 		if (!empty($metadata)){
 			$meta = array_unique($metadata);
 			// Save Option
