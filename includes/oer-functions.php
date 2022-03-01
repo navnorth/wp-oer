@@ -1196,337 +1196,341 @@ function oer_importResources($default=false) {
 					$oer_citation   	= $fnldata['cells'][$k][31];
 				if (isset($fnldata['cells'][$k][32]))
 					$oer_sensitive_material  = $fnldata['cells'][$k][32];
-					
-				if(!empty($oer_standard) && (!is_array($oer_standard)))
-				{
-					$oer_standard = explode(",", $oer_standard);
-				}
 
-				if(!empty($oer_categories))
-				{
-					$oer_categories = explode(",",$oer_categories);
-					$category_id = array();
-					for($i = 0; $i <= sizeof($oer_categories); $i++)
+				$resource_exists = oer_verifyResource($oer_title);
+
+				if (!$resource_exists){
+					if(!empty($oer_standard) && (!is_array($oer_standard)))
 					{
-						if(!empty($oer_categories [$i]))
-						{
-						    $cat = get_term_by( 'name', trim($oer_categories[$i]), 'resource-subject-area' );
-						    if($cat)
-						    {
-							    $category_id[$i] = $cat->term_id;
-						    }
-						    else
-						    {
-							    // Categories are not found then assign as keyword
-							    $oer_kywrd .= ",".$oer_categories [$i];
-						    }
-						}
+						$oer_standard = explode(",", $oer_standard);
 					}
-				}
-				else
-				{
-					$category_id = array();
-				}
 
-				//Check if $oer_title is set
-				if ( isset( $oer_title ) ){
-					$post_name = strtolower($oer_title);
-					$post_name = str_replace(' ','_', $post_name);
-				}
-
-				if(!empty($oer_title) && !empty($oer_resourceurl))
-				{
-					/** Get Current WP User **/
-					$user_id = get_current_user_id();
-					/** Get Current Timestamp for post_date **/
-					$cs_date = current_time('mysql');
-
-					$post = array('post_content' => $oer_description, 'post_name' => $post_name, 'post_title' => $oer_title, 'post_status' => 'publish', 'post_type' => 'resource', 'post_author' => $user_id , 'post_date' => $cs_date, 'post_date_gmt'  => $cs_date, 'comment_status' => 'open');
-					/** Set $wp_error to false to return 0 when error occurs **/
-					$post_id = wp_insert_post( $post, false );
-
-					//Set Category of Resources
-					$tax_ids = wp_set_object_terms( $post_id, $category_id, 'resource-subject-area', true );
-
-					// Set Tages
-					$oer_kywrd = strtolower(trim($oer_kywrd,","));
-					wp_set_post_tags(  $post_id, $oer_kywrd , true );
-
-
-
-				if($oer_resourceurl)
-				{
-					if( !empty($oer_resourceurl) )
+					if(!empty($oer_categories))
 					{
-						if ( preg_match('/http/',$oer_resourceurl) )
+						$oer_categories = explode(",",$oer_categories);
+						$category_id = array();
+						for($i = 0; $i <= sizeof($oer_categories); $i++)
 						{
-							$oer_resourceurl = $oer_resourceurl;
-						}
-						else
-						{
-							$oer_resourceurl = 'http://'.$oer_resourceurl;
-						}
-					}
-					update_post_meta( $post_id , 'oer_resourceurl' , esc_url_raw($oer_resourceurl));
-				}
-
-				if(!empty($oer_highlight))
-				{
-					update_post_meta( $post_id , 'oer_highlight' , $oer_highlight);
-				}
-
-				if(!empty($oer_grade))
-				{
-					$oer_grades = "";
-					$oer_grade = trim($oer_grade, '"');
-					if(strpos($oer_grade , "-"))
-					{
-						$oer_grade = explode("-",$oer_grade);
-						if(is_array($oer_grade))
-						{
-							if (strtolower($oer_grade[0])=="k"){
-								$oer_grades .= "K,";
-								$oer_grade[0] = 1;
-							}
-							for($j = $oer_grade[0]; $j <= $oer_grade[1]; $j++)
+							if(!empty($oer_categories [$i]))
 							{
-								$oer_grades .= $j.",";
+							    $cat = get_term_by( 'name', trim($oer_categories[$i]), 'resource-subject-area' );
+							    if($cat)
+							    {
+								    $category_id[$i] = $cat->term_id;
+							    }
+							    else
+							    {
+								    // Categories are not found then assign as keyword
+								    $oer_kywrd .= ",".$oer_categories [$i];
+							    }
 							}
 						}
 					}
 					else
 					{
-						$oer_grades = $oer_grade;
+						$category_id = array();
 					}
-					update_post_meta( $post_id , 'oer_grade' , $oer_grades);
-				}
 
-				if(!empty($oer_datecreated) && !($oer_datecreated==""))
-				{
-					update_post_meta( $post_id , 'oer_datecreated' , $oer_datecreated);
-				}
-				
-				if(!empty($oer_datecreated_estimate) && !($oer_datecreated_estimate=="")){
-					update_post_meta( $post_id , 'oer_datecreated_estimate' , $oer_datecreated_estimate);
-				}
+					//Check if $oer_title is set
+					if ( isset( $oer_title ) ){
+						$post_name = strtolower($oer_title);
+						$post_name = str_replace(' ','_', $post_name);
+					}
 
-				if(!empty($oer_datemodified))
-				{
-					update_post_meta( $post_id , 'oer_datemodified' , $oer_datemodified);
-				}
-
-				if(!empty($oer_mediatype))
-				{
-					update_post_meta( $post_id , 'oer_mediatype' , sanitize_text_field($oer_mediatype));
-				}
-				if(!empty($oer_lrtype))
-				{
-					update_post_meta( $post_id , 'oer_lrtype' , sanitize_text_field($oer_lrtype));
-				}
-				if(!empty($oer_interactivity))
-				{
-					update_post_meta( $post_id , 'oer_interactivity' , sanitize_text_field($oer_interactivity));
-				}
-				if(!empty($oer_userightsurl))
-				{
-						if ( preg_match('/http/',$oer_userightsurl) )
-						{
-							$oer_userightsurl = $oer_userightsurl;
-						}
-						else
-						{
-							$oer_userightsurl = 'http://'.$oer_userightsurl;
-						}
-					update_post_meta( $post_id , 'oer_userightsurl' , esc_url_raw($oer_userightsurl));
-				}
-				if(!empty($oer_isbasedonurl))
-				{
-						if ( preg_match('/http/',$oer_isbasedonurl) )
-						{
-							$oer_isbasedonurl = $oer_isbasedonurl;
-						}
-						else
-						{
-							$oer_isbasedonurl = 'http://'.$oer_isbasedonurl;
-						}
-					update_post_meta( $post_id , 'oer_isbasedonurl' , esc_url_raw($oer_isbasedonurl));
-				}
-				if(!empty($oer_standard))
-				{
-					$gt_oer_standard = '';
-					for($l = 0; $l < count($oer_standard); $l++)
+					if(!empty($oer_title) && !empty($oer_resourceurl))
 					{
-						$results = $wpdb->get_row( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "oer_standard_notation where standard_notation =%s" , $oer_standard[$l] ),ARRAY_A);
-						
-						if(!empty($results))
+						/** Get Current WP User **/
+						$user_id = get_current_user_id();
+						/** Get Current Timestamp for post_date **/
+						$cs_date = current_time('mysql');
+
+						$post = array('post_content' => $oer_description, 'post_name' => $post_name, 'post_title' => $oer_title, 'post_status' => 'publish', 'post_type' => 'resource', 'post_author' => $user_id , 'post_date' => $cs_date, 'post_date_gmt'  => $cs_date, 'comment_status' => 'open');
+						/** Set $wp_error to false to return 0 when error occurs **/
+						$post_id = wp_insert_post( $post, false );
+
+						//Set Category of Resources
+						$tax_ids = wp_set_object_terms( $post_id, $category_id, 'resource-subject-area', true );
+
+						// Set Tages
+						$oer_kywrd = strtolower(trim($oer_kywrd,","));
+						wp_set_post_tags(  $post_id, $oer_kywrd , true );
+
+
+
+					if($oer_resourceurl)
+					{
+						if( !empty($oer_resourceurl) )
 						{
-							$gt_oer_standard .= "standard_notation-".$results['id'].",";
-							
-							$table = explode("-", $results['parent_id']);
-							
-							if(!empty($table))
+							if ( preg_match('/http/',$oer_resourceurl) )
 							{
-								$stndrd_algn = $wpdb->get_row( $wpdb->prepare( "SELECT * from  " . $wpdb->prefix. $_oer_prefix . $table[0] . " where id =%s" , $table[1] ),ARRAY_A);
-								
-								if($stndrd_algn['parent_id'])
+								$oer_resourceurl = $oer_resourceurl;
+							}
+							else
+							{
+								$oer_resourceurl = 'http://'.$oer_resourceurl;
+							}
+						}
+						update_post_meta( $post_id , 'oer_resourceurl' , esc_url_raw($oer_resourceurl));
+					}
+
+					if(!empty($oer_highlight))
+					{
+						update_post_meta( $post_id , 'oer_highlight' , $oer_highlight);
+					}
+
+					if(!empty($oer_grade))
+					{
+						$oer_grades = "";
+						$oer_grade = trim($oer_grade, '"');
+						if(strpos($oer_grade , "-"))
+						{
+							$oer_grade = explode("-",$oer_grade);
+							if(is_array($oer_grade))
+							{
+								if (strtolower($oer_grade[0])=="k"){
+									$oer_grades .= "K,";
+									$oer_grade[0] = 1;
+								}
+								for($j = $oer_grade[0]; $j <= $oer_grade[1]; $j++)
 								{
-									oer_fetch_stndrd($stndrd_algn['parent_id'], $post_id);
+									$oer_grades .= $j.",";
 								}
 							}
 						}
 						else
 						{
-							$gt_oer_standard .= ",";
+							$oer_grades = $oer_grade;
 						}
+						update_post_meta( $post_id , 'oer_grade' , $oer_grades);
 					}
-					$gt_oer_standard = trim($gt_oer_standard,",");
-					update_post_meta( $post_id , 'oer_standard' , $gt_oer_standard);
-				}
-				if(!empty($oer_authortype))
-				{
-					update_post_meta( $post_id , 'oer_authortype' , sanitize_text_field($oer_authortype));
-				}
-				if(!empty($oer_authorname))
-				{
-					update_post_meta( $post_id , 'oer_authorname' , sanitize_text_field($oer_authorname));
-				}
-				if(!empty($oer_authorurl))
-				{
-						if ( preg_match('/http/',$oer_authorurl) )
-						{
-							$oer_authorurl = $oer_authorurl;
-						}
-						else
-						{
-							$oer_authorurl = 'http://'.$oer_authorurl;
-						}
-					update_post_meta( $post_id , 'oer_authorurl' , esc_url_raw($oer_authorurl));
-				}
-				if(!empty($oer_authoremail))
-				{
-					update_post_meta( $post_id , 'oer_authoremail' , sanitize_email($oer_authoremail));
-				}
-				if(!empty($oer_authortype2))
-				{
-					update_post_meta( $post_id , 'oer_authortype2' , sanitize_text_field($oer_authortype2));
-				}
-				if(!empty($oer_authorname2))
-				{
-					update_post_meta( $post_id , 'oer_authorname2' , sanitize_text_field($oer_authorname2));
-				}
-				if(!empty($oer_authorurl2))
-				{
-						if ( preg_match('/http/',$oer_authorurl2) )
-						{
-							$oer_authorurl2 = $oer_authorurl2;
-						}
-						else
-						{
-							$oer_authorurl2 = 'http://'.$oer_authorurl2;
-						}
-					update_post_meta( $post_id , 'oer_authorurl2' , esc_url_raw($oer_authorurl2));
-				}
-				if(!empty($oer_authoremail2))
-				{
-					update_post_meta( $post_id , 'oer_authoremail2' , sanitize_email($oer_authoremail2));
-				}
 
-				if(!empty($oer_publishername))
-				{
-					update_post_meta( $post_id , 'oer_publishername' , sanitize_text_field($oer_publishername));
-				}
-				if(!empty($oer_publisherurl))
-				{
-					if ( preg_match('/http/',$oer_publisherurl) )
+					if(!empty($oer_datecreated) && !($oer_datecreated==""))
 					{
-						$oer_publisherurl = $oer_publisherurl;
-					}
-					else
-					{
-						$oer_publisherurl = 'http://'.$oer_publisherurl;
-					}
-						update_post_meta( $post_id , 'oer_publisherurl' , esc_url_raw($oer_publisherurl));
-				}
-				if(!empty($oer_publisheremail))
-				{
-					update_post_meta( $post_id , 'oer_publisheremail' , sanitize_email($oer_publisheremail));
-				}
-				
-				// Save Format field
-				if(!empty($oer_format))
-				{
-					update_post_meta( $post_id , 'oer_format' , sanitize_text_field($oer_format));
-				}
-				
-				// Save Citation
-				if(!empty($oer_citation)){
-					update_post_meta( $post_id , 'oer_citation' , $oer_citation);
-				}
-				
-				// Save Sensitive Material Warning
-				if(!empty($oer_sensitive_material)){
-					update_post_meta( $post_id , 'oer_sensitive_material' , $oer_sensitive_material);
-				}
-				
-				// Save Transcription
-				if(!empty($oer_transcription)){
-					update_post_meta( $post_id , 'oer_transcription' , $oer_transcription);
-				}
-				//saving meta fields
-
-				if(!empty($oer_resourceurl))
-				{
-					$url = esc_url_raw($oer_resourceurl);
-					$upload_dir = wp_upload_dir();
-					$file = '';
-
-					//Check first if screenshot is enabled
-					$screenshot_enabled = get_option( 'oer_enable_screenshot' );
-					//Check if external service screenshot is enabled
-					$external_screenshot = get_option( 'oer_external_screenshots' );
-
-					if(!has_post_thumbnail( $post_id ))
-					{
-						if (!empty($oer_thumbnailurl)) {
-							if (substr(trim($oer_thumbnailurl),0,2)=="./") {
-								$oer_thumbnailurl = substr(trim($oer_thumbnailurl),2);
-								$file = oer_getExternalThumbnailImage($oer_thumbnailurl, true);	
-							} else {
-								$file = oer_getExternalThumbnailImage($oer_thumbnailurl);	
-							}
-						} elseif ($screenshot_enabled) {
-							$file = oer_getScreenshotFile($url);
-						} elseif ( $external_screenshot ) {
-							// if external screenshot utility enabled
-							$file = oer_getImageFromExternalURL($url);
-						}
+						update_post_meta( $post_id , 'oer_datecreated' , $oer_datecreated);
 					}
 					
-					if(file_exists($file))
-					{
-						$filetype = wp_check_filetype( basename( $file ), null );
-						$wp_upload_dir = wp_upload_dir();
-						
-						$guid = $wp_upload_dir['url'] . '/' . basename( $file );
-
-						$attachment = array(
-							'guid'           => $guid,
-							'post_mime_type' => $filetype['type'],
-							'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $file ) ),
-							'post_content'   => '',
-							'post_status'    => 'inherit'
-						);
-						
-						$attach_id = wp_insert_attachment( $attachment, $file, $post_id );
-						update_post_meta($post_id, "_thumbnail_id", $attach_id);
-
-						// Generate the metadata for the attachment, and update the database record.
-						$attach_data = wp_generate_attachment_metadata( $attach_id, $file );
-						wp_update_attachment_metadata( $attach_id, $attach_data );
+					if(!empty($oer_datecreated_estimate) && !($oer_datecreated_estimate=="")){
+						update_post_meta( $post_id , 'oer_datecreated_estimate' , $oer_datecreated_estimate);
 					}
 
-				}//Create Screeenshot
-				$cnt++;
+					if(!empty($oer_datemodified))
+					{
+						update_post_meta( $post_id , 'oer_datemodified' , $oer_datemodified);
+					}
+
+					if(!empty($oer_mediatype))
+					{
+						update_post_meta( $post_id , 'oer_mediatype' , sanitize_text_field($oer_mediatype));
+					}
+					if(!empty($oer_lrtype))
+					{
+						update_post_meta( $post_id , 'oer_lrtype' , sanitize_text_field($oer_lrtype));
+					}
+					if(!empty($oer_interactivity))
+					{
+						update_post_meta( $post_id , 'oer_interactivity' , sanitize_text_field($oer_interactivity));
+					}
+					if(!empty($oer_userightsurl))
+					{
+							if ( preg_match('/http/',$oer_userightsurl) )
+							{
+								$oer_userightsurl = $oer_userightsurl;
+							}
+							else
+							{
+								$oer_userightsurl = 'http://'.$oer_userightsurl;
+							}
+						update_post_meta( $post_id , 'oer_userightsurl' , esc_url_raw($oer_userightsurl));
+					}
+					if(!empty($oer_isbasedonurl))
+					{
+							if ( preg_match('/http/',$oer_isbasedonurl) )
+							{
+								$oer_isbasedonurl = $oer_isbasedonurl;
+							}
+							else
+							{
+								$oer_isbasedonurl = 'http://'.$oer_isbasedonurl;
+							}
+						update_post_meta( $post_id , 'oer_isbasedonurl' , esc_url_raw($oer_isbasedonurl));
+					}
+					if(!empty($oer_standard))
+					{
+						$gt_oer_standard = '';
+						for($l = 0; $l < count($oer_standard); $l++)
+						{
+							$results = $wpdb->get_row( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. "oer_standard_notation where standard_notation =%s" , $oer_standard[$l] ),ARRAY_A);
+							
+							if(!empty($results))
+							{
+								$gt_oer_standard .= "standard_notation-".$results['id'].",";
+								
+								$table = explode("-", $results['parent_id']);
+								
+								if(!empty($table))
+								{
+									$stndrd_algn = $wpdb->get_row( $wpdb->prepare( "SELECT * from  " . $wpdb->prefix. $_oer_prefix . $table[0] . " where id =%s" , $table[1] ),ARRAY_A);
+									
+									if($stndrd_algn['parent_id'])
+									{
+										oer_fetch_stndrd($stndrd_algn['parent_id'], $post_id);
+									}
+								}
+							}
+							else
+							{
+								$gt_oer_standard .= ",";
+							}
+						}
+						$gt_oer_standard = trim($gt_oer_standard,",");
+						update_post_meta( $post_id , 'oer_standard' , $gt_oer_standard);
+					}
+					if(!empty($oer_authortype))
+					{
+						update_post_meta( $post_id , 'oer_authortype' , sanitize_text_field($oer_authortype));
+					}
+					if(!empty($oer_authorname))
+					{
+						update_post_meta( $post_id , 'oer_authorname' , sanitize_text_field($oer_authorname));
+					}
+					if(!empty($oer_authorurl))
+					{
+							if ( preg_match('/http/',$oer_authorurl) )
+							{
+								$oer_authorurl = $oer_authorurl;
+							}
+							else
+							{
+								$oer_authorurl = 'http://'.$oer_authorurl;
+							}
+						update_post_meta( $post_id , 'oer_authorurl' , esc_url_raw($oer_authorurl));
+					}
+					if(!empty($oer_authoremail))
+					{
+						update_post_meta( $post_id , 'oer_authoremail' , sanitize_email($oer_authoremail));
+					}
+					if(!empty($oer_authortype2))
+					{
+						update_post_meta( $post_id , 'oer_authortype2' , sanitize_text_field($oer_authortype2));
+					}
+					if(!empty($oer_authorname2))
+					{
+						update_post_meta( $post_id , 'oer_authorname2' , sanitize_text_field($oer_authorname2));
+					}
+					if(!empty($oer_authorurl2))
+					{
+							if ( preg_match('/http/',$oer_authorurl2) )
+							{
+								$oer_authorurl2 = $oer_authorurl2;
+							}
+							else
+							{
+								$oer_authorurl2 = 'http://'.$oer_authorurl2;
+							}
+						update_post_meta( $post_id , 'oer_authorurl2' , esc_url_raw($oer_authorurl2));
+					}
+					if(!empty($oer_authoremail2))
+					{
+						update_post_meta( $post_id , 'oer_authoremail2' , sanitize_email($oer_authoremail2));
+					}
+
+					if(!empty($oer_publishername))
+					{
+						update_post_meta( $post_id , 'oer_publishername' , sanitize_text_field($oer_publishername));
+					}
+					if(!empty($oer_publisherurl))
+					{
+						if ( preg_match('/http/',$oer_publisherurl) )
+						{
+							$oer_publisherurl = $oer_publisherurl;
+						}
+						else
+						{
+							$oer_publisherurl = 'http://'.$oer_publisherurl;
+						}
+							update_post_meta( $post_id , 'oer_publisherurl' , esc_url_raw($oer_publisherurl));
+					}
+					if(!empty($oer_publisheremail))
+					{
+						update_post_meta( $post_id , 'oer_publisheremail' , sanitize_email($oer_publisheremail));
+					}
+					
+					// Save Format field
+					if(!empty($oer_format))
+					{
+						update_post_meta( $post_id , 'oer_format' , sanitize_text_field($oer_format));
+					}
+					
+					// Save Citation
+					if(!empty($oer_citation)){
+						update_post_meta( $post_id , 'oer_citation' , $oer_citation);
+					}
+					
+					// Save Sensitive Material Warning
+					if(!empty($oer_sensitive_material)){
+						update_post_meta( $post_id , 'oer_sensitive_material' , $oer_sensitive_material);
+					}
+					
+					// Save Transcription
+					if(!empty($oer_transcription)){
+						update_post_meta( $post_id , 'oer_transcription' , $oer_transcription);
+					}
+					//saving meta fields
+
+					if(!empty($oer_resourceurl))
+					{
+						$url = esc_url_raw($oer_resourceurl);
+						$upload_dir = wp_upload_dir();
+						$file = '';
+
+						//Check first if screenshot is enabled
+						$screenshot_enabled = get_option( 'oer_enable_screenshot' );
+						//Check if external service screenshot is enabled
+						$external_screenshot = get_option( 'oer_external_screenshots' );
+
+						if(!has_post_thumbnail( $post_id ))
+						{
+							if (!empty($oer_thumbnailurl)) {
+								if (substr(trim($oer_thumbnailurl),0,2)=="./") {
+									$oer_thumbnailurl = substr(trim($oer_thumbnailurl),2);
+									$file = oer_getExternalThumbnailImage($oer_thumbnailurl, true);	
+								} else {
+									$file = oer_getExternalThumbnailImage($oer_thumbnailurl);	
+								}
+							} elseif ($screenshot_enabled) {
+								$file = oer_getScreenshotFile($url);
+							} elseif ( $external_screenshot ) {
+								// if external screenshot utility enabled
+								$file = oer_getImageFromExternalURL($url);
+							}
+						}
+						
+						if(file_exists($file))
+						{
+							$filetype = wp_check_filetype( basename( $file ), null );
+							$wp_upload_dir = wp_upload_dir();
+							
+							$guid = $wp_upload_dir['url'] . '/' . basename( $file );
+
+							$attachment = array(
+								'guid'           => $guid,
+								'post_mime_type' => $filetype['type'],
+								'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $file ) ),
+								'post_content'   => '',
+								'post_status'    => 'inherit'
+							);
+							
+							$attach_id = wp_insert_attachment( $attachment, $file, $post_id );
+							update_post_meta($post_id, "_thumbnail_id", $attach_id);
+
+							// Generate the metadata for the attachment, and update the database record.
+							$attach_data = wp_generate_attachment_metadata( $attach_id, $file );
+							wp_update_attachment_metadata( $attach_id, $attach_data );
+						}
+
+					}//Create Screeenshot
+					$cnt++;
+				}
 			}
 
 		}
@@ -1541,6 +1545,19 @@ function oer_importResources($default=false) {
 	$type = "success";
 	$response = array('message' => $message, 'type' => $type);
 	return $response;
+}
+
+// verify resource to be imported if existing
+function oer_verifyResource($resource_title){
+	$existing = false;
+
+	$resource = get_page_by_title($resource_title, OBJECT, 'resource');
+	
+	if ($resource){
+		$existing = true;
+	}
+
+	return $existing;
 }
 
 // Import LR Resources

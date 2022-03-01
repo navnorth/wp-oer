@@ -778,12 +778,12 @@ function oer_process_import_resources(){
     //Resource Import
     if(isset($_POST['resrc_imprt']))
     {
-	check_admin_referer('oer_resources_nonce_field');
+		check_admin_referer('oer_resources_nonce_field');
 	    
 	    $import_response = oer_importResources();
 	    if ($import_response){
-		$message = urlencode($import_response["message"]);
-		$type = urlencode($import_response["type"]);
+			$message = urlencode($import_response["message"]);
+			$type = urlencode($import_response["type"]);
 	    }
     }
     
