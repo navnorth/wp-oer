@@ -7,6 +7,7 @@
  * @see https://developer.wordpress.org/block-editor/tutorials/block-tutorial/writing-your-first-block-type/
  */
 function wp_oer_subject_resources_block_init() {
+    wp_enqueue_script("wp-api");
     $dir = dirname(__FILE__);
     $version_58 = is_version_58();
 
@@ -71,6 +72,7 @@ function wp_oer_subject_resources_block_init() {
 }
 
 function wp_oer_subject_resources_block_json_init() {
+    wp_enqueue_script("wp-api");
     $dir = dirname(__FILE__);
     $version_58 = is_version_58();
 
