@@ -3,7 +3,7 @@
  Plugin Name:        WP OER
  Plugin URI:         https://www.wp-oer.com
  Description:        Open Educational Resource management and curation, metadata publishing, and alignment to Common Core State Standards.
- Version:            0.8.6
+ Version:            0.8.7
  Requires at least:  4.4
  Requires PHP:       7.0
  Author:             Navigation North
