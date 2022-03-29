@@ -264,6 +264,26 @@ function oer_show_metadata_settings() {
 			}
 		}
 		
+		if (!in_array("oer_related_resource", $metadata))
+			$metadata[] = "oer_related_resource";
+		// Add Age Levels if not showing on meta fields
+		if (!in_array("oer_age_levels", $metadata))
+			$metadata[] = "oer_age_levels";
+		// Add Instructional Time if not showing on meta fields
+		if (!in_array("oer_instructional_time", $metadata))
+			$metadata[] = "oer_instructional_time";
+		// Add Creative Commons License if not showing on meta fields
+		if (!in_array("oer_creativecommons_license", $metadata))
+			$metadata[] = "oer_creativecommons_license";
+		// Add Is Based on Url if not showing on meta fields
+		if (!in_array("oer_isbasedonurl", $metadata))
+			$metadata[] = "oer_isbasedonurl";
+		// Add External Repository if not showing on meta fields
+		if (!in_array("oer_external_repository", $metadata))
+			$metadata[] = "oer_external_repository";
+		// Add Repository Record Url if not showing on meta fields
+		if (!in_array("oer_repository_recordurl", $metadata))
+			$metadata[] = "oer_repository_recordurl";
 		if (!empty($metadata)){
 			$meta = array_unique($metadata);
 			// Save Option

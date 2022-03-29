@@ -40,7 +40,7 @@ class OER_OLERead {
     var $data = '';
 
 
-    function OER_OLERead(){
+    function __construct(){
 
 
     }

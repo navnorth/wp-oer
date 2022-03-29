@@ -7,7 +7,9 @@
  * @see https://developer.wordpress.org/block-editor/tutorials/block-tutorial/writing-your-first-block-type/
  */
 function wp_oer_subject_resources_block_init() {
+    wp_enqueue_script("wp-api");
     $dir = dirname(__FILE__);
+    $version_58 = is_version_58();
 
 	$script_asset_path = "$dir/build/index.asset.php";
     if ( ! file_exists( $script_asset_path ) ) {
@@ -23,7 +25,72 @@ function wp_oer_subject_resources_block_init() {
         $script_asset['dependencies'],
         $script_asset['version']
     );
-    wp_localize_script( 'oer-subject-resources-block-editor', 'oer_subject_resources', array( 'home_url' => home_url(), 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+    wp_localize_script( 'oer-subject-resources-block-editor', 'oer_subject_resources', array( 'home_url' => home_url(), 'ajax_url' => admin_url( 'admin-ajax.php' ), 'version_58' => $version_58 ) );
+    wp_set_script_translations('oer-subject-resources-block-editor', 'oer-subject-resources-block', OER_PATH . '/lang/js');
+
+    $front_asset_path = "$dir/build/front.asset.php";
+    if ( ! file_exists( $front_asset_path ) ) {
+        throw new Error(
+            'You need to run `npm start` or `npm run build` for the "create-block/oer-object-resources-block" block first.'
+        );
+    }
+
+    $frontend_js = 'build/front.js';
+    $front_asset = require( $front_asset_path );
+    wp_register_script(
+        'oer-subject-resources-block-frontend',
+        plugins_url( $frontend_js, __FILE__ ),
+        $front_asset['dependencies'],
+        $front_asset['version']
+    );
+    wp_localize_script( 'oer-subject-resources-block-frontend', 'wp_oer_block', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+    wp_set_script_translations('oer-subject-resources-block-frontend', 'oer-subject-resources-block', OER_PATH . '/lang/js');
+
+    $editor_css = 'build/index.css';
+    wp_register_style(
+        'oer-subject-resources-block-editor',
+        plugins_url( $editor_css, __FILE__ ),
+        array(),
+        filemtime( "$dir/$editor_css" )
+    );
+
+    $style_css = 'build/style-index.css';
+    wp_register_style(
+        'oer-subject-resources-block-css',
+        plugins_url( $style_css, __FILE__ ),
+        array(),
+        filemtime( "$dir/$style_css" )
+    );
+
+    register_block_type( 'oer-block/subject-resources-block', array(
+        'editor_script' => 'oer-subject-resources-block-editor',
+        'editor_style'  => 'oer-subject-resources-block-editor',
+        'script'        => 'oer-subject-resources-block-frontend',
+        'style'         => 'oer-subject-resources-block-css',
+        'render_callback' => 'oer_display_subject_resources_block'
+    ) );
+}
+
+function wp_oer_subject_resources_block_json_init() {
+    wp_enqueue_script("wp-api");
+    $dir = dirname(__FILE__);
+    $version_58 = is_version_58();
+
+    $script_asset_path = "$dir/build/index.asset.php";
+    if ( ! file_exists( $script_asset_path ) ) {
+        throw new Error(
+            'You need to run `npm start` or `npm run build` for the "create-block/oer-object-resources-block" block first.'
+        );
+    }
+    $index_js     = 'build/index.js';
+    $script_asset = require( $script_asset_path );
+    wp_register_script(
+        'oer-subject-resources-block-editor',
+        plugins_url( $index_js, __FILE__ ),
+        $script_asset['dependencies'],
+        $script_asset['version']
+    );
+    wp_localize_script( 'oer-subject-resources-block-editor', 'oer_subject_resources', array( 'home_url' => home_url(), 'ajax_url' => admin_url( 'admin-ajax.php' ), 'version_58' => $version_58 ) );
     wp_set_script_translations('oer-subject-resources-block-editor', 'oer-subject-resources-block', OER_PATH . '/lang/js');
 
     $front_asset_path = "$dir/build/front.asset.php";
@@ -53,7 +120,20 @@ function wp_oer_subject_resources_block_init() {
         )
     );
 }
-add_action( 'init', 'wp_oer_subject_resources_block_init' );
+
+if ( version_compare( $GLOBALS['wp_version'], '5.8-alpha-1', '<' ) ) {
+    add_action( 'init', 'wp_oer_subject_resources_block_init' );
+} else {
+    add_action( 'init', 'wp_oer_subject_resources_block_json_init' );
+}
+
+function is_version_58(){
+    if ( version_compare( $GLOBALS['wp_version'], '5.8-alpha-1', '<' ) ) {
+        return false;
+    } else {
+        return true;
+    }
+}
 
 function oer_register_subject_resources_api_routes(){
     register_rest_route(
