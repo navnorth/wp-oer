@@ -95,7 +95,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 						$attach_icn = get_post($getimage[0]->post_id);
 						
 						$img_path = $new_img_path = parse_url($attach_icn->guid);
-						$img_path = $_SERVER['DOCUMENT_ROOT'] . $img_path['path'];
+						$img_path = esc_url($_SERVER['DOCUMENT_ROOT'] . $img_path['path']);
 						//Resize Image using WP_Image_Editor
 						$image_editor = wp_get_image_editor($img_path);
 						if ( !is_wp_error($image_editor) ) {
@@ -109,7 +109,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 							$name = wp_basename( $img_path, ".$ext" );
 							$dest_file_name = "{$dir}/{$name}-{$suffix}.{$ext}";
 							$new_port = ($new_img_path['port']==80)?'':':'.$new_img_path['port'];
-							$new_image_url = str_replace($_SERVER['DOCUMENT_ROOT'], "{$new_img_path['scheme']}://{$new_img_path['host']}{$new_port}", $dest_file_name);
+							$new_image_url = esc_url(str_replace($_SERVER['DOCUMENT_ROOT'], "{$new_img_path['scheme']}://{$new_img_path['host']}{$new_port}", $dest_file_name));
 							
 							if ( !file_exists($dest_file_name) ){
 								$image_file = $image_editor->save($dest_file_name);
@@ -393,9 +393,9 @@ $hide_title = get_option('oer_hide_subject_area_title');
 						
 						if (empty($img_url)) {
 							$w_image = false;
-							$new_image_url = OER_URL . 'images/default-icon-220x180.png';
+							$new_image_url = esc_url(OER_URL . 'images/default-icon-220x180.png');
 						} else {
-							$new_image_url = $img_url[0];
+							$new_image_url = esc_url($img_url[0]);
 						}
 						
 						$title =  $post->post_title;
@@ -408,7 +408,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 						$content = substr($content, 0, 180).$ellipsis;
 						
 						$img_path = $new_img_path = parse_url($img_url[0]);
-						$img_path = $_SERVER['DOCUMENT_ROOT'] . $img_path['path'];
+						$img_path = esc_url($_SERVER['DOCUMENT_ROOT'] . $img_path['path']);
 						if(!empty($img_url))
 						{
 							//Resize Image using WP_Image_Editor
@@ -424,7 +424,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 								$name = wp_basename( $img_path, ".$ext" );
 								$dest_file_name = "{$dir}/{$name}-{$suffix}.{$ext}";
 								$new_port = ($new_img_path['port']==80)?'':':'.$new_img_path['port'];
-								$new_image_url = str_replace($_SERVER['DOCUMENT_ROOT'], "{$new_img_path['scheme']}://{$new_img_path['host']}{$new_port}", $dest_file_name);
+								$new_image_url = esc_url(str_replace($_SERVER['DOCUMENT_ROOT'], "{$new_img_path['scheme']}://{$new_img_path['host']}{$new_port}", $dest_file_name));
 								
 								if ( !file_exists($dest_file_name) ){
 									$image_file = $image_editor->save($dest_file_name);
@@ -435,7 +435,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 					?>
 						<div class="oer-snglrsrc">
 							<?php
-							echo '<a href="'.esc_url(get_permalink($post->ID)).'" class="oer-resource-link"><div class="oer-snglimglft"><img src="'.esc_url($new_image_url).'"></div></a>';
+							echo '<a href="'.esc_url(get_permalink($post->ID)).'" class="oer-resource-link"><div class="oer-snglimglft"><img src="'.$new_image_url.'"></div></a>';
 							?>
 							<div class="oer-snglttldscrght <?php if(empty($img_url)){ echo 'snglttldscrghtfull';}?>">
 								<div class="ttl"><a href="<?php echo esc_url(get_permalink($post->ID));?>"><?php echo $title;?></a></div>

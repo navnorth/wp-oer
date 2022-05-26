@@ -242,7 +242,7 @@ function oer_display_default_thumbnail($post){
 		$img_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ) , "full" );
 		if ($img_url){
 			$img_path = $new_img_path = parse_url($img_url[0]);
-			$img_path = $_SERVER['DOCUMENT_ROOT'] . $img_path['path'];
+			$img_path = esc_url($_SERVER['DOCUMENT_ROOT'] . $img_path['path']);
 			$new_image_url = OER_URL.'images/default-icon-528x455.png';
 			$img_width = oer_get_image_width('large');
 			$img_height = oer_get_image_height('large');

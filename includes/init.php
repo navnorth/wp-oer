@@ -401,19 +401,19 @@ function oer_save_customfields()
 	    }
 		if(isset($_POST['oer_resourceurl']))
 		{
-			$oer_resourceurl = $_POST['oer_resourceurl'];
+			$oer_resourceurl = esc_url_raw($_POST['oer_resourceurl']);
 			if( !empty($_POST['oer_resourceurl']) )
 			{
 				if ( preg_match('/http/',$oer_resourceurl) )
 				{
-					$oer_resourceurl = $_POST['oer_resourceurl'];
+					$oer_resourceurl = esc_url_raw($_POST['oer_resourceurl']);
 				}
 				else
 				{
-					$oer_resourceurl = 'http://'.$_POST['oer_resourceurl'];
+					$oer_resourceurl = esc_url_raw('http://'.$_POST['oer_resourceurl']);
 				}
 			}
-			update_post_meta( $post->ID , 'oer_resourceurl' , esc_url_raw($oer_resourceurl));
+			update_post_meta( $post->ID , 'oer_resourceurl' , $oer_resourceurl);
 		}
 
 		if(isset($_POST['oer_highlight']))
