@@ -27,7 +27,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
     <div class="oer-sngl-rsrc-img oer-sngl-standard-type">
         <?php if ($youtube) {
             $embed = oer_generate_youtube_embed_code($url);
-            echo $embed;
+            echo esc_html($embed);
         } elseif($isPDF) {
             if ($isExternal) {
                 $external_option = get_option("oer_external_pdf_viewer");
@@ -50,7 +50,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
                     case 2:
                         $pdf_url = OER_URL."pdfjs/web/viewer.html?file=".urlencode($url);
                         $embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.esc_url_raw($pdf_url).'"></iframe>';
-                        echo $embed_code;
+                        echo esc_html($embed_code);
                         break;
                     case 3:
                         if(shortcode_exists('wonderplugin_pdf')) {
@@ -130,7 +130,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
         else
             echo get_option('oer_publishername_label').":";
         ?></strong>
-        <span><a href="<?php echo esc_url($oer_publisherurl); ?>" target="_blank"><?php echo $oer_publishername; ?></a></span></h4>
+        <span><a href="<?php echo esc_url($oer_publisherurl); ?>" target="_blank"><?php echo esc_html($oer_publishername); ?></a></span></h4>
     </div>
     <?php } ?>
 </div>
@@ -201,9 +201,9 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
                     $subject_parent = get_term_parents_list($term->term_id,'resource-subject-area', array('separator' => ' <i class="fas fa-angle-double-right"></i> ', 'inclusive' => false));
                     $subject = $subject_parent . '<a href="'.esc_url(get_term_link($term->term_id)).'">'.$term->name.'</a>';
                     if ($i>2)
-                        echo '<li class="collapse lp-subject-hidden">'.$subject.'</li>';
+                        echo '<li class="collapse lp-subject-hidden">'.esc_html($subject).'</li>';
                     else
-                        echo '<li>'.$subject.'</li>';
+                        echo '<li>'.esc_html($subject).'</li>';
                     if (($i==2) && ($cnt>2))
                         echo '<li><a class="see-more-subjects" data-toggle="collapse" data-count="'.$moreCnt.'" href=".lp-subject-hidden">SEE '.$moreCnt.' MORE +</a></li>';
                     $i++;
@@ -232,9 +232,9 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
                 foreach($connected_curriculums as $curriculum){
                     $curriculum_url = get_the_permalink($curriculum['post_id']);
                     if ($i>2)
-                        echo '<li class="collapse lp-subject-hidden"><a href="'.esc_url($curriculum_url).'">'.$curriculum['post_title'].'</a></li>';
+                        echo '<li class="collapse lp-subject-hidden"><a href="'.esc_url($curriculum_url).'">'.esc_html($curriculum['post_title']).'</a></li>';
                     else
-                        echo "<li><a href='".esc_url($curriculum_url)."'>".$curriculum['post_title']."</a></li>";
+                        echo "<li><a href='".esc_url($curriculum_url)."'>".esc_html($curriculum['post_title'])."</a></li>";
                     if (($i==2) && ($cnt>2))
                         echo '<li><a class="see-more-subjects" data-toggle="collapse" data-count="'.$moreCnt.'" href=".lp-subject-hidden">SEE '.$moreCnt.' MORE +</a></li>';
                     $i++;
@@ -248,7 +248,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
 </div> <!--Description & Resource Info at Right-->
 <?php  if ($display_see_more): ?>
 <div class="oer-see-more-row col-md-12 col-sm-12 col-xs-12">
-    <p class="center"><span><a id="oer-see-more-link" class="oer-see-more-link" role="button" data-toggle="collapse" href="#tcHiddenFields" aria-expanded="false" aria-controls="tcHiddenFields"><?php _e("SEE MORE +",OER_SLUG); ?></a></span></p>
+    <p class="center"><span><a id="oer-see-more-link" class="oer-see-more-link" role="button" data-toggle="collapse" href="#tcHiddenFields" aria-expanded="false" aria-controls="tcHiddenFields"><?php esc_html_e("SEE MORE +",OER_SLUG); ?></a></span></p>
 </div>
 <?php endif; ?>
 <div id="tcHiddenFields" class="tc-hidden-fields collapse row col-md-12 col-sm-12 col-xs-12">

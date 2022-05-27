@@ -25,7 +25,7 @@ if ($_css_oer) {
 $output = "<style>"."\n";
 $output .= $_css_oer."\n";
 $output .="</style>"."\n";
-echo $output;
+echo esc_html($output);
 }
 
 $url = get_post_meta($post->ID, "oer_resourceurl", true);
@@ -169,7 +169,7 @@ if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
         <div id="sngl-resource" class="entry-content oer-cntnr post-content oer_sngl_resource_wrapper row">
 	<?php //if (!$hide_title): ?>
         <header class="entry-header">
-            <h1 class="entry-title col-md-8"><?php echo $post->post_title;?></h1>
+            <h1 class="entry-title col-md-8"><?php echo esc_html($post->post_title); ?></h1>
 			<?php if (!empty($oer_sensitive_material)): ?>
 			<span class="sensitive-resource col-md-4"><i class="fas fa-exclamation-triangle"></i> Potentially Sensitive Material</span>
 			<?php endif; ?>
