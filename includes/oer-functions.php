@@ -2405,7 +2405,9 @@ function oer_generate_sll_resource_embed_code($url){
 	
 	//Generate embed code
 	if ($sll_resource_id) {
-		$embed_code = '<script type="text/javascript" src="https://learninglab.si.edu/embed/widget/q/r/'.$sll_resource_id.'/embed.js"></script><div class="sll-embed" data-widget-type="r" data-widget-key="'.$sll_resource_id.'"></div>';
+		wp_enqueue_script('learninglab-resource', 'https://learninglab.si.edu/embed/widget/q/r/'.$sll_resource_id.'/embed.js');
+		//$embed_code = '<script type="text/javascript" src="https://learninglab.si.edu/embed/widget/q/r/'.$sll_resource_id.'/embed.js"></script><div class="sll-embed" data-widget-type="r" data-widget-key="'.$sll_resource_id.'"></div>';
+		$embed_code = '<div class="sll-embed" data-widget-type="r" data-widget-key="'.$sll_resource_id.'"></div>';
 	}
 	return $embed_code;
 }
@@ -2427,7 +2429,9 @@ function oer_generate_sll_collection_embed_code($url){
 	
 	//Generate embed code
 	if ($sll_collection_id) {
-		$embed_code = '<script type="text/javascript" src="https://learninglab.si.edu/embed/widget/q/c/'.$sll_collection_id.'/embed.js"></script><div class="sll-embed" data-widget-type="c" data-widget-key="'.$sll_collection_id.'"></div>';
+		wp_enqueue_script('learninglab-collection', 'https://learninglab.si.edu/embed/widget/q/c/'.$sll_collection_id.'/embed.js');
+		//$embed_code = '<script type="text/javascript" src="https://learninglab.si.edu/embed/widget/q/c/'.$sll_collection_id.'/embed.js"></script><div class="sll-embed" data-widget-type="c" data-widget-key="'.$sll_collection_id.'"></div>';
+		$embed_code = '<div class="sll-embed" data-widget-type="c" data-widget-key="'.$sll_collection_id.'"></div>';
 	}
 	return $embed_code;
 }

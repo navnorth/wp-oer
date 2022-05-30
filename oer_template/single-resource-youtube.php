@@ -8,12 +8,12 @@
         } elseif($isSSLResource){
                 echo '<div class="SLLWrapper">';
                 $embed = oer_generate_sll_resource_embed_code($url);
-                echo esc_html($embed);
+                echo $embed;
                 echo '</div>';
         } elseif($isSLLCollection){
                 echo '<div class="SLLWrapper">';
                 $embed = oer_generate_sll_collection_embed_code($url);
-                echo esc_html($embed);
+                echo $embed;
                 echo '</div>';
         }
             
