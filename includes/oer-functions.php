@@ -967,12 +967,16 @@ function oer_is_bootstrap_loaded(){
 	$js = "";
 	$url = get_site_url();
 	
-	if (ini_get('allow_url_fopen'))
+	/**-- if (ini_get('allow_url_fopen'))
 		$content = file_get_contents($url);
 	else
-		$content = oer_curlRequest($url);
+		$content = oer_curlRequest($url); --**/
 	
+
+	$content = oer_HTTPRequest($url);
+
 	$content = htmlentities($content);
+	var_dump($content);
 	
 	preg_match_all("#(<head[^>]*>.*?<\/head>)#ims", $content, $head);
 	$content = implode('',$head[0]);
@@ -990,15 +994,27 @@ function oer_is_bootstrap_loaded(){
 	return $bootstrap;
 }
 
-/** Get resource via curl **/
-function oer_curlRequest($url) {
-   $ch = curl_init();
-   curl_setopt($ch, CURLOPT_URL, $url);
-   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-   $data = curl_exec($ch);
-   curl_close($ch);
-   return $data;
+/** Get resources via WordPress HTTP API **/
+function oer_HTTPRequest($url){
+	$response = wp_remote_get($url);
+
+	if ( is_array($response) && !is_wp_error($response)){
+		$content = wp_remote_retrieve_body($response);
+		return $content;
+	} else {
+		return false;
+	}
 }
+
+/** Get resource via curl **/
+// function oer_curlRequest($url) {
+//    $ch = curl_init();
+//    curl_setopt($ch, CURLOPT_URL, $url);
+//    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//    $data = curl_exec($ch);
+//    curl_close($ch);
+//    return $data;
+// }
 
 /** Resize Image **/
 function oer_resize_image($orig_img_url, $width, $height, $crop = false) {
