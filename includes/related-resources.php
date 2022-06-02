@@ -5,7 +5,7 @@ $_delimited = get_post_meta($post->ID,"oer_related_resource");
 if(!empty($_delimited[0])):
 ?>
   <div class="row lp-primary-sources-row">
-  <div class="lp-related-resources-header">Related Resources</div>
+  <div class="lp-related-resources-header"><?php esc_html_e('Related Resources',OER_SLUG); ?></div>
   <?php
   $_related_resources = explode(",",$_delimited[0]);
   if (is_array($_related_resources)):
@@ -33,10 +33,10 @@ if(!empty($_delimited[0])):
                    </a>
                </div>
                <div class="lp-resource-info">
-                 <div class="lp-resource-title"><?php echo $oer_resourcetitle; ?></div>
+                 <div class="lp-resource-title"><?php echo esc_html($oer_resourcetitle); ?></div>
                  <div class="lp-resource-author">
                    <?php if( $oer_authorname != ''):?>
-                     <div class="lp-resource-author_block"><a href="<?php echo esc_url($oer_authorurl); ?>" target="_new"><?php echo $oer_authorname; ?></a></div>
+                     <div class="lp-resource-author_block"><a href="<?php echo esc_url($oer_authorurl); ?>" target="_new"><?php echo esc_html($oer_authorname); ?></a></div>
                    <?php endif; ?>
                    <?php /* if( $oer_authorname2 != ''):?>
                      <div class="lp-resource-author_block"><a href=""><?php echo $oer_authorname2; ?></a></div>

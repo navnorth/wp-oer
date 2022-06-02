@@ -21,13 +21,14 @@ $transcription_set = (get_option('oer_transcription_label'))?true:false;
 $transcription_enabled = (get_option('oer_transcription_enabled'))?true:false;
 $sensitive_material_set = (get_option('oer_sensitive_material_label'))?true:false;
 $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?true:false;
+$allowed_tags = oer_allowed_html();
 ?>
 <div class="oer-rsrclftcntr-img col-md-5 col-sm-12 col-xs-12">
     <!--Resource Image-->
     <div class="oer-sngl-rsrc-img oer-sngl-standard-type">
         <?php if ($youtube) {
             $embed = oer_generate_youtube_embed_code($url);
-            echo esc_html($embed);
+            echo wp_kses($embed,$allowed_tags);
         } elseif($isPDF) {
             if ($isExternal) {
                 $external_option = get_option("oer_external_pdf_viewer");
@@ -50,7 +51,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
                     case 2:
                         $pdf_url = OER_URL."pdfjs/web/viewer.html?file=".urlencode($url);
                         $embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.esc_url_raw($pdf_url).'"></iframe>';
-                        echo esc_html($embed_code);
+                        echo wp_kses($embed_code,$allowed_html);
                         break;
                     case 3:
                         if(shortcode_exists('wonderplugin_pdf')) {
@@ -159,7 +160,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
            <?php
                         foreach($keywords as $keyword)
                         {
-                                echo "<span><a href='".esc_url(get_tag_link($keyword->term_id))."' class='button'>".ucwords($keyword->name)."</a></span>";
+                                echo "<span><a href='".esc_url(get_tag_link($keyword->term_id))."' class='button'>".esc_html(ucwords($keyword->name))."</a></span>";
                         }
                 ?>
                 </div>
@@ -201,9 +202,9 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
                     $subject_parent = get_term_parents_list($term->term_id,'resource-subject-area', array('separator' => ' <i class="fas fa-angle-double-right"></i> ', 'inclusive' => false));
                     $subject = $subject_parent . '<a href="'.esc_url(get_term_link($term->term_id)).'">'.$term->name.'</a>';
                     if ($i>2)
-                        echo '<li class="collapse lp-subject-hidden">'.esc_html($subject).'</li>';
+                        echo '<li class="collapse lp-subject-hidden">'.wp_kses($subject,$allowed_tags).'</li>';
                     else
-                        echo '<li>'.esc_html($subject).'</li>';
+                        echo '<li>'.wp_kses($subject,$allowed_tags).'</li>';
                     if (($i==2) && ($cnt>2))
                         echo '<li><a class="see-more-subjects" data-toggle="collapse" data-count="'.$moreCnt.'" href=".lp-subject-hidden">SEE '.$moreCnt.' MORE +</a></li>';
                     $i++;

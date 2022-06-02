@@ -9,7 +9,7 @@ if (!empty($args)){
         if (!empty($age_levels) && trim($age_levels)!==""){
         ?>
         <div class="form-field">
-            <div class="oer-lp-label"><?php echo $age_label; ?>:</div> <div class="oer-lp-value"><?php echo $age_levels; ?></div>
+            <div class="oer-lp-label"><?php echo esc_html($age_label); ?>:</div> <div class="oer-lp-value"><?php echo esc_html($age_levels); ?></div>
         </div>
         <?php
         }
@@ -58,7 +58,7 @@ if (!empty($args)){
          if (!empty($suggested_time) && trim($suggested_time)!==""){
          ?>
          <div class="form-field">
-             <div class="oer-lp-label"><?php echo $suggested_label; ?>:</div> <div class="oer-lp-value"><?php echo $suggested_time; ?></div>
+             <div class="oer-lp-label"><?php echo esc_html($suggested_label); ?>:</div> <div class="oer-lp-value"><?php echo esc_html($suggested_time); ?></div>
          </div>
          <?php
          }

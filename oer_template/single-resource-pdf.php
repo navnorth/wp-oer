@@ -1,4 +1,6 @@
-<?php /** PDF Resource Template **/ ?>
+<?php /** PDF Resource Template **/ 
+$allowed_tags = oer_allowed_html();
+?>
 <div class="oer-rsrclftcntr-img col-md-7 col-sm-12 col-xs-12">
     <!--Resource Image-->
     <div class="oer-sngl-rsrc-img oer-sngl-pdf-type">
@@ -24,7 +26,7 @@
                 case 2:
                     $pdf_url = OER_URL."pdfjs/web/viewer.html?file=".urlencode($url);
                     $embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.esc_url_raw($pdf_url).'"></iframe>';
-                    echo esc_html($embed_code);
+                    echo wp_kses($embed_code,$allowed_tags);
                     break;
                 case 3:
                     if(shortcode_exists('wonderplugin_pdf')) {
@@ -74,7 +76,7 @@
                 _e("Creator:", OER_SLUG);
 	    else
 		echo get_option('oer_authorname_label').":"; ?></strong>
-            <span><?php if (!empty($oer_authorurl)): ?><a href="<?php echo esc_url($oer_authorurl); ?>" target="_blank"><?php endif; ?><?php echo $oer_authorname; ?><?php if (!empty($oer_authorurl)): ?></a><?php endif; ?></span><?php if ($oer_authorname2): echo ", "; ?><span><?php if (!empty($oer_authorurl2)): ?><a href="<?php echo esc_url($oer_authorurl2); ?>" target="_blank"><?php endif; ?><?php echo $oer_authorname2; ?><?php if (!empty($oer_authorurl2)): ?></a><?php endif; ?></span>
+            <span><?php if (!empty($oer_authorurl)): ?><a href="<?php echo esc_url($oer_authorurl); ?>" target="_blank"><?php endif; ?><?php echo esc_html($oer_authorname); ?><?php if (!empty($oer_authorurl)): ?></a><?php endif; ?></span><?php if ($oer_authorname2): echo ", "; ?><span><?php if (!empty($oer_authorurl2)): ?><a href="<?php echo esc_url($oer_authorurl2); ?>" target="_blank"><?php endif; ?><?php echo esc_html($oer_authorname2); ?><?php if (!empty($oer_authorurl2)): ?></a><?php endif; ?></span>
             <?php endif; ?>
             </h4>
         <?php } ?>
@@ -122,7 +124,7 @@
            <?php
                         foreach($keywords as $keyword)
                         {
-                                echo "<span><a href='".esc_url(get_tag_link($keyword->term_id))."' class='button'>".ucwords($keyword->name)."</a></span>";
+                                echo "<span><a href='".esc_url(get_tag_link($keyword->term_id))."' class='button'>".esc_html(ucwords($keyword->name))."</a></span>";
                         }
                 ?>
                 </div>
@@ -164,9 +166,9 @@
                     $subject_parent = get_term_parents_list($term->term_id,'resource-subject-area', array('separator' => ' <i class="fas fa-angle-double-right"></i> ', 'inclusive' => false));
                     $subject = $subject_parent . '<a href="'.esc_url(get_term_link($term->term_id)).'">'.$term->name.'</a>';
                     if ($i>2)
-                        echo '<li class="collapse lp-subject-hidden">'.esc_html($subject).'</li>';
+                        echo '<li class="collapse lp-subject-hidden">'.wp_kses($subject,$allowed_tags).'</li>';
                     else
-                        echo '<li>'.esc_html($subject).'</li>';
+                        echo '<li>'.wp_kses($subject,$allowed_tags).'</li>';
                     if (($i==2) && ($cnt>2))
                         echo '<li><a class="see-more-subjects" data-toggle="collapse" data-count="'.$moreCnt.'" href=".lp-subject-hidden">SEE '.$moreCnt.' MORE +</a></li>';
                     $i++;

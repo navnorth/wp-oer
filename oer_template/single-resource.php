@@ -20,12 +20,13 @@ if ($theme == "Eleganto"){
 global $post;
 global $wpdb, $_oer_prefix;
 global $_css_oer;
+$allowed_tags = oer_allowed_html();
 
 if ($_css_oer) {
 $output = "<style>"."\n";
 $output .= $_css_oer."\n";
 $output .="</style>"."\n";
-echo esc_html($output);
+	echo wp_kses($output, $allowed_tags);
 }
 
 $url = get_post_meta($post->ID, "oer_resourceurl", true);

@@ -9,7 +9,7 @@ if (!empty($args)){
 	     if (!empty($external_repository)){
 	     ?>
 	     <div class="form-field">
-	         <div class="oer-lp-label"><?php echo $external_repository_label; ?>:</div> <div class="oer-lp-value"><?php echo $external_repository; ?></div>
+	         <div class="oer-lp-label"><?php echo esc_html($external_repository_label); ?>:</div> <div class="oer-lp-value"><?php echo esc_html($external_repository); ?></div>
 	     </div>
 	     <?php
 	     }
@@ -22,7 +22,7 @@ if (!empty($args)){
          if (!empty($repository_record)){
          ?>
          <div class="form-field">
-             <div class="oer-lp-label"><?php echo $repository_record_label; ?>:</div> <div class="oer-lp-value"><a href="<?php echo esc_url($repository_record); ?>"><?php echo $repository_record; ?></a></a></div>
+             <div class="oer-lp-label"><?php echo esc_html($repository_record_label); ?>:</div> <div class="oer-lp-value"><a href="<?php echo esc_url($repository_record); ?>"><?php echo esc_url($repository_record); ?></a></a></div>
          </div>
          <?php
          }
@@ -36,12 +36,12 @@ if (!empty($args)){
         if (!empty($citation)){
         ?>
         <div class="form-field">
-            <div class="oer-lp-label"><?php echo $citation_label; ?>:</div><div class="oer-lp-value"><?php if (strlen($citation)>230): ?>
+            <div class="oer-lp-label"><?php echo esc_html($citation_label); ?>:</div><div class="oer-lp-value"><?php if (strlen($citation)>230): ?>
             <div class="oer-lp-value-excerpt"><?php echo oer_get_content( $citation, 230); ?></div>
-            <div class="oer-lp-value-full"><?php echo $citation; ?>  <a href="javascript:void(0);" class="lp-read-less">(read less)</a></div>
+            <div class="oer-lp-value-full"><?php echo wp_kses($citation,$allowed_tags); ?>  <a href="javascript:void(0);" class="lp-read-less">(read less)</a></div>
             <?php
             else: 
-                echo $citation;
+                echo wp_kses($citation,$allowed_tags);
             endif; ?></div>
         </div>
         <?php
@@ -56,12 +56,12 @@ if (!empty($args)){
         if (!empty($transcription)){
         ?>
         <div class="form-field">
-            <div class="oer-lp-label"><?php echo $transcription_label; ?>:</div><div class="oer-lp-value"><?php if (strlen($transcription)>230): ?>
+            <div class="oer-lp-label"><?php echo esc_html($transcription_label); ?>:</div><div class="oer-lp-value"><?php if (strlen($transcription)>230): ?>
             <div class="oer-lp-value-excerpt"><?php echo oer_get_content( $transcription, 230); ?></div>
-            <div class="oer-lp-value-full"><?php echo $transcription; ?> <a href="javascript:void(0);" class="lp-read-less">(read less)</a></div>
+            <div class="oer-lp-value-full"><?php echo wp_kses($transcription,$allowed_tags); ?> <a href="javascript:void(0);" class="lp-read-less">(read less)</a></div>
             <?php
             else: 
-                echo $transcription;
+                echo wp_kses($transcription,$allowed_tags);
             endif; ?></div>
         </div>
         <?php
@@ -76,12 +76,12 @@ if (!empty($args)){
         if (!empty($sensitive_material)){
         ?>
         <div class="form-field">
-            <div class="oer-lp-label oer-lp-red"><?php echo $sensitive_material_label; ?>:</div> <div class="oer-lp-value oer-lp-red"><?php if (strlen($sensitive_material)>230): ?>
+            <div class="oer-lp-label oer-lp-red"><?php echo esc_html($sensitive_material_label); ?>:</div> <div class="oer-lp-value oer-lp-red"><?php if (strlen($sensitive_material)>230): ?>
             <div class="oer-lp-value-excerpt"><?php echo oer_get_content( $sensitive_material, 230); ?></div>
-            <div class="oer-lp-value-full"><?php echo $sensitive_material; ?>  <a href="javascript:void(0);" class="lp-read-less">(read less)</a></div>
+            <div class="oer-lp-value-full"><?php echo wp_kses($sensitive_material,$allowed_tags); ?>  <a href="javascript:void(0);" class="lp-read-less">(read less)</a></div>
             <?php
             else: 
-                echo $sensitive_material;
+                echo wp_kses($sensitive_material,$allowed_tags);
             endif; ?></div>
         </div>
         <?php
