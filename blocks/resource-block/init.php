@@ -107,12 +107,12 @@ function oer_display_resource_block( $attributes, $ajax = false ){
         ob_start();
         ?>
 
-        <div class="wp-block-wp-oer-resource-block" <?php echo $style; ?>>
+        <div class="wp-block-wp-oer-resource-block" <?php echo esc_attr($style); ?>>
             <?php if ($empty): ?>
-                <div class="oer-empty-block"><?php _e( 'Empty display. Please enable some options.' , 'wp-oer' ); ?></div> 
+                <div class="oer-empty-block"><?php esc_html_e( 'Empty display. Please enable some options.' , 'wp-oer' ); ?></div> 
             <?php endif; ?>
             <?php if ($showTitle=="true"): ?>
-            <h4><a href="<?php echo $resource->guid; ?>"><?php echo $resource->post_title; ?></a></h4>
+            <h4><a href="<?php echo esc_url($resource->guid); ?>"><?php echo esc_html($resource->post_title); ?></a></h4>
             <?php endif; ?>
 
             <?php if ($showThumbnail=="true"):
@@ -185,11 +185,9 @@ function oer_resource_block_subjects($resource_id){
 }
 
 function oer_ajax_display_resource_block(){
+    $allowed_tags = oer_allowed_html();
     $resource = oer_display_resource_block($_POST['params'], true);
-    if (is_admin())
-        echo $resource;
-    else
-        echo esc_html($resource);
+    echo wp_kses($resource,$allowed_tags);
     die();
 }
 add_action( 'wp_ajax_oer_display_resource_block', 'oer_ajax_display_resource_block' );
