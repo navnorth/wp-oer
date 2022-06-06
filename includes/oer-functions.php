@@ -841,15 +841,8 @@ function oer_getImageFromExternalURL($url) {
 	$external_service_url = get_option('oer_service_url');
 	$img_url = str_replace('$url',$url,$external_service_url);
 
-	$ch = curl_init ($img_url);
-
-	curl_setopt($ch, CURLOPT_HEADER, 0);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
-	curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-
-	$raw=curl_exec($ch);
-	curl_close ($ch);
+	$image = wp_remote_get($img_url, array('sslverify'=>false));
+	$raw = wp_remote_retrieve_body($image);
 
 	$upload_dir = wp_upload_dir();
 	$path = $upload_dir['basedir'].'/resource-images/';
@@ -874,15 +867,9 @@ function oer_getImageFromExternalURL($url) {
 }
 
 function oer_save_image_to_file($image_url) {
-	$ch = curl_init ($image_url);
-
-	curl_setopt($ch, CURLOPT_HEADER, 0);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
-	curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-
-	$raw=curl_exec($ch);
-	curl_close ($ch);
+	// replace curl with WordPress HTTP API
+	$image = wp_remote_get($image_url, array('sslverify'=>false));
+	$raw = wp_remote_retrieve_body($image);
 
 	$upload_dir = wp_upload_dir();
 	$path = $upload_dir['basedir'].'/resource-images/';
@@ -915,16 +902,9 @@ function oer_getExternalThumbnailImage($url, $local=false) {
 	if ($local) {
 		$url = OER_URL.$url;
 	} else {
-		// Curl to download image
-		$ch = curl_init ($url);
-
-		curl_setopt($ch, CURLOPT_HEADER, 0);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
-		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-	
-		$raw=curl_exec($ch);
-		curl_close ($ch);
+		// replace curl with WordPress HTTP API
+		$image_url = wp_remote_get($url, array('sslverify'=>false));
+		$raw = wp_remote_retrieve_body($image_url);
 	}
 	
 	$upload_dir = wp_upload_dir();
@@ -966,17 +946,10 @@ function oer_is_bootstrap_loaded(){
 	$bootstrap = false;
 	$js = "";
 	$url = get_site_url();
-	
-	/**-- if (ini_get('allow_url_fopen'))
-		$content = file_get_contents($url);
-	else
-		$content = oer_curlRequest($url); --**/
-	
 
 	$content = oer_HTTPRequest($url);
 
 	$content = htmlentities($content);
-	var_dump($content);
 	
 	preg_match_all("#(<head[^>]*>.*?<\/head>)#ims", $content, $head);
 	$content = implode('',$head[0]);
@@ -1005,16 +978,6 @@ function oer_HTTPRequest($url){
 		return false;
 	}
 }
-
-/** Get resource via curl **/
-// function oer_curlRequest($url) {
-//    $ch = curl_init();
-//    curl_setopt($ch, CURLOPT_URL, $url);
-//    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-//    $data = curl_exec($ch);
-//    curl_close($ch);
-//    return $data;
-// }
 
 /** Resize Image **/
 function oer_resize_image($orig_img_url, $width, $height, $crop = false) {
@@ -1590,11 +1553,7 @@ function oer_importLRResources(){
 		);
 	
 	if ($lr_url){
-		if( ini_get('allow_url_fopen') ) {
-			$resources = file_get_contents($lr_url);
-		} else {
-			$resources = oer_curlResources($lr_url);
-		}
+		$resources = oer_HttpResources($lr_url);
 		$resources = json_decode($resources);
 	}
 	
@@ -1685,11 +1644,7 @@ function oer_get_sliceLRResources($lr_url){
 	
 	do {
 		// Get LR Resources based on initial slice URL
-		if( ini_get('allow_url_fopen') ) {
-			$resources = file_get_contents($lrUrl);
-		} else {
-			$resources = oer_curlResources($lrUrl);
-		}
+		$resources = oer_HttpResources($lrUrl);
 		$resources = json_decode($resources);
 		
 		// Exit loop if no resources returned
@@ -1734,16 +1689,16 @@ function oer_get_sliceLRResources($lr_url){
 	return $lr_resources;
 }
 
-function oer_curlResources($url){
-	if (!function_exists('curl_init')){ 
-		die('CURL is not installed!');
+/** Get resources via WordPress HTTP API **/
+function oer_HttpResources($url){
+	$response = wp_remote_get($url);
+
+	if ( is_array($response) && !is_wp_error($response)){
+		$content = wp_remote_retrieve_body($response);
+		return $content;
+	} else {
+		return false;
 	}
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_URL, $url);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	$response = curl_exec($ch);
-	curl_close($ch);
-	return $response;
 }
 
 function oer_custom_array_intersect($firstArray, $secondArray){
@@ -2410,7 +2365,7 @@ function oer_get_youtube_thumbnail($youtube_url){
 	$thumbnail_url = "https://i.ytimg.com/vi/".$youtube_id."/hqdefault.jpg";
 	
 	$thumbnail_file = oer_save_image_to_file($thumbnail_url);
-	
+
 	return $thumbnail_file;
 }
 
