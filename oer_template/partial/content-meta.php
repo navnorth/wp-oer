@@ -37,7 +37,7 @@ if (!empty($args)){
         ?>
         <div class="form-field">
             <div class="oer-lp-label"><?php echo esc_html($citation_label); ?>:</div><div class="oer-lp-value"><?php if (strlen($citation)>230): ?>
-            <div class="oer-lp-value-excerpt"><?php echo oer_get_content( $citation, 230); ?></div>
+            <div class="oer-lp-value-excerpt"><?php echo wp_kses_post(oer_get_content( $citation, 230)); ?></div>
             <div class="oer-lp-value-full"><?php echo wp_kses($citation,$allowed_tags); ?>  <a href="javascript:void(0);" class="lp-read-less">(read less)</a></div>
             <?php
             else: 
@@ -57,7 +57,7 @@ if (!empty($args)){
         ?>
         <div class="form-field">
             <div class="oer-lp-label"><?php echo esc_html($transcription_label); ?>:</div><div class="oer-lp-value"><?php if (strlen($transcription)>230): ?>
-            <div class="oer-lp-value-excerpt"><?php echo oer_get_content( $transcription, 230); ?></div>
+            <div class="oer-lp-value-excerpt"><?php echo wp_kses_post(oer_get_content( $transcription, 230)); ?></div>
             <div class="oer-lp-value-full"><?php echo wp_kses($transcription,$allowed_tags); ?> <a href="javascript:void(0);" class="lp-read-less">(read less)</a></div>
             <?php
             else: 
@@ -77,7 +77,7 @@ if (!empty($args)){
         ?>
         <div class="form-field">
             <div class="oer-lp-label oer-lp-red"><?php echo esc_html($sensitive_material_label); ?>:</div> <div class="oer-lp-value oer-lp-red"><?php if (strlen($sensitive_material)>230): ?>
-            <div class="oer-lp-value-excerpt"><?php echo oer_get_content( $sensitive_material, 230); ?></div>
+            <div class="oer-lp-value-excerpt"><?php echo wp_kses_post(oer_get_content( $sensitive_material, 230)); ?></div>
             <div class="oer-lp-value-full"><?php echo wp_kses($sensitive_material,$allowed_tags); ?>  <a href="javascript:void(0);" class="lp-read-less">(read less)</a></div>
             <?php
             else: 

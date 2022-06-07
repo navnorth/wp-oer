@@ -44,7 +44,7 @@ while ( have_posts() ) : the_post();
 						if (count($grades)>1)
 							$grade_label = "Grades: ";
 						
-						echo "<span class='post-meta-box post-meta-grades'><strong>".$grade_label."</strong>";
+						echo "<span class='post-meta-box post-meta-grades'><strong>".esc_html($grade_label)."</strong>";
 						echo oer_grade_levels($grades);
 						echo "</span>";
 					}
@@ -52,7 +52,7 @@ while ( have_posts() ) : the_post();
 				if (oer_isExternalUrl($url)) {
 					?>
 					<span class="post-meta-box post-meta-domain"><strong>Domain: </strong><a href="<?php echo esc_url(get_post_meta($ID, "oer_resourceurl", true)); ?>" target="_blank" >
-					<?php echo $url_domain; ?>
+					<?php echo esc_html($url_domain); ?>
 					</a></span>
 					<?php
 				}
@@ -78,7 +78,7 @@ while ( have_posts() ) : the_post();
 				<?php
 				foreach($oer_subjects as $subject)
 				{
-					echo '<span><a href="'.esc_url(site_url().'/'.$subject->taxonomy.'/'.$subject->slug).'" class="button">'.ucwords ($subject->name).'</a></span>';
+					echo '<span><a href="'.esc_url(site_url().'/'.$subject->taxonomy.'/'.$subject->slug).'" class="button">'.ucwords(esc_html($subject->name)).'</a></span>';
 				}
 				?>
 				</div>

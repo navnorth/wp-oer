@@ -454,16 +454,16 @@ if (!function_exists('oer_get_category_child')) {
 
 				if( !empty( $children ) )
 				{
-					echo '<li class="oer-sub-category has-child'.$class.'" title="'. $catchild->name .'" >
+					echo '<li class="oer-sub-category has-child'.esc_attr($class).'" title="'. esc_attr($catchild->name) .'" >
 							<span onclick="toggleparent(this);">
-								<a href="'. esc_url(site_url() .'/resource-subject-area/'. $catchild->slug) .'">' . $catchild->name .'</a>
+								<a href="'. esc_url(site_url() .'/resource-subject-area/'. $catchild->slug) .'">' . esc_html($catchild->name) .'</a>
 							</span>';
 				}
 				else
 				{
-					echo '<li class="oer-sub-category'.$class.'" title="'. $catchild->name .'" >
+					echo '<li class="oer-sub-category'.esc_attr($class).'" title="'. esc_attr($catchild->name) .'" >
 							<span onclick="toggleparent(this);">
-								<a href="'. esc_url(site_url() .'/resource-subject-area/'. $catchild->slug) .'">' . $catchild->name .'</a>
+								<a href="'. esc_url(site_url() .'/resource-subject-area/'. $catchild->slug) .'">' . esc_html($catchild->name) .'</a>
 							</span>';
 				}
 				oer_get_category_child( $catchild->term_id);
@@ -3490,9 +3490,9 @@ if (! function_exists('oer_standards_list_display')){
                    foreach($stds as $std){
                        if (isset($std['core_standard_id'])) {
                            echo "<li>";
-                               echo '<a class="lp-standard-toggle" data-toggle="collapse" href="#core-standard-'.$std['core_standard_id'].'">'.$std['core_standard_name'].' <i class="fas fa-caret-right"></i></a>';
+                               echo '<a class="lp-standard-toggle" data-toggle="collapse" href="#core-standard-'.$std['core_standard_id'].'">'.esc_html($std['core_standard_name']).' <i class="fas fa-caret-right"></i></a>';
                            ?>
-                           <div class="collapse tc-lp-details-standard" id="core-standard-<?php echo $std['core_standard_id']; ?>">
+                           <div class="collapse tc-lp-details-standard" id="core-standard-<?php echo esc_attr($std['core_standard_id']); ?>">
                            <?php
                            if (is_array($std['notation'])) {
                                echo "<ul class='tc-lp-notation-list'>";
@@ -3501,9 +3501,9 @@ if (! function_exists('oer_standards_list_display')){
                                        $standard_details = was_standard_details($notation);
                                    if (!empty($standard_details)){
                                        if (isset($standard_details->description))
-                                           echo "<li>".$standard_details->description."</li>";
+                                           echo "<li>".wp_kses_post($standard_details->description)."</li>";
                                        else
-                                           echo "<li>".$standard_details->standard_title."</li>";
+                                           echo "<li>".esc_html($standard_details->standard_title)."</li>";
                                    }
                                }
                                echo "</ul>";
@@ -3561,6 +3561,7 @@ if (!function_exists('oer_cc_license_image')){
 if (!function_exists('oer_display_pdf_embeds')){
 	function oer_display_pdf_embeds($url, $return = false){
 		$isExternal = oer_is_external_url($url);
+		$allowed_tags = oer_allowed_html();
 		
 		if ($isExternal) {
 			$external_option = get_option("oer_external_pdf_viewer");
@@ -3589,7 +3590,7 @@ if (!function_exists('oer_display_pdf_embeds')){
 					if ($return)
 						return $embed_code;
 					else
-						echo $embed_code;
+						echo wp_kses($embed_code,$allowed_tags);
 					break;
 				case 3:
 					if(shortcode_exists('wonderplugin_pdf')) {

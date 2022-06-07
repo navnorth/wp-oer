@@ -2,6 +2,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 function oer_template_display_standards($core_standard, $standards, &$end_html){
     $html = "";
+    $allowed_tags = oer_allowed_html();
     if ($standards){
         $cnt = count($standards);
 	$index = 1;
@@ -22,7 +23,7 @@ function oer_template_display_standards($core_standard, $standards, &$end_html){
         } 
         $end_html .= '</li>';
     }
-    echo $html;
+    echo wp_kses($html,$allowed_tags);
 }
 function oer_display_custom_styles(){
     ?>
@@ -30,7 +31,7 @@ function oer_display_custom_styles(){
         .substandards-template #content ul.oer-substandards > li:not(:active),
         .standards-template #content ul.oer-standards > li,
         .substandards-template #content ul.oer-notations > li,
-        .notation-template #content ul.oer-subnotations > li { background:url(<?php echo OER_URL."/images/arrow-right.png"; ?>) no-repeat top left; padding-left:28px; }
+        .notation-template #content ul.oer-subnotations > li { background:url(<?php echo esc_url(OER_URL."/images/arrow-right.png"); ?>) no-repeat top left; padding-left:28px; }
     </style>
     <?php
 }

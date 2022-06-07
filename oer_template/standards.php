@@ -28,7 +28,7 @@ $standards = oer_get_standards();
 				    $cnt = oer_get_resource_count_by_standard($standard->id);
 				    $slug = "resource/standards/".sanitize_title($standard->standard_name);
 				?>
-				<li><a href="<?php echo home_url($slug); ?>"><?php echo esc_html($standard->standard_name); ?></a> <span class="res-count"><?php echo $cnt; ?></span></li>
+				<li><a href="<?php echo home_url($slug); ?>"><?php echo esc_html($standard->standard_name); ?></a> <span class="res-count"><?php echo esc_html($cnt); ?></span></li>
 				<?php } ?>
 			    </ul>
 			    <?php } ?>

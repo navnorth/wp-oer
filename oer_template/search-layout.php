@@ -278,7 +278,7 @@ if ( is_search() && Avada()->settings->get( 'search_results_per_page' ) ) {
 								if (count($grades)>1)
 									$grade_label = "Grades: ";
 								
-								echo "<span class='fusion-post-meta-box fusion-post-meta-grades'><strong>".$grade_label."</strong>";
+								echo "<span class='fusion-post-meta-box fusion-post-meta-grades'><strong>".esc_html($grade_label)."</strong>";
 								echo oer_grade_levels($grades);
 								echo "</span>";
 							}
@@ -286,7 +286,7 @@ if ( is_search() && Avada()->settings->get( 'search_results_per_page' ) ) {
 						if (oer_isExternalUrl($url)) {
 							?>
 							<span class="fusion-post-meta-box fusion-post-meta-domain"><strong>Domain: </strong><a href="<?php echo esc_url(get_post_meta($ID, "oer_resourceurl", true)); ?>" target="_blank" >
-							<?php echo $url_domain; ?>
+							<?php echo esc_html($url_domain); ?>
 							</a></span>
 							<?php
 						}
@@ -340,7 +340,7 @@ if ( is_search() && Avada()->settings->get( 'search_results_per_page' ) ) {
 							<?php
 							foreach($oer_subjects as $subject)
 							{
-								echo '<span><a href="'.esc_url(site_url().'/'.$subject->taxonomy.'/'.$subject->slug).'" class="button">'.ucwords ($subject->name).'</a></span>';
+								echo '<span><a href="'.esc_url(site_url().'/'.$subject->taxonomy.'/'.$subject->slug).'" class="button">'.ucwords(esc_html($subject->name)).'</a></span>';
 							}
 							?>
 							</div>

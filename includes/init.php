@@ -158,12 +158,13 @@ function oer_frontside_scripts()
 add_action( 'wp_head' , 'oer_add_style_block', 99  );
 function oer_add_style_block(){
     global $_css;
+    $allowed_tags = oer_allowed_html();
     
     if ($_css) {
 	$output = "<style>"."\n";
 	$output .= $_css."\n";
 	$output .="</style>"."\n";
-	echo $output;
+	echo wp_kses($output,$allowed_tags);
     }
 }
 
@@ -319,20 +320,20 @@ function oer_edit_upload_image_fields( $term, $taxonomy ) {
         <th scope="row"><label for="feature-group"><?php _e('Subject Area Main Icon', OER_SLUG); ?></label></th>
         <td>
 	    <div class="main_icon_button_img"><img src="<?php echo esc_url($mainIcon); ?>" /></div>
-	    <a id="main_icon_button" href="javascript:void(0);" class="button"><?php _e('Set Main Icon', OER_SLUG); ?></a>
-	    <a id="remove_main_icon_button" href="javascript:void(0);" class="button<?php if (!$mainIcon):?> hidden<?php endif; ?>"><?php _e('Remove Main Icon', OER_SLUG); ?></a>
-	    <input id="mainIcon" type="hidden" size="36" name="mainIcon" value="<?php echo $mainIcon; ?>" />
+	    <a id="main_icon_button" href="javascript:void(0);" class="button"><?php esc_html_e('Set Main Icon', OER_SLUG); ?></a>
+	    <a id="remove_main_icon_button" href="javascript:void(0);" class="button<?php if (!$mainIcon):?> hidden<?php endif; ?>"><?php esc_html_e('Remove Main Icon', OER_SLUG); ?></a>
+	    <input id="mainIcon" type="hidden" size="36" name="mainIcon" value="<?php echo esc_attr($mainIcon); ?>" />
 	</td>
     </tr><?php
     
     $hoverIcon = get_term_meta( $term->term_id, 'hoverIcon', true );
     ?><tr class="form-field term-group-wrap">
-        <th scope="row"><label for="feature-group"><?php _e('Subject Area Hover Icon', OER_SLUG); ?></label></th>
+        <th scope="row"><label for="feature-group"><?php esc_html_e('Subject Area Hover Icon', OER_SLUG); ?></label></th>
         <td>
 	    <div class="hover_icon_button_img"><img src="<?php echo esc_url($hoverIcon); ?>" /></div>
-	    <a id="hover_icon_button" href="javascript:void(0);" class="button"><?php _e('Set Hover Icon', OER_SLUG); ?></a>
-	    <a id="remove_hover_icon_button" href="javascript:void(0);" class="button<?php if (!$hoverIcon):?> hidden<?php endif; ?>"><?php _e('Remove Hover Icon', OER_SLUG); ?></a>
-	    <input id="hoverIcon" type="hidden" size="36" name="hoverIcon" value="<?php echo $hoverIcon; ?>" />
+	    <a id="hover_icon_button" href="javascript:void(0);" class="button"><?php esc_html_e('Set Hover Icon', OER_SLUG); ?></a>
+	    <a id="remove_hover_icon_button" href="javascript:void(0);" class="button<?php if (!$hoverIcon):?> hidden<?php endif; ?>"><?php esc_html_e('Remove Hover Icon', OER_SLUG); ?></a>
+	    <input id="hoverIcon" type="hidden" size="36" name="hoverIcon" value="<?php echo esc_attr($hoverIcon); ?>" />
 	</td>
     </tr><?php
 }

@@ -37,9 +37,9 @@ if (!empty($args)){
             <div class="oer-lp-label"><?php
             if (!$option_set){
                 if (count($grades)>1)
-                    _e("Grade Levels:", OER_SLUG);
+                    esc_html_e("Grade Levels:", OER_SLUG);
                 else
-                    _e("Grade Level:", OER_SLUG);
+                    esc_html_e("Grade Level:", OER_SLUG);
             } else
                     echo get_option('oer_grade_label').":";
             ?></div>

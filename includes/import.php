@@ -25,17 +25,17 @@ if (!current_user_can('manage_options')) {
 ?>
 <div class="wrap">
     <div id="icon-themes" class="oer-logo"><img src="<?php echo esc_url(OER_URL . 'images/wp-oer-admin-logo.png'); ?>" /></div>
-    <p class="oer_heading"><?php _e('Import - OER', OER_SLUG); ?></p>
+    <p class="oer_heading"><?php esc_html_e('Import - OER', OER_SLUG); ?></p>
     <?php settings_errors(); ?>
     <div class="oer-import-body">
 	<div class="oer-import-row">
 		<div class="row-left">
-			<?php _e("Use the options below to import data sets to the OER tool. Additional information can be found on the support forums or wp-oer.com.", OER_SLUG); ?>
+			<?php esc_html_e("Use the options below to import data sets to the OER tool. Additional information can be found on the support forums or wp-oer.com.", OER_SLUG); ?>
 			<div class="oer-import-row">
 			<h2 class="hidden"></h2>
 			<?php if ($message) { ?>
-    			<div class="notice notice-<?php echo $type; ?> is-dismissible">
-    			    <p><?php echo $message; ?></p>
+    			<div class="notice notice-<?php echo esc_attr($type); ?> is-dismissible">
+    			    <p><?php echo esc_html($message); ?></p>
     			</div>
 			<?php } ?>
 			</div>
@@ -64,7 +64,7 @@ if (!current_user_can('manage_options')) {
 		<div class="row-right">
 			<strong><?php _e("Support Options", OER_SLUG); ?></strong>
 			<ul>
-				<li><a href="https://www.wp-oer.com/get-help/" target="_blank"><?php _e("WP OER Plugin Support", OER_SLUG); ?></a></li>
+				<li><a href="https://www.wp-oer.com/get-help/" target="_blank"><?php esc_html_e("WP OER Plugin Support", OER_SLUG); ?></a></li>
 			</ul>
 		</div>
 	</div>
@@ -72,7 +72,7 @@ if (!current_user_can('manage_options')) {
 </div><!-- /.wrap -->
 <div class="plugin-footer">
 	<div class="plugin-info"><?php echo OER_ADMIN_PLUGIN_NAME . " " . OER_VERSION .""; ?></div>
-	<div class="plugin-link"><a href='https://www.wp-oer.com/' target='_blank'><?php _e("More Information", OER_SLUG); ?></a></div>
+	<div class="plugin-link"><a href="<?php echo esc_url('https://www.wp-oer.com/') ?>" target="_blank"><?php esc_html_e("More Information", OER_SLUG); ?></a></div>
 	<div class="clear"></div>
 </div>
 <?php oer_display_loader(); ?>

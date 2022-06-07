@@ -120,7 +120,7 @@ function oer_display_resource_block( $attributes, $ajax = false ){
                 $featured_image = wp_get_attachment_image_src(get_post_thumbnail_id($resource->ID));
             ?>
             <div class="oer-resource-block-featured-image">
-                <a href="<?php echo esc_url_raw($resource->guid); ?>"><img src="<?php echo esc_url($featured_image[0]); ?>" alt="<?php echo $resource->post_title; ?>"></a>
+                <a href="<?php echo esc_url_raw($resource->guid); ?>"><img src="<?php echo esc_url($featured_image[0]); ?>" alt="<?php echo esc_attr($resource->post_title); ?>"></a>
             </div>
             <?php endif;
             endif; ?>

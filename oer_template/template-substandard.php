@@ -38,13 +38,13 @@ $notations = oer_get_standard_notations($standard->id);
 oer_display_custom_styles();
 ?>
 <div class="oer-backlink">
-    <a href="<?php echo home_url('resource/standards'); ?>"><?php _e("< Back to Standards",OER_SLUG); ?></a>
+    <a href="<?php echo home_url('resource/standards'); ?>"><?php esc_html_e("< Back to Standards",OER_SLUG); ?></a>
 </div>
 <div class="oer-cntnr">
 	<section id="primary" class="site-content">
 		<div id="content" role="main">
 		    <div class="oer-allftrdrsrc">
-			<div class="oer-snglrsrchdng"><?php printf(__("Browse %s", OER_SLUG), '<a href="'.home_url("resource/standards/".sanitize_title($core_standard->standard_name)).'">'.$core_standard->standard_name.'</a>'); ?></div>
+			<div class="oer-snglrsrchdng"><?php printf(__("Browse %s", OER_SLUG), '<a href="'.home_url("resource/standards/".sanitize_title($core_standard->standard_name)).'">'.esc_html($core_standard->standard_name).'</a>'); ?></div>
 			<div class="oer-allftrdrsrccntr">
 			    <ul class="oer-standard">
 				<?php if ($parent_substandards) { 
@@ -60,13 +60,13 @@ oer_display_custom_styles();
 					if ($cnt>1) { ?>
 					    <ul class="oer-substandards">
 						<li>
-						    <a href="<?php echo home_url($slug); ?>"><?php echo $parent_substandard['standard_title']; ?></a>
+						    <a href="<?php echo home_url($slug); ?>"><?php echo esc_html($parent_substandard['standard_title']); ?></a>
 						</li>
 					<?php
 					    $end_html .= '</ul>';
 					} else { ?>
 					    <li>
-						<a href="<?php echo home_url($slug); ?>"><?php echo $parent_substandard['standard_title']; ?></a>
+						<a href="<?php echo home_url($slug); ?>"><?php echo esc_html($parent_substandard['standard_title']); ?></a>
 					    </li>
 					<?php
 					}
@@ -77,13 +77,13 @@ oer_display_custom_styles();
 				?>
 				<li><?php if ($parent_substandards) { ?>
 					<ul class="oer-hsubstandards">
-					    <li><?php echo $standard->standard_title; ?></li>
+					    <li><?php echo esc_html($standard->standard_title); ?></li>
 					
 					<?php
 					$output_html .= '</ul>';
 					$output_html .= '</li>';
 				    } else
-					echo $standard->standard_title;
+					echo esc_html($standard->standard_title);
 				    
 				    if ($sub_standards) {  ?>
 					<ul class="oer-substandards">
@@ -91,7 +91,7 @@ oer_display_custom_styles();
 						 $cnt = oer_get_resource_count_by_substandard($sub_standard->id);
 						$slug = "resource/standards/".sanitize_title($core_standard->standard_name)."/".sanitize_title($sub_standard->standard_title);
 					    ?>
-					    <li><a href="<?php echo home_url($slug); ?>"><?php echo $sub_standard->standard_title; ?></a> <span class="res-count"><?php echo $cnt; ?></span></li>
+					    <li><a href="<?php echo home_url($slug); ?>"><?php echo esc_html($sub_standard->standard_title); ?></a> <span class="res-count"><?php echo esc_html($cnt); ?></span></li>
 					    <?php } ?>
 					</ul>
 				    <?php }
@@ -101,17 +101,17 @@ oer_display_custom_styles();
 						$cnt = oer_get_resource_count_by_notation($notation->id);
 						$slug = "resource/standards/".sanitize_title($core_standard->standard_name)."/".$standard_name_slug."/".$notation->standard_notation;
 					    ?>
-					    <li><a href="<?php echo home_url($slug); ?>"><strong><?php echo $notation->standard_notation; ?></strong> <?php echo $notation->description; ?></a> <span class="res-count"><?php echo $cnt; ?></span></li>
+					    <li><a href="<?php echo home_url($slug); ?>"><strong><?php echo esc_html($notation->standard_notation); ?></strong> <?php echo wp_kses_post($notation->description); ?></a> <span class="res-count"><?php echo esc_html($cnt); ?></span></li>
 					    <?php } ?>
 					</ul>
 				    <?php } 
 				    if ($output_html)
-					echo $output_html;
+					echo wp_kses_post($output_html);
 				    ?>
 				</li>
 				<?php
 				if ($end_html)
-				    echo $end_html;
+				    echo wp_kses_post($end_html);
 				?>
 			    </ul>
 			</div>

@@ -195,10 +195,10 @@ $hide_title = get_option('oer_hide_subject_area_title');
 						foreach ( $links as $link ) {
 							//$output .= ' '.$opt['sep'].' ';
 							if (!$link['cur']) {
-								$output .= '<a href="'.esc_url($link['url']).'">'.$link['title'].'</a>';
+								$output .= '<a href="'.esc_url($link['url']).'">'.esc_html($link['title']).'</a>';
 							} else {
 								//$output .= $taxonomy->label .': '. $link['title'];
-								$output .= ': '. $link['title'];
+								$output .= ': '. esc_html($link['title']);
 							}
 						}
 					}
@@ -208,7 +208,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 					
 					$output .= "</h1>";
 					//$output .= $taxonomy->label .': '. $cur_term->name ;
-					echo ucwords($output);
+					echo wp_kses_post(ucwords($output));
 					//$breadcrumbs = yoast_breadcrumb("","",false);
 					//echo ucwords ($breadcrumbs);
 					/*} */
@@ -232,7 +232,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 		if ( ! is_wp_error( $child_subjects ) ) {
 			foreach ( $child_subjects as $subject ) {
 				if ($subject->category_count>0)
-					echo '<span><a href="'.esc_url(get_term_link($subject)).'" class="button">'.ucwords ($subject->name).'</a></span>';
+					echo '<span><a href="'.esc_url(get_term_link($subject)).'" class="button">'.ucwords (esc_html($subject->name)).'</a></span>';
 			}
 		}
 		?>
@@ -304,7 +304,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 					
 					$content =  trim(substr($highlight_content,0,$length)).$ellipsis;
 				?>
-					<li data-id="<?php echo $post->ID; ?>">
+					<li data-id="<?php echo esc_attr($post->ID); ?>">
 					<?php if ($i<=$items_per_load) { ?>
 						<div class="frtdsnglwpr">
 							<?php
@@ -314,8 +314,8 @@ $hide_title = get_option('oer_hide_subject_area_title');
 							$new_image_url = oer_resize_image( $image, 220, 180, true );
 							?>
 							<a href="<?php echo esc_url(get_permalink($post->ID));?>"><div class="img"><img src="<?php echo esc_url($new_image_url);?>" alt="<?php echo esc_attr($title);?>"></div></a>
-							<div class="ttl"><a href="<?php echo esc_url(get_permalink($post->ID));?>"><?php echo $title;?></a></div>
-							<div class="desc"><?php echo $content; ?></div>
+							<div class="ttl"><a href="<?php echo esc_url(get_permalink($post->ID));?>"><?php echo esc_html($title);?></a></div>
+							<div class="desc"><?php echo wp_kses_post($content); ?></div>
 						</div>
 					<?php } ?>
 					</li>
@@ -336,7 +336,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 			
 			if(!empty($rslt))
 			{ 
-				echo '<div class="oer-allftrdpst">'.$rslt .'</div> ';
+				echo '<div class="oer-allftrdpst">'.wp_kses_post($rslt) .'</div> ';
 			}
 			$termObj = get_term_by( 'slug' , $term , 'resource-subject-area' );
 		?> <!--Text and HTML Widget-->
@@ -435,10 +435,10 @@ $hide_title = get_option('oer_hide_subject_area_title');
 					?>
 						<div class="oer-snglrsrc">
 							<?php
-							echo '<a href="'.esc_url(get_permalink($post->ID)).'" class="oer-resource-link"><div class="oer-snglimglft"><img src="'.$new_image_url.'"></div></a>';
+							echo '<a href="'.esc_url(get_permalink($post->ID)).'" class="oer-resource-link"><div class="oer-snglimglft"><img src="'.esc_url($new_image_url).'"></div></a>';
 							?>
 							<div class="oer-snglttldscrght <?php if(empty($img_url)){ echo 'snglttldscrghtfull';}?>">
-								<div class="ttl"><a href="<?php echo esc_url(get_permalink($post->ID));?>"><?php echo $title;?></a></div>
+								<div class="ttl"><a href="<?php echo esc_url(get_permalink($post->ID));?>"><?php echo esc_html($title);?></a></div>
 							<?php
 								$subjects = array();
 								$grades = array();
@@ -458,7 +458,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 											if (count($grades)>1)
 												$grade_label = "Grades: ";
 											
-											echo "<span class='post-meta-box post-meta-grades'><strong>".$grade_label."</strong>";
+											echo "<span class='post-meta-box post-meta-grades'><strong>".esc_html($grade_label)."</strong>";
 											
 											echo oer_grade_levels($grades);
 											echo "</span>";
@@ -467,7 +467,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 									if (oer_isExternalUrl($url)) {
 										?>
 										<span class="post-meta-box post-meta-domain"><strong>Domain: </strong><a href="<?php echo esc_url(get_post_meta($ID, "oer_resourceurl", true)); ?>" target="_blank" >
-										<?php echo $url_domain; ?>
+										<?php echo esc_html($url_domain); ?>
 										</a></span>
 										<?php
 									}
@@ -477,7 +477,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 									$subjects = oer_get_subject_areas($ID);
 								}
 								?>
-								<div class="desc"><?php echo $content; ?></div>
+								<div class="desc"><?php echo wp_kses_post($content); ?></div>
 								<?php
 								// Display subject areas
 								if ($subjects) {
@@ -490,7 +490,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 										<?php
 										foreach($oer_subjects as $subject)
 										{						
-											echo '<span><a href="'.esc_url(get_term_link($subject)).'" class="button">'.ucwords ($subject->name).'</a></span>';							
+											echo '<span><a href="'.esc_url(get_term_link($subject)).'" class="button">'.ucwords(esc_html($subject->name)).'</a></span>';							
 										}
 										?>
 										</div>
@@ -512,7 +512,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 				}
 				//Show load more button
 				if ($resource_count>$items_per_page & $paged<(int)$max_pages) {
-					$base_url = "http" . (($_SERVER['SERVER_PORT'] == 443) ? "s://" : "://") . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+					$base_url = esc_url("http" . (($_SERVER['SERVER_PORT'] == 443) ? "s://" : "://") . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 					
 					if (isset($oer_session['resource_sort']))
 						$_rsort = " data-sort='".(int)$oer_session['resource_sort']."'";
@@ -565,8 +565,8 @@ $hide_title = get_option('oer_hide_subject_area_title');
 							<div class="pstimg"><img src="<?php echo esc_url($new_image);?>" alt="<?php echo esc_attr($title);?>"></div>
 							<?php }?>
 							<div class="rght-sd-cntnr-cntnt">
-							<div class="psttl"><?php echo $title;?></div>
-							<div class="pstdesc"><?php echo $content; ?></div>
+							<div class="psttl"><?php echo esc_html($title);?></div>
+							<div class="pstdesc"><?php echo wp_kses_post($content); ?></div>
 							<div class="pstrdmr"><a href="<?php echo esc_url(get_permalink($post->ID));?>">More</a></div>
 							<div class="pstmta">
 							    <span class="date-icn"><?php echo get_the_time( 'F j, Y', $post->ID );?></span>

@@ -25,11 +25,11 @@ if(!empty($_delimited[0])):
                <div class="image-thumbnail">
                    <a href="<?php echo esc_url(get_post_permalink($_res_id)); ?>" target="_new">
                       <?php if(!$resource_img): $_avtr = oer_getResourceIcon($oer_media_type, $oer_resourceurl); ?>
-                          <div class="resource-avatar"><span class="dashicons <?php echo $_avtr; ?>"></span></div>
+                          <div class="resource-avatar"><span class="dashicons <?php echo esc_attr($_avtr); ?>"></span></div>
                        <?php endif; ?>
                        <span class="resource-overlay"></span>
-                       <span class="lp-source-type"><?php echo ucfirst($oer_media_type); ?></span>
-                       <div class="resource-thumbnail" style="background: url('<?php echo $resource_img; ?>') no-repeat center rgba(204,97,12,.1); background-size:cover;"></div>
+                       <span class="lp-source-type"><?php echo esc_html(ucfirst($oer_media_type)); ?></span>
+                       <div class="resource-thumbnail" style="background: url('<?php echo esc_url($resource_img); ?>') no-repeat center rgba(204,97,12,.1); background-size:cover;"></div>
                    </a>
                </div>
                <div class="lp-resource-info">
