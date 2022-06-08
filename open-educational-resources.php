@@ -3,7 +3,7 @@
  Plugin Name:        WP OER
  Plugin URI:         https://www.wp-oer.com
  Description:        Open Educational Resource management and curation, metadata publishing, and alignment to Common Core State Standards.
- Version:            0.8.7
+ Version:            0.8.8
  Requires at least:  4.4
  Requires PHP:       7.0
  Author:             Navigation North
@@ -38,7 +38,7 @@ define( 'OER_FILE',__FILE__);
 // Plugin Name and Version
 define( 'OER_PLUGIN_NAME', 'WP OER Plugin' );
 define( 'OER_ADMIN_PLUGIN_NAME', 'WP OER Plugin');
-define( 'OER_VERSION', '0.8.7' );
+define( 'OER_VERSION', '0.8.8' );
 
 include_once(OER_PATH.'includes/oer-functions.php');
 include_once(OER_PATH.'includes/template-functions.php');
@@ -189,9 +189,10 @@ function oer_plugin_activation_notice() {
 	}
 	if (get_option('setup_notify') && (get_option('setup_notify')==true)) {
 		$setup_button = '<form class="inline-form" style="display:inline;text-align: right; float: right; width: 20%; margin-top: 3px;" method="post" action="'.admin_url( 'edit.php?post_type=resource&page=oer_settings&tab=setup').'"><input type="hidden" name="oer_setup" value="1" /><input type="submit" class="button-primary" value="Setup" /></form>';
+		$allowed_tags = oer_allowed_html();
 	?>
 		<div id="oer-dismissible-notice" class="updated notice is-dismissible" style="padding-top:5px;padding-bottom:5px;overflow:hidden;">
-			<p style="width:75%;float:left;">Thank you for installing the <a href="https://www.wp-oer.com/" target="_blank">WP-OER</a> plugin. If you need support, please visit our site or the forums. <?php echo $setup_button; ?></p>
+			<p style="width:75%;float:left;">Thank you for installing the <a href="https://www.wp-oer.com/" target="_blank">WP-OER</a> plugin. If you need support, please visit our site or the forums. <?php echo wp_kses($setup_button,$allowed_tags); ?></p>
 		</div>
 	<?php
 	}
@@ -1217,6 +1218,7 @@ function oer_setup_settings_field( $arguments ) {
 	$size = "";
 	$class = "";
 	$disabled = "";
+	$allowed_tags = oer_allowed_html();
 
 	$value = get_option($arguments['uid']);
 
@@ -1230,7 +1232,7 @@ function oer_setup_settings_field( $arguments ) {
 	}
 
 	if (isset($arguments['pre_html'])) {
-		echo $arguments['pre_html'];
+		echo wp_kses($arguments['pre_html'],$allowed_tags);
 	}
 
 	switch($arguments['type']){
@@ -1238,7 +1240,7 @@ function oer_setup_settings_field( $arguments ) {
 			$size = 'size="50"';
 			if (isset($arguments['title']))
 				$title = $arguments['title'];
-			echo '<label for="'.$arguments['uid'].'"><strong>'.$title.'</strong></label><input name="'.$arguments['uid'].'" id="'.$arguments['uid'].'" type="'.$arguments['type'].'" value="' . $value . '" ' . $size . ' ' .  $selected . ' />';
+			echo '<label for="'.esc_attr($arguments['uid']).'"><strong>'.esc_html($title).'</strong></label><input name="'.esc_attr($arguments['uid']).'" id="'.esc_attr($arguments['uid']).'" type="'.esc_attr($arguments['type']).'" value="' . esc_attr($value) . '" ' . esc_attr($size) . ' ' .  $selected . ' />';
 			break;
 		case "checkbox":
 			$display_value = "";
@@ -1263,13 +1265,13 @@ function oer_setup_settings_field( $arguments ) {
 					$disabled = " disabled";
 			}
 
-			echo '<input name="'.$arguments['uid'].'" id="'.$arguments['uid'].'" '.$class.' type="'.$arguments['type'].'" ' . $display_value . ' ' . $size . ' ' .  $selected . ' ' . $disabled . '  /><label for="'.$arguments['uid'].'"><strong>'.$arguments['name'].'</strong></label>';
+			echo '<input name="'.esc_attr($arguments['uid']).'" id="'.esc_attr($arguments['uid']).'" '.esc_attr($class).' type="'.esc_attr($arguments['type']).'" ' . $display_value . ' ' . $size . ' ' .  $selected . ' ' . $disabled . '  /><label for="'.esc_attr($arguments['uid']).'"><strong>'.esc_html($arguments['name']).'</strong></label>';
 			break;
 		case "select":
 			if (isset($arguments['name']))
 				$title = $arguments['name'];
-			echo '<label for="'.$arguments['uid'].'"><strong>'.$title.'</strong></label>';
-			echo '<select name="'.$arguments['uid'].'" id="'.$arguments['uid'].'">';
+			echo '<label for="'.esc_attr($arguments['uid']).'"><strong>'.esc_html($title).'</strong></label>';
+			echo '<select name="'.esc_attr($arguments['uid']).'" id="'.esc_attr($arguments['uid']).'">';
 
 			if (isset($arguments['options']))
 				$options = $arguments['options'];
@@ -1300,17 +1302,17 @@ function oer_setup_settings_field( $arguments ) {
 					default:
 						break;
 				}
-				echo '<option value="'.$key.'"'.$selected.''.$disabled.'>'.$desc.'</option>';
+				echo '<option value="'.esc_attr($key).'"'.$selected.''.$disabled.'>'.esc_html($desc).'</option>';
 			}
 
 			echo '<select>';
 			break;
 		case "textarea":
-			echo '<label for="'.$arguments['uid'].'"><h3><strong>'.$arguments['name'];
+			echo '<label for="'.esc_attr($arguments['uid']).'"><h3><strong>'.esc_html($arguments['name']);
 			if (isset($arguments['inline_description']))
-				echo '<span class="inline-desc">'.$arguments['inline_description'].'</span>';
+				echo '<span class="inline-desc">'.esc_html($arguments['inline_description']).'</span>';
 			echo '</strong></h3></label>';
-			echo '<textarea name="'.$arguments['uid'].'" id="'.$arguments['uid'].'" rows="10">' . $value . '</textarea>';
+			echo '<textarea name="'.esc_attr($arguments['uid']).'" id="'.esc_attr($arguments['uid']).'" rows="10">' . esc_textarea($value) . '</textarea>';
 			break;
 		default:
 			break;
@@ -1336,12 +1338,12 @@ function oer_setup_radio_field($arguments){
 
 	if (isset($arguments['class'])) {
 		$class = $arguments['class'];
-		$class = " class='".$class."' ";
+		$class = " class='".esc_attr($class)."' ";
 	}
 
 	$val = get_option($arguments['uid']);
 
-	echo '<input name="'.$arguments['uid'].'" value="'.$arguments['value'].'" id="'.$arguments['uid'].'" '.$class.' type="'.$arguments['type'].'" ' . checked($arguments['value'], $val, false) . ' /><label for="'.$arguments['uid'].'"><strong>'.$arguments['name'].'</strong></label>';
+	echo '<input name="'.esc_attr($arguments['uid']).'" value="'.esc_attr($arguments['value']).'" id="'.esc_attr($arguments['uid']).'" '.$class.' type="'.esc_attr($arguments['type']).'" ' . checked($arguments['value'], $val, false) . ' /><label for="'.esc_attr($arguments['uid']).'"><strong>'.esc_html($arguments['name']).'</strong></label>';
 }
 
 /** Initialize Subject Area Sidebar widget **/
@@ -1446,8 +1448,8 @@ function oer_load_more_resources() {
 				echo '<a href="'.esc_url(get_permalink($post->ID)).'" class="oer-resource-link"><div class="oer-snglimglft"><img src="'.esc_url($new_image_url).'"></div></a>';
 				?>
 				<div class="oer-snglttldscrght <?php if(empty($img_url)){ echo 'snglttldscrghtfull';}?>">
-					<div class="ttl"><a href="<?php echo esc_url(get_permalink($post->ID)); ?>"><?php echo $title;?></a></div>
-					<div class="desc"><?php echo $content; ?></div>
+					<div class="ttl"><a href="<?php echo esc_url(get_permalink($post->ID)); ?>"><?php echo esc_html($title);?></a></div>
+					<div class="desc"><?php echo wp_kses_post($content); ?></div>
 				</div>
 			</div>
 		<?php
@@ -1573,8 +1575,8 @@ function oer_sort_resources(){
 				echo '<a href="'.esc_url(get_permalink($post->ID)).'" class="oer-resource-link"><div class="oer-snglimglft"><img src="'.esc_url($new_image_url).'"></div></a>';
 				?>
 				<div class="oer-snglttldscrght <?php if(empty($img_url)){ echo 'snglttldscrghtfull';}?>">
-					<div class="ttl"><a href="<?php echo esc_url(get_permalink($post->ID));?>"><?php echo $title;?></a></div>
-					<div class="desc"><?php echo $content; ?></div>
+					<div class="ttl"><a href="<?php echo esc_url(get_permalink($post->ID));?>"><?php echo esc_html($title);?></a></div>
+					<div class="desc"><?php echo wp_kses_post($content); ?></div>
 				</div>
 			</div>
 		<?php
@@ -1636,7 +1638,7 @@ function oer_load_more_highlights() {
 						}
 						$new_image_url = oer_resize_image( $image, 220, 180, true );
 						?>
-						<a href="<?php echo esc_url(get_permalink($post->ID)); ?>"><div class="img"><img src="<?php echo esc_url($new_image_url);?>" alt="<?php echo $title;?>"></div></a>
+						<a href="<?php echo esc_url(get_permalink($post->ID)); ?>"><div class="img"><img src="<?php echo esc_url($new_image_url);?>" alt="<?php echo esc_html($title);?>"></div></a>
 						<div class="ttl"><a href="<?php echo esc_url(get_permalink($post->ID)); ?>"><?php echo $title;?></a></div>
 						<div class="desc"><?php echo apply_filters('the_content',$content); ?></div>
 					</div>

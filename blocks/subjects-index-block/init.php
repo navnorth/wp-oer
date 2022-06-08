@@ -111,8 +111,9 @@ function oer_display_subjects_index( $attributes, $ajax = false ){
 }
 
 function wp_ajax_oer_display_subjects_index(){
+	$allowed_tags = oer_allowed_html();
 	$shortcode = oer_display_subjects_index($_POST, true);
-	echo $shortcode;
+	echo wp_kses($shortcode,$allowed_tags);
 	die();
 }
 add_action( 'wp_ajax_display_subjects_index', 'wp_ajax_oer_display_subjects_index' );

@@ -58,11 +58,11 @@ get_header();
 		<?php else : ?>
 			<article id="post-0" class="post no-results not-found">
 				<header class="entry-header">
-					<h1 class="entry-title"><?php _e( 'Nothing Found', OER_SLUG ); ?></h1>
+					<h1 class="entry-title"><?php esc_html_e( 'Nothing Found', OER_SLUG ); ?></h1>
 				</header>
 
 				<div class="entry-content">
-					<p><?php _e( 'Sorry, but nothing matched your search criteria. Please try again with some different keywords.', OER_SLUG ); ?></p>
+					<p><?php esc_html_e( 'Sorry, but nothing matched your search criteria. Please try again with some different keywords.', OER_SLUG ); ?></p>
 				</div><!-- .entry-content -->
 			</article><!-- #post-0 -->
 		<?php endif; ?>

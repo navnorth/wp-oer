@@ -21,13 +21,14 @@ $transcription_set = (get_option('oer_transcription_label'))?true:false;
 $transcription_enabled = (get_option('oer_transcription_enabled'))?true:false;
 $sensitive_material_set = (get_option('oer_sensitive_material_label'))?true:false;
 $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?true:false;
+$allowed_tags = oer_allowed_html();
 ?>
 <div class="oer-rsrclftcntr-img col-md-5 col-sm-12 col-xs-12">
     <!--Resource Image-->
     <div class="oer-sngl-rsrc-img oer-sngl-standard-type">
         <?php if ($youtube) {
             $embed = oer_generate_youtube_embed_code($url);
-            echo $embed;
+            echo wp_kses($embed,$allowed_tags);
         } elseif($isPDF) {
             if ($isExternal) {
                 $external_option = get_option("oer_external_pdf_viewer");
@@ -50,7 +51,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
                     case 2:
                         $pdf_url = OER_URL."pdfjs/web/viewer.html?file=".urlencode($url);
                         $embed_code = '<iframe class="oer-pdf-viewer" width="100%" src="'.esc_url_raw($pdf_url).'"></iframe>';
-                        echo $embed_code;
+                        echo wp_kses($embed_code,$allowed_html);
                         break;
                     case 3:
                         if(shortcode_exists('wonderplugin_pdf')) {
@@ -106,10 +107,10 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
         ?>
             <h4><strong><?php
             if (!$option_set)
-                _e("Creator:", OER_SLUG);
+                esc_html_e("Creator:", OER_SLUG);
 	    else
 		echo get_option('oer_authorname_label').":"; ?></strong>
-            <span><?php if (!empty($oer_authorurl)): ?><a href="<?php echo esc_url($oer_authorurl); ?>" target="_blank"><?php endif; ?><?php echo trim($oer_authorname); ?><?php if (!empty($oer_authorurl)): ?></a><?php endif; ?></span><?php if ($oer_authorname2): echo ", "; ?><span><?php if (!empty($oer_authorurl2)): ?><a href="<?php echo esc_url($oer_authorurl2); ?>" target="_blank"><?php endif; ?><?php echo $oer_authorname2; ?><?php if (!empty($oer_authorurl2)): ?></a><?php endif; ?></span>
+            <span><?php if (!empty($oer_authorurl)): ?><a href="<?php echo esc_url($oer_authorurl); ?>" target="_blank"><?php endif; ?><?php echo esc_html(trim($oer_authorname)); ?><?php if (!empty($oer_authorurl)): ?></a><?php endif; ?></span><?php if ($oer_authorname2): echo ", "; ?><span><?php if (!empty($oer_authorurl2)): ?><a href="<?php echo esc_url($oer_authorurl2); ?>" target="_blank"><?php endif; ?><?php echo esc_html($oer_authorname2); ?><?php if (!empty($oer_authorurl2)): ?></a><?php endif; ?></span>
             <?php endif; ?>
             </h4>
         <?php } ?>
@@ -126,11 +127,11 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
     ?><div id="" class="oer-publisherName oer-cbxl">
         <h4><strong><?php
         if (!$option_set)
-            _e("Publisher:", OER_SLUG);
+            esc_html_e("Publisher:", OER_SLUG);
         else
             echo get_option('oer_publishername_label').":";
         ?></strong>
-        <span><a href="<?php echo esc_url($oer_publisherurl); ?>" target="_blank"><?php echo $oer_publishername; ?></a></span></h4>
+        <span><a href="<?php echo esc_url($oer_publisherurl); ?>" target="_blank"><?php echo esc_html($oer_publishername); ?></a></span></h4>
     </div>
     <?php } ?>
 </div>
@@ -143,7 +144,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
                 <div class="oer-lp-full-content"><?php echo get_the_content(null, false, $post->ID); ?> <a href="javascript:void(0);" class="lp-read-less">(read less)</a>
                 </div>
             <?php else : ?>
-                <div class="oer-lp-content"><?php echo $post->post_content; ?></div>
+                <div class="oer-lp-content"><?php echo wp_kses_post($post->post_content); ?></div>
             <?php endif; ?>
             <?php //echo $content = apply_filters ("the_content", $post->post_content); ?>
         </div>
@@ -159,7 +160,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
            <?php
                         foreach($keywords as $keyword)
                         {
-                                echo "<span><a href='".esc_url(get_tag_link($keyword->term_id))."' class='button'>".ucwords($keyword->name)."</a></span>";
+                                echo "<span><a href='".esc_url(get_tag_link($keyword->term_id))."' class='button'>".esc_html(ucwords($keyword->name))."</a></span>";
                         }
                 ?>
                 </div>
@@ -189,7 +190,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
     ?>
     <div class="tc-oer-subject-areas">
        <h4 class="tc-field-heading clearfix">
-            <?php _e("Subjects",OER_SLUG); ?>
+            <?php esc_html_e("Subjects",OER_SLUG); ?>
         </h4>
        <div class="tc-oer-subject-details clearfix">
             <ul class="tc-oer-subject-areas-list">
@@ -199,11 +200,11 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
                 $moreCnt = $cnt - 2;
                 foreach($post_terms as $term){
                     $subject_parent = get_term_parents_list($term->term_id,'resource-subject-area', array('separator' => ' <i class="fas fa-angle-double-right"></i> ', 'inclusive' => false));
-                    $subject = $subject_parent . '<a href="'.esc_url(get_term_link($term->term_id)).'">'.$term->name.'</a>';
+                    $subject = $subject_parent . '<a href="'.esc_url(get_term_link($term->term_id)).'">'.esc_html($term->name).'</a>';
                     if ($i>2)
-                        echo '<li class="collapse lp-subject-hidden">'.$subject.'</li>';
+                        echo '<li class="collapse lp-subject-hidden">'.wp_kses($subject,$allowed_tags).'</li>';
                     else
-                        echo '<li>'.$subject.'</li>';
+                        echo '<li>'.wp_kses($subject,$allowed_tags).'</li>';
                     if (($i==2) && ($cnt>2))
                         echo '<li><a class="see-more-subjects" data-toggle="collapse" data-count="'.$moreCnt.'" href=".lp-subject-hidden">SEE '.$moreCnt.' MORE +</a></li>';
                     $i++;
@@ -221,7 +222,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
     ?>
     <div class="tc-oer-connected-curriculum">
        <h4 class="tc-field-heading clearfix">
-            <?php _e("Appears In",OER_SLUG); ?>
+            <?php esc_html_e("Appears In",OER_SLUG); ?>
         </h4>
        <div class="tc-oer-curriculum-details clearfix">
             <ul class="tc-oer-subject-areas-list">
@@ -232,9 +233,9 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
                 foreach($connected_curriculums as $curriculum){
                     $curriculum_url = get_the_permalink($curriculum['post_id']);
                     if ($i>2)
-                        echo '<li class="collapse lp-subject-hidden"><a href="'.esc_url($curriculum_url).'">'.$curriculum['post_title'].'</a></li>';
+                        echo '<li class="collapse lp-subject-hidden"><a href="'.esc_url($curriculum_url).'">'.esc_html($curriculum['post_title']).'</a></li>';
                     else
-                        echo "<li><a href='".esc_url($curriculum_url)."'>".$curriculum['post_title']."</a></li>";
+                        echo "<li><a href='".esc_url($curriculum_url)."'>".esc_html($curriculum['post_title'])."</a></li>";
                     if (($i==2) && ($cnt>2))
                         echo '<li><a class="see-more-subjects" data-toggle="collapse" data-count="'.$moreCnt.'" href=".lp-subject-hidden">SEE '.$moreCnt.' MORE +</a></li>';
                     $i++;
@@ -248,7 +249,7 @@ $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?tru
 </div> <!--Description & Resource Info at Right-->
 <?php  if ($display_see_more): ?>
 <div class="oer-see-more-row col-md-12 col-sm-12 col-xs-12">
-    <p class="center"><span><a id="oer-see-more-link" class="oer-see-more-link" role="button" data-toggle="collapse" href="#tcHiddenFields" aria-expanded="false" aria-controls="tcHiddenFields"><?php _e("SEE MORE +",OER_SLUG); ?></a></span></p>
+    <p class="center"><span><a id="oer-see-more-link" class="oer-see-more-link" role="button" data-toggle="collapse" href="#tcHiddenFields" aria-expanded="false" aria-controls="tcHiddenFields"><?php esc_html_e("SEE MORE +",OER_SLUG); ?></a></span></p>
 </div>
 <?php endif; ?>
 <div id="tcHiddenFields" class="tc-hidden-fields collapse row col-md-12 col-sm-12 col-xs-12">

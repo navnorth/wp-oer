@@ -1,4 +1,6 @@
-<?php /** Website/Image/Document(except PDF)/Other Resource Template **/ ?>
+<?php /** Website/Image/Document(except PDF)/Other Resource Template **/ 
+$allowed_tags = oer_allowed_html();
+?>
 <div class="oer-rsrclftcntr-img col-md-5 col-sm-12 col-xs-12">
     <!--Resource Image-->
     <div class="oer-sngl-rsrc-img oer-sngl-audio-type">
@@ -25,10 +27,10 @@
         ?>
             <h4><strong><?php
             if (!$option_set)
-                _e("Creator:", OER_SLUG);
+                esc_html_e("Creator:", OER_SLUG);
 	    else
 		echo get_option('oer_authorname_label').":"; ?></strong>
-            <span><?php if (!empty($oer_authorurl)): ?><a href="<?php echo esc_url($oer_authorurl); ?>" target="_blank"><?php endif; ?><?php echo $oer_authorname; ?><?php if (!empty($oer_authorurl)): ?></a><?php endif; ?></span><?php if ($oer_authorname2): echo ", "; ?><span><?php if (!empty($oer_authorurl2)): ?><a href="<?php echo esc_url($oer_authorurl2); ?>" target="_blank"><?php endif; ?><?php echo $oer_authorname2; ?><?php if (!empty($oer_authorurl2)): ?></a><?php endif; ?></span>
+            <span><?php if (!empty($oer_authorurl)): ?><a href="<?php echo esc_url($oer_authorurl); ?>" target="_blank"><?php endif; ?><?php echo esc_html($oer_authorname); ?><?php if (!empty($oer_authorurl)): ?></a><?php endif; ?></span><?php if ($oer_authorname2): echo ", "; ?><span><?php if (!empty($oer_authorurl2)): ?><a href="<?php echo esc_url($oer_authorurl2); ?>" target="_blank"><?php endif; ?><?php echo esc_html($oer_authorname2); ?><?php if (!empty($oer_authorurl2)): ?></a><?php endif; ?></span>
             <?php endif; ?>
             </h4>
         <?php } ?>
@@ -45,11 +47,11 @@
     ?><div id="" class="oer-publisherName oer-cbxl">
         <h4><strong><?php
         if (!$option_set)
-            _e("Publisher:", OER_SLUG);
+            esc_html_e("Publisher:", OER_SLUG);
         else
             echo get_option('oer_publishername_label').":";
         ?></strong>
-        <span><a href="<?php echo esc_url($oer_publisherurl); ?>" target="_blank"><?php echo $oer_publishername; ?></a></span></h4>
+        <span><a href="<?php echo esc_url($oer_publisherurl); ?>" target="_blank"><?php echo esc_html($oer_publishername); ?></a></span></h4>
     </div>
     <?php } ?>
 </div>
@@ -62,7 +64,7 @@
                 <div class="oer-lp-full-content"><?php echo get_the_content(null, false, $post->ID); ?> <a href="javascript:void(0);" class="lp-read-less">(read less)</a>
                 </div>
             <?php else : ?>
-                <div class="oer-lp-content"><?php echo $post->post_content; ?></div>
+                <div class="oer-lp-content"><?php echo wp_kses_post($post->post_content); ?></div>
             <?php endif; ?>
             <?php //echo $content = apply_filters ("the_content", $post->post_content); ?>
         </div>
@@ -78,7 +80,7 @@
            <?php
                         foreach($keywords as $keyword)
                         {
-                                echo "<span><a href='".esc_url(get_tag_link($keyword->term_id))."' class='button'>".ucwords($keyword->name)."</a></span>";
+                                echo "<span><a href='".esc_url(get_tag_link($keyword->term_id))."' class='button'>".esc_html(ucwords($keyword->name))."</a></span>";
                         }
                 ?>
                 </div>
@@ -108,7 +110,7 @@
     ?>
     <div class="tc-oer-subject-areas">
        <h4 class="tc-field-heading clearfix">
-            <?php _e("Subjects",OER_SLUG); ?>
+            <?php esc_html_e("Subjects",OER_SLUG); ?>
         </h4>
        <div class="tc-oer-subject-details clearfix">
             <ul class="tc-oer-subject-areas-list">
@@ -118,11 +120,11 @@
                 $moreCnt = $cnt - 2;
                 foreach($post_terms as $term){
                     $subject_parent = get_term_parents_list($term->term_id,'resource-subject-area', array('separator' => ' <i class="fas fa-angle-double-right"></i> ', 'inclusive' => false));
-                    $subject = $subject_parent . '<a href="'.esc_url(get_term_link($term->term_id)).'">'.$term->name.'</a>';
+                    $subject = $subject_parent . '<a href="'.esc_url(get_term_link($term->term_id)).'">'.esc_html($term->name).'</a>';
                     if ($i>2)
-                        echo '<li class="collapse lp-subject-hidden">'.$subject.'</li>';
+                        echo '<li class="collapse lp-subject-hidden">'.wp_kses($subject,$allowed_tags).'</li>';
                     else
-                        echo '<li>'.$subject.'</li>';
+                        echo '<li>'.wp_kses($subject,$allowed_tags).'</li>';
                     if (($i==2) && ($cnt>2))
                         echo '<li><a class="see-more-subjects" data-toggle="collapse" data-count="'.$moreCnt.'" href=".lp-subject-hidden">SEE '.$moreCnt.' MORE +</a></li>';
                     $i++;
@@ -140,7 +142,7 @@
     ?>
     <div class="tc-oer-connected-curriculum">
        <h4 class="tc-field-heading clearfix">
-            <?php _e("Connected Compilations",OER_SLUG); ?>
+            <?php esc_html_e("Connected Compilations",OER_SLUG); ?>
         </h4>
        <div class="tc-oer-curriculum-details clearfix">
             <ul class="tc-oer-subject-areas-list">
@@ -151,9 +153,9 @@
                 foreach($connected_curriculums as $curriculum){
                     $curriculum_url = get_the_permalink($curriculum['post_id']);
                     if ($i>2)
-                        echo '<li class="collapse lp-subject-hidden"><a href="'.esc_url($curriculum_url).'">'.$curriculum['post_title'].'</a></li>';
+                        echo '<li class="collapse lp-subject-hidden"><a href="'.esc_url($curriculum_url).'">'.esc_html($curriculum['post_title']).'</a></li>';
                     else
-                        echo "<li><a href='".esc_url($curriculum_url)."'>".$curriculum['post_title']."</a></li>";
+                        echo "<li><a href='".esc_url($curriculum_url)."'>".esc_html($curriculum['post_title'])."</a></li>";
                     if (($i==2) && ($cnt>2))
                         echo '<li><a class="see-more-subjects" data-toggle="collapse" data-count="'.$moreCnt.'" href=".lp-subject-hidden">SEE '.$moreCnt.' MORE +</a></li>';
                     $i++;
@@ -167,7 +169,7 @@
 </div> <!--Description & Resource Info at Right-->
 <?php  if ($display_see_more): ?>
 <div class="oer-see-more-row col-md-12 col-sm-12 col-xs-12">
-    <p class="center"><span><a id="oer-see-more-link" class="oer-see-more-link" role="button" data-toggle="collapse" href="#tcHiddenFields" aria-expanded="false" aria-controls="tcHiddenFields"><?php _e("SEE MORE +",OER_SLUG); ?></a></span></p>
+    <p class="center"><span><a id="oer-see-more-link" class="oer-see-more-link" role="button" data-toggle="collapse" href="#tcHiddenFields" aria-expanded="false" aria-controls="tcHiddenFields"><?php esc_html_e("SEE MORE +",OER_SLUG); ?></a></span></p>
 </div>
 <?php endif; ?>
 <div id="tcHiddenFields" class="tc-hidden-fields collapse row col-md-12 col-sm-12 col-xs-12">

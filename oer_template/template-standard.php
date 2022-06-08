@@ -21,7 +21,7 @@ $sub_standards = oer_get_substandards($standard->id);
 oer_display_custom_styles();
 ?>
 <div class="oer-backlink">
-    <a href="<?php echo home_url('resource/standards'); ?>"><?php _e("< Back to Standards",OER_SLUG); ?></a>
+    <a href="<?php echo home_url('resource/standards'); ?>"><?php esc_html_e("< Back to Standards",OER_SLUG); ?></a>
 </div>
 <div class="oer-cntnr">
 	<section id="primary" class="site-content">
@@ -35,7 +35,7 @@ oer_display_custom_styles();
 				    $cnt = oer_get_resource_count_by_substandard($sub_standard->id);
 				    $slug = "resource/standards/".$standard_name_slug."/".sanitize_title($sub_standard->standard_title);
 				?>
-				<li><a href="<?php echo home_url($slug); ?>"><?php echo $sub_standard->standard_title; ?></a> <span class="res-count"><?php echo $cnt; ?></span></li>
+				<li><a href="<?php echo home_url($slug); ?>"><?php echo esc_html($sub_standard->standard_title); ?></a> <span class="res-count"><?php echo esc_html($cnt); ?></span></li>
 				<?php } ?>
 			    </ul>
 			    <?php } ?>

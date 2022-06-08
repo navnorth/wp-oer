@@ -5,7 +5,7 @@
 			<legend><div class="oer_heading"><?php _e("Import Academic Standards", OER_SLUG); ?></div></legend>
 			<div class="oer-import-row">
 				<div class="row-left">
-					<?php _e("Resources can be easily tagged to standards to provide additional alignment information to viewers. Datasets for the standards listed below are included with the plugin.", OER_SLUG); ?>
+					<?php esc_html_e("Resources can be easily tagged to standards to provide additional alignment information to viewers. Datasets for the standards listed below are included with the plugin.", OER_SLUG); ?>
 				</div>
 				<div class="row-right alignRight">
 					<a href="http://asn.jesandco.org/resources/ASNJurisdiction/CCSS" target="_blank"><?php _e("ASN Standards Info", OER_SLUG); ?></a>
@@ -28,7 +28,7 @@
 											}
 											
 										?>
-										<input name="oer_common_core_mathematics" id="oer_common_core_mathematics" type="checkbox" value="1" <?php echo esc_attr($attr); ?>><label for="oer_common_core_mathematics" <?php echo $class; ?>><strong>Common Core Mathematics</strong> <?php if ($math): ?><span class="prev-import">(<?php _e('previously imported',OER_SLUG); ?>)</span><?php endif; ?></label>
+										<input name="oer_common_core_mathematics" id="oer_common_core_mathematics" type="checkbox" value="1" <?php echo esc_attr($attr); ?>><label for="oer_common_core_mathematics" <?php echo esc_attr($class); ?>><strong>Common Core Mathematics</strong> <?php if ($math): ?><span class="prev-import">(<?php esc_html_e('previously imported',OER_SLUG); ?>)</span><?php endif; ?></label>
 									</td>
 								</tr>
 								<tr>
@@ -43,7 +43,7 @@
 											}
 											
 										?>
-										<input name="oer_common_core_english" id="oer_common_core_english" type="checkbox" value="1" <?php echo esc_attr($attr); ?>><label for="oer_common_core_english" <?php echo $class; ?>><strong>Common Core English Language Arts</strong> <?php if ($english): ?><span class="prev-import">(<?php _e('previously imported',OER_SLUG); ?>)</span><?php endif; ?></label>
+										<input name="oer_common_core_english" id="oer_common_core_english" type="checkbox" value="1" <?php echo esc_attr($attr); ?>><label for="oer_common_core_english" <?php echo esc_attr($class); ?>><strong>Common Core English Language Arts</strong> <?php if ($english): ?><span class="prev-import">(<?php esc_html_e('previously imported',OER_SLUG); ?>)</span><?php endif; ?></label>
 									</td>
 								</tr>
 								<tr>
@@ -58,7 +58,7 @@
 											}
 											
 										?>
-										<input name="oer_next_generation_science" id="oer_next_generation_science" type="checkbox" value="1" <?php echo esc_attr($attr); ?>><label for="oer_next_generation_science" <?php echo $class; ?>><strong>Next Generation Science Standards</strong> <?php if ($science): ?><span class="prev-import">(<?php _e('previously imported',OER_SLUG); ?>)</span><?php endif; ?></label>
+										<input name="oer_next_generation_science" id="oer_next_generation_science" type="checkbox" value="1" <?php echo esc_attr($attr); ?>><label for="oer_next_generation_science" <?php echo esc_attr($class); ?>><strong>Next Generation Science Standards</strong> <?php if ($science): ?><span class="prev-import">(<?php esc_html_e('previously imported',OER_SLUG); ?>)</span><?php endif; ?></label>
 									</td>
 								</tr>
 							</tbody>

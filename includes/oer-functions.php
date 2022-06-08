@@ -454,16 +454,16 @@ if (!function_exists('oer_get_category_child')) {
 
 				if( !empty( $children ) )
 				{
-					echo '<li class="oer-sub-category has-child'.$class.'" title="'. $catchild->name .'" >
+					echo '<li class="oer-sub-category has-child'.esc_attr($class).'" title="'. esc_attr($catchild->name) .'" >
 							<span onclick="toggleparent(this);">
-								<a href="'. esc_url(site_url() .'/resource-subject-area/'. $catchild->slug) .'">' . $catchild->name .'</a>
+								<a href="'. esc_url(site_url() .'/resource-subject-area/'. $catchild->slug) .'">' . esc_html($catchild->name) .'</a>
 							</span>';
 				}
 				else
 				{
-					echo '<li class="oer-sub-category'.$class.'" title="'. $catchild->name .'" >
+					echo '<li class="oer-sub-category'.esc_attr($class).'" title="'. esc_attr($catchild->name) .'" >
 							<span onclick="toggleparent(this);">
-								<a href="'. esc_url(site_url() .'/resource-subject-area/'. $catchild->slug) .'">' . $catchild->name .'</a>
+								<a href="'. esc_url(site_url() .'/resource-subject-area/'. $catchild->slug) .'">' . esc_html($catchild->name) .'</a>
 							</span>';
 				}
 				oer_get_category_child( $catchild->term_id);
@@ -841,15 +841,8 @@ function oer_getImageFromExternalURL($url) {
 	$external_service_url = get_option('oer_service_url');
 	$img_url = str_replace('$url',$url,$external_service_url);
 
-	$ch = curl_init ($img_url);
-
-	curl_setopt($ch, CURLOPT_HEADER, 0);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
-	curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-
-	$raw=curl_exec($ch);
-	curl_close ($ch);
+	$image = wp_remote_get($img_url, array('sslverify'=>false));
+	$raw = wp_remote_retrieve_body($image);
 
 	$upload_dir = wp_upload_dir();
 	$path = $upload_dir['basedir'].'/resource-images/';
@@ -874,15 +867,9 @@ function oer_getImageFromExternalURL($url) {
 }
 
 function oer_save_image_to_file($image_url) {
-	$ch = curl_init ($image_url);
-
-	curl_setopt($ch, CURLOPT_HEADER, 0);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
-	curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-
-	$raw=curl_exec($ch);
-	curl_close ($ch);
+	// replace curl with WordPress HTTP API
+	$image = wp_remote_get($image_url, array('sslverify'=>false));
+	$raw = wp_remote_retrieve_body($image);
 
 	$upload_dir = wp_upload_dir();
 	$path = $upload_dir['basedir'].'/resource-images/';
@@ -915,16 +902,9 @@ function oer_getExternalThumbnailImage($url, $local=false) {
 	if ($local) {
 		$url = OER_URL.$url;
 	} else {
-		// Curl to download image
-		$ch = curl_init ($url);
-
-		curl_setopt($ch, CURLOPT_HEADER, 0);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
-		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-	
-		$raw=curl_exec($ch);
-		curl_close ($ch);
+		// replace curl with WordPress HTTP API
+		$image_url = wp_remote_get($url, array('sslverify'=>false));
+		$raw = wp_remote_retrieve_body($image_url);
 	}
 	
 	$upload_dir = wp_upload_dir();
@@ -966,12 +946,9 @@ function oer_is_bootstrap_loaded(){
 	$bootstrap = false;
 	$js = "";
 	$url = get_site_url();
-	
-	if (ini_get('allow_url_fopen'))
-		$content = file_get_contents($url);
-	else
-		$content = oer_curlRequest($url);
-	
+
+	$content = oer_HTTPRequest($url);
+
 	$content = htmlentities($content);
 	
 	preg_match_all("#(<head[^>]*>.*?<\/head>)#ims", $content, $head);
@@ -990,14 +967,16 @@ function oer_is_bootstrap_loaded(){
 	return $bootstrap;
 }
 
-/** Get resource via curl **/
-function oer_curlRequest($url) {
-   $ch = curl_init();
-   curl_setopt($ch, CURLOPT_URL, $url);
-   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-   $data = curl_exec($ch);
-   curl_close($ch);
-   return $data;
+/** Get resources via WordPress HTTP API **/
+function oer_HTTPRequest($url){
+	$response = wp_remote_get($url);
+
+	if ( is_array($response) && !is_wp_error($response)){
+		$content = wp_remote_retrieve_body($response);
+		return $content;
+	} else {
+		return false;
+	}
 }
 
 /** Resize Image **/
@@ -1574,11 +1553,7 @@ function oer_importLRResources(){
 		);
 	
 	if ($lr_url){
-		if( ini_get('allow_url_fopen') ) {
-			$resources = file_get_contents($lr_url);
-		} else {
-			$resources = oer_curlResources($lr_url);
-		}
+		$resources = oer_HttpResources($lr_url);
 		$resources = json_decode($resources);
 	}
 	
@@ -1669,11 +1644,7 @@ function oer_get_sliceLRResources($lr_url){
 	
 	do {
 		// Get LR Resources based on initial slice URL
-		if( ini_get('allow_url_fopen') ) {
-			$resources = file_get_contents($lrUrl);
-		} else {
-			$resources = oer_curlResources($lrUrl);
-		}
+		$resources = oer_HttpResources($lrUrl);
 		$resources = json_decode($resources);
 		
 		// Exit loop if no resources returned
@@ -1718,16 +1689,16 @@ function oer_get_sliceLRResources($lr_url){
 	return $lr_resources;
 }
 
-function oer_curlResources($url){
-	if (!function_exists('curl_init')){ 
-		die('CURL is not installed!');
+/** Get resources via WordPress HTTP API **/
+function oer_HttpResources($url){
+	$response = wp_remote_get($url);
+
+	if ( is_array($response) && !is_wp_error($response)){
+		$content = wp_remote_retrieve_body($response);
+		return $content;
+	} else {
+		return false;
 	}
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_URL, $url);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	$response = curl_exec($ch);
-	curl_close($ch);
-	return $response;
 }
 
 function oer_custom_array_intersect($firstArray, $secondArray){
@@ -2394,7 +2365,7 @@ function oer_get_youtube_thumbnail($youtube_url){
 	$thumbnail_url = "https://i.ytimg.com/vi/".$youtube_id."/hqdefault.jpg";
 	
 	$thumbnail_file = oer_save_image_to_file($thumbnail_url);
-	
+
 	return $thumbnail_file;
 }
 
@@ -2405,7 +2376,9 @@ function oer_generate_sll_resource_embed_code($url){
 	
 	//Generate embed code
 	if ($sll_resource_id) {
-		$embed_code = '<script type="text/javascript" src="https://learninglab.si.edu/embed/widget/q/r/'.$sll_resource_id.'/embed.js"></script><div class="sll-embed" data-widget-type="r" data-widget-key="'.$sll_resource_id.'"></div>';
+		wp_enqueue_script('learninglab-resource', 'https://learninglab.si.edu/embed/widget/q/r/'.$sll_resource_id.'/embed.js');
+		//$embed_code = '<script type="text/javascript" src="https://learninglab.si.edu/embed/widget/q/r/'.$sll_resource_id.'/embed.js"></script><div class="sll-embed" data-widget-type="r" data-widget-key="'.$sll_resource_id.'"></div>';
+		$embed_code = '<div class="sll-embed" data-widget-type="r" data-widget-key="'.$sll_resource_id.'"></div>';
 	}
 	return $embed_code;
 }
@@ -2427,7 +2400,9 @@ function oer_generate_sll_collection_embed_code($url){
 	
 	//Generate embed code
 	if ($sll_collection_id) {
-		$embed_code = '<script type="text/javascript" src="https://learninglab.si.edu/embed/widget/q/c/'.$sll_collection_id.'/embed.js"></script><div class="sll-embed" data-widget-type="c" data-widget-key="'.$sll_collection_id.'"></div>';
+		wp_enqueue_script('learninglab-collection', 'https://learninglab.si.edu/embed/widget/q/c/'.$sll_collection_id.'/embed.js');
+		//$embed_code = '<script type="text/javascript" src="https://learninglab.si.edu/embed/widget/q/c/'.$sll_collection_id.'/embed.js"></script><div class="sll-embed" data-widget-type="c" data-widget-key="'.$sll_collection_id.'"></div>';
+		$embed_code = '<div class="sll-embed" data-widget-type="c" data-widget-key="'.$sll_collection_id.'"></div>';
 	}
 	return $embed_code;
 }
@@ -3515,9 +3490,9 @@ if (! function_exists('oer_standards_list_display')){
                    foreach($stds as $std){
                        if (isset($std['core_standard_id'])) {
                            echo "<li>";
-                               echo '<a class="lp-standard-toggle" data-toggle="collapse" href="#core-standard-'.$std['core_standard_id'].'">'.$std['core_standard_name'].' <i class="fas fa-caret-right"></i></a>';
+                               echo '<a class="lp-standard-toggle" data-toggle="collapse" href="#core-standard-'.$std['core_standard_id'].'">'.esc_html($std['core_standard_name']).' <i class="fas fa-caret-right"></i></a>';
                            ?>
-                           <div class="collapse tc-lp-details-standard" id="core-standard-<?php echo $std['core_standard_id']; ?>">
+                           <div class="collapse tc-lp-details-standard" id="core-standard-<?php echo esc_attr($std['core_standard_id']); ?>">
                            <?php
                            if (is_array($std['notation'])) {
                                echo "<ul class='tc-lp-notation-list'>";
@@ -3526,9 +3501,9 @@ if (! function_exists('oer_standards_list_display')){
                                        $standard_details = was_standard_details($notation);
                                    if (!empty($standard_details)){
                                        if (isset($standard_details->description))
-                                           echo "<li>".$standard_details->description."</li>";
+                                           echo "<li>".wp_kses_post($standard_details->description)."</li>";
                                        else
-                                           echo "<li>".$standard_details->standard_title."</li>";
+                                           echo "<li>".esc_html($standard_details->standard_title)."</li>";
                                    }
                                }
                                echo "</ul>";
@@ -3586,6 +3561,7 @@ if (!function_exists('oer_cc_license_image')){
 if (!function_exists('oer_display_pdf_embeds')){
 	function oer_display_pdf_embeds($url, $return = false){
 		$isExternal = oer_is_external_url($url);
+		$allowed_tags = oer_allowed_html();
 		
 		if ($isExternal) {
 			$external_option = get_option("oer_external_pdf_viewer");
@@ -3614,7 +3590,7 @@ if (!function_exists('oer_display_pdf_embeds')){
 					if ($return)
 						return $embed_code;
 					else
-						echo $embed_code;
+						echo wp_kses($embed_code,$allowed_tags);
 					break;
 				case 3:
 					if(shortcode_exists('wonderplugin_pdf')) {
@@ -3874,4 +3850,76 @@ function oer_get_template_path($template_names, $load = false, $require_once = t
 
     return $template;
 }
+
+/**-- Allowed HTML for wp_kses escaping HTML code --**/
+function oer_allowed_html() {
+
+	global $allowedposttags;
+
+	$allowed_atts = array(
+		'align'      => array(),
+		'class'      => array(),
+		'type'       => array(),
+		'id'         => array(),
+		'dir'        => array(),
+		'lang'       => array(),
+		'style'      => array(),
+		'xml:lang'   => array(),
+		'src'        => array(),
+		'alt'        => array(),
+		'href'       => array(),
+		'rel'        => array(),
+		'rev'        => array(),
+		'target'     => array(),
+		'novalidate' => array(),
+		'type'       => array(),
+		'value'      => array(),
+		'name'       => array(),
+		'tabindex'   => array(),
+		'action'     => array(),
+		'method'     => array(),
+		'for'        => array(),
+		'width'      => array(),
+		'height'     => array(),
+		'data'       => array(),
+		'title'      => array(),
+	);
+	$allowedposttags['form']     = $allowed_atts;
+	$allowedposttags['label']    = $allowed_atts;
+	$allowedposttags['input']    = $allowed_atts;
+	$allowedposttags['textarea'] = $allowed_atts;
+	$allowedposttags['iframe']   = $allowed_atts;
+	$allowedposttags['script']   = $allowed_atts;
+	$allowedposttags['style']    = $allowed_atts;
+	$allowedposttags['strong']   = $allowed_atts;
+	$allowedposttags['small']    = $allowed_atts;
+	$allowedposttags['table']    = $allowed_atts;
+	$allowedposttags['span']     = $allowed_atts;
+	$allowedposttags['abbr']     = $allowed_atts;
+	$allowedposttags['code']     = $allowed_atts;
+	$allowedposttags['pre']      = $allowed_atts;
+	$allowedposttags['div']      = $allowed_atts;
+	$allowedposttags['img']      = $allowed_atts;
+	$allowedposttags['h1']       = $allowed_atts;
+	$allowedposttags['h2']       = $allowed_atts;
+	$allowedposttags['h3']       = $allowed_atts;
+	$allowedposttags['h4']       = $allowed_atts;
+	$allowedposttags['h5']       = $allowed_atts;
+	$allowedposttags['h6']       = $allowed_atts;
+	$allowedposttags['ol']       = $allowed_atts;
+	$allowedposttags['ul']       = $allowed_atts;
+	$allowedposttags['li']       = $allowed_atts;
+	$allowedposttags['em']       = $allowed_atts;
+	$allowedposttags['hr']       = $allowed_atts;
+	$allowedposttags['br']       = $allowed_atts;
+	$allowedposttags['tr']       = $allowed_atts;
+	$allowedposttags['td']       = $allowed_atts;
+	$allowedposttags['p']        = $allowed_atts;
+	$allowedposttags['a']        = $allowed_atts;
+	$allowedposttags['b']        = $allowed_atts;
+	$allowedposttags['i']        = $allowed_atts;
+	
+	return $allowedposttags;
+}
+
 ?>

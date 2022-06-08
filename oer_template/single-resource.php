@@ -20,12 +20,13 @@ if ($theme == "Eleganto"){
 global $post;
 global $wpdb, $_oer_prefix;
 global $_css_oer;
+$allowed_tags = oer_allowed_html();
 
 if ($_css_oer) {
 $output = "<style>"."\n";
 $output .= $_css_oer."\n";
 $output .="</style>"."\n";
-echo $output;
+	echo wp_kses($output, $allowed_tags);
 }
 
 $url = get_post_meta($post->ID, "oer_resourceurl", true);
@@ -169,7 +170,7 @@ if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
         <div id="sngl-resource" class="entry-content oer-cntnr post-content oer_sngl_resource_wrapper row">
 	<?php //if (!$hide_title): ?>
         <header class="entry-header">
-            <h1 class="entry-title col-md-8"><?php echo $post->post_title;?></h1>
+            <h1 class="entry-title col-md-8"><?php echo esc_html($post->post_title); ?></h1>
 			<?php if (!empty($oer_sensitive_material)): ?>
 			<span class="sensitive-resource col-md-4"><i class="fas fa-exclamation-triangle"></i> Potentially Sensitive Material</span>
 			<?php endif; ?>
@@ -242,7 +243,7 @@ function oer_display_default_thumbnail($post){
 		$img_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ) , "full" );
 		if ($img_url){
 			$img_path = $new_img_path = parse_url($img_url[0]);
-			$img_path = $_SERVER['DOCUMENT_ROOT'] . $img_path['path'];
+			$img_path = esc_url($_SERVER['DOCUMENT_ROOT'] . $img_path['path']);
 			$new_image_url = OER_URL.'images/default-icon-528x455.png';
 			$img_width = oer_get_image_width('large');
 			$img_height = oer_get_image_height('large');

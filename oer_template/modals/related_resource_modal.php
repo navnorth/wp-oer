@@ -4,13 +4,13 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="standardModalLabel"><?php _e('Add Related Resource', OER_SLUG); ?></h5>
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"><?php _e('Close',OER_SLUG); ?></span></button>
+        <h5 class="modal-title" id="standardModalLabel"><?php esc_html_e('Add Related Resource', OER_SLUG); ?></h5>
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"><?php esc_html_e('Close',OER_SLUG); ?></span></button>
       </div>
       <div id="standards-list" class="modal-body">
         <div class="search-bar">
           <input type="text" name="searchRelatedResources" class="search-related-resources-text form-control">
-          <button class="search_std_btn" data-postid="<?php echo $post->ID; ?>"><span class='dashicons dashicons-search'></span></button>
+          <button class="search_std_btn" data-postid="<?php echo esc_attr($post->ID); ?>"><span class='dashicons dashicons-search'></span></button>
         </div>
         <div id="oer_related_resources_list">
           <?php
@@ -26,9 +26,9 @@
                 $_chk = 'checked';  $_sel = 'selected';
               endif;
               ?>
-                <li data_name="<?php echo strtolower($_res->post_title); ?>">
-                  <label rid="<?php echo $_res->ID; ?>" class="<?php echo $_sel; ?>">
-                    <input class="relatedResourceNode <?php echo $_sel; ?>" name="relatedResourceNode" type="checkbox" data_name="<?php echo $_res->post_title; ?>" value="<?php echo $_res->ID; ?>" <?php echo $_chk; ?> />&nbsp;<?php echo $_res->post_title; ?>
+                <li data_name="<?php echo esc_attr(strtolower($_res->post_title)); ?>">
+                  <label rid="<?php echo esc_attr($_res->ID); ?>" class="<?php echo esc_attr($_sel); ?>">
+                    <input class="relatedResourceNode <?php echo esc_attr($_sel); ?>" name="relatedResourceNode" type="checkbox" data_name="<?php echo esc_attr($_res->post_title); ?>" value="<?php echo esc_attr($_res->ID); ?>" <?php echo esc_attr($_chk); ?> />&nbsp;<?php echo esc_html($_res->post_title); ?>
                     <span class="relatedResourceSelectorImage dashicons dashicons-yes"></span>
                   </label>
                 </li>
@@ -46,7 +46,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" id="btnAddRelatedResources" class="btn btn-default btn-sm btn-primary" data-postid="<?php echo $post->ID; ?>" data-dismiss="modal"><?php _e('Select', OER_SLUG); ?></button>
+        <button type="button" id="btnAddRelatedResources" class="btn btn-default btn-sm btn-primary" data-postid="<?php echo $post->ID; ?>" data-dismiss="modal"><?php esc_html_e('Select', OER_SLUG); ?></button>
       </div>
     </div>
   </div>

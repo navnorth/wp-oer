@@ -107,12 +107,12 @@ function oer_display_resource_block( $attributes, $ajax = false ){
         ob_start();
         ?>
 
-        <div class="wp-block-wp-oer-resource-block" <?php echo $style; ?>>
+        <div class="wp-block-wp-oer-resource-block" <?php echo esc_attr($style); ?>>
             <?php if ($empty): ?>
-                <div class="oer-empty-block"><?php _e( 'Empty display. Please enable some options.' , 'wp-oer' ); ?></div> 
+                <div class="oer-empty-block"><?php esc_html_e( 'Empty display. Please enable some options.' , 'wp-oer' ); ?></div> 
             <?php endif; ?>
             <?php if ($showTitle=="true"): ?>
-            <h4><a href="<?php echo $resource->guid; ?>"><?php echo $resource->post_title; ?></a></h4>
+            <h4><a href="<?php echo esc_url($resource->guid); ?>"><?php echo esc_html($resource->post_title); ?></a></h4>
             <?php endif; ?>
 
             <?php if ($showThumbnail=="true"):
@@ -120,7 +120,7 @@ function oer_display_resource_block( $attributes, $ajax = false ){
                 $featured_image = wp_get_attachment_image_src(get_post_thumbnail_id($resource->ID));
             ?>
             <div class="oer-resource-block-featured-image">
-                <a href="<?php echo $resource->guid; ?>"><img src="<?php echo $featured_image[0]; ?>" alt="<?php echo $resource->post_title; ?>"></a>
+                <a href="<?php echo esc_url_raw($resource->guid); ?>"><img src="<?php echo esc_url($featured_image[0]); ?>" alt="<?php echo esc_attr($resource->post_title); ?>"></a>
             </div>
             <?php endif;
             endif; ?>
@@ -138,7 +138,7 @@ function oer_display_resource_block( $attributes, $ajax = false ){
                 <?php if (count($subjects)>0): ?>
                     <ul>
                         <?php foreach($subjects as $subject): ?>
-                            <li><a href="<?php echo $subject['term_link']; ?>"><?php echo $subject['name']; ?></a></li>
+                            <li><a href="<?php echo esc_url($subject['term_link']); ?>"><?php echo esc_html($subject['name']); ?></a></li>
                         <?php endforeach; ?>
                     </ul>
                 <?php endif; ?>
@@ -149,7 +149,7 @@ function oer_display_resource_block( $attributes, $ajax = false ){
                 $grade_levels = oer_resource_block_grade_levels($resource->ID);
                 ?>
             <div class="oer-resource-block-grade-levels">
-                <strong><?php _e('Grade Levels', OER_SLUG); ?>: </strong> <?php echo $grade_levels; ?>
+                <strong><?php esc_html_e('Grade Levels', OER_SLUG); ?>: </strong> <?php echo esc_html($grade_levels); ?>
             </div>
             <?php endif; ?>
         </div>
@@ -185,8 +185,9 @@ function oer_resource_block_subjects($resource_id){
 }
 
 function oer_ajax_display_resource_block(){
+    $allowed_tags = oer_allowed_html();
     $resource = oer_display_resource_block($_POST['params'], true);
-    echo $resource;
+    echo wp_kses($resource,$allowed_tags);
     die();
 }
 add_action( 'wp_ajax_oer_display_resource_block', 'oer_ajax_display_resource_block' );

@@ -2,9 +2,9 @@
 Contributors: navigationnorth, joehobson, johnpaulbalagolan, josepheneldas, arobotnamedchris
 Tags: OER, Open Educational Resources, Education, Teaching, Learning
 Requires at least: 4.4
-Tested up to: 5.9.0
+Tested up to: 6.0
 Requires PHP: 7.0
-Stable tag: 0.8.7
+Stable tag: 0.8.8
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -41,6 +41,12 @@ No frequently asked questions.
 3. Display educational resources on your WordPress website!
 
 == Changelog ==
+= 0.8.8 =
+* Replaced usage of cURL and file_get_contents with HTTP API
+* Changed SLL embed code to enqueue external javascript instead of putting it inline
+* Applied proper escaping and sanitizing of data for improved plugin security
+* Tested up to WP 6.0
+
 = 0.8.7 =
 * More interactive admin eperience with the use of REST API
 * Made blocks backwards compatible
