@@ -9,7 +9,7 @@ if (!empty($args)){
         if (!empty($age_levels) && trim($age_levels)!==""){
         ?>
         <div class="form-field">
-            <div class="oer-lp-label"><?php echo $age_label; ?>:</div> <div class="oer-lp-value"><?php echo $age_levels; ?></div>
+            <div class="oer-lp-label"><?php echo esc_html($age_label); ?>:</div> <div class="oer-lp-value"><?php echo esc_html($age_levels); ?></div>
         </div>
         <?php
         }
@@ -37,9 +37,9 @@ if (!empty($args)){
             <div class="oer-lp-label"><?php
             if (!$option_set){
                 if (count($grades)>1)
-                    _e("Grade Levels:", OER_SLUG);
+                    esc_html_e("Grade Levels:", OER_SLUG);
                 else
-                    _e("Grade Level:", OER_SLUG);
+                    esc_html_e("Grade Level:", OER_SLUG);
             } else
                     echo get_option('oer_grade_label').":";
             ?></div>
@@ -58,7 +58,7 @@ if (!empty($args)){
          if (!empty($suggested_time) && trim($suggested_time)!==""){
          ?>
          <div class="form-field">
-             <div class="oer-lp-label"><?php echo $suggested_label; ?>:</div> <div class="oer-lp-value"><?php echo $suggested_time; ?></div>
+             <div class="oer-lp-label"><?php echo esc_html($suggested_label); ?>:</div> <div class="oer-lp-value"><?php echo esc_html($suggested_time); ?></div>
          </div>
          <?php
          }

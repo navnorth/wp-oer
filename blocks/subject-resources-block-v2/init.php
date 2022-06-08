@@ -554,7 +554,7 @@ function oer_get_subject_resources($args, $ajax=false){
             $html .= '  </a>';
             $html .= '  <div class="oer-snglttldscrght">';
             $html .= '      <div class="ttl">';
-            $html .= '          <a href="'.esc_url($resource->link).'">'.$resource->post_title.'</a>';
+            $html .= '          <a href="'.esc_url($resource->link).'">'.esc_html($resource->post_title).'</a>';
             $html .= '      </div>';
             $html .= '      <div class="post-meta">';
             $html .= '          <span class="post-meta-box post-meta-grades">';
@@ -572,7 +572,7 @@ function oer_get_subject_resources($args, $ajax=false){
             $html .= '      <div class="tagcloud">';
             if (is_array($resource->subject_details)){
                 foreach($resource->subject_details as $subj){
-                    $html .= '          <span><a href="'.esc_url($subj['link']).'">'.$subj['name'].'</a></span>';
+                    $html .= '          <span><a href="'.esc_url($subj['link']).'">'.esc_html($subj['name']).'</a></span>';
                 }
             }
             $html .= '      </div>';
@@ -586,8 +586,9 @@ function oer_get_subject_resources($args, $ajax=false){
 }
 
 function oer_ajax_get_subject_resources(){
+    $allowed_tags = oer_allowed_html();
     $resources = oer_get_subject_resources($_POST, true);
-    echo $resources;
+    echo wp_kses($resources,$allowed_tags);
     die();
 }
 add_action( 'wp_ajax_oer_get_subject_resources', 'oer_ajax_get_subject_resources' );

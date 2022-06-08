@@ -48,13 +48,13 @@ $resources = oer_get_resources_by_notation($notation->id);
 oer_display_custom_styles();
 ?>
 <div class="oer-backlink">
-    <a href="<?php echo home_url('resource/standards'); ?>"><?php _e("< Back to Standards",OER_SLUG); ?></a>
+    <a href="<?php echo home_url('resource/standards'); ?>"><?php esc_html_e("< Back to Standards",OER_SLUG); ?></a>
 </div>
 <div class="oer-cntnr">
 	<section id="primary" class="site-content">
 		<div id="content" role="main">
 		    <div class="oer-allftrdrsrc">
-			<div class="oer-snglrsrchdng"><?php printf(__("Browse %s", OER_SLUG), '<a href="'.home_url("resource/standards/".sanitize_title($standard->standard_name)).'">'.$standard->standard_name.'</a>'); ?></div>
+			<div class="oer-snglrsrchdng"><?php printf(__("Browse %s", OER_SLUG), '<a href="'.home_url("resource/standards/".sanitize_title($standard->standard_name)).'">'.esc_html($standard->standard_name).'</a>'); ?></div>
 			<div class="oer-allftrdrsrccntr-notation">
 			    <ul class="oer-standard">
 			    <?php  if ($upstandards){
@@ -63,7 +63,7 @@ oer_display_custom_styles();
 				?>
 				<li>
 				    <ul class="oer-hsubstandards">
-					<li><a href="<?php echo home_url($slug); ?>"><?php echo $upstandard['standard_title']; ?></a></li>
+					<li><a href="<?php echo home_url($slug); ?>"><?php echo esc_html($upstandard['standard_title']); ?></a></li>
 				<?php
 				$end_html .= '</ul>
 					</li>';
@@ -75,7 +75,7 @@ oer_display_custom_styles();
 				    ?>
 				    <li class="upnotation">
 					<ul class="oer-notations">
-					    <li><a href="<?php echo $upnote_slug; ?>"><strong><?php echo $upnotation['standard_notation']; ?></strong> <?php echo $upnotation['description']; ?></a></li>
+					    <li><a href="<?php echo esc_url($upnote_slug); ?>"><strong><?php echo esc_html($upnotation['standard_notation']); ?></strong> <?php echo wp_kses_post($upnotation['description']); ?></a></li>
 					
 				    <?php
 				    $end_upnote .= '</ul>
@@ -86,7 +86,7 @@ oer_display_custom_styles();
 				<li>
 				    <ul class="oer-notations">
 					<li>
-					    <h4><strong><?php echo $notation->standard_notation; ?></strong> <?php echo $notation->description; ?></h4>
+					    <h4><strong><?php echo esc_html($notation->standard_notation); ?></strong> <?php echo wp_kses_post($notation->description); ?></h4>
 					</li>
 					<?php if (!empty($subnotations)) { ?>
 					<li>
@@ -97,7 +97,7 @@ oer_display_custom_styles();
 						    $subnote_slug = $subnotation->standard_notation;
 						?>
 						<li>
-						    <a href="<?php echo $subnote_slug; ?>"><strong><?php echo $subnotation->standard_notation; ?></strong> <?php echo $subnotation->description; ?></a>  <span class="res-count"><?php echo $cnt; ?></span>
+						    <a href="<?php echo esc_url($subnote_slug); ?>"><strong><?php echo esc_html($subnotation->standard_notation); ?></strong> <?php echo wp_kses_post($subnotation->description); ?></a>  <span class="res-count"><?php echo esc_html($cnt); ?></span>
 						</li>
 						<?php } ?>
 					    </ul>
@@ -107,9 +107,9 @@ oer_display_custom_styles();
 				</li>
 			    <?php }
 			    if ($end_html)
-				echo $end_html;
+				echo wp_kses_post($end_html);
 			    if ($end_upnote)
-				echo $end_upnote;
+				echo wp_kses_post($end_upnote);
 			    ?>
 			    </ul>
 			</div>
@@ -118,7 +118,7 @@ oer_display_custom_styles();
 				<h4><?php _e("Resources:", OER_SLUG); ?></h4>
 				<ul class="oer-resources">
 				    <?php foreach($resources as $resource) { ?>
-				    <li><a href="<?php echo esc_url(get_the_permalink($resource->ID)); ?>"><?php echo $resource->post_title; ?></a></li>
+				    <li><a href="<?php echo esc_url(get_the_permalink($resource->ID)); ?>"><?php echo esc_html($resource->post_title); ?></a></li>
 				    <?php } ?>
 				</ul>
 			    <?php } ?>

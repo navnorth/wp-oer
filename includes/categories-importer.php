@@ -2,10 +2,10 @@
 <div class="oer_imprtrwpr">
     <form method="post" enctype="multipart/form-data" action="<?php echo esc_url( admin_url('admin.php') ); ?>" onsubmit="return processImport('#subject_submit','bulk_import')">
 	<fieldset>
-		<legend><div class="oer_heading"><?php _e("Import Subject Areas", OER_SLUG); ?></div></legend>
+		<legend><div class="oer_heading"><?php esc_html_e("Import Subject Areas", OER_SLUG); ?></div></legend>
 		<div class="oer-import-row">
 			<div class="row-left">
-				<?php _e("Easily setup resource subject areas. See the spreadsheet template for data format specifications.", OER_SLUG); ?>
+				<?php esc_html_e("Easily setup resource subject areas. See the spreadsheet template for data format specifications.", OER_SLUG); ?>
 			</div>
 			<div class="row-right alignRight">
 				<a href="<?php echo esc_url(OER_URL."samples/subject_area_import.xls"); ?>" target="_blank"><?php _e("Download Spreadsheet Template", OER_SLUG); ?></a>
@@ -23,7 +23,7 @@
 				<div class="fields alignRight">
 				    <input type="hidden" name="action" value="import_subjects">
 				    <?php wp_nonce_field( 'oer_subject_area_nonce_field' ); ?>
-					<input type="submit" id="subject_submit" name="" value="<?php _e("Import", OER_SLUG); ?>" class="button button-primary"/>
+					<input type="submit" id="subject_submit" name="" value="<?php esc_html_e("Import", OER_SLUG); ?>" class="button button-primary"/>
 				</div>
 			</div>
 		</div>

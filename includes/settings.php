@@ -134,7 +134,7 @@ global $message, $type;
 <div class="wrap">
     
     <div id="icon-themes" class="oer-logo"><img src="<?php echo esc_url(OER_URL); ?>images/wp-oer-admin-logo.png" /></div>
-    <h2><?php _e('Settings - WP OER',OER_SLUG); ?></h2>
+    <h2><?php esc_html_e('Settings - WP OER',OER_SLUG); ?></h2>
     <?php settings_errors(); ?>
      
 	<?php
@@ -142,14 +142,14 @@ global $message, $type;
 	?>
      
     <h2 class="nav-tab-wrapper">
-        <a href="?post_type=resource&page=oer_settings&tab=general" class="nav-tab <?php echo $active_tab == 'general' ? 'nav-tab-active' : ''; ?>"><?php _e('General',OER_SLUG); ?></a>
-        <a href="?post_type=resource&page=oer_settings&tab=styles" class="nav-tab <?php echo $active_tab == 'styles' ? 'nav-tab-active' : ''; ?>"><?php _e('Styles',OER_SLUG); ?></a>
-	<a href="?post_type=resource&page=oer_settings&tab=metadata" class="nav-tab <?php echo $active_tab == 'metadata' ? 'nav-tab-active' : ''; ?>"><?php _e('Metadata Fields',OER_SLUG); ?></a>
+        <a href="?post_type=resource&page=oer_settings&tab=general" class="nav-tab <?php echo $active_tab == 'general' ? 'nav-tab-active' : ''; ?>"><?php esc_html_e('General',OER_SLUG); ?></a>
+        <a href="?post_type=resource&page=oer_settings&tab=styles" class="nav-tab <?php echo $active_tab == 'styles' ? 'nav-tab-active' : ''; ?>"><?php esc_html_e('Styles',OER_SLUG); ?></a>
+	<a href="?post_type=resource&page=oer_settings&tab=metadata" class="nav-tab <?php echo $active_tab == 'metadata' ? 'nav-tab-active' : ''; ?>"><?php esc_html_e('Metadata Fields',OER_SLUG); ?></a>
 	<?php if ($active_tab=="setup" || get_option('oer_setup')=="1") { ?>
-        <a href="?post_type=resource&page=oer_settings&tab=setup" class="nav-tab <?php echo $active_tab == 'setup' ? 'nav-tab-active' : ''; ?>"><?php _e('Setup',OER_SLUG); ?></a>
+        <a href="?post_type=resource&page=oer_settings&tab=setup" class="nav-tab <?php echo $active_tab == 'setup' ? 'nav-tab-active' : ''; ?>"><?php esc_html_e('Setup',OER_SLUG); ?></a>
 	<?php } ?>
 	<?php if ($active_tab=="reset") { ?>
-        <a href="?post_type=resource&page=oer_settings&tab=reset" class="nav-tab <?php echo $active_tab == 'reset' ? 'nav-tab-active' : ''; ?>"><?php _e('Reset',OER_SLUG); ?></a>
+        <a href="?post_type=resource&page=oer_settings&tab=reset" class="nav-tab <?php echo $active_tab == 'reset' ? 'nav-tab-active' : ''; ?>"><?php esc_html_e('Reset',OER_SLUG); ?></a>
 	<?php } ?>
     </h2>
     
@@ -177,7 +177,7 @@ global $message, $type;
 </div><!-- /.wrap -->
 <div class="oer-plugin-footer">
 	<div class="oer-plugin-info"><?php echo OER_ADMIN_PLUGIN_NAME . " " . OER_VERSION .""; ?></div>
-	<div class="oer-plugin-link"><a href='https://www.wp-oer.com/' target='_blank'><?php _e("More Information", OER_SLUG); ?></a></div>
+	<div class="oer-plugin-link"><a href='https://www.wp-oer.com/' target='_blank'><?php esc_html_e("More Information", OER_SLUG); ?></a></div>
 	<div class="clear"></div>
 </div>
 

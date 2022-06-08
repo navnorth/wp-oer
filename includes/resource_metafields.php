@@ -14,7 +14,7 @@ if (get_option('oer_metadata_firstload')=="")
 
         <div class="oer_snglfld">
         	<div class="oer_txt">
-			<?php _e("Resource URL:", OER_SLUG); ?>
+			<?php esc_html_e("Resource URL:", OER_SLUG); ?>
             </div>
 		<?php echo wp_nonce_field( 'oer_metabox_action' , 'oer_metabox_nonce_field' ); ?>
             <div class="oer_fld">
@@ -35,7 +35,7 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Highlight:", OER_SLUG);
+				esc_html_e("Highlight:", OER_SLUG);
 			else
 				echo __(get_option('oer_highlight_label'),OER_SLUG).":";
 			?>
@@ -61,7 +61,7 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Grade", OER_SLUG).":";
+				esc_html_e("Grade", OER_SLUG).":";
 			else
 				echo __(get_option('oer_grade_label'),OER_SLUG).":";
 			?>
@@ -116,14 +116,14 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Age Levels", OER_SLUG).":";
+				esc_html_e("Age Levels", OER_SLUG).":";
 			else
 				echo __(get_option('oer_age_levels_label'),OER_SLUG).":";
 			?>
             </div>
             <div class="oer_fld">
             	<?php $oer_age_levels = get_post_meta($post->ID, 'oer_age_levels', true);?>
-                <input type="text" name="oer_age_levels" value="<?php echo $oer_age_levels;?>"/>
+                <input type="text" name="oer_age_levels" value="<?php echo esc_attr($oer_age_levels);?>"/>
             </div>
         </div>
 	<?php } ?>
@@ -141,14 +141,14 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Instructional Time", OER_SLUG).":";
+				esc_html_e("Instructional Time", OER_SLUG).":";
 			else
 				echo __(get_option('oer_instructional_time_label'),OER_SLUG).":";
 			?>
             </div>
             <div class="oer_fld">
             	<?php $oer_instructional_time = get_post_meta($post->ID, 'oer_instructional_time', true);?>
-                <input type="text" name="oer_instructional_time" value="<?php echo $oer_instructional_time;?>"/>
+                <input type="text" name="oer_instructional_time" value="<?php echo esc_attr($oer_instructional_time);?>"/>
             </div>
         </div>
 	<?php } ?>
@@ -165,7 +165,7 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Creative Commons License", OER_SLUG).":";
+				esc_html_e("Creative Commons License", OER_SLUG).":";
 			else
 				echo __(get_option('oer_creativecommons_license_label'),OER_SLUG).":";
 			?>
@@ -174,12 +174,12 @@ if (get_option('oer_metadata_firstload')=="")
             	<?php $oer_creativecommons_license = get_post_meta($post->ID, 'oer_creativecommons_license', true); ?>
                 <select name="oer_creativecommons_license">
 					<option value=""></option>
-					<option value="CC-BY" <?php if($oer_creativecommons_license == 'CC-BY'){echo 'selected="selected"';}?>><?php _e("Attribution CC BY", OER_SLUG); ?></option>
-					<option value="CC-BY-SA" <?php if($oer_creativecommons_license == 'CC-BY-SA'){echo 'selected="selected"';}?>><?php _e("Attribution-ShareAlike CC BY-SA", OER_SLUG); ?></option>
-					<option value="CC-BY-ND" <?php if($oer_creativecommons_license == 'CC-BY-ND'){echo 'selected="selected"';}?>><?php _e("Attribution-NoDerivs CC BY-ND", OER_SLUG); ?></option>
-					<option value="CC-BY-NC" <?php if($oer_creativecommons_license == 'CC-BY-NC'){echo 'selected="selected"';}?>><?php _e("Attribution-NonCommercial CC BY-NC", OER_SLUG); ?></option>
-					<option value="CC-BY-NC-SA" <?php if($oer_creativecommons_license == 'CC-BY-NC-SA'){echo 'selected="selected"';}?>><?php _e("Attribution-NonCommercial-ShareAlike CC BY-NC-SA", OER_SLUG); ?></option>
-					<option value="CC-BY-NC-ND" <?php if($oer_creativecommons_license == 'CC-BY-NC-ND'){echo 'selected="selected"';}?>><?php _e("Attribution-NonCommercial-NoDerivs CC BY-NC-ND", OER_SLUG); ?></option>
+					<option value="CC-BY" <?php if($oer_creativecommons_license == 'CC-BY'){echo 'selected="selected"';}?>><?php esc_html_e("Attribution CC BY", OER_SLUG); ?></option>
+					<option value="CC-BY-SA" <?php if($oer_creativecommons_license == 'CC-BY-SA'){echo 'selected="selected"';}?>><?php esc_html_e("Attribution-ShareAlike CC BY-SA", OER_SLUG); ?></option>
+					<option value="CC-BY-ND" <?php if($oer_creativecommons_license == 'CC-BY-ND'){echo 'selected="selected"';}?>><?php esc_html_e("Attribution-NoDerivs CC BY-ND", OER_SLUG); ?></option>
+					<option value="CC-BY-NC" <?php if($oer_creativecommons_license == 'CC-BY-NC'){echo 'selected="selected"';}?>><?php esc_html_e("Attribution-NonCommercial CC BY-NC", OER_SLUG); ?></option>
+					<option value="CC-BY-NC-SA" <?php if($oer_creativecommons_license == 'CC-BY-NC-SA'){echo 'selected="selected"';}?>><?php esc_html_e("Attribution-NonCommercial-ShareAlike CC BY-NC-SA", OER_SLUG); ?></option>
+					<option value="CC-BY-NC-ND" <?php if($oer_creativecommons_license == 'CC-BY-NC-ND'){echo 'selected="selected"';}?>><?php esc_html_e("Attribution-NonCommercial-NoDerivs CC BY-NC-ND", OER_SLUG); ?></option>
                 </select>
             </div>
         </div>
@@ -197,14 +197,14 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Format", OER_SLUG).":";
+				esc_html_e("Format", OER_SLUG).":";
 			else
 				echo __(get_option('oer_format_label'),OER_SLUG).":";
 			?>
             </div>
             <div class="oer_fld">
             	<?php $oer_format = get_post_meta($post->ID, 'oer_format', true);?>
-                <input type="text" name="oer_format" value="<?php echo $oer_format;?>"/>
+                <input type="text" name="oer_format" value="<?php echo esc_attr($oer_format);?>"/>
             </div>
         </div>
 	<?php } ?>
@@ -221,14 +221,14 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Date Created:", OER_SLUG);
+				esc_html_e("Date Created:", OER_SLUG);
 			else
 				echo __(get_option('oer_datecreated_label'),OER_SLUG).":";
 			?>
             </div>
             <div class="oer_fld">
             	<?php $oer_datecreated= get_post_meta($post->ID, 'oer_datecreated', true);?>
-                <input type="text" name="oer_datecreated" value="<?php echo $oer_datecreated;?>" class="oer_datepicker"/>
+                <input type="text" name="oer_datecreated" value="<?php echo esc_attr($oer_datecreated);?>" class="oer_datepicker"/>
             </div>
         </div>
 	<?php } ?>
@@ -245,14 +245,14 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Date Created Estimate", OER_SLUG).":";
+				esc_html_e("Date Created Estimate", OER_SLUG).":";
 			else
 				echo __(get_option('oer_datecreated_estimate_label'),OER_SLUG).":";
 			?>
             </div>
             <div class="oer_fld">
             	<?php $oer_datecreated_estimate = get_post_meta($post->ID, 'oer_datecreated_estimate', true);?>
-                <input type="text" name="oer_datecreated_estimate" value="<?php echo $oer_datecreated_estimate;?>" />
+                <input type="text" name="oer_datecreated_estimate" value="<?php echo esc_attr($oer_datecreated_estimate);?>" />
             </div>
         </div>
 	<?php } ?>
@@ -269,14 +269,14 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Date Modified:", OER_SLUG);
+				esc_html_e("Date Modified:", OER_SLUG);
 			else
 				echo __(get_option('oer_datemodified_label'),OER_SLUG).":";
 			?>
             </div>
             <div class="oer_fld">
             	<?php $oer_datemodified= get_post_meta($post->ID, 'oer_datemodified', true);?>
-                <input type="text" name="oer_datemodified" value="<?php echo $oer_datemodified;?>" class="oer_datepicker"/>
+                <input type="text" name="oer_datemodified" value="<?php echo esc_attr($oer_datemodified);?>" class="oer_datepicker"/>
             </div>
         </div>
 	<?php } ?>
@@ -293,7 +293,7 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Media Type:", OER_SLUG);
+				esc_html_e("Media Type:", OER_SLUG);
 			else
 				echo __(get_option('oer_mediatype_label'),OER_SLUG).":";
 			?>
@@ -301,12 +301,12 @@ if (get_option('oer_metadata_firstload')=="")
             <div class="oer_fld">
             	<?php $oer_mediatype = strtolower(get_post_meta($post->ID, 'oer_mediatype', true)); ?>
                 <select name="oer_mediatype">
-			<option value="website" <?php if($oer_mediatype == 'website'){echo 'selected="selected"';}?>><?php _e("Website", OER_SLUG); ?></option>
-                       <option value="audio" <?php if($oer_mediatype == 'audio'){echo 'selected="selected"';}?>><?php _e("Audio", OER_SLUG); ?></option>
-                       <option value="document" <?php if($oer_mediatype == 'document'){echo 'selected="selected"';}?>><?php _e("Document", OER_SLUG); ?></option>
-                       <option value="image" <?php if($oer_mediatype == 'image'){echo 'selected="selected"';}?>><?php _e("Image", OER_SLUG); ?></option>
-                       <option value="video" <?php if($oer_mediatype == 'video'){echo 'selected="selected"';}?>><?php _e("Video", OER_SLUG); ?></option>
-                       <option value="other" <?php if($oer_mediatype == 'other'){echo 'selected="selected"';}?>><?php _e("Other", OER_SLUG); ?></option>
+			<option value="website" <?php if($oer_mediatype == 'website'){echo 'selected="selected"';}?>><?php esc_html_e("Website", OER_SLUG); ?></option>
+                       <option value="audio" <?php if($oer_mediatype == 'audio'){echo 'selected="selected"';}?>><?php esc_html_e("Audio", OER_SLUG); ?></option>
+                       <option value="document" <?php if($oer_mediatype == 'document'){echo 'selected="selected"';}?>><?php esc_html_e("Document", OER_SLUG); ?></option>
+                       <option value="image" <?php if($oer_mediatype == 'image'){echo 'selected="selected"';}?>><?php esc_html_e("Image", OER_SLUG); ?></option>
+                       <option value="video" <?php if($oer_mediatype == 'video'){echo 'selected="selected"';}?>><?php esc_html_e("Video", OER_SLUG); ?></option>
+                       <option value="other" <?php if($oer_mediatype == 'other'){echo 'selected="selected"';}?>><?php esc_html_e("Other", OER_SLUG); ?></option>
                 </select>
             </div>
         </div>
@@ -324,7 +324,7 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Learning Resource Type", OER_SLUG).":";
+				esc_html_e("Learning Resource Type", OER_SLUG).":";
 			else
 				echo __(get_option('oer_lrtype_label'), OER_SLUG).":";
 			?>
@@ -333,18 +333,18 @@ if (get_option('oer_metadata_firstload')=="")
             	<?php $oer_lrtype = strtolower(get_post_meta($post->ID, 'oer_lrtype', true)); ?>
                 <select name="oer_lrtype">
 					<option value=""></option>
-					<option value="article" <?php if($oer_lrtype == 'article'){echo 'selected="selected"';}?>><?php _e("Article/Information", OER_SLUG); ?></option>
-					<option value="website" <?php if($oer_lrtype == 'website'){echo 'selected="selected"';}?>><?php _e("Assessment", OER_SLUG); ?></option>
-					<option value="audio" <?php if($oer_lrtype == 'audio'){echo 'selected="selected"';}?>><?php _e("Audio", OER_SLUG); ?></option>
-					<option value="calculator" <?php if($oer_lrtype == 'calculator'){echo 'selected="selected"';}?>><?php _e("Calculator", OER_SLUG); ?></option>
-					<option value="demonstration" <?php if($oer_lrtype == 'demonstration'){echo 'selected="selected"';}?>><?php _e("Demonstration", OER_SLUG); ?></option>
-					<option value="game" <?php if($oer_lrtype == 'game'){echo 'selected="selected"';}?>><?php _e("Game", OER_SLUG); ?></option>
-					<option value="interview" <?php if($oer_lrtype == 'interview'){echo 'selected="selected"';}?>><?php _e("Interview", OER_SLUG); ?></option>
-					<option value="lecture" <?php if($oer_lrtype == 'lecture'){echo 'selected="selected"';}?>><?php _e("Lecture", OER_SLUG); ?></option>
-					<option value="lesson plan" <?php if($oer_lrtype == 'lesson plan'){echo 'selected="selected"';}?>><?php _e("Lesson Plan", OER_SLUG); ?></option>
-					<option value="simulation" <?php if($oer_lrtype == 'simulation'){echo 'selected="selected"';}?>><?php _e("Simulation", OER_SLUG); ?></option>
-					<option value="presentation" <?php if($oer_lrtype == 'presentation'){echo 'selected="selected"';}?>><?php _e("Presentation", OER_SLUG); ?></option>
-					<option value="other" <?php if($oer_lrtype == 'other'){echo 'selected="selected"';}?>><?php _e("Learning Resource Type:", OER_SLUG); ?>Other</option>
+					<option value="article" <?php if($oer_lrtype == 'article'){echo 'selected="selected"';}?>><?php esc_html_e("Article/Information", OER_SLUG); ?></option>
+					<option value="website" <?php if($oer_lrtype == 'website'){echo 'selected="selected"';}?>><?php esc_html_e("Assessment", OER_SLUG); ?></option>
+					<option value="audio" <?php if($oer_lrtype == 'audio'){echo 'selected="selected"';}?>><?php esc_html_e("Audio", OER_SLUG); ?></option>
+					<option value="calculator" <?php if($oer_lrtype == 'calculator'){echo 'selected="selected"';}?>><?php esc_html_e("Calculator", OER_SLUG); ?></option>
+					<option value="demonstration" <?php if($oer_lrtype == 'demonstration'){echo 'selected="selected"';}?>><?php esc_html_e("Demonstration", OER_SLUG); ?></option>
+					<option value="game" <?php if($oer_lrtype == 'game'){echo 'selected="selected"';}?>><?php esc_html_e("Game", OER_SLUG); ?></option>
+					<option value="interview" <?php if($oer_lrtype == 'interview'){echo 'selected="selected"';}?>><?php esc_html_e("Interview", OER_SLUG); ?></option>
+					<option value="lecture" <?php if($oer_lrtype == 'lecture'){echo 'selected="selected"';}?>><?php esc_html_e("Lecture", OER_SLUG); ?></option>
+					<option value="lesson plan" <?php if($oer_lrtype == 'lesson plan'){echo 'selected="selected"';}?>><?php esc_html_e("Lesson Plan", OER_SLUG); ?></option>
+					<option value="simulation" <?php if($oer_lrtype == 'simulation'){echo 'selected="selected"';}?>><?php esc_html_e("Simulation", OER_SLUG); ?></option>
+					<option value="presentation" <?php if($oer_lrtype == 'presentation'){echo 'selected="selected"';}?>><?php esc_html_e("Presentation", OER_SLUG); ?></option>
+					<option value="other" <?php if($oer_lrtype == 'other'){echo 'selected="selected"';}?>><?php esc_html_e("Learning Resource Type:", OER_SLUG); ?>Other</option>
                 </select>
             </div>
         </div>
@@ -362,7 +362,7 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Interactivity", OER_SLUG).":";
+				esc_html_e("Interactivity", OER_SLUG).":";
 			else
 				echo __(get_option('oer_interactivity_label'),OER_SLUG).":";
 			?>
@@ -371,14 +371,14 @@ if (get_option('oer_metadata_firstload')=="")
             	<?php $oer_interactivity = strtolower(get_post_meta($post->ID, 'oer_interactivity', true)); ?>
                 <select name="oer_interactivity">
 			<option value=""></option>
-			<option value="interactive" <?php if($oer_interactivity == 'interactive'){echo 'selected="selected"';}?>><?php _e("Interactive", OER_SLUG); ?></option>
-                       <option value="passive" <?php if($oer_interactivity == 'passive'){echo 'selected="selected"';}?>><?php _e("Passive", OER_SLUG); ?></option>
-                       <option value="social" <?php if($oer_interactivity == 'social'){echo 'selected="selected"';}?>><?php _e("Social", OER_SLUG); ?></option>
-                       <option value="prgorammatic" <?php if($oer_interactivity == 'prgorammatic'){echo 'selected="selected"';}?>><?php _e("Programmatic", OER_SLUG); ?></option>
-                       <option value="one-on-one" <?php if($oer_interactivity == 'one-on-one'){echo 'selected="selected"';}?>><?php _e("One-on-One", OER_SLUG); ?></option>
-                       <option value="async" <?php if($oer_interactivity == 'async'){echo 'selected="selected"';}?>><?php _e("Async", OER_SLUG); ?></option>
-                       <option value="sync" <?php if($oer_interactivity == 'sync'){echo 'selected="selected"';}?>><?php _e("Sync", OER_SLUG); ?></option>
-                       <option value="group" <?php if($oer_interactivity == 'group'){echo 'selected="selected"';}?>><?php _e("Group", OER_SLUG); ?></option>
+			<option value="interactive" <?php if($oer_interactivity == 'interactive'){echo 'selected="selected"';}?>><?php esc_html_e("Interactive", OER_SLUG); ?></option>
+                       <option value="passive" <?php if($oer_interactivity == 'passive'){echo 'selected="selected"';}?>><?php esc_html_e("Passive", OER_SLUG); ?></option>
+                       <option value="social" <?php if($oer_interactivity == 'social'){echo 'selected="selected"';}?>><?php esc_html_e("Social", OER_SLUG); ?></option>
+                       <option value="prgorammatic" <?php if($oer_interactivity == 'prgorammatic'){echo 'selected="selected"';}?>><?php esc_html_e("Programmatic", OER_SLUG); ?></option>
+                       <option value="one-on-one" <?php if($oer_interactivity == 'one-on-one'){echo 'selected="selected"';}?>><?php esc_html_e("One-on-One", OER_SLUG); ?></option>
+                       <option value="async" <?php if($oer_interactivity == 'async'){echo 'selected="selected"';}?>><?php esc_html_e("Async", OER_SLUG); ?></option>
+                       <option value="sync" <?php if($oer_interactivity == 'sync'){echo 'selected="selected"';}?>><?php esc_html_e("Sync", OER_SLUG); ?></option>
+                       <option value="group" <?php if($oer_interactivity == 'group'){echo 'selected="selected"';}?>><?php esc_html_e("Group", OER_SLUG); ?></option>
                 </select>
             </div>
         </div>
@@ -396,7 +396,7 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Use Rights URL:", OER_SLUG);
+				esc_html_e("Use Rights URL:", OER_SLUG);
 			else
 				echo __(get_option('oer_userightsurl_label'),OER_SLUG).":";
 			?>
@@ -420,7 +420,7 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Is based on URL:", OER_SLUG);
+				esc_html_e("Is based on URL:", OER_SLUG);
 			else
 				echo __(get_option('oer_isbasedonurl_label'),OER_SLUG).":";
 			?>
@@ -445,7 +445,7 @@ if (get_option('oer_metadata_firstload')=="")
 			<div class="oer_txt">
 				<?php
 				if (!$label_set)
-					_e("Standards", OER_SLUG).":";
+					esc_html_e("Standards", OER_SLUG).":";
 				else
 					echo __(get_option('oer_standard_label'),OER_SLUG).":";
 				?>
@@ -457,12 +457,12 @@ if (get_option('oer_metadata_firstload')=="")
 				foreach($standards as $standard){
 					if ($standard!=="") {
 						$std_name = oer_get_standard_label($standard);
-						echo "<span class='standard-label'>".$std_name."<a href='javascript:void(0)' class='remove-standard' data-id='".$standard."'><span class='dashicons dashicons-no-alt'></span></a></span>";
+						echo "<span class='standard-label'>".esc_html($std_name)."<a href='javascript:void(0)' class='remove-standard' data-id='".esc_attr($standard)."'><span class='dashicons dashicons-no-alt'></span></a></span>";
 					}
 				}
 				?>
-				<input type="hidden" name="oer_standard" value="<?php echo $oStandard; ?>" />
-				<button id="add-new-standard" data-toggle="modal" class="ui-button components-button is-button is-default button button-primary"><?php _e('Add Standards',OER_SLUG); ?></button>
+				<input type="hidden" name="oer_standard" value="<?php echo esc_attr($oStandard); ?>" />
+				<button id="add-new-standard" data-toggle="modal" class="ui-button components-button is-button is-default button button-primary"><?php esc_html_e('Add Standards',OER_SLUG); ?></button>
 			</div>
 	
 		</div>
@@ -470,7 +470,7 @@ if (get_option('oer_metadata_firstload')=="")
 	} ?>
 	
         <div class="oer_snglfld oer_hdngsngl">
-		<?php _e("Author Information", OER_SLUG).":"; ?>
+		<?php esc_html_e("Author Information", OER_SLUG).":"; ?>
         </div>
 
         <?php
@@ -485,7 +485,7 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Type", OER_SLUG).":";
+				esc_html_e("Type", OER_SLUG).":";
 			else
 				echo __(get_option('oer_authortype_label'),OER_SLUG).":";
 			?>
@@ -493,8 +493,8 @@ if (get_option('oer_metadata_firstload')=="")
             <div class="oer_fld">
             	<?php $oer_authortype = strtolower(get_post_meta($post->ID, 'oer_authortype', true));?>
                 <select name="oer_authortype">
-                	<option value="person" <?php if($oer_authortype == 'person'){echo 'selected="selected"';}?>><?php _e("Person", OER_SLUG); ?></option>
-                    <option value="organization" <?php if($oer_authortype == 'organization'){echo 'selected="selected"';}?>><?php _e("Organization", OER_SLUG); ?></option>
+                	<option value="person" <?php if($oer_authortype == 'person'){echo 'selected="selected"';}?>><?php esc_html_e("Person", OER_SLUG); ?></option>
+                    <option value="organization" <?php if($oer_authortype == 'organization'){echo 'selected="selected"';}?>><?php esc_html_e("Organization", OER_SLUG); ?></option>
                 </select>
             </div>
         </div>
@@ -512,7 +512,7 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Name", OER_SLUG).":";
+				esc_html_e("Name", OER_SLUG).":";
 			else
 				echo __(get_option('oer_authorname_label'),OER_SLUG).":";
 			?>
@@ -536,7 +536,7 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("URL", OER_SLUG).":";
+				esc_html_e("URL", OER_SLUG).":";
 			else
 				echo __(get_option('oer_authorurl_label'),OER_SLUG).":";
 			?>
@@ -560,7 +560,7 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Email Address", OER_SLUG).":";
+				esc_html_e("Email Address", OER_SLUG).":";
 			else
 				echo __(get_option('oer_authoremail_label'),OER_SLUG).":";
 			?>
@@ -586,7 +586,7 @@ if (get_option('oer_metadata_firstload')=="")
                 </div>
 
                 <div class="oer_snglfld oer_hdngsngl">
-			<?php _e("Author Information", OER_SLUG).":"; ?>
+			<?php esc_html_e("Author Information", OER_SLUG).":"; ?>
                 </div>
 
                 <?php
@@ -601,7 +601,7 @@ if (get_option('oer_metadata_firstload')=="")
                     <div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Type", OER_SLUG).":";
+				esc_html_e("Type", OER_SLUG).":";
 			else
 				echo __(get_option('oer_authortype_label'),OER_SLUG).":";
 			?>
@@ -609,8 +609,8 @@ if (get_option('oer_metadata_firstload')=="")
                     <div class="oer_fld">
                         <?php $oer_authortype2 = get_post_meta($post->ID, 'oer_authortype2', true);?>
                         <select name="oer_authortype2">
-                            <option value="person" <?php if($oer_authortype2 == 'person'){echo 'selected="selected"';}?>><?php _e("Person", OER_SLUG); ?></option>
-                            <option value="organization" <?php if($oer_authortype2 == 'organization'){echo 'selected="selected"';}?>><?php _e("Organization", OER_SLUG); ?></option>
+                            <option value="person" <?php if($oer_authortype2 == 'person'){echo 'selected="selected"';}?>><?php esc_html_e("Person", OER_SLUG); ?></option>
+                            <option value="organization" <?php if($oer_authortype2 == 'organization'){echo 'selected="selected"';}?>><?php esc_html_e("Organization", OER_SLUG); ?></option>
                         </select>
                     </div>
                 </div>
@@ -628,7 +628,7 @@ if (get_option('oer_metadata_firstload')=="")
                     <div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Name", OER_SLUG).":";
+				esc_html_e("Name", OER_SLUG).":";
 			else
 				echo __(get_option('oer_authorname_label'), OER_SLUG).":";
 			?>
@@ -652,7 +652,7 @@ if (get_option('oer_metadata_firstload')=="")
                     <div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("URL", OER_SLUG).":";
+				esc_html_e("URL", OER_SLUG).":";
 			else
 				echo __(get_option('oer_authorurl_label'),OER_SLUG).":";
 			?>
@@ -676,7 +676,7 @@ if (get_option('oer_metadata_firstload')=="")
                     <div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Email Address", OER_SLUG).":";
+				esc_html_e("Email Address", OER_SLUG).":";
 			else
 				echo __(get_option('oer_authoremail_label'),OER_SLUG).":";
 			?>
@@ -706,14 +706,14 @@ if (get_option('oer_metadata_firstload')=="")
 				$authoremail_label = 'data-authoremail-label="'.get_option('oer_authoremail_label').'"';;
 		?>
         	<div class="oer_snglfld oer_hdngsngl">
-                <input type="button" class="button button-primary" value="<?php _e("Add Author", OER_SLUG); ?>" onClick="oer_addauthor(this);" <?php echo $authorurl_label; ?> <?php echo $authorname_label; ?> <?php echo $authortype_label; ?> <?php echo $authoremail_label; ?> data-url="<?php echo OER_URL.'/images/close.png'?>" />
+                <input type="button" class="button button-primary" value="<?php esc_html_e("Add Author", OER_SLUG); ?>" onClick="oer_addauthor(this);" <?php echo esc_attr($authorurl_label); ?> <?php echo esc_attr($authorname_label); ?> <?php echo esc_attr($authortype_label); ?> <?php echo esc_attr($authoremail_label); ?> data-url="<?php echo esc_url(OER_URL.'/images/close.png'); ?>" />
             </div>
         <?php
 		}
 		?>
 
         <div class="oer_snglfld oer_hdngsngl">
-		<?php _e("Publisher Information", OER_SLUG).":"; ?>
+		<?php esc_html_e("Publisher Information", OER_SLUG).":"; ?>
         </div>
 
         <?php
@@ -728,7 +728,7 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Name", OER_SLUG).":";
+				esc_html_e("Name", OER_SLUG).":";
 			else
 				echo __(get_option('oer_publishername_label'),OER_SLUG).":";
 			?>
@@ -752,7 +752,7 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("URL", OER_SLUG).":";
+				esc_html_e("URL", OER_SLUG).":";
 			else
 				echo __(get_option('oer_publisherurl_label'),OER_SLUG).":";
 			?>
@@ -776,7 +776,7 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Email Address", OER_SLUG).":";
+				esc_html_e("Email Address", OER_SLUG).":";
 			else
 				echo __(get_option('oer_publisheremail_label'),OER_SLUG).":";
 			?>
@@ -789,7 +789,7 @@ if (get_option('oer_metadata_firstload')=="")
 	<?php } ?>
 	
 	<div class="oer_snglfld oer_hdngsngl">
-		<?php _e("Repository Information", OER_SLUG).":"; ?>
+		<?php esc_html_e("Repository Information", OER_SLUG).":"; ?>
         </div>
 
         <?php
@@ -804,7 +804,7 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("External Repository", OER_SLUG).":";
+				esc_html_e("External Repository", OER_SLUG).":";
 			else
 				echo __(get_option('oer_external_repository_label'),OER_SLUG).":";
 			?>
@@ -828,7 +828,7 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Repository Record URL", OER_SLUG).":";
+				esc_html_e("Repository Record URL", OER_SLUG).":";
 			else
 				echo __(get_option('oer_repository_recordurl_label'),OER_SLUG).":";
 			?>
@@ -852,7 +852,7 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Citation", OER_SLUG).":";
+				esc_html_e("Citation", OER_SLUG).":";
 			else
 				echo __(get_option('oer_citation_label'),OER_SLUG).":";
 			?>
@@ -876,7 +876,7 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Sensitive Material Warning", OER_SLUG).":";
+				esc_html_e("Sensitive Material Warning", OER_SLUG).":";
 			else
 				echo __(get_option('oer_sensitive_material_label'),OER_SLUG).":";
 			?>
@@ -900,7 +900,7 @@ if (get_option('oer_metadata_firstload')=="")
         	<div class="oer_txt">
 			<?php
 			if (!$label_set)
-				_e("Transcription", OER_SLUG).":";
+				esc_html_e("Transcription", OER_SLUG).":";
 			else
 				echo __(get_option('oer_transcription_label'),OER_SLUG).":";
 			?>
@@ -925,7 +925,7 @@ if (get_option('oer_metadata_firstload')=="")
 				<div class="oer_txt">
 					<?php
 					if (!$label_set)
-						_e("Related Resources:", OER_SLUG);
+						esc_html_e("Related Resources:", OER_SLUG);
 					else
 						echo __(get_option('oer_related_resource_label'),OER_SLUG).":";
 					?>
@@ -940,14 +940,14 @@ if (get_option('oer_metadata_firstload')=="")
 											foreach ($_tmps as $_tmp){
 												$_res = get_post($_tmp);
 												?>
-												<span class="standard-label"><?php echo $_res->post_title; ?><a href="javascript:void(0)" class="remove-related_resource" data-id="<?php echo $_res->ID; ?>"><span class="dashicons dashicons-no-alt"></span></a></span>
+												<span class="standard-label"><?php echo esc_html($_res->post_title); ?><a href="javascript:void(0)" class="remove-related_resource" data-id="<?php echo esc_attr($_res->ID); ?>"><span class="dashicons dashicons-no-alt"></span></a></span>
 												<?php
 											}
 										}
 									?>
 								</div>
-								<input type="hidden" name="oer_related_resource" value="<?php echo $oer_related_resource ?>"/>
-								<button id="add-new-related-resource" data-toggle="modal" class="ui-button components-button is-button is-default button button-primary"><?php _e('Add Related Resources',OER_SLUG); ?></button>
+								<input type="hidden" name="oer_related_resource" value="<?php echo esc_attr($oer_related_resource); ?>"/>
+								<button id="add-new-related-resource" data-toggle="modal" class="ui-button components-button is-button is-default button button-primary"><?php esc_html_e('Add Related Resources',OER_SLUG); ?></button>
 						</div>
 				</div>
 			</div>
