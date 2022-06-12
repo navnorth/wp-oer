@@ -1056,7 +1056,7 @@ function oer_importResources($default=false) {
 
 					if ($_FILES["resource_import"]["error"] > 0)
 					{
-						$message = "Error: " . $_FILES["resource_import"]["error"] . "<br>";
+						$message = "Error: " . sanitize_text_field($_FILES["resource_import"]["error"]) . "<br>";
 						$type = "error";
 					}
 					else
@@ -1065,9 +1065,9 @@ function oer_importResources($default=false) {
 						if (!(is_dir(OER_PATH."upload"))){
 							mkdir(OER_PATH."upload",0777);
 						}
-						"Upload: " . $_FILES["resource_import"]["name"] . "<br>";
-						"Type: " . $_FILES["resource_import"]["type"] . "<br>";
-						"Size: " . ($_FILES["resource_import"]["size"] / 1024) . " kB<br>";
+						"Upload: " . sanitize_file_name($_FILES["resource_import"]["name"]) . "<br>";
+						"Type: " . sanitize_text_field($_FILES["resource_import"]["type"]) . "<br>";
+						"Size: " . sanitize_text_field(($_FILES["resource_import"]["size"] / 1024)) . " kB<br>";
 						"stored in:" .move_uploaded_file($_FILES["resource_import"]["tmp_name"],OER_PATH."upload/".$filename) ;
 					}
 					$excl_obj->read(OER_PATH."upload/".$filename);
@@ -1542,7 +1542,7 @@ function oer_verifyResource($resource_title){
 
 // Import LR Resources
 function oer_importLRResources(){
-	$lr_url = esc_url_raw($_POST['lr_import']);
+	$lr_url = sanitize_url($_POST['lr_import']);
 	
 	$resources = null;
 	$lr_resources = array();
@@ -1751,15 +1751,15 @@ function oer_importSubjectAreas($default=false) {
 
 				if ($_FILES["bulk_import"]["error"] > 0)
 				{
-					$message = "Error: " . $_FILES["bulk_import"]["error"] . "<br>";
+					$message = "Error: " . sanitize_text_field($_FILES["bulk_import"]["error"]) . "<br>";
 					$type = "error";
 				}
 				else
 				{
 					//Upload File
-					"Upload: " . $_FILES["bulk_import"]["name"] . "<br>";
-					"Type: " . $_FILES["bulk_import"]["type"] . "<br>";
-					"Size: " . ($_FILES["bulk_import"]["size"] / 1024) . " kB<br>";
+					"Upload: " . sanitize_file_name($_FILES["bulk_import"]["name"]) . "<br>";
+					"Type: " . sanitize_text_field($_FILES["bulk_import"]["type"]) . "<br>";
+					"Size: " . sanitize_text_field(($_FILES["bulk_import"]["size"] / 1024)) . " kB<br>";
 					"stored in:" .move_uploaded_file($_FILES["bulk_import"]["tmp_name"],OER_PATH."upload/".$filename) ;
 				}
 
