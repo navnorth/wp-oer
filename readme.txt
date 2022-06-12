@@ -4,7 +4,7 @@ Tags: OER, Open Educational Resources, Education, Teaching, Learning
 Requires at least: 4.4
 Tested up to: 6.0
 Requires PHP: 7.0
-Stable tag: 0.8.8
+Stable tag: 0.8.9
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -41,6 +41,11 @@ No frequently asked questions.
 3. Display educational resources on your WordPress website!
 
 == Changelog ==
+= 0.8.9 =
+* Upgrade Bootstrap library to 5.1.3
+* Applied proper sanitizing of server variables when saving resources and subject areas 
+* Replaced usage of $_SERVER['DOCUMENT_ROOT'] variable with ABSPATH
+
 = 0.8.8 =
 * Replaced usage of cURL and file_get_contents with HTTP API
 * Changed SLL embed code to enqueue external javascript instead of putting it inline
