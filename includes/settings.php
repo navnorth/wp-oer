@@ -347,9 +347,9 @@ function oer_show_metadata_settings() {
 							
 						?>
 						<tr>
-							<td><?php echo $key; ?></td>
-							<td><input type="text" name="<?php echo $key."_label"; ?>" placeholder="<?php echo oer_get_meta_label($key); ?>" value="<?php echo $label; ?>" /></td>
-							<td><input type="checkbox" name="<?php echo $key."_enabled"; ?>" value="1" <?php checked($enabled,"1"); ?>/></td>
+							<td><?php echo esc_html($key); ?></td>
+							<td><input type="text" name="<?php echo esc_attr($key."_label"); ?>" placeholder="<?php echo esc_attr(oer_get_meta_label($key)); ?>" value="<?php echo esc_attr($label); ?>" /></td>
+							<td><input type="checkbox" name="<?php echo esc_attr($key."_enabled"); ?>" value="1" <?php checked($enabled,"1"); ?>/></td>
 						</tr>
 						<?php 	}
 					} ?>
