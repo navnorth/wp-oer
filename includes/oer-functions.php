@@ -981,12 +981,13 @@ function oer_HTTPRequest($url){
 
 /** Resize Image **/
 function oer_resize_image($orig_img_url, $width, $height, $crop = false) {
+	$root_path = oer_get_root_path();
 	$new_image_url = $orig_img_url;
 
 	$suffix = "{$width}x{$height}";
 
 	$img_path = $new_img_path = parse_url($orig_img_url);
-	$img_path = $_SERVER['DOCUMENT_ROOT'] . $img_path['path'];
+	$img_path = sanitize_url($root_path . $img_path['path']);
 	
 	if (!empty($img_path)) {
 		//Resize Image using WP_Image_Editor class
@@ -1007,7 +1008,7 @@ function oer_resize_image($orig_img_url, $width, $height, $crop = false) {
 			$new_port = ($new_img_path['port'])?':'.$new_img_path['port']:'';
 
 			//new image url
-			$new_image_url = str_replace($_SERVER['DOCUMENT_ROOT'], "{$new_img_path['scheme']}://{$new_img_path['host']}{$new_port}", $dest_filename);
+			$new_image_url = str_replace($root_path, "{$new_img_path['scheme']}://{$new_img_path['host']}{$new_port}", $dest_filename);
 
 			if (!file_exists($dest_filename)) {
 				//save new resize image to file

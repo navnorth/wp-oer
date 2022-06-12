@@ -59,6 +59,25 @@ if($rsltdata['parent'] != 0)
 
 // Checks if subject area title is set to hide 
 $hide_title = get_option('oer_hide_subject_area_title');
+
+$site_path = OER_SITE_PATH;
+$spath = explode("/",OER_SITE_PATH);
+$site_dir = ($spath[count($spath)-1]=="")?$spath[count($spath)-2]:$spath[count($spath)];
+$site_dir_path = "/".$site_dir."/";
+$image_path = "";
+
+$root_path = $site_path;
+
+// get root path
+$rpos = strrpos($site_path,"/".$site_dir);
+if ($rpos!==false)
+	$root_path = substr_replace($site_path, "", $rpos, strlen("/".$site_dir));
+
+$rpos = strrpos($root_path,"/");
+if ($rpos==strlen($root_path)-1){
+	$root_path = substr_replace($root_path, "", $rpos, strlen("/"));
+}
+
 ?>
 <div id="oer-content">
 <div class="oer-cntnr row">
@@ -78,6 +97,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 		<div class="oer-pgbrdcrums">
 			<ul>
 				<?php
+					$new_image_url = "";
 					$strcat = oer_get_custom_category_parents($term_id, "resource-subject-area" , FALSE, ':', TRUE);
                                         
 					if(strpos($strcat,':'))
@@ -88,14 +108,22 @@ $hide_title = get_option('oer_hide_subject_area_title');
 					$parent = $top_cat[0];
 					
 					$catobj = get_term_by( 'slug' , $parent , 'resource-subject-area' );
-                                        
-					$getimage = $wpdb->get_results( $wpdb->prepare("SELECT * FROM ".$wpdb->prefix.'postmeta'."  WHERE meta_key='category_image' AND meta_value=%s" , $catobj->term_id ));
+                    
+					//$getimage = $wpdb->get_results( $wpdb->prepare("SELECT * FROM ".$wpdb->prefix.'postmeta'."  WHERE meta_key='category_image' AND meta_value=%s" , $catobj->term_id ));
+					$getimage = $wpdb->get_results( $wpdb->prepare("SELECT * FROM ".$wpdb->prefix.'postmeta'."  WHERE meta_key='_wp_attached_file' AND post_id=%s" , $catobj->term_id ));
+
 					if(!empty($getimage))
 					{
 						$attach_icn = get_post($getimage[0]->post_id);
-						
 						$img_path = $new_img_path = parse_url($attach_icn->guid);
-						$img_path = esc_url($_SERVER['DOCUMENT_ROOT'] . $img_path['path']);
+						$image_path = $img_path['path'];
+						$pos = strpos($image_path,$site_dir_path);
+
+						if ($pos==0){
+							$image_path = substr_replace($image_path, "", $pos, strlen($site_dir_path));
+						}
+						$img_path = sanitize_url($site_path . $image_path);
+						
 						//Resize Image using WP_Image_Editor
 						$image_editor = wp_get_image_editor($img_path);
 						if ( !is_wp_error($image_editor) ) {
@@ -109,12 +137,12 @@ $hide_title = get_option('oer_hide_subject_area_title');
 							$name = wp_basename( $img_path, ".$ext" );
 							$dest_file_name = "{$dir}/{$name}-{$suffix}.{$ext}";
 							$new_port = ($new_img_path['port']==80)?'':':'.$new_img_path['port'];
-							$new_image_url = esc_url(str_replace($_SERVER['DOCUMENT_ROOT'], "{$new_img_path['scheme']}://{$new_img_path['host']}{$new_port}", $dest_file_name));
+							$new_image_url = sanitize_url(str_replace($root_path, "{$new_img_path['scheme']}://{$new_img_path['host']}{$new_port}", $dest_file_name));
 							
 							if ( !file_exists($dest_file_name) ){
 								$image_file = $image_editor->save($dest_file_name);
 							}
-						}
+						} 
 						echo '<li><img src="'.esc_url($new_image_url).'" /></li>';
 					}
 					else
@@ -232,7 +260,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 		if ( ! is_wp_error( $child_subjects ) ) {
 			foreach ( $child_subjects as $subject ) {
 				if ($subject->category_count>0)
-					echo '<span><a href="'.esc_url(get_term_link($subject)).'" class="button">'.ucwords (esc_html($subject->name)).'</a></span>';
+					echo '<span><a href="'.esc_url(get_term_link($subject)).'" class="button">'.ucwords(esc_html($subject->name)).'</a></span>';
 			}
 		}
 		?>
@@ -408,7 +436,15 @@ $hide_title = get_option('oer_hide_subject_area_title');
 						$content = substr($content, 0, 180).$ellipsis;
 						
 						$img_path = $new_img_path = parse_url($img_url[0]);
-						$img_path = esc_url($_SERVER['DOCUMENT_ROOT'] . $img_path['path']);
+						$image_path = $img_path['path'];
+
+						$pos = strpos($image_path,$site_dir_path);
+						if ($pos==0){
+							$image_path = substr_replace($image_path, "", $pos, strlen($site_dir_path));
+						}
+
+						$img_path = sanitize_url($site_path . $image_path);
+						
 						if(!empty($img_url))
 						{
 							//Resize Image using WP_Image_Editor
@@ -424,7 +460,7 @@ $hide_title = get_option('oer_hide_subject_area_title');
 								$name = wp_basename( $img_path, ".$ext" );
 								$dest_file_name = "{$dir}/{$name}-{$suffix}.{$ext}";
 								$new_port = ($new_img_path['port']==80)?'':':'.$new_img_path['port'];
-								$new_image_url = esc_url(str_replace($_SERVER['DOCUMENT_ROOT'], "{$new_img_path['scheme']}://{$new_img_path['host']}{$new_port}", $dest_file_name));
+								$new_image_url = sanitize_url(str_replace($root_path, "{$new_img_path['scheme']}://{$new_img_path['host']}{$new_port}", $dest_file_name));
 								
 								if ( !file_exists($dest_file_name) ){
 									$image_file = $image_editor->save($dest_file_name);
@@ -510,10 +546,10 @@ $hide_title = get_option('oer_hide_subject_area_title');
 					<div class='oer-snglrsrc'><?php sprintf(__("There are no resources available for %s", OER_SLUG), $term); ?></div>
 					<?php
 				}
+
 				//Show load more button
 				if ($resource_count>$items_per_page & $paged<(int)$max_pages) {
-					$base_url = esc_url("http" . (($_SERVER['SERVER_PORT'] == 443) ? "s://" : "://") . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-					
+					$base_url = get_term_link($term_id);
 					if (isset($oer_session['resource_sort']))
 						$_rsort = " data-sort='".(int)$oer_session['resource_sort']."'";
 					

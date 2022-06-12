@@ -31,15 +31,15 @@ function oer_load_edit_php_action()
 {
   if(isset($_GET['post_type']))
   {
-	  if ($_GET['post_type'] == 'page')
+	  if (sanitize_text_field($_GET['post_type']) == 'page')
 	  {
 		add_filter('posts_where', 'oer_page_where_filter');
 	  }
-	  elseif($_GET["post_type"] == 'post')
+	  elseif(sanitize_text_field($_GET["post_type"]) == 'post')
 	  {
 		add_filter('posts_where', 'oer_posts_where_filter');
 	  }
-	  elseif($_GET["post_type"] == 'resource')
+	  elseif(sanitize_text_field($_GET["post_type"]) == 'resource')
 	  {
 		add_filter('posts_where', 'oer_resource_where_filter');
 	  }
@@ -105,7 +105,7 @@ add_action('admin_enqueue_scripts', 'oer_backside_scripts');
 function oer_backside_scripts($hook)
 {
     global $post;
-    if ((isset($_GET['post_type']) && $_GET['post_type']=='resource') || (isset($post->post_type) && $post->post_type=='resource')) {
+    if ((isset($_GET['post_type']) && sanitize_text_field($_GET['post_type'])=='resource') || (isset($post->post_type) && $post->post_type=='resource')) {
       wp_enqueue_style('jqueryui-styles', OER_URL.'css/jquery-ui.css');
       wp_enqueue_style('back-styles', OER_URL.'css/back_styles.css');
       wp_enqueue_style( 'thickbox' );
@@ -394,7 +394,7 @@ function oer_save_customfields()
     if ($post) {
 	if($post->post_type == 'resource')
 	{
-	    if (isset($_GET['action']) && ($_GET['action']=="trash" || $_GET['action']=="untrash")){
+	    if (isset($_GET['action']) && (sanitize_text_field($_GET['action'])=="trash" || sanitize_text_field($_GET['action'])=="untrash")){
 		return; 
 	    }
 	    if (!isset($_POST['oer_metabox_nonce_field']) || !wp_verify_nonce( $_POST['oer_metabox_nonce_field'], 'oer_metabox_action' )) {
