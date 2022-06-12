@@ -63,39 +63,30 @@ if($rsltdata['parent'] != 0)
 	
 		<div class="oer-pgbrdcrums">
 			<ul>
-				<?php
-					$termid = get_term_by('name', $term, "resource-subject-area" );
-					$strcat = get_custom_category_parents($termid, "resource-subject-area" , FALSE, ':', TRUE);
-					if(strpos($strcat,':'))
-					{
-						$top_cat = split(':',$strcat);
-					}
-					$parent = $top_cat[0];
-					
-					$catobj = get_category_by_slug($parent);
-					$getimage = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->prefix.'postmeta'."  WHERE meta_key='category_image' AND meta_value=%s",$catobj->term_id));
-					if(!empty($getimage))
-					{
-						$attach_icn = get_post($getimage[0]->post_id);
-						$new_image_url = oer_resize_image( $attach_icn->guid , 32 , 32 , true );
-						echo '<li><img src="'. esc_url($new_image_url) .'" /></li>';
-					}
-					else
-					{
-						echo '<li></li>';
-					}
-					
-				?>
-				<li>
-					<?php
-					/*if(function_exists('yoast_breadcrumb'))
-					{
-						$breadcrumbs = yoast_breadcrumb("","",false);
-						echo ucwords ($breadcrumbs);
-					}*/ 
-					?>
-				</li>
-			</ul>	
+			<?php
+				$termid = get_term_by('name', $term, "resource-subject-area" );
+				$strcat = get_custom_category_parents($termid, "resource-subject-area" , FALSE, ':', TRUE);
+				if(strpos($strcat,':'))
+				{
+					$top_cat = split(':',$strcat);
+				}
+				$parent = $top_cat[0];
+				
+				$catobj = get_category_by_slug($parent);
+				$getimage = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->prefix.'postmeta'."  WHERE meta_key='category_image' AND meta_value=%s",$catobj->term_id));
+				if(!empty($getimage))
+				{
+					$attach_icn = get_post($getimage[0]->post_id);
+					$new_image_url = oer_resize_image( $attach_icn->guid , 32 , 32 , true );
+					echo '<li><img src="'. esc_url($new_image_url) .'" /></li>';
+				}
+				else
+				{
+					echo '<li></li>';
+				}
+				
+			?>
+			</ul>
 		</div> <!--Breadcrumbs-->
 	
 		<?php 

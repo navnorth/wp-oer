@@ -587,7 +587,22 @@ function oer_get_subject_resources($args, $ajax=false){
 
 function oer_ajax_get_subject_resources(){
     $allowed_tags = oer_allowed_html();
-    $resources = oer_get_subject_resources($_POST, true);
+
+    // Sanitize POST parameters
+    $params = array();
+    $params['action'] = sanitize_text_field($_POST['action']);
+    $attributes = $_POST['attributes'];
+    foreach($attributes as $attribute){
+        $attribute['displayCount'] = sanitize_text_field($attribute['displayCount']);
+        $attribute['selectedSubject'] = sanitize_text_field($attribute['selectedSubject']);
+        $attribute['sort'] = sanitize_text_field($attribute['sort']);
+        $attribute['isChanged'] = sanitize_text_field($attribute['isChanged']);
+        $attribute['blockId'] = sanitize_text_field($attribute['blockId']);
+        $attribute['firstLoad'] = sanitize_text_field($attribute['firstLoad']);
+    }
+    $params['attributes'] = $attributes;
+    
+    $resources = oer_get_subject_resources($params, true);
     echo wp_kses($resources,$allowed_tags);
     die();
 }

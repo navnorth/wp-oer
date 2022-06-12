@@ -186,7 +186,27 @@ function oer_resource_block_subjects($resource_id){
 
 function oer_ajax_display_resource_block(){
     $allowed_tags = oer_allowed_html();
-    $resource = oer_display_resource_block($_POST['params'], true);
+
+    // Sanitize POST parameters
+    $params = array();
+    $params['selectedResource'] = sanitize_text_field($_POST['params']['selectedResource']);
+    $params['alignment'] = sanitize_text_field($_POST['params']['alignment']);
+    $params['showThumbnail'] = sanitize_text_field($_POST['params']['showThumbnail']);
+    $params['showTitle'] = sanitize_text_field($_POST['params']['showTitle']);
+    $params['showDescription'] = sanitize_text_field($_POST['params']['showDescription']);
+    $params['showSubjects'] = sanitize_text_field($_POST['params']['showSubjects']);
+    $params['showGrades'] = sanitize_text_field($_POST['params']['showGrades']);
+    $params['withBorder'] = sanitize_text_field($_POST['params']['withBorder']);
+    $params['blockId'] = sanitize_text_field($_POST['params']['blockId']);
+    $params['firstLoad'] = sanitize_text_field($_POST['params']['firstLoad']);
+    $params['isChanged'] = sanitize_text_field($_POST['params']['isChanged']);
+    $params['resources'] = $_POST['params']['resources'];
+    array_walk($params['resources'], function(&$value, &$key){
+        $value['title'] = sanitize_text_field($value['title']);
+        $value['id'] = sanitize_text_field($value['id']);
+    });
+    
+    $resource = oer_display_resource_block($params, true);
     echo wp_kses($resource,$allowed_tags);
     die();
 }

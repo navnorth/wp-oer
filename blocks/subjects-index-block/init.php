@@ -112,7 +112,16 @@ function oer_display_subjects_index( $attributes, $ajax = false ){
 
 function wp_ajax_oer_display_subjects_index(){
 	$allowed_tags = oer_allowed_html();
-	$shortcode = oer_display_subjects_index($_POST, true);
+	
+	// Sanitize POST parameters
+	$params = array();
+	$params['action'] = sanitize_text_field($_POST['action']);
+	$params['size'] = sanitize_text_field($_POST['size']);
+	$params['columns'] = sanitize_text_field($_POST['columns']);
+	$params['showCount'] = sanitize_text_field($_POST['showCount']);
+	$params['showSublevels'] = sanitize_text_field($_POST['showSublevels']);
+
+	$shortcode = oer_display_subjects_index($params, true);
 	echo wp_kses($shortcode,$allowed_tags);
 	die();
 }

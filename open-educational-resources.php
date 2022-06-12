@@ -39,6 +39,7 @@ define( 'OER_FILE',__FILE__);
 define( 'OER_PLUGIN_NAME', 'WP OER Plugin' );
 define( 'OER_ADMIN_PLUGIN_NAME', 'WP OER Plugin');
 define( 'OER_VERSION', '0.8.8' );
+define( 'OER_SITE_PATH', ABSPATH );
 
 include_once(OER_PATH.'includes/oer-functions.php');
 include_once(OER_PATH.'includes/template-functions.php');
@@ -1373,6 +1374,7 @@ function oer_add_body_class($classes) {
 /* Ajax Callback */
 function oer_load_more_resources() {
 	global $wpdb, $wp_query;
+	$root_path = oer_get_root_path();
 
 	if (isset($_POST["post_var"])) {
 		$page_num = intval($_POST["post_var"]);
@@ -1419,7 +1421,7 @@ function oer_load_more_resources() {
 				$content = substr($content, 0, 180).$ellipsis;
 
 				$img_path = $new_img_path = parse_url($img_url[0]);
-				$img_path = $_SERVER['DOCUMENT_ROOT'] . $img_path['path'];
+				$img_path = sanitize_url($root_path . $img_path['path']);
 				if(!empty($img_url))
 				{
 					//Resize Image using WP_Image_Editor
@@ -1435,7 +1437,7 @@ function oer_load_more_resources() {
 						$name = wp_basename( $img_path, ".$ext" );
 						$dest_file_name = "{$dir}/{$name}-{$suffix}.{$ext}";
 						$new_port = ($new_img_path['port']==80)?'':':'.$new_img_path['port'];
-						$new_image_url = str_replace($_SERVER['DOCUMENT_ROOT'], "{$new_img_path['scheme']}://{$new_img_path['host']}{$new_port}", $dest_file_name);
+						$new_image_url = str_replace($root_path, "{$new_img_path['scheme']}://{$new_img_path['host']}{$new_port}", $dest_file_name);
 
 						if ( !file_exists($dest_file_name) ){
 							$image_file = $image_editor->save($dest_file_name);
@@ -1464,6 +1466,7 @@ add_action('wp_ajax_nopriv_load_more', 'oer_load_more_resources');
 /** Sort Resources **/
 function oer_sort_resources(){
 	global $wpdb, $oer_session;
+	$root_path = oer_get_root_path();
 
 	if (!isset($oer_session))
 		$oer_session = OER_WP_Session::get_instance();
@@ -1546,7 +1549,7 @@ function oer_sort_resources(){
 				$content = substr($content, 0, 180).$ellipsis;
 
 				$img_path = $new_img_path = parse_url($img_url[0]);
-				$img_path = $_SERVER['DOCUMENT_ROOT'] . $img_path['path'];
+				$img_path = sanitize_url($root_path . $img_path['path']);
 				if(!empty($img_url))
 				{
 					//Resize Image using WP_Image_Editor
@@ -1562,7 +1565,7 @@ function oer_sort_resources(){
 						$name = wp_basename( $img_path, ".$ext" );
 						$dest_file_name = "{$dir}/{$name}-{$suffix}.{$ext}";
 						$new_port = ($new_img_path['port']==80)?'':':'.$new_img_path['port'];
-						$new_image_url = str_replace($_SERVER['DOCUMENT_ROOT'], "{$new_img_path['scheme']}://{$new_img_path['host']}{$new_port}", $dest_file_name);
+						$new_image_url = str_replace($root_path, "{$new_img_path['scheme']}://{$new_img_path['host']}{$new_port}", $dest_file_name);
 
 						if ( !file_exists($dest_file_name) ){
 							$image_file = $image_editor->save($dest_file_name);
@@ -1914,7 +1917,7 @@ function oer_post_type_link( $post_link, $post, $leavename ) {
 	}
 
 	// %post_id%/attachment/%attachement_name%;
-	if ( isset( $_GET['post'] ) && $_GET['post'] != $post->ID ) {
+	if ( isset( $_GET['post'] ) && sanitize_text_field($_GET['post']) != $post->ID ) {
 		$parent_structure = trim( oer_get_permalink_structure( $post->post_type ), '/' );
 		$parent_dirs      = explode( '/', $parent_structure );
 		if ( is_array( $parent_dirs ) ) {
@@ -2496,4 +2499,26 @@ function oer_get_subject_details($resource, $field, $request){
 
 function oer_get_rest_resource_excerpt($resource, $field, $request) {
 	return wp_kses_post( wp_trim_words($resource['content']['raw'], 45) );
+}
+
+function oer_get_root_path() {
+	$site_path = OER_SITE_PATH;
+	$spath = explode("/",OER_SITE_PATH);
+	$site_dir = ($spath[count($spath)-1]=="")?$spath[count($spath)-2]:$spath[count($spath)];
+	$site_dir_path = "/".$site_dir."/";
+	$image_path = "";
+
+	$root_path = $site_path;
+
+	// get root path
+	$rpos = strrpos($site_path,"/".$site_dir);
+	if ($rpos!==false)
+		$root_path = substr_replace($site_path, "", $rpos, strlen("/".$site_dir));
+
+	$rpos = strrpos($root_path,"/");
+	if ($rpos==strlen($root_path)-1){
+		$root_path = substr_replace($root_path, "", $rpos, strlen("/"));
+	}
+
+	return $root_path;
 }
