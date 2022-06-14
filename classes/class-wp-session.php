@@ -73,7 +73,7 @@ final class OER_WP_Session extends OER_Recursive_ArrayAccess implements Iterator
 	 */
 	protected function __construct() {
 		if ( isset( $_COOKIE[WP_SESSION_COOKIE] ) ) {
-			$cookie = stripslashes( $_COOKIE[WP_SESSION_COOKIE] );
+			$cookie = sanitize_text_field(wp_unslash( $_COOKIE[WP_SESSION_COOKIE] ));
 			$cookie_crumbs = explode( '||', $cookie );
 
 			if( $this->is_valid_md5( $cookie_crumbs[0] ) ) {

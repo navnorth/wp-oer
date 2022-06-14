@@ -31,15 +31,15 @@ function oer_load_edit_php_action()
 {
   if(isset($_GET['post_type']))
   {
-	  if ($_GET['post_type'] == 'page')
+	  if (sanitize_text_field($_GET['post_type']) == 'page')
 	  {
 		add_filter('posts_where', 'oer_page_where_filter');
 	  }
-	  elseif($_GET["post_type"] == 'post')
+	  elseif(sanitize_text_field($_GET["post_type"]) == 'post')
 	  {
 		add_filter('posts_where', 'oer_posts_where_filter');
 	  }
-	  elseif($_GET["post_type"] == 'resource')
+	  elseif(sanitize_text_field($_GET["post_type"]) == 'resource')
 	  {
 		add_filter('posts_where', 'oer_resource_where_filter');
 	  }
@@ -105,7 +105,7 @@ add_action('admin_enqueue_scripts', 'oer_backside_scripts');
 function oer_backside_scripts($hook)
 {
     global $post;
-    if ((isset($_GET['post_type']) && $_GET['post_type']=='resource') || (isset($post->post_type) && $post->post_type=='resource')) {
+    if ((isset($_GET['post_type']) && sanitize_text_field($_GET['post_type'])=='resource') || (isset($post->post_type) && $post->post_type=='resource')) {
       wp_enqueue_style('jqueryui-styles', OER_URL.'css/jquery-ui.css');
       wp_enqueue_style('back-styles', OER_URL.'css/back_styles.css');
       wp_enqueue_style( 'thickbox' );
@@ -348,10 +348,10 @@ function oer_save_subject_area_meta( $term_id, $tt_id ){
 	    wp_die('Nonce verification failed');
 	}
 	if( '' !== $_POST['mainIcon'] ){
-	    add_term_meta( $term_id, 'mainIcon', esc_url_raw($_POST['mainIcon']), true );
+	    add_term_meta( $term_id, 'mainIcon', sanitize_url($_POST['mainIcon']), true );
 	}
 	 if( '' !== $_POST['hoverIcon'] ){
-	    add_term_meta( $term_id, 'hoverIcon', esc_url_raw($_POST['hoverIcon']), true );
+	    add_term_meta( $term_id, 'hoverIcon', sanitize_url($_POST['hoverIcon']), true );
 	}
     }
 }
@@ -363,7 +363,7 @@ function oer_update_subject_area_meta( $term_id, $tt_id ){
 	wp_die('Nonce verification failed');
     }
    if( isset( $_POST['mainIcon'] ) && '' !== $_POST['mainIcon'] ){
-        update_term_meta( $term_id, 'mainIcon', esc_url_raw($_POST['mainIcon']) );
+        update_term_meta( $term_id, 'mainIcon', sanitize_url($_POST['mainIcon']) );
     } else {
 	//If Main Icon is existing, remove it
 	$mainIcon = get_term_meta( $term_id, 'mainIcon', true );
@@ -371,7 +371,7 @@ function oer_update_subject_area_meta( $term_id, $tt_id ){
 	    delete_term_meta( $term_id, 'mainIcon' );
     }
     if( isset( $_POST['hoverIcon'] ) && '' !== $_POST['hoverIcon'] ){
-        update_term_meta( $term_id, 'hoverIcon', esc_url_raw($_POST['hoverIcon']) );
+        update_term_meta( $term_id, 'hoverIcon', sanitize_url($_POST['hoverIcon']) );
     } else {
 	// If Icon is existing, remove it
 	$hoverIcon = get_term_meta( $term_id, 'hoverIcon', true );
@@ -394,7 +394,7 @@ function oer_save_customfields()
     if ($post) {
 	if($post->post_type == 'resource')
 	{
-	    if (isset($_GET['action']) && ($_GET['action']=="trash" || $_GET['action']=="untrash")){
+	    if (isset($_GET['action']) && (sanitize_text_field($_GET['action'])=="trash" || sanitize_text_field($_GET['action'])=="untrash")){
 		return; 
 	    }
 	    if (!isset($_POST['oer_metabox_nonce_field']) || !wp_verify_nonce( $_POST['oer_metabox_nonce_field'], 'oer_metabox_action' )) {
@@ -402,16 +402,12 @@ function oer_save_customfields()
 	    }
 		if(isset($_POST['oer_resourceurl']))
 		{
-			$oer_resourceurl = esc_url_raw($_POST['oer_resourceurl']);
-			if( !empty($_POST['oer_resourceurl']) )
+			$oer_resourceurl = sanitize_url($_POST['oer_resourceurl']);
+			if( !empty($oer_resourceurl) )
 			{
-				if ( preg_match('/http/',$oer_resourceurl) )
+				if ( !preg_match('/http/',$oer_resourceurl) )
 				{
-					$oer_resourceurl = esc_url_raw($_POST['oer_resourceurl']);
-				}
-				else
-				{
-					$oer_resourceurl = esc_url_raw('http://'.$_POST['oer_resourceurl']);
+					$oer_resourceurl = sanitize_url('http://'.$oer_resourceurl);
 				}
 			}
 			update_post_meta( $post->ID , 'oer_resourceurl' , $oer_resourceurl);
@@ -489,36 +485,28 @@ function oer_save_customfields()
 
 		if(isset($_POST['oer_userightsurl']))
 		{
-			$oer_userightsurl = $_POST['oer_userightsurl'];
-			if( !empty($_POST['oer_userightsurl']) )
+			$oer_userightsurl = sanitize_url($_POST['oer_userightsurl']);
+			if( !empty($oer_userightsurl) )
 			{
-				if ( preg_match('/http/',$oer_userightsurl) )
+				if ( !preg_match('/http/',$oer_userightsurl) )
 				{
-					$oer_userightsurl = $_POST['oer_userightsurl'];
-				}
-				else
-				{
-					$oer_userightsurl = 'http://'.$_POST['oer_userightsurl'];
+					$oer_userightsurl = sanitize_url('http://'.$oer_userightsurl);
 				}
 			}
-			update_post_meta( $post->ID , 'oer_userightsurl' , esc_url_raw($oer_userightsurl));
+			update_post_meta( $post->ID , 'oer_userightsurl', $oer_userightsurl);
 		}
 
 		if(isset($_POST['oer_isbasedonurl']))
 		{
-			$oer_isbasedonurl = $_POST['oer_isbasedonurl'];
-			if( !empty($_POST['oer_isbasedonurl']) )
+			$oer_isbasedonurl = sanitize_url($_POST['oer_isbasedonurl']);
+			if( !empty($oer_isbasedonurl) )
 			{
-				if ( preg_match('/http/',$oer_isbasedonurl) )
+				if ( !preg_match('/http/',$oer_isbasedonurl) )
 				{
-					$oer_isbasedonurl = $_POST['oer_isbasedonurl'];
-				}
-				else
-				{
-					$oer_isbasedonurl = 'http://'.$_POST['oer_isbasedonurl'];
+					$oer_isbasedonurl = sanitize_url('http://'.$oer_isbasedonurl);
 				}
 			}
-			update_post_meta( $post->ID , 'oer_isbasedonurl' , esc_url_raw($oer_isbasedonurl));
+			update_post_meta( $post->ID , 'oer_isbasedonurl' , $oer_isbasedonurl);
 		}
 		
 		if(isset($_POST['oer_standard_alignment']))
@@ -551,19 +539,15 @@ function oer_save_customfields()
 
 		if(isset($_POST['oer_authorurl']))
 		{
-			$oer_authorurl = $_POST['oer_authorurl'];
-			if( !empty($_POST['oer_authorurl']) )
+			$oer_authorurl = sanitize_url($_POST['oer_authorurl']);
+			if( !empty($oer_authorurl) )
 			{
-				if ( preg_match('/http/',$oer_authorurl) )
+				if ( !preg_match('/http/',$oer_authorurl) )
 				{
-					$oer_authorurl = $_POST['oer_authorurl'];
-				}
-				else
-				{
-					$oer_authorurl = 'http://'.$_POST['oer_authorurl'];
+					$oer_authorurl = sanitize_url('http://'.$oer_authorurl);
 				}
 			}
-			update_post_meta( $post->ID , 'oer_authorurl' , esc_url_raw($oer_authorurl));
+			update_post_meta( $post->ID , 'oer_authorurl' , $oer_authorurl);
 		}
 
 		if(isset($_POST['oer_authoremail']))
@@ -583,19 +567,15 @@ function oer_save_customfields()
 
 		if(isset($_POST['oer_authorurl2']))
 		{
-			$oer_authorurl2 = $_POST['oer_authorurl2'];
-			if( !empty($_POST['oer_authorurl2']) )
+			$oer_authorurl2 = sanitize_url($_POST['oer_authorurl2']);
+			if( !empty($oer_authorurl2) )
 			{
-				if ( preg_match('/http/',$oer_authorurl2) )
+				if ( !preg_match('/http/',$oer_authorurl2) )
 				{
-					$oer_authorurl2 = $_POST['oer_authorurl2'];
-				}
-				else
-				{
-					$oer_authorurl2 = 'http://'.$_POST['oer_authorurl2'];
+					$oer_authorurl2 = sanitize_url('http://'.$oer_authorurl2);
 				}
 			}
-			update_post_meta( $post->ID , 'oer_authorurl2' , esc_url_raw($oer_authorurl2));
+			update_post_meta( $post->ID , 'oer_authorurl2' , $oer_authorurl2);
 		}
 
 		if(isset($_POST['oer_authoremail2']))
@@ -610,19 +590,15 @@ function oer_save_customfields()
 
 		if(isset($_POST['oer_publisherurl']))
 		{
-			$oer_publisherurl = $_POST['oer_publisherurl'];
-			if( !empty($_POST['oer_publisherurl']) )
+			$oer_publisherurl = sanitize_url($_POST['oer_publisherurl']);
+			if( !empty($oer_publisherurl) )
 			{
-				if ( preg_match('/http/',$oer_publisherurl) )
+				if ( !preg_match('/http/',$oer_publisherurl) )
 				{
-					$oer_publisherurl = $_POST['oer_publisherurl'];
-				}
-				else
-				{
-					$oer_publisherurl = 'http://'.$_POST['oer_publisherurl'];
+					$oer_publisherurl = sanitize_url('http://'.$oer_publisherurl);
 				}
 			}
-			update_post_meta( $post->ID , 'oer_publisherurl' , esc_url_raw($oer_publisherurl));
+			update_post_meta( $post->ID , 'oer_publisherurl' , $oer_publisherurl);
 		}
 
 		if(isset($_POST['oer_publisheremail']))
@@ -637,24 +613,20 @@ function oer_save_customfields()
 
 		if(isset($_POST['oer_repository_recordurl']))
 		{
-			$oer_publisherurl = $_POST['oer_repository_recordurl'];
-			if( !empty($_POST['oer_repository_recordurl']) )
+			$oer_repositoryurl = sanitize_url($_POST['oer_repository_recordurl']);
+			if( !empty($oer_repositoryurl) )
 			{
-				if ( preg_match('/http/',$oer_publisherurl) )
+				if ( !preg_match('/http/',$oer_repositoryurl) )
 				{
-					$oer_publisherurl = $_POST['oer_repository_recordurl'];
-				}
-				else
-				{
-					$oer_publisherurl = 'http://'.$_POST['oer_repository_recordurl'];
+					$oer_repositoryurl = sanitize_url('http://'.$oer_repositoryurl);
 				}
 			}
-			update_post_meta( $post->ID , 'oer_repository_recordurl' , esc_url_raw($oer_publisherurl));
+			update_post_meta( $post->ID , 'oer_repository_recordurl' , $oer_repositoryurl);
 		}
 		
 		if(!empty($_POST['oer_resourceurl']))
 		{
-			$url = esc_url_raw($_POST['oer_resourceurl']);
+			$url = sanitize_url($_POST['oer_resourceurl']);
 			
 			$youtube = oer_is_youtube_url($url);
 			

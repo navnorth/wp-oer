@@ -981,12 +981,13 @@ function oer_HTTPRequest($url){
 
 /** Resize Image **/
 function oer_resize_image($orig_img_url, $width, $height, $crop = false) {
+	$root_path = oer_get_root_path();
 	$new_image_url = $orig_img_url;
 
 	$suffix = "{$width}x{$height}";
 
 	$img_path = $new_img_path = parse_url($orig_img_url);
-	$img_path = $_SERVER['DOCUMENT_ROOT'] . $img_path['path'];
+	$img_path = sanitize_url($root_path . $img_path['path']);
 	
 	if (!empty($img_path)) {
 		//Resize Image using WP_Image_Editor class
@@ -1007,7 +1008,7 @@ function oer_resize_image($orig_img_url, $width, $height, $crop = false) {
 			$new_port = ($new_img_path['port'])?':'.$new_img_path['port']:'';
 
 			//new image url
-			$new_image_url = str_replace($_SERVER['DOCUMENT_ROOT'], "{$new_img_path['scheme']}://{$new_img_path['host']}{$new_port}", $dest_filename);
+			$new_image_url = str_replace($root_path, "{$new_img_path['scheme']}://{$new_img_path['host']}{$new_port}", $dest_filename);
 
 			if (!file_exists($dest_filename)) {
 				//save new resize image to file
@@ -1055,7 +1056,7 @@ function oer_importResources($default=false) {
 
 					if ($_FILES["resource_import"]["error"] > 0)
 					{
-						$message = "Error: " . $_FILES["resource_import"]["error"] . "<br>";
+						$message = "Error: " . sanitize_text_field($_FILES["resource_import"]["error"]) . "<br>";
 						$type = "error";
 					}
 					else
@@ -1064,9 +1065,9 @@ function oer_importResources($default=false) {
 						if (!(is_dir(OER_PATH."upload"))){
 							mkdir(OER_PATH."upload",0777);
 						}
-						"Upload: " . $_FILES["resource_import"]["name"] . "<br>";
-						"Type: " . $_FILES["resource_import"]["type"] . "<br>";
-						"Size: " . ($_FILES["resource_import"]["size"] / 1024) . " kB<br>";
+						"Upload: " . sanitize_file_name($_FILES["resource_import"]["name"]) . "<br>";
+						"Type: " . sanitize_text_field($_FILES["resource_import"]["type"]) . "<br>";
+						"Size: " . sanitize_text_field(($_FILES["resource_import"]["size"] / 1024)) . " kB<br>";
 						"stored in:" .move_uploaded_file($_FILES["resource_import"]["tmp_name"],OER_PATH."upload/".$filename) ;
 					}
 					$excl_obj->read(OER_PATH."upload/".$filename);
@@ -1541,7 +1542,7 @@ function oer_verifyResource($resource_title){
 
 // Import LR Resources
 function oer_importLRResources(){
-	$lr_url = esc_url_raw($_POST['lr_import']);
+	$lr_url = sanitize_url($_POST['lr_import']);
 	
 	$resources = null;
 	$lr_resources = array();
@@ -1750,15 +1751,15 @@ function oer_importSubjectAreas($default=false) {
 
 				if ($_FILES["bulk_import"]["error"] > 0)
 				{
-					$message = "Error: " . $_FILES["bulk_import"]["error"] . "<br>";
+					$message = "Error: " . sanitize_text_field($_FILES["bulk_import"]["error"]) . "<br>";
 					$type = "error";
 				}
 				else
 				{
 					//Upload File
-					"Upload: " . $_FILES["bulk_import"]["name"] . "<br>";
-					"Type: " . $_FILES["bulk_import"]["type"] . "<br>";
-					"Size: " . ($_FILES["bulk_import"]["size"] / 1024) . " kB<br>";
+					"Upload: " . sanitize_file_name($_FILES["bulk_import"]["name"]) . "<br>";
+					"Type: " . sanitize_text_field($_FILES["bulk_import"]["type"]) . "<br>";
+					"Size: " . sanitize_text_field(($_FILES["bulk_import"]["size"] / 1024)) . " kB<br>";
 					"stored in:" .move_uploaded_file($_FILES["bulk_import"]["tmp_name"],OER_PATH."upload/".$filename) ;
 				}
 

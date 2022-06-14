@@ -4,8 +4,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 /** Import Page **/
 global $wpdb;
 
-$message = isset($_GET['message'])?urldecode($_GET['message']):null;
-$type = isset($_GET['type'])?urldecode($_GET['type']):null;
+$message = isset($_GET['message'])?sanitize_text_field(urldecode($_GET['message'])):null;
+$type = isset($_GET['type'])?sanitize_text_field(urldecode($_GET['type'])):null;
 
 if ($type=="lr"){
 	if ($message=="0")
