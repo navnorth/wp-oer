@@ -36,7 +36,7 @@ function oer_get_sub_standard($id, $oer_standard)
 				$subchildren = oer_get_substandard_children($id);
 				$child = oer_check_child($id);
 
-				echo "<li class='oer_sbstndard ". $class ."'>
+				echo "<li class='oer_sbstndard ". esc_attr($class) ."'>
 						<div class='stndrd_ttl'>";
 
 				if(!empty($subchildren) || !empty($child))
@@ -44,8 +44,8 @@ function oer_get_sub_standard($id, $oer_standard)
 						echo "<img src='".esc_url(OER_URL)."images/closed_arrow.png' data-pluginpath='".OER_URL."' />";
 					}
 
-				echo			"<input type='checkbox' ".$chck." name='oer_standard[]' value='".$value."' onclick='oer_check_all(this)' >
-							".$result['standard_title']."
+				echo			"<input type='checkbox' ".esc_attr($chck)." name='oer_standard[]' value='".esc_attr($value)."' onclick='oer_check_all(this)' >
+							".esc_html($result['standard_title'])."
 						</div><div class='oer_stndrd_desc'></div>";
 
 						$id = 'sub_standards-'.$result['id'];
@@ -91,17 +91,17 @@ function oer_get_standard_notation($id, $oer_standard)
 					}
 				}
 
-			  echo "<li class='".$class."'>
+			  echo "<li class='".esc_attr($class)."'>
 				   <div class='stndrd_ttl'>";
 					if(!empty($child))
 					{
 						echo "<img src='".esc_url(OER_URL)."images/closed_arrow.png' data-pluginpath='".OER_URL."' />";
 					}
 
-			  echo "<input type='checkbox' ".$chck." name='oer_standard[]' value='".$value."' onclick='oer_check_myChild(this)'>
-			 	   ". $result['standard_notation']."
+			  echo "<input type='checkbox' ".esc_attr($chck)." name='oer_standard[]' value='".esc_attr($value)."' onclick='oer_check_myChild(this)'>
+			 	   ". esc_html($result['standard_notation'])."
 				   </div>
-				   <div class='oer_stndrd_desc'> ". $result['description']." </div>";
+				   <div class='oer_stndrd_desc'> ". wp_kses_post($result['description'])." </div>";
 
 				   oer_get_standard_notation($id, $oer_standard);
 
@@ -1997,7 +1997,7 @@ function oer_get_sort_box($subjects=array()){
 				<li data-value="3"<?php if ($sort==3): ?> class="cs-selected"<?php endif; ?>><a href="javascript:void(0);"><span>Z-A</span></a></li>
 			</ul>
 		</div>
-		<select class="sort-selectbox" data-subject-ids="<?php echo json_encode($subjects); ?>">
+		<select class="sort-selectbox" data-subject-ids="<?php echo esc_attr(json_encode($subjects)); ?>">
 			<option value="0"<?php if ($sort==0): ?>  selected<?php endif; ?>>Newest</option>
 			<option value="1"<?php if ($sort==1): ?>  selected<?php endif; ?>>Oldest</option>
 			<option value="2"<?php if ($sort==2): ?>  selected<?php endif; ?>>A-Z</option>

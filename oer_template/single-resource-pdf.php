@@ -8,7 +8,7 @@ $allowed_tags = oer_allowed_html();
         if ($isExternal) {
             $external_option = get_option("oer_external_pdf_viewer");
             if ($external_option==1) {
-                $pdf_url = "https://docs.google.com/gview?url=".$url."&embedded=true";
+                $pdf_url = "https://docs.google.com/gview?url=".esc_url_raw($url)."&embedded=true";
                 echo oer_get_embed_code_frame($pdf_url);
             } elseif($external_option==0) {
                 $embed_disabled = true;
@@ -20,7 +20,7 @@ $allowed_tags = oer_allowed_html();
                     $embed_disabled = true;
                     break;
                 case 1:
-                    $pdf_url = "https://docs.google.com/gview?url=".$url."&embedded=true";
+                    $pdf_url = "https://docs.google.com/gview?url=".esc_url_raw($url)."&embedded=true";
                     echo oer_get_embed_code_frame($pdf_url);
                     break;
                 case 2:
@@ -46,7 +46,7 @@ $allowed_tags = oer_allowed_html();
                     break;
                 case 5:
                     if(shortcode_exists('pdfviewer')){
-                        $embed_code = "[pdfviewer width='100%']".$url."[/pdfviewer]";
+                        $embed_code = "[pdfviewer width='100%']".esc_url_raw($url)."[/pdfviewer]";
                         echo do_shortcode($embed_code);
                     } else {
                         $embed_disabled = true;
@@ -170,7 +170,7 @@ $allowed_tags = oer_allowed_html();
                     else
                         echo '<li>'.wp_kses($subject,$allowed_tags).'</li>';
                     if (($i==2) && ($cnt>2))
-                        echo '<li><a class="see-more-subjects" data-toggle="collapse" data-count="'.$moreCnt.'" href=".lp-subject-hidden">SEE '.$moreCnt.' MORE +</a></li>';
+                        echo '<li><a class="see-more-subjects" data-toggle="collapse" data-count="'.esc_attr($moreCnt).'" href=".lp-subject-hidden">SEE '.esc_html($moreCnt).' MORE +</a></li>';
                     $i++;
                 }
                 ?>
@@ -201,7 +201,7 @@ $allowed_tags = oer_allowed_html();
                     else
                         echo "<li><a href='".esc_url($curriculum_url)."'>".esc_html($curriculum['post_title'])."</a></li>";
                     if (($i==2) && ($cnt>2))
-                        echo '<li><a class="see-more-subjects" data-toggle="collapse" data-count="'.$moreCnt.'" href=".lp-subject-hidden">SEE '.$moreCnt.' MORE +</a></li>';
+                        echo '<li><a class="see-more-subjects" data-toggle="collapse" data-count="'.esc_attr($moreCnt).'" href=".lp-subject-hidden">SEE '.esc_html($moreCnt).' MORE +</a></li>';
                     $i++;
                 }
                 ?>

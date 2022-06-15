@@ -126,7 +126,7 @@ $allowed_tags = oer_allowed_html();
                     else
                         echo '<li>'.wp_kses($subject,$allowed_tags).'</li>';
                     if (($i==2) && ($cnt>2))
-                        echo '<li><a class="see-more-subjects" data-toggle="collapse" data-count="'.$moreCnt.'" href=".lp-subject-hidden">SEE '.$moreCnt.' MORE +</a></li>';
+                        echo '<li><a class="see-more-subjects" data-toggle="collapse" data-count="'.esc_attr($moreCnt).'" href=".lp-subject-hidden">SEE '.esc_html($moreCnt).' MORE +</a></li>';
                     $i++;
                 }
                 ?>
@@ -157,7 +157,7 @@ $allowed_tags = oer_allowed_html();
                     else
                         echo "<li><a href='".esc_url($curriculum_url)."'>".esc_html($curriculum['post_title'])."</a></li>";
                     if (($i==2) && ($cnt>2))
-                        echo '<li><a class="see-more-subjects" data-toggle="collapse" data-count="'.$moreCnt.'" href=".lp-subject-hidden">SEE '.$moreCnt.' MORE +</a></li>';
+                        echo '<li><a class="see-more-subjects" data-toggle="collapse" data-count="'.esc_attr($moreCnt).'" href=".lp-subject-hidden">SEE '.esc_html($moreCnt).' MORE +</a></li>';
                     $i++;
                 }
                 ?>

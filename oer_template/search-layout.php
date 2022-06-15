@@ -67,7 +67,7 @@ if ( is_search() && Avada()->settings->get( 'search_results_per_page' ) ) {
 }
 ?>
 <div id="posts-container" class="fusion-blog-archive <?php echo esc_attr( $wrapper_class ); ?>fusion-clearfix">
-	<div class="<?php echo esc_attr( $container_class ); ?>" data-pages="<?php echo (int) $number_of_pages; ?>">
+	<div class="<?php echo esc_attr( $container_class ); ?>" data-pages="<?php echo esc_attr($number_of_pages); ?>">
 		<?php if ( 'timeline' === $blog_layout ) : ?>
 			<?php // Add the timeline icon. ?>
 			<div class="fusion-timeline-icon"><i class="fusion-icon-bubbles"></i></div>
@@ -238,7 +238,7 @@ if ( is_search() && Avada()->settings->get( 'search_results_per_page' ) ) {
 				<?php if ( ( ( is_search() && Avada()->settings->get( 'search_featured_images' ) ) || ( ! is_search() && Avada()->settings->get( 'featured_images' ) ) ) && 'large-alternate' !== $blog_layout ) : ?>
 					<?php
 					if ( 'masonry' === $blog_layout ) {
-						echo $image; // WPCS: XSS ok.
+						echo wp_kses_post($image); // WPCS: XSS ok.
 					} else {
 						// Get featured images for all but large-alternate layout.
 						get_template_part( 'new-slideshow' );
@@ -362,7 +362,7 @@ if ( is_search() && Avada()->settings->get( 'search_results_per_page' ) ) {
 							<div class="fusion-alignleft">
 								<?php if ( Avada()->settings->get( 'post_meta_read' ) ) : ?>
 									<?php $link_target = ( 'yes' === fusion_get_page_option( 'link_icon_target', $post->ID ) || 'yes' === fusion_get_page_option( 'post_links_target', $post->ID ) ) ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>
-									<a href="<?php echo esc_url_raw( get_permalink() ); ?>" class="fusion-read-more"<?php echo $link_target; // WPCS: XSS ok. ?>>
+									<a href="<?php echo esc_url_raw( get_permalink() ); ?>" class="fusion-read-more"<?php echo esc_attr($link_target); // WPCS: XSS ok. ?>>
 										<?php echo esc_textarea( apply_filters( 'avada_blog_read_more_link', esc_attr__( 'Read More', 'Avada' ) ) ); ?>
 									</a>
 								<?php endif; ?>
@@ -388,7 +388,7 @@ if ( is_search() && Avada()->settings->get( 'search_results_per_page' ) ) {
 							<div class="fusion-alignright">
 								<?php if ( Avada()->settings->get( 'post_meta_read' ) ) : ?>
 									<?php $link_target = ( 'yes' === fusion_get_page_option( 'link_icon_target', $post->ID ) || 'yes' === fusion_get_page_option( 'post_links_target', $post->ID ) ) ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>
-									<a href="<?php echo esc_url_raw( get_permalink() ); ?>" class="fusion-read-more"<?php echo $link_target; // WPCS: XSS ok. ?>>
+									<a href="<?php echo esc_url_raw( get_permalink() ); ?>" class="fusion-read-more"<?php echo esc_attr($link_target); // WPCS: XSS ok. ?>>
 										<?php echo esc_textarea( apply_filters( 'avada_read_more_name', esc_attr__( 'Read More', 'Avada' ) ) ); ?>
 									</a>
 								<?php endif; ?>
