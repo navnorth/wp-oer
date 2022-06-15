@@ -110,11 +110,11 @@ class OER_Subject_Area_Widget extends WP_Widget{
 				
 				if( !empty( $children ) )
 				{
-					echo '<li class="oer-sub-category has-child'.esc_attr($class).'"><span onclick="toggleparent(this);"><a href="'. esc_url(site_url() .'/'.$category->taxonomy.'/'. $category->slug) .'" title="'. esc_attr($category->name) .'" >'. $category->name .'</a></span>';
+					echo '<li class="oer-sub-category has-child'.esc_attr($class).'"><span onclick="toggleparent(this);"><a href="'. esc_url(site_url() .'/'.$category->taxonomy.'/'. $category->slug) .'" title="'. esc_attr($category->name) .'" >'. esc_html($category->name) .'</a></span>';
 				}
 				else
 				{
-					echo '<li class="oer-sub-category'.esc_attr($class).'"><span onclick="toggleparent(this);"><a href="'. esc_url(site_url() .'/'.$category->taxonomy.'/'. $category->slug) .'"  title="'. esc_attr($category->name) .'" >'. $category->name .'</a></span>';
+					echo '<li class="oer-sub-category'.esc_attr($class).'"><span onclick="toggleparent(this);"><a href="'. esc_url(site_url() .'/'.$category->taxonomy.'/'. $category->slug) .'"  title="'. esc_attr($category->name) .'" >'. esc_html($category->name) .'</a></span>';
 				}
 				
 				echo oer_get_category_child( $category->term_id, $rsltdata['term_id']);

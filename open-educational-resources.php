@@ -3,7 +3,7 @@
  Plugin Name:        WP OER
  Plugin URI:         https://www.wp-oer.com
  Description:        Open Educational Resource management and curation, metadata publishing, and alignment to Common Core State Standards.
- Version:            0.8.9
+ Version:            0.9.0
  Requires at least:  4.4
  Requires PHP:       7.0
  Author:             Navigation North
@@ -38,7 +38,7 @@ define( 'OER_FILE',__FILE__);
 // Plugin Name and Version
 define( 'OER_PLUGIN_NAME', 'WP OER Plugin' );
 define( 'OER_ADMIN_PLUGIN_NAME', 'WP OER Plugin');
-define( 'OER_VERSION', '0.8.9' );
+define( 'OER_VERSION', '0.9.0' );
 define( 'OER_SITE_PATH', ABSPATH );
 
 include_once(OER_PATH.'includes/oer-functions.php');
@@ -1241,7 +1241,7 @@ function oer_setup_settings_field( $arguments ) {
 			$size = 'size="50"';
 			if (isset($arguments['title']))
 				$title = $arguments['title'];
-			echo '<label for="'.esc_attr($arguments['uid']).'"><strong>'.esc_html($title).'</strong></label><input name="'.esc_attr($arguments['uid']).'" id="'.esc_attr($arguments['uid']).'" type="'.esc_attr($arguments['type']).'" value="' . esc_attr($value) . '" ' . esc_attr($size) . ' ' .  $selected . ' />';
+			echo '<label for="'.esc_attr($arguments['uid']).'"><strong>'.esc_html($title).'</strong></label><input name="'.esc_attr($arguments['uid']).'" id="'.esc_attr($arguments['uid']).'" type="'.esc_attr($arguments['type']).'" value="' . esc_attr($value) . '" ' . esc_attr($size) . ' ' .  esc_attr($selected) . ' />';
 			break;
 		case "checkbox":
 			$display_value = "";
@@ -1266,7 +1266,7 @@ function oer_setup_settings_field( $arguments ) {
 					$disabled = " disabled";
 			}
 
-			echo '<input name="'.esc_attr($arguments['uid']).'" id="'.esc_attr($arguments['uid']).'" '.esc_attr($class).' type="'.esc_attr($arguments['type']).'" ' . $display_value . ' ' . $size . ' ' .  $selected . ' ' . $disabled . '  /><label for="'.esc_attr($arguments['uid']).'"><strong>'.esc_html($arguments['name']).'</strong></label>';
+			echo '<input name="'.esc_attr($arguments['uid']).'" id="'.esc_attr($arguments['uid']).'" '.esc_attr($class).' type="'.esc_attr($arguments['type']).'" ' . esc_attr($display_value) . ' ' . esc_attr($size) . ' ' .  esc_attr($selected) . ' ' . esc_attr($disabled) . '  /><label for="'.esc_attr($arguments['uid']).'"><strong>'.esc_html($arguments['name']).'</strong></label>';
 			break;
 		case "select":
 			if (isset($arguments['name']))
@@ -1303,7 +1303,7 @@ function oer_setup_settings_field( $arguments ) {
 					default:
 						break;
 				}
-				echo '<option value="'.esc_attr($key).'"'.$selected.''.$disabled.'>'.esc_html($desc).'</option>';
+				echo '<option value="'.esc_attr($key).'"'.esc_attr($selected).''.esc_attr($disabled).'>'.esc_html($desc).'</option>';
 			}
 
 			echo '<select>';
@@ -1344,7 +1344,7 @@ function oer_setup_radio_field($arguments){
 
 	$val = get_option($arguments['uid']);
 
-	echo '<input name="'.esc_attr($arguments['uid']).'" value="'.esc_attr($arguments['value']).'" id="'.esc_attr($arguments['uid']).'" '.$class.' type="'.esc_attr($arguments['type']).'" ' . checked($arguments['value'], $val, false) . ' /><label for="'.esc_attr($arguments['uid']).'"><strong>'.esc_html($arguments['name']).'</strong></label>';
+	echo '<input name="'.esc_attr($arguments['uid']).'" value="'.esc_attr($arguments['value']).'" id="'.esc_attr($arguments['uid']).'" '.esc_attr($class).' type="'.esc_attr($arguments['type']).'" ' . checked($arguments['value'], $val, false) . ' /><label for="'.esc_attr($arguments['uid']).'"><strong>'.esc_html($arguments['name']).'</strong></label>';
 }
 
 /** Initialize Subject Area Sidebar widget **/
@@ -1377,8 +1377,8 @@ function oer_load_more_resources() {
 	$root_path = oer_get_root_path();
 
 	if (isset($_POST["post_var"])) {
-		$page_num = intval($_POST["post_var"]);
-		$terms = json_decode($_POST["subjects"]);
+		$page_num = intval(sanitize_text_field($_POST["post_var"]));
+		$terms = json_decode(sanitize_text_field($_POST["subjects"]));
 
 		if (is_array($terms)){
 			$terms = array_map("oer_sanitize_subject", $terms);
@@ -1473,9 +1473,9 @@ function oer_sort_resources(){
 
 	if (isset($_POST["sort"])) {
 
-		$oer_session['resource_sort'] = intval($_POST['sort']);
+		$oer_session['resource_sort'] = intval(sanitize_text_field($_POST['sort']));
 
-		$terms = json_decode($_POST["subjects"]);
+		$terms = json_decode(sanitize_text_field($_POST["subjects"]));
 
 		if (is_array($terms)){
 			$terms = array_map("oer_sanitize_subject",$terms);
@@ -1505,7 +1505,7 @@ function oer_sort_resources(){
 
 		$paged = 1;
 		if ($_POST['post_var']){
-			$paged = intval($_POST['post_var']);
+			$paged = intval(sanitize_text_field($_POST['post_var']));
 		}
 
 		if ($_REQUEST['page'])
@@ -1597,9 +1597,9 @@ function oer_load_more_highlights() {
 	global $wpdb, $wp_query;
 
 	if (isset($_POST["post_var"])) {
-		$page_num = intval(["post_var"]);
+		$page_num = intval(sanitize_text_field(["post_var"]));
 		$items_per_load = 4;
-		$term_id = intval($_POST['term_id']);
+		$term_id = intval(sanitize_text_field($_POST['term_id']));
 
 		$args = array(
 			'meta_key' => 'oer_highlight',
@@ -1633,7 +1633,7 @@ function oer_load_more_highlights() {
 				if (isset($_POST['style']))
 					$style = ' style="'.esc_attr($_POST['style']).'"';
 				?>
-				<li<?php echo $style; ?>>
+				<li<?php echo esc_attr($style); ?>>
 					<div class="frtdsnglwpr">
 						<?php
 						if(empty($image)){
@@ -1642,7 +1642,7 @@ function oer_load_more_highlights() {
 						$new_image_url = oer_resize_image( $image, 220, 180, true );
 						?>
 						<a href="<?php echo esc_url(get_permalink($post->ID)); ?>"><div class="img"><img src="<?php echo esc_url($new_image_url);?>" alt="<?php echo esc_html($title);?>"></div></a>
-						<div class="ttl"><a href="<?php echo esc_url(get_permalink($post->ID)); ?>"><?php echo $title;?></a></div>
+						<div class="ttl"><a href="<?php echo esc_url(get_permalink($post->ID)); ?>"><?php echo esc_html($title);?></a></div>
 						<div class="desc"><?php echo apply_filters('the_content',$content); ?></div>
 					</div>
 				</li>
@@ -1660,7 +1660,7 @@ function oer_load_highlight() {
 	global $wpdb, $wp_query;
 
 	if (isset($_POST["post_var"])) {
-		$resource_id = intval(["post_var"]);
+		$resource_id = intval(sanitize_text_field(["post_var"]));
 
 		$args = array(
 			'p' => $resource_id,
@@ -1702,8 +1702,8 @@ function oer_load_highlight() {
 					}
 					$new_image_url = oer_resize_image( $image, 220, 180, true );
 					?>
-					<a href="<?php echo esc_url(get_permalink($post->ID)); ?>"><div class="img"><img src="<?php echo esc_url($new_image_url); ?>" alt="<?php echo $title;?>"></div></a>
-					<div class="ttl"><a href="<?php echo esc_url(get_permalink($post->ID)); ?>"><?php echo $title;?></a></div>
+					<a href="<?php echo esc_url(get_permalink($post->ID)); ?>"><div class="img"><img src="<?php echo esc_url($new_image_url); ?>" alt="<?php echo esc_html($title);?>"></div></a>
+					<div class="ttl"><a href="<?php echo esc_url(get_permalink($post->ID)); ?>"><?php echo esc_html($title);?></a></div>
 					<div class="desc"><?php echo apply_filters('the_content',$content); ?></div>
 				</div><?php
 			}

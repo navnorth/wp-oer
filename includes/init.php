@@ -697,9 +697,8 @@ function oer_save_customfields()
     	// Save Related Resource
 		if(isset($_POST['oer_related_resource']))
 		{
-			update_post_meta( $post->ID , 'oer_related_resource' , addslashes($_POST['oer_related_resource']));
+			update_post_meta( $post->ID , 'oer_related_resource' , sanitize_text_field($_POST['oer_related_resource']));
 		}
-
 	}
     }
 }
