@@ -591,16 +591,14 @@ function oer_ajax_get_subject_resources(){
     // Sanitize POST parameters
     $params = array();
     $params['action'] = sanitize_text_field($_POST['action']);
-    $attributes = $_POST['attributes'];
-    foreach($attributes as $attribute){
-        $attribute['displayCount'] = sanitize_text_field($attribute['displayCount']);
-        $attribute['selectedSubject'] = sanitize_text_field($attribute['selectedSubject']);
-        $attribute['sort'] = sanitize_text_field($attribute['sort']);
-        $attribute['isChanged'] = sanitize_text_field($attribute['isChanged']);
-        $attribute['blockId'] = sanitize_text_field($attribute['blockId']);
-        $attribute['firstLoad'] = sanitize_text_field($attribute['firstLoad']);
-    }
-    $params['attributes'] = $attributes;
+    $params['attributes'] = $_POST['attributes'];
+    array_walk($params['attributes'], function(&$value, &$key){
+        $value['displayCount'] = sanitize_text_field($value['displayCount']);
+        $value['sort'] = sanitize_text_field($value['sort']);
+        $value['isChanged'] = sanitize_text_field($value['isChanged']);
+        $value['blockId'] = sanitize_text_field($value['blockId']);
+        $value['firstLoad'] = sanitize_text_field($value['firstLoad']);
+    });
     
     $resources = oer_get_subject_resources($params, true);
     echo wp_kses($resources,$allowed_tags);

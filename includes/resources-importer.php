@@ -2,7 +2,7 @@
 <div class="oer_imprtrwpr">
     <form method="post" enctype="multipart/form-data" action="<?php echo esc_url( admin_url('admin.php') ); ?>" onsubmit="return processImport('#resource_submit','resource_import')">
 	<fieldset>
-		<legend><div class="oer_heading"><?php _e("Import Resources", OER_SLUG); ?></div></legend>
+		<legend><div class="oer_heading"><?php esc_html_e("Import Resources", OER_SLUG); ?></div></legend>
 		<div class="oer-import-row">
 			<div class="row-left">
 				<?php esc_html_e("For bulk upload of resources. Import file must match the spreadsheet template. If screenshot processing is enabled, a maximum of 50 records per transaction is suggested.", OER_SLUG); ?>

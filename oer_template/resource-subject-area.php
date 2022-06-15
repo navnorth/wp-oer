@@ -19,6 +19,7 @@ wp_enqueue_script( "ajax-script", OER_URL."js/front_ajax.js", array("jquery"));
 wp_localize_script( "ajax-script", "oer_ajax_object", array("ajaxurl" => admin_url( 'admin-ajax.php' )));
 
 //Add this hack to display top nav and head section on Eleganto theme
+$_rsort = "";
 $cur_theme = wp_get_theme();
 $theme = $cur_theme->get('Name');
 if ($theme == "Eleganto"){
@@ -435,18 +436,18 @@ if ($rpos==strlen($root_path)-1){
 							
 						$content = substr($content, 0, 180).$ellipsis;
 						
-						$img_path = $new_img_path = parse_url($img_url[0]);
-						$image_path = $img_path['path'];
-
-						$pos = strpos($image_path,$site_dir_path);
-						if ($pos==0){
-							$image_path = substr_replace($image_path, "", $pos, strlen($site_dir_path));
-						}
-
-						$img_path = sanitize_url($site_path . $image_path);
-						
 						if(!empty($img_url))
 						{
+							$img_path = $new_img_path = parse_url($img_url[0]);
+							$image_path = $img_path['path'];
+
+							$pos = strpos($image_path,$site_dir_path);
+							if ($pos==0){
+								$image_path = substr_replace($image_path, "", $pos, strlen($site_dir_path));
+							}
+
+							$img_path = sanitize_url($site_path . $image_path);
+
 							//Resize Image using WP_Image_Editor
 							$image_editor = wp_get_image_editor($img_path);
 							if ( !is_wp_error($image_editor) ) {
@@ -555,7 +556,7 @@ if ($rpos==strlen($root_path)-1){
 					
 					if (strpos($base_url,"page"))
 							$base_url = substr($base_url,0,strpos($base_url, "page")-1);
-					echo '<div class="col-md-12 tagcloud resourcecloud"><a href="?page='.($paged+1).'" '.$_rsort.' data-subject-ids="'.json_encode(array($rsltdata['term_id'])).'" data-page-number="'.($paged+1).'" data-base-url="'.esc_url($base_url).'" class="button resource-load-more-button" data-max-page="'.esc_attr($max_pages).'" class="btn-load-more">Load More</a></div>';
+					echo '<div class="col-md-12 tagcloud resourcecloud"><a href="?page='.esc_url($paged+1).'" '.esc_attr($_rsort).' data-subject-ids="'.esc_html(json_encode(array($rsltdata['term_id']))).'" data-page-number="'.esc_attr($paged+1).'" data-base-url="'.esc_url($base_url).'" class="button resource-load-more-button" data-max-page="'.esc_attr($max_pages).'" class="btn-load-more">Load More</a></div>';
 				}
 				?>
 		   </div>

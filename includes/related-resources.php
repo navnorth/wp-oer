@@ -39,7 +39,7 @@ if(!empty($_delimited[0])):
                      <div class="lp-resource-author_block"><a href="<?php echo esc_url($oer_authorurl); ?>" target="_new"><?php echo esc_html($oer_authorname); ?></a></div>
                    <?php endif; ?>
                    <?php /* if( $oer_authorname2 != ''):?>
-                     <div class="lp-resource-author_block"><a href=""><?php echo $oer_authorname2; ?></a></div>
+                     <div class="lp-resource-author_block"><a href=""><?php echo esc_html($oer_authorname2); ?></a></div>
                    <?php endif;*/ ?>
                  </div>
                  <div class="lp-resource-excerpt"><?php echo oer_get_related_resource_content($_res_post->post_content, 60); ?></div>
