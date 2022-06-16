@@ -2155,12 +2155,12 @@ function oer_custom_query($search, $wp_query){
 		$search .= "{$searchand} (";
 
 		//Search in title
-		$search .= $wpdb->prepare("($wpdb->posts.post_title LIKE '%s')", $term);
+		$search .= $wpdb->prepare("($wpdb->posts.post_title LIKE %s)", $term);
                 $OR = ' OR ';
 
 		//Search in content
 		$search .= $OR;
-                $search .= $wpdb->prepare("($wpdb->posts.post_content LIKE '%s')", $term);
+                $search .= $wpdb->prepare("($wpdb->posts.post_content LIKE %s)", $term);
                 $OR = ' OR ';
 
 		//Search by meta keys
@@ -2189,7 +2189,7 @@ function oer_custom_query($search, $wp_query){
 		$meta_key_OR = '';
 		foreach ($meta_keys as $key_slug) {
                         $search .= $OR;
-                        $search .= $wpdb->prepare("$meta_key_OR (pm.meta_key = '%s' AND pm.meta_value LIKE '%s')", $key_slug, $term);
+                        $search .= $wpdb->prepare("$meta_key_OR (pm.meta_key = %s AND pm.meta_value LIKE %s)", $key_slug, $term);
                         $OR = '';
                         $meta_key_OR = ' OR ';
                 }
@@ -2201,7 +2201,7 @@ function oer_custom_query($search, $wp_query){
 		$tax_OR = '';
 		foreach($taxonomies as $tax) {
 			$search .= $OR;
-                        $search .= $wpdb->prepare("$tax_OR (tt.taxonomy = '%s' AND t.name LIKE '%s')", $tax, $term);
+                        $search .= $wpdb->prepare("$tax_OR (tt.taxonomy = %s AND t.name LIKE %s)", $tax, $term);
                         $OR = '';
                         $tax_OR = ' OR ';
 		}

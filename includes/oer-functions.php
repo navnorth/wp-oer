@@ -2652,7 +2652,7 @@ function oer_get_substandards($standard_id, $core=true){
 	
 	$substandards = array();
 	
-	$query = "SELECT * FROM {$wpdb->prefix}oer_sub_standards where parent_id='%s'";
+	$query = "SELECT * FROM {$wpdb->prefix}oer_sub_standards where parent_id = %s";
 	
 	$substandards = $wpdb->get_results($wpdb->prepare($query, $std_id));
 	
@@ -2669,7 +2669,7 @@ function oer_get_standard_notations($standard_id){
 	
 	$notations = array();
 	
-	$query = "SELECT * FROM {$wpdb->prefix}oer_standard_notation where parent_id='%s'";
+	$query = "SELECT * FROM {$wpdb->prefix}oer_standard_notation where parent_id = %s";
 	
 	$result = $wpdb->get_results($wpdb->prepare($query, $std_id));
 	
@@ -2688,7 +2688,7 @@ function oer_get_substandard_by_notation($notation) {
 	
 	$std = null;
 	
-	$query = "SELECT * FROM {$wpdb->prefix}oer_standard_notation WHERE standard_notation = '%s'";
+	$query = "SELECT * FROM {$wpdb->prefix}oer_standard_notation WHERE standard_notation = %s";
 	
 	$substandards = $wpdb->get_results($wpdb->prepare($query, $notation));
 	
@@ -2707,7 +2707,7 @@ function oer_get_standard_by_notation($notation){
 	
 	$std = null;
 	
-	$query = "SELECT * FROM {$wpdb->prefix}oer_standard_notation WHERE standard_notation = '%s'";
+	$query = "SELECT * FROM {$wpdb->prefix}oer_standard_notation WHERE standard_notation = %s";
 	
 	$standard_notation = $wpdb->get_results($wpdb->prepare($query, $notation));
 	
@@ -2736,7 +2736,7 @@ function get_substandards_by_notation($notation){
 	
 	$std = null;
 	
-	$query = "SELECT * FROM {$wpdb->prefix}oer_standard_notation WHERE standard_notation = '%s'";
+	$query = "SELECT * FROM {$wpdb->prefix}oer_standard_notation WHERE standard_notation = %s";
 	
 	$standard_notation = $wpdb->get_results($wpdb->prepare($query, $notation));
 	
@@ -2798,7 +2798,7 @@ function oer_get_child_notations($notation_id){
 	
 	$notation = "standard_notation-".$notation_id;
 	
-	$query = "SELECT * FROM {$wpdb->prefix}oer_standard_notation WHERE parent_id = '%s'";
+	$query = "SELECT * FROM {$wpdb->prefix}oer_standard_notation WHERE parent_id = %s";
 	
 	$standard_notations = $wpdb->get_results($wpdb->prepare($query, $notation));
 	
@@ -2897,14 +2897,14 @@ function oer_get_corestandard_by_standard($parent_id){
 	$standard = null;
 	$parent = explode("-",$parent_id);
 	if ($parent[0]=="sub_standards") {
-		$query = "SELECT * FROM {$wpdb->prefix}oer_sub_standards WHERE id = '%s'";
+		$query = "SELECT * FROM {$wpdb->prefix}oer_sub_standards WHERE id = %s";
 		$substandards = $wpdb->get_results($wpdb->prepare($query, $parent[1]));
 		
 		foreach($substandards as $substandard){
 			$standard = oer_get_corestandard_by_standard($substandard->parent_id);
 		}
 	} else {
-		$query = "SELECT * FROM {$wpdb->prefix}oer_core_standards WHERE id = '%s'";
+		$query = "SELECT * FROM {$wpdb->prefix}oer_core_standards WHERE id = %s";
 		$standards = $wpdb->get_results($wpdb->prepare($query, $parent[1]));
 		foreach($standards as $std){
 			$standard = $std;
