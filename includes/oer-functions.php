@@ -1045,6 +1045,12 @@ function oer_importResources($default=false) {
 
 	$cnt = 0;
 		try{
+			// Register our path override.
+			add_filter( 'upload_dir', 'oer_override_upload_dir' );
+			$upload_overrides = array( 
+				'test_form' => false,
+				'unique_filename_callback' => 'oer_override_filename');
+			
 			if ($default==true) {
 				//default resource filename
 				$filename = "resource_import_sample_data.xls";
@@ -1065,14 +1071,18 @@ function oer_importResources($default=false) {
 						if (!(is_dir(OER_PATH."upload"))){
 							mkdir(OER_PATH."upload",0777);
 						}
+						$_file = wp_handle_upload($_FILES["resource_import"], $upload_overrides);
 						"Upload: " . sanitize_file_name($_FILES["resource_import"]["name"]) . "<br>";
 						"Type: " . sanitize_text_field($_FILES["resource_import"]["type"]) . "<br>";
 						"Size: " . sanitize_text_field(($_FILES["resource_import"]["size"] / 1024)) . " kB<br>";
-						"stored in:" .move_uploaded_file($_FILES["resource_import"]["tmp_name"],OER_PATH."upload/".$filename) ;
+						"stored in:" . $_file['file'];
 					}
-					$excl_obj->read(OER_PATH."upload/".$filename);
+					
+					$excl_obj->read($_file['file']);
 				}
 			}
+			// Set upload dir to normal
+			remove_filter( 'upload_dir', 'oer_override_upload_dir' );
 
 			$fnldata = $excl_obj->sheets[0];
 			for ($k =2; $k <= $fnldata['numRows']; $k++)
@@ -1717,6 +1727,24 @@ function oer_custom_array_intersect($firstArray, $secondArray){
   return $intersection;
 }
 
+// Temporarily override upload dir of wp_handle_upload
+function oer_override_upload_dir( $dir ){
+	 return array(
+        'path'   => OER_PATH."upload",
+        'url'    => OER_PATH."upload",
+        'subdir' => '/upload',
+    ) + $dir;
+}
+
+// Override filename for wp_handle_upload
+function oer_override_filename($dir, $name, $ext){
+	$time = time();
+	$date = date($time);
+	$file = pathinfo($name);
+	$new_filename = $file['filename'] . "-" . $date . $ext;
+	return $new_filename;
+} 
+
 //Import Subject Areas
 function oer_importSubjectAreas($default=false) {
 	global $wpdb;
@@ -1739,6 +1767,12 @@ function oer_importSubjectAreas($default=false) {
 
 	global $wpdb;
 
+	// Register our path override.
+	add_filter( 'upload_dir', 'oer_override_upload_dir' );
+	$upload_overrides = array( 
+		'test_form' => false,
+		'unique_filename_callback' => 'oer_override_filename');
+
 	try {
 		if ($default==true) {
 			//default subject area filename
@@ -1757,16 +1791,20 @@ function oer_importSubjectAreas($default=false) {
 				else
 				{
 					//Upload File
-					"Upload: " . sanitize_file_name($_FILES["bulk_import"]["name"]) . "<br>";
+					$_file = wp_handle_upload($_FILES["bulk_import"], $upload_overrides);
+  					"Upload: " . sanitize_file_name($_FILES["bulk_import"]["name"]) . "<br>";
 					"Type: " . sanitize_text_field($_FILES["bulk_import"]["type"]) . "<br>";
 					"Size: " . sanitize_text_field(($_FILES["bulk_import"]["size"] / 1024)) . " kB<br>";
-					"stored in:" .move_uploaded_file($_FILES["bulk_import"]["tmp_name"],OER_PATH."upload/".$filename) ;
+					"stored in:" . esc_url_raw($_file['file']) ; 
 				}
 
 				//Read Excel Data
-				$excl_obj->read(OER_PATH."upload/".$filename);
+				//$excl_obj->read(OER_PATH."upload/".$filename);
+				$excl_obj->read($_file['file']);
 			}
 		}
+		// Set upload dir to normal
+		remove_filter( 'upload_dir', 'oer_override_upload_dir' );
 
 			$fnldata = $excl_obj->sheets;
 			$length = count($fnldata);
@@ -1851,6 +1889,8 @@ function oer_importSubjectAreas($default=false) {
 	$response = array('message' => $message, 'type' => $type);
 	return $response;
 }
+
+
 
 //Import Default Grade Levels
 function oer_importDefaultGradeLevels(){
