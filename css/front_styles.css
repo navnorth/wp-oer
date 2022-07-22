@@ -441,6 +441,7 @@ li.oer_sbstndard{
 .search-results .type-resource .entry-header h2.entry-title { margin-bottom:0; }
 .search-results .type-resource .entry-header h5.post-meta { margin-bottom:1.05em; }
 .search-results .type-resource .entry-header h5.post-meta .post-meta-box { margin-right:15px; }
+.search-results #content #posts-container .pagination { margin-bottom:20px; }
 article.oer_sngl_resource_wrapper div#sngl-resource header.entry-header h1.entry-title {font-size: 20px; line-height: 30px;}
 .oer-standards #content, .standards-template #content,
 .substandards-template #content, .notation-template #content { width:100%; }
