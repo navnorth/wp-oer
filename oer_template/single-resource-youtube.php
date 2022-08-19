@@ -1,4 +1,11 @@
-<?php $allowed_tags = oer_allowed_html();  ?>
+<?php 
+$allowed_tags = oer_allowed_html();  
+
+// Checks if display more button should be displayed
+if (!empty($external_repository) || !empty($repository_record)
+    || !empty($citation) || !empty($transcription) || !empty($sensitive_material))
+    $display_see_more = true;
+?>
 <div class="oer-rsrclftcntr-video col-md-12 col-sm-12 col-xs-12">    
         <?php
         if ($youtube){

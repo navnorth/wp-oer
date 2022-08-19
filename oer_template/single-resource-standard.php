@@ -22,6 +22,12 @@ $transcription_enabled = (get_option('oer_transcription_enabled'))?true:false;
 $sensitive_material_set = (get_option('oer_sensitive_material_label'))?true:false;
 $sensitive_material_enabled = (get_option('oer_sensitive_material_enabled'))?true:false;
 $allowed_tags = oer_allowed_html();
+
+// Checks if display more button should be displayed
+if (!empty($grade_levels) || !empty($grades) || !empty($suggested_time)
+    || !empty($cc_license) || !empty($external_repository) || !empty($repository_record)
+    || !empty($citation) || !empty($transcription) || !empty($sensitive_material))
+    $display_see_more = true;
 ?>
 <div class="oer-rsrclftcntr-img col-md-5 col-sm-12 col-xs-12">
     <!--Resource Image-->

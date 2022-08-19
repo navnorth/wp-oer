@@ -157,11 +157,6 @@ $template_args = array(
     'sensitive_material_set' => $sensitive_material_set,
     'sensitive_material_enabled' => $sensitive_material_enabled
 );
-
-if (!empty($grades) || !empty($suggested_time)
-    || !empty($cc_license) || !empty($external_repository) || !empty($repository_record)
-    || !empty($citation) || !empty($transcription) || !empty($sensitive_material))
-    $display_see_more = true;
 ?>
 <!--<div id="primary" class="content-area">-->
     <main id="oer_main" class="site-main" role="main">

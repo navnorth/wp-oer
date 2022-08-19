@@ -1,5 +1,10 @@
 <?php /** PDF Resource Template **/ 
 $allowed_tags = oer_allowed_html();
+
+// Checks if display more button should be displayed
+if (!empty($external_repository) || !empty($repository_record)
+    || !empty($citation) || !empty($transcription) || !empty($sensitive_material))
+    $display_see_more = true;
 ?>
 <div class="oer-rsrclftcntr-img col-md-7 col-sm-12 col-xs-12">
     <!--Resource Image-->
