@@ -158,7 +158,7 @@ $template_args = array(
     'sensitive_material_enabled' => $sensitive_material_enabled
 );
 
-if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
+if (!empty($grades) || !empty($suggested_time)
     || !empty($cc_license) || !empty($external_repository) || !empty($repository_record)
     || !empty($citation) || !empty($transcription) || !empty($sensitive_material))
     $display_see_more = true;
