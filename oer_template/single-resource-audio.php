@@ -1,5 +1,11 @@
 <?php /** Website/Image/Document(except PDF)/Other Resource Template **/ 
 $allowed_tags = oer_allowed_html();
+
+// Checks if display more button should be displayed
+if (!empty($grade_levels) || !empty($grades) || !empty($suggested_time)
+    || !empty($cc_license) || !empty($external_repository) || !empty($repository_record)
+    || !empty($citation) || !empty($transcription) || !empty($sensitive_material))
+    $display_see_more = true;
 ?>
 <div class="oer-rsrclftcntr-img col-md-5 col-sm-12 col-xs-12">
     <!--Resource Image-->
