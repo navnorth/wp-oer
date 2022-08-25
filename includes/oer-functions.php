@@ -3474,7 +3474,10 @@ function oer_get_standard_label($slug){
 	$results = $wpdb->get_results( $wpdb->prepare( "SELECT * from " . $wpdb->prefix. $table_name . " where id = %s" , $id ) , ARRAY_A);
 	if (!empty($results)){
 		foreach($results as $result) {
-			$standard = $result['description'];
+			if ($table_name == "oer_sub_standards")
+				$standard = $result['standard_title'];
+			else
+				$standard = $result['description'];
 		}
 	}
 	
