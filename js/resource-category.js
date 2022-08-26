@@ -55,12 +55,18 @@ jQuery(document).ready(function(){
     jQuery('.sortoption').text(jQuery('.sort-options').find('li.cs-selected').text());
     
     jQuery('.sort-resources').click(function(){
-      jQuery('.sort-options').fadeToggle('fast');
+    	if (jQuery('.sort-options').is(":visible"))
+      	jQuery('.sort-options').fadeIn('fast');
+      else
+      	jQuery('.sort-options').fadeOut('fast');
     });
     jQuery('.sort-resources').keydown(function(e){
-	if (e.which==13 || e.which==32) {
-	    jQuery('.sort-options').fadeToggle('fast');
-	}
+			if (e.which==13 || e.which==32) {
+				if (jQuery('.sort-options').is(":visible"))
+	      	jQuery('.sort-options').fadeIn('fast');
+	      else
+	      	jQuery('.sort-options').fadeOut('fast');
+				}
     });
     
     jQuery('.sort-options ul li a').click(function(){
@@ -68,7 +74,7 @@ jQuery(document).ready(function(){
       jQuery(this).parent().addClass('cs-selected');
       jQuery('.sortoption').text(jQuery(this).text());
       jQuery('.sort-selectbox').val(jQuery(this).parent().attr('data-value'));
-      jQuery('.sort-options').fadeToggle('fast');
+      jQuery('.sort-options').fadeIn('fast');
       jQuery('.sort-selectbox').trigger("change");
     });
 });
