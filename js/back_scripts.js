@@ -112,6 +112,7 @@ jQuery(document).ready(function(e) {
 	
 	if (typeof wp.data !== "undefined") {
 		wp.data.subscribe(function(){
+			console.log(wp.data.select('core/editor'));
 			var isSavingPost = wp.data.select('core/editor').isSavingPost();
 			var isAutosavingPost = wp.data.select('core/editor').isAutosavingPost();
 			
