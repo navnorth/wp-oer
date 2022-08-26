@@ -112,12 +112,14 @@ jQuery(document).ready(function(e) {
 	
 	if (typeof wp.data !== "undefined") {
 		wp.data.subscribe(function(){
-			var isSavingPost = wp.data.select('core/editor').isSavingPost();
-			var isAutosavingPost = wp.data.select('core/editor').isAutosavingPost();
-			
-			if (isSavingPost && !isAutosavingPost) {
-				if (typeof window.tinyMCE !== "undefined")
-					window.tinyMCE.triggerSave();
+			if (wp.data.select('core/editor')){
+				var isSavingPost = wp.data.select('core/editor').isSavingPost();
+				var isAutosavingPost = wp.data.select('core/editor').isAutosavingPost();
+				
+				if (isSavingPost && !isAutosavingPost) {
+					if (typeof window.tinyMCE !== "undefined")
+						window.tinyMCE.triggerSave();
+				}
 			}
 		});
 	}
