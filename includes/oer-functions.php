@@ -3534,7 +3534,7 @@ if (! function_exists('oer_standards_list_display')){
                    foreach($stds as $std){
                        if (isset($std['core_standard_id'])) {
                            echo "<li>";
-                               echo '<a class="lp-standard-toggle" data-toggle="collapse" href="#core-standard-'.$std['core_standard_id'].'">'.esc_html($std['core_standard_name']).' <i class="fas fa-caret-right"></i></a>';
+                               echo '<a class="lp-standard-toggle" data-bs-toggle="collapse" href="#core-standard-'.$std['core_standard_id'].'">'.esc_html($std['core_standard_name']).' <i class="fas fa-caret-right"></i></a>';
                            ?>
                            <div class="collapse tc-lp-details-standard" id="core-standard-<?php echo esc_attr($std['core_standard_id']); ?>">
                            <?php

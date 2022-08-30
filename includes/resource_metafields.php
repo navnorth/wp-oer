@@ -462,7 +462,7 @@ if (get_option('oer_metadata_firstload')=="")
 				}
 				?>
 				<input type="hidden" name="oer_standard" value="<?php echo esc_attr($oStandard); ?>" />
-				<button id="add-new-standard" data-toggle="modal" class="ui-button components-button is-button is-default button button-primary"><?php esc_html_e('Add Standards',OER_SLUG); ?></button>
+				<button id="add-new-standard" data-bs-toggle="modal" class="ui-button components-button is-button is-default button button-primary"><?php esc_html_e('Add Standards',OER_SLUG); ?></button>
 			</div>
 	
 		</div>
@@ -947,7 +947,7 @@ if (get_option('oer_metadata_firstload')=="")
 									?>
 								</div>
 								<input type="hidden" name="oer_related_resource" value="<?php echo esc_attr($oer_related_resource); ?>"/>
-								<button id="add-new-related-resource" data-toggle="modal" class="ui-button components-button is-button is-default button button-primary"><?php esc_html_e('Add Related Resources',OER_SLUG); ?></button>
+								<button id="add-new-related-resource" data-bs-toggle="modal" class="ui-button components-button is-button is-default button button-primary"><?php esc_html_e('Add Related Resources',OER_SLUG); ?></button>
 						</div>
 				</div>
 			</div>
