@@ -2,7 +2,7 @@
 Contributors: navigationnorth, joehobson, johnpaulbalagolan, josepheneldas, arobotnamedchris
 Tags: OER, Open Educational Resources, Education, Teaching, Learning
 Requires at least: 4.4
-Tested up to: 6.0
+Tested up to: 6.0.2
 Requires PHP: 7.0
 Stable tag: 0.9.1
 License: GPLv3
