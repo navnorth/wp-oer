@@ -147,11 +147,13 @@ function oer_display_resource_block( $attributes, $ajax = false ){
 
             <?php if ($showGrades=="true"): 
                 $grade_levels = oer_resource_block_grade_levels($resource->ID);
+                if ($grade_levels):
                 ?>
-            <div class="oer-resource-block-grade-levels">
-                <strong><?php esc_html_e('Grade Levels', OER_SLUG); ?>: </strong> <?php echo esc_html($grade_levels); ?>
-            </div>
-            <?php endif; ?>
+                <div class="oer-resource-block-grade-levels">
+                    <strong><?php esc_html_e('Grade Levels', OER_SLUG); ?>: </strong> <?php echo esc_html($grade_levels); ?>
+                </div>
+            <?php endif;
+            endif; ?>
         </div>
 
         <?php
@@ -174,12 +176,14 @@ function oer_resource_block_subjects($resource_id){
     $subjects = array();
     $subj_arr = get_the_terms($resource_id, 'resource-subject-area');
     
-    foreach ($subj_arr as $subj){
-        $subjects[] = array(
-                        "term_id" => $subj->term_id,
-                        "name" => $subj->name,
-                        "term_link" => get_term_link($subj->term_id,'resource-subject-area')
-                        );
+    if (is_array($subj_arr)){
+        foreach ($subj_arr as $subj){
+            $subjects[] = array(
+                            "term_id" => $subj->term_id,
+                            "name" => $subj->name,
+                            "term_link" => get_term_link($subj->term_id,'resource-subject-area')
+                            );
+        }
     }
     return $subjects;
 }

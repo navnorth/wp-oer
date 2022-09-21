@@ -70,9 +70,9 @@ if (!current_user_can('manage_options')) {
 	</div>
     </div>
 </div><!-- /.wrap -->
-<div class="plugin-footer">
-	<div class="plugin-info"><?php echo OER_ADMIN_PLUGIN_NAME . " " . OER_VERSION .""; ?></div>
-	<div class="plugin-link"><a href="<?php echo esc_url('https://www.wp-oer.com/') ?>" target="_blank"><?php esc_html_e("More Information", OER_SLUG); ?></a></div>
+<div class="oer-plugin-footer">
+	<div class="oer-plugin-info"><?php echo OER_ADMIN_PLUGIN_NAME . " " . OER_VERSION .""; ?></div>
+	<div class="oer-plugin-link"><a href="<?php echo esc_url('https://www.wp-oer.com/') ?>" target="_blank"><?php esc_html_e("More Information", OER_SLUG); ?></a></div>
 	<div class="clear"></div>
 </div>
 <?php oer_display_loader(); ?>

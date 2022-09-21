@@ -2415,10 +2415,10 @@ function oer_generate_sll_resource_embed_code($url){
 	
 	$sll_resource_id = oer_get_ssl_resource_id($url);
 	
-	//Generate embed code
+	//Generate SLL Resource embed code
 	if ($sll_resource_id) {
-		wp_enqueue_script('learninglab-resource', 'https://learninglab.si.edu/embed/widget/q/r/'.$sll_resource_id.'/embed.js');
-		//$embed_code = '<script type="text/javascript" src="https://learninglab.si.edu/embed/widget/q/r/'.$sll_resource_id.'/embed.js"></script><div class="sll-embed" data-widget-type="r" data-widget-key="'.$sll_resource_id.'"></div>';
+		wp_register_script( 'learninglab-resource' , 'https://learninglab.si.edu/embed/widget/q/r/'.$sll_resource_id.'/embed.js' , '', null, true );
+		wp_enqueue_script( 'learninglab-resource' );
 		$embed_code = '<div class="sll-embed" data-widget-type="r" data-widget-key="'.$sll_resource_id.'"></div>';
 	}
 	return $embed_code;
@@ -2438,11 +2438,10 @@ function oer_generate_sll_collection_embed_code($url){
 	$embed_code = "";
 	
 	$sll_collection_id = oer_get_ssl_collection_id($url);
-	
-	//Generate embed code
+	//Generate SLL Collection embed code
 	if ($sll_collection_id) {
-		wp_enqueue_script('learninglab-collection', 'https://learninglab.si.edu/embed/widget/q/c/'.$sll_collection_id.'/embed.js');
-		//$embed_code = '<script type="text/javascript" src="https://learninglab.si.edu/embed/widget/q/c/'.$sll_collection_id.'/embed.js"></script><div class="sll-embed" data-widget-type="c" data-widget-key="'.$sll_collection_id.'"></div>';
+		wp_register_script( 'learninglab-collection' , 'https://learninglab.si.edu/embed/widget/q/c/'.$sll_collection_id.'/embed.js' , '' , null, true );
+		wp_enqueue_script('learninglab-collection');
 		$embed_code = '<div class="sll-embed" data-widget-type="c" data-widget-key="'.$sll_collection_id.'"></div>';
 	}
 	return $embed_code;
@@ -3900,33 +3899,37 @@ function oer_allowed_html() {
 
 	global $allowedposttags;
 
-	$allowed_atts = array(
-		'align'      => array(),
-		'class'      => array(),
-		'type'       => array(),
-		'id'         => array(),
-		'dir'        => array(),
-		'lang'       => array(),
-		'style'      => array(),
-		'xml:lang'   => array(),
-		'src'        => array(),
-		'alt'        => array(),
-		'href'       => array(),
-		'rel'        => array(),
-		'rev'        => array(),
-		'target'     => array(),
-		'novalidate' => array(),
-		'type'       => array(),
-		'value'      => array(),
-		'name'       => array(),
-		'tabindex'   => array(),
-		'action'     => array(),
-		'method'     => array(),
-		'for'        => array(),
-		'width'      => array(),
-		'height'     => array(),
-		'data'       => array(),
-		'title'      => array(),
+	$allowed_atts = array(	
+		'align'      		=> array(),
+		'class'      		=> array(),
+		'type'       		=> array(),
+		'id'         		=> array(),
+		'dir'        		=> array(),
+		'lang'       		=> array(),
+		'style'      		=> array(),
+		'xml:lang'   		=> array(),
+		'src'        		=> array(),
+		'alt'        		=> array(),
+		'href'       		=> array(),
+		'rel'        		=> array(),
+		'rev'        		=> array(),
+		'target'     		=> array(),
+		'novalidate' 		=> array(),
+		'type'       		=> array(),
+		'value'      		=> array(),
+		'name'       		=> array(),
+		'tabindex'   		=> array(),
+		'action'     		=> array(),
+		'method'     		=> array(),
+		'for'        		=> array(),
+		'width'      		=> array(),
+		'height'     		=> array(),
+		'data'       		=> array(),
+		'title'      		=> array(),
+		'data-widget-type' 	=> array(),
+		'data-widget-key'	=> array(),
+		'data-sort'			=> array(),
+		'data-count'		=> array(),
 	);
 	$allowedposttags['form']     = $allowed_atts;
 	$allowedposttags['label']    = $allowed_atts;
