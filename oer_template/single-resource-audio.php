@@ -1,4 +1,5 @@
 <?php /** Website/Image/Document(except PDF)/Other Resource Template **/ 
+
 $allowed_tags = oer_allowed_html();
 
 // Checks if display more button should be displayed
@@ -12,10 +13,12 @@ if (!empty($grade_levels) || !empty($grades) || !empty($suggested_time)
     <div class="oer-sngl-rsrc-img oer-sngl-audio-type">
         <?php
         $type=oer_get_resource_file_type($url);
-        if ($type['name']=="Audio")
-            echo oer_generate_audio_resource_embed($url);
-        else
-            echo oer_display_default_thumbnail($post);
+        if (is_array($type)){
+            if ($type['name']=="Audio")
+                echo oer_generate_audio_resource_embed($url);
+            else
+                echo oer_display_default_thumbnail($post);
+        }
         ?>
     </div>
     <div id="" class="oer-authorName oer-cbxl">

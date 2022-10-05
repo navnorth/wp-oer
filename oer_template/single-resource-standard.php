@@ -1,4 +1,5 @@
 <?php
+
 $post_meta_data = get_post_meta($post->ID );
 $author_set = (get_option('oer_authorname_label'))?true:false;
 $author_enabled = (get_option('oer_authorname_enabled'))?true:false;
@@ -87,10 +88,12 @@ if (!empty($grade_levels) || !empty($grades) || !empty($suggested_time)
             }
         } else {
             $type=oer_get_resource_file_type($url);
-            if ($type['name']=="Video"){
-                echo oer_embed_video_file($url, $type['type']);
-            } else {
-                echo oer_display_default_thumbnail($post);
+            if (is_array($type)){
+                if ($type['name']=="Video"){
+                    echo oer_embed_video_file($url, $type['type']);
+                } else {
+                    echo oer_display_default_thumbnail($post);
+                }
             }
         }
         if ($embed_disabled){

@@ -1,4 +1,5 @@
 <?php /** Video Resource Template **/ 
+
 $allowed_tags = oer_allowed_html();
 
 // Checks if display more button should be displayed
@@ -9,8 +10,10 @@ if (!empty($external_repository) || !empty($repository_record)
 <div class="oer-rsrclftcntr-video col-md-12 col-sm-12 col-xs-12">    
         <?php
         $type=oer_get_resource_file_type($url);
-        if ($type['name']=="Video")
-            echo oer_embed_video_file($url, $type['type']);
+        if (is_array($type)){
+            if ($type['name']=="Video")
+                echo oer_embed_video_file($url, $type['type']);
+        }
         ?>
 </div>
 <div class="oer-rsrccntr-details col-md-12 col-sm-12 col-xs-12">
