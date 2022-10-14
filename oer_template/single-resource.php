@@ -157,11 +157,6 @@ $template_args = array(
     'sensitive_material_set' => $sensitive_material_set,
     'sensitive_material_enabled' => $sensitive_material_enabled
 );
-
-if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
-    || !empty($cc_license) || !empty($external_repository) || !empty($repository_record)
-    || !empty($citation) || !empty($transcription) || !empty($sensitive_material))
-    $display_see_more = true;
 ?>
 <!--<div id="primary" class="content-area">-->
     <main id="oer_main" class="site-main" role="main">
@@ -188,10 +183,12 @@ if (!empty($age_levels) || !empty($grades) || !empty($suggested_time)
 			case "other":
 			case "image":
 				$oer_type=oer_get_resource_file_type($url);
-				if ($oer_type['name']=="PDF")
-				    $resource_template = OER_PATH.'oer_template/single-resource-pdf.php';
-				else
-				    $resource_template = OER_PATH.'oer_template/single-resource-website.php';
+				if (is_array($oer_type)){
+					if ($oer_type['name']=="PDF")
+					    $resource_template = OER_PATH.'oer_template/single-resource-pdf.php';
+					else
+					    $resource_template = OER_PATH.'oer_template/single-resource-website.php';
+				}
 				break;
 			case "audio":
 				$oer_type=oer_get_resource_file_type($url);

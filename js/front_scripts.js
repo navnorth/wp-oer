@@ -69,6 +69,7 @@ jQuery(document).ready(function(e) {
 
 	setTimeout(function(){ 
         jQuery('[data-toggle="collapse"]').removeAttr('data-parent');
+        jQuery('[data-bs-toggle="collapse"]').removeAttr('data-parent');
     }, 1000);
 });
 

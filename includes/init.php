@@ -385,17 +385,16 @@ add_action('save_post', 'oer_save_customfields');
 function oer_save_customfields()
 {
     global $post, $wpdb, $_oer_prefix;
-    
+
     //Check first if screenshot is enabled
     $screenshot_enabled = get_option( 'oer_enable_screenshot' );
     $external_screenshot = get_option('oer_external_screenshots');
     
     //Check first if $post is not empty
     if ($post) {
-	if($post->post_type == 'resource')
-	{
-	    if (isset($_GET['action']) && (sanitize_text_field($_GET['action'])=="trash" || sanitize_text_field($_GET['action'])=="untrash")){
-		return; 
+		if($post->post_type == 'resource'){
+		    if (isset($_GET['action']) && (sanitize_text_field($_GET['action'])=="trash" || sanitize_text_field($_GET['action'])=="untrash")){
+			return; 
 	    }
 	    if (!isset($_POST['oer_metabox_nonce_field']) || !wp_verify_nonce( $_POST['oer_metabox_nonce_field'], 'oer_metabox_action' )) {
 		    wp_die('Nonce verification failed');
@@ -427,20 +426,20 @@ function oer_save_customfields()
 		{
 			update_post_meta( $post->ID , 'oer_grade' , '');
 		}
-    
-    // Save Age Levels
+    	
+    	// Save Age Levels
 		if(isset($_POST['oer_age_levels']))
 		{
 		    update_post_meta( $post->ID , 'oer_age_levels' , sanitize_text_field($_POST['oer_age_levels']));
 		}
     
-    // Save Instructional Time
+    	// Save Instructional Time
 		if(isset($_POST['oer_instructional_time']))
 		{
 		    update_post_meta( $post->ID , 'oer_instructional_time' , sanitize_text_field($_POST['oer_instructional_time']));
 		}
     
-    // Save Creative Commons License
+    	// Save Creative Commons License
 		if(isset($_POST['oer_creativecommons_license']))
 		{
 		    update_post_meta( $post->ID , 'oer_creativecommons_license' , sanitize_text_field($_POST['oer_creativecommons_license']));
@@ -558,11 +557,17 @@ function oer_save_customfields()
 		if(isset($_POST['oer_authortype2']))
 		{
 			update_post_meta( $post->ID , 'oer_authortype2' , sanitize_text_field($_POST['oer_authortype2']));
+		} else {
+			if (get_post_meta($post->ID, 'oer_authortype2'))
+				delete_post_meta($post->ID, 'oer_authortype2');
 		}
 
 		if(isset($_POST['oer_authorname2']))
 		{
 			update_post_meta( $post->ID , 'oer_authorname2' , sanitize_text_field($_POST['oer_authorname2']));
+		} else {
+			if (get_post_meta($post->ID, 'oer_authorname2'))
+				delete_post_meta($post->ID, 'oer_authorname2');
 		}
 
 		if(isset($_POST['oer_authorurl2']))
@@ -576,11 +581,17 @@ function oer_save_customfields()
 				}
 			}
 			update_post_meta( $post->ID , 'oer_authorurl2' , $oer_authorurl2);
+		} else {
+			if (get_post_meta($post->ID, 'oer_authorurl2'))
+				delete_post_meta($post->ID, 'oer_authorurl2');
 		}
 
 		if(isset($_POST['oer_authoremail2']))
 		{
 			update_post_meta( $post->ID , 'oer_authoremail2' , sanitize_email($_POST['oer_authoremail2']));
+		} else {
+			if (get_post_meta($post->ID, 'oer_authoremail2'))
+				delete_post_meta($post->ID, 'oer_authoremail2');
 		}
 
 		if(isset($_POST['oer_publishername']))

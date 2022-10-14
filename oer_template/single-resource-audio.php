@@ -1,15 +1,24 @@
 <?php /** Website/Image/Document(except PDF)/Other Resource Template **/ 
+
 $allowed_tags = oer_allowed_html();
+
+// Checks if display more button should be displayed
+if (!empty($grade_levels) || !empty($grades) || !empty($suggested_time)
+    || !empty($cc_license) || !empty($external_repository) || !empty($repository_record)
+    || !empty($citation) || !empty($transcription) || !empty($sensitive_material))
+    $display_see_more = true;
 ?>
 <div class="oer-rsrclftcntr-img col-md-5 col-sm-12 col-xs-12">
     <!--Resource Image-->
     <div class="oer-sngl-rsrc-img oer-sngl-audio-type">
         <?php
         $type=oer_get_resource_file_type($url);
-        if ($type['name']=="Audio")
-            echo oer_generate_audio_resource_embed($url);
-        else
-            echo oer_display_default_thumbnail($post);
+        if (is_array($type)){
+            if ($type['name']=="Audio")
+                echo oer_generate_audio_resource_embed($url);
+            else
+                echo oer_display_default_thumbnail($post);
+        }
         ?>
     </div>
     <div id="" class="oer-authorName oer-cbxl">
@@ -126,7 +135,7 @@ $allowed_tags = oer_allowed_html();
                     else
                         echo '<li>'.wp_kses($subject,$allowed_tags).'</li>';
                     if (($i==2) && ($cnt>2))
-                        echo '<li><a class="see-more-subjects" data-toggle="collapse" data-count="'.esc_attr($moreCnt).'" href=".lp-subject-hidden">SEE '.esc_html($moreCnt).' MORE +</a></li>';
+                        echo '<li><a class="see-more-subjects" data-bs-toggle="collapse" data-count="'.esc_attr($moreCnt).'" href=".lp-subject-hidden">SEE '.esc_html($moreCnt).' MORE +</a></li>';
                     $i++;
                 }
                 ?>
@@ -157,7 +166,7 @@ $allowed_tags = oer_allowed_html();
                     else
                         echo "<li><a href='".esc_url($curriculum_url)."'>".esc_html($curriculum['post_title'])."</a></li>";
                     if (($i==2) && ($cnt>2))
-                        echo '<li><a class="see-more-subjects" data-toggle="collapse" data-count="'.esc_attr($moreCnt).'" href=".lp-subject-hidden">SEE '.esc_html($moreCnt).' MORE +</a></li>';
+                        echo '<li><a class="see-more-subjects" data-bs-toggle="collapse" data-count="'.esc_attr($moreCnt).'" href=".lp-subject-hidden">SEE '.esc_html($moreCnt).' MORE +</a></li>';
                     $i++;
                 }
                 ?>
@@ -169,7 +178,7 @@ $allowed_tags = oer_allowed_html();
 </div> <!--Description & Resource Info at Right-->
 <?php  if ($display_see_more): ?>
 <div class="oer-see-more-row col-md-12 col-sm-12 col-xs-12">
-    <p class="center"><span><a id="oer-see-more-link" class="oer-see-more-link" role="button" data-toggle="collapse" href="#tcHiddenFields" aria-expanded="false" aria-controls="tcHiddenFields"><?php esc_html_e("SEE MORE +",OER_SLUG); ?></a></span></p>
+    <p class="center"><span><a id="oer-see-more-link" class="oer-see-more-link" role="button" data-bs-toggle="collapse" href="#tcHiddenFields" aria-expanded="false" aria-controls="tcHiddenFields"><?php esc_html_e("SEE MORE +",OER_SLUG); ?></a></span></p>
 </div>
 <?php endif; ?>
 <div id="tcHiddenFields" class="tc-hidden-fields collapse row col-md-12 col-sm-12 col-xs-12">

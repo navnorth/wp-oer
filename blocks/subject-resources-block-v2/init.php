@@ -591,7 +591,11 @@ function oer_ajax_get_subject_resources(){
     // Sanitize POST parameters
     $params = array();
     $params['action'] = sanitize_text_field($_POST['action']);
-    $params['attributes'] = $_POST['attributes'];
+    if (isset($_POST['attributes']))
+        $params['attributes'] = $_POST['attributes'];
+    else
+        $params['attributes'] = $_POST;
+
     array_walk($params['attributes'], function(&$value, &$key){
         $value['displayCount'] = sanitize_text_field($value['displayCount']);
         $value['sort'] = sanitize_text_field($value['sort']);

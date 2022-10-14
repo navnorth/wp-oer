@@ -124,6 +124,7 @@ p.center { text-align:center; }
 .oer-lp-full-content {
     display: none;
 }
+.oer-lp-full-content .bx-wrapper.mobile .featuredwpr_bxslider li { width:375px !important; }
 .oer-lp-full-content pre {
     white-space: normal !important;
 }

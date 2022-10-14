@@ -441,6 +441,7 @@ li.oer_sbstndard{
 .search-results .type-resource .entry-header h2.entry-title { margin-bottom:0; }
 .search-results .type-resource .entry-header h5.post-meta { margin-bottom:1.05em; }
 .search-results .type-resource .entry-header h5.post-meta .post-meta-box { margin-right:15px; }
+.search-results #content #posts-container .pagination { margin-bottom:20px; }
 article.oer_sngl_resource_wrapper div#sngl-resource header.entry-header h1.entry-title {font-size: 20px; line-height: 30px;}
 .oer-standards #content, .standards-template #content,
 .substandards-template #content, .notation-template #content { width:100%; }
@@ -660,3 +661,10 @@ div#oer_related_resources_list label input {
 .twenty-twelve .wp-block-wp-oer-plugin-wp-oer-subjects-index .oer-cntnr .oer-ctgry-cntnr .oer_snglctwpr .oer-cat-div .oer-cat-txt-btm-cntnr ul li { margin-top:35px; margin-left:0; }
 .twenty-twelve .wp-block-wp-oer-plugin-wp-oer-subjects-index .oer-cntnr .oer-ctgry-cntnr .oer_snglctwpr .oer-cat-div .oer-cat-txt-btm-cntnr ul li .oer-mne-sbjct-ttl { width:45%; }
 .oer-subject-resources-list .oer-snglrsrc .oer-snglttldscrght .tagcloud span { margin:10px 0; }
+.tc-oer-subject-areas-list li.lp-subject-hidden i {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 3px;
+    margin-right: 3px;
+}
