@@ -4,7 +4,7 @@ Tags: OER, Open Educational Resources, Education, Teaching, Learning
 Requires at least: 4.4
 Tested up to: 6.0.2
 Requires PHP: 7.0
-Stable tag: 0.9.1
+Stable tag: 0.9.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -41,6 +41,12 @@ No frequently asked questions.
 3. Display educational resources on your WordPress website!
 
 == Changelog ==
+= 0.9.2 =
+* Fixed the overlapping text on the settings and import pages including the standard list display
+* Fixed the Resource Block display error when the resource has no selected subject areas
+* Fixed the front-end issue on Subject Resources block sorting and display count
+* Tested up to WP 6.0.2
+
 = 0.9.1 =
 * Replaced move_uploaded_file with wp_handle_upload function when importing subject areas and resources
 * Removed quote around string placeholders used in $wpdb->prepare statements
