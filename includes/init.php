@@ -507,6 +507,14 @@ function oer_save_customfields()
 			}
 			update_post_meta( $post->ID , 'oer_isbasedonurl' , $oer_isbasedonurl);
 		}
+
+		// Save Resource Notice
+		if(isset($_POST['oer_resource_notice']))
+		{
+			// Sanitize wp_editor content
+			$oer_resource_notice = sanitize_post_field('post_content', $_POST['oer_resource_notice'], $post->ID, 'db');
+			update_post_meta( $post->ID , 'oer_resource_notice' , $oer_resource_notice);
+		}
 		
 		if(isset($_POST['oer_standard_alignment']))
 		{
