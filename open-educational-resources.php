@@ -335,7 +335,11 @@ function oer_template_choser( $template ) {
 	}
 
 	if ( is_single($post_id) ){
-		return oer_get_template_hierarchy('single-resource');
+		if (!get_option('wp_oese_theme_nalrc_header')){
+			return oer_get_template_hierarchy('single-resource');
+		} else {
+			return oer_get_template_hierarchy('single-resource-nalrc');
+		}
 	}
 
 }
