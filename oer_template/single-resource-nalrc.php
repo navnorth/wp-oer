@@ -141,6 +141,12 @@ $oer_resource_notice = (isset($post_meta_data['oer_resource_notice'][0])?$post_m
                 <?php endif; ?>
             </div>
             <div class="col-md-3">
+                <div class="nalrc-resource-thumbnail">
+                    <?php echo oer_nalrc_display_default_thumbnail($post); ?>
+                </div>
+                <div class="nalrc-view-source">
+                    <a href="<?php echo esc_url($oer_resource_url); ?>" target="_blank" class="nalrc-view-button"><?php _e('View Source >>', WP_OESE_THEME_SLUG); ?></a>
+                </div>
             </div>
         </div>
         <?php if ($oer_resource_notice): ?>
