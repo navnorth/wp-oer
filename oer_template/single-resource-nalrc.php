@@ -24,8 +24,10 @@ $output .="</style>"."\n";
 // Resource Subject Areas
 $subject_areas = array();
 $topics = "";
+$keywords = "";
 $post_terms = get_the_terms( $post->ID, 'resource-subject-area' );
 
+// Topic Area(s)
 if(!empty($post_terms))
 {
     $subjects = array();
@@ -61,7 +63,7 @@ if(!empty($post_terms))
     }
     if (count($subjects)>0)
         $subject_areas = array_merge($subject_areas,$subjects);
-    
+
     foreach($subject_areas as $subject){
         if ($topics)
             $topics .= ", ".$subject->name;
@@ -69,13 +71,25 @@ if(!empty($post_terms))
             $topics .= $subject->name;
     }
 }
-$embed_disabled = false;
+
+// Keyword(s)
+$tags = get_the_tags();
+if ($tags){
+    foreach($tags as $tag){
+        if ($keywords)
+            $keywords .= ", ".ucfirst($tag->name);
+        else
+            $keywords .= ucfirst($tag->name);
+    }
+}
 
 // Resource Meta Data
 $post_meta_data = get_post_meta($post->ID );
 
 // Get Post Meta
 $oer_resource_url = (isset($post_meta_data['oer_resourceurl'][0])?$post_meta_data['oer_resourceurl'][0]:false); 
+
+// Author(s)
 $oer_authorname = (isset($post_meta_data['oer_authorname'][0])?$post_meta_data['oer_authorname'][0]:false);
 $oer_authorurl = (isset($post_meta_data['oer_authorurl'][0])?$post_meta_data['oer_authorurl'][0]:false);
 $oer_authorname2 = (isset($post_meta_data['oer_authorname2'][0])?$post_meta_data['oer_authorname2'][0]:false);
@@ -89,13 +103,13 @@ $oer_authorurl2 = (isset($post_meta_data['oer_authorurl2'][0])?$post_meta_data['
                 <div class="nalrc-resource-row">
                     <div class="nalrc-resource-desc nalrc-resource-value"><?php the_content(); ?></div>
                 </div>
-                <?php if ($oer_resource_url): ?>
+                <?php /** Display Resource URL **/  if ($oer_resource_url): ?>
                 <div class="nalrc-resource-row">
                     <label><?php _e('Resource URL', WP_OESE_THEME_SLUG); ?></label>
                     <div class="nalrc-resource-url nalrc-resource-value"><a href="<?php echo esc_html($oer_resource_url); ?>"><?php echo esc_html($oer_resource_url); ?></a></div>
                 </div>
                 <?php endif; ?>
-                <?php if ($oer_authorname || $oer_authorname2): ?>
+                <?php /** Display Author(s) **/ if ($oer_authorname || $oer_authorname2): ?>
                 <div class="nalrc-resource-row">
                     <label><?php _e('Author(s)', WP_OESE_THEME_SLUG); ?></label>
                     <div class="nalrc-resource-url nalrc-resource-value">
@@ -112,10 +126,16 @@ $oer_authorurl2 = (isset($post_meta_data['oer_authorurl2'][0])?$post_meta_data['
                     </div>
                 </div>
                 <?php endif; ?>
-                <?php if (!empty($subject_areas)): ?>
+                <?php /** Display Topic Area(s) **/ if (!empty($subject_areas)): ?>
                 <div class="nalrc-resource-row">
                     <label><?php _e('Topic Area(s)', WP_OESE_THEME_SLUG); ?></label>
                     <div class="nalrc-resource-url nalrc-resource-value"><?php echo esc_html($topics); ?></div>
+                </div>
+                <?php endif; ?>
+                <?php /** Display Keyword(s) **/ if (!empty($keywords)): ?>
+                <div class="nalrc-resource-row">
+                    <label><?php _e('Key Word(s)', WP_OESE_THEME_SLUG); ?></label>
+                    <div class="nalrc-resource-url nalrc-resource-value"><?php echo esc_html($keywords); ?></div>
                 </div>
                 <?php endif; ?>
             </div>
