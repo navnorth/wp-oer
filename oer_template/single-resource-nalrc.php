@@ -9,14 +9,6 @@ wp_enqueue_style( "resource-styles" );
 
 get_header();
 
-//Add this hack to display top nav and head section on Eleganto theme
-$cur_theme = wp_get_theme();
-$theme = $cur_theme->get('Name');
-if ($theme == "Eleganto"){
-    get_template_part( 'template-part', 'topnav' );
-    get_template_part( 'template-part', 'head' );
-}
-
 global $post;
 global $wpdb, $_oer_prefix;
 global $_css_oer;
@@ -28,11 +20,6 @@ $output .= $_css_oer."\n";
 $output .="</style>"."\n";
     echo wp_kses($output, $allowed_tags);
 }
-
-$url = get_post_meta($post->ID, "oer_resourceurl", true);
-$url_domain = oer_getDomainFromUrl($url);
-
-$hide_title = get_option('oer_hide_resource_title');
 
 // Resource Subject Areas
 $subject_areas = array();
@@ -81,19 +68,46 @@ $post_meta_data = get_post_meta($post->ID );
 
 // Get Post Meta
 $oer_resource_url = (isset($post_meta_data['oer_resourceurl'][0])?$post_meta_data['oer_resourceurl'][0]:false); 
+$oer_authorname = (isset($post_meta_data['oer_authorname'][0])?$post_meta_data['oer_authorname'][0]:false);
+$oer_authorurl = (isset($post_meta_data['oer_authorurl'][0])?$post_meta_data['oer_authorurl'][0]:false);
+$oer_authorname2 = (isset($post_meta_data['oer_authorname2'][0])?$post_meta_data['oer_authorname2'][0]:false);
+$oer_authorurl2 = (isset($post_meta_data['oer_authorurl2'][0])?$post_meta_data['oer_authorurl2'][0]:false);
 ?>
 <main id="oer_main" class="site-main nalrc-main" role="main">
     <section id="sngl-resource" class="entry-content oer-cntnr post-content oer_sngl_resource_wrapper nalrc-resource-content row">
-        <div class="nalrc-resource-row">
-            <h1 class="entry-title col-md-12"><?php echo esc_html($post->post_title); ?></h1>
-            <div class="nalrc-resource-desc nalrc-resource-value"><?php the_content(); ?></div>
+        <h1 class="entry-title col-md-12"><?php echo esc_html($post->post_title); ?></h1>
+        <div class="row">
+            <div class="col-md-9">
+                <div class="nalrc-resource-row">
+                    <div class="nalrc-resource-desc nalrc-resource-value"><?php the_content(); ?></div>
+                </div>
+                <?php if ($oer_resource_url): ?>
+                <div class="nalrc-resource-row">
+                    <label><?php _e('Resource URL', WP_OESE_THEME_SLUG); ?></label>
+                    <div class="nalrc-resource-url nalrc-resource-value"><a href="<?php echo esc_html($oer_resource_url); ?>"><?php echo esc_html($oer_resource_url); ?></a></div>
+                </div>
+                <?php endif; ?>
+                <?php if ($oer_authorname || $oer_authorname2): ?>
+                <div class="nalrc-resource-row">
+                    <label><?php _e('Author(s)', WP_OESE_THEME_SLUG); ?></label>
+                    <div class="nalrc-resource-url nalrc-resource-value">
+                        <?php 
+                        $authors = "";
+                        if ($oer_authorname)
+                            $authors .= $oer_authorname;
+                        if ($oer_authorname2){
+                            if ($authors)
+                                $authors .= ", ". $oer_authorname2;
+                        }
+                        echo esc_html($authors); 
+                        ?>
+                    </div>
+                </div>
+                <?php endif; ?>
+            </div>
+            <div class="col-md-3">
+            </div>
         </div>
-        <?php if ($oer_resource_url): ?>
-        <div class="nalrc-resource-row">
-            <label><?php _e('Resource Url', WP_OESE_THEME_SLUG); ?></label>
-            <div class="nalrc-resource-url nalrc-resource-value"><a href="<?php echo esc_html($oer_resource_url); ?>"><?php echo esc_html($oer_resource_url); ?></a></div>
-        </div>
-        <?php endif; ?>
     </section><!-- .single resource wrapper -->
 </main>
 
