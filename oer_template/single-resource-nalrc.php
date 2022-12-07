@@ -23,6 +23,7 @@ $output .="</style>"."\n";
 
 // Resource Subject Areas
 $subject_areas = array();
+$topics = "";
 $post_terms = get_the_terms( $post->ID, 'resource-subject-area' );
 
 if(!empty($post_terms))
@@ -60,6 +61,13 @@ if(!empty($post_terms))
     }
     if (count($subjects)>0)
         $subject_areas = array_merge($subject_areas,$subjects);
+    
+    foreach($subject_areas as $subject){
+        if ($topics)
+            $topics .= ", ".$subject->name;
+        else
+            $topics .= $subject->name;
+    }
 }
 $embed_disabled = false;
 
@@ -102,6 +110,12 @@ $oer_authorurl2 = (isset($post_meta_data['oer_authorurl2'][0])?$post_meta_data['
                         echo esc_html($authors); 
                         ?>
                     </div>
+                </div>
+                <?php endif; ?>
+                <?php if (!empty($subject_areas)): ?>
+                <div class="nalrc-resource-row">
+                    <label><?php _e('Topic Area(s)', WP_OESE_THEME_SLUG); ?></label>
+                    <div class="nalrc-resource-url nalrc-resource-value"><?php echo esc_html($topics); ?></div>
                 </div>
                 <?php endif; ?>
             </div>
