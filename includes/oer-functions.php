@@ -3305,6 +3305,9 @@ if (!function_exists('oer_get_meta_label')){
 			case "oer_related_resource":
 				$label = __("Related Resources", OER_SLUG);
 				break;
+			case "oer_resource_notice":
+				$label = __("Resource Notice", OER_SLUG);
+				break;
 		}
 		return $label;
 	}
