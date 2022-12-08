@@ -736,9 +736,13 @@ if (get_option('oer_metadata_firstload')=="")
 		}
 		?>
 
+		<?php if (get_option('oer_publishername_enabled') 
+				|| get_option('oer_publisherurl_enabled')
+				|| get_option('oer_publisheremail_enabled')): ?>
         <div class="oer_snglfld oer_hdngsngl">
 		<?php esc_html_e("Publisher Information", OER_SLUG).":"; ?>
         </div>
+    	<?php endif; ?>
 
         <?php
 	// Publisher Name
@@ -812,9 +816,15 @@ if (get_option('oer_metadata_firstload')=="")
         </div>
 	<?php } ?>
 	
-	<div class="oer_snglfld oer_hdngsngl">
+	<?php if (get_option('oer_external_repository_enabled') 
+				|| get_option('oer_repository_recordurl_enabled')
+				|| get_option('oer_citation_enabled')
+				|| get_option('oer_sensitive_material_enabled')
+				|| get_option('oer_transcription_enabled')): ?>
+		<div class="oer_snglfld oer_hdngsngl">
 		<?php esc_html_e("Repository Information", OER_SLUG).":"; ?>
         </div>
+    <?php endif; ?>
 
         <?php
 	// External Repository
