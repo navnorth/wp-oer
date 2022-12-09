@@ -51,7 +51,7 @@ require_once(OER_PATH.'blocks/resource-block/init.php');
 include_once(OER_PATH.'widgets/class-subject-area-widget.php');
 
 //define global variable $debug_mode and get value from settings
-global $_debug, $_bootstrap, $_fontawesome, $_css, $_css_oer, $_subjectarea, $_search_post_ids, $_w_bootstrap, $_oer_prefix, $oer_session, $_gutenberg, $_use_gutenberg;
+global $_debug, $_bootstrap, $_fontawesome, $_css, $_css_oer, $_subjectarea, $_search_post_ids, $_w_bootstrap, $_oer_prefix, $oer_session, $_gutenberg, $_use_gutenberg, $_nalrc;
 
 if( ! defined( 'WP_SESSION_COOKIE' ) )
 	define( 'WP_SESSION_COOKIE', '_oer_session' );
@@ -74,6 +74,7 @@ $_css = get_option('oer_additional_css');
 $_css_oer = get_option('oer_only_additional_css');
 $_subjectarea = get_option('oer_display_subject_area');
 $_oer_prefix = "oer_";
+$_nalrc = (get_option('wp_oese_theme_nalrc_header')?true:false);
 
 register_activation_hook(__FILE__, 'oer_create_csv_import_table');
 function oer_create_csv_import_table()
@@ -773,7 +774,16 @@ function oer_embed_settings_callback(){
 //Initialize Style Settings Tab
 add_action( 'admin_init' , 'oer_styles_settings' );
 function oer_styles_settings(){
+	global $_nalrc;
+	$singular = "Subject Area";
+	$plural = "Subject Areas";
+	$label = "Subjects";
 
+	if ($_nalrc){
+		$singular = "Topic Area";
+		$plural = "Topic Areas";
+		$label = "Topics";
+	}
 	//Create Styles Section
 	add_settings_section(
 		'oer_styles_settings',
@@ -810,8 +820,8 @@ function oer_styles_settings(){
 			'type' => 'checkbox',
 			'value' => '1',
 			'default' => true,
-			'name' =>  __('Display Subjects menu on Subject Area pages', OER_SLUG),
-			'description' => __('Lists all subject areas in the left column of Subject Area pages—may conflict with themes using left navigation.', OER_SLUG)
+			'name' =>  __('Display '.$labels.' menu on '.$singular.' pages', OER_SLUG),
+			'description' => __('Lists all '.strtolower($plural).' in the left column of '.$singular.' pages—may conflict with themes using left navigation.', OER_SLUG)
 		)
 	);
 
@@ -842,7 +852,7 @@ function oer_styles_settings(){
 			'uid' => 'oer_hide_subject_area_title',
 			'type' => 'checkbox',
 			'value' => '1',
-			'name' =>  __('Subject Area pages', OER_SLUG),
+			'name' =>  __($singular.' pages', OER_SLUG),
 			'pre_html' => __('<h3>Hide Page Titles</h3><p class="description hide-description">Some themes have a built-in display of page titles.</p>', OER_SLUG))
 	);
 
@@ -908,7 +918,7 @@ function oer_styles_settings_callback(){
 //Initialize Setup Settings Tab
 add_action( 'admin_init' , 'oer_setup_settings' );
 function oer_setup_settings(){
-	global $_w_bootstrap, $_gutenberg;
+	global $_w_bootstrap, $_gutenberg, $_nalrc;
 
 	if ((isset($_REQUEST['post_type']) && $_REQUEST['post_type']=="resource") && (isset($_REQUEST['page']) && $_REQUEST['page']=="oer_settings")){
 		if (oer_is_bootstrap_loaded())
@@ -944,6 +954,9 @@ function oer_setup_settings(){
 	);
 
 	//Add Settings field for Import Default Subject Areas
+	$import_subject_label = "Subject Areas";
+	if ($_nalrc)
+		$import_subject_label = "Topic Areas";
 	add_settings_field(
 		'oer_import_default_subject_areas',
 		'',
@@ -955,8 +968,8 @@ function oer_setup_settings(){
 			'type' => 'checkbox',
 			'value' => '1',
 			'default' => true,
-			'name' =>  __('Import Default Subject Areas', OER_SLUG),
-			'description' => __('A general listing of the most common subject areas.', OER_SLUG)
+			'name' =>  __('Import Default '.$import_subject_label, OER_SLUG),
+			'description' => __('A general listing of the most common '.strtolower($import_subject_label).'.', OER_SLUG)
 		)
 	);
 
@@ -1353,9 +1366,12 @@ function oer_setup_radio_field($arguments){
 
 /** Initialize Subject Area Sidebar widget **/
 function oer_widgets_init() {
-
+	global $_nalrc;
+	$label = "Subject Area";
+	if ($_nalrc)
+		$label = "Topic Area";
 	register_sidebar( array(
-		'name' => 'Subject Area Sidebar',
+		'name' => $label.' Sidebar',
 		'id' => 'subject_area_sidebar',
 		'before_widget' => '<div id="oer-subject-area-widget">',
 		'after_widget' => '</div>',

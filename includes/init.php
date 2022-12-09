@@ -223,10 +223,18 @@ function oermeta_callback()
 //register custom category
 add_action( 'init', 'oer_create_resource_taxonomies', 0 );
 function oer_create_resource_taxonomies() {
-    global $_use_gutenberg;
+    global $_use_gutenberg, $_nalrc;
+    $singular = "Subject Area";
+    $plural = "Subject Areas";
+
+    // NALRC - change Subject Area label to topic area
+    if ($_nalrc){
+    	$singular = "Topic Area";
+    	$plural = "Topic Areas";
+    }
 
     $arr_tax = array(
-    	array("slug"=>"resource-subject-area","singular_name"=>"Subject Area", "plural_name"=>"Subject Areas"),
+    	array("slug"=>"resource-subject-area","singular_name"=>$singular, "plural_name"=>$plural),
     	array("slug"=>"resource-grade-level","singular_name"=>"Grade Level", "plural_name"=>"Grade Levels")
     );
     
@@ -289,17 +297,20 @@ function oer_sort_grade_level_terms( $args, $taxonomies )
  **/
 add_action( 'resource-subject-area_add_form_fields', 'oer_add_upload_image_fields', 10 );
 function oer_add_upload_image_fields($taxonomy) {
-    global $feature_groups;
+    global $feature_groups, $_nalrc;
+    $label = "Subject Area";
+    if ($_nalrc)
+    	$label = "Topic Area";
     ?>
     <?php wp_nonce_field( 'oer_add_upload_image_action', 'oer_add_upload_image_action_nonce_field' ); ?>
     <div class="form-field term-group">
-        <label for="main-icon-group"><?php _e('Subject Area Main Icon', OER_SLUG); ?></label>
+        <label for="main-icon-group"><?php _e($label.' Main Icon', OER_SLUG); ?></label>
 	<a id="main_icon_button" href="javascript:void(0);" class="button"><?php _e('Set Main Icon', OER_SLUG); ?></a>
 	<a id="remove_main_icon_button" href="javascript:void(0);" class="button hidden"><?php _e('Remove Main Icon', OER_SLUG); ?></a>
 	<input id="mainIcon" type="hidden" size="36" name="mainIcon" value="" />
     </div>
     <div class="form-field term-group">
-        <label for="hover-icon-group"><?php _e('Subject Area Hover Icon', OER_SLUG); ?></label>
+        <label for="hover-icon-group"><?php _e($label.' Hover Icon', OER_SLUG); ?></label>
 	<a id="hover_icon_button" href="javascript:void(0);" class="button"><?php _e('Set Hover Icon', OER_SLUG); ?></a>
 	<a id="remove_hover_icon_button" href="javascript:void(0);" class="button hidden"><?php _e('Remove Hover Icon', OER_SLUG); ?></a>
 	<input id="hoverIcon" type="hidden" size="36" name="hoverIcon" value="" />
@@ -312,12 +323,15 @@ function oer_add_upload_image_fields($taxonomy) {
  **/
 add_action( 'resource-subject-area_edit_form_fields', 'oer_edit_upload_image_fields', 10, 2 );
 function oer_edit_upload_image_fields( $term, $taxonomy ) {
-    
+    global $_nalrc;
+    $label = "Subject Area";
+    if ($_nalrc)
+    	$label = "Topic Area";
     $mainIcon = get_term_meta( $term->term_id, 'mainIcon', true );
      ?>
      <?php wp_nonce_field( 'oer_edit_upload_image_action', 'oer_edit_upload_image_action_nonce_field' ); ?>
      <tr class="form-field term-group-wrap">
-        <th scope="row"><label for="feature-group"><?php _e('Subject Area Main Icon', OER_SLUG); ?></label></th>
+        <th scope="row"><label for="feature-group"><?php _e($label.' Main Icon', OER_SLUG); ?></label></th>
         <td>
 	    <div class="main_icon_button_img"><img src="<?php echo esc_url($mainIcon); ?>" /></div>
 	    <a id="main_icon_button" href="javascript:void(0);" class="button"><?php esc_html_e('Set Main Icon', OER_SLUG); ?></a>
@@ -328,7 +342,7 @@ function oer_edit_upload_image_fields( $term, $taxonomy ) {
     
     $hoverIcon = get_term_meta( $term->term_id, 'hoverIcon', true );
     ?><tr class="form-field term-group-wrap">
-        <th scope="row"><label for="feature-group"><?php esc_html_e('Subject Area Hover Icon', OER_SLUG); ?></label></th>
+        <th scope="row"><label for="feature-group"><?php esc_html_e($label.' Hover Icon', OER_SLUG); ?></label></th>
         <td>
 	    <div class="hover_icon_button_img"><img src="<?php echo esc_url($hoverIcon); ?>" /></div>
 	    <a id="hover_icon_button" href="javascript:void(0);" class="button"><?php esc_html_e('Set Hover Icon', OER_SLUG); ?></a>
