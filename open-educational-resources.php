@@ -2542,3 +2542,20 @@ function oer_get_root_path() {
 
 	return $root_path;
 }
+
+/** Change Tags Label to Keywords for NALRC **/
+function oer_change_tags_labels( $args, $taxonomy ) {
+	global $_nalrc;
+
+	if ($_nalrc){
+		if ( 'post_tag' === $taxonomy ) {
+		  $args['labels'] = array(
+		      'name'          => 'Keywords',
+		      'singular_name' => 'Keyword',
+		      'menu_name'     => 'Keywords',
+		  );
+		}
+   }
+    return $args;
+}
+add_filter( 'register_taxonomy_args', 'oer_change_tags_labels', 10, 2 );
