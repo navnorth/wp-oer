@@ -736,9 +736,9 @@ if (get_option('oer_metadata_firstload')=="")
 		}
 		?>
 
-		<?php if (empty(get_option('oer_publishername_enabled')) 
-				|| empty(get_option('oer_publisherurl_enabled'))
-				|| empty(get_option('oer_publisheremail_enabled'))): ?>
+		<?php if (get_option('oer_publishername_enabled') 
+				|| get_option('oer_publisherurl_enabled')
+				|| get_option('oer_publisheremail_enabled')): ?>
         <div class="oer_snglfld oer_hdngsngl">
 		<?php esc_html_e("Publisher Information", OER_SLUG).":"; ?>
         </div>
@@ -816,11 +816,12 @@ if (get_option('oer_metadata_firstload')=="")
         </div>
 	<?php } ?>
 	
-	<?php if (empty(get_option('oer_external_repository_enabled'))
-				|| empty(get_option('oer_repository_recordurl_enabled'))
-				|| empty(get_option('oer_citation_enabled'))
-				|| empty(get_option('oer_sensitive_material_enabled'))
-				|| empty(get_option('oer_transcription_enabled'))): ?>
+	<?php 
+	if (get_option('oer_external_repository_enabled')
+				|| get_option('oer_repository_recordurl_enabled')
+				|| get_option('oer_citation_enabled')
+				|| get_option('oer_sensitive_material_enabled')
+				|| get_option('oer_transcription_enabled')): ?>
 		<div class="oer_snglfld oer_hdngsngl">
 		<?php esc_html_e("Repository Information", OER_SLUG).":"; ?>
         </div>
