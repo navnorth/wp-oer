@@ -29,22 +29,29 @@ get_header();
 			<?php endif; ?>
 
 		<?php /* Start the Loop */ ?>
-		<?php while ( have_posts() ) : the_post(); ?>
+		<?php while ( have_posts() ) :  the_post();  ?>
 
-		    <div class="oer_blgpst">
+		    <div class="oer_blgpst<?php if ($_nalrc) _e(' nalrc-blogpost',OER_SLUG); ?>">
 				    
 			<?php if ( has_post_thumbnail() ) {?>
-			    <div class="oer-feature-image col-md-3">
+			    <div class="oer-feature-image <?php if ($_nalrc): ?>col-md-2<?php else: ?>col-md-3<?php endif; ?>">
 				<?php if ( ! post_password_required() && ! is_attachment() ) :
 				    the_post_thumbnail("thumbnail");
 				endif; ?>
 			    </div>
 			<?php } else {
 			    $new_image_url = OER_URL . 'images/default-icon-220x180.png';
-			    echo '<div class="oer-feature-image col-md-3"><a href="'.esc_url(get_permalink($post->ID)).'"><img src="'.esc_url($new_image_url).'"></a></div>';
-			}?>
+			    $col = 'col-md-3';
+			     if ($_nalrc)
+			     	$col = 'col-md-2';
+			    echo '<div class="oer-feature-image '.$col.'"><a href="'.esc_url(get_permalink($post->ID)).'"><img src="'.esc_url($new_image_url).'"></a></div>';
+			}
+			$content_col = 'col-md-9';
+			if ($_nalrc)
+				$content_col = 'col-md-10';
+			?>
 				    
-			<div class="rght-sd-cntnr-blg col-md-9">
+			<div class="rght-sd-cntnr-blg <?php echo $content_col; ?>">
 			    <h4><a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h4>
 	
 			    <div class="small"><span><?php the_time('F jS, Y'); ?> </span></div>
