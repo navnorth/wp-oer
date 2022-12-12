@@ -29,7 +29,7 @@ get_header();
 			<?php endif; ?>
 
 		<?php /* Start the Loop */ ?>
-		<?php while ( have_posts() ) :  the_post();  ?>
+		<?php while ( have_posts() ) :  the_post(); ?>
 
 		    <div class="oer_blgpst<?php if ($_nalrc) _e(' nalrc-blogpost',OER_SLUG); ?>">
 				    
@@ -53,8 +53,12 @@ get_header();
 				    
 			<div class="rght-sd-cntnr-blg <?php echo $content_col; ?>">
 			    <h4><a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h4>
-	
-			    <div class="small"><span><?php the_time('F jS, Y'); ?> </span></div>
+			    <div class="small">
+			    	<span><?php the_time('F jS, Y'); ?> </span>
+			    	<?php if ($_nalrc && !empty(get_post_meta($post->ID,'oer_lrtype')[0])): ?>
+			    	| <span><?php echo ucfirst(get_post_meta($post->ID, 'oer_lrtype')[0]); ?></span>
+			    	<?php endif; ?>
+			    </div>
 					    
 			    <div class="oer-post-content">
 				<?php the_excerpt(); ?>
