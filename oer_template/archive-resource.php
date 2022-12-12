@@ -2,7 +2,7 @@
 /*
  * Template Name: Default Archive Resource Template
  */
-
+global $_nalrc;
 add_filter( 'body_class','oer_archive_body_classes' );
 function oer_archive_body_classes( $classes ) {
  
@@ -13,13 +13,20 @@ function oer_archive_body_classes( $classes ) {
 get_header();
 ?>
 <div class="oer-cntnr">
-    <section id="primary" class="site-content">
+    <section id="primary" class="site-content<?php if ($_nalrc) _e(' nalrc-resources-content',OER_SLUG); ?>">
 	<div id="content" role="main">
 
 	    <?php if ( have_posts() ) : ?>
-		<header class="archive-header">
-		    <h1 class="archive-title"><?php printf( __( 'Archives: %s', OER_SLUG ), '<span>' .post_type_archive_title('', false).'</span>' );?></h1>
-		</header><!-- .archive-header -->
+	    	<?php if ($_nalrc): ?>
+	    		<header class="archive-header nalrc-resources-header">
+				    <h1 class="archive-title nalrc-resources-title"><?php _e( 'Native American Language Resource Collection', OER_SLUG ); ?></h1>
+				    <p class="nalrc-resources-description"><?php _e('Explore a collection of high-quality multimedia instructional resources, informed by research, for use by Native American language stakeholders. These resources have been reviewed by subject matter experts and recommended and approved by the U.S. Department of Education, Office of Indian Education.', OER_SLUG); ?></p>
+				</header><!-- .archive-header -->
+	    	<?php else: ?>
+				<header class="archive-header">
+				    <h1 class="archive-title"><?php printf( __( 'Archives: %s', OER_SLUG ), '<span>' .post_type_archive_title('', false).'</span>' );?></h1>
+				</header><!-- .archive-header -->
+			<?php endif; ?>
 
 		<?php /* Start the Loop */ ?>
 		<?php while ( have_posts() ) : the_post(); ?>
