@@ -61,7 +61,7 @@ get_header();
 			    </div>
 					    
 			    <div class="oer-post-content">
-				<?php the_excerpt(); ?>
+				<?php ucfirst(the_excerpt()); ?>
 			    </div>
 			</div>
 		    </div>
