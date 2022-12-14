@@ -40,8 +40,14 @@ get_header();
 								<input type="text" placeholder="<?php _e('Search by keyword or phrase',OER_SLUG); ?>" />
 						</div>
 						<div class="nalrc-search-topic col-md-3">
+							<?php
+							$topics = get_terms(['taxonomy'=>'resource-subject-area','hide_empty'=>false]);
+							?>
 							<select id="nalrc-topic-filter nalrc-select-filter">
 								<option value="">Topic Area</option>
+								<?php foreach($topics as $topic): ?>
+									<option value="<?php echo esc_html($topic->term_id); ?>"><?php echo esc_html($topic->name); ?></option>
+								<?php endforeach; ?>
 							</select>
 						</div>
 						<div class="nalrc-search-product col-md-3">
