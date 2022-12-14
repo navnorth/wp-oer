@@ -27,7 +27,36 @@ get_header();
 				    <h1 class="archive-title"><?php printf( __( 'Archives: %s', OER_SLUG ), '<span>' .post_type_archive_title('', false).'</span>' );?></h1>
 				</header><!-- .archive-header -->
 			<?php endif; ?>
-
+			<?php /** NALRC Search Filter **/
+			if ($_nalrc): ?>
+				<div class="nalrc-search-filters">
+					<div class="row filter-title">
+						<div class="col-md-12">
+							<h4><?php _e('Search the collection by category, keyword, date, and more', OER_SLUG); ?></h4>
+						</div>
+					</div>
+					<div class="row">
+						<div class="nalrc-search-keyword col-md-5">
+								<input type="text" placeholder="<?php _e('Search by keyword or phrase',OER_SLUG); ?>" />
+						</div>
+						<div class="nalrc-search-topic col-md-3">
+							<select id="nalrc-topic-filter nalrc-select-filter">
+								<option value="">Topic Area</option>
+							</select>
+						</div>
+						<div class="nalrc-search-product col-md-3">
+							<select id="nalrc-product-filter nalrc-select-filter">
+								<option value="">Product Type</option>
+							</select>
+						</div>
+						<div class="nalrc-search-year col-md-1">
+							<select id="nalrc-year-filter nalrc-select-filter">
+								<option value="">Year</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			<?php endif; ?>
 		<?php /* Start the Loop */ ?>
 		<?php while ( have_posts() ) :  the_post(); ?>
 
