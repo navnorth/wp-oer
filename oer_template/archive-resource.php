@@ -2,7 +2,7 @@
 /*
  * Template Name: Default Archive Resource Template
  */
-global $_nalrc;
+global $_nalrc, $_nalrc_products;
 add_filter( 'body_class','oer_archive_body_classes' );
 function oer_archive_body_classes( $classes ) {
  
@@ -44,7 +44,7 @@ get_header();
 							$topics = get_terms(['taxonomy'=>'resource-subject-area','hide_empty'=>false]);
 							?>
 							<select id="nalrc-topic-filter nalrc-select-filter">
-								<option value="">Topic Area</option>
+								<option value=""><?php _e('Topic Area', OER_SLUG); ?></option>
 								<?php foreach($topics as $topic): ?>
 									<option value="<?php echo esc_html($topic->term_id); ?>"><?php echo esc_html($topic->name); ?></option>
 								<?php endforeach; ?>
@@ -52,7 +52,10 @@ get_header();
 						</div>
 						<div class="nalrc-search-product col-md-3">
 							<select id="nalrc-product-filter nalrc-select-filter">
-								<option value="">Product Type</option>
+								<option value=""><?php _e('Product Type',OER_SLUG); ?></option>
+								<?php foreach ($_nalrc_products as $product): ?>
+									<option value="<?php echo esc_html($product['value']); ?>"><?php echo esc_html($product['label']); ?></option>
+								<?php endforeach; ?>
 							</select>
 						</div>
 						<div class="nalrc-search-year col-md-1">

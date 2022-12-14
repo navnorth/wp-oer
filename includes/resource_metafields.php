@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 global $post;
 global $wpdb;
-global $chck;
+global $chck, $_nalrc, $_nalrc_products;
 
 $option_set = false;
 if (get_option('oer_metadata_firstload')=="")
@@ -333,6 +333,14 @@ if (get_option('oer_metadata_firstload')=="")
             	<?php $oer_lrtype = strtolower(get_post_meta($post->ID, 'oer_lrtype', true)); ?>
                 <select name="oer_lrtype">
 					<option value=""></option>
+					<?php if ($_nalrc): 
+						foreach($_nalrc_products as $product){
+							?>
+							<option value="<?php echo $product['value']; ?>" <?php if($oer_lrtype == $product['value']){echo 'selected="selected"';}?>><?php esc_html_e($product['label'], OER_SLUG); ?></option>
+							<?php
+						}
+					?>
+					<?php else: ?>
 					<option value="article" <?php if($oer_lrtype == 'article'){echo 'selected="selected"';}?>><?php esc_html_e("Article/Information", OER_SLUG); ?></option>
 					<option value="website" <?php if($oer_lrtype == 'website'){echo 'selected="selected"';}?>><?php esc_html_e("Assessment", OER_SLUG); ?></option>
 					<option value="audio" <?php if($oer_lrtype == 'audio'){echo 'selected="selected"';}?>><?php esc_html_e("Audio", OER_SLUG); ?></option>
@@ -345,6 +353,7 @@ if (get_option('oer_metadata_firstload')=="")
 					<option value="simulation" <?php if($oer_lrtype == 'simulation'){echo 'selected="selected"';}?>><?php esc_html_e("Simulation", OER_SLUG); ?></option>
 					<option value="presentation" <?php if($oer_lrtype == 'presentation'){echo 'selected="selected"';}?>><?php esc_html_e("Presentation", OER_SLUG); ?></option>
 					<option value="other" <?php if($oer_lrtype == 'other'){echo 'selected="selected"';}?>><?php esc_html_e("Learning Resource Type:", OER_SLUG); ?>Other</option>
+					<?php endif; ?>
                 </select>
             </div>
         </div>

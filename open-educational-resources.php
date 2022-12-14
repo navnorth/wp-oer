@@ -51,7 +51,19 @@ require_once(OER_PATH.'blocks/resource-block/init.php');
 include_once(OER_PATH.'widgets/class-subject-area-widget.php');
 
 //define global variable $debug_mode and get value from settings
-global $_debug, $_bootstrap, $_fontawesome, $_css, $_css_oer, $_subjectarea, $_search_post_ids, $_w_bootstrap, $_oer_prefix, $oer_session, $_gutenberg, $_use_gutenberg, $_nalrc;
+global $_debug, $_bootstrap, $_fontawesome, $_css, $_css_oer, $_subjectarea, $_search_post_ids, $_w_bootstrap, $_oer_prefix, $oer_session, $_gutenberg, $_use_gutenberg, $_nalrc, $_nalrc_products;
+
+// NALRC Product Types
+$_nalrc_products = [
+	[ "value" => "curriculum", "label" => "Curriculum" ],
+	[ "value" => "instructions", "label" => "Instructional Materials" ],
+	[ "value" => "research", "label" => "Research Article" ],
+	[ "value" => "facts", "label" => "Fact Sheet" ],
+	[ "value" => "policy", "label" => "Policy or Regulations" ],
+	[ "value" => "video", "label" => "Video" ],
+	[ "value" => "blog", "label" => "Blog" ],
+	[ "value" => "podcast", "label" => "Podcast" ]
+];
 
 if( ! defined( 'WP_SESSION_COOKIE' ) )
 	define( 'WP_SESSION_COOKIE', '_oer_session' );
