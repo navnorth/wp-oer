@@ -3972,4 +3972,26 @@ function oer_allowed_html() {
 	return $allowedposttags;
 }
 
+/** Get Date Created Year **/
+function oer_get_created_year(){
+	$years = array();
+	$args = array(
+		'numberposts' => -1,
+		'post_type' => 'resource',
+		'post_status' => 'publish'
+	);
+	$resources = get_posts($args);
+	foreach($resources as $resource){
+		$dateCreated = get_post_meta($resource->ID,'oer_datecreated')[0];
+		if ($dateCreated){
+			$time = strtotime($dateCreated);
+			$year = date('Y', $time);
+			$years[] = $year;
+		}
+	}
+	$years = array_unique($years);
+	rsort($years);
+	return $years;
+}
+
 ?>

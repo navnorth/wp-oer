@@ -61,6 +61,11 @@ get_header();
 						<div class="nalrc-search-year col-md-1">
 							<select id="nalrc-year-filter nalrc-select-filter">
 								<option value="">Year</option>
+								<?php $years = oer_get_created_year(); 
+								foreach($years as $year):
+								?>
+								<option value="<?php echo esc_html($year); ?>"><?php echo esc_html($year); ?></option>
+								<?php endforeach; ?>
 							</select>
 						</div>
 					</div>
