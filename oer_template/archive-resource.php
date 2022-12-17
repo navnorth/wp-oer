@@ -37,7 +37,8 @@ get_header();
 					</div>
 					<div class="row">
 						<div class="nalrc-search-keyword col-md-5">
-								<input type="text" placeholder="<?php _e('Search by keyword or phrase',OER_SLUG); ?>" />
+							 <i class="fa fa-search icon"></i>
+							<input type="text" placeholder="<?php _e('Search by keyword or phrase',OER_SLUG); ?>" />
 						</div>
 						<div class="nalrc-search-topic col-md-3">
 							<?php
