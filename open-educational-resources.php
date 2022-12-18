@@ -2571,3 +2571,15 @@ function oer_change_tags_labels( $args, $taxonomy ) {
     return $args;
 }
 add_filter( 'register_taxonomy_args', 'oer_change_tags_labels', 10, 2 );
+
+function oer_search_resources(){
+	global $wpdb, $oer_session;
+	$root_path = oer_get_root_path();
+
+	if (!isset($oer_session))
+		$oer_session = OER_WP_Session::get_instance();
+
+	
+}
+add_action('wp_ajax_search_resources', 'oer_search_resources');
+add_action('wp_ajax_nopriv_search_resources', 'oer_search_resources');

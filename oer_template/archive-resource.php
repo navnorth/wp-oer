@@ -10,6 +10,13 @@ function oer_archive_body_classes( $classes ) {
     return $classes;
      
 }
+// Load Custom NALRC Javascript
+if ($_nalrc){
+	wp_register_script("nalrc-script",OER_URL."js/nalrc.js");
+	wp_enqueue_script("nalrc-script");
+	wp_localize_script("nalrc-script", "nalrc_object", array("ajaxurl" => admin_url( 'admin-ajax.php' )));
+}
+
 get_header();
 ?>
 <div class="oer-cntnr">
@@ -38,13 +45,13 @@ get_header();
 					<div class="row">
 						<div class="nalrc-search-keyword col-md-5">
 							 <i class="fa fa-search icon"></i>
-							<input type="text" placeholder="<?php _e('Search by keyword or phrase',OER_SLUG); ?>" />
+							<input type="text" id="keyword" placeholder="<?php _e('Search by keyword or phrase',OER_SLUG); ?>" />
 						</div>
 						<div class="nalrc-search-topic col-md-3">
 							<?php
 							$topics = get_terms(['taxonomy'=>'resource-subject-area','hide_empty'=>false]);
 							?>
-							<select id="nalrc-topic-filter nalrc-select-filter">
+							<select id="topic" class="nalrc-topic-filter nalrc-select-filter">
 								<option value=""><?php _e('Topic Area', OER_SLUG); ?></option>
 								<?php foreach($topics as $topic): ?>
 									<option value="<?php echo esc_html($topic->term_id); ?>"><?php echo esc_html($topic->name); ?></option>
@@ -52,7 +59,7 @@ get_header();
 							</select>
 						</div>
 						<div class="nalrc-search-product col-md-3">
-							<select id="nalrc-product-filter nalrc-select-filter">
+							<select id="product" class="nalrc-product-filter nalrc-select-filter">
 								<option value=""><?php _e('Product Type',OER_SLUG); ?></option>
 								<?php foreach ($_nalrc_products as $product): ?>
 									<option value="<?php echo esc_html($product['value']); ?>"><?php echo esc_html($product['label']); ?></option>
@@ -60,7 +67,7 @@ get_header();
 							</select>
 						</div>
 						<div class="nalrc-search-year col-md-1">
-							<select id="nalrc-year-filter nalrc-select-filter">
+							<select id="year" class="nalrc-year-filter nalrc-select-filter">
 								<option value="">Year</option>
 								<?php $years = oer_get_created_year(); 
 								foreach($years as $year):
