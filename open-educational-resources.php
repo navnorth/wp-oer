@@ -2596,9 +2596,27 @@ function oer_search_resources(){
 		);
 	}
 
-	if (isset($_POST['product'])){
-		$args['meta_key'] = 'oer_lrtype';
-		$args['meta_value'] = $_POST['product'];
+	if (isset($_POST['product']) && isset($_POST['year'])){
+		$args['meta_query'] = array(
+			array(
+				'key' => 'oer_lrtype',
+				'value' => $_POST['product']
+			),
+			array(
+				'key' => 'oer_datecreated',
+				'value' => $_POST['year'],
+				'compare' => 'LIKE'
+			)
+		);
+	} else {
+		if (isset($_POST['product'])){
+			$args['meta_key'] = 'oer_lrtype';
+			$args['meta_value'] = $_POST['product'];
+		} elseif (isset($_POST['year'])){
+			$args['meta_key'] = 'oer_datecreated';
+			$args['meta_value'] = $_POST['year'];
+			$args['meta_compare'] = 'LIKE';
+		}
 	}
 
 	// Search title, description, and tags

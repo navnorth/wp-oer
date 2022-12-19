@@ -13,6 +13,8 @@ jQuery(function($){
 			data.topic = $('.nalrc-search-filters #topic').val();
 		if ($('.nalrc-search-filters #product').val()!=='')
 			data.product = $('.nalrc-search-filters #product').val();
+		if ($('.nalrc-search-filters #year').val()!=='')
+			data.year = $('.nalrc-search-filters #year').val();
 		console.log(data);
 		$.ajax({
 			type: "POST",
@@ -36,4 +38,7 @@ jQuery(function($){
 
 	/** Product Type Search **/
 	$('.nalrc-search-filters #product').on("change", searchResources);
+
+	/** Publication Year Search **/
+	$('.nalrc-search-filters #year').on("change", searchResources);
 });
