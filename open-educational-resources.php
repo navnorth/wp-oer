@@ -2601,6 +2601,17 @@ function oer_search_resources(){
 		}
 		$resources = array_merge($resources, $resources2);
 	}
+
+	if (isset($_POST['topic'])){
+		$args['tax_query'] = array(
+			array(
+				'taxonomy' => 'resource-subject-area',
+				'field' => 'term_id',
+				'terms' => $_POST['topic']
+			)
+		);
+		$resources = get_posts($args);
+	}
 	
 	foreach($resources as $resource){
 		?>
