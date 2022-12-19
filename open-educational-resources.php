@@ -2586,6 +2586,21 @@ function oer_search_resources(){
 	if (!isset($oer_session))
 		$oer_session = OER_WP_Session::get_instance();
 
+	if (isset($_POST['topic'])){
+		$args['tax_query'] = array(
+			array(
+				'taxonomy' => 'resource-subject-area',
+				'field' => 'term_id',
+				'terms' => $_POST['topic']
+			)
+		);
+	}
+
+	if (isset($_POST['product'])){
+		$args['meta_key'] = 'oer_lrtype';
+		$args['meta_value'] = $_POST['product'];
+	}
+
 	// Search title, description, and tags
 	if (isset($_POST['keyword'])){
 		for ($i=0;$i<2;$i++){
@@ -2600,16 +2615,7 @@ function oer_search_resources(){
 			}
 		}
 		$resources = array_merge($resources, $resources2);
-	}
-
-	if (isset($_POST['topic'])){
-		$args['tax_query'] = array(
-			array(
-				'taxonomy' => 'resource-subject-area',
-				'field' => 'term_id',
-				'terms' => $_POST['topic']
-			)
-		);
+	} else {
 		$resources = get_posts($args);
 	}
 	

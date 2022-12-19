@@ -11,6 +11,8 @@ jQuery(function($){
 			data.keyword = $('.nalrc-search-filters #keyword').val();
 		if ($('.nalrc-search-filters #topic').val()!=='')
 			data.topic = $('.nalrc-search-filters #topic').val();
+		if ($('.nalrc-search-filters #product').val()!=='')
+			data.product = $('.nalrc-search-filters #product').val();
 		console.log(data);
 		$.ajax({
 			type: "POST",
@@ -31,4 +33,7 @@ jQuery(function($){
 
 	/** Topic Search **/
 	$('.nalrc-search-filters #topic').on("change", searchResources);
+
+	/** Product Type Search **/
+	$('.nalrc-search-filters #product').on("change", searchResources);
 });
