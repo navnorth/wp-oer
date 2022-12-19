@@ -2574,12 +2574,66 @@ add_filter( 'register_taxonomy_args', 'oer_change_tags_labels', 10, 2 );
 
 function oer_search_resources(){
 	global $wpdb, $oer_session;
+	$resources = array();
+	$args = array(
+		'post_type' => 'resource',
+		'post_status' => 'publish',
+		'numberposts' => -1,
+	);
+
 	$root_path = oer_get_root_path();
 
 	if (!isset($oer_session))
 		$oer_session = OER_WP_Session::get_instance();
 
+	// Search title, description, and tags
+	if (isset($_POST['keyword'])){
+		for ($i=0;$i<2;$i++){
+			if ($i == 0 ){
+				$args['s'] = $_POST['keyword'];
+				$resources = get_posts($args);	
+			} else {
+				if (isset($args['s']))
+					unset($args['s']);
+				$args['tag'] = $_POST['keyword'];
+				$resources2 = get_posts($args);
+			}
+		}
+		$resources = array_merge($resources, $resources2);
+	}
 	
+	foreach($resources as $resource){
+		?>
+		<div class="oer_blgpst nalrc-blogpost">
+			<?php if ( has_post_thumbnail($resource->ID) ) {?>
+			    <div class="oer-feature-image col-md-2">
+				<?php if ( ! post_password_required() && ! is_attachment() ) :
+				    echo get_the_post_thumbnail($resource->ID,"thumbnail");
+				endif; ?>
+			    </div>
+			<?php } else {
+			    $new_image_url = OER_URL . 'images/default-icon-220x180.png';
+			    echo '<div class="oer-feature-image col-md-2"><a href="'.esc_url(get_permalink($resource->ID)).'"><img src="'.esc_url($new_image_url).'"></a></div>';
+			}
+			?>
+				    
+			<div class="rght-sd-cntnr-blg col-md-10">
+			    <h4><a href="<?php the_permalink($resource->ID); ?>" rel="bookmark" title="<?php the_title_attribute(array('post'=>$resource->ID)); ?>"><?php echo esc_html(get_the_title($resource->ID)); ?></a></h4>
+			    <div class="small">
+			    	<span><?php echo get_the_time('F jS, Y', $resource->ID); ?> </span>
+			    	<?php if ($_nalrc && !empty(get_post_meta($resource->ID,'oer_lrtype')[0])): ?>
+			    	| <span><?php echo ucfirst(get_post_meta($resource->ID, 'oer_lrtype')[0]); ?></span>
+			    	<?php endif; ?>
+			    </div>
+					    
+			    <div class="oer-post-content">
+				<?php echo esc_html(ucfirst(get_the_excerpt($resource->ID))); ?>
+			    </div>
+			</div>
+	    </div>
+		<?php
+	}
+	die();
 }
 add_action('wp_ajax_search_resources', 'oer_search_resources');
 add_action('wp_ajax_nopriv_search_resources', 'oer_search_resources');

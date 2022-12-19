@@ -80,6 +80,11 @@ get_header();
 				</div>
 			<?php endif; ?>
 		<?php /* Start the Loop */ ?>
+
+		<?php if ($_nalrc): ?>
+			<article class="oer_resource_posts">
+		<?php endif; ?>
+
 		<?php while ( have_posts() ) :  the_post(); ?>
 
 		    <div class="oer_blgpst<?php if ($_nalrc) _e(' nalrc-blogpost',OER_SLUG); ?>">
@@ -117,6 +122,10 @@ get_header();
 			</div>
 		    </div>
 		<?php endwhile; ?>
+
+		<?php if ($_nalrc): ?>
+			</article>
+		<?php endif; ?>
 
 	    <?php else : ?>
 		<article id="post-0" class="post no-results not-found">
