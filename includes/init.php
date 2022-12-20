@@ -226,16 +226,20 @@ function oer_create_resource_taxonomies() {
     global $_use_gutenberg, $_nalrc;
     $singular = "Subject Area";
     $plural = "Subject Areas";
+    $grade_singular = "Grade Level";
+    $grade_plura = "Grade Levels";
 
     // NALRC - change Subject Area label to topic area
     if ($_nalrc){
     	$singular = "Topic Area";
     	$plural = "Topic Areas";
+    	$grade_singular = "Intended Audience";
+    	$grade_plural = "Intended Audiences";
     }
 
     $arr_tax = array(
     	array("slug"=>"resource-subject-area","singular_name"=>$singular, "plural_name"=>$plural),
-    	array("slug"=>"resource-grade-level","singular_name"=>"Grade Level", "plural_name"=>"Grade Levels")
+    	array("slug"=>"resource-grade-level","singular_name"=>$grade_singular, "plural_name"=>$grade_plural)
     );
     
     foreach($arr_tax as $tax){

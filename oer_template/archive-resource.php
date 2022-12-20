@@ -117,13 +117,27 @@ get_header();
 			    </div>
 					    
 			    <div class="oer-post-content">
-				<?php 
-				$excerpt = get_the_excerpt($post->ID);
-				$excerpt = oer_get_limited_excerpt($excerpt,100);
-				echo ucfirst($excerpt);
-				//ucfirst(the_excerpt());
-				 ?>
+					<?php 
+					$excerpt = get_the_excerpt($post->ID);
+					$excerpt = oer_get_limited_excerpt($excerpt,100);
+					echo esc_html(ucfirst($excerpt));
+					 ?>
 			    </div>
+			    <?php
+			    $grades = array();
+			    $grade_terms = get_the_terms( $post->ID, 'resource-grade-level' );
+			    
+			    if (is_array($grade_terms)){
+			        foreach($grade_terms as $grade){
+			            $grades[] = $grade->slug;
+			        }
+			    }
+			    if (!empty($grades)):
+			    ?>
+			    <div class="oer-intended-audience">
+			    	<span class="label"><?php _e("For: ", OER_SLUG); ?></span><span class="value"><?php echo oer_grade_levels($grades); ?></span>
+			    </div>
+				<?php endif; ?>
 			</div>
 		    </div>
 		<?php endwhile; ?>
