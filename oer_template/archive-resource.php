@@ -117,7 +117,12 @@ get_header();
 			    </div>
 					    
 			    <div class="oer-post-content">
-				<?php ucfirst(the_excerpt()); ?>
+				<?php 
+				$excerpt = get_the_excerpt($post->ID);
+				$excerpt = oer_get_limited_excerpt($excerpt,100);
+				echo ucfirst($excerpt);
+				//ucfirst(the_excerpt());
+				 ?>
 			    </div>
 			</div>
 		    </div>

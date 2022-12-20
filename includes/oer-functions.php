@@ -3591,7 +3591,7 @@ if (!function_exists('oer_get_related_resource_content')){
         $content = preg_replace('/[.+]/','', $content);
         //$content = apply_filters('the_content', $content);
         $content = str_replace(']]>', ']]>', $content);
-				if(strlen(trim($content,'')) > '') $content .= ' ...';
+		if(strlen(trim($content,'')) > '') $content .= ' ...';
         return strip_tags($content);
     }
 }
@@ -3994,4 +3994,19 @@ function oer_get_created_year(){
 	return $years;
 }
 
+/** Get limited excerpt **/
+function oer_get_limited_excerpt($content, $limit){
+
+    $excerpt = $content;
+    $excerpt = preg_replace(" (\[.*?\])",'',$excerpt);
+    $excerpt = strip_shortcodes($excerpt);
+    $excerpt = strip_tags($excerpt);
+    $excerpt = substr($excerpt, 0, $limit);
+    if (strlen($content)> $limit){
+    	$excerpt = substr($excerpt, 0, strripos($excerpt, " "));
+    	$excerpt = trim(preg_replace( '/\s+/', ' ', $excerpt));
+    	$excerpt .= '...';
+    }
+    return $excerpt;
+}
 ?>
