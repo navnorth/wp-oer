@@ -99,11 +99,11 @@ $oer_resource_notice = (isset($post_meta_data['oer_resource_notice'][0])?$post_m
 <main id="oer_main" class="site-main nalrc-main" role="main">
     <section id="sngl-resource" class="entry-content oer-cntnr post-content oer_sngl_resource_wrapper nalrc-resource-content row">
         <h1 class="entry-title col-md-12"><?php echo esc_html($post->post_title); ?></h1>
-        <div class="row">
+        <div class="nalrc-resource-row">
+            <div class="nalrc-resource-desc nalrc-resource-value"><?php the_content(); ?></div>
+        </div>
+        <div class="row nalrc-content-row">
             <div class="col-md-9">
-                <div class="nalrc-resource-row">
-                    <div class="nalrc-resource-desc nalrc-resource-value"><?php the_content(); ?></div>
-                </div>
                 <?php /** Display Resource URL **/  if ($oer_resource_url): ?>
                 <div class="nalrc-resource-row">
                     <label><?php _e('Resource URL', WP_OESE_THEME_SLUG); ?></label>
@@ -140,7 +140,7 @@ $oer_resource_notice = (isset($post_meta_data['oer_resource_notice'][0])?$post_m
                 </div>
                 <?php endif; ?>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 nalrc-featured-thumbnail">
                 <div class="nalrc-resource-thumbnail">
                     <?php echo oer_nalrc_display_default_thumbnail($post); ?>
                 </div>

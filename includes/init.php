@@ -210,7 +210,7 @@ function oer_postcreation(){
 }
 
 function oer_resources_custom_metaboxes(){
-	add_meta_box('oer_metaboxid',__('Open Resource Meta Fields',OER_SLUG),'oermeta_callback','resource','advanced');
+	add_meta_box('oer_metaboxid',__('Open Resource Meta Fields',OER_SLUG),'oermeta_callback','resource','normal','high');
 }
 
 //metafield callback
