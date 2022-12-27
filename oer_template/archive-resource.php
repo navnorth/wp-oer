@@ -39,7 +39,7 @@ get_header();
 				<div class="nalrc-search-filters">
 					<div class="row filter-title">
 						<div class="col-md-12">
-							<h4><?php _e('Search the collection by category, keyword, date, and more', OER_SLUG); ?></h4>
+							<h4><?php _e('Search the collection by category, keyword, date, and more.', OER_SLUG); ?></h4>
 						</div>
 					</div>
 					<div class="row">
@@ -51,30 +51,36 @@ get_header();
 							<?php
 							$topics = get_terms(['taxonomy'=>'resource-subject-area','hide_empty'=>false]);
 							?>
-							<select id="topic" class="nalrc-topic-filter nalrc-select-filter">
-								<option value=""><?php _e('Topic Area', OER_SLUG); ?></option>
-								<?php foreach($topics as $topic): ?>
-									<option value="<?php echo esc_html($topic->term_id); ?>"><?php echo esc_html($topic->name); ?></option>
-								<?php endforeach; ?>
-							</select>
+							<div class="nalrc-select-wrapper">
+								<select id="topic" class="nalrc-topic-filter nalrc-select-filter">
+									<option value=""><?php _e('Topic Area', OER_SLUG); ?></option>
+									<?php foreach($topics as $topic): ?>
+										<option value="<?php echo esc_html($topic->term_id); ?>"><?php echo esc_html($topic->name); ?></option>
+									<?php endforeach; ?>
+								</select>
+							</div>
 						</div>
 						<div class="nalrc-search-product col-md-3">
-							<select id="product" class="nalrc-product-filter nalrc-select-filter">
-								<option value=""><?php _e('Product Type',OER_SLUG); ?></option>
-								<?php foreach ($_nalrc_products as $product): ?>
-									<option value="<?php echo esc_html($product['value']); ?>"><?php echo esc_html($product['label']); ?></option>
-								<?php endforeach; ?>
-							</select>
+							<div class="nalrc-select-wrapper">
+								<select id="product" class="nalrc-product-filter nalrc-select-filter">
+									<option value=""><?php _e('Product Type',OER_SLUG); ?></option>
+									<?php foreach ($_nalrc_products as $product): ?>
+										<option value="<?php echo esc_html($product['value']); ?>"><?php echo esc_html($product['label']); ?></option>
+									<?php endforeach; ?>
+								</select>
+							</div>
 						</div>
 						<div class="nalrc-search-year col-md-1">
-							<select id="year" class="nalrc-year-filter nalrc-select-filter">
-								<option value="">Year</option>
-								<?php $years = oer_get_created_year(); 
-								foreach($years as $year):
-								?>
-								<option value="<?php echo esc_html($year); ?>"><?php echo esc_html($year); ?></option>
-								<?php endforeach; ?>
-							</select>
+							<div class="nalrc-select-wrapper">
+								<select id="year" class="nalrc-year-filter nalrc-select-filter">
+									<option value="">Year</option>
+									<?php $years = oer_get_created_year(); 
+									foreach($years as $year):
+									?>
+									<option value="<?php echo esc_html($year); ?>"><?php echo esc_html($year); ?></option>
+									<?php endforeach; ?>
+								</select>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -91,9 +97,11 @@ get_header();
 				    
 			<?php if ( has_post_thumbnail() ) {?>
 			    <div class="oer-feature-image <?php if ($_nalrc): ?>col-md-2<?php else: ?>col-md-3<?php endif; ?>">
-				<?php if ( ! post_password_required() && ! is_attachment() ) :
-				    the_post_thumbnail("thumbnail");
-				endif; ?>
+				<?php if ( ! post_password_required() && ! is_attachment() ) : ?>
+					<a href="<?php echo esc_url(get_permalink($post->ID)); ?>">
+						<?php the_post_thumbnail("thumbnail"); ?>
+					</a>
+				<?php endif; ?>
 			    </div>
 			<?php } else {
 			    $new_image_url = OER_URL . 'images/default-icon-220x180.png';
