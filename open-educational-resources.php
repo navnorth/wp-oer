@@ -2640,6 +2640,7 @@ function oer_search_resources(){
 	}
 	
 	foreach($resources as $resource){
+		$resource_atts = "";
 		?>
 		<div class="oer_blgpst nalrc-blogpost">
 			<?php if ( has_post_thumbnail($resource->ID) ) {?>
@@ -2657,10 +2658,17 @@ function oer_search_resources(){
 			<div class="rght-sd-cntnr-blg col-md-10">
 			    <h4><a href="<?php the_permalink($resource->ID); ?>" rel="bookmark" title="<?php the_title_attribute(array('post'=>$resource->ID)); ?>"><?php echo esc_html(get_the_title($resource->ID)); ?></a></h4>
 			    <div class="small">
-			    	<span><?php echo get_the_time('F jS, Y', $resource->ID); ?> </span>
-			    	<?php if ($_nalrc && !empty(get_post_meta($resource->ID,'oer_lrtype')[0])): ?>
-			    	| <span><?php echo ucfirst(get_post_meta($resource->ID, 'oer_lrtype')[0]); ?></span>
-			    	<?php endif; ?>
+			    	<?php if ($_nalrc && !empty(get_post_meta($resource->ID, 'oer_datecreated')[0])): 
+			    		$resource_atts .= '<span>'.esc_html(get_post_meta($resource->ID, 'oer_datecreated')[0]).'</span>';
+			    	endif; ?>
+			    	<?php if ($_nalrc && !empty(get_post_meta($resource->ID,'oer_lrtype')[0])): 
+			    		if (!empty($resource_atts))
+			    			$resource_atts .= ' | <span>'.ucfirst(get_post_meta($resource->ID, 'oer_lrtype')[0]).'</span>';
+			    		else
+			    			$resource_atts .= '<span>'.ucfirst(get_post_meta($resource->ID, 'oer_lrtype')[0]).'</span>';
+			    	endif; 
+			    	echo $resource_atts;
+			    	?>
 			    </div>
 					    
 			    <div class="oer-post-content">
