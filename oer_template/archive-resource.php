@@ -160,6 +160,10 @@ get_header();
 		<?php endwhile; ?>
 
 		<?php if ($_nalrc): ?>
+			<div class="nalrc-pagination-nav">
+				<div class="alignleft"><?php previous_posts_link( '&laquo; Previous' ); ?></div>
+				<div class="alignright"><?php next_posts_link( 'Next &raquo;', '' ); ?></div>
+			</div>
 			</article>
 		<?php endif; ?>
 
