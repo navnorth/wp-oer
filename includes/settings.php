@@ -219,6 +219,12 @@ function oer_show_general_settings() {
 				<?php do_settings_sections("oer_settings"); ?>
 			</fieldset>
 		</div>
+		<div class="oer-plugin-row">
+			<fieldset>
+				<legend class="resource-notice-legend"><div class="oer_hdng"><?php esc_html_e("Resource Notice", OER_SLUG); ?></div></legend>
+				<?php do_settings_sections("resource_notice_settings"); ?>
+			</fieldset>
+		</div>
 		<?php submit_button(); ?>
 	</form>
 </div>

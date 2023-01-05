@@ -440,30 +440,6 @@ if (get_option('oer_metadata_firstload')=="")
             </div>
         </div>
 	<?php } ?>
-	
-	<?php
-	// Resource Notice
-	$label_set = false;
-	if (get_option('oer_resource_notice_label')){
-		$label_set = true;
-	}
-	if (!empty(get_option('oer_resource_notice_enabled')) || !$option_set) {
-	?>
-	<div class="oer_snglfld">
-        	<div class="oer_txt">
-			<?php
-			if (!$label_set)
-				esc_html_e("Resource Notice", OER_SLUG).":";
-			else
-				echo __(get_option('oer_resource_notice_label'),OER_SLUG).":";
-			?>
-            </div>
-            <div class="oer_fld">
-            	<?php 	$oer_resource_notice = get_post_meta($post->ID, 'oer_resource_notice', true);
-			wp_editor( $oer_resource_notice, 'oer_resource_notice', array( "wpautop" => false, "media_buttons"  => true, "tinymce" => true, 'teeny' => true ) ); ?>
-            </div>
-        </div><!-- Resource Notice field -->
-	<?php } ?>
 
 	<?php
 	// Standard

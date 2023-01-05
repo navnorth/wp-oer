@@ -94,7 +94,8 @@ $oer_authorname = (isset($post_meta_data['oer_authorname'][0])?$post_meta_data['
 $oer_authorurl = (isset($post_meta_data['oer_authorurl'][0])?$post_meta_data['oer_authorurl'][0]:false);
 $oer_authorname2 = (isset($post_meta_data['oer_authorname2'][0])?$post_meta_data['oer_authorname2'][0]:false);
 $oer_authorurl2 = (isset($post_meta_data['oer_authorurl2'][0])?$post_meta_data['oer_authorurl2'][0]:false);
-$oer_resource_notice = (isset($post_meta_data['oer_resource_notice'][0])?$post_meta_data['oer_resource_notice'][0]:false);
+//$oer_resource_notice = (isset($post_meta_data['oer_resource_notice'][0])?$post_meta_data['oer_resource_notice'][0]:false);
+$oer_resource_notice = get_option('oer_nalrc_resource_notice');
 ?>
 <main id="oer_main" class="site-main nalrc-main" role="main">
     <section id="sngl-resource" class="entry-content oer-cntnr post-content oer_sngl_resource_wrapper nalrc-resource-content row">

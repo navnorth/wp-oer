@@ -593,6 +593,7 @@ function oer_front_scripts()
 //Initialize settings page
 add_action( 'admin_init' , 'oer_settings_page' );
 function oer_settings_page() {
+	global $_nalrc;
 	//Create Embed Section
 	add_settings_section(
 		'oer_embed_settings',
@@ -765,6 +766,31 @@ function oer_settings_page() {
 		)
 	);
 
+	//Add Resource Notice 
+	if ($_nalrc){
+		add_settings_section(
+			'oer_notice_settings',
+			'',
+			'oer_notice_settings_callback',
+			'resource_notice_settings'
+		);
+
+		//Add Settings field for Resource Notice
+		add_settings_field(
+			'oer_nalrc_resource_notice',
+			'',
+			'oer_wysiwyg_field',
+			'resource_notice_settings',
+			'oer_notice_settings',
+			array(
+				'uid' => 'oer_nalrc_resource_notice',
+				'type' => 'wysiwyg',
+				'class' => 'oer-nalrc-resource-notice',
+				'description' => __('Enter global resource notice text here.', OER_SLUG)
+			)
+		);
+	}
+
 	register_setting( 'oer_general_settings' , 'oer_disable_screenshots' );
 	register_setting( 'oer_general_settings' , 'oer_enable_screenshot' );
 	register_setting( 'oer_general_settings' , 'oer_use_xvfb' );
@@ -772,6 +798,7 @@ function oer_settings_page() {
 	register_setting( 'oer_general_settings' , 'oer_python_install' );
 	register_setting( 'oer_general_settings' , 'oer_external_screenshots' );
 	register_setting( 'oer_general_settings' , 'oer_service_url' );
+	register_setting( 'oer_general_settings' , 'oer_nalrc_resource_notice' );
 }
 
 //General settings callback
@@ -782,6 +809,11 @@ function oer_general_settings_callback() {
 function oer_embed_settings_callback(){
 
 }
+
+function oer_notice_settings_callback() {
+
+}
+
 
 //Initialize Style Settings Tab
 add_action( 'admin_init' , 'oer_styles_settings' );
@@ -1361,6 +1393,30 @@ function oer_setup_settings_field( $arguments ) {
 	if (isset($arguments['indent'])){
 		echo '</div>';
 	}
+}
+
+function oer_wysiwyg_field( $arguments ) {
+	$class = "";
+
+	$value = get_option($arguments['uid']);
+
+	if (isset($arguments['class'])) {
+		$class = $arguments['class'];
+		$class = " class='".$class."' ";
+	}
+	
+	echo '<label for="'.esc_attr($arguments['uid']).'"><h3><strong>'.esc_html($arguments['name']);
+	if (isset($arguments['inline_description']))
+		echo '<span class="inline-desc">'.esc_html($arguments['inline_description']).'</span>';
+	echo '</strong></h3></label>';
+
+    echo wp_editor( $value, $arguments['uid'], array('textarea_name' => $arguments['uid'])  );
+
+	//Show Description if specified
+	if( isset($arguments['description']) ){
+		printf( '<p class="description">%s</p>', $arguments['description'] );
+	}
+
 }
 
 function oer_setup_radio_field($arguments){
