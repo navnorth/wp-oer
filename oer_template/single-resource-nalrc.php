@@ -155,7 +155,7 @@ $oer_resource_notice = get_option('oer_nalrc_resource_notice');
             <div class="col-md-12">
                 <div class="nalrc-resource-row">
                     <label><?php _e('Resource Notice:', WP_OESE_THEME_SLUG); ?></label>
-                    <div class="nalrc-resource-url nalrc-resource-value"><?php echo wp_kses($oer_resource_notice, $allowed_tags); ?></div>
+                    <div class="nalrc-resource-url nalrc-resource-value"><?php echo do_shortcode(wpautop(wp_kses($oer_resource_notice, $allowed_tags))); ?></div>
                 </div>
             </div>
         </div>
