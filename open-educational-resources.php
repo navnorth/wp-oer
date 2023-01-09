@@ -791,6 +791,30 @@ function oer_settings_page() {
 		);
 	}
 
+	// Add configurable path section
+	add_settings_section(
+		'oer_configurable_path',
+		'',
+		'oer_path_settings_field_callback',
+		'configurable_path_setings'
+	);
+
+	// Add configurable path option
+	add_settings_field(
+		'oer_configurable_resource_path',
+		'',
+		'oer_setup_settings_field',
+		'configurable_path_setings',
+		'oer_configurable_path',
+		array(
+			'uid' => 'oer_configurable_resource_path',
+			'type' => 'textbox',
+			'class' => 'oer-configurable-resource-path',
+			'description' => __('Enter the relative URL of the resources page.', OER_SLUG)
+		)
+	);
+
+
 	register_setting( 'oer_general_settings' , 'oer_disable_screenshots' );
 	register_setting( 'oer_general_settings' , 'oer_enable_screenshot' );
 	register_setting( 'oer_general_settings' , 'oer_use_xvfb' );
@@ -799,6 +823,7 @@ function oer_settings_page() {
 	register_setting( 'oer_general_settings' , 'oer_external_screenshots' );
 	register_setting( 'oer_general_settings' , 'oer_service_url' );
 	register_setting( 'oer_general_settings' , 'oer_nalrc_resource_notice' );
+	register_setting( 'oer_general_settings' , 'oer_configurable_resource_path' );
 }
 
 //General settings callback
@@ -811,6 +836,10 @@ function oer_embed_settings_callback(){
 }
 
 function oer_notice_settings_callback() {
+
+}
+
+function oer_path_settings_field_callback() {
 
 }
 
@@ -1302,7 +1331,9 @@ function oer_setup_settings_field( $arguments ) {
 			$size = 'size="50"';
 			if (isset($arguments['title']))
 				$title = $arguments['title'];
-			echo '<label for="'.esc_attr($arguments['uid']).'"><strong>'.esc_html($title).'</strong></label><input name="'.esc_attr($arguments['uid']).'" id="'.esc_attr($arguments['uid']).'" type="'.esc_attr($arguments['type']).'" value="' . esc_attr($value) . '" ' . esc_attr($size) . ' ' .  esc_attr($selected) . ' />';
+			if ($title)
+				echo '<label for="'.esc_attr($arguments['uid']).'"><strong>'.esc_html($title).'</strong></label>';
+			echo '<input name="'.esc_attr($arguments['uid']).'" id="'.esc_attr($arguments['uid']).'" type="'.esc_attr($arguments['type']).'" value="' . esc_attr($value) . '" ' . esc_attr($size) . ' ' .  esc_attr($selected) . ' />';
 			break;
 		case "checkbox":
 			$display_value = "";
