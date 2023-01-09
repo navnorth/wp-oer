@@ -171,7 +171,10 @@ function oer_add_style_block(){
 //register custom post
 add_action( 'init' , 'oer_postcreation' );
 function oer_postcreation(){
-    global $_use_gutenberg;
+    global $_use_gutenberg, $_resources_path;
+
+    $resources_slug = ($_resources_path?$_resources_path:true);
+
 	$labels = array(
         'name'               => __( 'Resource', OER_SLUG ),
         'singular_name'      => __( 'Resource', OER_SLUG ),
@@ -199,7 +202,8 @@ function oer_postcreation(){
 		'menu_icon' => 'dashicons-welcome-learn-more',
         'supports'      => array(  'title', 'editor', 'thumbnail', 'revisions',  ),
 		'taxonomies' => array('post_tag'),
-        'has_archive'   => true,
+		'rewrite'	=> array( 'slug' => 'resource' ),
+        'has_archive'   => $resources_slug,
 		'register_meta_box_cb' => 'oer_resources_custom_metaboxes'
     );
     
@@ -207,6 +211,7 @@ function oer_postcreation(){
 		$args['show_in_rest'] = true;
 	
     register_post_type( 'resource', $args);
+    flush_rewrite_rules();
 }
 
 function oer_resources_custom_metaboxes(){

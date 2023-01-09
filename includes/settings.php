@@ -221,6 +221,12 @@ function oer_show_general_settings() {
 		</div>
 		<div class="oer-plugin-row">
 			<fieldset>
+				<legend class="resource-path-legend"><div class="oer_hdng"><?php esc_html_e("Resources Path", OER_SLUG); ?></div></legend>
+				<?php do_settings_sections("configurable_path_setings"); ?>
+			</fieldset>
+		</div>
+		<div class="oer-plugin-row">
+			<fieldset>
 				<legend class="resource-notice-legend"><div class="oer_hdng"><?php esc_html_e("Resource Notice", OER_SLUG); ?></div></legend>
 				<?php do_settings_sections("resource_notice_settings"); ?>
 			</fieldset>

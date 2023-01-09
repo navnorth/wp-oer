@@ -51,7 +51,7 @@ require_once(OER_PATH.'blocks/resource-block/init.php');
 include_once(OER_PATH.'widgets/class-subject-area-widget.php');
 
 //define global variable $debug_mode and get value from settings
-global $_debug, $_bootstrap, $_fontawesome, $_css, $_css_oer, $_subjectarea, $_search_post_ids, $_w_bootstrap, $_oer_prefix, $oer_session, $_gutenberg, $_use_gutenberg, $_nalrc, $_nalrc_products;
+global $_debug, $_bootstrap, $_fontawesome, $_css, $_css_oer, $_subjectarea, $_search_post_ids, $_w_bootstrap, $_oer_prefix, $oer_session, $_gutenberg, $_use_gutenberg, $_nalrc, $_nalrc_products, $_resources_path;
 
 // NALRC Product Types
 $_nalrc_products = [
@@ -64,6 +64,8 @@ $_nalrc_products = [
 	[ "value" => "Blog", "label" => "Blog" ],
 	[ "value" => "Podcast", "label" => "Podcast" ]
 ];
+
+$_resources_path = get_option('oer_configurable_resource_path');
 
 if( ! defined( 'WP_SESSION_COOKIE' ) )
 	define( 'WP_SESSION_COOKIE', '_oer_session' );
@@ -2451,6 +2453,7 @@ function oer_add_rewrites()
 	add_rewrite_endpoint( 'standard', EP_PERMALINK | EP_PAGES );
 	add_rewrite_endpoint( 'substandard', EP_PERMALINK | EP_PAGES );
 	add_rewrite_endpoint( 'notation', EP_PERMALINK | EP_PAGES );
+
 
 	$flush_rewrite = get_option('oer_rewrite_rules');
 	if ($flush_rewrite==false) {
