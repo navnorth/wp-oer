@@ -7,6 +7,14 @@
 wp_register_style( "resource-styles", OER_URL . "css/resource-style.css" );
 wp_enqueue_style( "resource-styles" );
 
+// Load Custom NALRC Javascript
+if ($_nalrc){
+    wp_register_script("nalrc-script",OER_URL."js/nalrc.js");
+    wp_enqueue_script("nalrc-script");
+    wp_localize_script("nalrc-script", "nalrc_object", array("ajaxurl" => admin_url( 'admin-ajax.php' ), "plugin_url" => OER_URL));
+}
+
+
 get_header();
 
 global $post;
@@ -100,11 +108,17 @@ $oer_resource_notice = get_option('oer_nalrc_resource_notice');
 <main id="oer_main" class="site-main nalrc-main" role="main">
     <section id="sngl-resource" class="entry-content oer-cntnr post-content oer_sngl_resource_wrapper nalrc-resource-content row">
         <h1 class="entry-title col-md-12"><?php echo esc_html($post->post_title); ?></h1>
-        <div class="nalrc-resource-row">
-            <div class="nalrc-resource-desc nalrc-resource-value"><?php the_content(); ?></div>
-        </div>
         <div class="row nalrc-content-row">
-            <div class="col-md-9">
+            <div class="col-lg-3 col-md-4 nalrc-featured-thumbnail">
+                <div class="nalrc-resource-thumbnail">
+                    <?php echo oer_nalrc_display_default_thumbnail($post); ?>
+                </div>
+                <div class="nalrc-view-source">
+                    <a href="<?php echo esc_url($oer_resource_url); ?>" target="_blank" class="nalrc-view-button"><?php _e('View Source >>', WP_OESE_THEME_SLUG); ?></a>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-8 nalrc-resource-details">
+                <div class="nalrc-resource-desc nalrc-resource-value"><?php the_content(); ?></div>
                 <?php /** Display Resource URL **/  if ($oer_resource_url): ?>
                 <div class="nalrc-resource-row">
                     <label><?php _e('Resource URL', WP_OESE_THEME_SLUG); ?></label>
@@ -141,21 +155,13 @@ $oer_resource_notice = get_option('oer_nalrc_resource_notice');
                 </div>
                 <?php endif; ?>
             </div>
-            <div class="col-md-3 nalrc-featured-thumbnail">
-                <div class="nalrc-resource-thumbnail">
-                    <?php echo oer_nalrc_display_default_thumbnail($post); ?>
-                </div>
-                <div class="nalrc-view-source">
-                    <a href="<?php echo esc_url($oer_resource_url); ?>" target="_blank" class="nalrc-view-button"><?php _e('View Source >>', WP_OESE_THEME_SLUG); ?></a>
-                </div>
-            </div>
         </div>
         <?php if ($oer_resource_notice): ?>
-        <div class="row">
-            <div class="col-md-12">
+        <div class="row nalrc-resource-notice">
+            <div class="nalrc-resource-notice-wrapper">
                 <div class="nalrc-resource-row">
                     <label><?php _e('Resource Notice:', WP_OESE_THEME_SLUG); ?></label>
-                    <div class="nalrc-resource-url nalrc-resource-value"><?php echo do_shortcode(wpautop(wp_kses($oer_resource_notice, $allowed_tags))); ?></div>
+                    <div class="nalrc-resource-notice-text nalrc-resource-value"><?php echo do_shortcode(wpautop(wp_kses($oer_resource_notice, $allowed_tags))); ?></div>
                 </div>
             </div>
         </div>

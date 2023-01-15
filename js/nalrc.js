@@ -26,6 +26,17 @@ jQuery(function($){
 		});
 	}
 
+	function moveResourceImage() {
+		var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+	    if (width<768){
+			let thumbnail = $('.nalrc-featured-thumbnail');
+			$('.nalrc-resource-details .nalrc-resource-desc').after(thumbnail);
+		} else {
+			let thumbnail = $('.nalrc-featured-thumbnail');
+			$('.nalrc-resource-details').prepend(thumbnail);
+		}
+	}
+
 	/** Keyword search **/
 	$('.nalrc-search-filters #keyword').on("blur", searchResources);
 	$('.nalrc-search-filters #keyword').on("keydown", function(e){
@@ -41,4 +52,9 @@ jQuery(function($){
 
 	/** Publication Year Search **/
 	$('.nalrc-search-filters #year').on("change", searchResources);
+
+	/** Move Resource Featured Image below description on small devices **/
+	window.addEventListener("resize", moveResourceImage);
+
+	moveResourceImage();
 });
