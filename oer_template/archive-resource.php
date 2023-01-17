@@ -26,8 +26,19 @@ get_header();
 	    <?php if ( have_posts() ) : ?>
 	    	<?php if ($_nalrc): ?>
 	    		<header class="archive-header nalrc-resources-header">
-				    <h1 class="archive-title nalrc-resources-title"><?php _e( 'Native American Language Resource Collection', OER_SLUG ); ?></h1>
-				    <p class="nalrc-resources-description"><?php _e('Explore a collection of high-quality multimedia instructional resources, informed by research, for use by Native American language stakeholders. These resources have been reviewed by subject matter experts and recommended and approved by the U.S. Department of Education, Office of Indian Education.', OER_SLUG); ?></p>
+				    <h1 class="archive-title nalrc-resources-title"><?php 
+				    	if (get_option('oer_nalrc_resources_page_title')): 
+				    		echo esc_html(get_option('oer_nalrc_resources_page_title'));
+				    	else : 
+				    		_e( 'Native American Language Resource Collection', OER_SLUG ); 
+				    	endif; ?></h1>
+				    <p class="nalrc-resources-description"><?php 
+				    	if (get_option('oer_nalrc_resources_content')):
+				    		echo do_shortcode(wpautop(wp_kses(get_option('oer_nalrc_resources_content'), $allowed_tags)));
+				    	else :
+				    		_e('Explore a collection of high-quality multimedia instructional resources, informed by research, for use by Native American language stakeholders. These resources have been reviewed by subject matter experts and recommended and approved by the U.S. Department of Education, Office of Indian Education.', OER_SLUG); 
+				    	endif;
+				    ?></p>
 				</header><!-- .archive-header -->
 	    	<?php else: ?>
 				<header class="archive-header">
