@@ -15,6 +15,7 @@ if ($_nalrc){
 	wp_register_script("nalrc-script",OER_URL."js/nalrc.js");
 	wp_enqueue_script("nalrc-script");
 	wp_localize_script("nalrc-script", "nalrc_object", array("ajaxurl" => admin_url( 'admin-ajax.php' ), "plugin_url" => OER_URL));
+	wp_enqueue_script("bootstrap-select",OER_URL."js/bootstrap-select.min.js");
 }
 
 get_header();
@@ -73,7 +74,7 @@ get_header();
 							$grades = get_terms(['taxonomy'=>'resource-grade-level','hide_empty'=>false]);
 							?>
 							<div class="nalrc-select-wrapper">
-								<select id="topic" class="nalrc-grade-level-filter nalrc-select-filter">
+								<select id="gradeLevel" class="nalrc-grade-level-filter nalrc-select-filter selectpicker" multiple title="Grade Level">
 									<option value=""><?php _e('Grade Level', OER_SLUG); ?></option>
 									<?php foreach($grades as $grade): ?>
 										<option value="<?php echo esc_html($grade->term_id); ?>"><?php echo esc_html($grade->name); ?></option>

@@ -9,13 +9,11 @@ jQuery(function($){
 		}
 		if ($('.nalrc-search-filters #keyword').val()!=='')
 			data.keyword = $('.nalrc-search-filters #keyword').val();
-		if ($('.nalrc-search-filters #topic').val()!=='')
-			data.topic = $('.nalrc-search-filters #topic').val();
+		if ($('.nalrc-search-filters #gradeLevel').val()!=='')
+			data.gradeLevel = $('.nalrc-search-filters #gradeLevel').val();
 		if ($('.nalrc-search-filters #product').val()!=='')
 			data.product = $('.nalrc-search-filters #product').val();
-		if ($('.nalrc-search-filters #year').val()!=='')
-			data.year = $('.nalrc-search-filters #year').val();
-		console.log(data);
+		
 		$.ajax({
 			type: "POST",
 			url: nalrc_object.ajaxurl,
@@ -37,21 +35,28 @@ jQuery(function($){
 		}
 	}
 
+	//multiple select dropdown
+	var gradeWrapper = $('.nalrc-search-grade-level .nalrc-select-wrapper');
+	if (gradeWrapper){
+		gradeWrapper.find('select').selectpicker();
+	}
+
 	/** Keyword search **/
-	$('.nalrc-search-filters #keyword').on("blur", searchResources);
-	$('.nalrc-search-filters #keyword').on("keydown", function(e){
+	//$('.nalrc-search-filters #keyword').on("blur", searchResources);
+	/**--$('.nalrc-search-filters #keyword').on("keydown", function(e){
 		if (e.keyCode==13)
 			$(this).trigger('blur');
-	});
+	});--**/
 
 	/** Topic Search **/
-	$('.nalrc-search-filters #topic').on("change", searchResources);
+	$('.nalrc-search-button').on('click', searchResources);
+	//$('.nalrc-search-filters #topic').on("change", searchResources);
 
 	/** Product Type Search **/
-	$('.nalrc-search-filters #product').on("change", searchResources);
+	//$('.nalrc-search-filters #product').on("change", searchResources);
 
 	/** Publication Year Search **/
-	$('.nalrc-search-filters #year').on("change", searchResources);
+	//$('.nalrc-search-filters #year').on("change", searchResources);
 
 	/** Move Resource Featured Image below description on small devices **/
 	window.addEventListener("resize", moveResourceImage);

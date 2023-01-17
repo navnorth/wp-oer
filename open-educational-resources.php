@@ -2712,41 +2712,33 @@ function oer_search_resources(){
 
 	if (!isset($oer_session))
 		$oer_session = OER_WP_Session::get_instance();
-
+	
 	// Search by Topic area
-	if (isset($_POST['topic'])){
-		$args['tax_query'] = array(
-			array(
-				'taxonomy' => 'resource-subject-area',
-				'field' => 'term_id',
-				'terms' => $_POST['topic']
-			)
-		);
+	if (isset($_POST['gradeLevel'])){
+		if (!empty($_POST['gradeLevel'][0])){
+			if (!is_array($_POST['gradeLevel']))
+				$grades = explode(",",$_POST['gradeLevel']);
+			else
+				$grades = $_POST['gradeLevel'];
+			$args['tax_query'] = array(
+				array(
+					'taxonomy' => 'resource-grade-level',
+					'field' => 'term_id',
+					'terms' => $grades
+				)
+			);
+		}
 	}
 
 	// Search by Product Type
-	if (isset($_POST['product']) && isset($_POST['year'])){
+	if (isset($_POST['product'])){
 		$args['meta_query'] = array(
 			array(
 				'key' => 'oer_lrtype',
 				'value' => $_POST['product']
-			),
-			array(
-				'key' => 'oer_datecreated',
-				'value' => $_POST['year'],
-				'compare' => 'LIKE'
 			)
 		);
-	} else {
-		if (isset($_POST['product'])){
-			$args['meta_key'] = 'oer_lrtype';
-			$args['meta_value'] = $_POST['product'];
-		} elseif (isset($_POST['year'])){
-			$args['meta_key'] = 'oer_datecreated';
-			$args['meta_value'] = $_POST['year'];
-			$args['meta_compare'] = 'LIKE';
-		}
-	}
+	} 
 
 	// Search title, description, and tags
 	if (isset($_POST['keyword'])){
