@@ -55,14 +55,22 @@ global $_debug, $_bootstrap, $_fontawesome, $_css, $_css_oer, $_subjectarea, $_s
 
 // NALRC Product Types
 $_nalrc_products = [
-	[ "value" => "Curriculum", "label" => "Curriculum" ],
-	[ "value" => "Instructional Materials", "label" => "Instructional Materials" ],
-	[ "value" => "Research Article", "label" => "Research Article" ],
-	[ "value" => "Fact Sheet", "label" => "Fact Sheet" ],
-	[ "value" => "Policy or Regulations", "label" => "Policy or Regulations" ],
-	[ "value" => "Video", "label" => "Video" ],
+	[ "value" => "App to Learn a Language", "label" => "App to Learn a Language"],
+	[ "value" => "Assessment Tool", "label" => "Assessment Tool"],
 	[ "value" => "Blog", "label" => "Blog" ],
-	[ "value" => "Podcast", "label" => "Podcast" ]
+	[ "value" => "Curriculum", "label" => "Curriculum" ],
+	[ "value" => "Fact Sheet", "label" => "Fact Sheet" ],
+	[ "value" => "Instructional Materials", "label" => "Instructional Materials" ],
+	[ "value" => "Online Course", "label" => "Online Course" ],
+	[ "value" => "Podcast", "label" => "Podcast" ],
+	[ "value" => "Policy or Regulations", "label" => "Policy or Regulations" ],
+	[ "value" => "Professional Development Material", "label" => "Professional Development Material" ],
+	[ "value" => "Publication", "label" => "Publication" ],
+	[ "value" => "Research or Evaluation Report", "label" => "Research or Evaluation Report" ],
+	[ "value" => "Video or Other Media", "label" => "Video or Other Media" ],
+	[ "value" => "Website", "label" => "Website" ],
+	[ "value" => "Framework", "label" => "Framework" ],
+	[ "value" => "Other", "label" => "Other" ]
 ];
 
 $_resources_path = get_option('oer_configurable_resource_path');
