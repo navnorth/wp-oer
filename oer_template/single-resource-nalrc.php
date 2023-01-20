@@ -114,7 +114,7 @@ $oer_resource_notice = get_option('oer_nalrc_resource_notice');
                     <?php echo oer_nalrc_display_default_thumbnail($post); ?>
                 </div>
                 <div class="nalrc-view-source">
-                    <a href="<?php echo esc_url($oer_resource_url); ?>" target="_blank" class="nalrc-view-button"><?php _e('View Source >>', WP_OESE_THEME_SLUG); ?></a>
+                    <a href="<?php echo esc_url($oer_resource_url); ?>" role="button" target="_blank" class="nalrc-view-button"><?php _e('View Source >>', WP_OESE_THEME_SLUG); ?></a>
                 </div>
             </div>
             <div class="col-lg-9 col-md-8 nalrc-resource-details">
