@@ -1291,7 +1291,31 @@ function oer_importResources($default=false) {
 						{
 							$oer_grades = $oer_grade;
 						}
+						
 						update_post_meta( $post_id , 'oer_grade' , $oer_grades);
+
+						if (!is_array($oer_grades)){
+							$oer_grades = explode(",",$oer_grades);
+							$grade_ids = array();
+							for($i = 0; $i <= sizeof($oer_grades); $i++)
+							{
+								if(!empty($oer_grades[$i]))
+								{
+								    $cat = get_term_by( 'name', trim($oer_grades[$i]), 'resource-grade-level' );
+								    if($cat)
+								    {
+									    $grade_ids[$i] = $cat->term_id;
+								    }
+								    else
+								    {
+									    // Categories are not found then assign as keyword
+									    $oer_kywrd .= ",".$oer_grades [$i];
+								    }
+								}
+							}
+						}
+						var_dump($grade_ids);
+						$grades = wp_set_object_terms( $post_id, $grade_ids, 'resource-grade-level', true );
 					}
 
 					if(!empty($oer_datecreated) && !($oer_datecreated==""))
@@ -1314,6 +1338,7 @@ function oer_importResources($default=false) {
 					}
 					if(!empty($oer_lrtype))
 					{
+						var_dump($oer_lrtype);
 						update_post_meta( $post_id , 'oer_lrtype' , sanitize_text_field($oer_lrtype));
 					}
 					if(!empty($oer_interactivity))

@@ -330,7 +330,7 @@ if (get_option('oer_metadata_firstload')=="")
 			?>
             </div>
             <div class="oer_fld">
-            	<?php $oer_lrtype = strtolower(get_post_meta($post->ID, 'oer_lrtype', true)); ?>
+            	<?php $oer_lrtype = ($_nalrc?get_post_meta($post->ID, 'oer_lrtype', true):strtolower(get_post_meta($post->ID, 'oer_lrtype', true))); ?>
                 <select name="oer_lrtype">
 					<option value=""></option>
 					<?php if ($_nalrc): 
