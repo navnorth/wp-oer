@@ -61,8 +61,8 @@ get_header();
 						</div>
 						<div class="nalrc-search-product col-md-3">
 							<div class="nalrc-select-wrapper">
-								<select id="product" class="nalrc-product-filter nalrc-select-filter">
-									<option value=""><?php _e('Resource Type',OER_SLUG); ?></option>
+								<select id="product" class="nalrc-product-filter nalrc-select-filter" title="Resource Type">
+									<option value="" disabled selected hidden><?php _e('Resource Type',OER_SLUG); ?></option>
 									<?php foreach ($_nalrc_products as $product): ?>
 										<option value="<?php echo esc_html($product['value']); ?>"><?php echo esc_html($product['label']); ?></option>
 									<?php endforeach; ?>
@@ -75,7 +75,7 @@ get_header();
 							?>
 							<div class="nalrc-select-wrapper">
 								<select id="gradeLevel" class="nalrc-grade-level-filter nalrc-select-filter selectpicker" multiple title="Grade Level">
-									<option value=""><?php _e('Grade Level', OER_SLUG); ?></option>
+									<!--<option value=""><?php _e('Grade Level', OER_SLUG); ?></option>-->
 									<?php foreach($grades as $grade): ?>
 										<option value="<?php echo esc_html($grade->term_id); ?>"><?php echo esc_html($grade->name); ?></option>
 									<?php endforeach; ?>
