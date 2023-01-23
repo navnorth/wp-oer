@@ -149,7 +149,7 @@ get_header();
 			    
 			    if (is_array($grade_terms)){
 			        foreach($grade_terms as $grade){
-			            $grades[] = $grade->slug;
+			            $grades[] = $grade->name;
 			        }
 			    }
 			    if (!empty($grades)):
