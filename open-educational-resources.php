@@ -2799,7 +2799,11 @@ function oer_search_resources(){
 			    </div>
 					    
 			    <div class="oer-post-content">
-				<?php echo esc_html(ucfirst(get_the_excerpt($resource->ID))); ?>
+				<?php 
+				$excerpt = get_the_excerpt($resource->ID);
+				$excerpt = oer_get_limited_excerpt($excerpt,150);
+				echo esc_html(ucfirst($excerpt));
+				?>
 			    </div>
 			    <?php
 			    if ($_nalrc):

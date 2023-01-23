@@ -139,7 +139,7 @@ get_header();
 			    <div class="oer-post-content">
 					<?php 
 					$excerpt = get_the_excerpt($post->ID);
-					$excerpt = oer_get_limited_excerpt($excerpt,100);
+					$excerpt = oer_get_limited_excerpt($excerpt,150);
 					echo esc_html(ucfirst($excerpt));
 					 ?>
 			    </div>
