@@ -62,7 +62,10 @@ get_header();
 						<div class="nalrc-search-product col-md-3">
 							<div class="nalrc-select-wrapper">
 								<select id="product" class="nalrc-product-filter nalrc-select-filter" title="Resource Type">
-									<option value="" disabled selected hidden><?php _e('Resource Type',OER_SLUG); ?></option>
+									<option value="" 
+										disabled 
+										selected 
+										hidden><?php _e('Resource Type',OER_SLUG); ?></option>
 									<?php foreach ($_nalrc_products as $product): ?>
 										<option value="<?php echo esc_html($product['value']); ?>"><?php echo esc_html($product['label']); ?></option>
 									<?php endforeach; ?>
