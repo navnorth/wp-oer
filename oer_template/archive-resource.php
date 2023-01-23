@@ -75,7 +75,6 @@ get_header();
 							?>
 							<div class="nalrc-select-wrapper">
 								<select id="gradeLevel" class="nalrc-grade-level-filter nalrc-select-filter selectpicker" multiple title="Grade Level">
-									<!--<option value=""><?php _e('Grade Level', OER_SLUG); ?></option>-->
 									<?php foreach($grades as $grade): ?>
 										<option value="<?php echo esc_html($grade->term_id); ?>"><?php echo esc_html($grade->name); ?></option>
 									<?php endforeach; ?>
