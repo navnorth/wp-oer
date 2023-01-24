@@ -37,27 +37,27 @@ jQuery(function($){
 
 	//multiple select dropdown
 	var gradeWrapper = $('.nalrc-search-grade-level .nalrc-select-wrapper');
-	if (gradeWrapper){
+	if (gradeWrapper.length){
 		gradeWrapper.find('select').selectpicker();
 	}
 
-	/** Keyword search **/
-	//$('.nalrc-search-filters #keyword').on("blur", searchResources);
-	/**--$('.nalrc-search-filters #keyword').on("keydown", function(e){
-		if (e.keyCode==13)
-			$(this).trigger('blur');
-	});--**/
+	$('.nalrc-search-grade-level .nalrc-select-wrapper .bootstrap-select .dropdown-toggle').on('keydown', function(e){
+		var code = e.keyCode || e.which;
+		if (code==32){
+			$(this).trigger('click');
+		}
+	});
+
+	$(document).on('focus', '.nalrc-search-grade-level .nalrc-select-wrapper .bootstrap-select .dropdown-menu li a.dropdown-item', function(){
+		$('.nalrc-search-grade-level .nalrc-select-wrapper .bootstrap-select .dropdown-menu li').removeClass('active');
+		$('.nalrc-search-grade-level .nalrc-select-wrapper .bootstrap-select .dropdown-menu li a.dropdown-item').removeClass('active');
+		$(this).addClass('active');
+		$(this).closest('li').addClass('active');
+	});
 
 	/** Topic Search **/
 	$('.nalrc-search-button').on('click', searchResources);
-	//$('.nalrc-search-filters #topic').on("change", searchResources);
-
-	/** Product Type Search **/
-	//$('.nalrc-search-filters #product').on("change", searchResources);
-
-	/** Publication Year Search **/
-	//$('.nalrc-search-filters #year').on("change", searchResources);
-
+	
 	/** Move Resource Featured Image below description on small devices **/
 	window.addEventListener("resize", moveResourceImage);
 
