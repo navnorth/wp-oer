@@ -821,7 +821,7 @@ function oer_settings_page() {
 			'type' => 'textbox',
 			'class' => 'oer-configurable-resource-path',
 			'title' => __( 'Path: ' , OER_SLUG ),
-			'description' => __('Enter the relative URL of the resources page.', OER_SLUG)
+			'description' => __('Enter the relative URL of the resources page without a leading slash(/). (ie. nalrc/resources)', OER_SLUG)
 		)
 	);
 

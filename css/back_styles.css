@@ -201,6 +201,7 @@ ul.oer_slctstandard > li
 	font-size: 25px;
 	padding: 20px 0;
 }
+.oer_settings_form .form-inline-error { color:#FF0000; margin-left:5px; }
 .oer_imprtrwpr .fields {
 	margin-bottom:10px;
 }

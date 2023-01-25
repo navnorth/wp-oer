@@ -1,6 +1,7 @@
 const __oer = wp.i18n.__;
 
 var formfield, invoker;
+var frm_error;
 jQuery(document).ready(function(e) {
 	jQuery( ".oer_datepicker" ).datepicker( { dateFormat: 'MM d, yy' } );
 	jQuery( ".oer_datepicker" ).datepicker( "option", "showAnim", "slideDown" );
@@ -167,6 +168,26 @@ jQuery(document).ready(function(e) {
     if (jQuery('.loader').length>0){
         var loader = jQuery('.loader');
         jQuery('#wpcontent').append(loader);
+    }
+
+    /** Validate Resource URL **/
+    var frm = jQuery('.oer_settings_form');
+    if (frm.length){
+    	jQuery(document).on('submit','.oer_settings_form', function(e){
+    		var path = jQuery(this).find('#oer_configurable_resource_path').val();
+    		var pathRegEx = /^[^\/](?:.*[^\/])?$/;
+    		var validPath = pathRegEx.test(path);
+    		if (validPath) {
+    			window.frm_error = false;
+    			jQuery(this).find('.form-inline-error').remove();
+    		} else {
+    			e.preventDefault();
+    			jQuery(this).find('#oer_configurable_resource_path').after('<span class="form-inline-error">Invalid path! Please enter a valid path.</span>');
+    			jQuery(this).find('#oer_configurable_resource_path').focus();
+    			window.frm_error = true;
+    			return false;
+    		}
+    	});
     }
 });
 
@@ -360,9 +381,11 @@ function get_standardlist(ref)
 //Process Initial Setup
 function processInitialSettings(form) {
 	setTimeout(function() {
-		var Top = document.documentElement.scrollTop || document.body.scrollTop;
-		jQuery('.loader .loader-img').css({'padding-top':Top + 'px'});
-		jQuery('.loader').show();
+		if (!window.frm_error){
+			var Top = document.documentElement.scrollTop || document.body.scrollTop;
+			jQuery('.loader .loader-img').css({'padding-top':Top + 'px'});
+			jQuery('.loader').show();
+		}
 	} ,1000);
 	return true;
 }
