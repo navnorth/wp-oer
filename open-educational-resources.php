@@ -2697,9 +2697,13 @@ function oer_change_tags_labels( $args, $taxonomy ) {
 	if ($_nalrc){
 		if ( 'post_tag' === $taxonomy ) {
 		  $args['labels'] = array(
-		      'name'          => 'Keywords',
-		      'singular_name' => 'Keyword',
-		      'menu_name'     => 'Keywords',
+		      'name'          	=> esc_html__( 'Educational Tags', OER_SLUG),
+		      'singular_name' 	=> esc_html__( 'Educational Tag', OER_SLUG ),
+		      'menu_name'     	=> esc_html__( 'Educational Tags', OER_SLUG ),
+		      'all_items'     	=> esc_html__( 'All Educational Tags', OER_SLUG ),
+		      'add_new_item'  	=> esc_html__( 'Add New Educational Tag', OER_SLUG),
+		      'edit_item'       => esc_html__( 'Edit Educational Tag', OER_SLUG ),
+		    	'update_item'     => esc_html__( 'Update Educational Tag', OER_SLUG ),
 		  );
 		}
    }

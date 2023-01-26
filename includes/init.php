@@ -238,8 +238,8 @@ function oer_create_resource_taxonomies() {
     if ($_nalrc){
     	$singular = "Topic Area";
     	$plural = "Topic Areas";
-    	$grade_singular = "Intended Audience";
-    	$grade_plural = "Intended Audiences";
+    	$grade_singular = "Grade Level";
+    	$grade_plural = "Grade Levels";
     }
 
     $arr_tax = array(

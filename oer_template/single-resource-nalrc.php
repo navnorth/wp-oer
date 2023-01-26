@@ -150,7 +150,7 @@ $oer_resource_notice = get_option('oer_nalrc_resource_notice');
                 <?php endif; ?>
                 <?php /** Display Keyword(s) **/ if (!empty($keywords)): ?>
                 <div class="nalrc-resource-row">
-                    <label><?php _e('Key Word(s):', WP_OESE_THEME_SLUG); ?></label>
+                    <label><?php _e('Educational Tag(s):', WP_OESE_THEME_SLUG); ?></label>
                     <div class="nalrc-resource-url nalrc-resource-value"><?php echo esc_html($keywords); ?></div>
                 </div>
                 <?php endif; ?>
