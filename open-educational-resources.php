@@ -2725,6 +2725,7 @@ function oer_search_resources(){
 	if (!isset($oer_session))
 		$oer_session = OER_WP_Session::get_instance();
 	
+
 	// Search by Topic area
 	if (isset($_POST['gradeLevel'])){
 		if (!empty($_POST['gradeLevel'][0])){
@@ -2743,7 +2744,7 @@ function oer_search_resources(){
 	}
 
 	// Search by Product Type
-	if (isset($_POST['product'])){
+	if (isset($_POST['product']) && $_POST['product']!==""){
 		$args['meta_query'] = array(
 			array(
 				'key' => 'oer_lrtype',
@@ -2753,7 +2754,7 @@ function oer_search_resources(){
 	} 
 
 	// Search title, description, and tags
-	if (isset($_POST['keyword'])){
+	if (isset($_POST['keyword']) && $_POST['keyword']!==""){
 		for ($i=0;$i<2;$i++){
 			if ($i == 0 ){
 				$args['s'] = $_POST['keyword'];
