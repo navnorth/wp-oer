@@ -41,6 +41,11 @@ jQuery(function($){
 		gradeWrapper.find('select').selectpicker();
 	}
 
+	var resWrapper = $('.nalrc-search-product .nalrc-select-wrapper');
+	if (resWrapper.length){
+		resWrapper.find('select').selectpicker();
+	}
+
 	$('.nalrc-search-grade-level .nalrc-select-wrapper .bootstrap-select .dropdown-toggle').on('keydown', function(e){
 		var code = e.keyCode || e.which;
 		if (code==32){
