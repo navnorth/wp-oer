@@ -61,7 +61,7 @@ get_header();
 						</div>
 						<div class="nalrc-search-product col-md-3">
 							<div class="nalrc-select-wrapper">
-								<select id="product" class="nalrc-product-filter nalrc-select-filter" title="Resource Type">
+								<select id="product" class="nalrc-product-filter nalrc-select-filter selectpicker" title="Resource Type">
 									<option value="" 
 										disabled 
 										selected 
