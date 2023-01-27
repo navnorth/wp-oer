@@ -58,6 +58,14 @@ jQuery(function($){
 
 	/** Topic Search **/
 	$('.nalrc-search-button').on('click', searchResources);
+
+	/** Keyword search **/
+	$('.nalrc-search-keyword #keyword').on('keydown', function(e){
+		var code = e.keyCode || e.which;
+		if (code==13){
+			searchResources();
+		}
+	});
 	
 	/** Move Resource Featured Image below description on small devices **/
 	window.addEventListener("resize", moveResourceImage);
