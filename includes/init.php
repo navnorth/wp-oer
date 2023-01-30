@@ -176,7 +176,7 @@ function oer_postcreation(){
     $resources_slug = ($_resources_path?$_resources_path:true);
 
 	$labels = array(
-        'name'               => __( 'Resource', OER_SLUG ),
+        'name'               => __( 'Resources', OER_SLUG ),
         'singular_name'      => __( 'Resource', OER_SLUG ),
         'add_new'            => __( 'Add Resource', OER_SLUG ),
         'add_new_item'       => __( 'Add Resource', OER_SLUG ),
@@ -249,7 +249,7 @@ function oer_create_resource_taxonomies() {
     
     foreach($arr_tax as $tax){
     	$labels = array(
-	      	'name'              => esc_html__( $tax['singular_name'],OER_SLUG ),
+	      	'name'              => esc_html__( $tax['plural_name'],OER_SLUG ),
 		    'singular_name'     => esc_html_x( $tax['singular_name'], 'taxonomy singular name', OER_SLUG ),
 		    'search_items'      => esc_html__( "Search ".$tax['plural_name'],OER_SLUG ),
 		    'all_items'         => esc_html__( 'All '.$tax['plural_name'], OER_SLUG ),

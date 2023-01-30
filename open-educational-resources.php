@@ -2701,9 +2701,13 @@ function oer_change_tags_labels( $args, $taxonomy ) {
 		      'singular_name' 	=> esc_html__( 'Educational Tag', OER_SLUG ),
 		      'menu_name'     	=> esc_html__( 'Educational Tags', OER_SLUG ),
 		      'all_items'     	=> esc_html__( 'All Educational Tags', OER_SLUG ),
+		      'search_items'      => esc_html__( 'Search Educational Tags',OER_SLUG ),
 		      'add_new_item'  	=> esc_html__( 'Add New Educational Tag', OER_SLUG),
 		      'edit_item'       => esc_html__( 'Edit Educational Tag', OER_SLUG ),
 		    	'update_item'     => esc_html__( 'Update Educational Tag', OER_SLUG ),
+		    	'parent_item'       => esc_html__( 'Parent Educational Tag',OER_SLUG ),
+		    	'parent_item_colon' => esc_html__( 'Parent Educational Tag:',OER_SLUG ),
+		    	'new_item_name'     => esc_html__( 'New Educational Tag',OER_SLUG),
 		  );
 		}
    }
@@ -2714,6 +2718,7 @@ add_filter( 'register_taxonomy_args', 'oer_change_tags_labels', 10, 2 );
 function oer_search_resources(){
 	global $wpdb, $oer_session, $_nalrc;
 	$resources = array();
+	$resource2 = array();
 	$args = array(
 		'post_type' => 'resource',
 		'post_status' => 'publish',
