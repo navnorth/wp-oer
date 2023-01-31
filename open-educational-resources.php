@@ -2308,26 +2308,25 @@ function oer_custom_query($search, $wp_query){
 
 	$q = $wp_query->query_vars;
 	$n = !empty($q['exact']) ? '' : '%';
-	$search = $searchand = '';
+	$search_str = $searchand = '';
 	$terms_relation_type = 'OR';
 
 	//Checks each term
 	foreach ((array)$q['search_terms'] as $term ) {
-
 		$term = $n . $wpdb->esc_like( $term ) . $n;
 
 		$OR = '';
 
-		$search .= "{$searchand} (";
+		$search_str .= "{$searchand} (";
 
 		//Search in title
-		$search .= $wpdb->prepare("($wpdb->posts.post_title LIKE %s)", $term);
-                $OR = ' OR ';
+		$search_str .= $wpdb->remove_placeholder_escape($wpdb->prepare("($wpdb->posts.post_title LIKE %s)", $term));
+      $OR = ' OR ';
 
 		//Search in content
-		$search .= $OR;
-                $search .= $wpdb->prepare("($wpdb->posts.post_content LIKE %s)", $term);
-                $OR = ' OR ';
+		$search_str .= $OR;
+    	$search_str .= $wpdb->remove_placeholder_escape($wpdb->prepare("($wpdb->posts.post_content LIKE %s)", $term));
+      $OR = ' OR ';
 
 		//Search by meta keys
 		$meta_keys = array(
@@ -2346,39 +2345,42 @@ function oer_custom_query($search, $wp_query){
 				   'oer_publisheremail',
 				   'oer_publishername',
 				   'oer_publisherurl',
-				   'oer_resourceurl',
+				   //'oer_resourceurl',
 				   'oer_standard',
 				   'oer_standard_alignment',
 				   'oer_userightsurl'
 				   );
 
 		$meta_key_OR = '';
+
 		foreach ($meta_keys as $key_slug) {
-                        $search .= $OR;
-                        $search .= $wpdb->prepare("$meta_key_OR (pm.meta_key = %s AND pm.meta_value LIKE %s)", $key_slug, $term);
-                        $OR = '';
-                        $meta_key_OR = ' OR ';
-                }
+         $search_str .= $OR;
+         $search_str .= $wpdb->remove_placeholder_escape($wpdb->prepare("$meta_key_OR (pm.meta_key = %s AND pm.meta_value LIKE %s)", $key_slug, $term));
+         $OR = '';
+         $meta_key_OR = ' OR ';
+       }
 
 		$OR = ' OR ';
 
 		//Search By Taxonomy
 		$taxonomies = array("post_tag","resource-subject-area");
+
 		$tax_OR = '';
+
 		foreach($taxonomies as $tax) {
-			$search .= $OR;
-                        $search .= $wpdb->prepare("$tax_OR (tt.taxonomy = %s AND t.name LIKE %s)", $tax, $term);
-                        $OR = '';
-                        $tax_OR = ' OR ';
+			$search_str .= $OR;
+         $search_str .= $wpdb->remove_placeholder_escape($wpdb->prepare("$tax_OR (tt.taxonomy = %s AND t.name LIKE %s)", $tax, $term));
+         $OR = '';
+         $tax_OR = ' OR ';
 		}
 
-		$search .= ")";
+		$search_str .= ")";
 
 		$searchand = " $terms_relation_type ";
 	}
 
-	if ( ! empty( $search ) ) {
-		$search = " AND ({$search}) ";
+	if ( ! empty( $search_str ) ) {
+		$search = " AND ({$search_str}) ";
 	}
 
 	add_filter('posts_join_request', 'oer_join_table');
@@ -2391,15 +2393,17 @@ function oer_custom_query($search, $wp_query){
 
 /** Join Table for Custom Search **/
 function oer_join_table($join){
-	global $wpdb;
+	global $wpdb, $_nalrc;
 
 	// Meta keys join
 	$join .= " LEFT JOIN $wpdb->postmeta pm ON ($wpdb->posts.ID = pm.post_id) ";
 
 	// Taxomomies join
-	$join .= " LEFT JOIN $wpdb->term_relationships tr ON ($wpdb->posts.ID = tr.object_id) ";
-        $join .= " LEFT JOIN $wpdb->term_taxonomy tt ON (tr.term_taxonomy_id = tt.term_taxonomy_id) ";
-        $join .= " LEFT JOIN $wpdb->terms t ON (tt.term_id = t.term_id) ";
+	if (!$_nalrc){
+		$join .= " LEFT JOIN $wpdb->term_relationships tr ON ($wpdb->posts.ID = tr.object_id) ";
+   	$join .= " LEFT JOIN $wpdb->term_taxonomy tt ON (tr.term_taxonomy_id = tt.term_taxonomy_id) ";
+   	$join .= " LEFT JOIN $wpdb->terms t ON (tt.term_id = t.term_id) ";
+	}
 
 	return $join;
 }
@@ -2418,8 +2422,14 @@ function oer_resource_taxonomy_queries( $query ) {
 }
 add_action( 'pre_get_posts', 'oer_resource_taxonomy_queries' );
 
+
 function oer_custom_search_template($template){
-    global $wp_query;
+    global $wp_query, $_nalrc;
+
+    if ($_nalrc){
+    	return $template;
+    }
+
     if (!$wp_query->is_search)
         return $template;
 
