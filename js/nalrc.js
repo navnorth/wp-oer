@@ -46,7 +46,7 @@ jQuery(function($){
 		resWrapper.find('select').selectpicker();
 	}
 
-	$('.nalrc-search-grade-level .nalrc-select-wrapper .bootstrap-select .dropdown-toggle').on('keydown', function(e){
+	$('.nalrc-search-grade-level .nalrc-select-wrapper .bootstrap-select .dropdown-toggle,.nalrc-search-product .nalrc-select-wrapper .bootstrap-select .dropdown-toggle').on('keydown', function(e){
 		var code = e.keyCode || e.which;
 		if (code==32){
 			$(this).trigger('click');
