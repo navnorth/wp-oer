@@ -174,7 +174,7 @@ $oer_resource_notice = get_option('oer_nalrc_resource_notice');
 function oer_nalrc_display_default_thumbnail($post){
     $root_path = oer_get_root_path();
     
-    $html = '<a class="oer-featureimg" href="'.esc_url(get_post_meta($post->ID, "oer_resourceurl", true)).'" target="_blank" >';
+    $html = '<a class="oer-featureimg" aria-label="'.esc_attr(get_the_title()).'" href="'.esc_url(get_post_meta($post->ID, "oer_resourceurl", true)).'">';
         $img_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ) , "full" );
         if ($img_url){
             $img_path = $new_img_path = parse_url($img_url[0]);
@@ -195,7 +195,7 @@ function oer_nalrc_display_default_thumbnail($post){
         }
     }else{
     global $url; 
-        $html .= '<span class="dashicons '.oer_getResourceIcon($media_type,$url).'"></span>';
+        $html .= '<span aria-hidden="true" class="dashicons '.oer_getResourceIcon($media_type,$url).'" title="'.esc_attr(get_the_title()).'"></span>';
     }
     
         
