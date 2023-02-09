@@ -51,7 +51,7 @@ get_header();
 				<div class="nalrc-search-filters">
 					<div class="row filter-title">
 						<div class="col-md-12">
-							<h4><?php _e('Search Resource Collection: ', OER_SLUG); ?></h4>
+							<h2><?php _e('Search Resource Collection: ', OER_SLUG); ?></h2>
 						</div>
 					</div>
 					<div class="row">
@@ -125,7 +125,7 @@ get_header();
 			?>
 				    
 			<div class="rght-sd-cntnr-blg <?php echo $content_col; ?>">
-			    <h4><a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h4>
+			    <h3><a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
 			    <div class="small">
 			    	<?php if ($_nalrc && !empty(get_post_meta($post->ID, 'oer_datecreated')[0])): 
 			    		$resource_atts .= '<span>'.esc_html(get_post_meta($post->ID, 'oer_datecreated')[0]).'</span>';
