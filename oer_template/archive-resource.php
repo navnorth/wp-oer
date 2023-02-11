@@ -99,7 +99,7 @@ get_header();
 			<?php if ( has_post_thumbnail() ) {?>
 			    <div class="oer-feature-image <?php if ($_nalrc): ?>col-md-2<?php else: ?>col-md-3<?php endif; ?>">
 				<?php if ( ! post_password_required() && ! is_attachment() ) : ?>
-					<a href="<?php echo esc_url(get_permalink($post->ID)); ?>" tabindex="-1">
+					<a href="<?php echo esc_url(get_permalink($post->ID)); ?>" tabindex="-1" aria-hidden="true">
 						<?php 
 						$image_id = get_post_thumbnail_id();
 						$image_alt = get_post_meta($image_id, '_wp_attachment_image_alt', true);
