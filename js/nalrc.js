@@ -1,3 +1,4 @@
+var focusedIndex = -1;
 jQuery(function($){
 
 	function searchResources(){
@@ -50,6 +51,7 @@ jQuery(function($){
 		var code = e.keyCode || e.which;
 		if (code==32){
 			$(this).trigger('click');
+			focusedIndex = -1;
 		}
 	});
 
@@ -71,7 +73,6 @@ jQuery(function($){
 
 	// up and arrow key press
 	if ($('.nalrc-select-filter').length){
-		var focusedIndex = -1;
 	  	var itemFocus = 0;
 	    var optionCount = $('.nalrc-select-filter .dropdown-menu li').length;
 	    $(document).on('keydown', '.nalrc-select-filter .dropdown-menu', function(e){
