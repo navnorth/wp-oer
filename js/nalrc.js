@@ -86,6 +86,7 @@ jQuery(function($){
 	        focusedIndex++;
 	      } else if (code==32 || code==13){
 	      	$(this).trigger('click');
+	      	return;
 	      }
 	      itemFocus = focusedIndex+1;
 	      $('.nalrc-select-filter .dropdown-menu li').removeClass('active');
