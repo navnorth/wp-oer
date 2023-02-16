@@ -61,13 +61,13 @@ jQuery(function($){
 		$(this).closest('li').addClass('active');
 	});
 
-	$(document).on('focus', '.nalrc-search-product .nalrc-select-wrapper .bootstrap-select .dropdown-menu li a.dropdown-item', function(){
+	/**--$(document).on('focus', '.nalrc-search-product .nalrc-select-wrapper .bootstrap-select .dropdown-menu li a.dropdown-item', function(){
 		$('.nalrc-search-product .nalrc-select-wrapper .bootstrap-select .dropdown-menu li').removeClass('active');
 		$('.nalrc-search-product .nalrc-select-wrapper .bootstrap-select .dropdown-menu li a.dropdown-item').removeClass('active');
 		
 		$(this).addClass('active');
 		$(this).closest('li').addClass('active');
-	});
+	});--**/
 
 	/** Topic Search **/
 	$('.nalrc-search-button').on('click', searchResources);
