@@ -70,7 +70,7 @@ jQuery(function($){
 	});--**/
 	$('.nalrc-select-filter div.dropdown-menu.show li').on('keydown', function (e) {
 	    if (e.keyCode == 38) { // Up
-	      	var previousEle = $(this).prev();
+	      	/**--var previousEle = $(this).prev();
 	      	if (previousEle.length == 0) {
 	        	previousEle = $(this).nextAll().last();
 	      	}
@@ -79,10 +79,10 @@ jQuery(function($){
 		    }).val();
 		    $('.selectpicker').selectpicker('val', selVal);
 
-		     return;
+		     return;--**/
 	    }
 	    if (e.keyCode == 40) { // Down
-	      	var nextEle = $(this).next();
+	      	/**--var nextEle = $(this).next();
 	      	if (nextEle.length == 0) {
 	        	nextEle = $(this).prevAll().last();
 	      	}
@@ -91,7 +91,12 @@ jQuery(function($){
 	      	}).val();
 	      	$('.selectpicker').selectpicker('val', selVal);
 
-	      	return;
+	      	return;--**/
+	      	e.preventDefault();
+	      	var e = jQuery.Event("keydown");
+			e.which = 9; // # Some key code value
+			e.keyCode = 9;
+			$(this).trigger(e);
 	    }
   });
 
