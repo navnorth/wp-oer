@@ -53,7 +53,7 @@ jQuery(function($){
 		}
 	});
 
-	/**--$(document).on('focus', '.nalrc-search-grade-level .nalrc-select-wrapper .bootstrap-select .dropdown-menu li a.dropdown-item', function(){
+	$(document).on('focus', '.nalrc-search-grade-level .nalrc-select-wrapper .bootstrap-select .dropdown-menu li a.dropdown-item', function(){
 		$('.nalrc-search-grade-level .nalrc-select-wrapper .bootstrap-select .dropdown-menu li').removeClass('active');
 		$('.nalrc-search-grade-level .nalrc-select-wrapper .bootstrap-select .dropdown-menu li a.dropdown-item').removeClass('active');
 		
@@ -67,7 +67,7 @@ jQuery(function($){
 		
 		$(this).addClass('active');
 		$(this).closest('li').addClass('active');
-	});--**/
+	});
 
 	// up and arrow key press
 	if ($('.nalrc-select-filter').length){
@@ -75,7 +75,6 @@ jQuery(function($){
 	  	var itemFocus = 0;
 	    var optionCount = $('.nalrc-select-filter .dropdown-menu li').length;
 	    $(document).on('keydown', '.nalrc-select-filter .dropdown-menu', function(e){
-	      e.preventDefault();
 	      var code = e.keyCode || e.which;
 	      if (code==9){
 	        $(this).closest('.bootstrap-select').find('.selectpicker').selectpicker('toggle');
@@ -86,7 +85,6 @@ jQuery(function($){
 	        focusedIndex++;
 	      } else if (code==32 || code==13){
 	      	$(this).trigger('click');
-	      	return;
 	      }
 	      itemFocus = focusedIndex+1;
 	      $('.nalrc-select-filter .dropdown-menu li').removeClass('active');
