@@ -105,7 +105,6 @@ jQuery(function($){
 		$(document).on('keydown', '.nalrc-select-filter button.dropdown-toggle', function(e){
 			var code = e.keyCode || e.which;
 			if (code==13 || code==32){
-				focusIndex = -1;
 				$(this).closest('.bootstrap-select').find('.selectpicker').selectpicker('toggle');
 			} else if (code==38) {
 				$(this).closest('.bootstrap-select').find('.dropdown-menu li:last-child a').focus();
