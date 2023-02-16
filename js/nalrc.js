@@ -1,4 +1,3 @@
-var focusedIndex = -1;
 jQuery(function($){
 
 	function searchResources(){
@@ -51,7 +50,6 @@ jQuery(function($){
 		var code = e.keyCode || e.which;
 		if (code==32){
 			$(this).trigger('click');
-			focusedIndex = -1;
 		}
 	});
 
@@ -73,6 +71,7 @@ jQuery(function($){
 
 	// up and arrow key press
 	if ($('.nalrc-select-filter').length){
+		var focusedIndex = -1;
 	  	var itemFocus = 0;
 	    var optionCount = $('.nalrc-select-filter .dropdown-menu li').length;
 	    $(document).on('keydown', '.nalrc-select-filter .dropdown-menu', function(e){
@@ -101,6 +100,19 @@ jQuery(function($){
 	      }
 	      $('.nalrc-select-filter .dropdown-menu li:nth-child('+itemFocus+') a').focus();
 	    });
+
+	    // Keyboard navigation of filter dropdown on Resources page
+		$(document).on('keydown', '.nalrc-select-filter button.dropdown-toggle', function(e){
+			var code = e.keyCode || e.which;
+			if (code==13 || code==32){
+				focusIndex = -1;
+				$(this).closest('.bootstrap-select').find('.selectpicker').selectpicker('toggle');
+			} else if (code==38) {
+				$(this).closest('.bootstrap-select').find('.dropdown-menu li:last-child a').focus();
+			} else if (code==40) {
+				$(this).closest('.bootstrap-select').find('.dropdown-menu li:first-child a').focus();
+			}
+		});
 	}
 
 	/** Topic Search **/
