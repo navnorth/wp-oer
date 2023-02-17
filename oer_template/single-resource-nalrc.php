@@ -104,10 +104,11 @@ $oer_authorname2 = (isset($post_meta_data['oer_authorname2'][0])?$post_meta_data
 $oer_authorurl2 = (isset($post_meta_data['oer_authorurl2'][0])?$post_meta_data['oer_authorurl2'][0]:false);
 //$oer_resource_notice = (isset($post_meta_data['oer_resource_notice'][0])?$post_meta_data['oer_resource_notice'][0]:false);
 $oer_resource_notice = get_option('oer_nalrc_resource_notice');
+$content = get_the_content($post);
 ?>
 <main id="oer_main" class="site-main nalrc-main" role="main">
     <section id="sngl-resource" class="entry-content oer-cntnr post-content oer_sngl_resource_wrapper nalrc-resource-content row">
-        <h1 class="entry-title col-md-12"><?php echo esc_html($post->post_title); ?></h1>
+        <h1 class="entry-title col-md-12<?php if (empty($content)): echo ' bottom28'; endif; ?>"><?php echo esc_html($post->post_title); ?></h1>
         <div class="row nalrc-content-row">
             <div class="col-lg-3 col-md-4 nalrc-featured-thumbnail">
                 <div class="nalrc-resource-thumbnail">
