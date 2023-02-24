@@ -1211,7 +1211,7 @@ function oer_importResources($default=false) {
 							    else
 							    {
 								    // Categories are not found then assign as keyword
-								    $oer_kywrd .= ",".$oer_categories [$i];
+								    //$oer_kywrd .= ",".$oer_categories [$i];
 								    
 								    // add the term if category does not exist
 								    $cat = wp_insert_term($oer_categories[$i], 'resource-subject-area');
