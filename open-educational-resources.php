@@ -2836,7 +2836,7 @@ function oer_search_resources(){
 					            $grades[] = $grade->name;
 					        }
 					    }
-					    if (!empty($grades)):
+					    if (!empty($grades) && oer_grade_levels($grades)!="N/A"):
 					    ?>
 					    <div class="oer-intended-audience">
 					    	<span class="label"><?php _e("For: ", OER_SLUG); ?></span><span class="value"><?php echo oer_grade_levels($grades); ?></span>
