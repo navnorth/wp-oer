@@ -46,9 +46,11 @@ jQuery(function($){
 		resWrapper.find('select').selectpicker();
 	}
 
-	$('.nalrc-search-grade-level .nalrc-select-wrapper .bootstrap-select .dropdown-toggle,.nalrc-search-product .nalrc-select-wrapper .bootstrap-select .dropdown-toggle').on('keydown', function(e){
+	$('.nalrc-search-grade-level .nalrc-select-wrapper .bootstrap-select button.dropdown-toggle,.nalrc-search-product .nalrc-select-wrapper .bootstrap-select button.dropdown-toggle').on('keydown', function(e){
 		var code = e.keyCode || e.which;
-		if (code==32){
+		console.log('button click');
+		console.log(code);
+		if (code==32 || code==13){
 			$(this).trigger('click');
 		}
 	});
@@ -77,6 +79,8 @@ jQuery(function($){
 	    $(document).on('keydown', '.nalrc-select-filter .dropdown-menu', function(e){
 	    	e.preventDefault();
 	      var code = e.keyCode || e.which;
+	      	console.log('dropdown-menu press');
+	    	console.log(code);
 	      if (code==9){
 	        $(this).closest('.bootstrap-select').find('.selectpicker').selectpicker('toggle');
 	        filter_index = 0;
