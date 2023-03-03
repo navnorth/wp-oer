@@ -46,12 +46,10 @@ jQuery(function($){
 		resWrapper.find('select').selectpicker();
 	}
 
-	$('.nalrc-search-grade-level .nalrc-select-wrapper .bootstrap-select button.dropdown-toggle,.nalrc-search-product .nalrc-select-wrapper .bootstrap-select button.dropdown-toggle').on('keydown', function(e){
+	$(document).on('keydown', '.nalrc-search-grade-level .nalrc-select-wrapper .bootstrap-select button.dropdown-toggle,.nalrc-search-product .nalrc-select-wrapper .bootstrap-select button.dropdown-toggle', function(e){
 		var code = e.keyCode || e.which;
-		console.log('button click');
-		console.log(code);
 		if (code==32 || code==13){
-			$(this).trigger('click');
+			$(this).trigger('click.bs.dropdown.data-api');
 		}
 	});
 
