@@ -2621,8 +2621,7 @@
           that.deselectAll();
         }
       });
-      console.log(this.$button);
-      console.log(EVENT_KEY);
+      
       this.$button
         .on('focus' + EVENT_KEY, function (e) {
           var tabindex = that.$element[0].getAttribute('tabindex');
@@ -3219,9 +3218,7 @@
 
   // get Bootstrap's keydown event handler for either Bootstrap 4 or Bootstrap 3
   function keydownHandler () {
-    console.log($.fn.dropdown);
     if ($.fn.dropdown) {
-      console.log($.fn.dropdown);
       // wait to define until function is called in case Bootstrap isn't loaded yet
       var bootstrapKeydown = $.fn.dropdown.Constructor._dataApiKeydownHandler || $.fn.dropdown.Constructor.prototype.keydown;
       return bootstrapKeydown.apply(this, arguments);
