@@ -15,7 +15,6 @@ if ($_nalrc){
 	wp_register_script("nalrc-script",OER_URL."js/nalrc.js");
 	wp_enqueue_script("nalrc-script");
 	wp_localize_script("nalrc-script", "nalrc_object", array("ajaxurl" => admin_url( 'admin-ajax.php' ), "plugin_url" => OER_URL));
-	wp_enqueue_script("bootstrap-select",OER_URL."js/bootstrap-select.js");
 }
 
 get_header();
@@ -57,11 +56,11 @@ get_header();
 					<div class="row">
 						<div class="nalrc-search-keyword col-md-5">
 							 <i class="fa fa-search icon"></i>
-							<input type="text" id="keyword" placeholder="<?php _e('Search by keyword or phrase',OER_SLUG); ?>" />
+							<input type="text" id="keyword" placeholder="<?php _e('Search by keyword or phrase',OER_SLUG); ?>" aria-label="<?php _e('Search resources by keyword or phrase',OER_SLUG); ?>" />
 						</div>
 						<div class="nalrc-search-product col-md-3">
 							<div class="nalrc-select-wrapper">
-								<select id="product" class="nalrc-product-filter nalrc-select-filter selectpicker" multiple title="Resource Type">
+								<select id="product" class="nalrc-product-filter nalrc-select-filter selectpicker" multiple title="Resource Type" aria-label="Resource Type">
 									<?php foreach ($_nalrc_products as $product): ?>
 										<option value="<?php echo esc_html($product['value']); ?>"><?php echo esc_html($product['label']); ?></option>
 									<?php endforeach; ?>
@@ -73,7 +72,7 @@ get_header();
 							$grades = get_terms(['taxonomy'=>'resource-grade-level','hide_empty'=>false]);
 							?>
 							<div class="nalrc-select-wrapper">
-								<select id="gradeLevel" class="nalrc-grade-level-filter nalrc-select-filter selectpicker" multiple title="Grade Level">
+								<select id="gradeLevel" class="nalrc-grade-level-filter nalrc-select-filter selectpicker" multiple title="Grade Level" aria-label="Grade Level">
 									<?php foreach($grades as $grade): ?>
 										<option value="<?php echo esc_html($grade->term_id); ?>"><?php echo esc_html($grade->name); ?></option>
 									<?php endforeach; ?>

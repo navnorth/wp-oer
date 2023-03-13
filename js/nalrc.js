@@ -117,6 +117,14 @@ jQuery(function($){
 			searchResources();
 		}
 	});
+
+	/** Add Aria Label to Bootstrap Select button **/
+	$('.selectpicker').each(function() {
+		var button = $('button[data-id="'+this.id+'"]').first();
+		if(button.length > 0) {
+			button.attr('aria-label', $(this).attr('aria-label'));
+		}
+	});
 	
 	/** Move Resource Featured Image below description on small devices **/
 	window.addEventListener("resize", moveResourceImage);
