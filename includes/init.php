@@ -140,6 +140,7 @@ function oer_backside_scripts($hook)
 add_action('wp_enqueue_scripts', 'oer_frontside_scripts');
 function oer_frontside_scripts()
 {
+	global $_nalrc;
 	wp_enqueue_style('jqueryui-styles', OER_URL.'css/jquery-ui.css');
 	wp_enqueue_style('front-styles', OER_URL.'css/front_styles.css');
 	wp_enqueue_style( "resource-category-styles", OER_URL . "css/resource-category-style.css" );
@@ -152,6 +153,12 @@ function oer_frontside_scripts()
 	
 	wp_enqueue_script('front-scripts', OER_URL.'js/front_scripts.js');
 	wp_enqueue_style( "resource-category-styles", OER_URL . "css/resource-category-style.css" );
+
+	if ($_nalrc){
+		if (is_post_type_archive('resource')){
+			wp_enqueue_script("bootstrap-select",OER_URL."js/bootstrap-select.js");
+		}
+	}
 }
 
 //Add style block
