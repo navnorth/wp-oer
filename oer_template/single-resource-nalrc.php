@@ -127,7 +127,7 @@ $content = get_the_content($post);
                 </div>
                 <?php endif; ?>
                 <?php /** Display Author(s) **/ if ($oer_authorname || $oer_authorname2): ?>
-                <div class="nalrc-resource-row">
+                <div class="nalrc-resource-row col-lg-9 col-md-9">
                     <label><?php _e('Author(s):', WP_OESE_THEME_SLUG); ?></label>
                     <div class="nalrc-resource-url nalrc-resource-value">
                         <?php 
@@ -150,7 +150,7 @@ $content = get_the_content($post);
                 </div>-->
                 <?php endif; ?>
                 <?php /** Display Keyword(s) **/ if (!empty($keywords)): ?>
-                <div class="nalrc-resource-row">
+                <div class="nalrc-resource-row col-lg-9 col-md-9">
                     <label><?php _e('Educational Tag(s):', WP_OESE_THEME_SLUG); ?></label>
                     <div class="nalrc-resource-url nalrc-resource-value"><?php echo esc_html($keywords); ?></div>
                 </div>
