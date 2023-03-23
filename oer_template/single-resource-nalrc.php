@@ -121,7 +121,7 @@ $content = get_the_content($post);
             <div class="col-lg-9 col-md-8 nalrc-resource-details">
                 <div class="nalrc-resource-desc nalrc-resource-value"><?php the_content(); ?></div>
                 <?php /** Display Resource URL **/  if ($oer_resource_url): ?>
-                <div class="nalrc-resource-row">
+                <div class="nalrc-resource-row col-lg-9 col-md-9">
                     <label><?php _e('Resource URL', WP_OESE_THEME_SLUG); ?></label>
                     <div class="nalrc-resource-url nalrc-resource-value"><a href="<?php echo esc_html($oer_resource_url); ?>"><?php echo esc_html($oer_resource_url); ?></a></div>
                 </div>
