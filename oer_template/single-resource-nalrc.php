@@ -129,7 +129,7 @@ $content = get_the_content($post);
                 <?php /** Display Author(s) **/ if ($oer_authorname || $oer_authorname2): ?>
                 <div class="nalrc-resource-row col-lg-9 col-md-9">
                     <label><?php _e('Author(s):', WP_OESE_THEME_SLUG); ?></label>
-                    <div class="nalrc-resource-url nalrc-resource-value">
+                    <div class="nalrc-resource-author nalrc-resource-value">
                         <?php 
                         $authors = "";
                         if ($oer_authorname)
@@ -152,7 +152,7 @@ $content = get_the_content($post);
                 <?php /** Display Keyword(s) **/ if (!empty($keywords)): ?>
                 <div class="nalrc-resource-row col-lg-9 col-md-9">
                     <label><?php _e('Educational Tag(s):', WP_OESE_THEME_SLUG); ?></label>
-                    <div class="nalrc-resource-url nalrc-resource-value"><?php echo esc_html($keywords); ?></div>
+                    <div class="nalrc-resource-tags nalrc-resource-value"><?php echo esc_html($keywords); ?></div>
                 </div>
                 <?php endif; ?>
             </div>
