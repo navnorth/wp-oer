@@ -5,6 +5,33 @@ global $post;
 global $wpdb;
 global $chck, $_nalrc, $_nalrc_products;
 
+// Product Types
+$_products = [
+	[ "value" => "Article/Information", "label" => "Article/Information"],
+	[ "value" => "Assessment", "label" => "Assessment"],
+	[ "value" => "Audio", "label" => "Audio"],
+	[ "value" => "Blog", "label" => "Blog" ],
+	[ "value" => "Calculator", "label" => "Calculator" ],
+	[ "value" => "Curriculum", "label" => "Curriculum" ],
+	[ "value" => "Demonstration", "label" => "Demonstration" ],
+	[ "value" => "Game", "label" => "Game" ],
+	[ "value" => "Fact Sheet", "label" => "Fact Sheet" ],
+	[ "value" => "Framework", "label" => "Framework" ],
+	[ "value" => "Instructional Material", "label" => "Instructional Material" ],
+	[ "value" => "Interview", "label" => "Interview" ],
+	[ "value" => "Lecture", "label" => "Lecture" ],
+	[ "value" => "Lesson Plan", "label" => "Lesson Plan" ],
+	[ "value" => "Online Course", "label" => "Online Course" ],
+	[ "value" => "Podcast", "label" => "Podcast" ],
+	[ "value" => "Presentation", "label" => "Presentation" ],
+	[ "value" => "Publication", "label" => "Publication" ],
+	[ "value" => "Research/Evaluation Report", "label" => "Research/Evaluation Report" ],
+	[ "value" => "Simulation", "label" => "Simulation" ],
+	[ "value" => "Video", "label" => "Video" ],
+	[ "value" => "Website", "label" => "Website" ],
+	[ "value" => "Other", "label" => "Other" ]
+];
+
 $option_set = false;
 if (get_option('oer_metadata_firstload')=="")
 	$option_set = true;
@@ -47,62 +74,6 @@ if (get_option('oer_metadata_firstload')=="")
             </div>
         </div>
 	<?php } ?>
-
-	<!-- <?php
-	// Grade Level
-	$label_set = false;
-	if (get_option('oer_grade_label')){
-		$label_set = true;
-	}
-	if (!empty(get_option('oer_grade_enabled')) || !$option_set) {
-	//if ((!empty(get_option('oer_grade_enabled')) && get_option('oer_grade_enabled')!=="") || !$option_set) {
-	?>
-	<div class="oer_snglfld">
-        	<div class="oer_txt">
-			<?php
-			if (!$label_set)
-				esc_html_e("Grade", OER_SLUG).":";
-			else
-				echo __(get_option('oer_grade_label'),OER_SLUG).":";
-			?>
-            </div>
-            <div class="oer_fld">
-            	<?php
-					$oer_grade = get_post_meta($post->ID, 'oer_grade', true);
-					$oer_grade = explode("," ,$oer_grade);
-
-					function chck_val($atr , $oer_grade)
-					{
-						if(in_array($atr,$oer_grade))
-						{
-							return $chck = 'checked="checked"';
-						}
-						else
-						{
-							return $chck = '';
-						}
-					}
-				?>
-				<ul class="oer_grade">
-					<li><input type="checkbox" name="oer_grade[]" <?php echo chck_val('pre-k',$oer_grade); ?> value="pre-k"> <?php _e("Pre-K", OER_SLUG); ?> </li>
-					<li><input type="checkbox" name="oer_grade[]" <?php echo chck_val('k',$oer_grade); ?> value="k">  <?php _e("K (Kindergarten)", OER_SLUG); ?> </li>
-					<li><input type="checkbox" name="oer_grade[]" <?php echo chck_val('1',$oer_grade); ?> value="1">  <?php _e("1", OER_SLUG); ?> </li>
-					<li><input type="checkbox" name="oer_grade[]" <?php echo chck_val('2',$oer_grade); ?> value="2">  <?php _e("2", OER_SLUG); ?> </li>
-					<li><input type="checkbox" name="oer_grade[]" <?php echo chck_val('3',$oer_grade); ?> value="3">  <?php _e("3", OER_SLUG); ?> </li>
-					<li><input type="checkbox" name="oer_grade[]" <?php echo chck_val('4',$oer_grade); ?> value="4">  <?php _e("4", OER_SLUG); ?> </li>
-					<li><input type="checkbox" name="oer_grade[]" <?php echo chck_val('5',$oer_grade); ?> value="5">  <?php _e("5", OER_SLUG); ?> </li>
-					<li><input type="checkbox" name="oer_grade[]" <?php echo chck_val('6',$oer_grade); ?> value="6">  <?php _e("6", OER_SLUG); ?> </li>
-					<li><input type="checkbox" name="oer_grade[]" <?php echo chck_val('7',$oer_grade); ?> value="7">  <?php _e("7", OER_SLUG); ?> </li>
-					<li><input type="checkbox" name="oer_grade[]" <?php echo chck_val('8',$oer_grade); ?> value="8">  <?php _e("8", OER_SLUG); ?> </li>
-					<li><input type="checkbox" name="oer_grade[]" <?php echo chck_val('9',$oer_grade); ?> value="9">  <?php _e("9", OER_SLUG); ?> </li>
-					<li><input type="checkbox" name="oer_grade[]" <?php echo chck_val('10',$oer_grade); ?> value="10">  <?php _e("10", OER_SLUG); ?> </li>
-					<li><input type="checkbox" name="oer_grade[]" <?php echo chck_val('11',$oer_grade); ?> value="11">  <?php _e("11", OER_SLUG); ?> </li>
-					<li><input type="checkbox" name="oer_grade[]" <?php echo chck_val('12',$oer_grade); ?> value="12">  <?php _e("12", OER_SLUG); ?> </li>
-			    </ul>
-
-            </div>
-        </div>
-       <?php } ?> -->
     
 	<?php
 	// Age Levels
@@ -333,27 +304,13 @@ if (get_option('oer_metadata_firstload')=="")
             	<?php $oer_lrtype = ($_nalrc?get_post_meta($post->ID, 'oer_lrtype', true):strtolower(get_post_meta($post->ID, 'oer_lrtype', true))); ?>
                 <select name="oer_lrtype">
 					<option value=""></option>
-					<?php if ($_nalrc): 
-						foreach($_nalrc_products as $product){
+					<?php 
+						foreach($_products as $product){
 							?>
 							<option value="<?php echo $product['value']; ?>" <?php if($oer_lrtype == $product['value']){echo 'selected="selected"';}?>><?php esc_html_e($product['label'], OER_SLUG); ?></option>
 							<?php
 						}
 					?>
-					<?php else: ?>
-					<option value="article" <?php if($oer_lrtype == 'article'){echo 'selected="selected"';}?>><?php esc_html_e("Article/Information", OER_SLUG); ?></option>
-					<option value="website" <?php if($oer_lrtype == 'website'){echo 'selected="selected"';}?>><?php esc_html_e("Assessment", OER_SLUG); ?></option>
-					<option value="audio" <?php if($oer_lrtype == 'audio'){echo 'selected="selected"';}?>><?php esc_html_e("Audio", OER_SLUG); ?></option>
-					<option value="calculator" <?php if($oer_lrtype == 'calculator'){echo 'selected="selected"';}?>><?php esc_html_e("Calculator", OER_SLUG); ?></option>
-					<option value="demonstration" <?php if($oer_lrtype == 'demonstration'){echo 'selected="selected"';}?>><?php esc_html_e("Demonstration", OER_SLUG); ?></option>
-					<option value="game" <?php if($oer_lrtype == 'game'){echo 'selected="selected"';}?>><?php esc_html_e("Game", OER_SLUG); ?></option>
-					<option value="interview" <?php if($oer_lrtype == 'interview'){echo 'selected="selected"';}?>><?php esc_html_e("Interview", OER_SLUG); ?></option>
-					<option value="lecture" <?php if($oer_lrtype == 'lecture'){echo 'selected="selected"';}?>><?php esc_html_e("Lecture", OER_SLUG); ?></option>
-					<option value="lesson plan" <?php if($oer_lrtype == 'lesson plan'){echo 'selected="selected"';}?>><?php esc_html_e("Lesson Plan", OER_SLUG); ?></option>
-					<option value="simulation" <?php if($oer_lrtype == 'simulation'){echo 'selected="selected"';}?>><?php esc_html_e("Simulation", OER_SLUG); ?></option>
-					<option value="presentation" <?php if($oer_lrtype == 'presentation'){echo 'selected="selected"';}?>><?php esc_html_e("Presentation", OER_SLUG); ?></option>
-					<option value="other" <?php if($oer_lrtype == 'other'){echo 'selected="selected"';}?>><?php esc_html_e("Learning Resource Type:", OER_SLUG); ?>Other</option>
-					<?php endif; ?>
                 </select>
             </div>
         </div>

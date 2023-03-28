@@ -53,26 +53,6 @@ include_once(OER_PATH.'widgets/class-subject-area-widget.php');
 //define global variable $debug_mode and get value from settings
 global $_debug, $_bootstrap, $_fontawesome, $_css, $_css_oer, $_subjectarea, $_search_post_ids, $_w_bootstrap, $_oer_prefix, $oer_session, $_gutenberg, $_use_gutenberg, $_nalrc, $_nalrc_products, $_resources_path;
 
-// NALRC Product Types
-$_nalrc_products = [
-	[ "value" => "App to Learn a Language", "label" => "App to Learn a Language"],
-	[ "value" => "Assessment Tool", "label" => "Assessment Tool"],
-	[ "value" => "Blog", "label" => "Blog" ],
-	[ "value" => "Curriculum", "label" => "Curriculum" ],
-	[ "value" => "Fact Sheet", "label" => "Fact Sheet" ],
-	[ "value" => "Instructional Material", "label" => "Instructional Material" ],
-	[ "value" => "Online Course", "label" => "Online Course" ],
-	[ "value" => "Podcast", "label" => "Podcast" ],
-	[ "value" => "Policy and Regulation", "label" => "Policy and Regulation" ],
-	[ "value" => "Professional Development Material", "label" => "Professional Development Material" ],
-	[ "value" => "Publication", "label" => "Publication" ],
-	[ "value" => "Research or Evaluation Report", "label" => "Research or Evaluation Report" ],
-	[ "value" => "Video or Other Media", "label" => "Video or Other Media" ],
-	[ "value" => "Website", "label" => "Website" ],
-	[ "value" => "Framework", "label" => "Framework" ],
-	[ "value" => "Other", "label" => "Other" ]
-];
-
 $_resources_path = get_option('oer_configurable_resource_path');
 
 if( ! defined( 'WP_SESSION_COOKIE' ) )
