@@ -1,9 +1,7 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-global $post;
-global $wpdb;
-global $chck, $_nalrc, $_nalrc_products;
+global $post, $wpdb, $chck;
 
 // Product Types
 $_products = [
@@ -301,7 +299,7 @@ if (get_option('oer_metadata_firstload')=="")
 			?>
             </div>
             <div class="oer_fld">
-            	<?php $oer_lrtype = ($_nalrc?get_post_meta($post->ID, 'oer_lrtype', true):strtolower(get_post_meta($post->ID, 'oer_lrtype', true))); ?>
+            	<?php $oer_lrtype = get_post_meta($post->ID, 'oer_lrtype', true); ?>
                 <select name="oer_lrtype">
 					<option value=""></option>
 					<?php 
