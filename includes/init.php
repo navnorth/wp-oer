@@ -140,7 +140,6 @@ function oer_backside_scripts($hook)
 add_action('wp_enqueue_scripts', 'oer_frontside_scripts');
 function oer_frontside_scripts()
 {
-	global $_nalrc;
 	wp_enqueue_style('jqueryui-styles', OER_URL.'css/jquery-ui.css');
 	wp_enqueue_style('front-styles', OER_URL.'css/front_styles.css');
 	wp_enqueue_style( "resource-category-styles", OER_URL . "css/resource-category-style.css" );
@@ -154,10 +153,8 @@ function oer_frontside_scripts()
 	wp_enqueue_script('front-scripts', OER_URL.'js/front_scripts.js');
 	wp_enqueue_style( "resource-category-styles", OER_URL . "css/resource-category-style.css" );
 
-	if ($_nalrc){
-		if (is_post_type_archive('resource')){
-			wp_enqueue_script("bootstrap-select",OER_URL."js/bootstrap-select.js");
-		}
+	if (is_post_type_archive('resource')){
+		wp_enqueue_script("bootstrap-select",OER_URL."js/bootstrap-select.js");
 	}
 }
 
@@ -235,19 +232,11 @@ function oermeta_callback()
 //register custom category
 add_action( 'init', 'oer_create_resource_taxonomies', 0 );
 function oer_create_resource_taxonomies() {
-    global $_use_gutenberg, $_nalrc;
+    global $_use_gutenberg;
     $singular = "Subject Area";
     $plural = "Subject Areas";
     $grade_singular = "Grade Level";
-    $grade_plura = "Grade Levels";
-
-    // NALRC - change Subject Area label to topic area
-    if ($_nalrc){
-    	$singular = "Topic Area";
-    	$plural = "Topic Areas";
-    	$grade_singular = "Grade Level";
-    	$grade_plural = "Grade Levels";
-    }
+    $grade_plural = "Grade Levels";
 
     $arr_tax = array(
     	array("slug"=>"resource-subject-area","singular_name"=>$singular, "plural_name"=>$plural),
@@ -313,10 +302,8 @@ function oer_sort_grade_level_terms( $args, $taxonomies )
  **/
 add_action( 'resource-subject-area_add_form_fields', 'oer_add_upload_image_fields', 10 );
 function oer_add_upload_image_fields($taxonomy) {
-    global $feature_groups, $_nalrc;
+    global $feature_groups;
     $label = "Subject Area";
-    if ($_nalrc)
-    	$label = "Topic Area";
     ?>
     <?php wp_nonce_field( 'oer_add_upload_image_action', 'oer_add_upload_image_action_nonce_field' ); ?>
     <div class="form-field term-group">
@@ -339,10 +326,7 @@ function oer_add_upload_image_fields($taxonomy) {
  **/
 add_action( 'resource-subject-area_edit_form_fields', 'oer_edit_upload_image_fields', 10, 2 );
 function oer_edit_upload_image_fields( $term, $taxonomy ) {
-    global $_nalrc;
     $label = "Subject Area";
-    if ($_nalrc)
-    	$label = "Topic Area";
     $mainIcon = get_term_meta( $term->term_id, 'mainIcon', true );
      ?>
      <?php wp_nonce_field( 'oer_edit_upload_image_action', 'oer_edit_upload_image_action_nonce_field' ); ?>
