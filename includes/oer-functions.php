@@ -1024,7 +1024,7 @@ function oer_resize_image($orig_img_url, $width, $height, $crop = false) {
 
 //Import Default Resources
 function oer_importResources($default=false) {
-	global $wpdb, $_oer_prefix, $_nalrc;
+	global $wpdb, $_oer_prefix;
 	require_once OER_PATH.'Excel/reader.php';
 
 	oer_debug_log("OER Resources Importer: Initializing Excel Reader");
@@ -1272,32 +1272,25 @@ function oer_importResources($default=false) {
 						update_post_meta( $post_id , 'oer_highlight' , $oer_highlight);
 					}
 
-					if(!empty($oer_grade))
-					{
+					if(!empty($oer_grade)){
 						$oer_grades = "";
 						$oer_grade = trim($oer_grade, '"');
-						if ($_nalrc){
-							$oer_grades = $oer_grade;
-						} else {
-							if(strpos($oer_grade , "-"))
+						
+						if(strpos($oer_grade , "-")){
+							$oer_grade = explode("-",$oer_grade);
+							if(is_array($oer_grade))
 							{
-								$oer_grade = explode("-",$oer_grade);
-								if(is_array($oer_grade))
+								if (strtolower($oer_grade[0])=="k"){
+									$oer_grades .= "K,";
+									$oer_grade[0] = 1;
+								}
+								for($j = $oer_grade[0]; $j <= $oer_grade[1]; $j++)
 								{
-									if (strtolower($oer_grade[0])=="k"){
-										$oer_grades .= "K,";
-										$oer_grade[0] = 1;
-									}
-									for($j = $oer_grade[0]; $j <= $oer_grade[1]; $j++)
-									{
-										$oer_grades .= $j.",";
-									}
+									$oer_grades .= $j.",";
 								}
 							}
-							else
-							{
-								$oer_grades = $oer_grade;
-							}
+						} else {
+							$oer_grades = $oer_grade;
 						}
 						
 						update_post_meta( $post_id , 'oer_grade' , $oer_grades);
@@ -1322,7 +1315,7 @@ function oer_importResources($default=false) {
 								}
 							}
 						}
-						var_dump($grade_ids);
+						
 						$grades = wp_set_object_terms( $post_id, $grade_ids, 'resource-grade-level', true );
 					}
 
