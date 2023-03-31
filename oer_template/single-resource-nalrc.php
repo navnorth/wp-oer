@@ -110,7 +110,7 @@ $content = get_the_content($post);
     <section id="sngl-resource" class="entry-content oer-cntnr post-content oer_sngl_resource_wrapper nalrc-resource-content row">
         <h1 class="entry-title col-md-12<?php if (empty($content)): echo ' bottom28'; endif; ?>"><?php echo esc_html($post->post_title); ?></h1>
         <div class="row nalrc-content-row">
-            <div class="col-lg-3 col-md-4 nalrc-featured-thumbnail">
+            <div class="col-lg-4 col-md-4 nalrc-featured-thumbnail">
                 <div class="nalrc-resource-thumbnail">
                     <?php echo oer_nalrc_display_default_thumbnail($post); ?>
                 </div>
@@ -118,7 +118,7 @@ $content = get_the_content($post);
                     <a href="<?php echo esc_url($oer_resource_url); ?>" role="button" target="_blank" class="nalrc-view-button" aria-label="View Source"><?php _e('View Source >>', WP_OESE_THEME_SLUG); ?></a>
                 </div>
             </div>
-            <div class="col-lg-9 col-md-8 nalrc-resource-details">
+            <div class="col-lg-8 col-md-8 nalrc-resource-details">
                 <div class="nalrc-resource-desc nalrc-resource-value"><?php the_content(); ?></div>
                 <?php /** Display Resource URL **/  if ($oer_resource_url): ?>
                 <div class="nalrc-resource-row col-lg-9 col-md-9">
@@ -192,7 +192,7 @@ function oer_nalrc_display_default_thumbnail($post){
             oer_debug_log("Can't get Image editor to resize Resource screenshot.");
         } else {
             $new_image_url = oer_resize_image($img_url[0], $img_width, $img_height, true);
-            $html .= '<img src="'.esc_url($new_image_url).'" alt="'.esc_attr(get_the_title()).'"/>';
+            $html .= '<img src="'.esc_url($new_image_url).'" alt="'.__('Resource Screenshot: ' , 'OER_SLUG'). esc_attr(get_the_title()).'"/>';
         }
     }else{
     global $url; 

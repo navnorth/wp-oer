@@ -104,7 +104,7 @@ get_header();
 						$image_alt = get_post_meta($image_id, '_wp_attachment_image_alt', true);
 						if (empty($image_alt))
 							$image_alt = esc_html(get_the_title($post->ID));
-						the_post_thumbnail("thumbnail", array('alt'=>$image_alt)); 
+						the_post_thumbnail("thumbnail", array('alt'=>__('Resource Screenshot: ').$image_alt)); 
 						?>
 					</a>
 				<?php endif; ?>
@@ -114,7 +114,7 @@ get_header();
 			    $col = 'col-md-3';
 			     if ($_nalrc)
 			     	$col = 'col-md-2';
-			    echo '<div class="oer-feature-image '.$col.'"><a href="'.esc_url(get_permalink($post->ID)).'" tabindex="-1"><img src="'.esc_url($new_image_url).'" alt="'.esc_html(get_the_title($post->ID)).' image"></a></div>';
+			    echo '<div class="oer-feature-image '.$col.'"><a href="'.esc_url(get_permalink($post->ID)).'" tabindex="-1"><img src="'.esc_url($new_image_url).'" alt="'.__('Resource Screenshot: ').esc_html(get_the_title($post->ID)).' image"></a></div>';
 			}
 			$content_col = 'col-md-9';
 			if ($_nalrc)
