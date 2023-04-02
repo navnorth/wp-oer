@@ -48,6 +48,7 @@ get_header();
 			<?php /** NALRC Search Filter **/
 			if ($_nalrc): ?>
 				<div class="nalrc-search-filters">
+					<div class="action-btns"><a href="javascript:void(0);"><i class="fa fa-print" aria-hidden="true"></i> <?php _e('Print' , OER_SLUG) ?></a></div>
 					<div class="row filter-title">
 						<div class="col-md-12">
 							<h2><?php _e('Search Resource Collection: ', OER_SLUG); ?></h2>
