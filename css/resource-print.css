@@ -1,0 +1,69 @@
+body.print-preview {
+	background-color:none;
+}
+body.print-preview .row.top-nav-spacing,
+body.print-preview .row.breadcrumbs-section,
+body.print-preview .nalrc-template .nalrc-header,
+body.print-preview .nalrc-template .nalrc-banner,
+body.print-preview .nalrc-template .nalrc-footer,
+body.print-preview .oese-footer-section,
+body.print-preview .row.mobile-nav-bar,
+body.print-preview .row.mr-0,
+body.print-preview .oer-cntnr .nalrc-resources-content .nalrc-search-filters { display:none; }
+body.print-preview .oer-cntnr .nalrc-resources-content .oer_resource_posts .nalrc-blogpost { margin-left:0; max-width:100%; }
+body.print-preview .oer-cntnr .nalrc-resources-content .oer_resource_posts .nalrc-blogpost:first-child { border-top:1px solid #d1d1d1; }
+body.print-preview .oer-cntnr .nalrc-resources-content .archive-header.nalrc-resources-header { margin-bottom:25px; }
+body.print-preview table.oer_resource_posts { width:100%; }
+body.print-preview table.oer_resource_posts thead { width:100%; }
+body.print-preview table.oer_resource_posts thead tr th { background-color:#F1F1F1 !important; text-align:left; }
+body.print-preview table.oer_resource_posts thead tr th:first-child{ background-color:#F1F1F1 !important; }
+body.print-preview table.oer_resource_posts tr td, 
+body.print-preview table.oer_resource_posts thead tr th { padding:5px; }
+body.print-preview table.oer_resource_posts tr:nth-child(odd){ background-color:#FFFFFF !important; }
+body.print-preview table.oer_resource_posts tr:nth-child(even){ background-color:#F9F9F9 !important; }
+body.print-preview table.oer_resource_posts tr td:last-child { width:10%; white-space: normal; word-break:break-all; }
+body.print-preview table.oer_resource_posts tr .resource-thumbnail { width:10%; }
+body.print-preview table.oer_resource_posts tr .resource-title { width:15%; }
+body.print-preview table.oer_resource_posts tr .resource-date-created { width:10%; }
+body.print-preview table.oer_resource_posts tr .resource-type { width:15%; }
+body.print-preview table.oer_resource_posts tr .resource-description { width:25%; }
+body.print-preview table.oer_resource_posts tr .resource-grade-level { width:10%; }
+body.print-preview table.oer_resource_posts tr .resource-link { width:15%; }
+body.print-preview .nalrc-blogpost .oer-feature-image { width:20%; }
+body.print-preview .nalrc-blogpost .rght-sd-cntnr-blg { width:80%; }
+@page {
+  size: auto !important;
+}
+@media print {
+	body.print-preview { background-color:none; }
+	body.print-preview .row.top-nav-spacing,
+	body.print-preview .row.breadcrumbs-section,
+	body.print-preview .nalrc-template .nalrc-header,
+	body.print-preview .nalrc-template .nalrc-banner,
+	body.print-preview .nalrc-template .nalrc-footer,
+	body.print-preview .oese-footer-section,
+	body.print-preview .row.mobile-nav-bar,
+	body.print-preview .row.mr-0,
+	body.print-preview .oer-cntnr .nalrc-resources-content .nalrc-search-filters { display:none; }
+	body.print-preview .oer-cntnr .nalrc-resources-content .oer_resource_posts .nalrc-blogpost { margin-left:0; max-width:100%; }
+	body.print-preview .oer-cntnr .nalrc-resources-content .oer_resource_posts .nalrc-blogpost:first-child { border-top:1px solid #d1d1d1; }
+	body.print-preview .oer-cntnr .nalrc-resources-content .archive-header.nalrc-resources-header { margin-bottom:25px; }
+	body.print-preview table.oer_resource_posts { width:100%; }
+	body.print-preview table.oer_resource_posts thead { width:100%; }
+	body.print-preview table.oer_resource_posts thead tr th { background-color:#F1F1F1 !important; text-align:left; }
+	body.print-preview table.oer_resource_posts thead tr th:first-child{ background-color:#F1F1F1 !important; }
+	body.print-preview table.oer_resource_posts tr td, 
+	body.print-preview table.oer_resource_posts thead tr th { padding:5px; }
+	body.print-preview table.oer_resource_posts tr:nth-child(odd){ background-color:#FFFFFF !important; }
+	body.print-preview table.oer_resource_posts tr:nth-child(even){ background-color:#F9F9F9 !important; }
+	body.print-preview table.oer_resource_posts tr td:last-child { width:10%; white-space: normal; word-break:break-all; }
+	body.print-preview table.oer_resource_posts tr .resource-thumbnail { width:10%; }
+	body.print-preview table.oer_resource_posts tr .resource-title { width:15%; }
+	body.print-preview table.oer_resource_posts tr .resource-date-created { width:10%; }
+	body.print-preview table.oer_resource_posts tr .resource-type { width:15%; }
+	body.print-preview table.oer_resource_posts tr .resource-description { width:25%; }
+	body.print-preview table.oer_resource_posts tr .resource-grade-level { width:10%; }
+	body.print-preview table.oer_resource_posts tr .resource-link { width:15%; }
+	body.print-preview .nalrc-blogpost .oer-feature-image { width:20%; }
+	body.print-preview .nalrc-blogpost .rght-sd-cntnr-blg { width:80%; }
+}

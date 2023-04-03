@@ -125,6 +125,32 @@ jQuery(function($){
 			button.attr('aria-label', $(this).attr('aria-label'));
 		}
 	});
+
+	// Print resource list
+	if ($('#oer_print_resource_list').length){
+		$(document).on('click','#oer_print_resource_list', function(e){
+			e.preventDefault();
+			var res_url = window.location.href;
+			var printWindow = window.open(res_url+'?action=print&view=list','printWindow');
+			setTimeout(function(){
+				printWindow.print();
+				printWindow.onafterprint = printWindow.close;
+			},500);
+		});
+	}
+
+	// Print resource table
+	if ($('#oer_print_resource_table').length){
+		$(document).on('click','#oer_print_resource_table', function(e){
+			e.preventDefault();
+			var res_url = window.location.href;
+			var printWindow = window.open(res_url+'?action=print&view=table','printWindow');
+			setTimeout(function(){
+				printWindow.print();
+				printWindow.onafterprint = printWindow.close;
+			},500);
+		});
+	}
 	
 	/** Move Resource Featured Image below description on small devices **/
 	window.addEventListener("resize", moveResourceImage);

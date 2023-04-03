@@ -1530,12 +1530,26 @@ add_action( 'widgets_init', 'oer_widgets_init' );
 //Add body class on oer emplates for themes without default font color
 add_filter( 'body_class', 'oer_add_body_class');
 function oer_add_body_class($classes) {
-
 	$cur_theme = wp_get_theme();
 	$theme_class = $cur_theme->get('Name');
 
-	return array_merge( $classes, array( str_replace( ' ', '-', strtolower($theme_class) ) ) );
+	if (isset($_GET['action']) && $_GET['action']=='print'){
+		return array_merge( $classes, array(  str_replace( ' ', '-', strtolower($theme_class) ) , 'print-preview' ) );
+	} else {
+		return array_merge( $classes, array( str_replace( ' ', '-', strtolower($theme_class) ) ) );
+	}
 }
+
+// Display all resources on print
+function oer_archive_all_posts( $query ){
+	global $_nalrc;
+	if ($_nalrc){
+    	if( $query->is_post_type_archive( 'resource' ) && $query->is_main_query() )
+    		if (isset($_GET['action']) && $_GET['action']=='print')
+        		$query->set( 'posts_per_page', -1 );
+   }
+}
+add_action( 'pre_get_posts', 'oer_archive_all_posts' );
 
 /* Ajax Callback */
 function oer_load_more_resources() {

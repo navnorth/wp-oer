@@ -157,6 +157,12 @@ function oer_frontside_scripts()
 	if ($_nalrc){
 		if (is_post_type_archive('resource')){
 			wp_enqueue_script("bootstrap-select",OER_URL."js/bootstrap-select.js");
+			if (isset($_GET['action']) && $_GET['action']=='print'){
+				wp_enqueue_style(
+					"resource-print",
+					OER_URL."css/resource-print.css"
+				);
+			}
 		}
 	}
 }
