@@ -60,6 +60,7 @@ $_nalrc_products = [
 	[ "value" => "Blog", "label" => "Blog" ],
 	[ "value" => "Curriculum", "label" => "Curriculum" ],
 	[ "value" => "Fact Sheet", "label" => "Fact Sheet" ],
+	[ "value" => "Framework", "label" => "Framework" ],
 	[ "value" => "Instructional Material", "label" => "Instructional Material" ],
 	[ "value" => "Online Course", "label" => "Online Course" ],
 	[ "value" => "Podcast", "label" => "Podcast" ],
@@ -69,7 +70,6 @@ $_nalrc_products = [
 	[ "value" => "Research or Evaluation Report", "label" => "Research or Evaluation Report" ],
 	[ "value" => "Video or Other Media", "label" => "Video or Other Media" ],
 	[ "value" => "Website", "label" => "Website" ],
-	[ "value" => "Framework", "label" => "Framework" ],
 	[ "value" => "Other", "label" => "Other" ]
 ];
 
