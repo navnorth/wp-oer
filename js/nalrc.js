@@ -137,6 +137,12 @@ jQuery(function($){
 				printWindow.onafterprint = printWindow.close;
 			},500);
 		});
+		$(document).on('keydown','#oer_print_resource_list', function(e){
+			var code = e.keyCode || e.which;
+			if (code==32 || code==13){
+				$(this).trigger('click');
+			}
+		});
 	}
 
 	// Print resource table
@@ -149,6 +155,12 @@ jQuery(function($){
 				printWindow.print();
 				printWindow.onafterprint = printWindow.close;
 			},500);
+		});
+		$(document).on('keydown','#oer_print_resource_table', function(e){
+			var code = e.keyCode || e.which;
+			if (code==32 || code==13){
+				$(this).trigger('click');
+			}
 		});
 	}
 	
