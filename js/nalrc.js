@@ -130,8 +130,31 @@ jQuery(function($){
 	if ($('#oer_print_resource_list').length){
 		$(document).on('click','#oer_print_resource_list', function(e){
 			e.preventDefault();
+			var keyword, gradeLevel, product, filter='';
+			if ($('.nalrc-search-filters #keyword').val()!=='')
+				keyword = $('.nalrc-search-filters #keyword').val();
+			let grades = $('.nalrc-search-filters #gradeLevel').val();
+			if (grades.length>0)
+				gradeLevel = $('.nalrc-search-filters #gradeLevel').val();
+			let products = $('.nalrc-search-filters #product').val();
+			if (products.length>0)
+				product = $('.nalrc-search-filters #product').val();
 			var res_url = window.location.href;
-			var printWindow = window.open(res_url+'?action=print&view=list','printWindow');
+			if (keyword){
+				console.log(keyword);
+				filter += '&keyword='+keyword;
+			}
+			if (gradeLevel){
+				if (Array.isArray(gradeLevel)){
+					gradeLevel = gradeLevel.join(",");
+				}
+				filter += '&gradelevel='+gradeLevel;
+			}
+			if (product){
+				console.log(product);
+				filter += '&product='+product;	
+			}
+			var printWindow = window.open(res_url+'?action=print&view=list'+filter,'printWindow');
 			setTimeout(function(){
 				printWindow.print();
 				printWindow.onafterprint = printWindow.close;
@@ -149,8 +172,32 @@ jQuery(function($){
 	if ($('#oer_print_resource_table').length){
 		$(document).on('click','#oer_print_resource_table', function(e){
 			e.preventDefault();
+			var keyword, gradeLevel, product, filter='';
+			if ($('.nalrc-search-filters #keyword').val()!=='')
+				keyword = $('.nalrc-search-filters #keyword').val();
+			let grades = $('.nalrc-search-filters #gradeLevel').val();
+			if (grades.length>0)
+				gradeLevel = $('.nalrc-search-filters #gradeLevel').val();
+			let products = $('.nalrc-search-filters #product').val();
+			if (products.length>0)
+				product = $('.nalrc-search-filters #product').val();
 			var res_url = window.location.href;
-			var printWindow = window.open(res_url+'?action=print&view=table','printWindow');
+			if (keyword){
+				console.log(keyword);
+				filter += '&keyword='+keyword;
+			}
+			if (gradeLevel){
+				if (Array.isArray(gradeLevel)){
+					gradeLevel = gradeLevel.join(",");
+				}
+				filter += '&gradelevel='+gradeLevel;
+			}
+			if (product){
+				console.log(product);
+				filter += '&product='+product;	
+			}
+			var res_url = window.location.href;
+			var printWindow = window.open(res_url+'?action=print&view=table'+filter,'printWindow');
 			setTimeout(function(){
 				printWindow.print();
 				printWindow.onafterprint = printWindow.close;

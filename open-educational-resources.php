@@ -51,7 +51,7 @@ require_once(OER_PATH.'blocks/resource-block/init.php');
 include_once(OER_PATH.'widgets/class-subject-area-widget.php');
 
 //define global variable $debug_mode and get value from settings
-global $_debug, $_bootstrap, $_fontawesome, $_css, $_css_oer, $_subjectarea, $_search_post_ids, $_w_bootstrap, $_oer_prefix, $oer_session, $_gutenberg, $_use_gutenberg, $_nalrc, $_nalrc_products, $_resources_path;
+global $_debug, $_bootstrap, $_fontawesome, $_css, $_css_oer, $_subjectarea, $_search_post_ids, $_w_bootstrap, $_oer_prefix, $oer_session, $_gutenberg, $_use_gutenberg, $_nalrc, $_nalrc_products, $_resources_path, $_resource_results;
 
 // NALRC Product Types
 $_nalrc_products = [
@@ -1541,15 +1541,40 @@ function oer_add_body_class($classes) {
 }
 
 // Display all resources on print
-function oer_archive_all_posts( $query ){
+/**--function oer_archive_all_posts( $query ){
 	global $_nalrc;
 	if ($_nalrc){
-    	if( $query->is_post_type_archive( 'resource' ) && $query->is_main_query() )
-    		if (isset($_GET['action']) && $_GET['action']=='print')
+    	if( $query->is_post_type_archive( 'resource' ) && $query->is_main_query() ){
+    		if (isset($_GET['action']) && $_GET['action']=='print'){
         		$query->set( 'posts_per_page', -1 );
+        		if (isset($_GET['gradelevel'])){
+        			$grades = $_GET['gradelevel'];
+        			$taxquery = array(
+						array(
+							'taxonomy' => 'resource-grade-level',
+							'field' => 'term_id',
+							'terms' => $grades
+						)
+					);
+					$query->set('tax_query',$taxquery);
+        		}
+        		if (isset($_GET['product'])){
+        			$product = $_GET['product'];
+        			$products = explode(",",$product);
+        			$metaquery = array(
+						array(
+							'key' => 'oer_lrtype',
+							'value' => $products
+
+						)
+					);
+					$query->set('meta_query',$metaquery);
+        		}
+    		}
+   	}
    }
 }
-add_action( 'pre_get_posts', 'oer_archive_all_posts' );
+add_action( 'pre_get_posts', 'oer_archive_all_posts' );--**/
 
 /* Ajax Callback */
 function oer_load_more_resources() {
@@ -2800,7 +2825,7 @@ function oer_search_resources(){
 		} else {
 			$resources = get_posts($args);
 		}
-
+		
 		foreach($resources as $resource){
 			$resource_atts = "";
 			?>
@@ -2861,6 +2886,8 @@ function oer_search_resources(){
 		    </div>
 			<?php
 		}
+		
+			
 	} catch (Exception $e){
 		echo 'Error occurred: '. $e->getMessage();
 	}
@@ -2868,3 +2895,52 @@ function oer_search_resources(){
 }
 add_action('wp_ajax_search_resources', 'oer_search_resources');
 add_action('wp_ajax_nopriv_search_resources', 'oer_search_resources');
+
+function oer_filter_resources($params){
+	$args = array(
+		'post_type' => 'resource',
+		'post_status' => 'publish',
+		'numberposts' => -1,
+	);
+	
+	// Search by Topic area
+	if (isset($params['gradelevel'])){
+		$grades = $params['gradelevel'];
+		$args['tax_query'] = array(
+			array(
+				'taxonomy' => 'resource-grade-level',
+				'field' => 'term_id',
+				'terms' => $grades
+			)
+		);
+	}
+
+	// Search by Product Type
+	if (isset($params['product'])){
+		$args['meta_query'] = array(
+			array(
+				'key' => 'oer_lrtype',
+				'value' => $params['product']
+			)
+		);
+	} 
+
+	// Search title, description, and tags
+	if (isset($params['keyword'])){
+		for ($i=0;$i<2;$i++){
+			if ($i == 0 ){
+				$args['s'] = $params['keyword'];
+				$resources = get_posts($args);	
+			} else {
+				if (isset($args['s']))
+					unset($args['s']);
+				$args['tag'] = $params['keyword'];
+				$resources2 = get_posts($args);
+			}
+		}
+		$resources = array_merge($resources, $resources2);
+	} else {
+		$resources = get_posts($args);
+	}
+	return $resources;
+}
