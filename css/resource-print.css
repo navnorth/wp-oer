@@ -10,9 +10,13 @@ body.print-preview .oese-footer-section,
 body.print-preview .row.mobile-nav-bar,
 body.print-preview .row.mr-0,
 body.print-preview .oer-cntnr .nalrc-resources-content .nalrc-search-filters { display:none; }
+body.print-preview .oer-cntnr .nalrc-resources-content { padding-top:0px; }
 body.print-preview .oer-cntnr .nalrc-resources-content .oer_resource_posts .nalrc-blogpost { margin-left:0; max-width:100%; }
-body.print-preview .oer-cntnr .nalrc-resources-content .oer_resource_posts .nalrc-blogpost:first-child { border-top:1px solid #d1d1d1; }
+body.print-preview .oer-cntnr .nalrc-resources-content .oer_resource_posts .nalrc-blogpost
 body.print-preview .oer-cntnr .nalrc-resources-content .archive-header.nalrc-resources-header { margin-bottom:25px; }
+body.print-preview .oer-cntnr .nalrc-resources-content table.oer-resources-posts-table { width:100%; }
+body.print-preview .oer-cntnr .nalrc-resources-content table.oer-resources-posts-table td { border-bottom:1px solid #d1d1d1; }
+body.print-preview .oer-cntnr .nalrc-resources-content table.oer-resources-posts-table tr:first-child td { border-top:1px solid #d1d1d1; }
 body.print-preview table.oer_resource_posts { width:100%; }
 body.print-preview table.oer_resource_posts thead { width:100%; }
 body.print-preview table.oer_resource_posts thead tr th { background-color:#F1F1F1 !important; text-align:left; }
@@ -48,6 +52,7 @@ body.print-preview .nalrc-blogpost .rght-sd-cntnr-blg { width:80%; }
 	body.print-preview .oer-cntnr .nalrc-resources-content .oer_resource_posts .nalrc-blogpost { margin-left:0; max-width:100%; }
 	body.print-preview .oer-cntnr .nalrc-resources-content .oer_resource_posts .nalrc-blogpost:first-child { border-top:1px solid #d1d1d1; }
 	body.print-preview .oer-cntnr .nalrc-resources-content .archive-header.nalrc-resources-header { margin-bottom:25px; }
+	body.print-preview .oer-cntnr .nalrc-resources-content table.oer-resources-posts-table { width:100%; }
 	body.print-preview table.oer_resource_posts { width:100%; }
 	body.print-preview table.oer_resource_posts thead { width:100%; }
 	body.print-preview table.oer_resource_posts thead tr th { background-color:#F1F1F1 !important; text-align:left; }

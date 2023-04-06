@@ -59,8 +59,8 @@ if (!$printable){
 			if ($_nalrc): ?>
 				<div class="nalrc-search-filters">
 					<div class="action-btns">
-						<a href="#" id="oer_print_resource_list"><i class="fa fa-print" aria-hidden="true"></i> <?php _e('Print list' , OER_SLUG) ?></a>
-						<a href="#" id="oer_print_resource_table"><i class="fa fa-print" aria-hidden="true"></i> <?php _e('Print table' , OER_SLUG) ?></a>
+						<a href="#" id="oer_print_resource_list"><i class="fa fa-print" aria-hidden="true"></i> <?php _e('Print List' , OER_SLUG) ?></a>
+						<a href="#" id="oer_print_resource_table"><i class="fa fa-print" aria-hidden="true"></i> <?php _e('Print Table' , OER_SLUG) ?></a>
 					</div>
 					<div class="row filter-title">
 						<div class="col-md-12">
@@ -236,84 +236,94 @@ if (!$printable){
 			<?php endif; ?>
 
 		<?php if ($_nalrc): ?>
-			<article class="oer_resource_posts">
-		<?php endif; ?>
+			<table class="oer-resources-posts-table">
+				<thead>
+					<tr><th></th></tr>
+					<tr><th></th></tr>
+				</thead>
+				<tbody>
+			<?php endif; ?>
 
 			<?php foreach($resources as $resource) { 
 				?>
-		    <div class="oer_blgpst<?php if ($_nalrc) _e(' nalrc-blogpost',OER_SLUG); ?>">
-				    
-			<?php if ( has_post_thumbnail($resource->ID) ) {?>
-			    <div class="oer-feature-image <?php if ($_nalrc): ?>col-md-2<?php else: ?>col-md-3<?php endif; ?>">
-				<?php if ( ! post_password_required() && ! is_attachment() ) : ?>
-					<a href="<?php echo esc_url(get_permalink($resource->ID)); ?>" tabindex="-1" aria-hidden="true">
-						<?php 
-						$image_id = get_post_thumbnail_id($resource->ID);
-						$image_alt = get_post_meta($image_id, '_wp_attachment_image_alt', true);
-						if (empty($image_alt))
-							$image_alt = esc_html(get_the_title($resource->ID));
-						echo get_the_post_thumbnail($resource->ID, "thumbnail", array('alt'=>__('Resource Screenshot: ').$image_alt)); 
-						?>
-					</a>
-				<?php endif; ?>
-			    </div>
-			<?php } else {
-			    $new_image_url = OER_URL . 'images/default-icon-220x180.png';
-			    $col = 'col-md-3';
-			     if ($_nalrc)
-			     	$col = 'col-md-2';
-			    echo '<div class="oer-feature-image '.$col.'"><a href="'.esc_url(get_permalink($resource->ID)).'" tabindex="-1"><img src="'.esc_url($new_image_url).'" alt="'.__('Resource Screenshot: ').esc_html(get_the_title($post->ID)).' image"></a></div>';
-			}
-			$content_col = 'col-md-9';
-			if ($_nalrc)
-				$content_col = 'col-md-10';
+				<tr>
+					<td>
+					    <div class="oer_blgpst<?php if ($_nalrc) _e(' nalrc-blogpost',OER_SLUG); ?>">
+							    
+						<?php if ( has_post_thumbnail($resource->ID) ) {?>
+						    <div class="oer-feature-image <?php if ($_nalrc): ?>col-md-2<?php else: ?>col-md-3<?php endif; ?>">
+							<?php if ( ! post_password_required() && ! is_attachment() ) : ?>
+								<a href="<?php echo esc_url(get_permalink($resource->ID)); ?>" tabindex="-1" aria-hidden="true">
+									<?php 
+									$image_id = get_post_thumbnail_id($resource->ID);
+									$image_alt = get_post_meta($image_id, '_wp_attachment_image_alt', true);
+									if (empty($image_alt))
+										$image_alt = esc_html(get_the_title($resource->ID));
+									echo get_the_post_thumbnail($resource->ID, "thumbnail", array('alt'=>__('Resource Screenshot: ').$image_alt)); 
+									?>
+								</a>
+							<?php endif; ?>
+						    </div>
+						<?php } else {
+						    $new_image_url = OER_URL . 'images/default-icon-220x180.png';
+						    $col = 'col-md-3';
+						     if ($_nalrc)
+						     	$col = 'col-md-2';
+						    echo '<div class="oer-feature-image '.$col.'"><a href="'.esc_url(get_permalink($resource->ID)).'" tabindex="-1"><img src="'.esc_url($new_image_url).'" alt="'.__('Resource Screenshot: ').esc_html(get_the_title($post->ID)).' image"></a></div>';
+						}
+						$content_col = 'col-md-9';
+						if ($_nalrc)
+							$content_col = 'col-md-10';
 
-			$resource_atts = "";
-			?>
-				    
-			<div class="rght-sd-cntnr-blg <?php echo $content_col; ?>">
-			    <h3><a href="<?php the_permalink($resource->ID); ?>" rel="bookmark" title="<?php echo get_the_title($resource->ID); ?>"><?php echo get_the_title($resource->ID); ?></a></h3>
-			    <div class="small">
-			    	<?php if ($_nalrc && !empty(get_post_meta($resource->ID, 'oer_datecreated')[0])): 
-			    		$resource_atts .= '<span>'.esc_html(get_post_meta($resource->ID, 'oer_datecreated')[0]).'</span>';
-			    	endif; ?>
-			    	<?php if ($_nalrc && !empty(get_post_meta($resource->ID,'oer_lrtype')[0])): 
-			    		if (!empty($resource_atts))
-			    			$resource_atts .= ' | <span>'.ucfirst(get_post_meta($resource->ID, 'oer_lrtype')[0]).'</span>';
-			    		else
-			    			$resource_atts .= '<span>'.ucfirst(get_post_meta($resource->ID, 'oer_lrtype')[0]).'</span>';
-			    	endif; 
-			    	echo $resource_atts;
-			    	?>
-			    </div>
-					    
-			    <div class="oer-post-content">
-					<?php 
-					$excerpt = get_the_excerpt($resource->ID);
-					$excerpt = oer_get_limited_excerpt($excerpt,150);
-					echo esc_html(ucfirst($excerpt));
-					 ?>
-			    </div>
-			    <?php
-			    $grades = array();
-			    $grade_terms = get_the_terms( $resource->ID, 'resource-grade-level' );
-			    
-			    if (is_array($grade_terms)){
-			        foreach($grade_terms as $grade){
-			            $grades[] = $grade->name;
-			        }
-			    }
-			    if (!empty($grades) && oer_grade_levels($grades)!="N/A"):
-			    ?>
-			    <div class="oer-intended-audience">
-			    	<span class="label"><?php _e("For: ", OER_SLUG); ?></span><span class="value"><?php echo oer_grade_levels($grades); ?></span>
-			    </div>
-				<?php endif; ?>
-			</div>
-		    </div>
+						$resource_atts = "";
+						?>
+							    
+							<div class="rght-sd-cntnr-blg <?php echo $content_col; ?>">
+							    <h3><a href="<?php the_permalink($resource->ID); ?>" rel="bookmark" title="<?php echo get_the_title($resource->ID); ?>"><?php echo get_the_title($resource->ID); ?></a></h3>
+							    <div class="small">
+							    	<?php if ($_nalrc && !empty(get_post_meta($resource->ID, 'oer_datecreated')[0])): 
+							    		$resource_atts .= '<span>'.esc_html(get_post_meta($resource->ID, 'oer_datecreated')[0]).'</span>';
+							    	endif; ?>
+							    	<?php if ($_nalrc && !empty(get_post_meta($resource->ID,'oer_lrtype')[0])): 
+							    		if (!empty($resource_atts))
+							    			$resource_atts .= ' | <span>'.ucfirst(get_post_meta($resource->ID, 'oer_lrtype')[0]).'</span>';
+							    		else
+							    			$resource_atts .= '<span>'.ucfirst(get_post_meta($resource->ID, 'oer_lrtype')[0]).'</span>';
+							    	endif; 
+							    	echo $resource_atts;
+							    	?>
+							    </div>
+									    
+							    <div class="oer-post-content">
+									<?php 
+									$excerpt = get_the_excerpt($resource->ID);
+									$excerpt = oer_get_limited_excerpt($excerpt,150);
+									echo esc_html(ucfirst($excerpt));
+									 ?>
+							    </div>
+							    <?php
+							    $grades = array();
+							    $grade_terms = get_the_terms( $resource->ID, 'resource-grade-level' );
+							    
+							    if (is_array($grade_terms)){
+							        foreach($grade_terms as $grade){
+							            $grades[] = $grade->name;
+							        }
+							    }
+							    if (!empty($grades) && oer_grade_levels($grades)!="N/A"):
+							    ?>
+							    <div class="oer-intended-audience">
+							    	<span class="label"><?php _e("For: ", OER_SLUG); ?></span><span class="value"><?php echo oer_grade_levels($grades); ?></span>
+							    </div>
+								<?php endif; ?>
+							</div>
+					    </div>
+			    	</td>
+				</tr>
 		<?php } ?>
 		<?php if ($_nalrc): ?>
-			</article>
+			</tbody>
+		</table>
 		<?php endif; ?>
 	    <?php else : ?>
 		<article id="post-0" class="post no-results not-found">
