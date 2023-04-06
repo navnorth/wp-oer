@@ -2897,6 +2897,8 @@ add_action('wp_ajax_search_resources', 'oer_search_resources');
 add_action('wp_ajax_nopriv_search_resources', 'oer_search_resources');
 
 function oer_filter_resources($params){
+	$grades = null;
+	$products = null;
 	$args = array(
 		'post_type' => 'resource',
 		'post_status' => 'publish',
@@ -2905,7 +2907,10 @@ function oer_filter_resources($params){
 	
 	// Search by Topic area
 	if (isset($params['gradelevel'])){
-		$grades = $params['gradelevel'];
+		if (!is_array($params['gradelevel']))
+			$grades = explode(",",$params['gradelevel']);
+		else
+			$grades = $params['gradelevel'];
 		$args['tax_query'] = array(
 			array(
 				'taxonomy' => 'resource-grade-level',
@@ -2917,10 +2922,14 @@ function oer_filter_resources($params){
 
 	// Search by Product Type
 	if (isset($params['product'])){
+		if (!is_array($params['product']))
+			$products = explode(",",$params['product']);
+		else
+			$products = $params['product'];
 		$args['meta_query'] = array(
 			array(
 				'key' => 'oer_lrtype',
-				'value' => $params['product']
+				'value' => $products
 			)
 		);
 	} 
