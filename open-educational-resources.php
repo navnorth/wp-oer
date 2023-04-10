@@ -940,7 +940,7 @@ function oer_styles_settings(){
 			'type' => 'checkbox',
 			'value' => '1',
 			'default' => true,
-			'name' =>  __('Display '.$labels.' menu on '.$singular.' pages', OER_SLUG),
+			'name' =>  __('Display '.$label.' menu on '.$singular.' pages', OER_SLUG),
 			'description' => __('Lists all '.strtolower($plural).' in the left column of '.$singular.' pages—may conflict with themes using left navigation.', OER_SLUG)
 		)
 	);
