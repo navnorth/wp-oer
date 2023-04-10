@@ -4,7 +4,7 @@ Tags: OER, Open Educational Resources, Education, Teaching, Learning
 Requires at least: 4.4
 Tested up to: 6.0.2
 Requires PHP: 7.0
-Stable tag: 0.9.2
+Stable tag: 0.9.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -41,6 +41,9 @@ No frequently asked questions.
 3. Display educational resources on your WordPress website!
 
 == Changelog ==
+= 0.9.3 =
+* Feature additions for OESE Native American Language Resource Center
+
 = 0.9.2 =
 * Fixed the overlapping text on the settings and import pages including the standard list display
 * Fixed the Resource Block display error when the resource has no selected subject areas

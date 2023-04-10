@@ -3,7 +3,7 @@
  Plugin Name:        WP OER
  Plugin URI:         https://www.wp-oer.com
  Description:        Open Educational Resource management and curation, metadata publishing, and alignment to Common Core State Standards.
- Version:            0.9.2
+ Version:            0.9.3
  Requires at least:  4.4
  Requires PHP:       7.0
  Author:             Navigation North
@@ -12,7 +12,7 @@
  License:            GPL3
  License URI:        https://www.gnu.org/licenses/gpl-3.0.html
 
- Copyright (C) 2021 Navigation North
+ Copyright (C) 2023 Navigation North
 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ define( 'OER_FILE',__FILE__);
 // Plugin Name and Version
 define( 'OER_PLUGIN_NAME', 'WP OER Plugin' );
 define( 'OER_ADMIN_PLUGIN_NAME', 'WP OER Plugin');
-define( 'OER_VERSION', '0.9.2' );
+define( 'OER_VERSION', '0.9.3' );
 define( 'OER_SITE_PATH', ABSPATH );
 
 include_once(OER_PATH.'includes/oer-functions.php');
@@ -776,7 +776,7 @@ function oer_settings_page() {
 		)
 	);
 
-	//Add Resource Notice 
+	//Add Resource Notice
 	if ($_nalrc){
 		add_settings_section(
 			'oer_notice_settings',
@@ -1482,7 +1482,7 @@ function oer_wysiwyg_field( $arguments ) {
 		$class = $arguments['class'];
 		$class = " class='".$class."' ";
 	}
-	
+
 	echo '<label for="'.esc_attr($arguments['uid']).'" class="'.$class.'"><strong>'.esc_html($arguments['name']);
 	if (isset($arguments['inline_description']))
 		echo '<span class="inline-desc">'.esc_html($arguments['inline_description']).'</span>';
@@ -2007,7 +2007,7 @@ function oer_register_post_type_rules( $post_type, $args ) {
 
 		$permalink = '%' . $post_type . '_slug%' . $permalink;
 		$permalink = str_replace( '%postname%', '%' . $post_type . '%', $permalink );
-		
+
 		if(!empty($args->rewrite['slug']))
 			add_rewrite_tag( '%' . $post_type . '_slug%', '(' . $args->rewrite['slug'] . ')', 'post_type=' . $post_type . '&slug=' );
 
@@ -2020,9 +2020,9 @@ function oer_register_post_type_rules( $post_type, $args ) {
 		if ( ! is_array( $rewrite_args ) ) {
 			$rewrite_args = array( 'with_front' => $args->rewrite );
 		}
-		
+
 		$slug = '';
-		
+
 		if(!empty($args->rewrite['slug']))
 			$slug = $args->rewrite['slug'];
 
@@ -2030,7 +2030,7 @@ function oer_register_post_type_rules( $post_type, $args ) {
 			if ( is_string( $args->has_archive ) ) {
 				$slug = $args->has_archive;
 			};
-			
+
 			if ( !empty($args->rewrite['with_front']) ) {
 				$slug = substr( $wp_rewrite->front, 1 ) . $slug;
 			}
@@ -2778,7 +2778,7 @@ function oer_search_resources(){
 
 	if (!isset($oer_session))
 		$oer_session = OER_WP_Session::get_instance();
-	
+
 
 	try {
 		// Search by Topic area
@@ -2806,14 +2806,14 @@ function oer_search_resources(){
 					'value' => $_POST['product']
 				)
 			);
-		} 
+		}
 
 		// Search title, description, and tags
 		if (isset($_POST['keyword']) && $_POST['keyword']!==""){
 			for ($i=0;$i<2;$i++){
 				if ($i == 0 ){
 					$args['s'] = $_POST['keyword'];
-					$resources = get_posts($args);	
+					$resources = get_posts($args);
 				} else {
 					if (isset($args['s']))
 						unset($args['s']);
@@ -2825,7 +2825,7 @@ function oer_search_resources(){
 		} else {
 			$resources = get_posts($args);
 		}
-		
+
 		foreach($resources as $resource){
 			$resource_atts = "";
 			?>
@@ -2841,25 +2841,25 @@ function oer_search_resources(){
 				    echo '<div class="oer-feature-image col-md-2"><a href="'.esc_url(get_permalink($resource->ID)).'"><img src="'.esc_url($new_image_url).'"></a></div>';
 				}
 				?>
-					    
+
 				<div class="rght-sd-cntnr-blg col-md-10">
 				    <h4><a href="<?php the_permalink($resource->ID); ?>" rel="bookmark" title="<?php the_title_attribute(array('post'=>$resource->ID)); ?>"><?php echo esc_html(get_the_title($resource->ID)); ?></a></h4>
 				    <div class="small">
-				    	<?php if ($_nalrc && !empty(get_post_meta($resource->ID, 'oer_datecreated')[0])): 
+				    	<?php if ($_nalrc && !empty(get_post_meta($resource->ID, 'oer_datecreated')[0])):
 				    		$resource_atts .= '<span>'.esc_html(get_post_meta($resource->ID, 'oer_datecreated')[0]).'</span>';
 				    	endif; ?>
-				    	<?php if ($_nalrc && !empty(get_post_meta($resource->ID,'oer_lrtype')[0])): 
+				    	<?php if ($_nalrc && !empty(get_post_meta($resource->ID,'oer_lrtype')[0])):
 				    		if (!empty($resource_atts))
 				    			$resource_atts .= ' | <span>'.ucfirst(get_post_meta($resource->ID, 'oer_lrtype')[0]).'</span>';
 				    		else
 				    			$resource_atts .= '<span>'.ucfirst(get_post_meta($resource->ID, 'oer_lrtype')[0]).'</span>';
-				    	endif; 
+				    	endif;
 				    	echo $resource_atts;
 				    	?>
 				    </div>
-						    
+
 				    <div class="oer-post-content">
-					<?php 
+					<?php
 					$excerpt = get_the_excerpt($resource->ID);
 					$excerpt = oer_get_limited_excerpt($excerpt,150);
 					echo esc_html(ucfirst($excerpt));
@@ -2869,7 +2869,7 @@ function oer_search_resources(){
 				    if ($_nalrc):
 					    $grades = array();
 					    $grade_terms = get_the_terms( $resource->ID, 'resource-grade-level' );
-				    
+
 					    if (is_array($grade_terms)){
 					        foreach($grade_terms as $grade){
 					            $grades[] = $grade->name;
@@ -2880,14 +2880,14 @@ function oer_search_resources(){
 					    <div class="oer-intended-audience">
 					    	<span class="label"><?php _e("For: ", OER_SLUG); ?></span><span class="value"><?php echo oer_grade_levels($grades); ?></span>
 					    </div>
-					<?php endif; 
+					<?php endif;
 					endif; ?>
 				</div>
 		    </div>
 			<?php
 		}
-		
-			
+
+
 	} catch (Exception $e){
 		echo 'Error occurred: '. $e->getMessage();
 	}
@@ -2904,7 +2904,7 @@ function oer_filter_resources($params){
 		'post_status' => 'publish',
 		'numberposts' => -1,
 	);
-	
+
 	// Search by Topic area
 	if (isset($params['gradelevel'])){
 		if (!is_array($params['gradelevel']))
@@ -2932,14 +2932,14 @@ function oer_filter_resources($params){
 				'value' => $products
 			)
 		);
-	} 
+	}
 
 	// Search title, description, and tags
 	if (isset($params['keyword'])){
 		for ($i=0;$i<2;$i++){
 			if ($i == 0 ){
 				$args['s'] = $params['keyword'];
-				$resources = get_posts($args);	
+				$resources = get_posts($args);
 			} else {
 				if (isset($args['s']))
 					unset($args['s']);
