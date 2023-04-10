@@ -756,31 +756,6 @@ function oer_settings_page() {
 		)
 	);
 
-	//Add Resource Notice 
-	if ($_nalrc){
-		add_settings_section(
-			'oer_notice_settings',
-			'',
-			'oer_notice_settings_callback',
-			'resource_notice_settings'
-		);
-
-		//Add Settings field for Resource Notice
-		add_settings_field(
-			'oer_nalrc_resource_notice',
-			'',
-			'oer_wysiwyg_field',
-			'resource_notice_settings',
-			'oer_notice_settings',
-			array(
-				'uid' => 'oer_nalrc_resource_notice',
-				'type' => 'wysiwyg',
-				'class' => 'oer-nalrc-resource-notice',
-				'description' => __('Enter global resource notice text here.', OER_SLUG)
-			)
-		);
-	}
-
 	// Add configurable path section
 	add_settings_section(
 		'oer_configurable_path',
@@ -805,39 +780,37 @@ function oer_settings_page() {
 		)
 	);
 
-	if ($_nalrc){
-		//Add Settings field for Resources Page Title
-		add_settings_field(
-			'oer_nalrc_resources_page_title',
-			'',
-			'oer_setup_settings_field',
-			'configurable_path_setings',
-			'oer_configurable_path',
-			array(
-				'uid' => 'oer_nalrc_resources_page_title',
-				'type' => 'textbox',
-				'class' => 'oer-nalrc-resources-title',
-				'title' => __( 'Title: ', OER_SLUG),
-				'description' => __('Enter the title of the resources page.', OER_SLUG)
-			)
-		);
+	//Add Settings field for Resources Page Title
+	add_settings_field(
+		'oer_nalrc_resources_page_title',
+		'',
+		'oer_setup_settings_field',
+		'configurable_path_setings',
+		'oer_configurable_path',
+		array(
+			'uid' => 'oer_nalrc_resources_page_title',
+			'type' => 'textbox',
+			'class' => 'oer-nalrc-resources-title',
+			'title' => __( 'Title: ', OER_SLUG),
+			'description' => __('Enter the title of the resources page.', OER_SLUG)
+		)
+	);
 
-		//Add Settings field for Resources Page Content
-		add_settings_field(
-			'oer_nalrc_resources_content',
-			'',
-			'oer_wysiwyg_field',
-			'configurable_path_setings',
-			'oer_configurable_path',
-			array(
-				'uid' => 'oer_nalrc_resources_content',
-				'type' => 'wysiwyg',
-				'class' => 'oer-nalrc-resources-content bottom-margin',
-				'name' => __( 'Content: ', OER_SLUG),
-				'description' => __('Enter global resources page content here.', OER_SLUG)
-			)
-		);
-	}
+	//Add Settings field for Resources Page Content
+	add_settings_field(
+		'oer_nalrc_resources_content',
+		'',
+		'oer_wysiwyg_field',
+		'configurable_path_setings',
+		'oer_configurable_path',
+		array(
+			'uid' => 'oer_nalrc_resources_content',
+			'type' => 'wysiwyg',
+			'class' => 'oer-nalrc-resources-content bottom-margin',
+			'name' => __( 'Content: ', OER_SLUG),
+			'description' => __('Enter global resources page content here.', OER_SLUG)
+		)
+	);
 
 
 	register_setting( 'oer_general_settings' , 'oer_disable_screenshots' );

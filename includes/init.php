@@ -177,7 +177,7 @@ add_action( 'init' , 'oer_postcreation' );
 function oer_postcreation(){
     global $_use_gutenberg, $_resources_path;
 
-    $resources_slug = ($_resources_path?$_resources_path:true);
+    $resources_slug = ($_resources_path?$_resources_path:"resources");
 
 	$labels = array(
         'name'               => __( 'Resources', OER_SLUG ),
