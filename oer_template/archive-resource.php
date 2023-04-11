@@ -2,7 +2,8 @@
 /*
  * Template Name: Default Archive Resource Template
  */
-global $_nalrc, $_nalrc_products;
+global $_products;
+
 add_filter( 'body_class','oer_archive_body_classes' );
 function oer_archive_body_classes( $classes ) {
  
@@ -10,12 +11,12 @@ function oer_archive_body_classes( $classes ) {
     return $classes;
      
 }
-// Load Custom NALRC Javascript
-if ($_nalrc){
-	wp_register_script("nalrc-script",OER_URL."js/nalrc.js");
-	wp_enqueue_script("nalrc-script");
-	wp_localize_script("nalrc-script", "nalrc_object", array("ajaxurl" => admin_url( 'admin-ajax.php' ), "plugin_url" => OER_URL));
-}
+
+$allowed_tags = oer_allowed_html();
+
+wp_register_script("nalrc-script",OER_URL."js/nalrc.js");
+wp_enqueue_script("nalrc-script");
+wp_localize_script("nalrc-script", "nalrc_object", array("ajaxurl" => admin_url( 'admin-ajax.php' ), "plugin_url" => OER_URL));
 
 get_header();
 ?>
@@ -24,29 +25,20 @@ get_header();
 	<div id="content" role="main">
 
 	    <?php if ( have_posts() ) : ?>
-	    	<?php if ($_nalrc): ?>
-	    		<header class="archive-header nalrc-resources-header">
+				<header class="archive-header">
 				    <h1 class="archive-title nalrc-resources-title"><?php 
 				    	if (get_option('oer_nalrc_resources_page_title')): 
 				    		echo esc_html(get_option('oer_nalrc_resources_page_title'));
 				    	else : 
-				    		_e( 'Native American Language Resource Collection', OER_SLUG ); 
+				    		_e( 'Resource Collection', OER_SLUG ); 
 				    	endif; ?></h1>
 				    <p class="nalrc-resources-description"><?php 
 				    	if (get_option('oer_nalrc_resources_content')):
 				    		echo do_shortcode(wpautop(wp_kses(get_option('oer_nalrc_resources_content'), $allowed_tags)));
-				    	else :
-				    		_e('Explore a collection of high-quality multimedia instructional resources, informed by research, for use by Native American language stakeholders. These resources have been reviewed by subject matter experts and recommended and approved by the U.S. Department of Education, Office of Indian Education.', OER_SLUG); 
 				    	endif;
 				    ?></p>
 				</header><!-- .archive-header -->
-	    	<?php else: ?>
-				<header class="archive-header">
-				    <h1 class="archive-title"><?php printf( __( 'Archives: %s', OER_SLUG ), '<span>' .post_type_archive_title('', false).'</span>' );?></h1>
-				</header><!-- .archive-header -->
-			<?php endif; ?>
-			<?php /** NALRC Search Filter **/
-			if ($_nalrc): ?>
+			<?php /** Search Filter **/ ?>
 				<div class="nalrc-search-filters">
 					<div class="row filter-title">
 						<div class="col-md-12">
@@ -61,7 +53,7 @@ get_header();
 						<div class="nalrc-search-product col-md-3">
 							<div class="nalrc-select-wrapper">
 								<select id="product" class="nalrc-product-filter nalrc-select-filter selectpicker" multiple title="Resource Type" aria-label="Resource Type">
-									<?php foreach ($_nalrc_products as $product): ?>
+									<?php foreach ($_products as $product): ?>
 										<option value="<?php echo esc_html($product['value']); ?>"><?php echo esc_html($product['label']); ?></option>
 									<?php endforeach; ?>
 								</select>
@@ -84,12 +76,7 @@ get_header();
 						</div>
 					</div>
 				</div>
-			<?php endif; ?>
 		<?php /* Start the Loop */ ?>
-
-		<?php if ($_nalrc): ?>
-			<article class="oer_resource_posts">
-		<?php endif; ?>
 
 		<?php while ( have_posts() ) :  the_post(); ?>
 
@@ -165,13 +152,10 @@ get_header();
 		    </div>
 		<?php endwhile; ?>
 
-		<?php if ($_nalrc): ?>
-			<div class="nalrc-pagination-nav">
-				<div class="alignleft"><?php previous_posts_link( '&laquo; Previous' ); ?></div>
-				<div class="alignright"><?php next_posts_link( 'Next &raquo;', '' ); ?></div>
-			</div>
-			</article>
-		<?php endif; ?>
+		<div class="nalrc-pagination-nav">
+			<div class="alignleft"><?php previous_posts_link( '&laquo; Previous' ); ?></div>
+			<div class="alignright"><?php next_posts_link( 'Next &raquo;', '' ); ?></div>
+		</div>
 
 	    <?php else : ?>
 		<article id="post-0" class="post no-results not-found">

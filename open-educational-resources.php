@@ -51,7 +51,34 @@ require_once(OER_PATH.'blocks/resource-block/init.php');
 include_once(OER_PATH.'widgets/class-subject-area-widget.php');
 
 //define global variable $debug_mode and get value from settings
-global $_debug, $_bootstrap, $_fontawesome, $_css, $_css_oer, $_subjectarea, $_search_post_ids, $_w_bootstrap, $_oer_prefix, $oer_session, $_gutenberg, $_use_gutenberg, $_nalrc, $_nalrc_products, $_resources_path;
+global $_debug, $_bootstrap, $_fontawesome, $_css, $_css_oer, $_subjectarea, $_search_post_ids, $_w_bootstrap, $_oer_prefix, $oer_session, $_gutenberg, $_use_gutenberg, $_nalrc, $_nalrc_products, $_resources_path, $_products;
+
+// Product Types
+$_products = [
+	[ "value" => "Article/Information", "label" => "Article/Information"],
+	[ "value" => "Assessment", "label" => "Assessment"],
+	[ "value" => "Audio", "label" => "Audio"],
+	[ "value" => "Blog", "label" => "Blog" ],
+	[ "value" => "Calculator", "label" => "Calculator" ],
+	[ "value" => "Curriculum", "label" => "Curriculum" ],
+	[ "value" => "Demonstration", "label" => "Demonstration" ],
+	[ "value" => "Game", "label" => "Game" ],
+	[ "value" => "Fact Sheet", "label" => "Fact Sheet" ],
+	[ "value" => "Framework", "label" => "Framework" ],
+	[ "value" => "Instructional Material", "label" => "Instructional Material" ],
+	[ "value" => "Interview", "label" => "Interview" ],
+	[ "value" => "Lecture", "label" => "Lecture" ],
+	[ "value" => "Lesson Plan", "label" => "Lesson Plan" ],
+	[ "value" => "Online Course", "label" => "Online Course" ],
+	[ "value" => "Podcast", "label" => "Podcast" ],
+	[ "value" => "Presentation", "label" => "Presentation" ],
+	[ "value" => "Publication", "label" => "Publication" ],
+	[ "value" => "Research/Evaluation Report", "label" => "Research/Evaluation Report" ],
+	[ "value" => "Simulation", "label" => "Simulation" ],
+	[ "value" => "Video", "label" => "Video" ],
+	[ "value" => "Website", "label" => "Website" ],
+	[ "value" => "Other", "label" => "Other" ]
+];
 
 $_resources_path = get_option('oer_configurable_resource_path');
 
@@ -1441,7 +1468,7 @@ function oer_wysiwyg_field( $arguments ) {
 		echo '<span class="inline-desc">'.esc_html($arguments['inline_description']).'</span>';
 	echo '</strong></label>';
 
-    echo wp_editor( $value, $arguments['uid'], array('textarea_name' => $arguments['uid'])  );
+    echo wp_editor( $value, $arguments['uid'], array('textarea_name' => $arguments['uid'], 'textarea_rows' => 10)  );
 
 	//Show Description if specified
 	if( isset($arguments['description']) ){

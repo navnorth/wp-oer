@@ -1,34 +1,8 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-global $post, $wpdb, $chck;
+global $post, $wpdb, $chck, $_products;
 
-// Product Types
-$_products = [
-	[ "value" => "Article/Information", "label" => "Article/Information"],
-	[ "value" => "Assessment", "label" => "Assessment"],
-	[ "value" => "Audio", "label" => "Audio"],
-	[ "value" => "Blog", "label" => "Blog" ],
-	[ "value" => "Calculator", "label" => "Calculator" ],
-	[ "value" => "Curriculum", "label" => "Curriculum" ],
-	[ "value" => "Demonstration", "label" => "Demonstration" ],
-	[ "value" => "Game", "label" => "Game" ],
-	[ "value" => "Fact Sheet", "label" => "Fact Sheet" ],
-	[ "value" => "Framework", "label" => "Framework" ],
-	[ "value" => "Instructional Material", "label" => "Instructional Material" ],
-	[ "value" => "Interview", "label" => "Interview" ],
-	[ "value" => "Lecture", "label" => "Lecture" ],
-	[ "value" => "Lesson Plan", "label" => "Lesson Plan" ],
-	[ "value" => "Online Course", "label" => "Online Course" ],
-	[ "value" => "Podcast", "label" => "Podcast" ],
-	[ "value" => "Presentation", "label" => "Presentation" ],
-	[ "value" => "Publication", "label" => "Publication" ],
-	[ "value" => "Research/Evaluation Report", "label" => "Research/Evaluation Report" ],
-	[ "value" => "Simulation", "label" => "Simulation" ],
-	[ "value" => "Video", "label" => "Video" ],
-	[ "value" => "Website", "label" => "Website" ],
-	[ "value" => "Other", "label" => "Other" ]
-];
 
 $option_set = false;
 if (get_option('oer_metadata_firstload')=="")
