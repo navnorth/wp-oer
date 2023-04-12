@@ -809,15 +809,15 @@ function oer_settings_page() {
 
 	//Add Settings field for Resources Page Title
 	add_settings_field(
-		'oer_nalrc_resources_page_title',
+		'oer_resources_page_title',
 		'',
 		'oer_setup_settings_field',
 		'configurable_path_setings',
 		'oer_configurable_path',
 		array(
-			'uid' => 'oer_nalrc_resources_page_title',
+			'uid' => 'oer_resources_page_title',
 			'type' => 'textbox',
-			'class' => 'oer-nalrc-resources-title',
+			'class' => 'oer-resources-title',
 			'title' => __( 'Title: ', OER_SLUG),
 			'description' => __('Enter the title of the resources page.', OER_SLUG)
 		)
@@ -825,15 +825,15 @@ function oer_settings_page() {
 
 	//Add Settings field for Resources Page Content
 	add_settings_field(
-		'oer_nalrc_resources_content',
+		'oer_resources_content',
 		'',
 		'oer_wysiwyg_field',
 		'configurable_path_setings',
 		'oer_configurable_path',
 		array(
-			'uid' => 'oer_nalrc_resources_content',
+			'uid' => 'oer_resources_content',
 			'type' => 'wysiwyg',
-			'class' => 'oer-nalrc-resources-content bottom-margin',
+			'class' => 'oer-resources-content bottom-margin',
 			'name' => __( 'Content: ', OER_SLUG),
 			'description' => __('Enter global resources page content here.', OER_SLUG)
 		)
@@ -847,10 +847,10 @@ function oer_settings_page() {
 	register_setting( 'oer_general_settings' , 'oer_python_install' );
 	register_setting( 'oer_general_settings' , 'oer_external_screenshots' );
 	register_setting( 'oer_general_settings' , 'oer_service_url' );
-	register_setting( 'oer_general_settings' , 'oer_nalrc_resource_notice' );
+	//register_setting( 'oer_general_settings' , 'oer_nalrc_resource_notice' );
 	register_setting( 'oer_general_settings' , 'oer_configurable_resource_path' );
-	register_setting( 'oer_general_settings' , 'oer_nalrc_resources_page_title' );
-	register_setting( 'oer_general_settings' , 'oer_nalrc_resources_content' );
+	register_setting( 'oer_general_settings' , 'oer_resources_page_title' );
+	register_setting( 'oer_general_settings' , 'oer_resources_content' );
 }
 
 //General settings callback

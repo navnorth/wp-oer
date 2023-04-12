@@ -15,7 +15,7 @@ jQuery(function($){
 		
 		$.ajax({
 			type: "POST",
-			url: nalrc_object.ajaxurl,
+			url: resources.ajaxurl,
 			data: data,
 			success: function(msg){
 				$('.oer_resource_posts').html(msg);

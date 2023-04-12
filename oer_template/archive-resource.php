@@ -14,9 +14,10 @@ function oer_archive_body_classes( $classes ) {
 
 $allowed_tags = oer_allowed_html();
 
-wp_register_script("nalrc-script",OER_URL."js/nalrc.js");
-wp_enqueue_script("nalrc-script");
-wp_localize_script("nalrc-script", "nalrc_object", array("ajaxurl" => admin_url( 'admin-ajax.php' ), "plugin_url" => OER_URL));
+wp_register_script(	"resources-script",	OER_URL."js/resources.js" );
+wp_enqueue_script( "resources-script" );
+wp_localize_script( "resources-script" , "resources", array("ajaxurl" => admin_url( 'admin-ajax.php' ), "plugin_url" => OER_URL));
+wp_enqueue_style( "resources-style", OER_URL."css/resources.css" );
 
 get_header();
 ?>
@@ -26,53 +27,53 @@ get_header();
 
 	    <?php if ( have_posts() ) : ?>
 				<header class="archive-header">
-				    <h1 class="archive-title nalrc-resources-title"><?php 
-				    	if (get_option('oer_nalrc_resources_page_title')): 
-				    		echo esc_html(get_option('oer_nalrc_resources_page_title'));
+				    <h1 class="archive-title oer-resources-title"><?php 
+				    	if (get_option('oer_resources_page_title')): 
+				    		echo esc_html(get_option('oer_resources_page_title'));
 				    	else : 
 				    		_e( 'Resource Collection', OER_SLUG ); 
 				    	endif; ?></h1>
 				    <p class="nalrc-resources-description"><?php 
-				    	if (get_option('oer_nalrc_resources_content')):
-				    		echo do_shortcode(wpautop(wp_kses(get_option('oer_nalrc_resources_content'), $allowed_tags)));
+				    	if (get_option('oer_resources_content')):
+				    		echo do_shortcode(wpautop(wp_kses(get_option('oer_resources_content'), $allowed_tags)));
 				    	endif;
 				    ?></p>
 				</header><!-- .archive-header -->
 			<?php /** Search Filter **/ ?>
-				<div class="nalrc-search-filters">
+				<div class="resource-search-filters">
 					<div class="row filter-title">
 						<div class="col-md-12">
 							<h2><?php _e('Search Resource Collection: ', OER_SLUG); ?></h2>
 						</div>
 					</div>
 					<div class="row">
-						<div class="nalrc-search-keyword col-md-5">
+						<div class="resource-search-keyword col-md-5">
 							 <i class="fa fa-search icon"></i>
 							<input type="text" id="keyword" placeholder="<?php _e('Search by keyword or phrase',OER_SLUG); ?>" aria-label="<?php _e('Search resources by keyword or phrase',OER_SLUG); ?>" />
 						</div>
-						<div class="nalrc-search-product col-md-3">
-							<div class="nalrc-select-wrapper">
-								<select id="product" class="nalrc-product-filter nalrc-select-filter selectpicker" multiple title="Resource Type" aria-label="Resource Type">
+						<div class="resource-search-product col-md-3">
+							<div class="resource-select-wrapper">
+								<select id="product" class="resource-product-filter resource-select-filter selectpicker" multiple title="Resource Type" aria-label="Resource Type">
 									<?php foreach ($_products as $product): ?>
 										<option value="<?php echo esc_html($product['value']); ?>"><?php echo esc_html($product['label']); ?></option>
 									<?php endforeach; ?>
 								</select>
 							</div>
 						</div>
-						<div class="nalrc-search-grade-level col-md-2">
+						<div class="resource-search-grade-level col-md-2">
 							<?php
 							$grades = get_terms(['taxonomy'=>'resource-grade-level','hide_empty'=>false]);
 							?>
-							<div class="nalrc-select-wrapper">
-								<select id="gradeLevel" class="nalrc-grade-level-filter nalrc-select-filter selectpicker" multiple title="Grade Level" aria-label="Grade Level">
+							<div class="resource-select-wrapper">
+								<select id="gradeLevel" class="resource-grade-level-filter resource-select-filter selectpicker" multiple title="Grade Level" aria-label="Grade Level">
 									<?php foreach($grades as $grade): ?>
 										<option value="<?php echo esc_html($grade->term_id); ?>"><?php echo esc_html($grade->name); ?></option>
 									<?php endforeach; ?>
 								</select>
 							</div>
 						</div>
-						<div class="nalrc-search-button-wrapper col-md-2">
-							<button class="nalrc-search-button"><?php _e('Search >', OER_SLUG); ?></button>
+						<div class="resource-search-button-wrapper col-md-2">
+							<button class="resource-search-button"><?php _e('Search >', OER_SLUG); ?></button>
 						</div>
 					</div>
 				</div>
@@ -80,10 +81,10 @@ get_header();
 
 		<?php while ( have_posts() ) :  the_post(); ?>
 
-		    <div class="oer_blgpst<?php if ($_nalrc) _e(' nalrc-blogpost',OER_SLUG); ?>">
+		    <div class="oer_blgpst resource-blogpost">
 				    
 			<?php if ( has_post_thumbnail() ) {?>
-			    <div class="oer-feature-image <?php if ($_nalrc): ?>col-md-2<?php else: ?>col-md-3<?php endif; ?>">
+			    <div class="oer-feature-image col-md-2">
 				<?php if ( ! post_password_required() && ! is_attachment() ) : ?>
 					<a href="<?php echo esc_url(get_permalink($post->ID)); ?>" tabindex="-1" aria-hidden="true">
 						<?php 
@@ -103,9 +104,7 @@ get_header();
 			     	$col = 'col-md-2';
 			    echo '<div class="oer-feature-image '.$col.'"><a href="'.esc_url(get_permalink($post->ID)).'" tabindex="-1"><img src="'.esc_url($new_image_url).'" alt="'.esc_html(get_the_title($post->ID)).' image"></a></div>';
 			}
-			$content_col = 'col-md-9';
-			if ($_nalrc)
-				$content_col = 'col-md-10';
+			$content_col = 'col-md-10';
 
 			$resource_atts = "";
 			?>
