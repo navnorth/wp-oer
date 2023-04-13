@@ -33,11 +33,11 @@ get_header();
 				    	else : 
 				    		_e( 'Resource Collection', OER_SLUG ); 
 				    	endif; ?></h1>
-				    <p class="nalrc-resources-description"><?php 
+				    <div class="nalrc-resources-description"><?php 
 				    	if (get_option('oer_resources_content')):
 				    		echo do_shortcode(wpautop(wp_kses(get_option('oer_resources_content'), $allowed_tags)));
 				    	endif;
-				    ?></p>
+				    ?></div>
 				</header><!-- .archive-header -->
 			<?php /** Search Filter **/ ?>
 				<div class="resource-search-filters">

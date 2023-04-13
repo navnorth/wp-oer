@@ -154,7 +154,7 @@ function oer_frontside_scripts()
 	wp_enqueue_style( "resource-category-styles", OER_URL . "css/resource-category-style.css" );
 
 	if (is_post_type_archive('resource')){
-		wp_enqueue_script("bootstrap-select",OER_URL."js/bootstrap-select.js");
+		wp_enqueue_script("bootstrap-select",OER_URL."js/bootstrap-select.min.js");
 	}
 }
 
