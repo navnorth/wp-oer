@@ -1,7 +1,7 @@
 jQuery(function($){
 	function searchResources(){
 		$('.oer_resource_posts').html('');
-		var loader = '<div class="resource-loader"><img src="'+nalrc_object.plugin_url +'/images/load.gif" /></div>';
+		var loader = '<div class="resource-loader"><img src="'+resources.plugin_url +'/images/load.gif" /></div>';
 		$('.oer_resource_posts').html(loader);
 		var data = {
 			action: 'search_resources',
@@ -141,6 +141,16 @@ jQuery(function($){
 		$(this).next('.dropdown-menu').find('.inner').toggleClass('open');
 		$(this).next('.dropdown-menu').find('.inner').toggleClass('show');
 	});
+
+	document.addEventListener('click', (event) => { 
+		if (!$(event.target).hasClass('dropdown-item') 
+			&& !$(event.target).hasClass('dropdown-toggle')
+			&& !$(event.target).hasClass('filter-option-inner-inner')){
+	    	if ($(".resource-select-wrapper .dropdown-menu").hasClass('show')){
+	    		$(".resource-select-wrapper .dropdown-menu").removeClass('show');
+	    	} 
+    	}
+	}, true);
 	
 	/** Move Resource Featured Image below description on small devices **/
 	window.addEventListener("resize", moveResourceImage);
