@@ -120,3 +120,4 @@
     transform: rotate(45deg);
 }
 .resource-search-product .nalrc-select-wrapper .bootstrap-select .dropdown-menu li a.dropdown-item span.text { padding-right:5px; }
+.post-type-archive-resource .oer-cntnr { overflow:unset; }
