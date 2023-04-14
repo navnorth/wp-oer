@@ -79,6 +79,8 @@ get_header();
 				</div>
 		<?php /* Start the Loop */ ?>
 
+		<article class="oer_resource_posts">
+
 		<?php while ( have_posts() ) :  the_post(); ?>
 
 		    <div class="oer_blgpst resource-blogpost">
@@ -150,12 +152,11 @@ get_header();
 			</div>
 		    </div>
 		<?php endwhile; ?>
-
 		<div class="nalrc-pagination-nav">
 			<div class="alignleft"><?php previous_posts_link( '&laquo; Previous' ); ?></div>
 			<div class="alignright"><?php next_posts_link( 'Next &raquo;', '' ); ?></div>
 		</div>
-
+		</article>
 	    <?php else : ?>
 		<article id="post-0" class="post no-results not-found">
 		    <header class="entry-header">
