@@ -22,6 +22,8 @@ wp_enqueue_style( "resources-style", OER_URL."css/resources.css" );
 get_header();
 
 $filter_enabled = empty(get_option('oer_enable_search_filters'))?false:true;
+$print_enabled = empty(get_option('oer_enable_print_buttons'))?false:true;
+var_dump($print_enabled);
 ?>
 <div class="oer-cntnr">
     <section id="primary" class="site-content">
@@ -44,6 +46,12 @@ $filter_enabled = empty(get_option('oer_enable_search_filters'))?false:true;
 			<?php /** Search Filter **/ 
 			if ($filter_enabled) : ?>
 				<div class="resource-search-filters">
+					<?php if ($print_enabled): ?>
+					<div class="action-btns">
+						<a href="#" id="oer_print_resource_list"><i class="fa fa-print" aria-hidden="true"></i> <?php _e('Print List' , OER_SLUG) ?></a>
+						<a href="#" id="oer_print_resource_table"><i class="fa fa-print" aria-hidden="true"></i> <?php _e('Print Table' , OER_SLUG) ?></a>
+					</div>
+					<?php endif; ?>
 					<div class="row filter-title">
 						<div class="col-md-12">
 							<h2><?php _e('Search Resource Collection: ', OER_SLUG); ?></h2>

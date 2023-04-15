@@ -854,6 +854,20 @@ function oer_settings_page() {
 		)
 	);
 
+	// Add Enable Print Buttons option
+	add_settings_field(
+		'oer_enable_print_buttons',
+		'',
+		'oer_setup_settings_field',
+		'configurable_path_setings',
+		'oer_configurable_path',
+		array(
+			'uid' => 'oer_enable_print_buttons',
+			'type' => 'checkbox',
+			'class' => 'oer-enable-print-buttons',
+			'name' => __( 'Enable print buttons' , OER_SLUG )
+		)
+	);
 
 	register_setting( 'oer_general_settings' , 'oer_disable_screenshots' );
 	register_setting( 'oer_general_settings' , 'oer_enable_screenshot' );
@@ -867,6 +881,7 @@ function oer_settings_page() {
 	register_setting( 'oer_general_settings' , 'oer_resources_page_title' );
 	register_setting( 'oer_general_settings' , 'oer_resources_content' );
 	register_setting( 'oer_general_settings' , 'oer_enable_search_filters' );
+	register_setting( 'oer_general_settings' , 'oer_enable_print_buttons' );
 }
 
 //General settings callback
@@ -1353,9 +1368,9 @@ function oer_setup_settings_field( $arguments ) {
 	$class = "";
 	$disabled = "";
 	$allowed_tags = oer_allowed_html();
-
+	
 	$value = get_option($arguments['uid']);
-
+	
 	if (isset($arguments['indent'])){
 		echo '<div class="indent">';
 	}
@@ -1384,7 +1399,7 @@ function oer_setup_settings_field( $arguments ) {
 
 			if ($value=="1" || $value=="on"){
 				$selected = "checked='checked'";
-				$display_value = "value='1'";
+				$display_value = "value=1";
 			} elseif ($value===false){
 				$selected = "";
 				if (isset($arguments['default'])) {
@@ -1400,7 +1415,7 @@ function oer_setup_settings_field( $arguments ) {
 				if ($arguments['disabled']==true)
 					$disabled = " disabled";
 			}
-
+			
 			echo '<input name="'.esc_attr($arguments['uid']).'" id="'.esc_attr($arguments['uid']).'" '.esc_attr($class).' type="'.esc_attr($arguments['type']).'" ' . esc_attr($display_value) . ' ' . esc_attr($size) . ' ' .  esc_attr($selected) . ' ' . esc_attr($disabled) . '  /><label for="'.esc_attr($arguments['uid']).'"><strong>'.esc_html($arguments['name']).'</strong></label>';
 			break;
 		case "select":
