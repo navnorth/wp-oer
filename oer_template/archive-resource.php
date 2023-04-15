@@ -20,9 +20,11 @@ wp_localize_script( "resources-script" , "resources", array("ajaxurl" => admin_u
 wp_enqueue_style( "resources-style", OER_URL."css/resources.css" );
 
 get_header();
+
+$filter_enabled = empty(get_option('oer_enable_search_filters'))?false:true;
 ?>
 <div class="oer-cntnr">
-    <section id="primary" class="site-content<?php if ($_nalrc) _e(' nalrc-resources-content',OER_SLUG); ?>">
+    <section id="primary" class="site-content">
 	<div id="content" role="main">
 
 	    <?php if ( have_posts() ) : ?>
@@ -39,7 +41,8 @@ get_header();
 				    	endif;
 				    ?></div>
 				</header><!-- .archive-header -->
-			<?php /** Search Filter **/ ?>
+			<?php /** Search Filter **/ 
+			if ($filter_enabled) : ?>
 				<div class="resource-search-filters">
 					<div class="row filter-title">
 						<div class="col-md-12">
@@ -77,7 +80,8 @@ get_header();
 						</div>
 					</div>
 				</div>
-		<?php /* Start the Loop */ ?>
+		<?php endif;
+		/* Start the Loop */ ?>
 
 		<article class="oer_resource_posts">
 
@@ -101,9 +105,7 @@ get_header();
 			    </div>
 			<?php } else {
 			    $new_image_url = OER_URL . 'images/default-icon-220x180.png';
-			    $col = 'col-md-3';
-			     if ($_nalrc)
-			     	$col = 'col-md-2';
+			    $col = 'col-md-2';
 			    echo '<div class="oer-feature-image '.$col.'"><a href="'.esc_url(get_permalink($post->ID)).'" tabindex="-1"><img src="'.esc_url($new_image_url).'" alt="'.esc_html(get_the_title($post->ID)).' image"></a></div>';
 			}
 			$content_col = 'col-md-10';
@@ -114,10 +116,10 @@ get_header();
 			<div class="rght-sd-cntnr-blg <?php echo $content_col; ?>">
 			    <h3><a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
 			    <div class="small">
-			    	<?php if ($_nalrc && !empty(get_post_meta($post->ID, 'oer_datecreated')[0])): 
+			    	<?php if (!empty(get_post_meta($post->ID, 'oer_datecreated')[0])): 
 			    		$resource_atts .= '<span>'.esc_html(get_post_meta($post->ID, 'oer_datecreated')[0]).'</span>';
 			    	endif; ?>
-			    	<?php if ($_nalrc && !empty(get_post_meta($post->ID,'oer_lrtype')[0])): 
+			    	<?php if (!empty(get_post_meta($post->ID,'oer_lrtype')[0])): 
 			    		if (!empty($resource_atts))
 			    			$resource_atts .= ' | <span>'.ucfirst(get_post_meta($post->ID, 'oer_lrtype')[0]).'</span>';
 			    		else

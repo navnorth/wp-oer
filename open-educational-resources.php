@@ -803,7 +803,7 @@ function oer_settings_page() {
 			'type' => 'textbox',
 			'class' => 'oer-configurable-resource-path',
 			'title' => __( 'Path: ' , OER_SLUG ),
-			'description' => __('Enter the relative URL of the resources page without a leading slash(/). (ie. nalrc/resources)', OER_SLUG)
+			'description' => __('Enter the relative URL of the resources page without a leading slash(/). (ie. resources)', OER_SLUG)
 		)
 	);
 
@@ -839,6 +839,21 @@ function oer_settings_page() {
 		)
 	);
 
+	// Add Enable filter option
+	add_settings_field(
+		'oer_enable_search_filters',
+		'',
+		'oer_setup_settings_field',
+		'configurable_path_setings',
+		'oer_configurable_path',
+		array(
+			'uid' => 'oer_enable_search_filters',
+			'type' => 'checkbox',
+			'class' => 'oer-enable-search-filters',
+			'name' => __( 'Enable search filter' , OER_SLUG )
+		)
+	);
+
 
 	register_setting( 'oer_general_settings' , 'oer_disable_screenshots' );
 	register_setting( 'oer_general_settings' , 'oer_enable_screenshot' );
@@ -851,6 +866,7 @@ function oer_settings_page() {
 	register_setting( 'oer_general_settings' , 'oer_configurable_resource_path' );
 	register_setting( 'oer_general_settings' , 'oer_resources_page_title' );
 	register_setting( 'oer_general_settings' , 'oer_resources_content' );
+	register_setting( 'oer_general_settings' , 'oer_enable_search_filters' );
 }
 
 //General settings callback
