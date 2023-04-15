@@ -2865,3 +2865,61 @@ function oer_search_resources(){
 }
 add_action('wp_ajax_search_resources', 'oer_search_resources');
 add_action('wp_ajax_nopriv_search_resources', 'oer_search_resources');
+
+function oer_filter_resources($params){
+	$grades = null;
+	$products = null;
+	$args = array(
+		'post_type' => 'resource',
+		'post_status' => 'publish',
+		'numberposts' => -1,
+	);
+	
+	// Search by Topic area
+	if (isset($params['gradelevel'])){
+		if (!is_array($params['gradelevel']))
+			$grades = explode(",",$params['gradelevel']);
+		else
+			$grades = $params['gradelevel'];
+		$args['tax_query'] = array(
+			array(
+				'taxonomy' => 'resource-grade-level',
+				'field' => 'term_id',
+				'terms' => $grades
+			)
+		);
+	}
+
+	// Search by Product Type
+	if (isset($params['product'])){
+		if (!is_array($params['product']))
+			$products = explode(",",$params['product']);
+		else
+			$products = $params['product'];
+		$args['meta_query'] = array(
+			array(
+				'key' => 'oer_lrtype',
+				'value' => $products
+			)
+		);
+	} 
+
+	// Search title, description, and tags
+	if (isset($params['keyword'])){
+		for ($i=0;$i<2;$i++){
+			if ($i == 0 ){
+				$args['s'] = $params['keyword'];
+				$resources = get_posts($args);	
+			} else {
+				if (isset($args['s']))
+					unset($args['s']);
+				$args['tag'] = $params['keyword'];
+				$resources2 = get_posts($args);
+			}
+		}
+		$resources = array_merge($resources, $resources2);
+	} else {
+		$resources = get_posts($args);
+	}
+	return $resources;
+}
