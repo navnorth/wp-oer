@@ -1545,7 +1545,11 @@ function oer_add_body_class($classes) {
 	$cur_theme = wp_get_theme();
 	$theme_class = $cur_theme->get('Name');
 
-	return array_merge( $classes, array( str_replace( ' ', '-', strtolower($theme_class) ) ) );
+	if (isset($_GET['action']) && $_GET['action']=='print'){
+		return array_merge( $classes, array(  str_replace( ' ', '-', strtolower($theme_class) ) , 'print-preview' ) );
+	} else {
+		return array_merge( $classes, array( str_replace( ' ', '-', strtolower($theme_class) ) ) );
+	}
 }
 
 /* Ajax Callback */
