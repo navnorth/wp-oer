@@ -346,7 +346,7 @@ if (!$printable){
 					<th class="resource-link">Link</th>
 				</tr>
 			</thead>
-			<tbody
+			<tbody>
 
 		<?php foreach($resources as $resource) {  ?>
 			<tr>
