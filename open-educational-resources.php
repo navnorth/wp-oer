@@ -176,6 +176,8 @@ function oer_create_csv_import_table()
    update_option( "oer_rewrite_rules", false );
    update_option('oer_metadata_firstload', true);
    update_option('oer_setup', true);
+   // enable bootstrap by default
+   update_option('oer_use_bootstrap', true);
 
    //Trigger CPT and Taxonomy creation
    oer_postcreation();
@@ -594,11 +596,22 @@ function oer_query_post_type($query) {
 add_action('wp_enqueue_scripts', 'oer_front_scripts');
 function oer_front_scripts()
 {
-	global $_bootstrap, $_fontawesome;
-
+	global $_bootstrap, $_fontawesome, $wp_scripts;
+	$bootstrap_enqueued = FALSE;
 	if ($_bootstrap) {
-		wp_enqueue_style('bootstrap-style', OER_URL.'css/bootstrap.min.css');
-		wp_enqueue_script('bootstrap-script', OER_URL.'js/bootstrap.min.js');
+		foreach( $wp_scripts->registered as $script ) {
+		  if ((stristr($script->src, 'bootstrap.min.js') !== FALSE or
+		       stristr($script->src, 'bootstrap.js') != FALSE) and
+		      wp_script_is($script->handle, $list = 'enqueued')) {
+
+		      $bootstrap_enqueued = TRUE;
+		      break;
+		  }
+		}
+		if (!$bootstrap_enqueued){
+			wp_enqueue_style('bootstrap-style', OER_URL.'css/bootstrap.min.css');
+			wp_enqueue_script('bootstrap-script', OER_URL.'js/bootstrap.min.js');
+		}
 	}
 
 	if ($_fontawesome) {
