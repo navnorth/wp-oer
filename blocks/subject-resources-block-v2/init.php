@@ -245,6 +245,7 @@ function oer_display_subject_resources_block( $attributes , $ajax = false){
     if (empty($selectedSubjectResources))
         $selectedSubjectResources = oer_srb_get_resources($attributes,true);
     if (is_array($selectedSubjectResources)){
+        $selectedSubjectResources = oer_srb_get_resources($attributes,true);
         $selectedSubjectResources = (object)$selectedSubjectResources;
         if (!empty((array)$selectedSubjectResources)){
             foreach ($selectedSubjectResources as $subject){
@@ -542,6 +543,7 @@ function oer_get_subject_resources($args, $ajax=false){
 
     if ($ajax && isset($args['attributes']))
         $args = $args['attributes'];
+
     $resources = oer_srb_get_resources($args,true);
     
     if (is_array($resources)){
@@ -587,21 +589,20 @@ function oer_get_subject_resources($args, $ajax=false){
 
 function oer_ajax_get_subject_resources(){
     $allowed_tags = oer_allowed_html();
-
     // Sanitize POST parameters
     $params = array();
     $params['action'] = sanitize_text_field($_POST['action']);
-    if (isset($_POST['attributes']))
-        $params['attributes'] = $_POST['attributes'];
-    else
+
+    if (isset($_POST['attributes'])){
+        $attributes = $_POST['attributes'];
+        $attributes = html_entity_decode($attributes);
+        $attributes = (array)json_decode(stripcslashes($attributes));
+        $params['attributes'] = $attributes;
+    } else
         $params['attributes'] = $_POST;
 
-    array_walk($params['attributes'], function(&$value, &$key){
-        $value['displayCount'] = sanitize_text_field($value['displayCount']);
-        $value['sort'] = sanitize_text_field($value['sort']);
-        $value['isChanged'] = sanitize_text_field($value['isChanged']);
-        $value['blockId'] = sanitize_text_field($value['blockId']);
-        $value['firstLoad'] = sanitize_text_field($value['firstLoad']);
+    array_walk($params['attributes'], function($value, $key){
+        $value = sanitize_text_field($value);
     });
     
     $resources = oer_get_subject_resources($params, true);
