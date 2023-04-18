@@ -178,6 +178,8 @@ function oer_create_csv_import_table()
    update_option('oer_setup', true);
    // enable bootstrap by default
    update_option('oer_use_bootstrap', true);
+   // enable fontawesome by default as it is used by the subjects index block
+   update_option('oer_use_fontawesome', true);
 
    //Trigger CPT and Taxonomy creation
    oer_postcreation();
@@ -596,8 +598,9 @@ function oer_query_post_type($query) {
 add_action('wp_enqueue_scripts', 'oer_front_scripts');
 function oer_front_scripts()
 {
-	global $_bootstrap, $_fontawesome, $wp_scripts;
+	global $_bootstrap, $_fontawesome, $wp_scripts, $wp_styles;
 	$bootstrap_enqueued = FALSE;
+	$fontawesome_enqueued = FALSE;
 	if ($_bootstrap) {
 		foreach( $wp_scripts->registered as $script ) {
 		  if ((stristr($script->src, 'bootstrap.min.js') !== FALSE or
@@ -615,7 +618,18 @@ function oer_front_scripts()
 	}
 
 	if ($_fontawesome) {
-		wp_enqueue_style('fontawesome-style', OER_URL.'css/fontawesome.css');
+		foreach( $wp_styles->registered as $style ) {
+			//var_dump($style);
+		  if ((stristr($style->src, 'fontawesome') !== FALSE or
+		       stristr($style->src, 'font-awesome') != FALSE) and
+		      wp_style_is($style->handle, $list = 'enqueued')) {
+		      $fontawesome_enqueued = TRUE;
+		      break;
+		  }
+		}
+		if (!$fontawesome_enqueued){
+			wp_enqueue_style('fontawesome-style', OER_URL.'css/fontawesome.css');
+		}
 	}
 
 }
