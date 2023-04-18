@@ -83,7 +83,7 @@ function oer_display_resource_block( $attributes, $ajax = false ){
     $className = "";
     $style = "";
     $empty = false;
-
+    
     if (!empty($attributes))
         extract($attributes);
 
@@ -97,7 +97,7 @@ function oer_display_resource_block( $attributes, $ajax = false ){
         $style.="border:1px solid #cdcdcd;";
     
     if (!empty($style))
-        $style ="style='".$style."'";
+        $style ="style=".$style."";
 
     if ($showThumbnail==false && $showTitle==false && $showDescription==false && $showSubjects==false && $showGrades==false && $withBorder==false)
         $empty = true; 
