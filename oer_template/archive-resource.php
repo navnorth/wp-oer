@@ -228,10 +228,10 @@ if (!$printable){
 				?>
 				<tr>
 					<td>
-					    <div class="oer_blgpst<?php if ($_nalrc) _e(' nalrc-blogpost',OER_SLUG); ?>">
+					    <div class="oer_blgpst resource-blogpost">
 							    
 						<?php if ( has_post_thumbnail($resource->ID) ) {?>
-						    <div class="oer-feature-image <?php if ($_nalrc): ?>col-md-2<?php else: ?>col-md-3<?php endif; ?>">
+						    <div class="oer-feature-image col-md-2">
 							<?php if ( ! post_password_required() && ! is_attachment() ) : ?>
 								<a href="<?php echo esc_url(get_permalink($resource->ID)); ?>" tabindex="-1" aria-hidden="true">
 									<?php 
@@ -246,14 +246,11 @@ if (!$printable){
 						    </div>
 						<?php } else {
 						    $new_image_url = OER_URL . 'images/default-icon-220x180.png';
-						    $col = 'col-md-3';
-						     if ($_nalrc)
-						     	$col = 'col-md-2';
+						    $col = 'col-md-2';
 						    echo '<div class="oer-feature-image '.$col.'"><a href="'.esc_url(get_permalink($resource->ID)).'" tabindex="-1"><img src="'.esc_url($new_image_url).'" alt="'.__('Resource Screenshot: ').esc_html(get_the_title($post->ID)).' image"></a></div>';
 						}
-						$content_col = 'col-md-9';
-						if ($_nalrc)
-							$content_col = 'col-md-10';
+
+						$content_col = 'col-md-10';
 
 						$resource_atts = "";
 						?>
@@ -261,10 +258,10 @@ if (!$printable){
 							<div class="rght-sd-cntnr-blg <?php echo $content_col; ?>">
 							    <h3><a href="<?php the_permalink($resource->ID); ?>" rel="bookmark" title="<?php echo get_the_title($resource->ID); ?>"><?php echo get_the_title($resource->ID); ?></a></h3>
 							    <div class="small">
-							    	<?php if ($_nalrc && !empty(get_post_meta($resource->ID, 'oer_datecreated')[0])): 
+							    	<?php if (!empty(get_post_meta($resource->ID, 'oer_datecreated')[0])): 
 							    		$resource_atts .= '<span>'.esc_html(get_post_meta($resource->ID, 'oer_datecreated')[0]).'</span>';
 							    	endif; ?>
-							    	<?php if ($_nalrc && !empty(get_post_meta($resource->ID,'oer_lrtype')[0])): 
+							    	<?php if (!empty(get_post_meta($resource->ID,'oer_lrtype')[0])): 
 							    		if (!empty($resource_atts))
 							    			$resource_atts .= ' | <span>'.ucfirst(get_post_meta($resource->ID, 'oer_lrtype')[0]).'</span>';
 							    		else

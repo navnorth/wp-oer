@@ -51,7 +51,7 @@ require_once(OER_PATH.'blocks/resource-block/init.php');
 include_once(OER_PATH.'widgets/class-subject-area-widget.php');
 
 //define global variable $debug_mode and get value from settings
-global $_debug, $_bootstrap, $_fontawesome, $_css, $_css_oer, $_subjectarea, $_search_post_ids, $_w_bootstrap, $_oer_prefix, $oer_session, $_gutenberg, $_use_gutenberg, $_nalrc, $_nalrc_products, $_resources_path, $_products;
+global $_debug, $_bootstrap, $_fontawesome, $_css, $_css_oer, $_subjectarea, $_search_post_ids, $_w_bootstrap, $_oer_prefix, $oer_session, $_gutenberg, $_use_gutenberg, $_resources_path, $_products;
 
 // Product Types
 $_products = [
@@ -103,7 +103,6 @@ $_css = get_option('oer_additional_css');
 $_css_oer = get_option('oer_only_additional_css');
 $_subjectarea = get_option('oer_display_subject_area');
 $_oer_prefix = "oer_";
-$_nalrc = (get_option('wp_oese_theme_nalrc_header')?true:false);
 
 register_activation_hook(__FILE__, 'oer_create_csv_import_table');
 function oer_create_csv_import_table()
@@ -369,11 +368,7 @@ function oer_template_choser( $template ) {
 	}
 
 	if ( is_single($post_id) ){
-		if (!get_option('wp_oese_theme_nalrc_header')){
-			return oer_get_template_hierarchy('single-resource');
-		} else {
-			return oer_get_template_hierarchy('single-resource-nalrc');
-		}
+		return oer_get_template_hierarchy('single-resource');
 	}
 
 }
@@ -637,7 +632,6 @@ function oer_front_scripts()
 //Initialize settings page
 add_action( 'admin_init' , 'oer_settings_page' );
 function oer_settings_page() {
-	global $_nalrc;
 	//Create Embed Section
 	add_settings_section(
 		'oer_embed_settings',
@@ -932,16 +926,10 @@ function oer_path_settings_field_callback() {
 //Initialize Style Settings Tab
 add_action( 'admin_init' , 'oer_styles_settings' );
 function oer_styles_settings(){
-	global $_nalrc;
 	$singular = "Subject Area";
 	$plural = "Subject Areas";
 	$label = "Subjects";
 
-	if ($_nalrc){
-		$singular = "Topic Area";
-		$plural = "Topic Areas";
-		$label = "Topics";
-	}
 	//Create Styles Section
 	add_settings_section(
 		'oer_styles_settings',
@@ -1076,7 +1064,7 @@ function oer_styles_settings_callback(){
 //Initialize Setup Settings Tab
 add_action( 'admin_init' , 'oer_setup_settings' );
 function oer_setup_settings(){
-	global $_w_bootstrap, $_gutenberg, $_nalrc;
+	global $_w_bootstrap, $_gutenberg;
 
 	if ((isset($_REQUEST['post_type']) && $_REQUEST['post_type']=="resource") && (isset($_REQUEST['page']) && $_REQUEST['page']=="oer_settings")){
 		if (oer_is_bootstrap_loaded())
@@ -1113,8 +1101,6 @@ function oer_setup_settings(){
 
 	//Add Settings field for Import Default Subject Areas
 	$import_subject_label = "Subject Areas";
-	if ($_nalrc)
-		$import_subject_label = "Topic Areas";
 	add_settings_field(
 		'oer_import_default_subject_areas',
 		'',
@@ -1550,10 +1536,8 @@ function oer_setup_radio_field($arguments){
 
 /** Initialize Subject Area Sidebar widget **/
 function oer_widgets_init() {
-	global $_nalrc;
 	$label = "Subject Area";
-	if ($_nalrc)
-		$label = "Topic Area";
+	
 	register_sidebar( array(
 		'name' => $label.' Sidebar',
 		'id' => 'subject_area_sidebar',
@@ -2435,17 +2419,15 @@ function oer_custom_query($search, $wp_query){
 
 /** Join Table for Custom Search **/
 function oer_join_table($join){
-	global $wpdb, $_nalrc;
+	global $wpdb;
 
 	// Meta keys join
 	$join .= " LEFT JOIN $wpdb->postmeta pm ON ($wpdb->posts.ID = pm.post_id) ";
 
 	// Taxomomies join
-	if (!$_nalrc){
-		$join .= " LEFT JOIN $wpdb->term_relationships tr ON ($wpdb->posts.ID = tr.object_id) ";
-   	$join .= " LEFT JOIN $wpdb->term_taxonomy tt ON (tr.term_taxonomy_id = tt.term_taxonomy_id) ";
-   	$join .= " LEFT JOIN $wpdb->terms t ON (tt.term_id = t.term_id) ";
-	}
+	$join .= " LEFT JOIN $wpdb->term_relationships tr ON ($wpdb->posts.ID = tr.object_id) ";
+	$join .= " LEFT JOIN $wpdb->term_taxonomy tt ON (tr.term_taxonomy_id = tt.term_taxonomy_id) ";
+	$join .= " LEFT JOIN $wpdb->terms t ON (tt.term_id = t.term_id) ";
 
 	return $join;
 }
@@ -2466,11 +2448,7 @@ add_action( 'pre_get_posts', 'oer_resource_taxonomy_queries' );
 
 
 function oer_custom_search_template($template){
-    global $wp_query, $_nalrc;
-
-    if ($_nalrc){
-    	return $template;
-    }
+    global $wp_query;
 
     if (!$wp_query->is_search)
         return $template;
@@ -2744,31 +2722,29 @@ function oer_get_root_path() {
 
 /** Change Tags Label to Keywords for NALRC **/
 function oer_change_tags_labels( $args, $taxonomy ) {
-	global $_nalrc;
+	
+	if ( 'post_tag' === $taxonomy ) {
+	  $args['labels'] = array(
+	      'name'          	=> esc_html__( 'Educational Tags', OER_SLUG),
+	      'singular_name' 	=> esc_html__( 'Educational Tag', OER_SLUG ),
+	      'menu_name'     	=> esc_html__( 'Educational Tags', OER_SLUG ),
+	      'all_items'     	=> esc_html__( 'All Educational Tags', OER_SLUG ),
+	      'search_items'      => esc_html__( 'Search Educational Tags',OER_SLUG ),
+	      'add_new_item'  	=> esc_html__( 'Add New Educational Tag', OER_SLUG),
+	      'edit_item'       => esc_html__( 'Edit Educational Tag', OER_SLUG ),
+	    	'update_item'     => esc_html__( 'Update Educational Tag', OER_SLUG ),
+	    	'parent_item'       => esc_html__( 'Parent Educational Tag',OER_SLUG ),
+	    	'parent_item_colon' => esc_html__( 'Parent Educational Tag:',OER_SLUG ),
+	    	'new_item_name'     => esc_html__( 'New Educational Tag',OER_SLUG),
+	  );
+	}
 
-	if ($_nalrc){
-		if ( 'post_tag' === $taxonomy ) {
-		  $args['labels'] = array(
-		      'name'          	=> esc_html__( 'Educational Tags', OER_SLUG),
-		      'singular_name' 	=> esc_html__( 'Educational Tag', OER_SLUG ),
-		      'menu_name'     	=> esc_html__( 'Educational Tags', OER_SLUG ),
-		      'all_items'     	=> esc_html__( 'All Educational Tags', OER_SLUG ),
-		      'search_items'      => esc_html__( 'Search Educational Tags',OER_SLUG ),
-		      'add_new_item'  	=> esc_html__( 'Add New Educational Tag', OER_SLUG),
-		      'edit_item'       => esc_html__( 'Edit Educational Tag', OER_SLUG ),
-		    	'update_item'     => esc_html__( 'Update Educational Tag', OER_SLUG ),
-		    	'parent_item'       => esc_html__( 'Parent Educational Tag',OER_SLUG ),
-		    	'parent_item_colon' => esc_html__( 'Parent Educational Tag:',OER_SLUG ),
-		    	'new_item_name'     => esc_html__( 'New Educational Tag',OER_SLUG),
-		  );
-		}
-   }
     return $args;
 }
-add_filter( 'register_taxonomy_args', 'oer_change_tags_labels', 10, 2 );
+//add_filter( 'register_taxonomy_args', 'oer_change_tags_labels', 10, 2 );
 
 function oer_search_resources(){
-	global $wpdb, $oer_session, $_nalrc;
+	global $wpdb, $oer_session;
 	$resources = array();
 	$resource2 = array();
 	$args = array(
@@ -2848,10 +2824,10 @@ function oer_search_resources(){
 				<div class="rght-sd-cntnr-blg col-md-10">
 				    <h4><a href="<?php the_permalink($resource->ID); ?>" rel="bookmark" title="<?php the_title_attribute(array('post'=>$resource->ID)); ?>"><?php echo esc_html(get_the_title($resource->ID)); ?></a></h4>
 				    <div class="small">
-				    	<?php if ($_nalrc && !empty(get_post_meta($resource->ID, 'oer_datecreated')[0])): 
+				    	<?php if (!empty(get_post_meta($resource->ID, 'oer_datecreated')[0])): 
 				    		$resource_atts .= '<span>'.esc_html(get_post_meta($resource->ID, 'oer_datecreated')[0]).'</span>';
 				    	endif; ?>
-				    	<?php if ($_nalrc && !empty(get_post_meta($resource->ID,'oer_lrtype')[0])): 
+				    	<?php if (!empty(get_post_meta($resource->ID,'oer_lrtype')[0])): 
 				    		if (!empty($resource_atts))
 				    			$resource_atts .= ' | <span>'.ucfirst(get_post_meta($resource->ID, 'oer_lrtype')[0]).'</span>';
 				    		else
@@ -2869,22 +2845,20 @@ function oer_search_resources(){
 					?>
 				    </div>
 				    <?php
-				    if ($_nalrc):
-					    $grades = array();
-					    $grade_terms = get_the_terms( $resource->ID, 'resource-grade-level' );
-				    
-					    if (is_array($grade_terms)){
-					        foreach($grade_terms as $grade){
-					            $grades[] = $grade->name;
-					        }
-					    }
-					    if (!empty($grades) && oer_grade_levels($grades)!="N/A"):
-					    ?>
-					    <div class="oer-intended-audience">
-					    	<span class="label"><?php _e("For: ", OER_SLUG); ?></span><span class="value"><?php echo oer_grade_levels($grades); ?></span>
-					    </div>
-					<?php endif; 
-					endif; ?>
+				    $grades = array();
+				    $grade_terms = get_the_terms( $resource->ID, 'resource-grade-level' );
+			    
+				    if (is_array($grade_terms)){
+				        foreach($grade_terms as $grade){
+				            $grades[] = $grade->name;
+				        }
+				    }
+				    if (!empty($grades) && oer_grade_levels($grades)!="N/A"):
+				    ?>
+				    <div class="oer-intended-audience">
+				    	<span class="label"><?php _e("For: ", OER_SLUG); ?></span><span class="value"><?php echo oer_grade_levels($grades); ?></span>
+				    </div>
+					<?php endif; ?>
 				</div>
 		    </div>
 			<?php
