@@ -96,6 +96,16 @@ if (!$printable){
 						</div>
 					</div>
 				</div>
+		<?php else : ?>
+			<?php if ($print_enabled): ?>
+			<div class="resource-print-buttons">
+				<div class="action-btns">
+					<a href="#" id="oer_print_resource_list"><i class="fa fa-print" aria-hidden="true"></i> <?php _e('Print List' , OER_SLUG) ?></a>
+					<a href="#" id="oer_print_resource_table"><i class="fa fa-print" aria-hidden="true"></i> <?php _e('Print Table' , OER_SLUG) ?></a>
+				</div>
+				
+			</div>
+			<?php endif; ?>
 		<?php endif;
 		/* Start the Loop */ ?>
 
