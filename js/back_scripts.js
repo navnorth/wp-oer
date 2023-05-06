@@ -182,6 +182,8 @@ jQuery(document).ready(function(e) {
     			jQuery(this).find('.form-inline-error').remove();
     		} else {
     			e.preventDefault();
+    			if (jQuery(this).find('.form-inline-error').length)
+    				jQuery(this).find('.form-inline-error').remove();
     			jQuery(this).find('#oer_configurable_resource_path').after('<span class="form-inline-error">Invalid path! Please enter a valid path.</span>');
     			jQuery(this).find('#oer_configurable_resource_path').focus();
     			window.frm_error = true;
