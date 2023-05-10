@@ -49,6 +49,7 @@ standardModaloer_metawpr
 {
 	/*float: right;*/
 }
+.resource-notice-legend { padding:20px 0 0; }
 .oer_snglfld .oer_txt
 {
 	width: 180px;
@@ -200,6 +201,7 @@ ul.oer_slctstandard > li
 	font-size: 25px;
 	padding: 20px 0;
 }
+.oer_settings_form .form-inline-error { color:#FF0000; margin-left:5px; }
 .oer_imprtrwpr .fields {
 	margin-bottom:10px;
 }
@@ -229,6 +231,7 @@ ul.oer_slctstandard > li
 .oer-plugin-row fieldset, .oer-import-row fieldset { margin-bottom:15px; }
 .oer-plugin-row .form-table th { width:0; display:none; }
 .oer-plugin-row .form-table td label { margin-right:10px; }
+.oer-plugin-row .bottom-margin { margin-bottom:10px; }
 .oer-plugin-row .form-table td .indent { margin-left:25px; }
 .oer-plugin-row .form-table td textarea { width:100%; }
 .oer-plugin-row .form-table td .inline-desc {
@@ -407,3 +410,6 @@ div#standardModal { z-index: 9999 !important; }
 .oer_settings_form input::placeholder { color:#707d86; }
 .oer_text_red { color:#ce1212; }
 .components-button.button.button-primary { font-weight:bold; }
+.resource-notice-legend, .resource-path-legend { padding-bottom:0px !important; }
+#oer_configurable_resource_path,
+#oer_nalrc_resources_page_title { width:50%; padding: 5px 10px; }

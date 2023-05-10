@@ -3,8 +3,8 @@
  Plugin Name:        WP OER
  Plugin URI:         https://www.wp-oer.com
  Description:        Open Educational Resource management and curation, metadata publishing, and alignment to Common Core State Standards.
- Version:            0.9.2
- Requires at least:  4.4
+ Version:            0.9.3
+ Requires at least:  5.0
  Requires PHP:       7.0
  Author:             Navigation North
  Author URI:         https://www.navigationnorth.com
@@ -38,7 +38,7 @@ define( 'OER_FILE',__FILE__);
 // Plugin Name and Version
 define( 'OER_PLUGIN_NAME', 'WP OER Plugin' );
 define( 'OER_ADMIN_PLUGIN_NAME', 'WP OER Plugin');
-define( 'OER_VERSION', '0.9.2' );
+define( 'OER_VERSION', '0.9.3' );
 define( 'OER_SITE_PATH', ABSPATH );
 
 include_once(OER_PATH.'includes/oer-functions.php');
@@ -51,7 +51,36 @@ require_once(OER_PATH.'blocks/resource-block/init.php');
 include_once(OER_PATH.'widgets/class-subject-area-widget.php');
 
 //define global variable $debug_mode and get value from settings
-global $_debug, $_bootstrap, $_fontawesome, $_css, $_css_oer, $_subjectarea, $_search_post_ids, $_w_bootstrap, $_oer_prefix, $oer_session, $_gutenberg, $_use_gutenberg;
+global $_debug, $_bootstrap, $_fontawesome, $_css, $_css_oer, $_subjectarea, $_search_post_ids, $_w_bootstrap, $_oer_prefix, $oer_session, $_gutenberg, $_use_gutenberg, $_resources_path, $_products;
+
+// Product Types
+$_products = [
+	[ "value" => "Article/Information", "label" => "Article/Information"],
+	[ "value" => "Assessment", "label" => "Assessment"],
+	[ "value" => "Audio", "label" => "Audio"],
+	[ "value" => "Blog", "label" => "Blog" ],
+	[ "value" => "Calculator", "label" => "Calculator" ],
+	[ "value" => "Curriculum", "label" => "Curriculum" ],
+	[ "value" => "Demonstration", "label" => "Demonstration" ],
+	[ "value" => "Game", "label" => "Game" ],
+	[ "value" => "Fact Sheet", "label" => "Fact Sheet" ],
+	[ "value" => "Framework", "label" => "Framework" ],
+	[ "value" => "Instructional Material", "label" => "Instructional Material" ],
+	[ "value" => "Interview", "label" => "Interview" ],
+	[ "value" => "Lecture", "label" => "Lecture" ],
+	[ "value" => "Lesson Plan", "label" => "Lesson Plan" ],
+	[ "value" => "Online Course", "label" => "Online Course" ],
+	[ "value" => "Podcast", "label" => "Podcast" ],
+	[ "value" => "Presentation", "label" => "Presentation" ],
+	[ "value" => "Publication", "label" => "Publication" ],
+	[ "value" => "Research/Evaluation Report", "label" => "Research/Evaluation Report" ],
+	[ "value" => "Simulation", "label" => "Simulation" ],
+	[ "value" => "Video", "label" => "Video" ],
+	[ "value" => "Website", "label" => "Website" ],
+	[ "value" => "Other", "label" => "Other" ]
+];
+
+$_resources_path = get_option('oer_configurable_resource_path');
 
 if( ! defined( 'WP_SESSION_COOKIE' ) )
 	define( 'WP_SESSION_COOKIE', '_oer_session' );
@@ -146,6 +175,10 @@ function oer_create_csv_import_table()
    update_option( "oer_rewrite_rules", false );
    update_option('oer_metadata_firstload', true);
    update_option('oer_setup', true);
+   // enable bootstrap by default
+   update_option('oer_use_bootstrap', true);
+   // enable fontawesome by default as it is used by the subjects index block
+   update_option('oer_use_fontawesome', true);
 
    //Trigger CPT and Taxonomy creation
    oer_postcreation();
@@ -560,15 +593,38 @@ function oer_query_post_type($query) {
 add_action('wp_enqueue_scripts', 'oer_front_scripts');
 function oer_front_scripts()
 {
-	global $_bootstrap, $_fontawesome;
-
+	global $_bootstrap, $_fontawesome, $wp_scripts, $wp_styles;
+	$bootstrap_enqueued = FALSE;
+	$fontawesome_enqueued = FALSE;
 	if ($_bootstrap) {
-		wp_enqueue_style('bootstrap-style', OER_URL.'css/bootstrap.min.css');
-		wp_enqueue_script('bootstrap-script', OER_URL.'js/bootstrap.min.js');
+		foreach( $wp_scripts->registered as $script ) {
+		  if ((stristr($script->src, 'bootstrap.min.js') !== FALSE or
+		       stristr($script->src, 'bootstrap.js') != FALSE) and
+		      wp_script_is($script->handle, $list = 'enqueued')) {
+
+		      $bootstrap_enqueued = TRUE;
+		      break;
+		  }
+		}
+		if (!$bootstrap_enqueued){
+			wp_enqueue_style('bootstrap-style', OER_URL.'css/bootstrap.min.css');
+			wp_enqueue_script('bootstrap-script', OER_URL.'js/bootstrap.min.js');
+		}
 	}
 
 	if ($_fontawesome) {
-		wp_enqueue_style('fontawesome-style', OER_URL.'css/fontawesome.css');
+		foreach( $wp_styles->registered as $style ) {
+			//var_dump($style);
+		  if ((stristr($style->src, 'fontawesome') !== FALSE or
+		       stristr($style->src, 'font-awesome') != FALSE) and
+		      wp_style_is($style->handle, $list = 'enqueued')) {
+		      $fontawesome_enqueued = TRUE;
+		      break;
+		  }
+		}
+		if (!$fontawesome_enqueued){
+			wp_enqueue_style('fontawesome-style', OER_URL.'css/fontawesome.css');
+		}
 	}
 
 }
@@ -748,6 +804,92 @@ function oer_settings_page() {
 		)
 	);
 
+	// Add configurable path section
+	add_settings_section(
+		'oer_configurable_path',
+		'',
+		'oer_path_settings_field_callback',
+		'configurable_path_setings'
+	);
+
+	// Add configurable path option
+	add_settings_field(
+		'oer_configurable_resource_path',
+		'',
+		'oer_setup_settings_field',
+		'configurable_path_setings',
+		'oer_configurable_path',
+		array(
+			'uid' => 'oer_configurable_resource_path',
+			'type' => 'textbox',
+			'class' => 'oer-configurable-resource-path',
+			'title' => __( 'Path: ' , OER_SLUG ),
+			'description' => __('Enter the relative URL of the resources page without a leading slash(/). (ie. resources)', OER_SLUG)
+		)
+	);
+
+	//Add Settings field for Resources Page Title
+	add_settings_field(
+		'oer_resources_page_title',
+		'',
+		'oer_setup_settings_field',
+		'configurable_path_setings',
+		'oer_configurable_path',
+		array(
+			'uid' => 'oer_resources_page_title',
+			'type' => 'textbox',
+			'class' => 'oer-resources-title',
+			'title' => __( 'Title: ', OER_SLUG),
+			'description' => __('Enter the title of the resources page.', OER_SLUG)
+		)
+	);
+
+	//Add Settings field for Resources Page Content
+	add_settings_field(
+		'oer_resources_content',
+		'',
+		'oer_wysiwyg_field',
+		'configurable_path_setings',
+		'oer_configurable_path',
+		array(
+			'uid' => 'oer_resources_content',
+			'type' => 'wysiwyg',
+			'class' => 'oer-resources-content bottom-margin',
+			'name' => __( 'Content: ', OER_SLUG),
+			'description' => __('Enter global resources page content here.', OER_SLUG)
+		)
+	);
+
+	// Add Enable filter option
+	add_settings_field(
+		'oer_enable_search_filters',
+		'',
+		'oer_setup_settings_field',
+		'configurable_path_setings',
+		'oer_configurable_path',
+		array(
+			'uid' => 'oer_enable_search_filters',
+			'type' => 'checkbox',
+			'class' => 'oer-enable-search-filters',
+			'name' => __( 'Enable search filter' , OER_SLUG )
+		)
+	);
+
+	// Add Enable Print Buttons option
+	add_settings_field(
+		'oer_enable_print_buttons',
+		'',
+		'oer_setup_settings_field',
+		'configurable_path_setings',
+		'oer_configurable_path',
+		array(
+			'uid' => 'oer_enable_print_buttons',
+			'type' => 'checkbox',
+			'class' => 'oer-enable-print-buttons',
+			'name' => __( 'Enable print buttons' , OER_SLUG )
+		)
+	);
+
 	register_setting( 'oer_general_settings' , 'oer_disable_screenshots' );
 	register_setting( 'oer_general_settings' , 'oer_enable_screenshot' );
 	register_setting( 'oer_general_settings' , 'oer_use_xvfb' );
@@ -755,6 +897,12 @@ function oer_settings_page() {
 	register_setting( 'oer_general_settings' , 'oer_python_install' );
 	register_setting( 'oer_general_settings' , 'oer_external_screenshots' );
 	register_setting( 'oer_general_settings' , 'oer_service_url' );
+	//register_setting( 'oer_general_settings' , 'oer_nalrc_resource_notice' );
+	register_setting( 'oer_general_settings' , 'oer_configurable_resource_path' );
+	register_setting( 'oer_general_settings' , 'oer_resources_page_title' );
+	register_setting( 'oer_general_settings' , 'oer_resources_content' );
+	register_setting( 'oer_general_settings' , 'oer_enable_search_filters' );
+	register_setting( 'oer_general_settings' , 'oer_enable_print_buttons' );
 }
 
 //General settings callback
@@ -766,9 +914,21 @@ function oer_embed_settings_callback(){
 
 }
 
+function oer_notice_settings_callback() {
+
+}
+
+function oer_path_settings_field_callback() {
+
+}
+
+
 //Initialize Style Settings Tab
 add_action( 'admin_init' , 'oer_styles_settings' );
 function oer_styles_settings(){
+	$singular = "Subject Area";
+	$plural = "Subject Areas";
+	$label = "Subjects";
 
 	//Create Styles Section
 	add_settings_section(
@@ -806,8 +966,8 @@ function oer_styles_settings(){
 			'type' => 'checkbox',
 			'value' => '1',
 			'default' => true,
-			'name' =>  __('Display Subjects menu on Subject Area pages', OER_SLUG),
-			'description' => __('Lists all subject areas in the left column of Subject Area pages—may conflict with themes using left navigation.', OER_SLUG)
+			'name' =>  __('Display '.$label.' menu on '.$singular.' pages', OER_SLUG),
+			'description' => __('Lists all '.strtolower($plural).' in the left column of '.$singular.' pages—may conflict with themes using left navigation.', OER_SLUG)
 		)
 	);
 
@@ -838,7 +998,7 @@ function oer_styles_settings(){
 			'uid' => 'oer_hide_subject_area_title',
 			'type' => 'checkbox',
 			'value' => '1',
-			'name' =>  __('Subject Area pages', OER_SLUG),
+			'name' =>  __($singular.' pages', OER_SLUG),
 			'pre_html' => __('<h3>Hide Page Titles</h3><p class="description hide-description">Some themes have a built-in display of page titles.</p>', OER_SLUG))
 	);
 
@@ -940,6 +1100,7 @@ function oer_setup_settings(){
 	);
 
 	//Add Settings field for Import Default Subject Areas
+	$import_subject_label = "Subject Areas";
 	add_settings_field(
 		'oer_import_default_subject_areas',
 		'',
@@ -951,8 +1112,8 @@ function oer_setup_settings(){
 			'type' => 'checkbox',
 			'value' => '1',
 			'default' => true,
-			'name' =>  __('Import Default Subject Areas', OER_SLUG),
-			'description' => __('A general listing of the most common subject areas.', OER_SLUG)
+			'name' =>  __('Import Default '.$import_subject_label, OER_SLUG),
+			'description' => __('A general listing of the most common '.strtolower($import_subject_label).'.', OER_SLUG)
 		)
 	);
 
@@ -1220,9 +1381,9 @@ function oer_setup_settings_field( $arguments ) {
 	$class = "";
 	$disabled = "";
 	$allowed_tags = oer_allowed_html();
-
+	
 	$value = get_option($arguments['uid']);
-
+	
 	if (isset($arguments['indent'])){
 		echo '<div class="indent">';
 	}
@@ -1241,7 +1402,9 @@ function oer_setup_settings_field( $arguments ) {
 			$size = 'size="50"';
 			if (isset($arguments['title']))
 				$title = $arguments['title'];
-			echo '<label for="'.esc_attr($arguments['uid']).'"><strong>'.esc_html($title).'</strong></label><input name="'.esc_attr($arguments['uid']).'" id="'.esc_attr($arguments['uid']).'" type="'.esc_attr($arguments['type']).'" value="' . esc_attr($value) . '" ' . esc_attr($size) . ' ' .  esc_attr($selected) . ' />';
+			if ($title)
+				echo '<label for="'.esc_attr($arguments['uid']).'"><strong>'.esc_html($title).'</strong></label>';
+			echo '<input name="'.esc_attr($arguments['uid']).'" id="'.esc_attr($arguments['uid']).'" type="'.esc_attr($arguments['type']).'" value="' . esc_attr($value) . '" ' . esc_attr($size) . ' ' .  esc_attr($selected) . ' />';
 			break;
 		case "checkbox":
 			$display_value = "";
@@ -1249,7 +1412,7 @@ function oer_setup_settings_field( $arguments ) {
 
 			if ($value=="1" || $value=="on"){
 				$selected = "checked='checked'";
-				$display_value = "value='1'";
+				$display_value = "value=1";
 			} elseif ($value===false){
 				$selected = "";
 				if (isset($arguments['default'])) {
@@ -1265,7 +1428,7 @@ function oer_setup_settings_field( $arguments ) {
 				if ($arguments['disabled']==true)
 					$disabled = " disabled";
 			}
-
+			
 			echo '<input name="'.esc_attr($arguments['uid']).'" id="'.esc_attr($arguments['uid']).'" '.esc_attr($class).' type="'.esc_attr($arguments['type']).'" ' . esc_attr($display_value) . ' ' . esc_attr($size) . ' ' .  esc_attr($selected) . ' ' . esc_attr($disabled) . '  /><label for="'.esc_attr($arguments['uid']).'"><strong>'.esc_html($arguments['name']).'</strong></label>';
 			break;
 		case "select":
@@ -1334,6 +1497,30 @@ function oer_setup_settings_field( $arguments ) {
 	}
 }
 
+function oer_wysiwyg_field( $arguments ) {
+	$class = "";
+
+	$value = get_option($arguments['uid']);
+
+	if (isset($arguments['class'])) {
+		$class = $arguments['class'];
+		$class = " class='".$class."' ";
+	}
+	
+	echo '<label for="'.esc_attr($arguments['uid']).'" class="'.$class.'"><strong>'.esc_html($arguments['name']);
+	if (isset($arguments['inline_description']))
+		echo '<span class="inline-desc">'.esc_html($arguments['inline_description']).'</span>';
+	echo '</strong></label>';
+
+    echo wp_editor( $value, $arguments['uid'], array('textarea_name' => $arguments['uid'], 'textarea_rows' => 10)  );
+
+	//Show Description if specified
+	if( isset($arguments['description']) ){
+		printf( '<p class="description">%s</p>', $arguments['description'] );
+	}
+
+}
+
 function oer_setup_radio_field($arguments){
 	$class="";
 
@@ -1349,9 +1536,10 @@ function oer_setup_radio_field($arguments){
 
 /** Initialize Subject Area Sidebar widget **/
 function oer_widgets_init() {
-
+	$label = "Subject Area";
+	
 	register_sidebar( array(
-		'name' => 'Subject Area Sidebar',
+		'name' => $label.' Sidebar',
 		'id' => 'subject_area_sidebar',
 		'before_widget' => '<div id="oer-subject-area-widget">',
 		'after_widget' => '</div>',
@@ -1368,7 +1556,11 @@ function oer_add_body_class($classes) {
 	$cur_theme = wp_get_theme();
 	$theme_class = $cur_theme->get('Name');
 
-	return array_merge( $classes, array( str_replace( ' ', '-', strtolower($theme_class) ) ) );
+	if (isset($_GET['action']) && $_GET['action']=='print'){
+		return array_merge( $classes, array(  str_replace( ' ', '-', strtolower($theme_class) ) , 'print-preview' ) );
+	} else {
+		return array_merge( $classes, array( str_replace( ' ', '-', strtolower($theme_class) ) ) );
+	}
 }
 
 /* Ajax Callback */
@@ -2142,26 +2334,25 @@ function oer_custom_query($search, $wp_query){
 
 	$q = $wp_query->query_vars;
 	$n = !empty($q['exact']) ? '' : '%';
-	$search = $searchand = '';
+	$search_str = $searchand = '';
 	$terms_relation_type = 'OR';
 
 	//Checks each term
 	foreach ((array)$q['search_terms'] as $term ) {
-
 		$term = $n . $wpdb->esc_like( $term ) . $n;
 
 		$OR = '';
 
-		$search .= "{$searchand} (";
+		$search_str .= "{$searchand} (";
 
 		//Search in title
-		$search .= $wpdb->prepare("($wpdb->posts.post_title LIKE %s)", $term);
-                $OR = ' OR ';
+		$search_str .= $wpdb->remove_placeholder_escape($wpdb->prepare("($wpdb->posts.post_title LIKE %s)", $term));
+      $OR = ' OR ';
 
 		//Search in content
-		$search .= $OR;
-                $search .= $wpdb->prepare("($wpdb->posts.post_content LIKE %s)", $term);
-                $OR = ' OR ';
+		$search_str .= $OR;
+    	$search_str .= $wpdb->remove_placeholder_escape($wpdb->prepare("($wpdb->posts.post_content LIKE %s)", $term));
+      $OR = ' OR ';
 
 		//Search by meta keys
 		$meta_keys = array(
@@ -2180,39 +2371,42 @@ function oer_custom_query($search, $wp_query){
 				   'oer_publisheremail',
 				   'oer_publishername',
 				   'oer_publisherurl',
-				   'oer_resourceurl',
+				   //'oer_resourceurl',
 				   'oer_standard',
 				   'oer_standard_alignment',
 				   'oer_userightsurl'
 				   );
 
 		$meta_key_OR = '';
+
 		foreach ($meta_keys as $key_slug) {
-                        $search .= $OR;
-                        $search .= $wpdb->prepare("$meta_key_OR (pm.meta_key = %s AND pm.meta_value LIKE %s)", $key_slug, $term);
-                        $OR = '';
-                        $meta_key_OR = ' OR ';
-                }
+         $search_str .= $OR;
+         $search_str .= $wpdb->remove_placeholder_escape($wpdb->prepare("$meta_key_OR (pm.meta_key = %s AND pm.meta_value LIKE %s)", $key_slug, $term));
+         $OR = '';
+         $meta_key_OR = ' OR ';
+       }
 
 		$OR = ' OR ';
 
 		//Search By Taxonomy
 		$taxonomies = array("post_tag","resource-subject-area");
+
 		$tax_OR = '';
+
 		foreach($taxonomies as $tax) {
-			$search .= $OR;
-                        $search .= $wpdb->prepare("$tax_OR (tt.taxonomy = %s AND t.name LIKE %s)", $tax, $term);
-                        $OR = '';
-                        $tax_OR = ' OR ';
+			$search_str .= $OR;
+         $search_str .= $wpdb->remove_placeholder_escape($wpdb->prepare("$tax_OR (tt.taxonomy = %s AND t.name LIKE %s)", $tax, $term));
+         $OR = '';
+         $tax_OR = ' OR ';
 		}
 
-		$search .= ")";
+		$search_str .= ")";
 
 		$searchand = " $terms_relation_type ";
 	}
 
-	if ( ! empty( $search ) ) {
-		$search = " AND ({$search}) ";
+	if ( ! empty( $search_str ) ) {
+		$search = " AND ({$search_str}) ";
 	}
 
 	add_filter('posts_join_request', 'oer_join_table');
@@ -2232,8 +2426,8 @@ function oer_join_table($join){
 
 	// Taxomomies join
 	$join .= " LEFT JOIN $wpdb->term_relationships tr ON ($wpdb->posts.ID = tr.object_id) ";
-        $join .= " LEFT JOIN $wpdb->term_taxonomy tt ON (tr.term_taxonomy_id = tt.term_taxonomy_id) ";
-        $join .= " LEFT JOIN $wpdb->terms t ON (tt.term_id = t.term_id) ";
+	$join .= " LEFT JOIN $wpdb->term_taxonomy tt ON (tr.term_taxonomy_id = tt.term_taxonomy_id) ";
+	$join .= " LEFT JOIN $wpdb->terms t ON (tt.term_id = t.term_id) ";
 
 	return $join;
 }
@@ -2252,8 +2446,10 @@ function oer_resource_taxonomy_queries( $query ) {
 }
 add_action( 'pre_get_posts', 'oer_resource_taxonomy_queries' );
 
+
 function oer_custom_search_template($template){
     global $wp_query;
+
     if (!$wp_query->is_search)
         return $template;
 
@@ -2332,6 +2528,7 @@ function oer_add_rewrites()
 	add_rewrite_endpoint( 'standard', EP_PERMALINK | EP_PAGES );
 	add_rewrite_endpoint( 'substandard', EP_PERMALINK | EP_PAGES );
 	add_rewrite_endpoint( 'notation', EP_PERMALINK | EP_PAGES );
+
 
 	$flush_rewrite = get_option('oer_rewrite_rules');
 	if ($flush_rewrite==false) {
@@ -2521,4 +2718,213 @@ function oer_get_root_path() {
 	}
 
 	return $root_path;
+}
+
+/** Change Tags Label to Keywords for NALRC **/
+function oer_change_tags_labels( $args, $taxonomy ) {
+	
+	if ( 'post_tag' === $taxonomy ) {
+	  $args['labels'] = array(
+	      'name'          	=> esc_html__( 'Educational Tags', OER_SLUG),
+	      'singular_name' 	=> esc_html__( 'Educational Tag', OER_SLUG ),
+	      'menu_name'     	=> esc_html__( 'Educational Tags', OER_SLUG ),
+	      'all_items'     	=> esc_html__( 'All Educational Tags', OER_SLUG ),
+	      'search_items'      => esc_html__( 'Search Educational Tags',OER_SLUG ),
+	      'add_new_item'  	=> esc_html__( 'Add New Educational Tag', OER_SLUG),
+	      'edit_item'       => esc_html__( 'Edit Educational Tag', OER_SLUG ),
+	    	'update_item'     => esc_html__( 'Update Educational Tag', OER_SLUG ),
+	    	'parent_item'       => esc_html__( 'Parent Educational Tag',OER_SLUG ),
+	    	'parent_item_colon' => esc_html__( 'Parent Educational Tag:',OER_SLUG ),
+	    	'new_item_name'     => esc_html__( 'New Educational Tag',OER_SLUG),
+	  );
+	}
+
+    return $args;
+}
+//add_filter( 'register_taxonomy_args', 'oer_change_tags_labels', 10, 2 );
+
+function oer_search_resources(){
+	global $wpdb, $oer_session;
+	$resources = array();
+	$resource2 = array();
+	$args = array(
+		'post_type' => 'resource',
+		'post_status' => 'publish',
+		'numberposts' => -1,
+	);
+
+	$root_path = oer_get_root_path();
+
+	if (!isset($oer_session))
+		$oer_session = OER_WP_Session::get_instance();
+	
+
+	try {
+		// Search by Topic area
+		if (isset($_POST['gradeLevel'])){
+			if (!empty($_POST['gradeLevel'][0])){
+				if (!is_array($_POST['gradeLevel']))
+					$grades = explode(",",sanitize_text_field($_POST['gradeLevel']));
+				else
+					$grades = array_map('sanitize_text_field',$_POST['gradeLevel']);
+				$args['tax_query'] = array(
+					array(
+						'taxonomy' => 'resource-grade-level',
+						'field' => 'term_id',
+						'terms' => $grades
+					)
+				);
+			}
+		}
+
+		// Search by Product Type
+		if (isset($_POST['product']) && $_POST['product']!==""){
+			$args['meta_query'] = array(
+				array(
+					'key' => 'oer_lrtype',
+					'value' => array_map('sanitize_text_field',$_POST['product'])
+				)
+			);
+		} 
+
+		// Search title, description, and tags
+		if (isset($_POST['keyword']) && $_POST['keyword']!==""){
+			for ($i=0;$i<2;$i++){
+				if ($i == 0 ){
+					$args['s'] = sanitize_text_field($_POST['keyword']);
+					$resources = get_posts($args);	
+				} else {
+					if (isset($args['s']))
+						unset($args['s']);
+					$args['tag'] = sanitize_text_field($_POST['keyword']);
+					$resources2 = get_posts($args);
+				}
+			}
+			$resources = array_merge($resources, $resources2);
+		} else {
+			$resources = get_posts($args);
+		}
+
+		foreach($resources as $resource){
+			$resource_atts = "";
+			?>
+			<div class="oer_blgpst nalrc-blogpost">
+				<?php if ( has_post_thumbnail($resource->ID) ) {?>
+				    <div class="oer-feature-image col-md-2">
+					<?php if ( ! post_password_required() && ! is_attachment() ) :
+					    echo wp_kses_post(get_the_post_thumbnail($resource->ID,"thumbnail"));
+					endif; ?>
+				    </div>
+				<?php } else {
+				    $new_image_url = OER_URL . 'images/default-icon-220x180.png';
+				    echo '<div class="oer-feature-image col-md-2"><a href="'.esc_url(get_permalink($resource->ID)).'"><img src="'.esc_url($new_image_url).'"></a></div>';
+				}
+				?>
+					    
+				<div class="rght-sd-cntnr-blg col-md-10">
+				    <h4><a href="<?php the_permalink($resource->ID); ?>" rel="bookmark" title="<?php the_title_attribute(array('post'=>$resource->ID)); ?>"><?php echo esc_html(get_the_title($resource->ID)); ?></a></h4>
+				    <div class="small">
+				    	<?php if (!empty(get_post_meta($resource->ID, 'oer_datecreated')[0])): 
+				    		$resource_atts .= '<span>'.esc_html(get_post_meta($resource->ID, 'oer_datecreated')[0]).'</span>';
+				    	endif; ?>
+				    	<?php if (!empty(get_post_meta($resource->ID,'oer_lrtype')[0])): 
+				    		if (!empty($resource_atts))
+				    			$resource_atts .= ' | <span>'.ucfirst(get_post_meta($resource->ID, 'oer_lrtype')[0]).'</span>';
+				    		else
+				    			$resource_atts .= '<span>'.ucfirst(get_post_meta($resource->ID, 'oer_lrtype')[0]).'</span>';
+				    	endif; 
+				    	echo wp_kses_post($resource_atts);
+				    	?>
+				    </div>
+						    
+				    <div class="oer-post-content">
+					<?php 
+					$excerpt = get_the_excerpt($resource->ID);
+					$excerpt = oer_get_limited_excerpt($excerpt,150);
+					echo esc_html(ucfirst($excerpt));
+					?>
+				    </div>
+				    <?php
+				    $grades = array();
+				    $grade_terms = get_the_terms( $resource->ID, 'resource-grade-level' );
+			    
+				    if (is_array($grade_terms)){
+				        foreach($grade_terms as $grade){
+				            $grades[] = $grade->name;
+				        }
+				    }
+				    if (!empty($grades) && oer_grade_levels($grades)!="N/A"):
+				    ?>
+				    <div class="oer-intended-audience">
+				    	<span class="label"><?php _e("For: ", OER_SLUG); ?></span><span class="value"><?php echo oer_grade_levels($grades); ?></span>
+				    </div>
+					<?php endif; ?>
+				</div>
+		    </div>
+			<?php
+		}
+	} catch (Exception $e){
+		echo 'Error occurred: '. $e->getMessage();
+	}
+	die();
+}
+add_action('wp_ajax_search_resources', 'oer_search_resources');
+add_action('wp_ajax_nopriv_search_resources', 'oer_search_resources');
+
+function oer_filter_resources($params){
+	$grades = null;
+	$products = null;
+	$args = array(
+		'post_type' => 'resource',
+		'post_status' => 'publish',
+		'numberposts' => -1,
+	);
+	
+	// Search by Topic area
+	if (isset($params['gradelevel'])){
+		if (!is_array($params['gradelevel']))
+			$grades = explode(",",sanitize_text_field($params['gradelevel']));
+		else
+			$grades = array_map('sanitize_text_field',$params['gradelevel']);
+		$args['tax_query'] = array(
+			array(
+				'taxonomy' => 'resource-grade-level',
+				'field' => 'term_id',
+				'terms' => $grades
+			)
+		);
+	}
+	
+	// Search by Product Type
+	if (isset($params['product'])){
+		if (!is_array($params['product']))
+			$products = explode(",",sanitize_text_field($params['product']));
+		else
+			$products = array_map('sanitize_text_field',$params['product']);
+		$args['meta_query'] = array(
+			array(
+				'key' => 'oer_lrtype',
+				'value' => $products
+			)
+		);
+	} 
+	
+	// Search title, description, and tags
+	if (isset($params['keyword'])){
+		for ($i=0;$i<2;$i++){
+			if ($i == 0 ){
+				$args['s'] = sanitize_text_field($params['keyword']);
+				$resources = get_posts($args);	
+			} else {
+				if (isset($args['s']))
+					unset($args['s']);
+				$args['tag'] = sanitize_text_field($params['keyword']);
+				$resources2 = get_posts($args);
+			}
+		}
+		$resources = array_merge($resources, $resources2);
+	} else {
+		$resources = get_posts($args);
+	}
+	return $resources;
 }

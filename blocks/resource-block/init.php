@@ -23,7 +23,8 @@ function oer_create_block_wp_oer_resource_block_init() {
         $script_asset['dependencies'],
         $script_asset['version']
     );
-    wp_localize_script( 'wp-oer-resource-block-editor', 'oer_resource', array( 'home_url' => home_url(), 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+    $perm_structure = empty(get_option('permalink_structure'))?false:true;
+    wp_localize_script( 'wp-oer-resource-block-editor', 'oer_resource', array( 'home_url' => home_url(), 'ajaxurl' => admin_url( 'admin-ajax.php' ), 'perm_structure' => $perm_structure ) );
     wp_set_script_translations( 'wp-oer-resource-block-editor', 'wp-oer-resource-block', OER_PATH.'/lang/js' );
 
     register_block_type(
@@ -98,62 +99,66 @@ function oer_display_resource_block( $attributes, $ajax = false ){
     
     if (!empty($style))
         $style ="style='".$style."'";
-
+    
+    $showThumbnail = is_bool($showThumbnail)?$showThumbnail:($showThumbnail=="true"?true:false);
+    $showTitle = is_bool($showTitle)?$showTitle:($showTitle=="true"?true:false);
+    $showDescription = is_bool($showDescription)?$showDescription:($showDescription=="true"?true:false);
+    $showSubjects = is_bool($showSubjects)?$showSubjects:($showSubjects=="true"?true:false);
+    $showGrades = is_bool($showGrades)?$showGrades:($showGrades=="true"?true:false);
+    $withBorder = is_bool($withBorder)?$withBorder:($withBorder=="true"?true:false);
     if ($showThumbnail==false && $showTitle==false && $showDescription==false && $showSubjects==false && $showGrades==false && $withBorder==false)
-        $empty = true; 
-
+        $empty = true;     
+    
     if (!empty($selectedResource)){
         $resource = get_post($selectedResource);
         ob_start();
         ?>
 
-        <div class="wp-block-wp-oer-resource-block" <?php echo esc_attr($style); ?>>
+        <div class="wp-block-wp-oer-resource-block" <?php echo $style; ?>>
             <?php if ($empty): ?>
-                <div class="oer-empty-block"><?php esc_html_e( 'Empty display. Please enable some options.' , 'wp-oer' ); ?></div> 
+                <div class="oer-empty-block"><?php _e( 'Empty display. Please enable some options.' , 'wp-oer' ); ?></div> 
             <?php endif; ?>
-            <?php if ($showTitle=="true"): ?>
-            <h4><a href="<?php echo esc_url($resource->guid); ?>"><?php echo esc_html($resource->post_title); ?></a></h4>
+            <?php if ($showTitle==true): ?>
+            <h4><a href="<?php echo $resource->guid; ?>"><?php echo $resource->post_title; ?></a></h4>
             <?php endif; ?>
 
-            <?php if ($showThumbnail=="true"):
+            <?php if ($showThumbnail==true):
             if (has_post_thumbnail($resource->ID)): 
                 $featured_image = wp_get_attachment_image_src(get_post_thumbnail_id($resource->ID));
             ?>
             <div class="oer-resource-block-featured-image">
-                <a href="<?php echo esc_url_raw($resource->guid); ?>"><img src="<?php echo esc_url($featured_image[0]); ?>" alt="<?php echo esc_attr($resource->post_title); ?>"></a>
+                <a href="<?php echo $resource->guid; ?>"><img src="<?php echo $featured_image[0]; ?>" alt="<?php echo $resource->post_title; ?>"></a>
             </div>
             <?php endif;
             endif; ?>
 
-            <?php if ($showDescription=="true"): ?>
+            <?php if ($showDescription==true): ?>
             <div class="oer-resource-block-description">
                 <p><?php echo oer_resource_content_excerpt($resource->post_content); ?></p>
             </div>
             <?php endif; ?>
 
-            <?php if ($showSubjects=="true"): 
+            <?php if ($showSubjects==true): 
                 $subjects = oer_resource_block_subjects($resource->ID);
             ?>
             <div class="oer-resource-block-subjects oer-rsrcctgries tagcloud">
                 <?php if (count($subjects)>0): ?>
                     <ul>
                         <?php foreach($subjects as $subject): ?>
-                            <li><a href="<?php echo esc_url($subject['term_link']); ?>"><?php echo esc_html($subject['name']); ?></a></li>
+                            <li><a href="<?php echo $subject['term_link']; ?>"><?php echo $subject['name']; ?></a></li>
                         <?php endforeach; ?>
                     </ul>
                 <?php endif; ?>
             </div>
             <?php endif; ?>
 
-            <?php if ($showGrades=="true"): 
+            <?php if ($showGrades==true): 
                 $grade_levels = oer_resource_block_grade_levels($resource->ID);
-                if ($grade_levels):
                 ?>
-                <div class="oer-resource-block-grade-levels">
-                    <strong><?php esc_html_e('Grade Levels', OER_SLUG); ?>: </strong> <?php echo esc_html($grade_levels); ?>
-                </div>
-            <?php endif;
-            endif; ?>
+            <div class="oer-resource-block-grade-levels">
+                <strong>Grade Levels: </strong> <?php echo $grade_levels; ?>
+            </div>
+            <?php endif; ?>
         </div>
 
         <?php
@@ -205,9 +210,8 @@ function oer_ajax_display_resource_block(){
     $params['firstLoad'] = sanitize_text_field($_POST['params']['firstLoad']);
     $params['isChanged'] = sanitize_text_field($_POST['params']['isChanged']);
     $params['resources'] = $_POST['params']['resources'];
-    array_walk($params['resources'], function(&$value, &$key){
-        $value['title'] = sanitize_text_field($value['title']);
-        $value['id'] = sanitize_text_field($value['id']);
+    array_walk($params['resources'], function($value, $key){
+        $value = sanitize_text_field($value);
     });
     
     $resource = oer_display_resource_block($params, true);
