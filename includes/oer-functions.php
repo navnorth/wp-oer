@@ -1339,7 +1339,6 @@ function oer_importResources($default=false) {
 					}
 					if(!empty($oer_lrtype))
 					{
-						var_dump($oer_lrtype);
 						update_post_meta( $post_id , 'oer_lrtype' , sanitize_text_field($oer_lrtype));
 					}
 					if(!empty($oer_interactivity))
