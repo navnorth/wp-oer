@@ -42,6 +42,15 @@ No frequently asked questions.
 
 == Changelog ==
 = 0.9.3 =
+* Converted Grade Level field into a taxonomy
+* Updated import resources to create a new grade level if not existing
+* Added search function to the resources page
+* Added function to print resources in a list or table format
+* Added path, title, content, enable search filter, and enable print function setting for the Resources page in plugin options
+* Enabled FontAwesome and Bootstrap library by default
+* PHP 8.1 compatibility
+* Block compatibility fixes with WP 6.2
+* Tested up to WP 6.2
 
 = 0.9.2 =
 * Fixed the overlapping text on the settings and import pages including the standard list display
