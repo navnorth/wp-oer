@@ -2764,9 +2764,9 @@ function oer_search_resources(){
 		if (isset($_POST['gradeLevel'])){
 			if (!empty($_POST['gradeLevel'][0])){
 				if (!is_array($_POST['gradeLevel']))
-					$grades = explode(",",$_POST['gradeLevel']);
+					$grades = explode(",",sanitize_text_field($_POST['gradeLevel']));
 				else
-					$grades = $_POST['gradeLevel'];
+					$grades = array_map('sanitize_text_field',$_POST['gradeLevel']);
 				$args['tax_query'] = array(
 					array(
 						'taxonomy' => 'resource-grade-level',
@@ -2782,7 +2782,7 @@ function oer_search_resources(){
 			$args['meta_query'] = array(
 				array(
 					'key' => 'oer_lrtype',
-					'value' => $_POST['product']
+					'value' => array_map('sanitize_text_field',$_POST['product'])
 				)
 			);
 		} 
@@ -2791,12 +2791,12 @@ function oer_search_resources(){
 		if (isset($_POST['keyword']) && $_POST['keyword']!==""){
 			for ($i=0;$i<2;$i++){
 				if ($i == 0 ){
-					$args['s'] = $_POST['keyword'];
+					$args['s'] = sanitize_text_field($_POST['keyword']);
 					$resources = get_posts($args);	
 				} else {
 					if (isset($args['s']))
 						unset($args['s']);
-					$args['tag'] = $_POST['keyword'];
+					$args['tag'] = sanitize_text_field($_POST['keyword']);
 					$resources2 = get_posts($args);
 				}
 			}
@@ -2812,7 +2812,7 @@ function oer_search_resources(){
 				<?php if ( has_post_thumbnail($resource->ID) ) {?>
 				    <div class="oer-feature-image col-md-2">
 					<?php if ( ! post_password_required() && ! is_attachment() ) :
-					    echo get_the_post_thumbnail($resource->ID,"thumbnail");
+					    echo wp_kses_post(get_the_post_thumbnail($resource->ID,"thumbnail"));
 					endif; ?>
 				    </div>
 				<?php } else {
@@ -2833,7 +2833,7 @@ function oer_search_resources(){
 				    		else
 				    			$resource_atts .= '<span>'.ucfirst(get_post_meta($resource->ID, 'oer_lrtype')[0]).'</span>';
 				    	endif; 
-				    	echo $resource_atts;
+				    	echo wp_kses_post($resource_atts);
 				    	?>
 				    </div>
 						    
@@ -2883,9 +2883,9 @@ function oer_filter_resources($params){
 	// Search by Topic area
 	if (isset($params['gradelevel'])){
 		if (!is_array($params['gradelevel']))
-			$grades = explode(",",$params['gradelevel']);
+			$grades = explode(",",sanitize_text_field($params['gradelevel']));
 		else
-			$grades = $params['gradelevel'];
+			$grades = array_map('sanitize_text_field',$params['gradelevel']);
 		$args['tax_query'] = array(
 			array(
 				'taxonomy' => 'resource-grade-level',
@@ -2894,13 +2894,13 @@ function oer_filter_resources($params){
 			)
 		);
 	}
-
+	
 	// Search by Product Type
 	if (isset($params['product'])){
 		if (!is_array($params['product']))
-			$products = explode(",",$params['product']);
+			$products = explode(",",sanitize_text_field($params['product']));
 		else
-			$products = $params['product'];
+			$products = array_map('sanitize_text_field',$params['product']);
 		$args['meta_query'] = array(
 			array(
 				'key' => 'oer_lrtype',
@@ -2908,17 +2908,17 @@ function oer_filter_resources($params){
 			)
 		);
 	} 
-
+	
 	// Search title, description, and tags
 	if (isset($params['keyword'])){
 		for ($i=0;$i<2;$i++){
 			if ($i == 0 ){
-				$args['s'] = $params['keyword'];
+				$args['s'] = sanitize_text_field($params['keyword']);
 				$resources = get_posts($args);	
 			} else {
 				if (isset($args['s']))
 					unset($args['s']);
-				$args['tag'] = $params['keyword'];
+				$args['tag'] = sanitize_text_field($params['keyword']);
 				$resources2 = get_posts($args);
 			}
 		}
