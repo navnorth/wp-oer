@@ -3,8 +3,8 @@
  Plugin Name:        WP OER
  Plugin URI:         https://www.wp-oer.com
  Description:        Open Educational Resource management and curation, metadata publishing, and alignment to Common Core State Standards.
- Version:            0.9.2
- Requires at least:  4.4
+ Version:            0.9.3
+ Requires at least:  5.0
  Requires PHP:       7.0
  Author:             Navigation North
  Author URI:         https://www.navigationnorth.com
@@ -38,7 +38,7 @@ define( 'OER_FILE',__FILE__);
 // Plugin Name and Version
 define( 'OER_PLUGIN_NAME', 'WP OER Plugin' );
 define( 'OER_ADMIN_PLUGIN_NAME', 'WP OER Plugin');
-define( 'OER_VERSION', '0.9.2' );
+define( 'OER_VERSION', '0.9.3' );
 define( 'OER_SITE_PATH', ABSPATH );
 
 include_once(OER_PATH.'includes/oer-functions.php');
