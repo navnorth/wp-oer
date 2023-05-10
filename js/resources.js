@@ -160,10 +160,10 @@ jQuery(function($){
 			if ($('.resource-search-filters #keyword').val()!=='')
 				keyword = $('.resource-search-filters #keyword').val();
 			let grades = $('.resource-search-filters #gradeLevel').val();
-			if (grades.length>0)
+			if (typeof grades != 'undefined' && grades.length>0)
 				gradeLevel = $('.resource-search-filters #gradeLevel').val();
 			let products = $('.resource-search-filters #product').val();
-			if (products.length>0)
+			if (typeof products != 'undefined' && products.length>0)
 				product = $('.resource-search-filters #product').val();
 			var res_url = window.location.href;
 			if (keyword){
@@ -202,10 +202,10 @@ jQuery(function($){
 			if ($('.resource-search-filters #keyword').val()!=='')
 				keyword = $('.resource-search-filters #keyword').val();
 			let grades = $('.resource-search-filters #gradeLevel').val();
-			if (grades.length>0)
+			if (typeof grades != 'undefined' && grades.length>0)
 				gradeLevel = $('.resource-search-filters #gradeLevel').val();
 			let products = $('.resource-search-filters #product').val();
-			if (products.length>0)
+			if (typeof products != 'undefined' && products.length>0)
 				product = $('.resource-search-filters #product').val();
 			var res_url = window.location.href;
 			if (keyword){
