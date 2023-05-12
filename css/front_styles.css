@@ -470,7 +470,8 @@ article.oer_sngl_resource_wrapper div#sngl-resource header.entry-header h1.entry
 	.oer_blgpst .rght-sd-cntnr-blg { width:100%; float:none; }
 	.oer_sngl_stndrd { margin-left:5px; }
 }
-a.oer-featureimg .dashicons {
+a.oer-featureimg .dashicons,
+div.oer-featureimg .dashicons {
 	font-size: 165px;
 	width: 100%;
 	height: 400px;

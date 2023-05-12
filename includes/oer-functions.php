@@ -1211,7 +1211,11 @@ function oer_importResources($default=false) {
 							    else
 							    {
 								    // Categories are not found then assign as keyword
-								    $oer_kywrd .= ",".$oer_categories [$i];
+								    //$oer_kywrd .= ",".$oer_categories [$i];
+								    
+								    // add the term if category does not exist
+								    $cat = wp_insert_term($oer_categories[$i], 'resource-subject-area');
+								    $category_id[$i] = $cat['term_id'];
 							    }
 							}
 						}
@@ -1268,12 +1272,11 @@ function oer_importResources($default=false) {
 						update_post_meta( $post_id , 'oer_highlight' , $oer_highlight);
 					}
 
-					if(!empty($oer_grade))
-					{
+					if(!empty($oer_grade)){
 						$oer_grades = "";
 						$oer_grade = trim($oer_grade, '"');
-						if(strpos($oer_grade , "-"))
-						{
+						
+						if(strpos($oer_grade , "-")){
 							$oer_grade = explode("-",$oer_grade);
 							if(is_array($oer_grade))
 							{
@@ -1286,12 +1289,34 @@ function oer_importResources($default=false) {
 									$oer_grades .= $j.",";
 								}
 							}
-						}
-						else
-						{
+						} else {
 							$oer_grades = $oer_grade;
 						}
+						
 						update_post_meta( $post_id , 'oer_grade' , $oer_grades);
+
+						if (!is_array($oer_grades)){
+							$oer_grades = explode(",",$oer_grades);
+							$grade_ids = array();
+							for($i = 0; $i <= sizeof($oer_grades); $i++)
+							{
+								if(!empty($oer_grades[$i]))
+								{
+								    $cat = get_term_by( 'name', trim($oer_grades[$i]), 'resource-grade-level' );
+								    if($cat)
+								    {
+									    $grade_ids[$i] = $cat->term_id;
+								    }
+								    else
+								    {
+									    // Categories are not found then assign as keyword
+									    $oer_kywrd .= ",".$oer_grades [$i];
+								    }
+								}
+							}
+						}
+						
+						$grades = wp_set_object_terms( $post_id, $grade_ids, 'resource-grade-level', true );
 					}
 
 					if(!empty($oer_datecreated) && !($oer_datecreated==""))
@@ -3305,6 +3330,9 @@ if (!function_exists('oer_get_meta_label')){
 			case "oer_related_resource":
 				$label = __("Related Resources", OER_SLUG);
 				break;
+			case "oer_resource_notice":
+				$label = __("Resource Notice", OER_SLUG);
+				break;
 		}
 		return $label;
 	}
@@ -3588,7 +3616,7 @@ if (!function_exists('oer_get_related_resource_content')){
         $content = preg_replace('/[.+]/','', $content);
         //$content = apply_filters('the_content', $content);
         $content = str_replace(']]>', ']]>', $content);
-				if(strlen(trim($content,'')) > '') $content .= ' ...';
+		if(strlen(trim($content,'')) > '') $content .= ' ...';
         return strip_tags($content);
     }
 }
@@ -3969,4 +3997,41 @@ function oer_allowed_html() {
 	return $allowedposttags;
 }
 
+/** Get Date Created Year **/
+function oer_get_created_year(){
+	$years = array();
+	$args = array(
+		'numberposts' => -1,
+		'post_type' => 'resource',
+		'post_status' => 'publish'
+	);
+	$resources = get_posts($args);
+	foreach($resources as $resource){
+		$dateCreated = get_post_meta($resource->ID,'oer_datecreated')[0];
+		if ($dateCreated){
+			$time = strtotime($dateCreated);
+			$year = date('Y', $time);
+			$years[] = $year;
+		}
+	}
+	$years = array_unique($years);
+	rsort($years);
+	return $years;
+}
+
+/** Get limited excerpt **/
+function oer_get_limited_excerpt($content, $limit){
+
+    $excerpt = $content;
+    $excerpt = preg_replace(" (\[.*?\])",'',$excerpt);
+    $excerpt = strip_shortcodes($excerpt);
+    $excerpt = strip_tags($excerpt);
+    $excerpt = substr($excerpt, 0, $limit);
+    if (strlen($content)> $limit){
+    	$excerpt = substr($excerpt, 0, strripos($excerpt, " "));
+    	$excerpt = trim(preg_replace( '/\s+/', ' ', $excerpt));
+    	$excerpt .= '...';
+    }
+    return $excerpt;
+}
 ?>

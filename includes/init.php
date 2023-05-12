@@ -152,6 +152,16 @@ function oer_frontside_scripts()
 	
 	wp_enqueue_script('front-scripts', OER_URL.'js/front_scripts.js');
 	wp_enqueue_style( "resource-category-styles", OER_URL . "css/resource-category-style.css" );
+
+	if (is_post_type_archive('resource')){
+		wp_enqueue_script("bootstrap-select",OER_URL."js/bootstrap-select.min.js");
+		if (isset($_GET['action']) && $_GET['action']=='print'){
+			wp_enqueue_style(
+				"resource-print",
+				OER_URL."css/resource-print.css"
+			);
+		}
+	}
 }
 
 //Add style block
@@ -171,9 +181,12 @@ function oer_add_style_block(){
 //register custom post
 add_action( 'init' , 'oer_postcreation' );
 function oer_postcreation(){
-    global $_use_gutenberg;
+    global $_use_gutenberg, $_resources_path;
+
+    $resources_slug = ($_resources_path?$_resources_path:"resources");
+
 	$labels = array(
-        'name'               => __( 'Resource', OER_SLUG ),
+        'name'               => __( 'Resources', OER_SLUG ),
         'singular_name'      => __( 'Resource', OER_SLUG ),
         'add_new'            => __( 'Add Resource', OER_SLUG ),
         'add_new_item'       => __( 'Add Resource', OER_SLUG ),
@@ -199,7 +212,8 @@ function oer_postcreation(){
 		'menu_icon' => 'dashicons-welcome-learn-more',
         'supports'      => array(  'title', 'editor', 'thumbnail', 'revisions',  ),
 		'taxonomies' => array('post_tag'),
-        'has_archive'   => true,
+		'rewrite'	=> array( 'slug' => 'resource' ),
+        'has_archive'   => $resources_slug,
 		'register_meta_box_cb' => 'oer_resources_custom_metaboxes'
     );
     
@@ -207,10 +221,11 @@ function oer_postcreation(){
 		$args['show_in_rest'] = true;
 	
     register_post_type( 'resource', $args);
+    flush_rewrite_rules();
 }
 
 function oer_resources_custom_metaboxes(){
-	add_meta_box('oer_metaboxid',__('Open Resource Meta Fields',OER_SLUG),'oermeta_callback','resource','advanced');
+	add_meta_box('oer_metaboxid',__('Open Resource Meta Fields',OER_SLUG),'oermeta_callback','resource','normal','high');
 }
 
 //metafield callback
@@ -224,15 +239,19 @@ function oermeta_callback()
 add_action( 'init', 'oer_create_resource_taxonomies', 0 );
 function oer_create_resource_taxonomies() {
     global $_use_gutenberg;
+    $singular = "Subject Area";
+    $plural = "Subject Areas";
+    $grade_singular = "Grade Level";
+    $grade_plural = "Grade Levels";
 
     $arr_tax = array(
-    	array("slug"=>"resource-subject-area","singular_name"=>"Subject Area", "plural_name"=>"Subject Areas"),
-    	array("slug"=>"resource-grade-level","singular_name"=>"Grade Level", "plural_name"=>"Grade Levels")
+    	array("slug"=>"resource-subject-area","singular_name"=>$singular, "plural_name"=>$plural),
+    	array("slug"=>"resource-grade-level","singular_name"=>$grade_singular, "plural_name"=>$grade_plural)
     );
     
     foreach($arr_tax as $tax){
     	$labels = array(
-	      	'name'              => esc_html__( $tax['singular_name'],OER_SLUG ),
+	      	'name'              => esc_html__( $tax['plural_name'],OER_SLUG ),
 		    'singular_name'     => esc_html_x( $tax['singular_name'], 'taxonomy singular name', OER_SLUG ),
 		    'search_items'      => esc_html__( "Search ".$tax['plural_name'],OER_SLUG ),
 		    'all_items'         => esc_html__( 'All '.$tax['plural_name'], OER_SLUG ),
@@ -290,16 +309,17 @@ function oer_sort_grade_level_terms( $args, $taxonomies )
 add_action( 'resource-subject-area_add_form_fields', 'oer_add_upload_image_fields', 10 );
 function oer_add_upload_image_fields($taxonomy) {
     global $feature_groups;
+    $label = "Subject Area";
     ?>
     <?php wp_nonce_field( 'oer_add_upload_image_action', 'oer_add_upload_image_action_nonce_field' ); ?>
     <div class="form-field term-group">
-        <label for="main-icon-group"><?php _e('Subject Area Main Icon', OER_SLUG); ?></label>
+        <label for="main-icon-group"><?php _e($label.' Main Icon', OER_SLUG); ?></label>
 	<a id="main_icon_button" href="javascript:void(0);" class="button"><?php _e('Set Main Icon', OER_SLUG); ?></a>
 	<a id="remove_main_icon_button" href="javascript:void(0);" class="button hidden"><?php _e('Remove Main Icon', OER_SLUG); ?></a>
 	<input id="mainIcon" type="hidden" size="36" name="mainIcon" value="" />
     </div>
     <div class="form-field term-group">
-        <label for="hover-icon-group"><?php _e('Subject Area Hover Icon', OER_SLUG); ?></label>
+        <label for="hover-icon-group"><?php _e($label.' Hover Icon', OER_SLUG); ?></label>
 	<a id="hover_icon_button" href="javascript:void(0);" class="button"><?php _e('Set Hover Icon', OER_SLUG); ?></a>
 	<a id="remove_hover_icon_button" href="javascript:void(0);" class="button hidden"><?php _e('Remove Hover Icon', OER_SLUG); ?></a>
 	<input id="hoverIcon" type="hidden" size="36" name="hoverIcon" value="" />
@@ -312,12 +332,12 @@ function oer_add_upload_image_fields($taxonomy) {
  **/
 add_action( 'resource-subject-area_edit_form_fields', 'oer_edit_upload_image_fields', 10, 2 );
 function oer_edit_upload_image_fields( $term, $taxonomy ) {
-    
+    $label = "Subject Area";
     $mainIcon = get_term_meta( $term->term_id, 'mainIcon', true );
      ?>
      <?php wp_nonce_field( 'oer_edit_upload_image_action', 'oer_edit_upload_image_action_nonce_field' ); ?>
      <tr class="form-field term-group-wrap">
-        <th scope="row"><label for="feature-group"><?php _e('Subject Area Main Icon', OER_SLUG); ?></label></th>
+        <th scope="row"><label for="feature-group"><?php _e($label.' Main Icon', OER_SLUG); ?></label></th>
         <td>
 	    <div class="main_icon_button_img"><img src="<?php echo esc_url($mainIcon); ?>" /></div>
 	    <a id="main_icon_button" href="javascript:void(0);" class="button"><?php esc_html_e('Set Main Icon', OER_SLUG); ?></a>
@@ -328,7 +348,7 @@ function oer_edit_upload_image_fields( $term, $taxonomy ) {
     
     $hoverIcon = get_term_meta( $term->term_id, 'hoverIcon', true );
     ?><tr class="form-field term-group-wrap">
-        <th scope="row"><label for="feature-group"><?php esc_html_e('Subject Area Hover Icon', OER_SLUG); ?></label></th>
+        <th scope="row"><label for="feature-group"><?php esc_html_e($label.' Hover Icon', OER_SLUG); ?></label></th>
         <td>
 	    <div class="hover_icon_button_img"><img src="<?php echo esc_url($hoverIcon); ?>" /></div>
 	    <a id="hover_icon_button" href="javascript:void(0);" class="button"><?php esc_html_e('Set Hover Icon', OER_SLUG); ?></a>
@@ -506,6 +526,14 @@ function oer_save_customfields()
 				}
 			}
 			update_post_meta( $post->ID , 'oer_isbasedonurl' , $oer_isbasedonurl);
+		}
+
+		// Save Resource Notice
+		if(isset($_POST['oer_resource_notice']))
+		{
+			// Sanitize wp_editor content
+			$oer_resource_notice = sanitize_post_field('post_content', $_POST['oer_resource_notice'], $post->ID, 'db');
+			update_post_meta( $post->ID , 'oer_resource_notice' , $oer_resource_notice);
 		}
 		
 		if(isset($_POST['oer_standard_alignment']))
