@@ -17,7 +17,7 @@ function oer_archive_body_classes( $classes ) {
 if ($_nalrc){
 	wp_register_script("nalrc-script",OER_URL."js/nalrc.js");
 	wp_enqueue_script("nalrc-script");
-	wp_localize_script("nalrc-script", "nalrc_object", array("ajaxurl" => admin_url( 'admin-ajax.php' ), "plugin_url" => OER_URL));
+	wp_localize_script("nalrc-script", "nalrc_object", array("ajaxurl" => OER_URL."ajax.php" , "plugin_url" => OER_URL));
 }
 
 if (isset($_GET['action']) && $_GET['action']=='print'){
