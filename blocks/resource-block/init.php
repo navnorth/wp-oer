@@ -23,7 +23,8 @@ function oer_create_block_wp_oer_resource_block_init() {
         $script_asset['dependencies'],
         $script_asset['version']
     );
-    $admin_ajax_url = oer_is_resource_ajax_url_accessible(admin_url('admin-ajax.php'))?admin_url('admin-ajax.php'):OER_URL.'ajax.php';
+    //$admin_ajax_url = oer_is_resource_ajax_url_accessible(admin_url('admin-ajax.php'))?admin_url('admin-ajax.php'):OER_URL.'ajax.php';
+    $admin_ajax_url = OER_URL.'ajax.php';
     wp_localize_script( 'wp-oer-resource-block-editor', 'oer_resource', array( 'home_url' => home_url(), 'ajaxurl' => $admin_ajax_url ) );
     wp_set_script_translations( 'wp-oer-resource-block-editor', 'wp-oer-resource-block', OER_PATH.'/lang/js' );
 

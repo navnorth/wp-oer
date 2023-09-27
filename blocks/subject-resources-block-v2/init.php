@@ -25,7 +25,8 @@ function wp_oer_subject_resources_block_init() {
         $script_asset['dependencies'],
         $script_asset['version']
     );
-    $admin_ajax_url = oer_is_subject_ajax_url_accessible(admin_url('admin-ajax.php'))?admin_url('admin-ajax.php'):OER_URL.'ajax.php';
+    //$admin_ajax_url = oer_is_subject_ajax_url_accessible(admin_url('admin-ajax.php'))?admin_url('admin-ajax.php'):OER_URL.'ajax.php';
+    $admin_ajax_url = OER_URL.'ajax.php';
     wp_localize_script( 'oer-subject-resources-block-editor', 'oer_subject_resources', array( 'home_url' => home_url(), 'ajax_url' => $admin_ajax_url, 'version_58' => $version_58 ) );
     wp_set_script_translations('oer-subject-resources-block-editor', 'oer-subject-resources-block', OER_PATH . '/lang/js');
 
@@ -101,7 +102,8 @@ function wp_oer_subject_resources_block_json_init() {
         $script_asset['dependencies'],
         $script_asset['version']
     );
-    $admin_ajax_url = oer_is_subject_ajax_url_accessible(admin_url('admin-ajax.php'))?admin_url('admin-ajax.php'):OER_URL.'ajax.php';
+    //$admin_ajax_url = oer_is_subject_ajax_url_accessible(admin_url('admin-ajax.php'))?admin_url('admin-ajax.php'):OER_URL.'ajax.php';
+    $admin_ajax_url = OER_URL.'ajax.php';
     wp_localize_script( 'oer-subject-resources-block-editor', 'oer_subject_resources', array( 'home_url' => home_url(), 'ajax_url' => $admin_ajax_url, 'version_58' => $version_58 ) );
     wp_set_script_translations('oer-subject-resources-block-editor', 'oer-subject-resources-block', OER_PATH . '/lang/js');
 
