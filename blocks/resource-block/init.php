@@ -23,7 +23,8 @@ function oer_create_block_wp_oer_resource_block_init() {
         $script_asset['dependencies'],
         $script_asset['version']
     );
-    wp_localize_script( 'wp-oer-resource-block-editor', 'oer_resource', array( 'home_url' => home_url(), 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+    $admin_ajax_url = oer_is_resource_ajax_url_accessible(admin_url('admin-ajax.php'))?admin_url('admin-ajax.php'):OER_URL.'ajax.php';
+    wp_localize_script( 'wp-oer-resource-block-editor', 'oer_resource', array( 'home_url' => home_url(), 'ajaxurl' => $admin_ajax_url ) );
     wp_set_script_translations( 'wp-oer-resource-block-editor', 'wp-oer-resource-block', OER_PATH.'/lang/js' );
 
     register_block_type(
@@ -35,6 +36,16 @@ function oer_create_block_wp_oer_resource_block_init() {
     );
 }
 add_action( 'init', 'oer_create_block_wp_oer_resource_block_init' );
+
+/** Checks if AJAX url is accessible **/
+function oer_is_resource_ajax_url_accessible($url){
+    $headers = @get_headers($url);
+    if($headers && strpos( $headers[0], '200')) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 // Get Resource API to retrieve resources to add options to Resource Select Box
 function oer_get_resources_api(){

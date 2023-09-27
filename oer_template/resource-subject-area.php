@@ -16,7 +16,8 @@ wp_enqueue_script('bxslider-script', OER_URL.'/js/jquery.bxslider.js');
 wp_register_script( "resource-script" , OER_URL ."js/resource-category.js" );
 wp_enqueue_script( "resource-script" );
 wp_enqueue_script( "ajax-script", OER_URL."js/front_ajax.js", array("jquery"));
-wp_localize_script( "ajax-script", "oer_ajax_object", array("ajaxurl" => admin_url( 'admin-ajax.php' )));
+$admin_ajax_url = oer_is_ajax_url_accessible(admin_url('admin-ajax.php'))?admin_url('admin-ajax.php'):OER_URL.'ajax.php';
+wp_localize_script( "ajax-script", "oer_ajax_object", array("ajaxurl" => $admin_ajax_url));
 
 //Add this hack to display top nav and head section on Eleganto theme
 $_rsort = "";

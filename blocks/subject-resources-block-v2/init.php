@@ -25,7 +25,8 @@ function wp_oer_subject_resources_block_init() {
         $script_asset['dependencies'],
         $script_asset['version']
     );
-    wp_localize_script( 'oer-subject-resources-block-editor', 'oer_subject_resources', array( 'home_url' => home_url(), 'ajax_url' => admin_url( 'admin-ajax.php' ), 'version_58' => $version_58 ) );
+    $admin_ajax_url = oer_is_subject_ajax_url_accessible(admin_url('admin-ajax.php'))?admin_url('admin-ajax.php'):OER_URL.'ajax.php';
+    wp_localize_script( 'oer-subject-resources-block-editor', 'oer_subject_resources', array( 'home_url' => home_url(), 'ajax_url' => $admin_ajax_url, 'version_58' => $version_58 ) );
     wp_set_script_translations('oer-subject-resources-block-editor', 'oer-subject-resources-block', OER_PATH . '/lang/js');
 
     $front_asset_path = "$dir/build/front.asset.php";
@@ -43,7 +44,7 @@ function wp_oer_subject_resources_block_init() {
         $front_asset['dependencies'],
         $front_asset['version']
     );
-    wp_localize_script( 'oer-subject-resources-block-frontend', 'wp_oer_block', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+    wp_localize_script( 'oer-subject-resources-block-frontend', 'wp_oer_block', array( 'ajax_url' => $admin_ajax_url ) );
     wp_set_script_translations('oer-subject-resources-block-frontend', 'oer-subject-resources-block', OER_PATH . '/lang/js');
 
     $editor_css = 'build/index.css';
@@ -71,6 +72,16 @@ function wp_oer_subject_resources_block_init() {
     ) );
 }
 
+/** Checks if AJAX url is accessible **/
+function oer_is_subject_ajax_url_accessible($url){
+    $headers = @get_headers($url);
+    if($headers && strpos( $headers[0], '200')) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 function wp_oer_subject_resources_block_json_init() {
     wp_enqueue_script("wp-api");
     $dir = dirname(__FILE__);
@@ -90,7 +101,8 @@ function wp_oer_subject_resources_block_json_init() {
         $script_asset['dependencies'],
         $script_asset['version']
     );
-    wp_localize_script( 'oer-subject-resources-block-editor', 'oer_subject_resources', array( 'home_url' => home_url(), 'ajax_url' => admin_url( 'admin-ajax.php' ), 'version_58' => $version_58 ) );
+    $admin_ajax_url = oer_is_subject_ajax_url_accessible(admin_url('admin-ajax.php'))?admin_url('admin-ajax.php'):OER_URL.'ajax.php';
+    wp_localize_script( 'oer-subject-resources-block-editor', 'oer_subject_resources', array( 'home_url' => home_url(), 'ajax_url' => $admin_ajax_url, 'version_58' => $version_58 ) );
     wp_set_script_translations('oer-subject-resources-block-editor', 'oer-subject-resources-block', OER_PATH . '/lang/js');
 
     $front_asset_path = "$dir/build/front.asset.php";
@@ -108,7 +120,7 @@ function wp_oer_subject_resources_block_json_init() {
         $front_asset['dependencies'],
         $front_asset['version']
     );
-    wp_localize_script( 'oer-subject-resources-block-frontend', 'wp_oer_block', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+    wp_localize_script( 'oer-subject-resources-block-frontend', 'wp_oer_block', array( 'ajax_url' => $admin_ajax_url ) );
     wp_set_script_translations('oer-subject-resources-block-frontend', 'oer-subject-resources-block', OER_PATH . '/lang/js');
 
     register_block_type(

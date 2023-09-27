@@ -36,7 +36,9 @@ function create_wp_oer_subjects_index_block_init() {
 		$script_asset['dependencies'],
 		$script_asset['version']
 	);
-	wp_localize_script( 'wp-oer-subjects-index-block-editor', 'wp_oer', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+	$admin_ajax_url = oer_is_subjects_index_ajax_url_accessible(admin_url('admin-ajax.php'))?admin_url('admin-ajax.php'):OER_URL.'ajax.php';
+	var_dump($admin_ajax_url);
+	wp_localize_script( 'wp-oer-subjects-index-block-editor', 'wp_oer', array( 'ajaxurl' => $admin_ajax_url ) );
 	wp_set_script_translations( 'wp-oer-subjects-index-block-editor', 'wp-oer-subjects-index', OER_PATH . '/lang/js');
 
 	register_block_type(
@@ -49,6 +51,15 @@ function create_wp_oer_subjects_index_block_init() {
 }
 add_action( 'init', 'create_wp_oer_subjects_index_block_init' );
 
+/** Checks if AJAX url is accessible **/
+function oer_is_subjects_index_ajax_url_accessible($url){
+	$headers = @get_headers($url);
+	if($headers && strpos( $headers[0], '200')) {
+    	return true;
+	} else {
+    	return false;
+	}
+}
 
 function oer_display_subjects_index( $attributes, $ajax = false ){
 	$html = "";

@@ -4042,4 +4042,14 @@ function oer_get_limited_excerpt($content, $limit){
     }
     return $excerpt;
 }
+
+/** Checks if AJAX url is accessible **/
+function oer_is_ajax_url_accessible($url){
+	$headers = @get_headers($url);
+	if($headers && strpos( $headers[0], '200')) {
+    	return true;
+	} else {
+    	return false;
+	}
+}
 ?>
