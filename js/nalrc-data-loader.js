@@ -5,6 +5,7 @@ jQuery(function($){
     	nalrc_object.ajaxurl = 'http://localhost:8888/nalrc/wp-content/plugins/wp-usahtmlmap-stage/ajax.php'; // local override
 
 	function narlc_searchResources(){
+		console.log('overridden search resources');
 		$('.oer_resource_posts').html('');
 		var loader = '<div class="resource-loader"><img src="'+nalrc_object.plugin_url +'/images/load.gif" /></div>';
 		$('.oer_resource_posts').html(loader);
