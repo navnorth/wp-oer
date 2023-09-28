@@ -1,11 +1,8 @@
 jQuery(function($){
   	if (typeof nalrc_object != 'undefined')
-    	//nalrc_object.ajaxurl = 'https://oese.ed.gov/wp-content/plugins/wp-usahtmlmap-3.2.9/ajax.php'; // production override
-    	//nalrc_object.ajaxurl = 'https://oese.wp.nnth.dev/wp-content/plugins/wp-customusahtmlmap/ajax.php'; // test server override
-    	nalrc_object.ajaxurl = 'http://localhost:8888/nalrc/wp-content/plugins/wp-usahtmlmap-stage/ajax.php'; // local override
+    	nalrc_object.ajaxurl = 'https://oese.ed.gov/wp-content/plugins/wp-usahtmlmap-3.2.9/ajax.php'; // production override
 
 	function narlc_searchResources(){
-		console.log('overridden search resources');
 		$('.oer_resource_posts').html('');
 		var loader = '<div class="resource-loader"><img src="'+nalrc_object.plugin_url +'/images/load.gif" /></div>';
 		$('.oer_resource_posts').html(loader);
