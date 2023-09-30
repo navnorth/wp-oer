@@ -7,7 +7,6 @@
  * @see https://developer.wordpress.org/block-editor/tutorials/block-tutorial/writing-your-first-block-type/
  */
 function wp_oer_subject_resources_block_init() {
-    wp_enqueue_script("wp-api");
     $dir = dirname(__FILE__);
     $version_58 = is_version_58();
 
@@ -610,12 +609,8 @@ function oer_ajax_get_subject_resources(){
     else
         $params['attributes'] = $_POST;
 
-    array_walk($params['attributes'], function(&$value, &$key){
-        $value['displayCount'] = sanitize_text_field($value['displayCount']);
-        $value['sort'] = sanitize_text_field($value['sort']);
-        $value['isChanged'] = sanitize_text_field($value['isChanged']);
-        $value['blockId'] = sanitize_text_field($value['blockId']);
-        $value['firstLoad'] = sanitize_text_field($value['firstLoad']);
+    array_walk($params['attributes'], function(&$value, $key){
+        $value = sanitize_text_field($value);
     });
     
     $resources = oer_get_subject_resources($params, true);
