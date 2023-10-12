@@ -9,7 +9,7 @@ jQuery(function($){
 		$('.oer_resource_posts').html(loader);
 		var data = {
 			action: 'search_resources',
-		}
+		};
 		if ($('.nalrc-search-filters #keyword').val()!=='')
 			data.keyword = $('.nalrc-search-filters #keyword').val();
 		if ($('.nalrc-search-filters #gradeLevel').val()!=='')
@@ -21,7 +21,7 @@ jQuery(function($){
 			ajaxExecuting = true;
 			$.ajax({
 				type: "POST",
-				url: nalrc_object.ajaxurl,
+				url: nalrc_object.ajaxurl,	
 				data: data,
 				success: function(msg){
 					$('.oer_resource_posts').html(msg);
