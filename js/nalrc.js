@@ -1,3 +1,4 @@
+var ajaxExecuting = false;
 jQuery(function($){
 	function searchResources(){
 		$('.oer_resource_posts').html('');
@@ -13,14 +14,18 @@ jQuery(function($){
 		if ($('.nalrc-search-filters #product').val()!=='')
 			data.product = $('.nalrc-search-filters #product').val();
 		
-		$.ajax({
-			type: "POST",
-			url: nalrc_object.ajaxurl,
-			data: data,
-			success: function(msg){
-				$('.oer_resource_posts').html(msg);
-			}
-		});
+		if (!ajaxExecuting){
+			ajaxExecuting = true;
+			$.ajax({
+				type: "POST",
+				url: nalrc_object.ajaxurl,
+				data: data,
+				success: function(msg){
+					$('.oer_resource_posts').html(msg);
+					ajaxExecuting = false;
+				}
+			});
+		}
 	}
 
 	function moveResourceImage() {
@@ -108,7 +113,7 @@ jQuery(function($){
 	}
 
 	/** Topic Search **/
-	$('.nalrc-search-button').on('click', searchResources);
+	$('.nalrc-search-button').off('click').on('click', searchResources);
 
 	/** Keyword search **/
 	$('.nalrc-search-keyword #keyword').on('keydown', function(e){
