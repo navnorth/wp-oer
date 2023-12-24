@@ -2826,68 +2826,72 @@ function oer_search_resources(){
 			$resources = get_posts($args);
 		}
 
-		foreach($resources as $resource){
-			$resource_atts = "";
-			?>
-			<div class="oer_blgpst nalrc-blogpost">
-				<?php if ( has_post_thumbnail($resource->ID) ) {?>
-				    <div class="oer-feature-image col-md-2">
-					<?php if ( ! post_password_required() && ! is_attachment() ) :
-					    echo get_the_post_thumbnail($resource->ID,"thumbnail");
-					endif; ?>
-				    </div>
-				<?php } else {
-				    $new_image_url = OER_URL . 'images/default-icon-220x180.png';
-				    echo '<div class="oer-feature-image col-md-2"><a href="'.esc_url(get_permalink($resource->ID)).'"><img src="'.esc_url($new_image_url).'"></a></div>';
-				}
+		if (count($resources)>0){
+			foreach($resources as $resource){
+				$resource_atts = "";
 				?>
-
-				<div class="rght-sd-cntnr-blg col-md-10">
-				    <h4><a href="<?php the_permalink($resource->ID); ?>" rel="bookmark" title="<?php the_title_attribute(array('post'=>$resource->ID)); ?>"><?php echo esc_html(get_the_title($resource->ID)); ?></a></h4>
-				    <div class="small">
-				    	<?php if ($_nalrc && !empty(get_post_meta($resource->ID, 'oer_datecreated')[0])):
-				    		$resource_atts .= '<span>'.esc_html(get_post_meta($resource->ID, 'oer_datecreated')[0]).'</span>';
-				    	endif; ?>
-				    	<?php if ($_nalrc && !empty(get_post_meta($resource->ID,'oer_lrtype')[0])):
-				    		if (!empty($resource_atts))
-				    			$resource_atts .= ' | <span>'.ucfirst(get_post_meta($resource->ID, 'oer_lrtype')[0]).'</span>';
-				    		else
-				    			$resource_atts .= '<span>'.ucfirst(get_post_meta($resource->ID, 'oer_lrtype')[0]).'</span>';
-				    	endif;
-				    	echo $resource_atts;
-				    	?>
-				    </div>
-
-				    <div class="oer-post-content">
-					<?php
-					$excerpt = get_the_excerpt($resource->ID);
-					$excerpt = oer_get_limited_excerpt($excerpt,150);
-					echo esc_html(ucfirst($excerpt));
+				<div class="oer_blgpst nalrc-blogpost">
+					<?php if ( has_post_thumbnail($resource->ID) ) {?>
+						<div class="oer-feature-image col-md-2">
+						<?php if ( ! post_password_required() && ! is_attachment() ) :
+							echo get_the_post_thumbnail($resource->ID,"thumbnail");
+						endif; ?>
+						</div>
+					<?php } else {
+						$new_image_url = OER_URL . 'images/default-icon-220x180.png';
+						echo '<div class="oer-feature-image col-md-2"><a href="'.esc_url(get_permalink($resource->ID)).'"><img src="'.esc_url($new_image_url).'"></a></div>';
+					}
 					?>
-				    </div>
-				    <?php
-				    if ($_nalrc):
-					    $grades = array();
-					    $grade_terms = get_the_terms( $resource->ID, 'resource-grade-level' );
 
-					    if (is_array($grade_terms)){
-					        foreach($grade_terms as $grade){
-					            $grades[] = $grade->name;
-					        }
-					    }
-					    if (!empty($grades) && oer_grade_levels($grades)!="N/A"):
-					    ?>
-					    <div class="oer-intended-audience">
-					    	<span class="label"><?php _e("For: ", OER_SLUG); ?></span><span class="value"><?php echo oer_grade_levels($grades); ?></span>
-					    </div>
-					<?php endif;
-					endif; ?>
+					<div class="rght-sd-cntnr-blg col-md-10">
+						<h4><a href="<?php the_permalink($resource->ID); ?>" rel="bookmark" title="<?php the_title_attribute(array('post'=>$resource->ID)); ?>"><?php echo esc_html(get_the_title($resource->ID)); ?></a></h4>
+						<div class="small">
+							<?php if ($_nalrc && !empty(get_post_meta($resource->ID, 'oer_datecreated')[0])):
+								$resource_atts .= '<span>'.esc_html(get_post_meta($resource->ID, 'oer_datecreated')[0]).'</span>';
+							endif; ?>
+							<?php if ($_nalrc && !empty(get_post_meta($resource->ID,'oer_lrtype')[0])):
+								if (!empty($resource_atts))
+									$resource_atts .= ' | <span>'.ucfirst(get_post_meta($resource->ID, 'oer_lrtype')[0]).'</span>';
+								else
+									$resource_atts .= '<span>'.ucfirst(get_post_meta($resource->ID, 'oer_lrtype')[0]).'</span>';
+							endif;
+							echo $resource_atts;
+							?>
+						</div>
+
+						<div class="oer-post-content">
+						<?php
+						$excerpt = get_the_excerpt($resource->ID);
+						$excerpt = oer_get_limited_excerpt($excerpt,150);
+						echo esc_html(ucfirst($excerpt));
+						?>
+						</div>
+						<?php
+						if ($_nalrc):
+							$grades = array();
+							$grade_terms = get_the_terms( $resource->ID, 'resource-grade-level' );
+
+							if (is_array($grade_terms)){
+								foreach($grade_terms as $grade){
+									$grades[] = $grade->name;
+								}
+							}
+							if (!empty($grades) && oer_grade_levels($grades)!="N/A"):
+							?>
+							<div class="oer-intended-audience">
+								<span class="label"><?php _e("For: ", OER_SLUG); ?></span><span class="value"><?php echo oer_grade_levels($grades); ?></span>
+							</div>
+						<?php endif;
+						endif; ?>
+					</div>
 				</div>
-		    </div>
+				<?php
+			}
+		} else {
+			?>
+				<div class="oer_blgpst nalrc-blogpost">Your search returned zero results. Please try another search, or <a href="javascript:void(0)" id="nalrc-clear-filters"><strong>clear your filters</strong></a> to see all resources.</div>
 			<?php
 		}
-
-
 	} catch (Exception $e){
 		echo 'Error occurred: '. $e->getMessage();
 	}

@@ -39,6 +39,13 @@ jQuery(function($){
 		}
 	}
 
+	function resetFilters() {
+        var filters = $(document).find('.nalrc-search-filters');
+        filters.find('input:text,select').val('');
+        $('.nalrc-search-product button .filter-option-inner-inner').text('Resource Type');
+        $('.nalrc-search-grade-level button .filter-option-inner-inner').text('Grade Level');
+    }
+
 	//multiple select dropdown
 	var gradeWrapper = $('.nalrc-search-grade-level .nalrc-select-wrapper');
 	if (gradeWrapper.length){
@@ -72,6 +79,13 @@ jQuery(function($){
 		$(this).addClass('active');
 		$(this).closest('li').addClass('active');
 	});--**/
+
+	// clear search filters
+    $(document).on('click','#nalrc-clear-filters', function(e){
+        e.preventDefault();
+        resetFilters();
+        $('.nalrc-search-button').trigger('click');
+    });
 
 	// up and arrow key press
 	if ($('.nalrc-select-filter').length){
