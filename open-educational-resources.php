@@ -2455,9 +2455,12 @@ function oer_custom_search_template($template){
 
 	$current_theme = wp_get_theme();
 
-	if ($current_theme=="Avada")
+	/**--if ($current_theme=="Avada")
 		return OER_PATH . 'oer_template/avada-search.php';
 	else
+		return OER_PATH . 'oer_template/search.php'; --**/
+
+	if ($current_theme!=="Avada")
 		return OER_PATH . 'oer_template/search.php';
 }
 add_filter('template_include','oer_custom_search_template');
