@@ -2336,11 +2336,18 @@ function oer_delete_plugin_files(){
 }
 
 /** Extend Search **/
+add_action( 'init', 'oer_exclude_attachments_from_search_query', 999 );
+function oer_exclude_attachments_from_search_query() {
+	global $wp_post_types;
+	if ( post_type_exists( 'attachment' ) ) {
+		$wp_post_types['attachment']->exclude_from_search = true;
+	}
+}
+
  /* Filter to modify search query */
 add_filter( 'posts_search', 'oer_custom_query', 500, 2 );
 function oer_custom_query($search, $wp_query){
 	global $wpdb;
-
 	if ( empty( $search ) || !empty($wp_query->query_vars['suppress_filters']) ) {
             return $search; // skip processing - If no search term in query or suppress_filters is true
         }
@@ -2353,53 +2360,55 @@ function oer_custom_query($search, $wp_query){
 	//Checks each term
 	foreach ((array)$q['search_terms'] as $term ) {
 		$term = $n . $wpdb->esc_like( $term ) . $n;
-
+		
 		$OR = '';
-
-		$search_str .= "{$searchand} (";
-
+		
 		//Search in title
 		$search_str .= $wpdb->remove_placeholder_escape($wpdb->prepare("($wpdb->posts.post_title LIKE %s)", $term));
-      $OR = ' OR ';
+		$OR = ' OR ';
 
 		//Search in content
 		$search_str .= $OR;
-    	$search_str .= $wpdb->remove_placeholder_escape($wpdb->prepare("($wpdb->posts.post_content LIKE %s)", $term));
-      $OR = ' OR ';
+		$search_str .= $wpdb->remove_placeholder_escape($wpdb->prepare("($wpdb->posts.post_content LIKE %s)", $term));
+		
+		$OR = ' OR ';
+
+		//Search in excerpt
+		$search_str .= $OR;
+		$search_str .= $wpdb->remove_placeholder_escape($wpdb->prepare("($wpdb->posts.post_excerpt LIKE %s)", $term));
+		
+		$OR = ' OR ';
 
 		//Search by meta keys
-		$meta_keys = array(
-				   'oer_authoremail',
+		/**--$meta_keys = array(
 				   'oer_authorname',
-				   'oer_authortype',
-				   'oer_authorurl',
-				   'oer_datecreated',
-				   'oer_datemodified',
-				   'oer_grade',
-				   'oer_highlight',
 				   'oer_interactivity',
-				   'oer_isbasedonurl',
 				   'oer_lrtype',
 				   'oer_mediatype',
-				   'oer_publisheremail',
 				   'oer_publishername',
-				   'oer_publisherurl',
-				   //'oer_resourceurl',
 				   'oer_standard',
 				   'oer_standard_alignment',
-				   'oer_userightsurl'
 				   );
 
 		$meta_key_OR = '';
 
-		foreach ($meta_keys as $key_slug) {
-         $search_str .= $OR;
-         $search_str .= $wpdb->remove_placeholder_escape($wpdb->prepare("$meta_key_OR (pm.meta_key = %s AND pm.meta_value LIKE %s)", $key_slug, $term));
-         $OR = '';
-         $meta_key_OR = ' OR ';
-       }
+		if (count($meta_keys)>0){
+			$search_str .= $OR;
+			$search_str .= "(pm.meta_key IN(";
+			$meta_index = 0;
+			foreach ($meta_keys as $key_slug) {
+				$search_str .= $wpdb->remove_placeholder_escape($wpdb->prepare("%s", $key_slug));
+				if ($meta_index<count($meta_keys)-1){
+					$search_str .= ",";
+				} else {
+					$search_str .= ")";
+				}
+				$meta_index++;
+			}
+			$search_str .= $wpdb->remove_placeholder_escape($wpdb->prepare(" AND pm.meta_value LIKE %s)", $term));
+		}
 
-		$OR = ' OR ';
+		$OR = ' OR ';--**/
 
 		//Search By Taxonomy
 		$taxonomies = array("post_tag","resource-subject-area");
@@ -2408,12 +2417,10 @@ function oer_custom_query($search, $wp_query){
 
 		foreach($taxonomies as $tax) {
 			$search_str .= $OR;
-         $search_str .= $wpdb->remove_placeholder_escape($wpdb->prepare("$tax_OR (tt.taxonomy = %s AND t.name LIKE %s)", $tax, $term));
-         $OR = '';
-         $tax_OR = ' OR ';
+         	$search_str .= $wpdb->remove_placeholder_escape($wpdb->prepare("$tax_OR (tt.taxonomy = %s AND t.name LIKE %s)", $tax, $term));
+         	$OR = '';
+         	$tax_OR = ' OR ';
 		}
-
-		$search_str .= ")";
 
 		$searchand = " $terms_relation_type ";
 	}
@@ -2422,11 +2429,11 @@ function oer_custom_query($search, $wp_query){
 		$search = " AND ({$search_str}) ";
 	}
 
-	add_filter('posts_join_request', 'oer_join_table');
+	//add_filter('posts_join_request', 'oer_join_table');
 
 	/* Request distinct results */
 	add_filter('posts_distinct_request', 'oer_distinct');
-
+	
 	return $search;
 }
 
@@ -2440,8 +2447,8 @@ function oer_join_table($join){
 	// Taxomomies join
 	if (!$_nalrc){
 		$join .= " LEFT JOIN $wpdb->term_relationships tr ON ($wpdb->posts.ID = tr.object_id) ";
-   	$join .= " LEFT JOIN $wpdb->term_taxonomy tt ON (tr.term_taxonomy_id = tt.term_taxonomy_id) ";
-   	$join .= " LEFT JOIN $wpdb->terms t ON (tt.term_id = t.term_id) ";
+   		$join .= " LEFT JOIN $wpdb->term_taxonomy tt ON (tr.term_taxonomy_id = tt.term_taxonomy_id) ";
+   		$join .= " LEFT JOIN $wpdb->terms t ON (tt.term_id = t.term_id) ";
 	}
 
 	return $join;
